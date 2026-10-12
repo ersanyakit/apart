@@ -9,10 +9,17 @@ Go 1.26+, Node.js 20.9+ ve PostgreSQL gerekir.
 1. `.env.example` dosyasını `.env` olarak kopyalayın; PostgreSQL bağlantısını ve rastgele bir `JWT_SECRET` değerini ayarlayın.
 2. `ADMIN_USERNAME`, `ADMIN_PASSWORD` (12–72 karakter) ve `HOTEL_NAME` değerlerini belirleyin.
 3. `go run . admin:create` ile migrationları uygulayın ve ilk yönetici, otel ve merkez tesis kaydını oluşturun. Bu komut yalnızca boş kullanıcı veritabanında çalışır.
-4. `go run .` çalıştırın. Next.js bağımlılıkları gerektiğinde kurulur, üretim derlemesi hazırlanır ve SSR süreci başlatılır.
+4. `go run .` çalıştırın. Next.js bağımlılıkları gerektiğinde kurulur. Geliştirmede `next dev` başlar; UI dosyalarını kaydetmek tarayıcıyı Fast Refresh ile günceller. Go’yu yeniden başlatmak gerekmez.
 5. `http://localhost:3000` adresinde işletmenizi seçerek giriş yapın.
 
 `.env`, yüklenen medya, node_modules ve derleme çıktıları Git'e alınmaz. Üretimde PostgreSQL TLS, HTTPS reverse proxy, güçlü kimlik bilgileri ve kalıcı `DATA_DIR` kullanın. Uygulama portu ile UI portu farklı olmalıdır. Next.js yalnızca loopback üzerinde dinler. `SKIP_UI=true` yalnızca API'yi başlatır.
+
+### Geliştirme ve üretim
+
+- `APP_ENV=development go run .`: tek komut, tek adres (`http://localhost:3000`); API, SSR ve HMR WebSocket aynı origin üzerinden çalışır. `.env` geliştirme ayarındaysa `go run .` yeterlidir.
+- `APP_ENV=production go run .`: üretim derlemesi ve `next start`; mevcut HTTPS zorunluluğu geçerlidir.
+- İlk kez bu geliştirme akışına geçerken çalışan eski Go sürecini bir kez yeniden başlatın. Sonraki `.tsx` / CSS değişiklikleri otomatik görünür. Go kaynak değişiklikleri hâlâ Go sürecinin yeniden başlatılmasını gerektirir.
+- Ayrı frontend süreci isteyenler için `npm --prefix ui run dev:hot` (:3002) kullanılabilir; normal geliştirmede gerekli değildir.
 
 ## Konaklama yapısı
 

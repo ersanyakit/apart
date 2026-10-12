@@ -1,11 +1,8 @@
 import React from "react";
 import { X } from "lucide-react";
-export const inputStyle =
-  "w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-brand-blue-200";
-export const buttonStyle =
-  "inline-flex items-center justify-center gap-2 rounded-xl bg-brand-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-brand-blue-700 disabled:opacity-40 disabled:cursor-not-allowed";
-export const secondaryStyle =
-  "inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-40";
+export const inputStyle = "uni-input w-full px-4 py-3 text-sm";
+export const buttonStyle = "uni-button uni-button-primary";
+export const secondaryStyle = "uni-button uni-button-secondary min-h-10 rounded-xl px-3 py-2";
 export function Field({
   label,
   children,
@@ -29,7 +26,7 @@ export function Field({
     <label htmlFor={id} className="block space-y-1.5">
       <span
         id={`${id}-label`}
-        className="text-[11px] font-bold text-slate-500 uppercase tracking-wide"
+        className="text-sm font-medium text-uni-muted"
       >
         {label}
       </span>
@@ -64,7 +61,7 @@ export function Drawer({
           <button
             type="button"
             aria-label="Pencereyi kapat"
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             onClick={onClose}
           >
             <X size={18} />

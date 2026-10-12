@@ -50,7 +50,7 @@ func fingerprint(root string) (string, error) {
 	})
 	return hex.EncodeToString(h.Sum(nil)), err
 }
-func Prepare(ctx context.Context) error {
+func Prepare(ctx context.Context, development bool) error {
 	if _, err := exec.LookPath("node"); err != nil {
 		return constants.ErrNode
 	}
@@ -61,6 +61,9 @@ func Prepare(ctx context.Context) error {
 		if err := run(ctx, "npm", "ci", "--no-fund", "--no-audit"); err != nil {
 			return err
 		}
+	}
+	if development {
+		return nil
 	}
 	sum, err := fingerprint("ui")
 	if err != nil {
@@ -93,7 +96,7 @@ func run(ctx context.Context, name string, args ...string) error {
 	}
 	return nil
 }
-func Start(ctx context.Context, address, apiURL string) (*Process, error) {
+func Start(ctx context.Context, address, apiURL string, development bool) (*Process, error) {
 	_, port, err := net.SplitHostPort(address)
 	if err != nil {
 		return nil, constants.Wrap(constants.ErrUI, err)
@@ -104,9 +107,14 @@ func Start(ctx context.Context, address, apiURL string) (*Process, error) {
 		return nil, constants.Wrap(constants.ErrUI, err)
 	}
 	listener.Close()
-	cmd := exec.CommandContext(ctx, "node", "node_modules/next/dist/bin/next", "start", "--hostname", "127.0.0.1", "--port", port)
+	mode, nodeEnv := "start", "production"
+	if development {
+		mode, nodeEnv = "dev", "development"
+	}
+	slog.Info("Next.js başlatılıyor", "mode", mode, "hot_reload", development)
+	cmd := exec.CommandContext(ctx, "node", "node_modules/next/dist/bin/next", mode, "--hostname", "127.0.0.1", "--port", port)
 	cmd.Dir = "ui"
-	cmd.Env = append(os.Environ(), "NODE_ENV=production", "NEXT_TELEMETRY_DISABLED=1", "API_INTERNAL_URL="+apiURL)
+	cmd.Env = append(os.Environ(), "NODE_ENV="+nodeEnv, "NEXT_TELEMETRY_DISABLED=1", "API_INTERNAL_URL="+apiURL)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Cancel = func() error { return cmd.Process.Signal(syscall.SIGTERM) }

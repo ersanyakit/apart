@@ -31,7 +31,7 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-             <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500 hover:bg-slate-50 transition-all shadow-sm">
+             <button className="uni-control flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px]    text-slate-500 hover:bg-slate-50  shadow-sm">
                 <Download className="w-3.5 h-3.5" />
                 Dışa Aktar (CSV)
              </button>
@@ -49,10 +49,10 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
             <input
               type="text"
               placeholder="LOGLARDA ARA (GERÇEKLEŞTİREN, EYLEM, AÇIKLAMA...)"
-              className="w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all shadow-sm"
+              className="uni-input w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all shadow-sm"
             />
           </div>
-          <button className="px-6 py-4 bg-white border border-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 flex items-center gap-3 transition-all shrink-0">
+          <button className="uni-control px-6 py-4 bg-white border border-slate-200 rounded-2xl text-[10px]    text-slate-400 hover:text-slate-600 flex items-center gap-3  shrink-0">
              <Filter className="w-4 h-4" />
              Filtrele
           </button>

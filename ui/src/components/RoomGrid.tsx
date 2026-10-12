@@ -6,7 +6,7 @@ interface RoomGridProps {
   rooms: Room[];
   setRooms: (rooms: Room[]) => void;
   selectedRoom: string | null;
-  handleContextMenu: (e: React.MouseEvent, roomId: string) => void;
+  handleContextMenu: (e: Pick<React.MouseEvent, "preventDefault" | "clientX" | "clientY">, roomId: string) => void;
   onSwap?: (sourceRoom: Room, targetRoom: Room) => void;
 }
 

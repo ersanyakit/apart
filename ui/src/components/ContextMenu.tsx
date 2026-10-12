@@ -48,7 +48,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       initial={{ opacity: 0, scale: 0.95, y: 5 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 5 }}
-      className="fixed z-50 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[220px] shadow-brand-blue-900/20 ring-1 ring-black/5"
+      className="uni-card fixed z-50 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[220px] shadow-brand-blue-900/20 ring-1 ring-black/5"
       style={{ top: y, left: x }}
       onClick={(e) => e.stopPropagation()}
       onContextMenu={(e) => e.preventDefault()}
@@ -106,7 +106,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
-              className="absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[180px] ring-1 ring-black/5"
+              className="uni-card absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[180px] ring-1 ring-black/5"
               onMouseLeave={() => setActiveSubMenu(null)}
             >
               <ContextMenuItem
@@ -154,7 +154,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
-              className="absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[160px] ring-1 ring-black/5"
+              className="uni-card absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[160px] ring-1 ring-black/5"
               onMouseLeave={() => setActiveSubMenu(null)}
             >
               <ContextMenuItem
@@ -281,9 +281,9 @@ function ContextMenuItem({
     <button
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      className="w-full flex items-center px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-brand-blue-50 hover:text-brand-blue-700 transition-all group"
+      className="uni-control uni-menu-item rounded-xl w-full flex items-center px-3 py-2.5 text-xs font-bold text-slate-700 hover:bg-brand-blue-50 hover:text-brand-blue-700    active:bg-brand-blue-50  cursor-pointer"
     >
-      <div className="w-5 flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+      <div className="w-5 flex items-center justify-center mr-3">
         {icon}
       </div>
       <span className="flex-1 text-left">{label}</span>

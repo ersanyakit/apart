@@ -67,6 +67,9 @@ import { RoomCard } from "./components/RoomCard";
 import { roomView } from "./lib/adapters";
 import { OriginalShell } from "./components/OriginalShell";
 import { FeatureRegistryView } from "./components/FeatureRegistryView";
+import { AppSettingsView } from "./components/AppSettingsView";
+import { FontSizeProvider } from "./components/FontSize";
+import { ThemeProvider } from "./components/Theme";
 const date = (value: string) =>
   new Date(value).toLocaleString("tr-TR", {
     timeZone: "Europe/Istanbul",
@@ -103,6 +106,7 @@ const navigation = [
   { id: "logs", label: "Sistem Logları", icon: Layers },
   { id: "facility", label: "Kurumsal Tesis Kartı", icon: Building2 },
   { id: "features", label: "Olanak Tanımları", icon: Settings },
+  { id: "appsettings", label: "Ayarlar", icon: Settings },
 ];
 export default function App({ initialData }: { initialData: Snapshot | null }) {
   const [snapshot, setSnapshot] = useState<Snapshot | null>(
@@ -161,6 +165,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
   };
   if (!snapshot)
     return (
+      <FontSizeProvider>
+      <ThemeProvider>
       <LoginScreen
         onLogin={async (selection, register) => {
           await refresh(selection);
@@ -171,6 +177,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
           }
         }}
       />
+      </ThemeProvider>
+      </FontSizeProvider>
     );
   const s = snapshot,
     manager = ["admin", "management"].includes(s.user.role),
@@ -235,7 +243,15 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       });
   };
   const title = navigation.find((n) => n.id === tab)?.label || "";
+  const handleLogout = () =>
+    void run(async () => {
+      await command("auth.logout");
+      setSnapshot(null);
+      setModal(null);
+    });
   return (
+    <FontSizeProvider>
+    <ThemeProvider>
     <OriginalShell
       snapshot={s}
       activeTab={tab}
@@ -245,13 +261,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         setError("");
       }}
       onSelection={changeBranch}
-      onLogout={() =>
-        void run(async () => {
-          await command("auth.logout");
-          setSnapshot(null);
-          setModal(null);
-        })
-      }
+      onLogout={handleLogout}
       at={atISO}
       onDate={(d) =>
         setDateFilter(
@@ -260,6 +270,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       }
     >
       <main className="flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6">
+        {tab !== "appsettings" && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] uppercase font-bold tracking-[.18em] text-slate-400">
@@ -273,14 +284,14 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             <button
               aria-label="Yenile"
               disabled={busy}
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               onClick={() => void run(() => refresh(), "Kayıtlar güncellendi.")}
             >
               <RefreshCw size={16} className={busy ? "animate-spin" : ""} />
             </button>
             {operator && s.branch_id && (
               <button
-                className={buttonStyle}
+                className={`uni-control ${buttonStyle}`}
                 onClick={() => setModal({ type: "booking" })}
               >
                 <Plus size={16} />
@@ -289,6 +300,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             )}
           </div>
         </div>
+        )}
         <ErrorMessage message={error} />
         {notice && (
           <div
@@ -299,7 +311,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               <Check size={15} />
               {notice}
             </span>
-            <button aria-label="Bildirimi kapat" onClick={() => setNotice("")}>
+            <button className="uni-control" aria-label="Bildirimi kapat" onClick={() => setNotice("")}>
               ×
             </button>
           </div>
@@ -319,7 +331,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm"
+                  className="uni-card rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm"
                 >
                   <span className="text-[9px] font-black tracking-widest text-slate-400">
                     {stat.label}
@@ -338,7 +350,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 />
                 <input
                   aria-label="Kayıtlarda ara"
-                  className={`${inputStyle} !pl-9 !bg-white`}
+                  className={`uni-input ${inputStyle} !pl-9 !bg-white`}
                   placeholder="Birim veya misafir ara…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -348,7 +360,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 <>
                   <select
                     aria-label="Kat filtresi"
-                    className={`${inputStyle} !w-auto`}
+                    className={`uni-input ${inputStyle} !w-auto`}
                     value={floorId}
                     onChange={(e) => {
                       setFloorId(e.target.value);
@@ -364,7 +376,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   </select>
                   <select
                     aria-label="Birim türü filtresi"
-                    className={`${inputStyle} !w-auto`}
+                    className={`uni-input ${inputStyle} !w-auto`}
                     value={kind}
                     onChange={(e) => setKind(e.target.value)}
                   >
@@ -379,7 +391,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               ) : (
                 <select
                   aria-label="Rezervasyon durumu"
-                  className={`${inputStyle} !w-auto`}
+                  className={`uni-input ${inputStyle} !w-auto`}
                   value={bookingFilter}
                   onChange={(e) => setBookingFilter(e.target.value)}
                 >
@@ -395,7 +407,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 <input
                   aria-label="Tarih filtresi"
                   type="date"
-                  className={`${inputStyle} !w-auto`}
+                  className={`uni-input ${inputStyle} !w-auto`}
                   value={dateFilter}
                   onChange={(e) => setDateFilter(e.target.value)}
                 />
@@ -412,7 +424,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               </p>
               <button
                 disabled={!floorId}
-                className={secondaryStyle}
+                className={`uni-control ${secondaryStyle}`}
                 onClick={() => setPlan(!plan)}
               >
                 <Map size={15} />
@@ -543,7 +555,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                       <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2">
                         {operator && room.rentable && (
                           <button
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={() =>
                               setModal({
                                 type: "booking",
@@ -558,7 +570,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         {operator && active && stays.length === 1 && (
                           <button
                             aria-label={`${room.code} rezervasyonunu taşı`}
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={() =>
                               setModal({ type: "move", booking: active })
                             }
@@ -569,7 +581,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         {manager && (
                           <button
                             aria-label={`${room.code} düzenle`}
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={() => setModal({ type: "unit", room })}
                           >
                             <Pencil size={12} />
@@ -578,7 +590,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         {housekeeping && !active && (
                           <select
                             aria-label={`${room.code} oda durumu`}
-                            className="text-[10px] rounded-lg border border-slate-200 p-1"
+                            className="uni-input text-[10px] rounded-lg border border-slate-200 p-1"
                             value={room.status}
                             onChange={(e) =>
                               void run(async () => {
@@ -672,7 +684,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 >
                   <td className="p-4">
                     <button
-                      className="font-bold text-brand-blue-700 text-left"
+                      className="uni-control font-bold text-brand-blue-700 text-left"
                       onClick={() => setModal({ type: "history", booking: b })}
                     >
                       {b.guest_name}
@@ -701,13 +713,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           <>
                             <button
                               disabled={busy}
-                              className={secondaryStyle}
+                              className={`uni-control ${secondaryStyle}`}
                               onClick={() => transition(b, "check_in")}
                             >
                               Giriş
                             </button>
                             <button
-                              className={secondaryStyle}
+                              className={`uni-control ${secondaryStyle}`}
                               onClick={() =>
                                 setModal({ type: "booking", booking: b })
                               }
@@ -716,7 +728,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             </button>
                             <button
                               disabled={busy}
-                              className={secondaryStyle}
+                              className={`uni-control ${secondaryStyle}`}
                               onClick={async () => {
                                 if (
                                   await confirmDialog(
@@ -733,7 +745,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         {b.status === "checked_in" && (
                           <button
                             disabled={busy}
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={async () => {
                               if (
                                 await confirmDialog(
@@ -748,7 +760,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         )}
                         {["confirmed", "checked_in"].includes(b.status) && (
                           <button
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={() =>
                               setModal({ type: "move", booking: b })
                             }
@@ -773,7 +785,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             <div className="flex gap-2">
               {s.user.role === "admin" && (
                 <button
-                  className={buttonStyle}
+                  className={`uni-control ${buttonStyle}`}
                   onClick={() =>
                     setModal({ type: "facility", kind: "hotel", create: true })
                   }
@@ -782,7 +794,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 </button>
               )}
               <button
-                className={secondaryStyle}
+                className={`uni-control ${secondaryStyle}`}
                 disabled={!s.hotel_id}
                 onClick={() =>
                   setModal({ type: "facility", kind: "branch", create: true })
@@ -800,7 +812,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   data && (
                     <article
                       key={kind}
-                      className="rounded-2xl border border-slate-200 bg-white p-6 space-y-4"
+                      className="uni-card rounded-2xl border border-slate-200 bg-white p-6 space-y-4"
                     >
                       <span className="text-[10px] font-black text-brand-blue-600 uppercase">
                         {kind === "hotel" ? "Otel" : "Tesis / Şube"}
@@ -830,7 +842,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         )}
                       </div>
                       <button
-                        className={secondaryStyle}
+                        className={`uni-control ${secondaryStyle}`}
                         onClick={() => setModal({ type: "facility", kind })}
                       >
                         Bilgileri ve Medyayı Düzenle
@@ -843,6 +855,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         )}
         {tab === "features" && (
           <FeatureRegistryView snapshot={s} onRefresh={refresh} />
+        )}
+        {tab === "appsettings" && (
+          <AppSettingsView
+            userName={s.user.displayname || s.user.username}
+            userRole={s.user.role}
+            onLogout={handleLogout}
+          />
         )}
       </main>
       {modal && (
@@ -911,7 +930,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               <div className="flex gap-2">
                 {["confirmed", "checked_in"].includes(modal.booking.status) && (
                   <button
-                    className={secondaryStyle}
+                    className={`uni-control ${secondaryStyle}`}
                     onClick={() =>
                       setModal({ type: "guests", booking: modal.booking })
                     }
@@ -920,7 +939,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   </button>
                 )}
                 <button
-                  className={secondaryStyle}
+                  className={`uni-control ${secondaryStyle}`}
                   onClick={() =>
                     setModal({ type: "documents", booking: modal.booking })
                   }
@@ -1057,6 +1076,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         </>
       )}
     </OriginalShell>
+    </ThemeProvider>
+    </FontSizeProvider>
   );
 }
 function Empty({ label, onClick }: { label: string; onClick?: () => void }) {
@@ -1065,7 +1086,7 @@ function Empty({ label, onClick }: { label: string; onClick?: () => void }) {
       <Building2 className="mx-auto text-slate-300" size={36} />
       <p className="text-sm text-slate-400">{label}</p>
       {onClick && (
-        <button className={buttonStyle} onClick={onClick}>
+        <button className={`uni-control ${buttonStyle}`} onClick={onClick}>
           <Plus size={15} />
           Yeni Kayıt
         </button>

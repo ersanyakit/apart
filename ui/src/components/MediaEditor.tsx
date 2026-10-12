@@ -71,7 +71,7 @@ export function MediaEditor({
           aria-label="Medya metinlerinin dili"
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="rounded-xl border border-slate-200 p-2 text-xs font-bold"
+          className="uni-input rounded-xl border border-slate-200 p-2 text-xs font-bold"
         >
           {languages.map((l) => (
             <option key={l}>{l}</option>
@@ -127,7 +127,7 @@ export function MediaEditor({
               ),
             )
           }
-          className="rounded-xl bg-slate-100 px-4 py-3 text-xs font-bold flex items-center gap-2 disabled:opacity-50"
+          className="uni-control rounded-xl bg-slate-100 px-4 py-3 text-xs font-bold flex items-center gap-2 disabled:opacity-50"
         >
           <Library size={15} />
           Kütüphaneden Seç
@@ -143,7 +143,7 @@ export function MediaEditor({
           aria-label="Medya türü"
           value={kind}
           onChange={(e) => setKind(e.target.value as "image" | "video")}
-          className="rounded-xl border border-slate-200 px-2 text-xs"
+          className="uni-input rounded-xl border border-slate-200 px-2 text-xs"
         >
           <option value="image">Resim</option>
           <option value="video">Video</option>
@@ -153,7 +153,7 @@ export function MediaEditor({
           value={url}
           onChange={(e) => setURL(e.target.value)}
           placeholder="https://…"
-          className="min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs"
+          className="uni-input min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs"
         />
         <button
           type="button"
@@ -176,7 +176,7 @@ export function MediaEditor({
               setError(messageOf(e));
             }
           }}
-          className="p-3 rounded-xl bg-slate-900 text-white disabled:opacity-40"
+          className="uni-control p-3 rounded-xl bg-slate-900 text-white disabled:opacity-40"
           aria-label="Medya bağlantısı ekle"
         >
           <Plus size={16} />
@@ -222,7 +222,7 @@ export function MediaEditor({
                   })
                 }
                 placeholder={`Başlık (${language})`}
-                className="w-full rounded-lg border border-slate-100 p-2 text-xs"
+                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
               />
               <textarea
                 aria-label={`Medya ${index + 1} açıklama ${language}`}
@@ -236,7 +236,7 @@ export function MediaEditor({
                   })
                 }
                 placeholder={`Açıklama (${language})`}
-                className="w-full rounded-lg border border-slate-100 p-2 text-xs"
+                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
               />
               <input
                 aria-label={`Medya ${index + 1} alternatif metin ${language}`}
@@ -247,14 +247,14 @@ export function MediaEditor({
                   })
                 }
                 placeholder={`Alternatif metin (${language})`}
-                className="w-full rounded-lg border border-slate-100 p-2 text-xs"
+                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
               />
               <div className="flex gap-2 justify-end">
                 <button
                   type="button"
                   disabled={index === 0}
                   aria-label="Medyayı sola taşı"
-                  className="p-2 text-slate-400 disabled:opacity-30"
+                  className="uni-control p-2 text-slate-400 disabled:opacity-30"
                   onClick={() => {
                     const items = [...value];
                     [items[index - 1], items[index]] = [
@@ -270,7 +270,7 @@ export function MediaEditor({
                   type="button"
                   disabled={index === value.length - 1}
                   aria-label="Medyayı sağa taşı"
-                  className="p-2 text-slate-400 disabled:opacity-30"
+                  className="uni-control p-2 text-slate-400 disabled:opacity-30"
                   onClick={() => {
                     const items = [...value];
                     [items[index + 1], items[index]] = [
@@ -286,7 +286,7 @@ export function MediaEditor({
                   type="button"
                   aria-label="Medyayı galeriden çıkar"
                   onClick={() => onChange(value.filter((_, i) => i !== index))}
-                  className="p-2 text-red-500"
+                  className="uni-control p-2 text-red-500"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -310,7 +310,7 @@ export function MediaEditor({
           >
             <div className="flex justify-between mb-4">
               <h3 className="font-black">MEDYA KÜTÜPHANESİ</h3>
-              <button
+              <button className="uni-control"
                 type="button"
                 aria-label="Kütüphaneyi kapat"
                 onClick={() => setLibrary(null)}
@@ -332,7 +332,7 @@ export function MediaEditor({
                       setError(messageOf(e));
                     }
                   }}
-                  className="rounded-xl border border-slate-200 overflow-hidden disabled:opacity-30"
+                  className="uni-control rounded-xl border border-slate-200 overflow-hidden disabled:opacity-30"
                 >
                   {a.kind === "video" ? (
                     <video src={a.url} className="aspect-video object-cover" />

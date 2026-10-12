@@ -51,13 +51,13 @@ export function FeatureRegistryView({
       <ErrorMessage message={error} />
       <div className="flex gap-2">
         <button
-          className={buttonStyle}
+          className={`uni-control ${buttonStyle}`}
           disabled={!snapshot.feature_registry.categories?.length}
           onClick={() => setDraft(empty())}
         >
           Özellik Ekle
         </button>
-        <button className={secondaryStyle} onClick={() => setCategory(true)}>
+        <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>
           Kategori Ekle
         </button>
       </div>
@@ -65,7 +65,7 @@ export function FeatureRegistryView({
         {(snapshot.feature_registry.definitions || []).map((d) => (
           <button
             key={d.code}
-            className="rounded-2xl border border-slate-200 bg-white p-5 text-left"
+            className="uni-control rounded-2xl border border-slate-200 bg-white p-5 text-left"
             onClick={() => setDraft({ ...d, assets: d.assets || [] })}
           >
             <h3 className="font-black">{localized(d.label) || d.code}</h3>
@@ -109,7 +109,7 @@ export function FeatureRegistryView({
             <Field label="Kod">
               <input
                 required
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
               />
@@ -117,12 +117,12 @@ export function FeatureRegistryView({
             <Field label="Kategori adı">
               <input
                 required
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
               />
             </Field>
-            <button disabled={busy} className={buttonStyle}>
+            <button disabled={busy} className={`uni-control ${buttonStyle}`}>
               Kaydet
             </button>
           </form>
@@ -156,14 +156,14 @@ export function FeatureRegistryView({
               <Field label="Kod">
                 <input
                   required
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   value={draft.code}
                   onChange={(e) => setDraft({ ...draft, code: e.target.value })}
                 />
               </Field>
               <Field label="Kategori">
                 <select
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   value={draft.category_id}
                   onChange={(e) =>
                     setDraft({ ...draft, category_id: e.target.value })
@@ -178,7 +178,7 @@ export function FeatureRegistryView({
               </Field>
               <Field label="Dil">
                 <select
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
                 >
@@ -189,7 +189,7 @@ export function FeatureRegistryView({
               </Field>
               <Field label="Başlık">
                 <input
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   value={draft.label?.[language] || ""}
                   onChange={(e) =>
                     setDraft({
@@ -202,7 +202,7 @@ export function FeatureRegistryView({
             </div>
             <Field label="Açıklama">
               <textarea
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={draft.description?.[language] || ""}
                 onChange={(e) =>
                   setDraft({
@@ -217,7 +217,7 @@ export function FeatureRegistryView({
             </Field>
             <Field label="Veri türü">
               <select
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={draft.value_type}
                 onChange={(e) =>
                   setDraft({
@@ -248,7 +248,7 @@ export function FeatureRegistryView({
             {["enum", "multi_enum"].includes(draft.value_type) && (
               <Field label="Seçenek kodları (virgülle ayırın)">
                 <input
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   value={draft.options.join(",")}
                   onChange={(e) => {
                     const options = e.target.value.split(",");
@@ -270,7 +270,7 @@ export function FeatureRegistryView({
                     <input
                       type="number"
                       step="any"
-                      className={inputStyle}
+                      className={`uni-input ${inputStyle}`}
                       value={draft[k] ?? ""}
                       onChange={(e) =>
                         setDraft({
@@ -332,7 +332,7 @@ export function FeatureRegistryView({
               languages={snapshot.languages}
               onBusy={setUploading}
             />
-            <button disabled={busy || uploading} className={buttonStyle}>
+            <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
               Özelliği Kaydet
             </button>
           </form>

@@ -167,19 +167,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       <div className="max-w-5xl mx-auto space-y-8">
 
         {/* Navigation Tabs */}
-        <div className="flex bg-white p-1 rounded-2xl border border-slate-200 shadow-sm w-fit">
+        <div className="uni-card flex bg-white p-1 rounded-2xl border border-slate-200 shadow-sm w-fit">
           <button
             onClick={() => setActiveTab('rooms')}
-            className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-              activeTab === 'rooms' ? 'bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
+            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${
+              activeTab === 'rooms' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
             }`}
           >
             Oda Yönetimi
           </button>
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-              activeTab === 'inventory' ? 'bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
+            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${
+              activeTab === 'inventory' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
             }`}
           >
             Demirbaş Tanımları
@@ -194,10 +194,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 <p className="text-sm text-slate-400 font-medium italic mt-1">Odaları ve oda bazlı demirbaşları yönetin.</p>
               </div>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setIsAdding(true)}
-                className="flex items-center gap-2 px-6 py-3 bg-brand-blue-600 text-white rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl shadow-brand-blue-100"
+                className="uni-control flex items-center gap-2 px-6 py-3 uni-button-primary text-white rounded-2xl text-xs     shadow-brand-blue-100       cursor-pointer"
               >
                 <PlusCircle className="w-4 h-4" />
                 Yeni Oda Ekle
@@ -210,7 +208,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="bg-white border-2 border-brand-blue-100 rounded-[32px] p-8 shadow-2xl"
+                  className="uni-card bg-white border-2 border-brand-blue-100 rounded-[32px] p-8 shadow-2xl"
                 >
                   <div className="flex items-center justify-between mb-8">
                     <h3 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
@@ -222,7 +220,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         setEditingRoomId(null);
                         setNewRoom({ number: '', type: '1+1', status: 'Temiz', features: [], inventoryIds: [], imageUrls: [] });
                       }}
-                      className="p-2 text-slate-400 hover:bg-slate-50 rounded-xl"
+                      className="uni-control p-2 text-slate-400 hover:bg-slate-50 rounded-xl"
                     >
                       <X />
                     </button>
@@ -237,14 +235,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                             required
                             value={newRoom.number}
                             onChange={e => setNewRoom(prev => ({ ...prev, number: e.target.value }))}
-                            className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black outline-none focus:border-brand-blue-500 transition-all"
+                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black outline-none focus:border-brand-blue-500 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">TİP</label>
                           <div className="grid grid-cols-3 gap-2">
                             {['1+0', '1+1', '2+1', 'Suit', 'Kral'].map(t => (
-                              <button key={t} type="button" onClick={() => setNewRoom(prev => ({ ...prev, type: t }))} className={`py-3 rounded-xl text-[10px] font-black transition-all border ${newRoom.type === t ? 'bg-brand-blue-600 text-white' : 'text-slate-400 border-slate-200'}`}>{t}</button>
+                              <button key={t} type="button" onClick={() => setNewRoom(prev => ({ ...prev, type: t }))} className={`uni-control py-3 rounded-xl text-[10px]   border ${newRoom.type === t ? 'uni-button-primary text-white' : 'text-slate-400 border-slate-200'}`}>{t}</button>
                             ))}
                           </div>
                         </div>
@@ -256,9 +254,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                 key={s}
                                 type="button"
                                 onClick={() => setNewRoom(prev => ({ ...prev, status: s }))}
-                                className={`py-2 rounded-lg text-[9px] font-black uppercase transition-all border ${
+                                className={`uni-control py-2 rounded-lg text-[9px]    border ${
                                   newRoom.status === s
-                                    ? (s === 'Bos' || s === 'Temiz' ? 'bg-emerald-600 border-emerald-600 text-white shadow-md' : 'bg-rose-600 border-rose-600 text-white shadow-md')
+                                    ? (s === 'Bos' || s === 'Temiz' ? 'bg-emerald-600 border-emerald-600 text-white ' : 'bg-rose-600 border-rose-600 text-white ')
                                     : 'text-slate-400 border-slate-200 hover:border-slate-300'
                                 }`}
                               >
@@ -279,7 +277,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                   <button
                                     type="button"
                                     onClick={() => setNewRoom(prev => ({ ...prev, imageUrls: prev.imageUrls?.filter((_, i) => i !== idx) }))}
-                                    className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                    className="uni-control absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                                   >
                                     <Trash2 className="w-5 h-5 text-white" />
                                   </button>
@@ -291,7 +289,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                   <input
                                     type="text"
                                     placeholder="Link..."
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    className="uni-input absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     onKeyDown={(e) => {
                                       if (e.key === 'Enter') {
                                         e.preventDefault();
@@ -326,9 +324,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                       : [...(prev.features || []), f]
                                   }));
                                 }}
-                                className={`px-3 py-2.5 rounded-xl border text-[9px] font-black uppercase tracking-tight transition-all text-left truncate flex items-center justify-between group ${
+                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${
                                   newRoom.features?.includes(f)
-                                    ? 'bg-brand-blue-600 border-brand-blue-600 text-white shadow-md'
+                                    ? 'uni-button-primary border-brand-blue-600 text-white '
                                     : 'bg-white border-slate-200 text-slate-500 hover:border-brand-blue-200'
                                 }`}
                                 title={f}
@@ -344,9 +342,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                 key={`inv-${item.id}`}
                                 type="button"
                                 onClick={() => toggleInventory(item.id)}
-                                className={`px-3 py-2.5 rounded-xl border text-[9px] font-black uppercase tracking-tight transition-all text-left truncate flex items-center justify-between group ${
+                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${
                                   newRoom.inventoryIds?.includes(item.id)
-                                    ? 'bg-brand-blue-500 border-brand-blue-500 text-white shadow-md'
+                                    ? 'bg-brand-blue-500 border-brand-blue-500 text-white '
                                     : 'bg-white border-slate-100 text-slate-400 hover:border-brand-blue-200'
                                 }`}
                                 title={item.name}
@@ -364,7 +362,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                             value={newRoom.description}
                             onChange={e => setNewRoom(prev => ({ ...prev, description: e.target.value }))}
                             placeholder="Oda hakkında kısa bilgi, manzara durumu vb..."
-                            className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold outline-none focus:border-brand-blue-500 transition-all min-h-[80px] resize-none"
+                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold outline-none focus:border-brand-blue-500 transition-all min-h-[80px] resize-none"
                           />
                         </div>
                       </div>
@@ -377,11 +375,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           setIsAdding(false);
                           setEditingRoomId(null);
                         }}
-                        className="px-6 py-3 text-slate-400 font-bold uppercase text-[10px]"
+                        className="uni-control px-6 py-3 text-slate-400 font-bold  text-[10px]"
                       >
                         İPTAL
                       </button>
-                      <button type="submit" className="px-10 py-3 bg-brand-blue-600 text-white rounded-2xl font-black uppercase text-[10px] shadow-lg">
+                      <button type="submit" className="uni-control px-10 py-3 uni-button-primary text-white rounded-2xl   text-[10px] ">
                         {editingRoomId ? 'GÜNCELLE' : 'ODA EKLE'}
                       </button>
                     </div>
@@ -392,7 +390,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {rooms.map(room => (
-                <div key={room.id} className="bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm group hover:border-brand-blue-200 transition-all">
+                <div key={room.id} className="uni-card bg-white border border-slate-200 rounded-[32px] p-6 shadow-sm group hover:border-brand-blue-200 transition-all">
                   <div className="flex items-start justify-between mb-6">
                     <div className="flex items-center gap-4">
                       <div className="relative w-16 h-16 bg-slate-100 rounded-2xl overflow-hidden group/thumb">
@@ -419,7 +417,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => handleStartEdit(room)}
-                        className="p-2 text-slate-300 hover:text-brand-blue-600 transition-colors"
+                        className="uni-control p-2 text-slate-300 hover:text-brand-blue-600   "
                         title="Düzenle"
                       >
                         <Edit className="w-4 h-4" />
@@ -428,7 +426,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         onClick={() => {
                           setRoomToDelete(room);
                         }}
-                        className="p-2 text-red-100 hover:text-red-500 transition-colors"
+                        className="uni-control p-2 text-red-100 hover:text-red-500   "
                         title="Sil"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -467,17 +465,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               <p className="text-sm text-slate-400 font-medium italic mt-1">Otelinizdeki standart demirbaş tiplerini belirleyin.</p>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-[32px] p-8 shadow-sm">
+            <div className="uni-card bg-white border border-slate-200 rounded-[32px] p-8 shadow-sm">
               <form onSubmit={handleAddInventory} className="flex gap-4 mb-8">
                 <div className="flex-1">
                   <input
                     placeholder="Yeni demirbaş adı... (Örn: Klima)"
                     value={newItemName}
                     onChange={e => setNewItemName(e.target.value)}
-                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-brand-blue-500 transition-all"
+                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-brand-blue-500 transition-all"
                   />
                 </div>
-                <button type="submit" className="px-8 py-4 bg-brand-blue-600 text-white rounded-2xl font-black uppercase text-[10px] shadow-lg shadow-brand-blue-100">EKLE</button>
+                <button type="submit" className="uni-control px-8 py-4 uni-button-primary text-white rounded-2xl   text-[10px]  shadow-brand-blue-100">EKLE</button>
               </form>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -485,13 +483,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   <motion.div
                     layout
                     key={item.id}
-                    className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl group transition-all hover:bg-white hover:border-brand-blue-200"
+                    className="uni-card flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl group transition-all hover:bg-white hover:border-brand-blue-200"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-brand-blue-600 shadow-sm border border-slate-50"><Box className="w-4 h-4" /></div>
                       <span className="text-xs font-black text-slate-700 uppercase tracking-tight">{item.name}</span>
                     </div>
-                    <button onClick={() => removeInventory(item.id)} className="p-2 text-slate-300 hover:text-red-500 transition-colors"><X className="w-4 h-4" /></button>
+                    <button onClick={() => removeInventory(item.id)} className="uni-control p-2 text-slate-300 hover:text-red-500   "><X className="w-4 h-4" /></button>
                   </motion.div>
                 ))}
               </div>

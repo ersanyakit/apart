@@ -129,7 +129,7 @@ export function GuestView({
         {!guestId && (
           <Field label="Misafir arama">
             <input
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               placeholder="Ad, kimlik veya telefon"
               value={search}
               onChange={(e) => {
@@ -141,7 +141,7 @@ export function GuestView({
         )}
         <Field label="Başlangıç">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="datetime-local"
             value={from}
             onChange={(e) => {
@@ -152,7 +152,7 @@ export function GuestView({
         </Field>
         <Field label="Bitiş">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="datetime-local"
             value={to}
             onChange={(e) => {
@@ -163,7 +163,7 @@ export function GuestView({
         </Field>
         <Field label="Kayıtlar">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={status}
             onChange={(e) => {
               setStatus(e.target.value);
@@ -184,14 +184,14 @@ export function GuestView({
         </span>
         <div className="flex gap-2">
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("xlsx")}
           >
             Excel İndir
           </button>
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("pdf")}
           >
@@ -210,7 +210,7 @@ export function GuestView({
                 ["end", "Çıkış"],
               ].map(([key, label]) => (
                 <th key={key} className="p-4">
-                  <button onClick={() => sortBy(key)}>
+                  <button className="uni-control" onClick={() => sortBy(key)}>
                     {label} {sort === key ? (desc ? "↓" : "↑") : "↕"}
                   </button>
                 </th>
@@ -227,7 +227,7 @@ export function GuestView({
               >
                 <td className="p-4">
                   <button
-                    className="font-black text-brand-blue-700 hover:underline"
+                    className="uni-control  text-brand-blue-700 hover:underline"
                     onClick={() =>
                       setSelected({ id: r.guest_id, name: r.name })
                     }
@@ -245,7 +245,7 @@ export function GuestView({
                 <td>
                   {r.companions.map((c) => (
                     <button
-                      className="block text-brand-blue-600 hover:underline py-1"
+                      className="uni-control block text-brand-blue-600 hover:underline py-1"
                       key={c.guest_id}
                       onClick={() =>
                         setSelected({ id: c.guest_id, name: c.name })
@@ -268,14 +268,14 @@ export function GuestView({
       </div>
       <div className="flex justify-end gap-2">
         <button
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           disabled={page === 1 || busy}
           onClick={() => setPage((v) => v - 1)}
         >
           Önceki
         </button>
         <button
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           disabled={page * 100 >= total || busy}
           onClick={() => setPage((v) => v + 1)}
         >

@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"otel/constants"
@@ -20,6 +22,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/gofiber/fiber/v3/middleware/adaptor"
 	"github.com/joho/godotenv"
 )
 
@@ -112,7 +115,7 @@ func run() error {
 		return err
 	}
 	if !cfg.SkipUI {
-		if err := webui.Prepare(ctx); err != nil {
+		if err := webui.Prepare(ctx, cfg.UIDev); err != nil {
 			return err
 		}
 	}
@@ -133,7 +136,30 @@ func run() error {
 		return constants.Wrap(constants.ErrServer, err)
 	}
 	serverErrors := make(chan error, 1)
-	go func() { serverErrors <- app.Listener(listener) }()
+	if cfg.UIDev && !cfg.SkipUI {
+		// net/http's reverse proxy carries Next's WebSocket upgrade and streaming
+		// responses; Fiber's HTTP balancer strips hop-by-hop upgrade headers.
+		devHandler, err := webui.DevelopmentHandler(adaptor.FiberApp(app), cfg.UIURL)
+		if err != nil {
+			listener.Close()
+			return err
+		}
+		server := &http.Server{Handler: devHandler, ReadHeaderTimeout: 10 * time.Second}
+		go func() {
+			err := server.Serve(listener)
+			if errors.Is(err, http.ErrServerClosed) {
+				err = nil
+			}
+			serverErrors <- err
+		}()
+		defer func() {
+			shutdownCtx, done := context.WithTimeout(context.Background(), 5*time.Second)
+			defer done()
+			_ = server.Shutdown(shutdownCtx)
+		}()
+	} else {
+		go func() { serverErrors <- app.Listener(listener) }()
+	}
 	defer func() {
 		shutdownCtx, done := context.WithTimeout(context.Background(), 5*time.Second)
 		defer done()
@@ -142,7 +168,7 @@ func run() error {
 	var uiDone <-chan error
 	if !cfg.SkipUI {
 		_, port, _ := net.SplitHostPort(cfg.Address)
-		process, err := webui.Start(ctx, cfg.UIAddress, "http://127.0.0.1:"+port)
+		process, err := webui.Start(ctx, cfg.UIAddress, "http://127.0.0.1:"+port, cfg.UIDev)
 		if err != nil {
 			return err
 		}

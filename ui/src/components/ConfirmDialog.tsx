@@ -84,7 +84,7 @@ export function ConfirmDialogHost() {
           <button
             aria-label="Kapat"
             onClick={() => finish(false)}
-            className="p-2 rounded-full hover:bg-slate-100 text-slate-400"
+            className="uni-control p-2 rounded-full hover:bg-slate-100 text-slate-400"
           >
             <X size={18} />
           </button>
@@ -105,13 +105,13 @@ export function ConfirmDialogHost() {
           <button
             data-cancel
             onClick={() => finish(false)}
-            className="px-5 py-3 rounded-xl bg-slate-100 text-slate-600 text-sm font-bold hover:bg-slate-200"
+            className="uni-control px-5 py-3 rounded-xl bg-slate-100 text-slate-600 text-sm font-bold hover:bg-slate-200"
           >
             Vazgeç
           </button>
           <button
             onClick={() => finish(true)}
-            className="px-5 py-3 rounded-xl bg-brand-blue-600 text-white text-sm font-bold hover:bg-brand-blue-700"
+            className="uni-control px-5 py-3 rounded-xl uni-button-primary text-white text-sm font-bold "
           >
             Onayla
           </button>

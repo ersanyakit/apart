@@ -69,7 +69,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
         <div className="flex items-center gap-2">
           <button
             onClick={addGuest}
-            className="flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl text-[10px] font-black hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100 group whitespace-nowrap"
+            className="uni-control flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl text-[10px]  hover:bg-emerald-700   shadow-emerald-100 group whitespace-nowrap"
           >
             <Plus className="w-4 h-4 transition-transform group-hover:rotate-90" />
             YENİ MİSAFİR EKLE
@@ -81,7 +81,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
         {guests.map((guest, index) => (
           <div
             key={guest.id}
-            className="p-4 md:p-8 bg-white border border-slate-200 rounded-[32px] md:rounded-[40px] shadow-sm relative group animate-in fade-in slide-in-from-top-4 duration-500 hover:border-brand-blue-200 transition-all"
+            className="uni-card p-4 md:p-8 bg-white border border-slate-200 rounded-[32px] md:rounded-[40px] shadow-sm relative group animate-in fade-in slide-in-from-top-4 duration-500 hover:border-brand-blue-200 transition-all"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pl-2 md:pl-2">
               <div className="lg:col-span-12 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-50 pb-5 mb-2">
@@ -101,7 +101,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                       setSearchQuery('');
                       setActiveHistoryGuestId(guest.id);
                     }}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[9px] font-black hover:bg-brand-blue-100 transition-all border border-brand-blue-100/50 group"
+                    className="uni-control flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[9px]  hover:bg-brand-blue-100  border border-brand-blue-100/50 group"
                   >
                     <History className="w-3.5 h-3.5 transition-transform group-hover:rotate-[-45deg]" />
                     ARŞİVDEN GETİR
@@ -110,10 +110,10 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   {guests.length > 1 && (
                     <button
                       onClick={() => removeGuest(guest.id)}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-50 text-rose-600 rounded-xl text-[9px] font-black hover:bg-rose-100 transition-all border border-rose-100/50 group/del"
+                      className="uni-control flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-50 text-rose-600 rounded-xl text-[9px]  hover:bg-rose-100 active:bg-rose-100    border border-rose-100/50  cursor-pointer"
                       title="Misafiri Sil"
                     >
-                      <Trash2 className="w-3.5 h-3.5 group-hover/del:scale-110" />
+                      <Trash2 className="w-3.5 h-3.5" />
                       SİL
                     </button>
                   )}
@@ -130,7 +130,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     value={guest.name || ''}
                     onChange={(e) => updateGuest(guest.id, 'name', e.target.value.toUpperCase())}
                     placeholder="MİSAFİR ADI VE SOYADI"
-                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner uppercase"
+                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner uppercase"
                   />
                   {guest.name && (
                     <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -150,7 +150,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.tcNo || ''}
                   onChange={(e) => updateGuest(guest.id, 'tcNo', e.target.value.replace(/\D/g, ''))}
                   placeholder="KİMLİK NUMARASI"
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
                 />
               </div>
 
@@ -163,7 +163,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.phone || ''}
                   onChange={(e) => updateGuest(guest.id, 'phone', e.target.value)}
                   placeholder="TELEFON NUMARASI"
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
                 />
               </div>
 
@@ -176,7 +176,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.note || ''}
                   onChange={(e) => updateGuest(guest.id, 'note', e.target.value)}
                   placeholder="ÖZEL TALEPLER, ALERJİLER VEYA KİMLİK AYRINTILARI..."
-                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-[32px] text-sm font-bold text-slate-700 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all resize-none shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-[32px] text-sm font-bold text-slate-700 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all resize-none shadow-inner"
                 />
               </div>
             </div>
@@ -191,7 +191,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
             <p className="text-slate-400 font-black text-sm uppercase tracking-widest">Henüz misafir eklenmedi</p>
             <button
               onClick={addGuest}
-              className="mt-6 px-10 py-4 bg-slate-900 text-white rounded-3xl font-black text-xs uppercase tracking-widest hover:bg-brand-blue-600 transition-all shadow-xl shadow-slate-200 animate-bounce"
+              className="uni-control mt-6 px-10 py-4 bg-slate-900 text-white rounded-3xl  text-xs   hover:uni-button-primary   shadow-slate-200 animate-bounce"
             >
               İLK MİSAFİRİ EKLE
             </button>
@@ -234,7 +234,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                 </div>
                 <button
                   onClick={() => setActiveHistoryGuestId(null)}
-                  className="p-2.5 bg-white hover:bg-slate-100 text-slate-400 rounded-xl transition-all border border-slate-100"
+                  className="uni-control p-2.5 bg-white hover:bg-slate-100 text-slate-400 rounded-xl  border border-slate-100"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -251,7 +251,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="İsim veya T.C. Kimlik ile ara..."
-                    className="w-full pl-11 pr-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-300 transition-all placeholder:text-slate-300"
+                    className="uni-input w-full pl-11 pr-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-300 transition-all placeholder:text-slate-300"
                   />
                 </div>
 
@@ -261,7 +261,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     <button
                       key={h.id}
                       onClick={() => selectFromHistory(activeHistoryGuestId, h)}
-                      className="w-full p-4 group relative rounded-2xl text-left transition-all bg-white border border-slate-100 hover:border-brand-blue-300 hover:bg-brand-blue-50/30 flex items-center justify-between gap-4"
+                      className="uni-control w-full p-4 group relative rounded-2xl text-left  bg-white border border-slate-100 hover:border-brand-blue-300 hover:bg-brand-blue-50/30 flex items-center justify-between gap-4"
                     >
                       <div className="flex items-center gap-4">
                          <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-slate-300 group-hover:text-brand-blue-600 transition-all border border-slate-50">
@@ -300,7 +300,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">TOPLAM {GUEST_HISTORY.length} KAYIT</p>
                 <button
                   onClick={() => setActiveHistoryGuestId(null)}
-                  className="px-6 py-2.5 bg-white text-slate-500 hover:text-slate-700 border border-slate-200 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all"
+                  className="uni-control px-6 py-2.5 bg-white text-slate-500 hover:text-slate-700 border border-slate-200 rounded-xl text-[9px]    "
                 >
                   KAPAT
                 </button>

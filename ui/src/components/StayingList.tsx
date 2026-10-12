@@ -135,7 +135,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
               <>
                 <button
                   onClick={() => onOperation?.('checkout', info.row.original.id)}
-                  className="p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg transition-colors"
+                  className="uni-control p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg "
                   title="Çıkış Yap"
                 >
                   <UserMinus className="w-4 h-4" />
@@ -148,21 +148,21 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             <div className="flex items-center bg-slate-50/50 rounded-lg p-0.5 border border-slate-100">
                <button
                 onClick={() => onPrint?.('reservation', info.row.original.id)}
-                className="p-1.5 hover:bg-white text-slate-400 hover:text-brand-blue-600 rounded-md transition-all hover:shadow-sm"
+                className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-brand-blue-600 rounded-md "
                 title="Rezervasyon Dekontu"
               >
                 <Calendar className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onPrint?.('sales', info.row.original.id)}
-                className="p-1.5 hover:bg-white text-slate-400 hover:text-emerald-600 rounded-md transition-all hover:shadow-sm"
+                className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-emerald-600 rounded-md "
                 title="Satış Dekontu"
               >
                 <Printer className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onPrint?.('cancellation', info.row.original.id)}
-                className="p-1.5 hover:bg-white text-slate-400 hover:text-rose-600 rounded-md transition-all hover:shadow-sm"
+                className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-rose-600 rounded-md "
                 title="İptal Dekontu"
               >
                 <X className="w-3.5 h-3.5" />
@@ -171,7 +171,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
 
             <button
               onContextMenu={(e) => handleContextMenu?.(e, info.row.original.id)}
-              className="p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-lg transition-colors"
+              className="uni-control p-2 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-lg "
             >
               <MoreHorizontal className="w-4 h-4" />
             </button>
@@ -222,7 +222,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             placeholder={isArchive ? "Binlerce kayıt arasında akıllı arama..." : "Konaklayanlar listesinde ara..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[13px] font-medium focus:outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500/40 transition-all placeholder:text-slate-300"
+            className="uni-input w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[13px] font-medium focus:outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500/40 transition-all placeholder:text-slate-300"
           />
         </div>
 
@@ -296,7 +296,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
              <select
                value={table.getState().pagination.pageSize}
                onChange={e => table.setPageSize(Number(e.target.value))}
-               className="text-[10px] font-black bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-brand-blue-500"
+               className="uni-input text-[10px] font-black bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-brand-blue-500"
              >
                {[15, 30, 50, 100].map(size => (
                  <option key={size} value={size}>{size} SATIR</option>
@@ -308,7 +308,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="p-1.5 border border-slate-200 rounded-lg hover:bg-white text-slate-400 disabled:opacity-20 transition-all"
+              className="uni-control p-1.5 border border-slate-200 rounded-lg hover:bg-white text-slate-400 disabled:opacity-20 "
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -318,7 +318,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="p-1.5 border border-slate-200 rounded-lg hover:bg-white text-slate-400 disabled:opacity-20 transition-all"
+              className="uni-control p-1.5 border border-slate-200 rounded-lg hover:bg-white text-slate-400 disabled:opacity-20 "
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -356,7 +356,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                 </div>
                 <button
                   onClick={() => setSelectedGuest(null)}
-                  className="p-3 hover:bg-slate-50 text-slate-400 hover:text-slate-900 rounded-2xl transition-all"
+                  className="uni-control p-3 hover:bg-slate-50 text-slate-400 hover:text-slate-900 rounded-2xl "
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -374,7 +374,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                     >
                       <div className={`absolute left-[-4px] top-2 w-2 h-2 rounded-full border-2 border-white ring-2 ${stay.status === 'Dolu' ? 'ring-red-500 bg-red-500' : 'ring-slate-300 bg-slate-300'}`} />
 
-                      <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all group">
+                      <div className="uni-card bg-white border border-slate-100 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all group">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <span className="text-xl font-black text-slate-800 tracking-tighter">{stay.number}</span>

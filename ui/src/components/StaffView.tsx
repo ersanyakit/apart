@@ -53,7 +53,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
     <div className="space-y-5">
       <ErrorMessage message={error} />
       <button
-        className={buttonStyle}
+        className={`uni-control ${buttonStyle}`}
         onClick={() =>
           setEditing({
             hotel_id: s.hotel_id,
@@ -74,7 +74,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
         {people.map((p) => (
           <article
             key={p.user_id}
-            className="rounded-2xl border border-slate-200 bg-white p-5 space-y-4"
+            className="uni-card rounded-2xl border border-slate-200 bg-white p-5 space-y-4"
           >
             <User className="text-brand-blue-500" />
             <div>
@@ -97,14 +97,14 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
             </p>
             <div className="flex gap-2">
               <button
-                className={secondaryStyle}
+                className={`uni-control ${secondaryStyle}`}
                 onClick={() => setEditing({ ...p, password: "" })}
               >
                 <Pencil size={13} />
                 Düzenle
               </button>
               <button
-                className={secondaryStyle}
+                className={`uni-control ${secondaryStyle}`}
                 disabled={p.user_id === s.user.user_id}
                 onClick={async () => {
                   if (
@@ -195,7 +195,7 @@ function StaffForm({
         ).map(([key, label]) => (
           <Field key={key} label={label}>
             <input
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               required={key !== "email"}
               type={key === "email" ? "email" : "text"}
               autoComplete="off"
@@ -206,7 +206,7 @@ function StaffForm({
         ))}
         <Field label="Rol">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={p.role}
             onChange={(e) => patch({ role: e.target.value })}
           >
@@ -223,7 +223,7 @@ function StaffForm({
           label={p.user_id ? "Yeni şifre (değiştirmek için)" : "Giriş şifresi"}
         >
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="password"
             autoComplete="new-password"
             minLength={12}
@@ -265,7 +265,7 @@ function StaffForm({
         Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında
         personelin yeniden giriş yapması gerekir.
       </p>
-      <button className={buttonStyle} disabled={busy}>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
         Personeli Kaydet
       </button>
     </form>

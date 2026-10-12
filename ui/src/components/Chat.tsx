@@ -51,7 +51,7 @@ export const Chat: React.FC = () => {
             <input
               type="text"
               placeholder="Sohbet ara..."
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brand-blue-500"
+              className="uni-input w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brand-blue-500"
             />
           </div>
         </div>
@@ -77,7 +77,7 @@ export const Chat: React.FC = () => {
               <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">Çevrimiçi (12 Kişi)</p>
             </div>
           </div>
-          <button className="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100">
+          <button className="uni-control p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100">
             <MoreVertical className="w-5 h-5" />
           </button>
         </div>
@@ -112,8 +112,8 @@ export const Chat: React.FC = () => {
 
         {/* Chat Input */}
         <div className="p-4 bg-slate-50/50 border-t border-slate-100">
-          <div className="bg-white p-2 rounded-2xl shadow-lg shadow-slate-200/50 flex items-center gap-2 border border-slate-200">
-             <button className="p-2 text-slate-400 hover:text-brand-blue-600 transition-colors">
+          <div className="uni-card bg-white p-2 rounded-2xl shadow-lg shadow-slate-200/50 flex items-center gap-2 border border-slate-200">
+             <button className="uni-control p-2 text-slate-400 hover:text-brand-blue-600   ">
                 <Paperclip className="w-5 h-5" />
              </button>
              <input
@@ -122,14 +122,14 @@ export const Chat: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                className="flex-1 bg-transparent px-2 text-sm focus:outline-none"
+                className="uni-input flex-1 bg-transparent px-2 text-sm focus:outline-none"
              />
-             <button className="p-2 text-slate-400 hover:text-brand-blue-600 transition-colors">
+             <button className="uni-control p-2 text-slate-400 hover:text-brand-blue-600   ">
                 <Smile className="w-5 h-5" />
              </button>
              <button
                 onClick={handleSend}
-                className="bg-brand-blue-600 text-white p-2.5 rounded-xl hover:bg-brand-blue-700 transition-all shadow-lg shadow-brand-blue-100 active:scale-95"
+                className="uni-control uni-button-primary text-white p-2.5 rounded-xl       shadow-brand-blue-100  cursor-pointer"
              >
                 <Send className="w-5 h-5" />
              </button>
@@ -141,8 +141,8 @@ export const Chat: React.FC = () => {
 };
 
 const ChatItem = ({ label, sub, active = false }: { label: string, sub: string, active?: boolean }) => (
-  <button className={`
-    w-full flex items-center gap-3 p-3 rounded-2xl transition-all group
+  <button className={`uni-control
+    w-full flex items-center gap-3 p-3 rounded-2xl  group
     ${active ? 'bg-brand-blue-50' : 'hover:bg-slate-50'}
   `}>
     <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-bold text-xs ring-4 ring-white shadow-sm ${active ? 'bg-brand-blue-600 text-white' : 'bg-slate-100 text-slate-400'}`}>

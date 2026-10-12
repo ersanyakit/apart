@@ -161,7 +161,7 @@ export function InventoryView({
       <ErrorMessage message={error} />
       <div className="flex gap-2 overflow-x-auto pb-2">
         <button
-          className={!floor ? buttonStyle : secondaryStyle}
+          className={`uni-control ${!floor ? buttonStyle : secondaryStyle}`}
           onClick={() => {
             setFloor("");
             setSelected([]);
@@ -172,7 +172,7 @@ export function InventoryView({
         {s.floors.map((f) => (
           <button
             key={f.floor_id}
-            className={floor === f.floor_id ? buttonStyle : secondaryStyle}
+            className={`uni-control ${floor === f.floor_id ? buttonStyle : secondaryStyle}`}
             onClick={() => {
               setFloor(f.floor_id);
               setSelected([]);
@@ -189,7 +189,7 @@ export function InventoryView({
             </span>
           </button>
         ))}
-        <button className={secondaryStyle} onClick={() => onFloor()}>
+        <button className={`uni-control ${secondaryStyle}`} onClick={() => onFloor()}>
           <Plus size={14} />
           Kat Ekle
         </button>
@@ -208,14 +208,14 @@ export function InventoryView({
         {currentFloor && (
           <div className="flex gap-2">
             <button
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               onClick={() => onFloor(currentFloor)}
             >
               <Pencil size={13} />
               Katı Düzenle
             </button>
             <button
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               disabled={busy}
               onClick={async () => {
                 if (
@@ -236,13 +236,13 @@ export function InventoryView({
       </div>
       <div className="flex flex-wrap gap-2">
         <button
-          className={mode === "rooms" ? buttonStyle : secondaryStyle}
+          className={`uni-control ${mode === "rooms" ? buttonStyle : secondaryStyle}`}
           onClick={() => setMode("rooms")}
         >
           Odalar ve Birimler
         </button>
         <button
-          className={mode === "beds" ? buttonStyle : secondaryStyle}
+          className={`uni-control ${mode === "beds" ? buttonStyle : secondaryStyle}`}
           onClick={() => {
             setMode("beds");
             setParent(null);
@@ -252,7 +252,7 @@ export function InventoryView({
           Yataklar
         </button>
         <button
-          className={mode === "plan" ? buttonStyle : secondaryStyle}
+          className={`uni-control ${mode === "plan" ? buttonStyle : secondaryStyle}`}
           disabled={!floor}
           onClick={() => setMode("plan")}
         >
@@ -263,15 +263,15 @@ export function InventoryView({
       {mode === "rooms" && (
         <>
           <div className="flex flex-wrap gap-2">
-            <button className={buttonStyle} onClick={() => onUnit()}>
+            <button className={`uni-control ${buttonStyle}`} onClick={() => onUnit()}>
               <Plus size={14} />
               Oda / Birim Ekle
             </button>
-            <button className={secondaryStyle} onClick={onBulk}>
+            <button className={`uni-control ${secondaryStyle}`} onClick={onBulk}>
               Toplu Oda / Yatak Ekle
             </button>
             <button
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               disabled={!selected.length || busy}
               onClick={() => remove(selected)}
             >
@@ -279,7 +279,7 @@ export function InventoryView({
               Seçilenleri Sil ({selected.length})
             </button>
             <button
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               disabled={!rooms.length || busy}
               onClick={() => remove(rooms.map((r) => r.room_id))}
             >
@@ -352,7 +352,7 @@ export function InventoryView({
                     <td className="p-3">
                       <div className="flex gap-2">
                         <button
-                          className={secondaryStyle}
+                          className={`uni-control ${secondaryStyle}`}
                           aria-label={`${r.code} düzenle`}
                           onClick={() => onUnit(r)}
                         >
@@ -360,7 +360,7 @@ export function InventoryView({
                         </button>
                         {r.kind !== "bed" && (
                           <button
-                            className={secondaryStyle}
+                            className={`uni-control ${secondaryStyle}`}
                             onClick={() => {
                               setParent(r.room_id);
                               setMode("beds");
@@ -370,7 +370,7 @@ export function InventoryView({
                           </button>
                         )}
                         <button
-                          className={secondaryStyle}
+                          className={`uni-control ${secondaryStyle}`}
                           aria-label={`${r.code} sil`}
                           onClick={() => remove([r.room_id])}
                         >
@@ -395,7 +395,7 @@ export function InventoryView({
           <div className="flex gap-3 items-end">
             <Field label="Oda">
               <select
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={parent || ""}
                 onChange={(e) => setParent(e.target.value || null)}
               >
@@ -409,7 +409,7 @@ export function InventoryView({
                   ))}
               </select>
             </Field>
-            <button className={buttonStyle} onClick={newBed}>
+            <button className={`uni-control ${buttonStyle}`} onClick={newBed}>
               <Plus size={14} />
               Fiziksel Yatak Ekle
             </button>
@@ -424,7 +424,7 @@ export function InventoryView({
               .map((b) => (
                 <article
                   key={b.bed_id}
-                  className="border border-slate-200 rounded-2xl p-5 bg-white space-y-3"
+                  className="uni-card border border-slate-200 rounded-2xl p-5 bg-white space-y-3"
                 >
                   <div className="flex justify-between">
                     <strong>{b.code}</strong>
@@ -448,13 +448,13 @@ export function InventoryView({
                   ))}
                   <div className="flex gap-2">
                     <button
-                      className={secondaryStyle}
+                      className={`uni-control ${secondaryStyle}`}
                       onClick={() => setBed(b)}
                     >
                       Düzenle
                     </button>
                     <button
-                      className={secondaryStyle}
+                      className={`uni-control ${secondaryStyle}`}
                       onClick={async () => {
                         if (
                           await confirmDialog(
@@ -561,7 +561,7 @@ function BedForm({
         <Field label="Yatak kodu">
           <input
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             maxLength={32}
             value={b.code}
             onChange={(e) =>
@@ -580,7 +580,7 @@ function BedForm({
         </Field>
         <Field label="Oda">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={b.room_id || ""}
             onChange={(e) =>
               patch({
@@ -603,7 +603,7 @@ function BedForm({
         </Field>
         <Field label="Kat">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={b.floor_id || ""}
             onChange={(e) => patch({ floor_id: e.target.value || null })}
           >
@@ -617,7 +617,7 @@ function BedForm({
         </Field>
         <Field label="Yatak türü">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={b.type}
             onChange={(e) => patch({ type: e.target.value })}
           >
@@ -630,7 +630,7 @@ function BedForm({
         </Field>
         <Field label="Fiziksel yapı">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={b.structure}
             onChange={(e) => patch({ structure: e.target.value })}
           >
@@ -643,7 +643,7 @@ function BedForm({
         </Field>
         <Field label="Seviye sayısı">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="number"
             min={1}
             max={10}
@@ -653,7 +653,7 @@ function BedForm({
         </Field>
         <Field label="Yatak genişliği (cm)">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="number"
             min={0}
             max={500}
@@ -663,7 +663,7 @@ function BedForm({
         </Field>
         <Field label="Yatak uzunluğu (cm)">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="number"
             min={0}
             max={500}
@@ -687,7 +687,7 @@ function BedForm({
             <Field label="Yer kodu">
               <input
                 required
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={p.code}
                 maxLength={32}
                 onChange={(e) => changePlace(i, { code: e.target.value })}
@@ -695,7 +695,7 @@ function BedForm({
             </Field>
             <Field label="Konum">
               <select
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={p.position}
                 onChange={(e) => changePlace(i, { position: e.target.value })}
               >
@@ -714,7 +714,7 @@ function BedForm({
             <Field label="Kişi kapasitesi">
               <input
                 required
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="number"
                 min={1}
                 max={10}
@@ -726,7 +726,7 @@ function BedForm({
             </Field>
             <Field label="Genişlik (cm)">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="number"
                 min={0}
                 max={500}
@@ -738,7 +738,7 @@ function BedForm({
             </Field>
             <Field label="Uzunluk (cm)">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="number"
                 min={0}
                 max={500}
@@ -771,7 +771,7 @@ function BedForm({
           </div>
         </div>
       ))}
-      <button className={buttonStyle} disabled={busy}>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
         Yatağı Kaydet
       </button>
     </form>

@@ -71,10 +71,8 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
             </div>
           </div>
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-red-100 transition-all hover:bg-red-700"
+            className="uni-control flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-2xl text-[10px]   tracking-[0.2em]  shadow-red-100    hover:bg-red-700 active:bg-red-700  cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Yeni Kayıt Ekle
@@ -89,7 +87,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
             placeholder="İSİM VEYA KİMLİK NO İLE ARA..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[32px] text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-red-500/5 focus:border-red-500 transition-all shadow-sm"
+            className="uni-input w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[32px] text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-red-500/5 focus:border-red-500 transition-all shadow-sm"
           />
         </div>
 
@@ -100,7 +98,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white border-2 border-red-100 rounded-[32px] p-8 shadow-2xl overflow-hidden relative"
+              className="uni-card bg-white border-2 border-red-100 rounded-[32px] p-8 shadow-2xl overflow-hidden relative"
             >
               <div className="absolute top-0 left-0 right-0 h-2 bg-red-500" />
               <div className="flex items-center justify-between mb-8">
@@ -108,7 +106,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                   <UserX className="w-5 h-5 text-red-500" />
                   KARA LİSTE KAYIT FORMU
                 </h3>
-                <button onClick={() => setIsAdding(false)} className="p-2 hover:bg-slate-50 rounded-xl text-slate-400">
+                <button onClick={() => setIsAdding(false)} className="uni-control p-2 hover:bg-slate-50 rounded-xl text-slate-400">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -123,7 +121,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                       placeholder="Örn: Ahmet Yılmaz"
                       value={newItem.name}
                       onChange={e => setNewItem(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
+                      className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -132,7 +130,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                       placeholder="Örn: 12345678901"
                       value={newItem.idNumber}
                       onChange={e => setNewItem(prev => ({ ...prev, idNumber: e.target.value }))}
-                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
+                      className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
                     />
                   </div>
                 </div>
@@ -144,7 +142,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                       required
                       value={newItem.reason}
                       onChange={e => setNewItem(prev => ({ ...prev, reason: e.target.value }))}
-                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
+                      className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all"
                     >
                       <option value="">Neden Seçiniz...</option>
                       <option value="Ödeme Sorunu">Ödeme Sorunu</option>
@@ -160,7 +158,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                       placeholder="Durumla ilgili eklemek istediğiniz notlar..."
                       value={newItem.note}
                       onChange={e => setNewItem(prev => ({ ...prev, note: e.target.value }))}
-                      className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all min-h-[100px]"
+                      className="uni-input w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-red-500 transition-all min-h-[100px]"
                     />
                   </div>
                 </div>
@@ -169,13 +167,13 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                   <button
                     type="button"
                     onClick={() => setIsAdding(false)}
-                    className="px-6 py-3 text-slate-400 font-black text-[10px] uppercase tracking-widest hover:text-slate-600 transition-all"
+                    className="uni-control px-6 py-3 text-slate-400  text-[10px]   hover:text-slate-600 "
                   >
                     Vazgeç
                   </button>
                   <button
                     type="submit"
-                    className="px-10 py-3 bg-red-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-red-100 hover:bg-red-700 transition-all"
+                    className="uni-control px-10 py-3 bg-red-600 text-white rounded-2xl text-[10px]   tracking-[0.2em]  shadow-red-100 hover:bg-red-700 "
                   >
                     LİSTEYE EKLE
                   </button>
@@ -202,7 +200,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
                 </div>
                 <button
                   onClick={() => onRemove(item.id)}
-                  className="p-2 text-red-300 hover:text-red-600 hover:bg-red-100 rounded-xl transition-all"
+                  className="uni-control p-2 text-red-300 hover:text-red-600 hover:bg-red-100 rounded-xl "
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -258,7 +256,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
           ))}
 
           {filteredList.length === 0 && (
-            <div className="md:col-span-2 py-20 bg-white border border-dashed border-slate-200 rounded-[40px] flex flex-col items-center justify-center text-center gap-4">
+            <div className="uni-card md:col-span-2 py-20 bg-white border border-dashed border-slate-200 rounded-[40px] flex flex-col items-center justify-center text-center gap-4">
                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-200">
                   <UserX className="w-10 h-10" />
                </div>

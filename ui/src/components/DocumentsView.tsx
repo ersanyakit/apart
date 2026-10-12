@@ -138,7 +138,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       <div className="flex flex-wrap gap-3 items-end">
         <Field label="Belge türü">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={kind}
             onChange={(e) => setKind(e.target.value)}
           >
@@ -151,7 +151,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
         </Field>
         <Field label="Dil">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
           >
@@ -162,7 +162,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
         </Field>
         <button
           type="button"
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           onClick={async () => {
             const example = defaults.find((t) => t.kind === kind);
             if (!example) return;
@@ -188,7 +188,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       </div>
       <Field label="Belge başlığı">
         <input
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           required
           value={draft.title[language] || ""}
           onChange={(e) =>
@@ -201,7 +201,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       </Field>
       <Field label="Belge metni">
         <textarea
-          className={inputStyle + " min-h-[480px] font-mono text-xs leading-6"}
+          className={`uni-input ${inputStyle + " min-h-[480px] font-mono text-xs leading-6"}`}
           required
           maxLength={16000}
           value={draft.body[language] || ""}
@@ -222,7 +222,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
           {placeholders.map((p) => (
             <button
               type="button"
-              className="text-[10px] bg-white border rounded-lg px-2 py-1 font-mono"
+              className="uni-control text-[10px] bg-white border rounded-lg px-2 py-1 font-mono"
               key={p}
               onClick={() =>
                 setDraft({
@@ -237,7 +237,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
           ))}
         </div>
       </div>
-      <button className={buttonStyle} disabled={busy}>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
         Şablonu Kaydet
       </button>
     </form>
@@ -317,7 +317,7 @@ export function BookingDocuments({
       <div className="grid grid-cols-2 gap-4">
         <Field label="Belge türü">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={kind}
             onChange={(e) => {
               setKind(e.target.value);
@@ -333,7 +333,7 @@ export function BookingDocuments({
         </Field>
         <Field label="Dil">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={language}
             onChange={(e) => {
               setLanguage(e.target.value);
@@ -355,7 +355,7 @@ export function BookingDocuments({
               }
             >
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="number"
                 min="0"
                 step="0.01"
@@ -365,7 +365,7 @@ export function BookingDocuments({
             </Field>
             <Field label="Para birimi">
               <select
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
               >
@@ -380,7 +380,7 @@ export function BookingDocuments({
           <>
             <Field label="Ödeme yöntemi">
               <select
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={method}
                 onChange={(e) => setMethod(e.target.value)}
               >
@@ -391,7 +391,7 @@ export function BookingDocuments({
             </Field>
             <Field label="Ödeme tarihi">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="datetime-local"
                 value={paidAt}
                 onChange={(e) => setPaidAt(e.target.value)}
@@ -399,7 +399,7 @@ export function BookingDocuments({
             </Field>
             <Field label="İşlem referansı">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
               />
@@ -409,14 +409,14 @@ export function BookingDocuments({
       </div>
       <div className="flex gap-3">
         <button
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           disabled={busy}
           onClick={() => prepare(false)}
         >
           Önizle
         </button>
         <button
-          className={buttonStyle}
+          className={`uni-control ${buttonStyle}`}
           disabled={busy}
           onClick={async () => {
             if (
@@ -434,7 +434,7 @@ export function BookingDocuments({
         <article
           lang={language.toLowerCase()}
           dir={language === "AR" ? "rtl" : "ltr"}
-          className="border border-slate-200 rounded-xl bg-white p-7 shadow-sm"
+          className="uni-card border border-slate-200 rounded-xl bg-white p-7 shadow-sm"
         >
           <h3 className="font-black text-xl mb-5">{preview.title}</h3>
           <pre className="font-sans text-sm whitespace-pre-wrap leading-7">
@@ -455,7 +455,7 @@ export function BookingDocuments({
             </p>
           </div>
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={async () => {
               setBusy(true);

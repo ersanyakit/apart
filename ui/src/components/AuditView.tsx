@@ -54,7 +54,7 @@ export function AuditView({ hotelId }: { hotelId: string }) {
       <div className="flex flex-wrap gap-3 items-end">
         <Field label="Başlangıç">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="datetime-local"
             value={from}
             onChange={(e) => {
@@ -65,7 +65,7 @@ export function AuditView({ hotelId }: { hotelId: string }) {
         </Field>
         <Field label="Bitiş">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             type="datetime-local"
             value={to}
             onChange={(e) => {
@@ -76,7 +76,7 @@ export function AuditView({ hotelId }: { hotelId: string }) {
         </Field>
         <Field label="İşlem">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={action}
             onChange={(e) => {
               setAction(e.target.value);
@@ -90,7 +90,7 @@ export function AuditView({ hotelId }: { hotelId: string }) {
           </select>
         </Field>
         <button
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           onClick={() => setRevision((v) => v + 1)}
         >
           Yenile
@@ -147,14 +147,14 @@ export function AuditView({ hotelId }: { hotelId: string }) {
         </span>
         <div className="flex gap-2">
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             disabled={page === 1 || busy}
             onClick={() => setPage((v) => v - 1)}
           >
             Önceki
           </button>
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             disabled={page * 100 >= total || busy}
             onClick={() => setPage((v) => v + 1)}
           >

@@ -115,14 +115,12 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
             <p className="text-sm text-slate-400 font-medium italic mt-1">Sisteme erişimi olan personeli ve rollerini yönetin.</p>
           </div>
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => {
               setEditingStaffId(null);
               setNewStaff({ name: '', role: 'Resepsiyon', phone: '', email: '', username: '', status: 'Aktif', permissions: INITIAL_PERMISSIONS });
               setIsAdding(true);
             }}
-            className="flex items-center gap-2 px-6 py-3 bg-brand-blue-600 text-white rounded-2xl text-xs font-black uppercase tracking-widest shadow-xl shadow-brand-blue-100"
+            className="uni-control flex items-center gap-2 px-6 py-3 uni-button-primary text-white rounded-2xl text-xs     shadow-brand-blue-100       cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             Yeni Personel Ekle
@@ -135,7 +133,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-white border-2 border-brand-blue-100 rounded-[32px] p-8 shadow-2xl"
+              className="uni-card bg-white border-2 border-brand-blue-100 rounded-[32px] p-8 shadow-2xl"
             >
                <div className="flex items-center justify-between mb-8">
                 <h3 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
@@ -146,7 +144,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     setIsAdding(false);
                     setEditingStaffId(null);
                   }}
-                  className="p-2 text-slate-400 hover:bg-slate-50 rounded-xl"
+                  className="uni-control p-2 text-slate-400 hover:bg-slate-50 rounded-xl"
                 >
                   <X />
                 </button>
@@ -160,7 +158,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       required
                       value={newStaff.name}
                       onChange={e => setNewStaff(prev => ({ ...prev, name: e.target.value }))}
-                      className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -169,7 +167,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       required
                       value={newStaff.username}
                       onChange={e => setNewStaff(prev => ({ ...prev, username: e.target.value }))}
-                      className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
                     />
                   </div>
                   <div className="space-y-2 md:col-span-2">
@@ -180,9 +178,9 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                           key={role}
                           type="button"
                           onClick={() => setNewStaff(prev => ({ ...prev, role }))}
-                          className={`px-4 py-3 rounded-xl border text-[10px] font-black uppercase tracking-tight transition-all ${
+                          className={`uni-control px-4 py-3 rounded-xl border text-[10px]   tracking-tight  ${
                             newStaff.role === role
-                              ? 'bg-brand-blue-600 border-brand-blue-600 text-white shadow-lg shadow-brand-blue-100'
+                              ? 'uni-button-primary border-brand-blue-600 text-white  shadow-brand-blue-100'
                               : 'bg-white border-slate-200 text-slate-400 hover:border-brand-blue-200 hover:text-slate-600'
                           }`}
                         >
@@ -199,7 +197,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                           key={key}
                           type="button"
                           onClick={() => togglePermission(key as keyof StaffPermissions)}
-                          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all ${
+                          className={`uni-control flex items-center gap-3 px-3 py-2.5 rounded-xl border  ${
                             newStaff.permissions?.[key as keyof StaffPermissions]
                               ? 'bg-brand-blue-50 border-brand-blue-200 shadow-sm'
                               : 'bg-white border-slate-100'
@@ -227,9 +225,9 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                           key={status}
                           type="button"
                           onClick={() => setNewStaff(prev => ({ ...prev, status }))}
-                          className={`flex-1 px-4 py-3 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all ${
+                          className={`uni-control flex-1 px-4 py-3 rounded-xl border text-[10px]     ${
                             newStaff.status === status
-                              ? (status === 'Aktif' ? 'bg-green-600 border-green-600 text-white shadow-lg shadow-green-100' : 'bg-slate-600 border-slate-600 text-white shadow-lg shadow-slate-100')
+                              ? (status === 'Aktif' ? 'bg-green-600 border-green-600 text-white  shadow-green-100' : 'bg-slate-600 border-slate-600 text-white  shadow-slate-100')
                               : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
                           }`}
                         >
@@ -243,7 +241,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     <input
                       value={newStaff.phone}
                       onChange={e => setNewStaff(prev => ({ ...prev, phone: e.target.value }))}
-                      className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
                     />
                   </div>
                 </div>
@@ -255,11 +253,11 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       setIsAdding(false);
                       setEditingStaffId(null);
                     }}
-                    className="px-6 py-3 text-slate-400 font-bold uppercase text-[10px]"
+                    className="uni-control px-6 py-3 text-slate-400 font-bold  text-[10px]"
                   >
                     İPTAL
                   </button>
-                  <button type="submit" className="px-10 py-3 bg-brand-blue-600 text-white rounded-2xl font-black uppercase text-[10px] shadow-lg">
+                  <button type="submit" className="uni-control px-10 py-3 uni-button-primary text-white rounded-2xl   text-[10px] ">
                     {editingStaffId ? 'GÜNCELLE' : 'PERSONEL EKLE'}
                   </button>
                 </div>
@@ -282,7 +280,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
             </thead>
             <tbody className="divide-y divide-slate-50">
                {staff.map(s => (
-                 <tr key={s.id} className="hover:bg-slate-50/50 transition-colors group">
+                 <tr key={s.id} className="hover:bg-slate-50/50 transition-all duration-150 ease-out group">
                    <td className="px-6 py-4">
                      <div className="flex items-center gap-3">
                        <div className="w-9 h-9 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-600 group-hover:text-white transition-all shadow-inner">
@@ -339,8 +337,8 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                    </td>
                    <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => handleStartStaffEdit(s)} className="p-2 text-slate-400 hover:text-brand-blue-600 transition-colors"><Edit className="w-4 h-4" /></button>
-                        <button onClick={() => setStaffToDelete(s)} className="p-2 text-slate-400 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                        <button onClick={() => handleStartStaffEdit(s)} className="uni-control p-2 text-slate-400 hover:text-brand-blue-600   "><Edit className="w-4 h-4" /></button>
+                        <button onClick={() => setStaffToDelete(s)} className="uni-control p-2 text-slate-400 hover:text-red-500   "><Trash2 className="w-4 h-4" /></button>
                       </div>
                    </td>
                  </tr>

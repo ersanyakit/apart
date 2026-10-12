@@ -41,7 +41,7 @@ export function FeatureFields({
           return (
             <div
               key={d.code}
-              className="bg-white border border-slate-100 rounded-2xl p-4 space-y-3"
+              className="uni-card bg-white border border-slate-100 rounded-2xl p-4 space-y-3"
             >
               <div className="flex items-center gap-2">
                 {d.assets?.find((a) => a.kind === "image") && (
@@ -67,7 +67,7 @@ export function FeatureFields({
                     onClick={() =>
                       onChange(value.filter((a) => a.code !== d.code))
                     }
-                    className="text-slate-400"
+                    className="uni-control text-slate-400"
                   >
                     <X size={13} />
                   </button>
@@ -82,7 +82,7 @@ export function FeatureFields({
                       ? onChange(value.filter((a) => a.code !== d.code))
                       : set(d.code, e.target.value === "true")
                   }
-                  className={inputClass}
+                  className={`uni-input ${inputClass}`}
                 >
                   <option value="">Belirtilmedi</option>
                   <option value="true">Var / Evet</option>
@@ -101,7 +101,7 @@ export function FeatureFields({
                       ? onChange(value.filter((a) => a.code !== d.code))
                       : set(d.code, Number(e.target.value))
                   }
-                  className={inputClass}
+                  className={`uni-input ${inputClass}`}
                 />
               ) : d.value_type === "enum" ? (
                 <select
@@ -112,7 +112,7 @@ export function FeatureFields({
                       ? set(d.code, e.target.value)
                       : onChange(value.filter((a) => a.code !== d.code))
                   }
-                  className={inputClass}
+                  className={`uni-input ${inputClass}`}
                 >
                   <option value="">Seçiniz</option>
                   {d.options.map((o) => (
@@ -137,7 +137,7 @@ export function FeatureFields({
                               : [...(Array.isArray(v) ? v : []), o],
                           )
                         }
-                        className={`rounded-lg px-3 py-2 text-xs border ${selected ? "bg-brand-blue-600 text-white border-brand-blue-600" : "bg-slate-50 border-slate-200"}`}
+                        className={`uni-control rounded-lg px-3 py-2 text-xs border ${selected ? "uni-button-primary text-white border-brand-blue-600" : "bg-slate-50 border-slate-200"}`}
                       >
                         {localized(d.option_labels?.[o], language) || o}
                       </button>
@@ -149,7 +149,7 @@ export function FeatureFields({
                   id={`feature-${d.code}`}
                   value={typeof v === "string" ? v : ""}
                   onChange={(e) => set(d.code, e.target.value)}
-                  className={inputClass}
+                  className={`uni-input ${inputClass}`}
                 />
               )}
               {localized(d.description, language) && (

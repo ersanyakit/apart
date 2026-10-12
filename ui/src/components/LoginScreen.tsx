@@ -210,19 +210,16 @@ export const LoginScreen: React.FC<{
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
               {step !== "hotel" && (
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
+                <button
                   onClick={() => {
                     if (step === "user") setStep("hotel");
                     if (step === "password") setStep("user");
                     if (step === "register") setStep("hotel");
                   }}
-                  className="p-2 hover:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-900 transition-all active:scale-90"
+                  className="uni-control p-2 hover:bg-slate-100 active:bg-slate-100 rounded-xl text-slate-400 hover:text-slate-900     cursor-pointer"
                 >
-                  <motion.div whileHover={{ scale: 1.1 }}>
-                    <ArrowLeft className="w-5 h-5" />
-                  </motion.div>
-                </motion.button>
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
               )}
               <div>
                 <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight">
@@ -241,23 +238,17 @@ export const LoginScreen: React.FC<{
             </div>
 
             {step === "hotel" && (
-              <motion.button
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => {
                   setStep("register");
                   setSelectedHotel(null);
                   setError("");
                 }}
-                className="flex items-center gap-2 px-3 py-2 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-brand-blue-100 transition-all shadow-sm"
+                className="uni-control flex items-center gap-2 px-3 py-2 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[10px]    hover:bg-brand-blue-100 active:bg-brand-blue-100    shadow-sm  cursor-pointer"
               >
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="flex items-center gap-2"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  YENİ KAYIT
-                </motion.div>
-              </motion.button>
+                <Plus className="w-3.5 h-3.5" />
+                YENİ KAYIT
+              </button>
             )}
           </div>
 
@@ -279,7 +270,7 @@ export const LoginScreen: React.FC<{
                       placeholder="OTELİNİZİN ADI VEYA LOKASYONU..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all uppercase tracking-widest placeholder:text-slate-300"
+                      className="uni-input w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all uppercase tracking-widest placeholder:text-slate-300"
                     />
                   </div>
 
@@ -292,14 +283,10 @@ export const LoginScreen: React.FC<{
                     {filteredHotels.map((hotel) => (
                       <motion.button
                         key={hotel.id}
-                        whileTap={{ scale: 0.98 }}
                         onClick={() => handleHotelSelect(hotel)}
-                        className="w-full flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-3xl hover:border-brand-blue-400 transition-all group shadow-sm hover:shadow-md"
+                        className="uni-control w-full flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-3xl hover:border-brand-blue-400    group shadow-sm    cursor-pointer"
                       >
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          className="w-full flex items-center gap-4"
-                        >
+                        <div className="w-full flex items-center gap-4">
                           <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-600 group-hover:text-white transition-all shadow-inner shrink-0 relative overflow-hidden">
                             {hotel.image ? (
                               <img
@@ -331,10 +318,10 @@ export const LoginScreen: React.FC<{
                               {hotel.location}
                             </p>
                           </div>
-                          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-brand-blue-600 group-hover:text-white transition-all">
+                          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-brand-blue-600 group-hover:text-white transition-all duration-150 ease-out">
                             <ChevronRight className="w-4 h-4" />
                           </div>
-                        </motion.div>
+                        </div>
                       </motion.button>
                     ))}
 
@@ -368,9 +355,8 @@ export const LoginScreen: React.FC<{
                   {people.map((person) => (
                     <motion.button
                       key={person.user_id}
-                      whileTap={{ scale: 0.97 }}
                       onClick={() => handleUserSelect(person)}
-                      className="flex flex-col items-center gap-4 p-6 bg-white border border-slate-200 rounded-[32px] hover:border-brand-blue-400 transition-all group shadow-sm hover:shadow-md"
+                      className="uni-control flex flex-col items-center gap-4 p-6 bg-white border border-slate-200 rounded-[32px] hover:border-brand-blue-400    group shadow-sm    cursor-pointer"
                     >
                       <div className="w-16 h-16 bg-slate-100 rounded-[24px] flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-600 group-hover:text-white transition-all">
                         <User className="w-8 h-8" />
@@ -408,10 +394,10 @@ export const LoginScreen: React.FC<{
                           autoComplete="username"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
-                          className="mt-3 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500"
+                          className="uni-input mt-3 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500"
                         />
                       </label>
-                      <button className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-blue-100">
+                      <button className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer">
                         DEVAM ET
                       </button>
                     </form>
@@ -443,7 +429,7 @@ export const LoginScreen: React.FC<{
                     className="w-full max-w-sm space-y-4"
                   >
                     <div className="relative group">
-                      <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-brand-blue-500 transition-colors" />
+                      <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-brand-blue-500 transition-all duration-150 ease-out" />
                       <input
                         autoFocus
                         type="password"
@@ -453,21 +439,15 @@ export const LoginScreen: React.FC<{
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all placeholder:text-slate-200"
+                        className="uni-input w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all placeholder:text-slate-200"
                       />
                     </div>
                     <motion.button
-                      whileTap={{ scale: 0.98 }}
                       type="submit"
                       disabled={busy}
-                      className="w-full py-4 bg-brand-blue-600 hover:bg-brand-blue-700 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-blue-100 transition-all"
+                      className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer disabled:cursor-not-allowed"
                     >
-                      <motion.span
-                        whileHover={{ scale: 1.02 }}
-                        className="block"
-                      >
-                        {busy ? "GİRİŞ YAPILIYOR…" : "SİSTEME GİRİŞ YAP"}
-                      </motion.span>
+                      {busy ? "GİRİŞ YAPILIYOR…" : "SİSTEME GİRİŞ YAP"}
                     </motion.button>
                   </form>
                 </motion.div>
@@ -493,7 +473,7 @@ export const LoginScreen: React.FC<{
                         autoComplete="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
+                        className="uni-input mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
                       />
                     </label>
                     <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -504,12 +484,12 @@ export const LoginScreen: React.FC<{
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
+                        className="uni-input mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
                       />
                     </label>
                     <button
                       disabled={busy}
-                      className="w-full py-4 bg-brand-blue-600 text-white rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-blue-100"
+                      className="uni-control w-full py-4 uni-button-primary text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100"
                     >
                       GİRİŞ YAP VE TESİS EKLE
                     </button>

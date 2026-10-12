@@ -56,7 +56,7 @@ export function FloorBoard({
         {canManage && (
           <div className="flex gap-2">
             <button
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               onClick={() => {
                 setEditing(!editing);
                 setPositions(
@@ -69,7 +69,7 @@ export function FloorBoard({
             {editing && (
               <button
                 disabled={busy}
-                className={buttonStyle}
+                className={`uni-control ${buttonStyle}`}
                 onClick={async () => {
                   setBusy(true);
                   setError("");
@@ -101,7 +101,7 @@ export function FloorBoard({
           düzenleme ekranından değiştirebilirsiniz.
         </p>
       )}
-      <div className="overflow-auto rounded-2xl border border-slate-200 bg-white p-4">
+      <div className="uni-card overflow-auto rounded-2xl border border-slate-200 bg-white p-4">
         <div
           ref={canvas}
           className="relative min-w-[800px] w-full bg-slate-50"
@@ -167,7 +167,7 @@ export function FloorBoard({
                 type="button"
                 key={room.room_id}
                 title={`${room.code} · ${unitKinds[room.kind]}`}
-                className={`absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${color} ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
+                className={`uni-control absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${color} ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
                 style={{
                   left: `${(p.x / floor.width) * 100}%`,
                   top: `${(p.y / floor.height) * 100}%`,

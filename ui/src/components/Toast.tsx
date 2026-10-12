@@ -44,7 +44,7 @@ export const Toast: React.FC<ToastProps> = ({ message, type, isVisible, onClose 
         >
           <div className="shrink-0">{icons[type]}</div>
           <p className="text-sm font-bold text-slate-800 flex-1">{message}</p>
-          <button onClick={onClose} className="p-1 hover:bg-black/5 rounded-lg transition-colors">
+          <button onClick={onClose} className="uni-control p-1 hover:bg-black/5 rounded-lg ">
             <X className="w-4 h-4 text-slate-400" />
           </button>
         </motion.div>

@@ -95,7 +95,7 @@ export function BookingForm({
           <input
             type="datetime-local"
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={start}
             onChange={(e) => {
               setStart(e.target.value);
@@ -107,7 +107,7 @@ export function BookingForm({
           <input
             type="datetime-local"
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={end}
             onChange={(e) => {
               setEnd(e.target.value);
@@ -118,7 +118,7 @@ export function BookingForm({
         <Field label="Rezervasyon sahibi">
           <input
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -129,7 +129,7 @@ export function BookingForm({
             min={1}
             max={100000}
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={count}
             onChange={(e) => {
               setCount(Number(e.target.value));
@@ -143,7 +143,7 @@ export function BookingForm({
           <Field label="Kiralanacak birim">
             <select
               required
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={room}
               onChange={(e) => setRoom(e.target.value)}
             >
@@ -161,7 +161,7 @@ export function BookingForm({
         </div>
         <button
           type="button"
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           disabled={busy || !start || !end}
           onClick={async () => {
             setBusy(true);
@@ -197,7 +197,7 @@ export function BookingForm({
         <div className="flex justify-between items-center">
           <h3 className="text-xs font-black text-slate-500">MİSAFİRLER</h3>
           <button
-            className={secondaryStyle}
+            className={`uni-control ${secondaryStyle}`}
             type="button"
 
             onClick={() => {
@@ -220,7 +220,7 @@ export function BookingForm({
               aria-label={`Misafir ${i + 1} adı`}
               required
               placeholder="Ad soyad"
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={g.name}
               onChange={(e) =>
                 setGuests(
@@ -233,7 +233,7 @@ export function BookingForm({
             <input
               aria-label={`Misafir ${i + 1} telefon`}
               placeholder="Telefon"
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={g.phone || ""}
               onChange={(e) =>
                 setGuests(
@@ -246,7 +246,7 @@ export function BookingForm({
             <input
               aria-label={`Misafir ${i + 1} kimlik`}
               placeholder="Kimlik / pasaport"
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={g.tcNo || ""}
               onChange={(e) =>
                 setGuests(
@@ -259,7 +259,7 @@ export function BookingForm({
             <input
               aria-label={`Misafir ${i + 1} yakınlık`}
               placeholder="Yakınlık"
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={g.relationship || ""}
               onChange={(e) =>
                 setGuests(
@@ -272,7 +272,7 @@ export function BookingForm({
             <button
               type="button"
               aria-label="Misafiri kaldır"
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               onClick={() => setGuests(guests.filter((_, n) => n !== i))}
             >
               ×
@@ -282,12 +282,12 @@ export function BookingForm({
       </div>
       <Field label="Notlar">
         <textarea
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
       </Field>
-      <button className={buttonStyle} disabled={busy || !room}>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy || !room}>
         {busy ? "Kaydediliyor…" : "Rezervasyonu Kaydet"}
       </button>
     </form>
@@ -338,7 +338,7 @@ export function MoveBookingForm({
       </p>
       <Field label="İşlem">
         <select
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={mode}
           onChange={(e) => setMode(e.target.value)}
         >
@@ -350,7 +350,7 @@ export function MoveBookingForm({
         <Field label="Hedef birim">
           <select
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={target}
             onChange={(e) => setTarget(e.target.value)}
           >
@@ -369,7 +369,7 @@ export function MoveBookingForm({
         <Field label="Diğer rezervasyon">
           <select
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={other}
             onChange={(e) => setOther(e.target.value)}
           >
@@ -397,7 +397,7 @@ export function MoveBookingForm({
         konaklamanın tamamını kapsar. Kapasite ve tarih çakışmaları iki taraf
         için birlikte kontrol edilir.
       </p>
-      <button disabled={busy} className={buttonStyle}>
+      <button disabled={busy} className={`uni-control ${buttonStyle}`}>
         Değişikliği Kaydet
       </button>
     </form>
@@ -452,7 +452,7 @@ export function BookingGuestsForm({
             <strong className="text-sm">{i + 1}. Misafir</strong>
             <button
               type="button"
-              className={secondaryStyle}
+              className={`uni-control ${secondaryStyle}`}
               onClick={() =>
                 setGuests((rows) => rows.filter((_, n) => n !== i))
               }
@@ -471,7 +471,7 @@ export function BookingGuestsForm({
             ).map(([key, label]) => (
               <Field key={key} label={`${i + 1}. Misafir ${label}`}>
                 <input
-                  className={inputStyle}
+                  className={`uni-input ${inputStyle}`}
                   required={key === "name"}
                   value={g[key] || ""}
                   onChange={(e) => patch(i, { [key]: e.target.value })}
@@ -484,7 +484,7 @@ export function BookingGuestsForm({
       <div className="flex gap-3">
         <button
           type="button"
-          className={secondaryStyle}
+          className={`uni-control ${secondaryStyle}`}
           onClick={() =>
             setGuests((rows) => [
               ...rows,
@@ -494,7 +494,7 @@ export function BookingGuestsForm({
         >
           Misafir Ekle
         </button>
-        <button className={buttonStyle} disabled={busy || !guests.length}>
+        <button className={`uni-control ${buttonStyle}`} disabled={busy || !guests.length}>
           Misafirleri Kaydet
         </button>
       </div>

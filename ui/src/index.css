@@ -1,26 +1,463 @@
 @import "tailwindcss";
 
+/* Accent anchors: interface-main/apps/web/src/pages/Landing/components/cards.
+   Neutral surfaces: interface-main/packages/ui/src/theme/color/colors.ts.
+   Darker text shades are derived for legibility on white surfaces. */
 @theme {
-  --color-brand-blue-50: #f0f7ff;
-  --color-brand-blue-100: #e0effe;
-  --color-brand-blue-200: #bae0fd;
-  --color-brand-blue-300: #7cc7fb;
-  --color-brand-blue-400: #38a9f8;
-  --color-brand-blue-500: #0ea5e9;
-  --color-brand-blue-600: #028ac7;
-  --color-brand-blue-700: #036e9f;
-  --color-brand-blue-800: #075c83;
-  --color-brand-blue-900: #0c4d6d;
+  --font-sans: var(--font-inter), "Basel Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-weight-book: 485;
+  --font-weight-medium: 535;
+  --color-uni-ink: #131313;
+  --color-uni-muted: #6b6b6b;
+  --color-uni-surface: #f9f9f9;
+  --color-uni-hover: #f2f2f2;
+  --color-uni-border: #e7e7e7;
+  --color-accent: #2ABDFF;
+  --color-accent-hover: color-mix(in srgb, #2ABDFF 90%, black);
+  --color-accent-contrast: #131313;
+  --color-brand-blue-50: color-mix(in srgb, #2ABDFF 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #2ABDFF 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #2ABDFF 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #2ABDFF 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #2ABDFF 65%, white);
+  --color-brand-blue-500: #2ABDFF;
+  --color-brand-blue-600: #075985;
+  --color-brand-blue-700: color-mix(in srgb, #075985 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #075985 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #075985 56%, black);
+}
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+[data-theme="pink"] {
+  --color-accent: #FF37C7;
+  --color-accent-hover: color-mix(in srgb, #FF37C7 90%, black);
+  --color-accent-contrast: #131313;
+  --color-brand-blue-50: color-mix(in srgb, #FF37C7 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #FF37C7 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #FF37C7 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #FF37C7 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #FF37C7 65%, white);
+  --color-brand-blue-500: #FF37C7;
+  --color-brand-blue-600: #a60078;
+  --color-brand-blue-700: color-mix(in srgb, #a60078 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #a60078 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #a60078 56%, black);
+}
+
+[data-theme="green"] {
+  --color-accent: #00C3A0;
+  --color-accent-hover: color-mix(in srgb, #00C3A0 90%, black);
+  --color-accent-contrast: #131313;
+  --color-brand-blue-50: color-mix(in srgb, #00C3A0 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #00C3A0 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #00C3A0 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #00C3A0 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #00C3A0 65%, white);
+  --color-brand-blue-500: #00C3A0;
+  --color-brand-blue-600: #006b58;
+  --color-brand-blue-700: color-mix(in srgb, #006b58 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #006b58 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #006b58 56%, black);
+}
+
+[data-theme="orange"] {
+  --color-accent: #FF4D00;
+  --color-accent-hover: color-mix(in srgb, #FF4D00 90%, black);
+  --color-accent-contrast: #131313;
+  --color-brand-blue-50: color-mix(in srgb, #FF4D00 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #FF4D00 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #FF4D00 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #FF4D00 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #FF4D00 65%, white);
+  --color-brand-blue-500: #FF4D00;
+  --color-brand-blue-600: #ae3400;
+  --color-brand-blue-700: color-mix(in srgb, #ae3400 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #ae3400 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #ae3400 56%, black);
+}
+
+[data-theme="purple"] {
+  --color-accent: #8251FB;
+  --color-accent-hover: color-mix(in srgb, #8251FB 90%, black);
+  --color-accent-contrast: #ffffff;
+  --color-brand-blue-50: color-mix(in srgb, #8251FB 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #8251FB 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #8251FB 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #8251FB 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #8251FB 65%, white);
+  --color-brand-blue-500: #8251FB;
+  --color-brand-blue-600: #6636d3;
+  --color-brand-blue-700: color-mix(in srgb, #6636d3 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #6636d3 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #6636d3 56%, black);
+}
+
+[data-theme="fuchsia"] {
+  --color-accent: #F50DB4;
+  --color-accent-hover: color-mix(in srgb, #F50DB4 90%, black);
+  --color-accent-contrast: #131313;
+  --color-brand-blue-50: color-mix(in srgb, #F50DB4 5%, white);
+  --color-brand-blue-100: color-mix(in srgb, #F50DB4 8%, white);
+  --color-brand-blue-200: color-mix(in srgb, #F50DB4 18%, white);
+  --color-brand-blue-300: color-mix(in srgb, #F50DB4 35%, white);
+  --color-brand-blue-400: color-mix(in srgb, #F50DB4 65%, white);
+  --color-brand-blue-500: #F50DB4;
+  --color-brand-blue-600: #ac097e;
+  --color-brand-blue-700: color-mix(in srgb, #ac097e 88%, black);
+  --color-brand-blue-800: color-mix(in srgb, #ac097e 72%, black);
+  --color-brand-blue-900: color-mix(in srgb, #ac097e 56%, black);
 }
 
 body {
   @apply bg-slate-100 text-slate-800 antialiased;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
 }
 
+/*
+ * Referans Nav Tipografisi (web app birebir):
+ * - Kaynak: interface-main packages/tailwind/css/theme.css + packages/ui/src/theme/fonts.ts
+ * - text-button-3: 0.875rem / 1.25rem / 535  (parent + aktif sub)
+ * - text-body-3:   0.875rem / 1.25rem / 485  (pasif sub)
+ * - text-button-4: 0.75rem / 1rem / 535      (section label + üst tab etiketleri)
+ * - rem birimdir (referans standart): kök font-size Ayarlar → Yazı Boyutu ile
+ *   değişince tüm nav tipografisi orantılı ölçeklenir.
+ * - Aile: Basel Grotesk öncelikli, Inter + system fallback (referans stack ile aynı sıra).
+ * - Renkler burada set edilmez — çağrılan yerde brand/slate renkleri korunur.
+ */
+@utility font-uninav-book {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 485;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+}
+
+@utility font-uninav-medium {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 535;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+}
+
+@utility uni-nav-parent {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 535;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@utility uni-nav-sub {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 485;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@utility uni-nav-sub-active {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 535;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@utility uni-section-label {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 535;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+}
+
+/* Üst tab etiketleri: buttonLabel4 ile birebir (12px / 16px / 535).
+   Tab verisi Title Case olduğu için uppercase YOK, tracking 0. */
+@utility uni-tab-label {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 535;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@utility uni-profile-name {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@utility uni-profile-sub {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 485;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Üst menü sekmeleri: apps/web Tabs standardı (subheading1 18px / 24px / 485).
+   Hap, alt çizgi ve ikon yok — sadece metin rengi değişir (pasif gri, aktif siyah).
+   rem birimdir: Ayarlar → Yazı Boyutu ile ölçeklenir. */
+@utility uni-top-tab {
+  font-family:
+    "Basel Grotesk", var(--font-inter), "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  font-weight: 485;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* iOS Ayarlar ekranı yazı tipi: Apple cihazında SF, diğerlerinde Inter. */
+@utility font-ios {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+}
 @layer components {
   .glass-card {
     @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
   }
 }
+
+/* Shared controls follow Uniswap's 16px corners, 535 weight and 0.98 press scale. */
+@layer components {
+  .uni-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-transparent px-4 py-3 text-sm font-uninav-medium cursor-pointer;
+    transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+  }
+  .uni-button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .uni-button:active:not(:disabled) { transform: scale(0.98); }
+  .uni-button:disabled {
+    background: var(--color-uni-hover);
+    color: #767676;
+    cursor: not-allowed;
+  }
+  .uni-button-primary { background: var(--color-accent); color: var(--color-accent-contrast); }
+  .uni-button-primary:hover:not(:disabled) { background: var(--color-accent-hover); }
+  .uni-button-secondary { background: var(--color-uni-hover); color: var(--color-uni-ink); }
+  .uni-button-secondary:hover:not(:disabled) { background: #e7e7e7; }
+  .uni-button-soft { background: var(--color-brand-blue-100); color: var(--color-brand-blue-600); }
+  .uni-button-soft:hover:not(:disabled) { background: var(--color-brand-blue-200); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .uni-button { transition: none; }
+  .uni-button:active:not(:disabled) { transform: none; }
+}
+
+/* All native controls share the same interaction contract, including legacy
+   screens. Layout utilities remain local; state styling lives here. */
+:root {
+  --interaction-fast: 100ms;
+  --interaction-ease: cubic-bezier(0.17, 0.67, 0.45, 1);
+  --interaction-press-scale: 0.98;
+  --control-ring: var(--color-brand-blue-600);
+  --control-halo: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --control-border: #e7e7e7;
+  --control-border-hover: #d4d4d4;
+}
+.uni-control, .uni-button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  font-family: var(--font-inter), "Basel Grotesk", sans-serif;
+  font-weight: 535;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: none;
+  cursor: pointer;
+  transition: scale var(--interaction-fast) var(--interaction-ease),
+    background-color var(--interaction-fast) ease,
+    border-color var(--interaction-fast) ease,
+    color var(--interaction-fast) ease,
+    filter var(--interaction-fast) ease;
+}
+.uni-control:focus-visible, .uni-button:focus-visible,
+.uni-card-interactive:focus-visible {
+  outline: 2px solid var(--control-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--control-halo);
+}
+.uni-control:active:not(:disabled):not([aria-disabled="true"]),
+.uni-button:active:not(:disabled) {
+  scale: var(--interaction-press-scale);
+  transform: none;
+}
+@media (hover: hover) {
+  .uni-control:hover:not(:disabled):not([aria-disabled="true"]) { filter: brightness(0.97); }
+}
+.uni-control:disabled, .uni-control[aria-disabled="true"], .uni-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  scale: 1;
+  filter: none;
+}
+.uni-button-primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-contrast);
+  border-color: transparent;
+}
+.uni-button-primary:hover:not(:disabled), .uni-button-primary:active:not(:disabled) {
+  background-color: var(--color-accent-hover);
+  color: var(--color-accent-contrast);
+  filter: none;
+}
+.uni-menu-item { border: 1px solid transparent; }
+.uni-menu-item:hover:not(:disabled) { background-color: var(--color-uni-hover); filter: none; }
+.uni-menu-item:active:not(:disabled), .uni-menu-item[aria-current="page"],
+.uni-menu-item[aria-selected="true"] {
+  background-color: var(--color-brand-blue-100);
+  color: var(--color-brand-blue-600);
+}
+.uni-menu-item:focus-visible { outline-offset: -2px; box-shadow: none; }
+.uni-select-trigger { border-color: var(--control-border); box-shadow: none; }
+.uni-select-trigger:hover { border-color: var(--control-border-hover); }
+.uni-select-trigger[aria-expanded="true"] { border-color: var(--control-ring); }
+.uni-input {
+  border: 1px solid var(--control-border);
+  border-radius: 16px;
+  background-color: var(--color-uni-surface);
+  color: var(--color-uni-ink);
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 485;
+  letter-spacing: 0;
+  text-transform: none;
+  outline: none;
+  box-shadow: none;
+  transition: border-color var(--interaction-fast) ease, box-shadow var(--interaction-fast) ease, background-color var(--interaction-fast) ease;
+}
+.uni-input::placeholder { color: #767676; opacity: 1; }
+.uni-input:hover:not(:disabled):not(:read-only), select.uni-input:hover:not(:disabled) { border-color: var(--control-border-hover); }
+.uni-input:focus { border-color: var(--control-ring); box-shadow: 0 0 0 3px var(--control-halo); background-color: white; }
+.uni-input[aria-invalid="true"] { border-color: #e10f0f; }
+.uni-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px #e10f0f1a; }
+.uni-input:disabled { background-color: var(--color-uni-hover); color: #767676; cursor: not-allowed; }
+input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: var(--color-brand-blue-600); }
+.uni-card { border-width: 1px; box-shadow: none; }
+.uni-card-interactive {
+  transition: scale var(--interaction-fast) var(--interaction-ease), border-color var(--interaction-fast) ease, background-color var(--interaction-fast) ease;
+}
+.uni-card-interactive:hover { background-color: var(--color-uni-surface); border-color: var(--control-border-hover); }
+.uni-card-interactive:active { scale: var(--interaction-press-scale); background-color: var(--color-brand-blue-50); }
+@media (prefers-reduced-motion: reduce) {
+  .uni-control, .uni-button, .uni-input, .uni-card-interactive { transition: none; }
+  .uni-control:active, .uni-button:active, .uni-card-interactive:active { scale: 1 !important; }
+}
+.uni-control:disabled, .uni-button:disabled {
+  background-color: var(--color-uni-hover);
+  color: #767676;
+}
+.uni-choice { transition: scale var(--interaction-fast) var(--interaction-ease), background-color var(--interaction-fast) ease, border-color var(--interaction-fast) ease; }
+label:active > .uni-choice { scale: var(--interaction-press-scale); }
+@media (prefers-reduced-motion: reduce) {
+  .uni-choice { transition: none; }
+  label:active > .uni-choice { scale: 1; }
+}
+.uni-card-interactive[aria-pressed="true"] { border-color: var(--color-accent); }

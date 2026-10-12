@@ -98,7 +98,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
             <div className="flex items-center gap-6">
               <button
                 onClick={() => setView('list')}
-                className="p-3 hover:bg-slate-100 rounded-2xl text-slate-400 transition-all border border-slate-100 shadow-sm"
+                className="uni-control p-3 hover:bg-slate-100 active:bg-slate-100 rounded-2xl text-slate-400    border border-slate-100 shadow-sm  cursor-pointer"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
@@ -121,13 +121,13 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
             <div className="flex items-center gap-4">
                <button
                  onClick={() => setView('list')}
-                 className="px-6 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-black text-slate-500 hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+                  className="uni-control px-6 py-3 bg-white border border-slate-200 rounded-2xl text-xs  text-slate-500 hover:bg-slate-50 active:bg-slate-50    shadow-sm  cursor-pointer"
                >
                  İPTAL ET
                </button>
                <button
                  onClick={handleSendRequest}
-                 className="px-10 py-3 rounded-2xl text-xs font-black text-white shadow-xl transition-all flex items-center gap-2 hover:scale-[1.02] active:scale-95 bg-orange-600 shadow-orange-200"
+                  className="uni-control px-10 py-3 rounded-2xl text-xs  text-white     flex items-center gap-2  cursor-pointer bg-orange-600 shadow-orange-200"
                >
                  <Send className="w-4 h-4" />
                  TALEBİ GÖNDER
@@ -138,7 +138,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
           <div className="flex-1 overflow-y-auto p-10 custom-scrollbar">
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
               <div className="md:col-span-8 space-y-6">
-                <section className="bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
+                <section className="uni-card bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-10 h-10 bg-orange-50 rounded-2xl flex items-center justify-center text-orange-600">
                       <FileText className="w-5 h-5" />
@@ -157,7 +157,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                         value={newRequest.roomNumber}
                         onChange={(e) => setNewRequest({...newRequest, roomNumber: e.target.value})}
                         placeholder="Örn: 204 veya Resepsiyon"
-                        className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none transition-all"
+                        className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none transition-all"
                       />
                     </div>
                     <div className="md:col-span-12 space-y-3">
@@ -175,13 +175,13 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                             key={cat.id}
                             type="button"
                             onClick={() => setNewRequest({...newRequest, category: cat.id as any})}
-                            className={`flex flex-col items-center justify-center p-4 rounded-3xl border-2 transition-all gap-2 group hover:scale-[1.02] active:scale-95 ${
+                            className={`uni-control flex flex-col items-center justify-center p-4 rounded-3xl border-2    gap-2  cursor-pointer ${
                               newRequest.category === cat.id
-                                ? 'bg-orange-600 border-orange-600 text-white shadow-xl shadow-orange-100 ring-4 ring-orange-500/10'
+                                ? 'bg-orange-600 border-orange-600 text-white  shadow-orange-100 ring-4 ring-orange-500/10'
                                 : 'bg-white border-slate-100 text-slate-500 hover:border-orange-200 hover:bg-orange-50/30'
                             }`}
                           >
-                            <div className={`p-2 rounded-xl transition-colors ${
+                            <div className={`p-2 rounded-xl transition-all duration-150 ease-out ${
                               newRequest.category === cat.id ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-orange-100/50 group-hover:text-orange-600'
                             }`}>
                               {cat.icon}
@@ -200,12 +200,12 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       value={newRequest.description}
                       onChange={(e) => setNewRequest({...newRequest, description: e.target.value})}
                       placeholder="Lütfen teknik sorunu buraya açıklayın..."
-                      className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
+                      className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
                     />
                   </div>
                 </section>
 
-                <section className="bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
+                <section className="uni-card bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-500">
                       <MessageSquare className="w-5 h-5" />
@@ -220,13 +220,13 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                     value={newRequest.notes}
                     onChange={(e) => setNewRequest({...newRequest, notes: e.target.value})}
                     placeholder="Varsa eklemek istediğiniz notlar..."
-                    className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
+                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
                   />
                 </section>
               </div>
 
               <div className="md:col-span-4 space-y-6">
-                <section className="bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
+                <section className="uni-card bg-white p-8 rounded-[32px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100 space-y-6">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-10 h-10 bg-red-50 rounded-2xl flex items-center justify-center text-red-600">
                       <AlertCircle className="w-5 h-5" />
@@ -242,9 +242,9 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <button
                         key={p}
                         onClick={() => setNewRequest({...newRequest, priority: p as any})}
-                        className={`py-3 rounded-2xl text-[10px] font-black border transition-all ${
+                        className={`uni-control py-3 rounded-2xl text-[10px]  border  ${
                           newRequest.priority === p
-                            ? 'bg-orange-600 border-orange-600 text-white shadow-lg'
+                            ? 'bg-orange-600 border-orange-600 text-white '
                             : 'bg-white border-slate-100 text-slate-500 hover:bg-slate-50'
                         }`}
                       >
@@ -254,8 +254,8 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   </div>
                 </section>
 
-                <div className="p-6 bg-orange-600 rounded-[32px] shadow-xl shadow-orange-100 text-white relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700" />
+                <div className="p-6 bg-orange-600 rounded-[32px] shadow-xl shadow-orange-100 text-white relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
                   <div className="relative z-10 space-y-4">
                     <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                        <ShieldCheck className="w-5 h-5" />
@@ -289,7 +289,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
             <div className="flex items-center gap-6">
               <button
                 onClick={() => setView('list')}
-                className="p-3 hover:bg-slate-100 rounded-2xl text-slate-400 transition-all border border-slate-100 shadow-sm"
+                className="uni-control p-3 hover:bg-slate-100 active:bg-slate-100 rounded-2xl text-slate-400    border border-slate-100 shadow-sm  cursor-pointer"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
@@ -316,7 +316,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                      setRequests(requests.map(r => r.id === selectedRequest.id ? {...r, status: 'Tamamlandı'} : r));
                      setView('list');
                    }}
-                   className="px-10 py-3 rounded-2xl text-xs font-black text-white shadow-xl transition-all flex items-center gap-2 hover:scale-[1.02] active:scale-95 bg-green-600 shadow-green-200"
+                   className="uni-control px-10 py-3 rounded-2xl text-xs  text-white     flex items-center gap-2  cursor-pointer bg-green-600 shadow-green-200"
                  >
                    <CheckCircle2 className="w-4 h-4" />
                    TALEBİ TAMAMLA
@@ -327,7 +327,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                    setRequests(requests.filter(r => r.id !== selectedRequest.id));
                    setView('list');
                  }}
-                 className="p-3 text-red-500 hover:bg-red-50 rounded-2xl border border-transparent hover:border-red-100 transition-all"
+                  className="uni-control p-3 text-red-500 hover:bg-red-50 active:bg-red-50 rounded-2xl border border-transparent hover:border-red-100     cursor-pointer"
                >
                  <Trash2 className="w-5 h-5" />
                </button>
@@ -337,7 +337,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
           <div className="flex-1 overflow-y-auto p-10 custom-scrollbar">
             <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8">
               <div className="md:col-span-8 space-y-6">
-                <section className="bg-white p-8 rounded-[40px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100">
+                <section className="uni-card bg-white p-8 rounded-[40px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100">
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-500">
                       <Wrench className="w-6 h-6" />
@@ -364,7 +364,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   </div>
                 </section>
 
-                <section className="bg-white p-8 rounded-[40px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100">
+                <section className="uni-card bg-white p-8 rounded-[40px] shadow-sm border border-slate-200/60 ring-1 ring-slate-100">
                   <div className="flex items-center gap-4 mb-4">
                      <div className="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-500">
                        <MessageSquare className="w-5 h-5" />
@@ -420,7 +420,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                    </div>
 
                    <div className="mt-12 relative z-10">
-                      <div className="p-4 bg-white/5 border border-white/10 rounded-[28px] flex items-center gap-3">
+                      <div className="uni-card p-4 bg-white/5 border border-white/10 rounded-[28px] flex items-center gap-3">
                          <Clock className="w-4.5 h-4.5 text-brand-blue-400" />
                          <span className="text-[11px] font-bold text-slate-400">Tahmini Müdahale: 15 Dakika</span>
                       </div>
@@ -458,18 +458,18 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
             <div className="relative group flex-1 sm:w-64">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-orange-500 transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-orange-500 transition-all duration-150 ease-out" />
               <input
                 type="text"
                 placeholder="Talep no veya oda ara..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-5 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-300 transition-all shadow-sm"
+                className="uni-input w-full pl-11 pr-5 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-300 transition-all shadow-sm"
               />
             </div>
             <button
               onClick={() => setView('new')}
-              className="flex items-center justify-center gap-2 bg-orange-600 text-white px-7 py-3.5 rounded-[22px] text-xs font-black hover:bg-orange-700 transition-all shadow-xl shadow-orange-100 hover:scale-[1.02] active:scale-95 group whitespace-nowrap"
+              className="uni-control flex items-center justify-center gap-2 bg-orange-600 text-white px-7 py-3.5 rounded-[22px] text-xs  hover:bg-orange-700 active:bg-orange-700     shadow-orange-100  cursor-pointer whitespace-nowrap"
             >
               <Plus className="w-4 h-4 transition-transform group-hover:rotate-90 duration-300" />
               YENİ TALEP OLUŞTUR
@@ -495,7 +495,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                  transition={{ delay: idx * 0.05 }}
                  key={req.id}
                  onClick={() => { setSelectedRequestId(req.id); setView('detail'); }}
-                 className="bg-white rounded-[32px] p-6 border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-slate-200/40 transition-all group flex items-start gap-6 relative overflow-hidden cursor-pointer active:scale-[0.99]"
+                  className="uni-card bg-white rounded-[32px] p-6 border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-slate-200/40 hover:scale-[1.03] transition-all duration-150 ease-out group flex items-start gap-6 relative overflow-hidden cursor-pointer"
               >
                 {/* Visual Accent */}
                 <div className={`absolute top-0 left-0 w-1.5 h-full ${
@@ -503,7 +503,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   req.status === 'Devam Ediyor' ? 'bg-brand-blue-500' : 'bg-emerald-500'
                 }`}></div>
 
-                <div className={`w-16 h-16 rounded-[22px] flex flex-col items-center justify-center font-black shrink-0 transition-transform group-hover:scale-105 ${req.priority === 'Acil' ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-slate-50 text-slate-800'}`}>
+                <div className={`w-16 h-16 rounded-[22px] flex flex-col items-center justify-center font-black shrink-0 ${req.priority === 'Acil' ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-slate-50 text-slate-800'}`}>
                   <span className="text-[9px] uppercase mb-0.5 opacity-50">ODA</span>
                   <span className="text-xl leading-none">{req.roomNumber}</span>
                 </div>
@@ -521,7 +521,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <Clock className="w-3 h-3" /> {req.createdAt.split(' ').pop()}
                     </span>
                   </div>
-                  <h4 className="text-base font-bold text-slate-800 mb-1 leading-tight group-hover:text-brand-blue-600 transition-colors">{req.description}</h4>
+                  <h4 className="text-base font-bold text-slate-800 mb-1 leading-tight group-hover:text-brand-blue-600 transition-all duration-150 ease-out">{req.description}</h4>
                   <div className="flex items-center gap-4 mt-4">
                      <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100">
                         <User className="w-3 h-3 text-slate-300" />
@@ -572,12 +572,12 @@ const getCategoryIcon = (category: string) => {
 };
 
 const StatCard = ({ label, value, color, icon }: { label: string, value: number, color: string, icon: React.ReactNode }) => (
-  <div className="bg-white p-6 rounded-[32px] border border-slate-200/60 shadow-sm flex items-center justify-between group hover:shadow-md transition-all cursor-default">
+  <div className="uni-card bg-white p-6 rounded-[32px] border border-slate-200/60 shadow-sm flex items-center justify-between group hover:shadow-md transition-all cursor-default">
     <div className="flex flex-col">
        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">{label}</p>
        <p className="text-3xl font-black text-slate-800 tracking-tighter">{value}</p>
     </div>
-    <div className={`w-14 h-14 ${color} rounded-[22px] flex items-center justify-center text-white shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3`}>
+    <div className={`w-14 h-14 ${color} rounded-[22px] flex items-center justify-center text-white shadow-lg transition-transform group-hover:rotate-3`}>
       {icon}
     </div>
   </div>

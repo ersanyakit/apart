@@ -52,7 +52,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:border-brand-blue-500 transition-all shadow-sm group text-left"
+        className="uni-control w-full flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:border-brand-blue-500  shadow-sm group text-left"
       >
         <CalendarIcon className={`w-4 h-4 transition-colors ${isOpen ? 'text-brand-blue-600' : 'text-slate-400'}`} />
         <span className="flex-1 truncate">
@@ -73,7 +73,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
               <button
                 type="button"
                 onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-                className="p-1.5 hover:bg-white rounded-lg text-slate-400 hover:text-brand-blue-600 shadow-sm transition-all"
+                className="uni-control p-1.5 hover:bg-white rounded-lg text-slate-400 hover:text-brand-blue-600 shadow-sm "
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -85,7 +85,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
               <button
                 type="button"
                 onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                className="p-1.5 hover:bg-white rounded-lg text-slate-400 hover:text-brand-blue-600 shadow-sm transition-all"
+                className="uni-control p-1.5 hover:bg-white rounded-lg text-slate-400 hover:text-brand-blue-600 shadow-sm "
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -108,9 +108,9 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                       key={date.toString()}
                       type="button"
                       onClick={() => handleDateSelect(date)}
-                      className={`
-                        h-8 w-8 rounded-lg text-xs font-bold transition-all relative
-                        ${isSel ? 'bg-brand-blue-600 text-white shadow-lg shadow-brand-blue-100' : 'text-slate-600 hover:bg-brand-blue-50 hover:text-brand-blue-600'}
+                      className={`uni-control
+                        h-8 w-8 rounded-lg text-xs font-bold  relative
+                        ${isSel ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-600 hover:bg-brand-blue-50 hover:text-brand-blue-600'}
                         ${isTodayDate && !isSel ? 'border border-brand-blue-200 bg-brand-blue-50/30' : ''}
                       `}
                     >
@@ -132,14 +132,14 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                       type="text"
                       value={format(value, 'HH')}
                       onChange={(e) => updateTime('h', e.target.value)}
-                      className="w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
+                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
                     />
                     <span className="font-black text-slate-300">:</span>
                     <input
                       type="text"
                       value={format(value, 'mm')}
                       onChange={(e) => updateTime('m', e.target.value)}
-                      className="w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
+                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
                     />
                   </div>
                 </div>
@@ -153,14 +153,14 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                     setCurrentMonth(today);
                     onChange(today);
                   }}
-                  className="flex-1 py-2 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all"
+                  className="uni-control flex-1 py-2 bg-slate-100 text-slate-600 rounded-xl text-[10px]    hover:bg-slate-200 "
                 >
                   BUGÜN
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 py-2 bg-brand-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-brand-blue-100 hover:bg-brand-blue-700 transition-all"
+                  className="uni-control flex-1 py-2 uni-button-primary text-white rounded-xl text-[10px]     shadow-brand-blue-100  "
                 >
                   KAPAT
                 </button>

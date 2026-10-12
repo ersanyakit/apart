@@ -198,7 +198,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
         <div className="flex items-center gap-3 md:gap-4">
           <button
             onClick={onCancel}
-            className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-900 transition-all border border-slate-100 shadow-sm shrink-0"
+            className="uni-control p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-900  border border-slate-100 shadow-sm shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -230,7 +230,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 window.print();
                 setFormError("Belge işlemlerini oda menüsünden açabilirsiniz.");
               }}
-              className="flex-1 md:flex-none px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-200 transition-all shadow-sm active:scale-95 uppercase tracking-widest flex items-center gap-2"
+              className="uni-control flex-1 md:flex-none px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-[11px]  text-slate-500 hover:bg-slate-200 active:bg-slate-200    shadow-sm  cursor-pointer   flex items-center gap-2"
             >
               <FileText className="w-3.5 h-3.5" />
               DEKONT AL
@@ -238,16 +238,16 @@ export const OperationForm: React.FC<OperationFormProps> = ({
           )}
           <button
             onClick={onCancel}
-            className="flex-1 md:flex-none px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-50 transition-all shadow-sm active:scale-95 uppercase tracking-widest"
+            className="uni-control flex-1 md:flex-none px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-[11px]  text-slate-500 hover:bg-slate-50 active:bg-slate-50    shadow-sm  cursor-pointer  "
           >
             İPTAL
           </button>
           <button
             onClick={handleConfirm}
-            className={`flex-[2] md:flex-none px-5 py-2 rounded-lg text-[11px] font-black text-white shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 uppercase tracking-widest ${
+            className={`uni-control flex-[2] md:flex-none px-5 py-2 rounded-lg text-[11px]  text-white     flex items-center justify-center gap-2  cursor-pointer   ${
               type === "checkout"
                 ? "bg-rose-600 shadow-rose-200"
-                : "bg-brand-blue-600 shadow-brand-blue-200"
+                : "uni-button-primary shadow-brand-blue-200"
             }`}
           >
             <Save className="w-3.5 h-3.5" />
@@ -269,7 +269,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-[40px] p-10 max-w-md w-full shadow-2xl border-2 border-brand-blue-100/50 text-center relative overflow-hidden"
+              className="uni-card bg-white rounded-[40px] p-10 max-w-md w-full shadow-2xl border-2 border-brand-blue-100/50 text-center relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 right-0 h-2 flex">
                 <div className="flex-1 bg-brand-blue-600" />
@@ -291,13 +291,13 @@ export const OperationForm: React.FC<OperationFormProps> = ({
               <div className="flex gap-4">
                 <button
                   onClick={() => setIsConfirming(false)}
-                  className="flex-1 py-4 text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] hover:text-slate-600 transition-all"
+                  className="uni-control flex-1 py-4 text-slate-400  text-[11px]  tracking-[0.2em] hover:text-slate-600 "
                 >
                   VAZGEÇ
                 </button>
                 <button
                   onClick={handleConfirm}
-                  className="flex-2 py-4 bg-brand-blue-600 text-white rounded-[20px] text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-blue-100 hover:bg-brand-blue-700 transition-all active:scale-95"
+                  className="uni-control flex-2 py-4 uni-button-primary text-white rounded-[20px] text-[11px]   tracking-[0.2em]  shadow-brand-blue-100       cursor-pointer"
                 >
                   EVET, ONAYLIYORUM
                 </button>
@@ -317,7 +317,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
               <motion.section
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+                className="uni-card bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
               >
                 {type === "exchange" && (
                   <div className="p-5 bg-amber-50 border-2 border-amber-200 rounded-3xl mb-6 shadow-inner">
@@ -338,9 +338,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               targetRoomId: targetRoom.id,
                             })
                           }
-                          className={`flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all gap-1 h-20 shadow-sm ${
+                          className={`uni-control flex flex-col items-center justify-center p-3 rounded-2xl border-2  gap-1 h-20 shadow-sm ${
                             formData.targetRoomId === targetRoom.id
-                              ? "bg-amber-500 border-amber-600 text-white shadow-lg ring-4 ring-amber-500/10 scale-105 z-10"
+                              ? "bg-amber-500 border-amber-600 text-white  ring-4 ring-amber-500/10 scale-105 z-10"
                               : "bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-600"
                           }`}
                         >
@@ -353,7 +353,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                         </button>
                       ))}
                       {availableRooms.length === 0 && (
-                        <div className="col-span-full py-8 text-center bg-white/50 rounded-2xl border-2 border-dashed border-amber-200">
+                        <div className="uni-card col-span-full py-8 text-center bg-white/50 rounded-2xl border-2 border-dashed border-amber-200">
                           <AlertCircle className="w-8 h-8 text-amber-300 mx-auto mb-2" />
                           <p className="text-[10px] font-black text-amber-400 uppercase tracking-widest">
                             MÜSAİT ODA BULUNAMADI
@@ -373,9 +373,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                       <button
                         type="button"
                         onClick={() => setShowHistory(!showHistory)}
-                        className={`flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tight transition-all ${
+                        className={`uni-control flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px]   tracking-tight  ${
                           showHistory
-                            ? "bg-brand-blue-600 text-white shadow-md"
+                            ? "uni-button-primary text-white "
                             : "bg-brand-blue-50 text-brand-blue-600 hover:bg-brand-blue-100"
                         }`}
                       >
@@ -395,7 +395,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           })
                         }
                         placeholder="MİSAFİR İSMİ..."
-                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-300"
+                        className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-300"
                       />
                     </div>
 
@@ -419,7 +419,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                   setHistorySearch(e.target.value)
                                 }
                                 placeholder="İSİM, TELEFON VEYA TC ARA..."
-                                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500 placeholder:text-slate-300 shadow-inner"
+                                className="uni-input w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500 placeholder:text-slate-300 shadow-inner"
                               />
                             </div>
                           </div>
@@ -444,7 +444,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                   key={idx}
                                   type="button"
                                   onClick={() => selectFromHistory(guest)}
-                                  className="w-full px-4 py-3 hover:bg-slate-50 text-left border-b border-slate-50 last:border-0 group transition-all"
+                                  className="uni-control w-full px-4 py-3 hover:bg-slate-50 text-left border-b border-slate-50 last:border-0 group "
                                 >
                                   <div className="flex justify-between items-center">
                                     <div className="flex items-center gap-3">
@@ -506,7 +506,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           setFormData({ ...formData, phone: e.target.value })
                         }
                         placeholder="05xx..."
-                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none"
+                        className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none"
                       />
                     </div>
                   </div>
@@ -538,7 +538,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+                className="uni-card bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
               >
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div className="md:col-span-4 space-y-1">
@@ -553,7 +553,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                         onChange={(e) =>
                           setFormData({ ...formData, price: e.target.value })
                         }
-                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-black text-slate-800 outline-none"
+                        className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-black text-slate-800 outline-none"
                       />
                     </div>
                   </div>
@@ -570,9 +570,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           onClick={() =>
                             setFormData({ ...formData, paymentType: method.id })
                           }
-                          className={`flex flex-col items-center justify-center py-2.5 rounded-xl border transition-all gap-1.5 ${
+                          className={`uni-control flex flex-col items-center justify-center py-2.5 rounded-xl border  gap-1.5 ${
                             formData.paymentType === method.id
-                              ? "bg-brand-blue-600 border-brand-blue-600 text-white shadow-md shadow-brand-blue-100 ring-4 ring-brand-blue-500/5"
+                              ? "uni-button-primary border-brand-blue-600 text-white  shadow-brand-blue-100 ring-4 ring-brand-blue-500/5"
                               : "bg-slate-50 border-slate-200 text-slate-400 hover:border-slate-300 hover:bg-white hover:text-slate-600"
                           }`}
                         >
@@ -600,7 +600,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shadow-sm ${
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-150 ease-out shadow-sm ${
                               formData.isDeposit
                                 ? "bg-emerald-600 text-white shadow-emerald-200"
                                 : "bg-white text-slate-400 border border-slate-100"
@@ -621,13 +621,13 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                         </div>
 
                         <div className="flex items-center gap-3">
-                          <div className="flex bg-white rounded-xl p-1 border border-slate-200/60 shadow-inner">
+                          <div className="uni-card flex bg-white rounded-xl p-1 border border-slate-200/60 shadow-inner">
                             <button
                               type="button"
                               onClick={() =>
                                 setFormData({ ...formData, isDeposit: false })
                               }
-                              className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${
                                 !formData.isDeposit
                                   ? "bg-slate-100 text-slate-600 shadow-sm"
                                   : "text-slate-400 hover:text-slate-500"
@@ -640,9 +640,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               onClick={() =>
                                 setFormData({ ...formData, isDeposit: true })
                               }
-                              className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${
                                 formData.isDeposit
-                                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-100"
+                                  ? "bg-emerald-600 text-white  shadow-emerald-100"
                                   : "text-slate-400 hover:text-slate-500"
                               }`}
                             >
@@ -671,7 +671,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                     depositAmount: e.target.value,
                                   })
                                 }
-                                className="w-full pl-12 pr-4 py-2 bg-white border border-emerald-200 rounded-xl text-sm font-black text-emerald-700 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all shadow-sm"
+                                className="uni-input w-full pl-12 pr-4 py-2 bg-white border border-emerald-200 rounded-xl text-sm font-black text-emerald-700 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all shadow-sm"
                                 placeholder="0.00"
                               />
                             </motion.div>
@@ -689,7 +689,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                     <textarea
                       rows={2}
                       placeholder="Misafir ile ilgili ek bilgiler..."
-                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-brand-blue-500 transition-all"
                       value={formData.notes || ""}
                       onChange={(e) =>
                         setFormData({ ...formData, notes: e.target.value })
@@ -704,7 +704,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+                className="uni-card bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
@@ -718,7 +718,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   <button
                     type="button"
                     onClick={addGuest}
-                    className="px-3 py-1.5 bg-brand-blue-50 text-brand-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-brand-blue-100 transition-all flex items-center gap-1.5"
+                    className="uni-control px-3 py-1.5 bg-brand-blue-50 text-brand-blue-600 rounded-lg text-[10px]    hover:bg-brand-blue-100  flex items-center gap-1.5"
                   >
                     <Save className="w-3 h-3 rotate-45" />
                     YENİ EKLE
@@ -746,7 +746,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                 e.target.value.toUpperCase(),
                               )
                             }
-                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none uppercase"
+                            className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none uppercase"
                             placeholder="MİSAFİR ADI..."
                           />
                         </div>
@@ -765,7 +765,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                 e.target.value.replace(/\D/g, ""),
                               )
                             }
-                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
+                            className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
                             placeholder="KİMLİK NO"
                           />
                         </div>
@@ -779,7 +779,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                             onChange={(e) =>
                               updateGuest(guest.id, "phone", e.target.value)
                             }
-                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
+                            className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
                             placeholder="05xx..."
                           />
                         </div>
@@ -787,7 +787,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           <button
                             type="button"
                             onClick={() => removeGuest(guest.id)}
-                            className={`p-2 rounded-lg text-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-all ${formData.guests.length <= 1 ? "hidden" : ""}`}
+                            className={`uni-control p-2 rounded-lg text-rose-300 hover:text-rose-600 hover:bg-rose-50  ${formData.guests.length <= 1 ? "hidden" : ""}`}
                           >
                             <X className="w-4 h-4" />
                           </button>
@@ -805,7 +805,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                             onChange={(e) =>
                               updateGuest(guest.id, "note", e.target.value)
                             }
-                            className="w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-300"
+                            className="uni-input w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-300"
                             placeholder="Bu misafir için özel bir not yazın..."
                           />
                         </div>

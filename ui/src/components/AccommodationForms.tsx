@@ -87,7 +87,7 @@ export function UnitForm({
           <input
             required
             maxLength={32}
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.code}
             onChange={(e) => patch({ code: e.target.value })}
           />
@@ -95,7 +95,7 @@ export function UnitForm({
         <Field label="Birim türü">
           <select
             disabled={draft.kind === "bed"}
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.kind}
             onChange={(e) =>
               patch({
@@ -118,7 +118,7 @@ export function UnitForm({
         <Field label="Kat">
           <select
             disabled={draft.kind === "bed"}
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.floor_id || ""}
             onChange={(e) => patch({ floor_id: e.target.value || null })}
           >
@@ -133,7 +133,7 @@ export function UnitForm({
         <Field label="Üst birim">
           <select
             disabled={draft.kind === "bed"}
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.parent_id || ""}
             onChange={(e) => patch({ parent_id: e.target.value || null })}
           >
@@ -156,12 +156,12 @@ export function UnitForm({
             max={100000}
             value={draft.capacity}
             onChange={(e) => patch({ capacity: Number(e.target.value) })}
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
           />
         </Field>
         <Field label="Oda tipi / düzeni">
           <input
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.type}
             onChange={(e) => patch({ type: e.target.value })}
             placeholder="2+1, stüdyo, aile…"
@@ -171,7 +171,7 @@ export function UnitForm({
           <>
             <Field label="Ranza grubu (isteğe bağlı)">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 disabled
                 value={draft.bed_group}
                 onChange={(e) => patch({ bed_group: e.target.value })}
@@ -180,7 +180,7 @@ export function UnitForm({
             </Field>
             <Field label="Yatak seviyesi">
               <input
-                className={inputStyle}
+                className={`uni-input ${inputStyle}`}
                 type="number"
                 min={1}
                 max={10}
@@ -195,7 +195,7 @@ export function UnitForm({
       {draft.kind !== "bed" && (
         <Field label="Oda yatak düzeni">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={draft.bed_layout || ""}
             onChange={(e) => patch({ bed_layout: e.target.value })}
           >
@@ -235,7 +235,7 @@ export function UnitForm({
           >
             <input
               type="number"
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={draft.position[key]}
               onChange={(e) =>
                 patch({
@@ -251,7 +251,7 @@ export function UnitForm({
       </div>
       <Field label="Açıklama dili">
         <select
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
         >
@@ -262,7 +262,7 @@ export function UnitForm({
       </Field>
       <Field label={`Açıklama (${language})`}>
         <textarea
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={draft.description?.[language] || ""}
           onChange={(e) =>
             patch({
@@ -285,7 +285,7 @@ export function UnitForm({
         languages={snapshot.languages}
         onBusy={setUploading}
       />
-      <button disabled={busy || uploading} className={buttonStyle}>
+      <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
         {busy ? "Kaydediliyor…" : "Birimi Kaydet"}
       </button>
     </form>
@@ -339,7 +339,7 @@ export function FloorForm({
       <Field label="Kat kodu">
         <input
           required
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={draft.code}
           onChange={(e) => setDraft({ ...draft, code: e.target.value })}
         />
@@ -347,7 +347,7 @@ export function FloorForm({
       <div className="flex gap-2">
         <select
           aria-label="Kat adı dili"
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
         >
@@ -369,7 +369,7 @@ export function FloorForm({
         <input
           aria-label="Kat adı"
           placeholder={`Kat adı (${language})`}
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={draft.label?.[language] || ""}
           onChange={(e) =>
             setDraft({
@@ -388,7 +388,7 @@ export function FloorForm({
             <input
               type="number"
               required
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={draft[key]}
               onChange={(e) =>
                 setDraft({ ...draft, [key]: Number(e.target.value) })
@@ -397,7 +397,7 @@ export function FloorForm({
           </Field>
         ))}
       </div>
-      <button disabled={busy} className={buttonStyle}>
+      <button disabled={busy} className={`uni-control ${buttonStyle}`}>
         Katı Kaydet
       </button>
     </form>
@@ -493,7 +493,7 @@ export function FacilityForm({
           >
             <input
               required={key === "name"}
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={draft[key]}
               onChange={(e) => setDraft({ ...draft, [key]: e.target.value })}
             />
@@ -502,7 +502,7 @@ export function FacilityForm({
       </div>
       <Field label="Açıklama dili">
         <select
-          className={inputStyle}
+          className={`uni-input ${inputStyle}`}
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
         >
@@ -513,7 +513,7 @@ export function FacilityForm({
       </Field>
       <textarea
         aria-label="Tesis açıklaması"
-        className={inputStyle}
+        className={`uni-input ${inputStyle}`}
         value={draft.description?.[language] || ""}
         onChange={(e) =>
           setDraft({
@@ -540,7 +540,7 @@ export function FacilityForm({
         languages={snapshot.languages}
         onBusy={setUploading}
       />
-      <button disabled={busy || uploading} className={buttonStyle}>
+      <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
         Kaydet
       </button>
     </form>
@@ -597,7 +597,7 @@ export function BulkUnitForm({
       <div className="grid grid-cols-2 gap-4">
         <Field label="Kat">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={floor}
             onChange={(e) => setFloor(e.target.value)}
           >
@@ -611,7 +611,7 @@ export function BulkUnitForm({
         </Field>
         <Field label="Üst birim">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={parent}
             onChange={(e) => setParent(e.target.value)}
           >
@@ -627,7 +627,7 @@ export function BulkUnitForm({
         </Field>
         <Field label="Tür">
           <select
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={kind}
             onChange={(e) => setKind(e.target.value)}
           >
@@ -641,7 +641,7 @@ export function BulkUnitForm({
         <Field label="Kod ön eki">
           <input
             required
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={prefix}
             onChange={(e) => setPrefix(e.target.value)}
           />
@@ -652,7 +652,7 @@ export function BulkUnitForm({
             min={1}
             max={1000}
             type="number"
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={count}
             onChange={(e) => setCount(Number(e.target.value))}
           />
@@ -662,7 +662,7 @@ export function BulkUnitForm({
             min={1}
             required
             type="number"
-            className={inputStyle}
+            className={`uni-input ${inputStyle}`}
             value={capacity}
             onChange={(e) => setCapacity(Number(e.target.value))}
           />
@@ -674,14 +674,14 @@ export function BulkUnitForm({
               type="number"
               min={1}
               max={10}
-              className={inputStyle}
+              className={`uni-input ${inputStyle}`}
               value={levels}
               onChange={(e) => setLevels(Number(e.target.value))}
             />
           </Field>
         )}
       </div>
-      <button className={buttonStyle} disabled={busy}>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
         {busy ? "Oluşturuluyor…" : `${count} Birimi Oluştur`}
       </button>
     </form>

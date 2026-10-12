@@ -13,10 +13,12 @@ type Config struct {
 	DatabaseURL, JWTSecret, Address, Origin, UIAddress, UIURL, DataDir string
 	SecureCookies                                                      bool
 	SkipUI                                                             bool
+	UIDev                                                              bool
 }
 
 func Load() (Config, error) {
 	c := Config{DatabaseURL: os.Getenv("DATABASE_URL"), JWTSecret: os.Getenv("JWT_SECRET"), DataDir: value("DATA_DIR", "data"), SkipUI: os.Getenv("SKIP_UI") == "true"}
+	c.UIDev = !strings.EqualFold(os.Getenv("APP_ENV"), "production")
 	port := value("PORT", "3000")
 	uiPort := value("UI_PORT", "3001")
 	for _, p := range []string{port, uiPort} {
