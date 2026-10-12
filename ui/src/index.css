@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue-50: #f0f7ff;
+  --color-brand-blue-100: #e0effe;
+  --color-brand-blue-200: #bae0fd;
+  --color-brand-blue-300: #7cc7fb;
+  --color-brand-blue-400: #38a9f8;
+  --color-brand-blue-500: #0ea5e9;
+  --color-brand-blue-600: #028ac7;
+  --color-brand-blue-700: #036e9f;
+  --color-brand-blue-800: #075c83;
+  --color-brand-blue-900: #0c4d6d;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-slate-100 text-slate-800 antialiased;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+}

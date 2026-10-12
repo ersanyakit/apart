@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+/data/
+/ui/node_modules/
+/ui/.next/
+/ui/out/
+/ui/dist/
+/ui/*.tsbuildinfo
+*.test
+coverage.out
+/ui/test-results/
+/ui/playwright-report/

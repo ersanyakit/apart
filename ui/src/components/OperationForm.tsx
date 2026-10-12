@@ -1,0 +1,984 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  X,
+  User,
+  Phone,
+  CreditCard,
+  Clock,
+  Save,
+  ArrowLeft,
+  ClipboardList,
+  Hotel,
+  Repeat,
+  AlertCircle,
+  Banknote,
+  Send,
+  Building2,
+  FileText,
+  Wallet,
+  History,
+  Search,
+} from "lucide-react";
+
+const MOCK_HISTORY = [
+  { name: "ERSAN YAKİT", phone: "0532 111 22 33", tcNo: "11122233344" },
+  { name: "MEHMET DEMİR", phone: "0544 555 66 77", tcNo: "55566677788" },
+  { name: "AYŞE YILMAZ", phone: "0505 888 99 00", tcNo: "99900011122" },
+  { name: "FATMA KAYA", phone: "0533 333 44 55", tcNo: "33344455566" },
+];
+import { Room, RoomStatus } from "../types";
+import { DateTimePicker } from "./DateTimePicker";
+
+interface OperationFormProps {
+  room: Room;
+  type: "reserve" | "sale" | "checkout" | "exchange";
+  availableRooms?: Room[];
+  onConfirm: (roomId: string, newStatus: RoomStatus, data: any) => void;
+  onCancel: () => void;
+}
+
+export const OperationForm: React.FC<OperationFormProps> = ({
+  room,
+  type,
+  availableRooms = [],
+  onConfirm,
+  onCancel,
+}) => {
+  const [formError, setFormError] = React.useState("");
+  const [formData, setFormData] = useState({
+    customerName: room.name || "",
+    phone: "",
+    checkIn: room.checkIn ? new Date(room.checkIn) : new Date(),
+    checkOut: room.checkOut
+      ? new Date(room.checkOut)
+      : new Date(Date.now() + 86400000),
+    price: 0 || "450.00",
+    notes: "",
+    targetRoomId: "",
+    paymentType: "Nakit",
+    isDeposit: false,
+    depositAmount: "0.00",
+    guests: room.guests || [
+      { id: "1", name: room.name || "", tcNo: "", phone: "", note: "" },
+    ],
+  });
+
+  const [showHistory, setShowHistory] = useState(false);
+  const [historySearch, setHistorySearch] = useState("");
+
+  const selectFromHistory = (guest: any) => {
+    updateGuest(formData.guests[0].id, "name", guest.name);
+    updateGuest(formData.guests[0].id, "tcNo", guest.tcNo);
+    updateGuest(formData.guests[0].id, "phone", guest.phone);
+    setFormData((prev) => ({
+      ...prev,
+      customerName: guest.name,
+      phone: guest.phone,
+    }));
+    setShowHistory(false);
+  };
+
+  const addGuest = () => {
+    const newGuest = {
+      id: Math.random().toString(36).substr(2, 9),
+      name: "",
+      tcNo: "",
+      phone: "",
+      note: "",
+    };
+    setFormData((prev) => ({
+      ...prev,
+      guests: [...prev.guests, newGuest],
+    }));
+  };
+
+  const removeGuest = (id: string) => {
+    if (formData.guests.length <= 1) return;
+    setFormData((prev) => ({
+      ...prev,
+      guests: prev.guests.filter((g) => g.id !== id),
+    }));
+  };
+
+  const updateGuest = (id: string, field: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      guests: prev.guests.map((g) =>
+        g.id === id ? { ...g, [field]: value } : g,
+      ),
+    }));
+  };
+
+  const paymentMethods = [
+    { id: "Nakit", label: "NAKİT", icon: <Banknote className="w-3 h-3" /> },
+    {
+      id: "Kredi Kartı",
+      label: "K. KARTI",
+      icon: <CreditCard className="w-3 h-3" />,
+    },
+    { id: "Havale", label: "HAVALE", icon: <Send className="w-3 h-3" /> },
+    { id: "Şirket", label: "ŞİRKET", icon: <Building2 className="w-3 h-3" /> },
+  ];
+
+  const titles = {
+    reserve: "Rezervasyon Kaydı",
+    sale: "Hızlı Satış",
+    checkout: "Misafir Çıkış",
+    exchange: "Oda Değişimi",
+  };
+
+  const operationColors = {
+    reserve: "text-emerald-600 bg-emerald-50",
+    sale: "text-brand-blue-600 bg-brand-blue-50",
+    checkout: "text-rose-600 bg-rose-50",
+    exchange: "text-amber-600 bg-amber-50",
+  };
+
+  const operationIcons = {
+    reserve: <ClipboardList className="w-5 h-5 text-emerald-600" />,
+    sale: <CreditCard className="w-5 h-5 text-brand-blue-600" />,
+    checkout: <Clock className="w-5 h-5 text-rose-600" />,
+    exchange: <Repeat className="w-5 h-5 text-amber-600" />,
+  };
+
+  const getConfirmationMessage = () => {
+    if (type === "exchange") {
+      const targetRoom = availableRooms.find(
+        (r) => r.id === formData.targetRoomId,
+      );
+      return `ODA ${room.number} kaydını ODA ${targetRoom?.number} üzerine aktarmak istediğinize emin misiniz?`;
+    }
+    if (type === "checkout")
+      return `ODA ${room.number} için check-out işlemini onaylıyor musunuz? Odadaki tüm misafir kayıtları silinecektir.`;
+    if (type === "reserve")
+      return `${formData.customerName} adına oda ${room.number} için rezervasyon kaydı yapılacaktır.`;
+    return `${formData.customerName} adına oda ${room.number} için satış işlemi (check-in) yapılacaktır.`;
+  };
+
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  const handleConfirm = () => {
+    if (isConfirming) {
+      const statusMap: Record<string, RoomStatus> = {
+        reserve: "Rezervli",
+        sale: "Dolu",
+        checkout: "Temiz",
+        exchange: room.status,
+      };
+
+      onConfirm(room.id, statusMap[type], {
+        ...formData,
+        checkIn: formData.checkIn.toISOString(),
+        checkOut: formData.checkOut.toISOString(),
+      });
+      setIsConfirming(false);
+    } else {
+      if (type === "exchange" && !formData.targetRoomId) {
+        setFormError("Lütfen hedef odayı seçiniz.");
+        return;
+      }
+      setIsConfirming(true);
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex-1 flex flex-col bg-slate-50/50 overflow-hidden h-full"
+    >
+      {formError && (
+        <p role="alert" className="p-4 text-sm text-red-600">
+          {formError}
+        </p>
+      )}
+      {/* Header Bar */}
+      <div className="bg-white border-b border-slate-200 px-4 md:px-6 py-2.5 md:py-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sticky top-0 z-10 shadow-sm">
+        <div className="flex items-center gap-3 md:gap-4">
+          <button
+            onClick={onCancel}
+            className="p-2 hover:bg-slate-100 rounded-lg text-slate-400 hover:text-slate-900 transition-all border border-slate-100 shadow-sm shrink-0"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div>
+            <h2 className="text-base md:text-lg font-black text-slate-800 tracking-tight flex items-center gap-2">
+              {operationIcons[type]}
+              {titles[type]}
+            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-0">
+              <span
+                className={`text-[10px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded self-start ${operationColors[type]}`}
+              >
+                SYSTEM
+              </span>
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                ODA:{" "}
+                <span className="text-slate-900 font-black">
+                  #{room.number}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 w-full md:w-auto">
+          {(type === "reserve" || type === "sale") && (
+            <button
+              onClick={() => {
+                window.print();
+                setFormError("Belge işlemlerini oda menüsünden açabilirsiniz.");
+              }}
+              className="flex-1 md:flex-none px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-200 transition-all shadow-sm active:scale-95 uppercase tracking-widest flex items-center gap-2"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              DEKONT AL
+            </button>
+          )}
+          <button
+            onClick={onCancel}
+            className="flex-1 md:flex-none px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-[11px] font-black text-slate-500 hover:bg-slate-50 transition-all shadow-sm active:scale-95 uppercase tracking-widest"
+          >
+            İPTAL
+          </button>
+          <button
+            onClick={handleConfirm}
+            className={`flex-[2] md:flex-none px-5 py-2 rounded-lg text-[11px] font-black text-white shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 uppercase tracking-widest ${
+              type === "checkout"
+                ? "bg-rose-600 shadow-rose-200"
+                : "bg-brand-blue-600 shadow-brand-blue-200"
+            }`}
+          >
+            <Save className="w-3.5 h-3.5" />
+            KAYDI ONAYLA
+          </button>
+        </div>
+      </div>
+
+      {/* Confirmation Modal Overlays */}
+      <AnimatePresence>
+        {isConfirming && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-[40px] p-10 max-w-md w-full shadow-2xl border-2 border-brand-blue-100/50 text-center relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 right-0 h-2 flex">
+                <div className="flex-1 bg-brand-blue-600" />
+                <div className="flex-1 bg-brand-blue-400" />
+                <div className="flex-1 bg-brand-blue-200" />
+              </div>
+
+              <div className="w-20 h-20 bg-brand-blue-50 rounded-[32px] flex items-center justify-center text-brand-blue-600 mx-auto mb-8 shadow-inner">
+                <AlertCircle className="w-10 h-10" />
+              </div>
+
+              <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-4">
+                İŞLEM ONAYI
+              </h4>
+              <p className="text-sm text-slate-500 font-medium leading-relaxed mb-10 italic">
+                {getConfirmationMessage()}
+              </p>
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setIsConfirming(false)}
+                  className="flex-1 py-4 text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] hover:text-slate-600 transition-all"
+                >
+                  VAZGEÇ
+                </button>
+                <button
+                  onClick={handleConfirm}
+                  className="flex-2 py-4 bg-brand-blue-600 text-white rounded-[20px] text-[11px] font-black uppercase tracking-[0.2em] shadow-xl shadow-brand-blue-100 hover:bg-brand-blue-700 transition-all active:scale-95"
+                >
+                  EVET, ONAYLIYORUM
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Form Content Area */}
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 bg-slate-50/50 custom-scrollbar">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
+            {/* Left Column: Form Sections (8 Units) */}
+            <div className="lg:col-span-8 space-y-3">
+              {/* Combined Info Section */}
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+              >
+                {type === "exchange" && (
+                  <div className="p-5 bg-amber-50 border-2 border-amber-200 rounded-3xl mb-6 shadow-inner">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Repeat className="w-5 h-5 text-amber-600" />
+                      <label className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em]">
+                        HEDEF ODA SEÇİMİ (TRANSFER EDİLECEK ODA)
+                      </label>
+                    </div>
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2.5">
+                      {availableRooms.map((targetRoom) => (
+                        <button
+                          key={targetRoom.id}
+                          type="button"
+                          onClick={() =>
+                            setFormData({
+                              ...formData,
+                              targetRoomId: targetRoom.id,
+                            })
+                          }
+                          className={`flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all gap-1 h-20 shadow-sm ${
+                            formData.targetRoomId === targetRoom.id
+                              ? "bg-amber-500 border-amber-600 text-white shadow-lg ring-4 ring-amber-500/10 scale-105 z-10"
+                              : "bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-600"
+                          }`}
+                        >
+                          <span className="text-[13px] font-black tracking-tight">
+                            #{targetRoom.number}
+                          </span>
+                          <span className="text-[9px] font-bold uppercase tracking-tighter opacity-80">
+                            {targetRoom.type}
+                          </span>
+                        </button>
+                      ))}
+                      {availableRooms.length === 0 && (
+                        <div className="col-span-full py-8 text-center bg-white/50 rounded-2xl border-2 border-dashed border-amber-200">
+                          <AlertCircle className="w-8 h-8 text-amber-300 mx-auto mb-2" />
+                          <p className="text-[10px] font-black text-amber-400 uppercase tracking-widest">
+                            MÜSAİT ODA BULUNAMADI
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-x-4 gap-y-3">
+                  {/* Guest Info */}
+                  <div className="md:col-span-7 space-y-1 relative">
+                    <div className="flex items-center justify-between ml-0.5">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                        AD SOYAD / ÜNVAN
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowHistory(!showHistory)}
+                        className={`flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-tight transition-all ${
+                          showHistory
+                            ? "bg-brand-blue-600 text-white shadow-md"
+                            : "bg-brand-blue-50 text-brand-blue-600 hover:bg-brand-blue-100"
+                        }`}
+                      >
+                        <History className="w-2.5 h-2.5" />
+                        GEÇMİŞTEN GETİR
+                      </button>
+                    </div>
+                    <div className="relative group">
+                      <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
+                      <input
+                        type="text"
+                        value={formData.customerName || ""}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            customerName: e.target.value,
+                          })
+                        }
+                        placeholder="MİSAFİR İSMİ..."
+                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-300"
+                      />
+                    </div>
+
+                    {/* History Popover */}
+                    <AnimatePresence>
+                      {showHistory && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className="absolute left-0 right-0 top-[calc(100%+4px)] bg-white rounded-3xl shadow-2xl border-2 border-brand-blue-100 z-50 overflow-hidden"
+                        >
+                          <div className="p-3 border-b border-slate-100 bg-slate-50/50">
+                            <div className="relative">
+                              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
+                              <input
+                                type="text"
+                                autoFocus
+                                value={historySearch}
+                                onChange={(e) =>
+                                  setHistorySearch(e.target.value)
+                                }
+                                placeholder="İSİM, TELEFON VEYA TC ARA..."
+                                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500 placeholder:text-slate-300 shadow-inner"
+                              />
+                            </div>
+                          </div>
+                          <div className="max-h-[280px] overflow-y-auto custom-scrollbar py-2">
+                            {MOCK_HISTORY.filter(
+                              (h) =>
+                                h.name
+                                  .toLowerCase()
+                                  .includes(historySearch.toLowerCase()) ||
+                                h.tcNo.includes(historySearch) ||
+                                h.phone.includes(historySearch),
+                            ).length > 0 ? (
+                              MOCK_HISTORY.filter(
+                                (h) =>
+                                  h.name
+                                    .toLowerCase()
+                                    .includes(historySearch.toLowerCase()) ||
+                                  h.tcNo.includes(historySearch) ||
+                                  h.phone.includes(historySearch),
+                              ).map((guest, idx) => (
+                                <button
+                                  key={idx}
+                                  type="button"
+                                  onClick={() => selectFromHistory(guest)}
+                                  className="w-full px-4 py-3 hover:bg-slate-50 text-left border-b border-slate-50 last:border-0 group transition-all"
+                                >
+                                  <div className="flex justify-between items-center">
+                                    <div className="flex items-center gap-3">
+                                      <div className="w-9 h-9 bg-brand-blue-50 text-brand-blue-600 rounded-xl flex items-center justify-center font-black text-xs">
+                                        {guest.name.charAt(0)}
+                                      </div>
+                                      <div>
+                                        <p className="text-xs font-black text-slate-800 uppercase leading-none mb-1">
+                                          {guest.name}
+                                        </p>
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                                            {guest.phone}
+                                          </span>
+                                          <div className="w-1 h-1 bg-slate-200 rounded-full" />
+                                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                                            TC: {guest.tcNo}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+                                      <span className="text-[9px] font-black text-brand-blue-600 bg-brand-blue-50 px-2 py-1 rounded-lg uppercase tracking-widest">
+                                        SEÇ
+                                      </span>
+                                    </div>
+                                  </div>
+                                </button>
+                              ))
+                            ) : (
+                              <div className="py-10 px-4 text-center">
+                                <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-3 text-slate-300">
+                                  <Search size={20} />
+                                </div>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                  ARANAN MİSAFİR BULUNAMADI
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                          <div className="p-3 bg-brand-blue-600 text-white text-[9px] font-black uppercase tracking-[0.2em] text-center">
+                            MERKEZİ MİSAFİR VERİTABANI
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="md:col-span-5 space-y-1">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
+                      TELEFON
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
+                      <input
+                        type="tel"
+                        value={formData.phone || ""}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
+                        placeholder="05xx..."
+                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Planning */}
+                  <div className="md:col-span-6">
+                    <DateTimePicker
+                      label="GİRİŞ"
+                      value={formData.checkIn}
+                      onChange={(date) =>
+                        setFormData({ ...formData, checkIn: date })
+                      }
+                    />
+                  </div>
+                  <div className="md:col-span-6">
+                    <DateTimePicker
+                      label="ÇIKIŞ"
+                      value={formData.checkOut}
+                      onChange={(date) =>
+                        setFormData({ ...formData, checkOut: date })
+                      }
+                    />
+                  </div>
+                </div>
+              </motion.section>
+
+              {/* Financial & Details Combined */}
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                  <div className="md:col-span-4 space-y-1">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
+                      BİRİM FİYAT
+                    </label>
+                    <div className="relative">
+                      <CreditCard className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
+                      <input
+                        type="number"
+                        value={formData.price}
+                        onChange={(e) =>
+                          setFormData({ ...formData, price: e.target.value })
+                        }
+                        className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-black text-slate-800 outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-8 flex flex-col gap-1">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
+                      ÖDEME YÖNTEMİ
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5 w-full">
+                      {paymentMethods.map((method) => (
+                        <button
+                          key={method.id}
+                          type="button"
+                          onClick={() =>
+                            setFormData({ ...formData, paymentType: method.id })
+                          }
+                          className={`flex flex-col items-center justify-center py-2.5 rounded-xl border transition-all gap-1.5 ${
+                            formData.paymentType === method.id
+                              ? "bg-brand-blue-600 border-brand-blue-600 text-white shadow-md shadow-brand-blue-100 ring-4 ring-brand-blue-500/5"
+                              : "bg-slate-50 border-slate-200 text-slate-400 hover:border-slate-300 hover:bg-white hover:text-slate-600"
+                          }`}
+                        >
+                          <span
+                            className={`${formData.paymentType === method.id ? "opacity-100" : "opacity-40"}`}
+                          >
+                            {method.icon}
+                          </span>
+                          <span className="text-[9px] font-black tracking-tighter">
+                            {method.label}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {type === "reserve" && (
+                    <div
+                      className={`md:col-span-12 p-4 rounded-xl border transition-all ${
+                        formData.isDeposit
+                          ? "bg-emerald-50/50 border-emerald-200 ring-1 ring-emerald-100"
+                          : "bg-slate-50 border-slate-200"
+                      }`}
+                    >
+                      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shadow-sm ${
+                              formData.isDeposit
+                                ? "bg-emerald-600 text-white shadow-emerald-200"
+                                : "bg-white text-slate-400 border border-slate-100"
+                            }`}
+                          >
+                            <Wallet className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <p
+                              className={`text-xs font-black uppercase tracking-tight ${formData.isDeposit ? "text-emerald-900" : "text-slate-600"}`}
+                            >
+                              ÖN ÖDEME / KAPORA
+                            </p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                              KAYIT SIRASINDA ALINAN TUTAR
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex bg-white rounded-xl p-1 border border-slate-200/60 shadow-inner">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFormData({ ...formData, isDeposit: false })
+                              }
+                              className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                                !formData.isDeposit
+                                  ? "bg-slate-100 text-slate-600 shadow-sm"
+                                  : "text-slate-400 hover:text-slate-500"
+                              }`}
+                            >
+                              YOK
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setFormData({ ...formData, isDeposit: true })
+                              }
+                              className={`px-4 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                                formData.isDeposit
+                                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-100"
+                                  : "text-slate-400 hover:text-slate-500"
+                              }`}
+                            >
+                              ALINDI
+                            </button>
+                          </div>
+
+                          {formData.isDeposit && (
+                            <motion.div
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className="relative group min-w-[140px]"
+                            >
+                              <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
+                                <span className="text-[10px] font-black text-emerald-600 uppercase">
+                                  TL
+                                </span>
+                                <div className="w-px h-3 bg-emerald-200" />
+                              </div>
+                              <input
+                                type="number"
+                                value={formData.depositAmount}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    depositAmount: e.target.value,
+                                  })
+                                }
+                                className="w-full pl-12 pr-4 py-2 bg-white border border-emerald-200 rounded-xl text-sm font-black text-emerald-700 outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all shadow-sm"
+                                placeholder="0.00"
+                              />
+                            </motion.div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Notes Section moved here for better flow */}
+                  <div className="md:col-span-12 space-y-1">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
+                      NOTLAR / ÖZEL İSTEKLER
+                    </label>
+                    <textarea
+                      rows={2}
+                      placeholder="Misafir ile ilgili ek bilgiler..."
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-brand-blue-500 transition-all"
+                      value={formData.notes || ""}
+                      onChange={(e) =>
+                        setFormData({ ...formData, notes: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+              </motion.section>
+
+              {/* Guest List Section */}
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-white p-4 rounded-xl shadow-sm border border-slate-200/60"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400">
+                      <User className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase">
+                      MİSAFİR LİSTESİ
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={addGuest}
+                    className="px-3 py-1.5 bg-brand-blue-50 text-brand-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-brand-blue-100 transition-all flex items-center gap-1.5"
+                  >
+                    <Save className="w-3 h-3 rotate-45" />
+                    YENİ EKLE
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {formData.guests.map((guest, index) => (
+                    <div
+                      key={guest.id}
+                      className="p-3 bg-slate-50 border border-slate-100 rounded-xl relative group"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
+                        <div className="md:col-span-5 space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                            AD SOYAD
+                          </label>
+                          <input
+                            type="text"
+                            value={guest.name || ""}
+                            onChange={(e) =>
+                              updateGuest(
+                                guest.id,
+                                "name",
+                                e.target.value.toUpperCase(),
+                              )
+                            }
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none uppercase"
+                            placeholder="MİSAFİR ADI..."
+                          />
+                        </div>
+                        <div className="md:col-span-3 space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                            TC NO / PASAPORT
+                          </label>
+                          <input
+                            type="text"
+                            maxLength={11}
+                            value={guest.tcNo || ""}
+                            onChange={(e) =>
+                              updateGuest(
+                                guest.id,
+                                "tcNo",
+                                e.target.value.replace(/\D/g, ""),
+                              )
+                            }
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
+                            placeholder="KİMLİK NO"
+                          />
+                        </div>
+                        <div className="md:col-span-3 space-y-1">
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
+                            TELEFON
+                          </label>
+                          <input
+                            type="text"
+                            value={guest.phone || ""}
+                            onChange={(e) =>
+                              updateGuest(guest.id, "phone", e.target.value)
+                            }
+                            className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
+                            placeholder="05xx..."
+                          />
+                        </div>
+                        <div className="md:col-span-1 flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => removeGuest(guest.id)}
+                            className={`p-2 rounded-lg text-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-all ${formData.guests.length <= 1 ? "hidden" : ""}`}
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {/* Guest Note Field */}
+                        <div className="md:col-span-12 space-y-1 mt-1">
+                          <label className="text-[8px] font-black text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <FileText size={10} /> MİSAFİR ÖZEL NOTU (TERCİHLER,
+                            ALERJİLER VB.)
+                          </label>
+                          <input
+                            type="text"
+                            value={guest.note || ""}
+                            onChange={(e) =>
+                              updateGuest(guest.id, "note", e.target.value)
+                            }
+                            className="w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-300"
+                            placeholder="Bu misafir için özel bir not yazın..."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.section>
+            </div>
+
+            {/* Right Column: Order Summary (4 Units) */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="lg:col-span-4 space-y-3 lg:sticky lg:top-16"
+            >
+              <div className="bg-white rounded-xl shadow-xl shadow-slate-200/20 border border-slate-200 overflow-hidden">
+                <div
+                  className={`p-4 relative overflow-hidden ${
+                    type === "checkout"
+                      ? "bg-rose-600"
+                      : type === "reserve"
+                        ? "bg-emerald-600"
+                        : "bg-brand-blue-700"
+                  } text-white`}
+                >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl opacity-50" />
+                  <h3 className="text-[9px] font-black text-white/50 uppercase tracking-[0.2em] mb-4 relative z-10">
+                    ÖZET
+                  </h3>
+
+                  <div className="flex justify-between items-center relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center font-black bg-white/10 border border-white/20">
+                        <span className="text-[8px] opacity-60 font-bold uppercase tracking-tighter">
+                          ODA
+                        </span>
+                        <span className="text-base">{room.number}</span>
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-black uppercase truncate">
+                          {room.type}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-base font-black leading-none">
+                        {Number(formData.price).toLocaleString("tr-TR", {
+                          minimumFractionDigits: 2,
+                        })}{" "}
+                        TL
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 space-y-4 bg-white">
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
+                      <span className="uppercase tracking-widest text-[9px]">
+                        KONAKLAMA SÜRESİ
+                      </span>
+                      <span className="text-slate-900 font-black">2 GECE</span>
+                    </div>
+                    <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
+                      <span className="uppercase tracking-widest text-[9px]">
+                        GÜNLÜK BİRİM FİYAT
+                      </span>
+                      <span className="text-slate-700 font-bold">
+                        {Number(formData.price).toLocaleString("tr-TR", {
+                          minimumFractionDigits: 2,
+                        })}{" "}
+                        TL
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
+                      <span className="uppercase tracking-widest text-[9px]">
+                        HİZMET TOPLAMI (KDV HARİÇ)
+                      </span>
+                      <span className="text-slate-700 font-bold">
+                        {(Number(formData.price) * 2).toLocaleString("tr-TR", {
+                          minimumFractionDigits: 2,
+                        })}{" "}
+                        TL
+                      </span>
+                    </div>
+                    {formData.isDeposit && (
+                      <div className="flex justify-between items-center text-[10px] font-black text-emerald-600 border-b border-emerald-100 bg-emerald-50/30 -mx-1 px-1 py-1 rounded">
+                        <span className="uppercase tracking-widest text-[9px]">
+                          TAHSİL EDİLEN KAPORA
+                        </span>
+                        <span className="font-black">
+                          -
+                          {Number(formData.depositAmount).toLocaleString(
+                            "tr-TR",
+                            { minimumFractionDigits: 2 },
+                          )}{" "}
+                          TL
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center text-[10px] font-black text-indigo-400">
+                      <span className="uppercase tracking-widest text-[9px]">
+                        KDV (%20)
+                      </span>
+                      <span className="text-indigo-600 font-bold text-[11px]">
+                        {(Number(formData.price) * 2 * 0.2).toLocaleString(
+                          "tr-TR",
+                          { minimumFractionDigits: 2 },
+                        )}{" "}
+                        TL
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t-2 border-slate-100 mt-4 bg-slate-50 -mx-4 px-4 py-4">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
+                        TOPLAM BAKİYE
+                      </span>
+                      <span className="text-[10px] font-black text-brand-blue-600 bg-brand-blue-50 px-2 py-0.5 rounded uppercase">
+                        {formData.paymentType}
+                      </span>
+                    </div>
+                    <div className="flex items-baseline justify-end gap-1">
+                      <span className="text-3xl font-black text-slate-900 tracking-tighter">
+                        {
+                          (
+                            Number(formData.price) * 2 * 1.2 -
+                            (formData.isDeposit
+                              ? Number(formData.depositAmount)
+                              : 0)
+                          )
+                            .toLocaleString("tr-TR", {
+                              minimumFractionDigits: 0,
+                            })
+                            .split(",")[0]
+                        }
+                      </span>
+                      <span className="text-lg font-black text-slate-400">
+                        ,
+                        {(
+                          Number(formData.price) * 2 * 1.2 -
+                          (formData.isDeposit
+                            ? Number(formData.depositAmount)
+                            : 0)
+                        )
+                          .toLocaleString("tr-TR", { minimumFractionDigits: 2 })
+                          .split(",")[1] || "00"}
+                      </span>
+                      <span className="text-sm font-black text-slate-500 ml-1 uppercase">
+                        TL
+                      </span>
+                    </div>
+                  </div>
+
+                  {formData.notes && (
+                    <div className="mt-4 p-3 bg-amber-50 border border-amber-100 rounded-xl">
+                      <p className="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                        <AlertCircle size={10} /> GENEL REZERVASYON NOTU
+                      </p>
+                      <p className="text-[11px] text-amber-800 font-medium italic leading-relaxed">
+                        "{formData.notes}"
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
