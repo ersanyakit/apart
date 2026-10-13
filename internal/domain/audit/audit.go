@@ -41,16 +41,18 @@ type Entry struct {
 	Details   map[string]any `json:"details"`
 }
 type Query struct {
-	HotelID uuid.UUID  `json:"hotel_id"`
-	From    *time.Time `json:"from"`
-	To      *time.Time `json:"to"`
-	Action  string     `json:"action"`
-	Page    int        `json:"page"`
+	HotelID  uuid.UUID  `json:"hotel_id"`
+	From     *time.Time `json:"from"`
+	To       *time.Time `json:"to"`
+	Action   string     `json:"action"`
+	Page     int        `json:"page"`
+	PageSize int        `json:"page_size"`
 }
 type Page struct {
-	Items []Entry `json:"items"`
-	Total int64   `json:"total"`
-	Page  int     `json:"page"`
+	Items    []Entry `json:"items"`
+	Total    int64   `json:"total"`
+	Page     int     `json:"page"`
+	PageSize int     `json:"page_size"`
 }
 type Repository interface {
 	AuditLogs(context.Context, Query) (Page, error)

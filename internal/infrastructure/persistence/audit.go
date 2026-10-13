@@ -194,6 +194,9 @@ func (r *Repository) AuditLogs(ctx context.Context, q audit.Query) (audit.Page, 
 	if q.Page < 1 {
 		q.Page = 1
 	}
+	if q.PageSize != 25 && q.PageSize != 50 && q.PageSize != 100 {
+		q.PageSize = 100
+	}
 	query := r.db.WithContext(ctx).Model(&models.AuditLog{}).Where("hotel_id = ?", q.HotelID)
 	if q.From != nil {
 		query = query.Where("created_at >= ?", q.From)
@@ -204,12 +207,16 @@ func (r *Repository) AuditLogs(ctx context.Context, q audit.Query) (audit.Page, 
 	if q.Action != "" {
 		query = query.Where("action = ?", q.Action)
 	}
-	out := audit.Page{Items: []audit.Entry{}, Page: q.Page}
+	out := audit.Page{Items: []audit.Entry{}, Page: q.Page, PageSize: q.PageSize}
 	if err := query.Count(&out.Total).Error; err != nil {
 		return out, err
 	}
+	lastPage := max(1, int((out.Total+int64(q.PageSize)-1)/int64(q.PageSize)))
+	if out.Page > lastPage {
+		out.Page = lastPage
+	}
 	var rows []models.AuditLog
-	if err := query.Order("created_at DESC,id DESC").Limit(100).Offset((q.Page - 1) * 100).Find(&rows).Error; err != nil {
+	if err := query.Order("created_at DESC,id DESC").Limit(q.PageSize).Offset((out.Page - 1) * q.PageSize).Find(&rows).Error; err != nil {
 		return out, err
 	}
 	// Older entries remain immutable; missing labels are resolved for this response.

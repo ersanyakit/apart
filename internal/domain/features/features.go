@@ -38,23 +38,29 @@ type Category struct {
 	SortOrder  int                    `json:"sort_order"`
 }
 type Definition struct {
-	FeatureID    uuid.UUID                         `json:"feature_id"`
-	HotelID      uuid.UUID                         `json:"hotel_id"`
-	CategoryID   uuid.UUID                         `json:"category_id"`
-	Code         string                            `json:"code"`
-	Label        shared.LocalizedString            `json:"label"`
-	Description  shared.LocalizedString            `json:"description"`
-	Category     string                            `json:"category"`
-	Scopes       []Scope                           `json:"scopes"`
-	ValueType    ValueType                         `json:"value_type"`
-	Options      []string                          `json:"options,omitempty"`
-	OptionLabels map[string]shared.LocalizedString `json:"option_labels,omitempty"`
-	Filterable   bool                              `json:"filterable"`
-	Min          *float64                          `json:"min"`
-	Max          *float64                          `json:"max"`
-	Unit         string                            `json:"unit"`
-	Required     bool                              `json:"required"`
-	Assets       []media.Asset                     `json:"assets"`
+	CatalogKind   string                            `json:"catalog_kind,omitempty"`
+	IconKey       string                            `json:"icon_key,omitempty"`
+	CategoryLabel shared.LocalizedString            `json:"category_label,omitempty"`
+	GroupKey      string                            `json:"group_key,omitempty"`
+	GroupLabel    shared.LocalizedString            `json:"group_label,omitempty"`
+	SortOrder     int                               `json:"sort_order,omitempty"`
+	FeatureID     uuid.UUID                         `json:"feature_id"`
+	HotelID       uuid.UUID                         `json:"hotel_id"`
+	CategoryID    uuid.UUID                         `json:"category_id"`
+	Code          string                            `json:"code"`
+	Label         shared.LocalizedString            `json:"label"`
+	Description   shared.LocalizedString            `json:"description"`
+	Category      string                            `json:"category"`
+	Scopes        []Scope                           `json:"scopes"`
+	ValueType     ValueType                         `json:"value_type"`
+	Options       []string                          `json:"options,omitempty"`
+	OptionLabels  map[string]shared.LocalizedString `json:"option_labels,omitempty"`
+	Filterable    bool                              `json:"filterable"`
+	Min           *float64                          `json:"min"`
+	Max           *float64                          `json:"max"`
+	Unit          string                            `json:"unit"`
+	Required      bool                              `json:"required"`
+	Assets        []media.Asset                     `json:"assets"`
 }
 type Assignment struct {
 	OwnerType Scope           `json:"owner_type"`
@@ -253,6 +259,7 @@ func ValidateAssignments(registry []Definition, target Target, assignments []Ass
 type Repository interface {
 	Registry(context.Context, uuid.UUID) (Registry, error)
 	SaveCategory(context.Context, Category, bool) error
+	DeleteCategory(context.Context, uuid.UUID, uuid.UUID) error
 	SaveDefinition(context.Context, Definition, bool) error
 	DeleteDefinition(context.Context, uuid.UUID, uuid.UUID) error
 	Assign(context.Context, Target, []Assignment) error

@@ -18,21 +18,23 @@ import {
   type MediaAsset,
 } from "../lib/api";
 
+import { useI18n } from "./I18n";
+import { LocalizedTextFields } from "./fields";
+
 type Props = {
   value: MediaAsset[];
   onChange: (items: MediaAsset[]) => void;
   hotelId?: string;
-  languages: string[];
+  languages?: string[];
   onBusy?: (busy: boolean) => void;
 };
 export function MediaEditor({
   value,
   onChange,
   hotelId,
-  languages,
   onBusy,
 }: Props) {
-  const [language, setLanguage] = useState("TR");
+  const { locale } = useI18n();
   const [url, setURL] = useState("");
   const [kind, setKind] = useState<"image" | "video">("image");
   const [busy, setBusy] = useState(false);
@@ -63,20 +65,10 @@ export function MediaEditor({
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-xs font-black uppercase tracking-widest text-slate-500 flex items-center gap-2">
-          <Camera size={16} />
+        <h3 className="font-uninav-book flex items-center gap-2 text-[1.125rem] leading-6 text-slate-900">
+          <Camera size={16} aria-hidden="true" />
           Görsel ve Video Galerisi
         </h3>
-        <select
-          aria-label="Medya metinlerinin dili"
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-          className="uni-input rounded-xl border border-slate-200 p-2 text-xs font-bold"
-        >
-          {languages.map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
       </div>
       {error && (
         <p
@@ -139,21 +131,37 @@ export function MediaEditor({
         </p>
       )}
       <div className="flex gap-2">
-        <select
-          aria-label="Medya türü"
-          value={kind}
-          onChange={(e) => setKind(e.target.value as "image" | "video")}
-          className="uni-input rounded-xl border border-slate-200 px-2 text-xs"
-        >
-          <option value="image">Resim</option>
-          <option value="video">Video</option>
-        </select>
+        <div className="relative">
+          <select
+            aria-label="Medya türü"
+            value={kind}
+            onChange={(e) => setKind(e.target.value as "image" | "video")}
+            className="appearance-none rounded-xl bg-[#f9f9f9] py-2.5 pl-3 pr-9 text-xs font-bold text-slate-700 outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+          >
+            <option value="image">Resim</option>
+            <option value="video">Video</option>
+          </select>
+          <svg
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+            className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400"
+          >
+            <path
+              d="M4 6l4 4 4-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
         <input
           aria-label="Medya URL"
           value={url}
           onChange={(e) => setURL(e.target.value)}
           placeholder="https://…"
-          className="uni-input min-w-0 flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs"
+          className="min-w-0 flex-1 rounded-xl bg-[#f9f9f9] px-3 py-2 text-xs text-slate-800 outline-none placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-neutral-400"
         />
         <button
           type="button"
@@ -184,10 +192,10 @@ export function MediaEditor({
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {value.map((asset, index) => (
-          <article
-            key={asset.media_id || `${index}-${asset.url}`}
-            className="rounded-2xl border border-slate-200 bg-white overflow-hidden"
-          >
+            <article
+              key={asset.media_id || `${index}-${asset.url}`}
+              className="overflow-hidden rounded-[20px] bg-[#f9f9f9]"
+            >
             <div className="aspect-video bg-slate-100 relative">
               {asset.kind === "video" ? (
                 <video
@@ -199,7 +207,7 @@ export function MediaEditor({
               ) : (
                 <img
                   src={asset.url}
-                  alt={localized(asset.alt_text, language)}
+                  alt={localized(asset.alt_text, locale)}
                   className="w-full h-full object-cover"
                 />
               )}
@@ -212,42 +220,28 @@ export function MediaEditor({
                 {index + 1}
               </span>
             </div>
-            <div className="p-3 space-y-2">
-              <input
-                aria-label={`Medya ${index + 1} başlık ${language}`}
-                value={asset.title?.[language] || ""}
-                onChange={(e) =>
-                  update(index, {
-                    title: { ...asset.title, [language]: e.target.value },
-                  })
-                }
-                placeholder={`Başlık (${language})`}
-                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
+            <div className="p-3 space-y-3">
+              <LocalizedTextFields
+                compact
+                label="Başlık"
+                values={asset.title || {}}
+                onChange={(title) => update(index, { title })}
+                placeholder="Medya başlığı"
               />
-              <textarea
-                aria-label={`Medya ${index + 1} açıklama ${language}`}
-                value={asset.description?.[language] || ""}
-                onChange={(e) =>
-                  update(index, {
-                    description: {
-                      ...asset.description,
-                      [language]: e.target.value,
-                    },
-                  })
-                }
-                placeholder={`Açıklama (${language})`}
-                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
+              <LocalizedTextFields
+                compact
+                label="Açıklama"
+                values={asset.description || {}}
+                onChange={(description) => update(index, { description })}
+                multiline
+                placeholder="Medya açıklaması"
               />
-              <input
-                aria-label={`Medya ${index + 1} alternatif metin ${language}`}
-                value={asset.alt_text?.[language] || ""}
-                onChange={(e) =>
-                  update(index, {
-                    alt_text: { ...asset.alt_text, [language]: e.target.value },
-                  })
-                }
-                placeholder={`Alternatif metin (${language})`}
-                className="uni-input w-full rounded-lg border border-slate-100 p-2 text-xs"
+              <LocalizedTextFields
+                compact
+                label="Alternatif metin"
+                values={asset.alt_text || {}}
+                onChange={(alt_text) => update(index, { alt_text })}
+                placeholder="Erişilebilirlik metni"
               />
               <div className="flex gap-2 justify-end">
                 <button

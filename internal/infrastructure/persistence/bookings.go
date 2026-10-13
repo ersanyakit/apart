@@ -53,7 +53,7 @@ func (r *Repository) ListBookings(ctx context.Context, q booking.Query) ([]booki
 	for _, row := range rows {
 		out = append(out, fromBooking(row))
 	}
-	return out, nil
+	return out, translate(enrichBookingActors(r.db.WithContext(ctx), out))
 }
 func inventory(tx *gorm.DB, branchID uuid.UUID) ([]property.Room, error) {
 	var rows []models.Room
@@ -172,8 +172,8 @@ func (r *Repository) SaveBooking(ctx context.Context, b booking.Booking, create 
 		}
 		row.GuestDetails = toBooking(b).GuestDetails
 		row.Allocations = []models.BookingAllocation{a}
-		out = fromBooking(row)
-		return nil
+		out, err = loadBooking(tx, b.BranchID, b.BookingID)
+		return err
 	})
 	return out, translate(err)
 }
@@ -214,7 +214,12 @@ func updateCurrentStay(tx *gorm.DB, b, old booking.Booking) (booking.Booking, er
 func loadBooking(tx *gorm.DB, branch, id uuid.UUID) (booking.Booking, error) {
 	var row models.Booking
 	err := tx.Preload("Allocations", func(tx *gorm.DB) *gorm.DB { return tx.Order("start") }).First(&row, "booking_id = ? AND branch_id = ?", id, branch).Error
-	return fromBooking(row), err
+	if err != nil {
+		return booking.Booking{}, err
+	}
+	items := []booking.Booking{fromBooking(row)}
+	err = enrichBookingActors(tx, items)
+	return items[0], err
 }
 func persistBooking(tx *gorm.DB, b booking.Booking) error {
 	row := toBooking(b)
@@ -418,4 +423,48 @@ func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transi
 		return err
 	})
 	return out, translate(err)
+}
+
+// Resolve actors in one batch, including soft-deleted staff. Checkout attribution
+// comes from the immutable checkout event, never from the last booking editor.
+func enrichBookingActors(tx *gorm.DB, items []booking.Booking) error {
+	if len(items) == 0 {
+		return nil
+	}
+	ids := make([]uuid.UUID, len(items))
+	for i := range items {
+		ids[i] = items[i].BookingID
+	}
+	type actorRow struct {
+		BookingID        uuid.UUID
+		CreatedByName    string
+		CheckedOutByName string
+		CheckedOutByID   *uuid.UUID
+	}
+	var rows []actorRow
+	err := tx.Raw(`SELECT b.booking_id,
+		COALESCE(NULLIF(TRIM(creator.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', creator.first_name, creator.last_name)), ''), creator.user_name, '') AS created_by_name,
+		COALESCE(NULLIF(TRIM(departure.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', departure.first_name, departure.last_name)), ''), departure.user_name, '') AS checked_out_by_name,
+		checkout.actor_id AS checked_out_by_id
+		FROM bookings b JOIN branches p ON p.branch_id = b.branch_id
+		LEFT JOIN users creator ON creator.user_id = b.user_id
+		LEFT JOIN (
+			SELECT DISTINCT ON (entity_id, hotel_id) entity_id, hotel_id, actor_id
+			FROM audit_logs WHERE entity = 'bookings' AND action = 'check_out' AND entity_id IN ?
+			ORDER BY entity_id, hotel_id, created_at DESC, id DESC
+		) checkout ON checkout.entity_id = b.booking_id AND checkout.hotel_id = p.hotel_id AND b.status = 'completed'
+		LEFT JOIN users departure ON departure.user_id = checkout.actor_id
+		WHERE b.booking_id IN ?`, ids, ids).Scan(&rows).Error
+	if err != nil {
+		return err
+	}
+	actors := make(map[uuid.UUID]actorRow, len(rows))
+	for _, row := range rows {
+		actors[row.BookingID] = row
+	}
+	for i := range items {
+		a := actors[items[i].BookingID]
+		items[i].CreatedByName, items[i].CheckedOutByName, items[i].CheckedOutByID = a.CreatedByName, a.CheckedOutByName, a.CheckedOutByID
+	}
+	return nil
 }

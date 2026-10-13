@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/google/uuid"
 	"otel/constants"
+	"otel/internal/domain/audit"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/property"
@@ -133,7 +134,9 @@ func (s *Accommodation) Transition(ctx context.Context, u identity.User, input b
 	if _, err := s.Catalog.Branch(ctx, u, input.BranchID); err != nil {
 		return booking.Booking{}, err
 	}
-	return s.Bookings.TransitionBooking(ctx, input)
+	actor := audit.ActorFrom(ctx)
+	actor.UserID = u.UserID
+	return s.Bookings.TransitionBooking(audit.WithActor(ctx, actor), input)
 }
 func (s *Accommodation) Available(ctx context.Context, u identity.User, q booking.Availability) ([]property.Room, error) {
 	if _, err := s.Catalog.Branch(ctx, u, q.BranchID); err != nil {

@@ -154,8 +154,8 @@ export function OriginalShell({
         </span>
       </header>
       {/* Desktop tabs stay on desktop; mobile uses the tab bar below. */}
-      <header className="desktop-app-header hidden lg:flex h-16 min-w-0 items-center justify-between shrink-0 z-30 border-b border-black/[0.06] bg-white/90">
-        <div style={{ width: isSidebarOpen ? 264 : 76 }} className="flex min-w-0 items-center gap-2 px-3 border-r border-slate-100 h-full shrink-0 transition-[width] duration-200 motion-reduce:transition-none">
+      <header className="desktop-app-header hidden lg:flex h-16 min-w-0 items-center justify-between shrink-0 z-30 border-b border-black/[0.06]">
+        <div style={{ width: isSidebarOpen ? 264 : 76 }} className="flex min-w-0 items-center gap-2 px-3 h-full shrink-0 transition-[width] duration-200 motion-reduce:transition-none">
           <button
             type="button"
             aria-label={isSidebarOpen ? "Menüyü daralt" : "Menüyü genişlet"}
@@ -251,7 +251,7 @@ export function OriginalShell({
           </div>
         )}
 
-        <div className="flex items-center px-4 md:px-5 gap-3 md:gap-4 shrink-0 bg-white ml-auto">
+        <div className="flex items-center px-4 md:px-5 gap-3 md:gap-4 shrink-0 ml-auto">
           <button type="button" aria-label="Bildirimler" className="nav-icon-button text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50 relative">
             <NavigationIcon name="notifications" />
             <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 border border-white rounded-full"></span>
@@ -282,7 +282,7 @@ export function OriginalShell({
           animate={{ width: isSidebarOpen ? 264 : 76 }}
           transition={{ duration: reducedMotion ? 0 : 0.2, ease: "easeOut" }}
           aria-label="Ana menü"
-          className="desktop-sidebar hidden lg:flex min-h-0 bg-white border-r border-black/[0.06] flex-col z-20 shrink-0"
+          className="desktop-sidebar hidden lg:flex min-h-0 border-0 flex-col z-20 shrink-0"
         >
           {isSidebarOpen && (
             <div className="px-3 pb-2 pt-3 space-y-2">

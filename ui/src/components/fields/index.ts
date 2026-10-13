@@ -4,6 +4,8 @@ export { DateField } from "./DateField";
 export { GuestNameField, type PastGuest } from "./GuestNameField";
 export { NationalityField, CountryRow } from "./NationalityField";
 export { TextField, SelectField, TextAreaField } from "./TextFields";
+export { LocalizedTextFields, type LocalizedValues } from "./LocalizedTextFields";
+export { Switch } from "./SwitchField";
 export { InlineSelectField, type InlineSelectOption } from "./InlineSelectField";
 export { RoomSelectField } from "./RoomSelectField";
 export { MoneyField, MoneyText } from "./MoneyField";

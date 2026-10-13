@@ -4,11 +4,10 @@ import { Plus, Pencil, Trash2, User } from "lucide-react";
 import { command, messageOf, type Snapshot } from "../lib/api";
 import {
   ErrorMessage,
-  Field,
-  inputStyle,
   buttonStyle,
   secondaryStyle,
 } from "./FormKit";
+import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
 type Person = {
   user_id?: string;
@@ -186,83 +185,79 @@ function StaffForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-2 gap-4">
-        {(
-          [
-            ["first_name", "Ad"],
-            ["last_name", "Soyad"],
-            ["username", "Kullanıcı adı"],
-            ["email", "E-posta"],
-          ] as const
-        ).map(([key, label]) => (
-          <Field key={key} label={label}>
-            <input
-              className={`uni-input ${inputStyle}`}
-              required={key !== "email"}
-              type={key === "email" ? "email" : "text"}
-              autoComplete="off"
-              value={p[key]}
-              onChange={(e) => patch({ [key]: e.target.value })}
-            />
-          </Field>
-        ))}
-        <Field label="Rol">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={p.role}
-            onChange={(e) => patch({ role: e.target.value })}
-          >
-            {Object.entries(roles)
-              .filter(([r]) => r !== "admin" || s.user.role === "admin")
-              .map(([r, l]) => (
-                <option key={r} value={r}>
-                  {l}
-                </option>
-              ))}
-          </select>
-        </Field>
-        <Field
+      <div className="grid grid-cols-1 items-start sm:grid-cols-2 gap-4">
+        <TextField
+          label="Ad"
+          required
+          autoComplete="off"
+          value={p.first_name}
+          onChange={(v) => patch({ first_name: v })}
+        />
+        <TextField
+          label="Soyad"
+          required
+          autoComplete="off"
+          value={p.last_name}
+          onChange={(v) => patch({ last_name: v })}
+        />
+        <TextField
+          label="Kullanıcı adı"
+          required
+          autoComplete="off"
+          value={p.username}
+          onChange={(v) => patch({ username: v })}
+        />
+        <TextField
+          label="E-posta"
+          type="email"
+          autoComplete="off"
+          value={p.email}
+          onChange={(v) => patch({ email: v })}
+        />
+        <InlineSelectField
+          label="Rol"
+          value={p.role}
+          onChange={(v) => patch({ role: v })}
+          options={Object.entries(roles)
+            .filter(([r]) => r !== "admin" || s.user.role === "admin")
+            .map(([value, label]) => ({ value, label }))}
+        />
+        <TextField
           label={p.user_id ? "Yeni şifre (değiştirmek için)" : "Giriş şifresi"}
-        >
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="password"
-            autoComplete="new-password"
-            minLength={12}
-            maxLength={72}
-            required={!p.user_id}
-            value={p.password || ""}
-            onChange={(e) => patch({ password: e.target.value })}
-          />
-        </Field>
+          type="password"
+          autoComplete="new-password"
+          minLength={12}
+          maxLength={72}
+          required={!p.user_id}
+          value={p.password || ""}
+          onChange={(v) => patch({ password: v })}
+        />
       </div>
-      <fieldset className="rounded-2xl border border-slate-200 p-4 space-y-3">
-        <legend className="px-2 text-xs font-bold text-slate-500">
+      <div className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-1">
+        <p className="font-uninav-book px-1 pb-2 text-[0.875rem] leading-5 text-slate-500">
           Şube erişimleri
-        </legend>
+        </p>
         {s.branches.map((b) => (
-          <label key={b.branch_id} className="flex gap-3 text-sm">
-            <input
-              type="checkbox"
-              checked={p.branch_ids.includes(b.branch_id!)}
-              disabled={["management", "admin"].includes(p.role)}
-              onChange={(e) =>
-                patch({
-                  branch_ids: e.target.checked
-                    ? [...p.branch_ids, b.branch_id!]
-                    : p.branch_ids.filter((id) => id !== b.branch_id),
-                })
-              }
-            />
-            {b.name}
-          </label>
+          <Switch
+            key={b.branch_id}
+            label={b.name}
+            checked={!!b.branch_id && p.branch_ids.includes(b.branch_id)}
+            disabled={["management", "admin"].includes(p.role)}
+            onChange={(v) =>
+              patch({
+                branch_ids: v
+                  ? [...p.branch_ids, b.branch_id!]
+                  : p.branch_ids.filter((id) => id !== b.branch_id),
+              })
+            }
+          />
         ))}
         {["management", "admin"].includes(p.role) && (
-          <p className="text-xs text-slate-400">
+          <p className="px-1 pt-1 text-xs text-slate-400">
             Yönetim rolü otelin tüm şubelerine erişir.
           </p>
         )}
-      </fieldset>
+      </div>
       <p className="text-xs text-slate-400">
         Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında
         personelin yeniden giriş yapması gerekir.

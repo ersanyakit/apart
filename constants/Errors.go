@@ -97,7 +97,7 @@ var (
 	ErrMigrationName          = define("invalid_migration_name", "Migration adı küçük harf, rakam ve alt çizgiden oluşmalıdır.", Validation)
 	ErrMigrationExists        = define("migration_exists", "Migration dosyası zaten var.", Conflict)
 	ErrMigrationUnimplemented = define("migration_unimplemented", "Migration Up/Down fonksiyonlarını uygulayın.", Internal)
-	ErrCLI                    = define("invalid_cli_command", "Bilinmeyen komut. migrate, migrate:status, migrate:rollback, migrate:reset, make:migration, admin:create veya db:seed [demo] kullanın.", Validation)
+	ErrCLI                    = define("invalid_cli_command", "Bilinmeyen komut. migrate, migrate:status, migrate:rollback, migrate:reset, make:migration, admin:create veya db:seed [defaults|demo] kullanın.", Validation)
 	ErrUI                     = define("ui_failed", "Next.js sunucusu başlatılamadı.", Internal)
 	ErrUIUnavailable          = define("ui_unavailable", "Arayüz hazırlanıyor. Lütfen kısa süre sonra yeniden deneyin.", Internal)
 	ErrNode                   = define("node_required", "Next.js SSR için Node.js ve npm gereklidir.", Internal)
@@ -114,6 +114,8 @@ var (
 	ErrFeatureDuplicate  = define("duplicate_feature", "Aynı özellik birden fazla kez atanamaz.", Validation)
 	ErrFeatureRequired   = define("required_feature", "Zorunlu özellikler doldurulmalıdır.", Validation)
 	ErrFeatureInUse      = define("feature_in_use", "Bu değişiklik mevcut özellik atamalarını geçersiz kılar.", Conflict)
+	ErrCategoryInUse     = define("feature_category_in_use", "Bu kategoride olanaklar var. Önce olanakları başka bir kategoriye taşıyın veya silin.", Conflict)
+	ErrFeatureAssigned   = define("feature_assigned", "Bu olanak birim veya tesislerde kullanılıyor. Silmeden önce bu seçimleri kaldırın.", Conflict)
 	ErrFeatureFilter     = define("invalid_feature_filter", "Geçersiz özellik filtresi veya karşılaştırma işlemi.", Validation)
 )
 
@@ -126,16 +128,18 @@ var (
 	ErrBunk            = define("invalid_bunk", "Ranza katı 1–10 olmalı; aynı ranza katında birden fazla yatak bulunamaz.", Validation)
 	ErrRoomRequired    = define("unit_required", "Rezervasyon için bir konaklama birimi seçilmelidir.", Validation)
 	ErrUnavailable     = define("unit_unavailable", "Seçilen tarihlerde birim veya bağlı birimleri müsait değil.", Conflict)
+	ErrRoomDirty       = define("room_dirty", "Oda kirli olduğu için giriş yapılamaz. Önce oda durumunu Temiz olarak güncelleyin.", Conflict)
 	ErrBookingState    = define("invalid_booking_transition", "Rezervasyonun mevcut durumu veya tarihleri bu işleme uygun değil.", Conflict)
 	ErrCheckInExpired  = define("check_in_expired", "Rezervasyonun çıkış tarihi geçmiş. Giriş yapmadan önce rezervasyon tarihlerini düzenleyin.", Conflict)
 	ErrStructureInUse  = define("structure_in_use", "Aktif rezervasyonu olan birimin yapısı değiştirilemez. Önce rezervasyonu taşıyın veya iptal edin.", Conflict)
+	ErrBranchInUse     = define("branch_in_use", "Bu tesiste aktif veya yaklaşan konaklama bulunduğu için arşive kaldırılamaz.", Conflict)
 	ErrBookingRequired = define("booking_required", "Konaklama işlemleri rezervasyon kaydı üzerinden yapılmalıdır.", Validation)
 	ErrPlanDuplicate   = define("duplicate_placement", "Kat planında aynı birim birden fazla kez gönderilemez.", Validation)
 )
 
 var (
 	ErrSeed         = define("seed_failed", "Seed işlemi tamamlanamadı.", Internal)
-	ErrSeedName     = define("unknown_seed", "Bilinmeyen seed. db:seed veya db:seed demo kullanın.", Validation)
+	ErrSeedName     = define("unknown_seed", "Bilinmeyen seed. db:seed defaults veya db:seed demo kullanın.", Validation)
 	ErrSeedConflict = define("seed_conflict", "Demo kullanıcı adı başka bir otele ait veya silinmiş; mevcut kayıt değiştirilmedi.", Conflict)
 )
 

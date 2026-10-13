@@ -8,6 +8,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"otel/constants"
+	"otel/internal/domain/catalog"
 	"otel/internal/domain/features"
 	"otel/internal/domain/shared"
 	"otel/internal/infrastructure/persistence/models"
@@ -18,6 +19,10 @@ var _ features.Repository = (*Repository)(nil)
 
 func fromDefinition(d models.FeatureDefinition) features.Definition {
 	out := features.Definition{FeatureID: d.FeatureID, HotelID: d.HotelID, CategoryID: d.CategoryID, Code: d.Code, Label: shared.LocalizedString(d.Label), Category: d.Category.Code, Description: shared.LocalizedString(d.Description), ValueType: features.ValueType(d.ValueType), Filterable: d.Filterable, Scopes: d.Scopes, Min: d.Min, Max: d.Max, Unit: d.Unit, Required: d.Required, Assets: fromAssets(d.Assets), Options: []string{}, OptionLabels: map[string]shared.LocalizedString{}}
+	if e, ok := catalog.Lookup(d.Code); ok {
+		out.CatalogKind, out.IconKey, out.CategoryLabel = e.Kind, e.IconKey, e.Category.Label
+		out.GroupKey, out.GroupLabel, out.SortOrder = e.GroupKey, e.GroupLabel, e.SortOrder
+	}
 	for _, v := range d.Options {
 		out.Options = append(out.Options, v.Code)
 		out.OptionLabels[v.Code] = shared.LocalizedString(v.Label)
@@ -43,6 +48,18 @@ func (r *Repository) Registry(ctx context.Context, id uuid.UUID) (features.Regis
 	return out, nil
 }
 func (r *Repository) SaveCategory(ctx context.Context, c features.Category, create bool) error {
+	if catalog.IsReserved(c.Code) {
+		return constants.ErrFeatureInUse
+	}
+	if !create {
+		var old models.FeatureCategory
+		if err := r.db.WithContext(ctx).Where("category_id = ? AND hotel_id = ?", c.CategoryID, c.HotelID).First(&old).Error; err != nil {
+			return translate(err)
+		}
+		if catalog.IsReserved(old.Code) {
+			return constants.ErrFeatureInUse
+		}
+	}
 	row := models.FeatureCategory{CategoryID: c.CategoryID, HotelID: c.HotelID, Code: c.Code, Label: utils.LocalizedString(c.Label), SortOrder: c.SortOrder}
 	if create {
 		return translate(r.db.WithContext(ctx).Create(&row).Error)
@@ -59,15 +76,49 @@ func (r *Repository) SaveCategory(ctx context.Context, c features.Category, crea
 func lockFeatures(tx *gorm.DB, id uuid.UUID) error {
 	return tx.Exec("SELECT pg_advisory_xact_lock(hashtextextended(?, 0))", id.String()).Error
 }
+func (r *Repository) DeleteCategory(ctx context.Context, id, hotelID uuid.UUID) error {
+	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := lockFeatures(tx, hotelID); err != nil {
+			return err
+		}
+		var category models.FeatureCategory
+		if err := tx.Where("category_id = ? AND hotel_id = ?", id, hotelID).First(&category).Error; err != nil {
+			return err
+		}
+		if catalog.IsReserved(category.Code) {
+			return constants.ErrFeatureInUse
+		}
+		var count int64
+		if err := tx.Model(&models.FeatureDefinition{}).Where("category_id = ? AND hotel_id = ?", id, hotelID).Count(&count).Error; err != nil {
+			return err
+		}
+		if count > 0 {
+			return constants.ErrCategoryInUse
+		}
+		return tx.Delete(&category).Error
+	}))
+}
 func (r *Repository) SaveDefinition(ctx context.Context, d features.Definition, create bool) error {
+	if catalog.IsReserved(d.Code) {
+		return constants.ErrFeatureInUse
+	}
 	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := lockFeatures(tx, d.HotelID); err != nil {
+			return err
+		}
+		// Recheck under the same lock as category deletion. A stale form must
+		// never create or move a definition into a deleted category.
+		var category models.FeatureCategory
+		if err := tx.Where("category_id = ? AND hotel_id = ?", d.CategoryID, d.HotelID).First(&category).Error; err != nil {
 			return err
 		}
 		if !create {
 			var old models.FeatureDefinition
 			if err := tx.Where("feature_id = ? AND hotel_id = ?", d.FeatureID, d.HotelID).First(&old).Error; err != nil {
 				return err
+			}
+			if catalog.IsReserved(old.Code) {
+				return constants.ErrFeatureInUse
 			}
 			var rooms []models.RoomAssignment
 			if err := tx.Where("feature_id = ?", d.FeatureID).Find(&rooms).Error; err != nil {
@@ -119,13 +170,20 @@ func (r *Repository) DeleteDefinition(ctx context.Context, id, hotelID uuid.UUID
 		if err := lockFeatures(tx, hotelID); err != nil {
 			return err
 		}
+		var old models.FeatureDefinition
+		if err := tx.Where("feature_id = ? AND hotel_id = ?", id, hotelID).First(&old).Error; err != nil {
+			return err
+		}
+		if catalog.IsReserved(old.Code) {
+			return constants.ErrFeatureInUse
+		}
 		for _, model := range []any{&models.RoomAssignment{}, &models.PropertyAssignment{}} {
 			var n int64
 			if err := tx.Model(model).Where("feature_id = ?", id).Count(&n).Error; err != nil {
 				return err
 			}
 			if n > 0 {
-				return constants.ErrFeatureInUse
+				return constants.ErrFeatureAssigned
 			}
 		}
 		result := tx.Where("feature_id = ? AND hotel_id = ?", id, hotelID).Delete(&models.FeatureDefinition{})
@@ -192,6 +250,9 @@ func (r *Repository) Assign(ctx context.Context, t features.Target, items []feat
 					return err
 				}
 			}
+		}
+		if err := syncCatalogAssignments(tx, t, items); err != nil {
+			return err
 		}
 		entity := "branches"
 		if t.Scope == features.ScopeRoom {

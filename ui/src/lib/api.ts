@@ -25,6 +25,12 @@ export type FeatureAssignment = {
   value: FeatureValue;
 };
 export type FeatureDefinition = {
+	  catalog_kind?: "amenity" | "inventory" | "consumable";
+	  icon_key?: string;
+	  category_label?: LocalizedString;
+	  group_key?: string;
+	  group_label?: LocalizedString;
+	  sort_order?: number;
   feature_id?: string;
   hotel_id: string;
   category_id: string;
@@ -208,6 +214,9 @@ export type Allocation = {
   end: string;
 };
 export type Booking = {
+  created_by_name?: string;
+  checked_out_by_name?: string;
+  checked_out_by_id?: string;
   booking_id: string;
   branch_id: string;
   room_id: string;

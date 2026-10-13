@@ -63,10 +63,11 @@ test("localized, accented and ISO searches find the same country", () => {
   assert.equal(searchCountries("", 5, "en").length, 5);
 });
 
-test("every locale contains all UI messages and interpolation works", () => {
+test("locale dictionaries are complete and unbundled languages use the default messages", () => {
   const keys = Object.keys(messages.tr).sort();
   for (const locale of Object.keys(LOCALES)) {
-    assert.deepEqual(Object.keys(messages[locale]).sort(), keys);
+    if (messages[locale]) assert.deepEqual(Object.keys(messages[locale]).sort(), keys);
+    else for (const key of keys) assert.equal(translate(locale, key), translate("tr", key));
     assert.ok(keys.every((key) => translate(locale, key).trim()));
   }
   assert.equal(translate("en", "guest.numberNationality", { number: 2 }), "Guest 2 nationality");

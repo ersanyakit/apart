@@ -21,7 +21,12 @@ const tr = {
 export type MessageKey = keyof typeof tr;
 type Dictionary = Record<MessageKey, string>;
 
-export const messages: Record<Locale, Dictionary> = {
+/**
+ * Çevirisi olmayan dillerde eksik anahtarlar varsayılan dile düşer
+ * (bkz. translate). Bu yüzden yeni diller boş sözlükle başlayabilir;
+ * arayüz dili seçimi içerik dillerinden bağımsız çalışır.
+ */
+export const messages: Partial<Record<Locale, Dictionary>> = {
   tr,
   "en": {
   "language.title": "Language",
@@ -179,6 +184,9 @@ export const messages: Record<Locale, Dictionary> = {
 };
 
 export function translate(locale: string, key: MessageKey, params: Record<string, string | number> = {}): string {
-  const template = messages[resolveLocale(locale)][key] ?? messages[DEFAULT_LOCALE][key];
+  const template =
+    messages[resolveLocale(locale)]?.[key] ??
+    messages[DEFAULT_LOCALE]?.[key] ??
+    key;
   return template.replace(/\{(\w+)\}/g, (token, name: string) => String(params[name] ?? token));
 }

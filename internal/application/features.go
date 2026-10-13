@@ -40,6 +40,15 @@ func (s *Features) SaveCategory(ctx context.Context, u identity.User, c features
 	}
 	return c, s.Repository.SaveCategory(ctx, c, create)
 }
+func (s *Features) DeleteCategory(ctx context.Context, u identity.User, hotelID, id uuid.UUID) error {
+	if !u.IsManager() {
+		return constants.ErrForbidden
+	}
+	if _, err := s.Catalog.Hotel(ctx, u, hotelID); err != nil {
+		return err
+	}
+	return s.Repository.DeleteCategory(ctx, id, hotelID)
+}
 func (s *Features) SaveDefinition(ctx context.Context, u identity.User, d features.Definition, create bool) (features.Definition, error) {
 	if !u.IsManager() {
 		return d, constants.ErrForbidden

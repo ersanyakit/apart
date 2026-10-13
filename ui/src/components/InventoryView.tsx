@@ -12,11 +12,10 @@ import {
 } from "../lib/api";
 import {
   ErrorMessage,
-  Field,
-  inputStyle,
   buttonStyle,
   secondaryStyle,
 } from "./FormKit";
+import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
 import { FloorBoard } from "./FloorBoard";
 type Place = {
@@ -292,16 +291,16 @@ export function InventoryView({
                 <thead className="bg-slate-50 text-slate-400">
                   <tr>
                     <th className="p-4">
-                      <input
-                        aria-label="Tüm birimleri seç"
-                        type="checkbox"
+                      <Switch
+                        label="Tüm birimleri seç"
+                        hideLabel
                         checked={
                           rooms.length > 0 &&
                           rooms.every((r) => selected.includes(r.room_id))
                         }
-                        onChange={(e) =>
+                        onChange={(checked) =>
                           setSelected(
-                            e.target.checked ? rooms.map((r) => r.room_id) : [],
+                            checked ? rooms.map((r) => r.room_id) : [],
                           )
                         }
                       />
@@ -325,13 +324,13 @@ export function InventoryView({
                   {rooms.map((r) => (
                     <tr key={r.room_id} className="border-t border-slate-100">
                       <td className="p-4">
-                        <input
-                          type="checkbox"
-                          aria-label={`${r.code} seç`}
+                        <Switch
+                          hideLabel
+                          label={`${r.code} seç`}
                           checked={selected.includes(r.room_id)}
-                          onChange={(e) =>
+                          onChange={(checked) =>
                             setSelected((v) =>
-                              e.target.checked
+                              checked
                                 ? [...v, r.room_id]
                                 : v.filter((id) => id !== r.room_id),
                             )
@@ -394,22 +393,19 @@ export function InventoryView({
         {mode === "beds" && (
           <>
             <div className="flex gap-3 items-end">
-              <Field label="Oda">
-                <select
-                  className={`uni-input ${inputStyle}`}
+              <div className="min-w-44 flex-1">
+                <InlineSelectField
+                  label="Oda"
                   value={parent || ""}
-                  onChange={(e) => setParent(e.target.value || null)}
-                >
-                  <option value="">Tüm odalar / bağımsız yataklar</option>
-                  {rooms
-                    .filter((r) => r.kind !== "bed")
-                    .map((r) => (
-                      <option key={r.room_id} value={r.room_id}>
-                        {r.code}
-                      </option>
-                    ))}
-                </select>
-              </Field>
+                  onChange={(v) => setParent(v || null)}
+                  options={[
+                    { value: "", label: "Tüm odalar / bağımsız yataklar" },
+                    ...rooms
+                      .filter((r) => r.kind !== "bed")
+                      .map((r) => ({ value: r.room_id, label: r.code })),
+                  ]}
+                />
+              </div>
               <button className={`uni-control ${buttonStyle}`} onClick={newBed}>
                 <Plus size={14} />
                 Fiziksel Yatak Ekle
@@ -559,217 +555,162 @@ function BedForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Yatak kodu">
-          <input
-            required
-            className={`uni-input ${inputStyle}`}
-            maxLength={32}
-            value={b.code}
-            onChange={(e) =>
-              patch({
-                code: e.target.value,
-                places: b.places.map((p, i) => ({
-                  ...p,
-                  code:
-                    p.code === "" || p.code === `${b.code}-${i + 1}`
-                      ? `${e.target.value}-${i + 1}`
-                      : p.code,
-                })),
-              })
-            }
-          />
-        </Field>
-        <Field label="Oda">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={b.room_id || ""}
-            onChange={(e) =>
-              patch({
-                room_id: e.target.value || null,
-                floor_id:
-                  s.rooms.find((r) => r.room_id === e.target.value)?.floor_id ||
-                  b.floor_id,
-              })
-            }
-          >
-            <option value="">Bağımsız yatak</option>
-            {s.rooms
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <TextField
+          label="Yatak kodu"
+          required
+          autoComplete="off"
+          uppercase
+          value={b.code}
+          onChange={(v) =>
+            patch({
+              code: v,
+              places: b.places.map((p, i) => ({
+                ...p,
+                code:
+                  p.code === "" || p.code === `${b.code}-${i + 1}`
+                    ? `${v}-${i + 1}`
+                    : p.code,
+              })),
+            })
+          }
+        />
+        <InlineSelectField
+          label="Oda"
+          value={b.room_id || ""}
+          onChange={(v) =>
+            patch({
+              room_id: v || null,
+              floor_id:
+                s.rooms.find((r) => r.room_id === v)?.floor_id ||
+                b.floor_id,
+            })
+          }
+          options={[
+            { value: "", label: "Bağımsız yatak" },
+            ...s.rooms
               .filter((r) => r.kind !== "bed")
-              .map((r) => (
-                <option value={r.room_id} key={r.room_id}>
-                  {r.code}
-                </option>
-              ))}
-          </select>
-        </Field>
-        <Field label="Kat">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={b.floor_id || ""}
-            onChange={(e) => patch({ floor_id: e.target.value || null })}
-          >
-            <option value="">Kat atanmamış</option>
-            {s.floors.map((f) => (
-              <option key={f.floor_id} value={f.floor_id}>
-                {localized(f.label) || f.code}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Yatak türü">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={b.type}
-            onChange={(e) => patch({ type: e.target.value })}
-          >
-            {Object.entries(bedTypes).map(([v, label]) => (
-              <option value={v} key={v}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Fiziksel yapı">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={b.structure}
-            onChange={(e) => patch({ structure: e.target.value })}
-          >
-            {Object.entries(structures).map(([v, label]) => (
-              <option value={v} key={v}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Seviye sayısı">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="number"
-            min={1}
-            max={10}
-            value={b.levels}
-            onChange={(e) => levels(Number(e.target.value))}
-          />
-        </Field>
-        <Field label="Yatak genişliği (cm)">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="number"
-            min={0}
-            max={500}
-            value={b.width_cm}
-            onChange={(e) => patch({ width_cm: Number(e.target.value) })}
-          />
-        </Field>
-        <Field label="Yatak uzunluğu (cm)">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="number"
-            min={0}
-            max={500}
-            value={b.length_cm}
-            onChange={(e) => patch({ length_cm: Number(e.target.value) })}
-          />
-        </Field>
+              .map((r) => ({ value: r.room_id, label: r.code })),
+          ]}
+        />
+        <InlineSelectField
+          label="Kat"
+          value={b.floor_id || ""}
+          onChange={(v) => patch({ floor_id: v || null })}
+          options={[
+            { value: "", label: "Kat atanmamış" },
+            ...s.floors.map((f) => ({
+              value: f.floor_id,
+              label: localized(f.label) || f.code,
+            })),
+          ]}
+        />
+        <InlineSelectField
+          label="Yatak türü"
+          value={b.type}
+          onChange={(v) => patch({ type: v })}
+          options={Object.entries(bedTypes).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
+        <InlineSelectField
+          label="Fiziksel yapı"
+          value={b.structure}
+          onChange={(v) => patch({ structure: v })}
+          options={Object.entries(structures).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
+        <TextField
+          label="Seviye sayısı"
+          type="number"
+          value={String(b.levels)}
+          onChange={(v) => levels(Number(v))}
+        />
+        <TextField
+          label="Yatak genişliği (cm)"
+          type="number"
+          value={String(b.width_cm)}
+          onChange={(v) => patch({ width_cm: Number(v) })}
+        />
+        <TextField
+          label="Yatak uzunluğu (cm)"
+          type="number"
+          value={String(b.length_cm)}
+          onChange={(v) => patch({ length_cm: Number(v) })}
+        />
       </div>
       <p className="text-xs text-slate-500">
         Her fiziksel yatak ayrı kaydedilir. Kapasite, aktif yatak yerlerinin
         kişi kapasitelerinin toplamıdır. Twin düzeni oda tanımında seçilir.
       </p>
-      <h3 className="font-black text-sm">Yatak yerleri</h3>
+      <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">Yatak yerleri</h3>
       {b.places.map((p, i) => (
         <div
           key={i}
-          className="rounded-2xl border border-slate-200 p-4 space-y-3"
+          className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3"
         >
-          <strong className="text-sm">Seviye {p.level}</strong>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <Field label="Yer kodu">
-              <input
-                required
-                className={`uni-input ${inputStyle}`}
-                value={p.code}
-                maxLength={32}
-                onChange={(e) => changePlace(i, { code: e.target.value })}
-              />
-            </Field>
-            <Field label="Konum">
-              <select
-                className={`uni-input ${inputStyle}`}
-                value={p.position}
-                onChange={(e) => changePlace(i, { position: e.target.value })}
-              >
-                {Object.entries({
-                  single: "Tek seviye",
-                  lower: "Alt",
-                  middle: "Orta",
-                  upper: "Üst",
-                }).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Kişi kapasitesi">
-              <input
-                required
-                className={`uni-input ${inputStyle}`}
-                type="number"
-                min={1}
-                max={10}
-                value={p.capacity}
-                onChange={(e) =>
-                  changePlace(i, { capacity: Number(e.target.value) })
-                }
-              />
-            </Field>
-            <Field label="Genişlik (cm)">
-              <input
-                className={`uni-input ${inputStyle}`}
-                type="number"
-                min={0}
-                max={500}
-                value={p.width_cm}
-                onChange={(e) =>
-                  changePlace(i, { width_cm: Number(e.target.value) })
-                }
-              />
-            </Field>
-            <Field label="Uzunluk (cm)">
-              <input
-                className={`uni-input ${inputStyle}`}
-                type="number"
-                min={0}
-                max={500}
-                value={p.length_cm}
-                onChange={(e) =>
-                  changePlace(i, { length_cm: Number(e.target.value) })
-                }
-              />
-            </Field>
+          <strong className="font-uninav-book block text-[0.875rem] leading-5 text-slate-500">Seviye {p.level}</strong>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <TextField
+              label="Yer kodu"
+              tone="white"
+              required
+              autoComplete="off"
+              uppercase
+              value={p.code}
+              onChange={(v) => changePlace(i, { code: v })}
+            />
+            <InlineSelectField
+              label="Konum"
+              tone="white"
+              value={p.position}
+              onChange={(v) => changePlace(i, { position: v })}
+              options={Object.entries({
+                single: "Tek seviye",
+                lower: "Alt",
+                middle: "Orta",
+                upper: "Üst",
+              }).map(([value, label]) => ({ value, label }))}
+            />
+            <TextField
+              label="Kişi kapasitesi"
+              tone="white"
+              type="number"
+              required
+              value={String(p.capacity)}
+              onChange={(v) => changePlace(i, { capacity: Number(v) })}
+            />
+            <TextField
+              label="Genişlik (cm)"
+              tone="white"
+              type="number"
+              value={String(p.width_cm)}
+              onChange={(v) => changePlace(i, { width_cm: Number(v) })}
+            />
+            <TextField
+              label="Uzunluk (cm)"
+              tone="white"
+              type="number"
+              value={String(p.length_cm)}
+              onChange={(v) => changePlace(i, { length_cm: Number(v) })}
+            />
           </div>
-          <div className="flex gap-4 text-xs font-bold">
-            <label>
-              <input
-                type="checkbox"
-                checked={p.is_active}
-                onChange={(e) =>
-                  changePlace(i, { is_active: e.target.checked })
-                }
-              />{" "}
-              Aktif
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={p.rentable}
-                onChange={(e) => changePlace(i, { rentable: e.target.checked })}
-              />{" "}
-              Ayrı rezerve edilebilir
-            </label>
+          <div className="space-y-1">
+            <Switch
+              label="Aktif"
+              hint="Pasif yataklar planda ve aramada görünmez."
+              checked={p.is_active}
+              onChange={(v) => changePlace(i, { is_active: v })}
+            />
+            <Switch
+              label="Ayrı rezerve edilebilir"
+              hint="Kapalıysa yalnızca üst birimle birlikte kiralanır."
+              checked={p.rentable}
+              onChange={(v) => changePlace(i, { rentable: v })}
+            />
           </div>
         </div>
       ))}

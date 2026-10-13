@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { bookingStatuses, command, messageOf } from "../lib/api";
-import { History } from "lucide-react";
-import { UniSelect } from "./UniSelect";
-import { ErrorMessage, Field, inputStyle, secondaryStyle } from "./FormKit";
+import { ErrorMessage, secondaryStyle } from "./FormKit";
+import { DateField, InlineSelectField } from "./fields";
 import { auditLocationSummary, type AuditDetails } from "../lib/audit-location";
+import { Pagination } from "./Pagination";
 type Entry = {
   id: string;
   actor_name: string;
@@ -42,9 +42,13 @@ function description(entry: Entry) {
   return parts.filter(Boolean).join(" · ");
 }
 export function AuditView({ hotelId }: { hotelId: string }) {
+  return <AuditLogList key={hotelId} hotelId={hotelId} />;
+}
+function AuditLogList({ hotelId }: { hotelId: string }) {
   const [rows, setRows] = useState<Entry[]>([]),
     [total, setTotal] = useState(0),
     [page, setPage] = useState(1),
+    [pageSize, setPageSize] = useState(25),
     [from, setFrom] = useState(""),
     [to, setTo] = useState(""),
     [action, setAction] = useState(""),
@@ -55,9 +59,10 @@ export function AuditView({ hotelId }: { hotelId: string }) {
     let active = true;
     setBusy(true);
     setError("");
-    command<{ items: Entry[]; total: number }>("audit.list", {
+    command<{ items: Entry[]; total: number; page: number; page_size: number }>("audit.list", {
       hotel_id: hotelId,
       page,
+      page_size: pageSize,
       action,
       ...(from ? { from: new Date(from).toISOString() } : {}),
       ...(to ? { to: new Date(to).toISOString() } : {}),
@@ -66,10 +71,11 @@ export function AuditView({ hotelId }: { hotelId: string }) {
         if (active) {
           setRows(result.items);
           setTotal(result.total);
+          setPage(result.page);
         }
       })
       .catch((e) => {
-        if (active) setError(messageOf(e));
+        if (active) { setError(messageOf(e)); setRows([]); setTotal(0); }
       })
       .finally(() => {
         if (active) setBusy(false);
@@ -77,46 +83,48 @@ export function AuditView({ hotelId }: { hotelId: string }) {
     return () => {
       active = false;
     };
-  }, [hotelId, page, from, to, action, revision]);
+  }, [hotelId, page, pageSize, from, to, action, revision]);
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
       <div className="flex flex-wrap gap-3 items-end">
-        <Field label="Başlangıç">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="datetime-local"
+        <div className="min-w-44 flex-1">
+          <DateField
+            label="Başlangıç"
             value={from}
-            onChange={(e) => {
-              setFrom(e.target.value);
+            onChange={(v) => {
+              setFrom(v);
               setPage(1);
             }}
           />
-        </Field>
-        <Field label="Bitiş">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="datetime-local"
+        </div>
+        <div className="min-w-44 flex-1">
+          <DateField
+            label="Bitiş"
             value={to}
-            onChange={(e) => {
-              setTo(e.target.value);
+            onChange={(v) => {
+              setTo(v);
               setPage(1);
             }}
           />
-        </Field>
-        <div className="min-w-52">
-          <UniSelect caption="İşlem" ariaLabel="Log işlem filtresi" icon={<History size={18} />}
-            value={action} options={[{ value: "", label: "Tüm işlemler" }, ...Object.entries(actions).map(([value, label]) => ({ value, label }))]}
-            onChange={(value) => { setAction(value); setPage(1); }} />
+        </div>
+        <div className="min-w-52 flex-1">
+          <InlineSelectField
+            label="İşlem"
+            value={action}
+            onChange={(value) => { setAction(value); setPage(1); }}
+            options={[{ value: "", label: "Tüm işlemler" }, ...Object.entries(actions).map(([value, label]) => ({ value, label }))]}
+          />
         </div>
         <button
           className={`uni-control ${secondaryStyle}`}
+          disabled={busy}
           onClick={() => setRevision((v) => v + 1)}
         >
           Yenile
         </button>
       </div>
-      <div className="overflow-auto rounded-2xl border border-slate-200 bg-white">
+      <div className="overflow-auto rounded-2xl border border-slate-200 bg-white" aria-busy={busy}>
         <table className="w-full text-xs text-left">
           <thead className="bg-slate-50 text-slate-400">
             <tr>
@@ -135,7 +143,7 @@ export function AuditView({ hotelId }: { hotelId: string }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => {
+            {!busy && rows.map((r) => {
               const location = auditLocationSummary(r.entity, r.details);
               return (
               <tr key={r.id} className="border-t border-slate-100">
@@ -165,33 +173,14 @@ export function AuditView({ hotelId }: { hotelId: string }) {
             ); })}
           </tbody>
         </table>
-        {!rows.length && (
+        {(busy || !rows.length) && (
           <p className="p-8 text-sm text-slate-400">
             {busy ? "Yükleniyor…" : "Bu filtrede işlem kaydı bulunamadı."}
           </p>
         )}
       </div>
-      <div className="flex justify-between items-center text-xs text-slate-500">
-        <span>
-          {total} işlem · Sayfa {page}
-        </span>
-        <div className="flex gap-2">
-          <button
-            className={`uni-control ${secondaryStyle}`}
-            disabled={page === 1 || busy}
-            onClick={() => setPage((v) => v - 1)}
-          >
-            Önceki
-          </button>
-          <button
-            className={`uni-control ${secondaryStyle}`}
-            disabled={page * 100 >= total || busy}
-            onClick={() => setPage((v) => v + 1)}
-          >
-            Sonraki
-          </button>
-        </div>
-      </div>
+      <Pagination page={page} pageSize={pageSize} total={total} busy={busy}
+        onPageChange={setPage} onPageSizeChange={(size) => { setPageSize(size); setPage(1); }} />
     </div>
   );
 }

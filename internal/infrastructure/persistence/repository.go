@@ -154,7 +154,15 @@ func (r *Repository) FindRoom(ctx context.Context, id uuid.UUID) (property.Room,
 }
 func (r *Repository) SaveHotel(ctx context.Context, item property.Hotel, create bool) error {
 	row := toHotel(item)
-	return r.save(ctx, &row, row.Assets, create)
+	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		if err := New(tx).save(ctx, &row, row.Assets, create); err != nil {
+			return err
+		}
+		if create {
+			return ensureHotelCatalog(tx, item.HotelID)
+		}
+		return nil
+	})
 }
 func (r *Repository) SaveBranch(ctx context.Context, item property.Branch, create bool) error {
 	return r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
@@ -227,19 +235,35 @@ func (r *Repository) save(ctx context.Context, row any, assets []models.Asset, c
 	}))
 }
 func (r *Repository) DeleteBranch(ctx context.Context, id uuid.UUID) error {
+	var rooms []models.Room
+	if err := r.db.WithContext(ctx).Where("branch_id = ?", id).Find(&rooms).Error; err != nil {
+		return translate(err)
+	}
+	if len(rooms) > 0 {
+		ids := make([]uuid.UUID, 0, len(rooms))
+		for _, room := range rooms {
+			ids = append(ids, room.RoomID)
+		}
+		// Aktif/yaklaşan konaklama varsa ErrStructureInUse döner;
+		// odalar ve yatakları arşivlenir.
+		if err := r.DeleteRooms(ctx, id, ids); err != nil {
+			return err
+		}
+	}
 	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := lockBranch(tx, id); err != nil {
 			return err
 		}
-		for _, model := range []any{&models.Room{}, &models.Floor{}, &models.Bed{}} {
-			var n int64
-			if err := tx.Model(model).Where("branch_id = ?", id).Count(&n).Error; err != nil {
-				return err
-			}
-			if n > 0 {
-				return constants.ErrConflict
-			}
+		if err := tx.Where("branch_id = ?", id).Delete(&models.Floor{}).Error; err != nil {
+			return err
 		}
+		if err := tx.Where("branch_id = ?", id).Delete(&models.Bed{}).Error; err != nil {
+			return err
+		}
+		if err := tx.Where("bed_id IN (?)", tx.Table("beds").Select("bed_id").Where("branch_id = ?", id)).Delete(&models.SleepingPlace{}).Error; err != nil {
+			return err
+		}
+		// Fiziksel silme yok: kayıt arşive kaldırılır.
 		return tx.Delete(&models.Branch{}, "branch_id = ?", id).Error
 	}))
 }

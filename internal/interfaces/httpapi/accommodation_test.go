@@ -104,6 +104,28 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 	if status, body := call(constants.CMD_AUTH_LOGIN, "POST", map[string]any{"username": "admin", "password": "integration-password"}, ""); status != 200 {
 		t.Fatalf("login %d %s", status, body)
 	}
+	t.Run("custom category deletion command", func(t *testing.T) {
+		status, body := call(constants.CMD_CATEGORY_CREATE, "POST", map[string]any{"hotel_id": hotelID, "code": "CUSTOM_DELETE", "label": map[string]string{"TR": "Silinecek kategori"}}, "")
+		if status != 200 {
+			t.Fatalf("create category %d %s", status, body)
+		}
+		var category struct {
+			ID uuid.UUID `json:"category_id"`
+		}
+		if err := json.Unmarshal(body, &category); err != nil {
+			t.Fatal(err)
+		}
+		payload := map[string]any{"hotel_id": hotelID, "id": category.ID}
+		if status, _ := call(constants.CMD_CATEGORY_DELETE, "POST", payload, ""); status != 405 {
+			t.Fatalf("delete method %d", status)
+		}
+		if status, body := call(constants.CMD_CATEGORY_DELETE, "DELETE", payload, ""); status != 200 {
+			t.Fatalf("delete category %d %s", status, body)
+		}
+		if status, _ := call(constants.CMD_CATEGORY_DELETE, "DELETE", payload, ""); status != 404 {
+			t.Fatalf("deleted category still visible: %d", status)
+		}
+	})
 	if status, _ := call(constants.CMD_FLOOR_CREATE, "POST", map[string]any{}, "https://foreign.invalid"); status != 403 {
 		t.Fatalf("CSRF status %d", status)
 	}

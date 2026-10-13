@@ -48,7 +48,8 @@ test("expanded desktop navigation exposes the active page and its section", () =
   const markup = renderToStaticMarkup(React.createElement(SidebarItem, {
     item: groups[1], isOpen: true, activeTab: "staff", onSelect() {},
   }));
-  assert.ok(markup.includes('aria-expanded="true"'));
+  // Groups are always visible; the section name identifies their parent.
+  assert.ok(markup.includes('aria-label="Sistem Ayarları"'));
   assert.ok(markup.includes('aria-current="page"'));
   assert.ok(markup.includes("Personel Tanımları"));
   assert.ok(markup.includes("Ayarlar"));

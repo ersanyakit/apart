@@ -25,7 +25,8 @@ export function FloorBoard({
   snapshot: Snapshot;
   floorId: string;
   at: string;
-  onEdit: (room: APIRoom) => void;
+  /** Verilirse (tanımlar ekranı) boş birime tıklayınca düzenleme açılır; yoksa rezervasyon açılır. */
+  onEdit?: (room: APIRoom) => void;
   onBook: (room: APIRoom) => void;
   onRefresh: () => Promise<void>;
   canManage: boolean;
@@ -192,7 +193,10 @@ export function FloorBoard({
                 onClick={() => {
                   if (!editing) {
                     if (occupied[0] && onOpenBooking) onOpenBooking(occupied[0]);
-                    else (canManage ? onEdit : onBook)(room);
+                    // Birim düzenleme yalnızca Tanımlar ekranından yapılır;
+                    // panoda boş birim rezervasyon açar.
+                    else if (onEdit && canManage) onEdit(room);
+                    else onBook(room);
                   }
                 }}
               >

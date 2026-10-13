@@ -13,6 +13,8 @@ export function TextField({
   disabled,
   type = "text",
   autoComplete,
+  minLength,
+  maxLength,
   uppercase = false,
   tone = "surface",
 }: {
@@ -24,6 +26,8 @@ export function TextField({
   disabled?: boolean;
   type?: string;
   autoComplete?: string;
+  minLength?: number;
+  maxLength?: number;
   /** Açıkken girilen metin tr-TR büyük harfe çevrilir. */
   uppercase?: boolean;
   /** "surface" (varsayılan gri kart) ya da gri zemin üstünde "white" kart. */
@@ -42,6 +46,8 @@ export function TextField({
           aria-label={label}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          minLength={minLength}
+          maxLength={maxLength}
           value={value}
           onChange={(e) =>
             onChange(
@@ -50,7 +56,7 @@ export function TextField({
           }
           className="font-uninav-book mt-1 w-full min-w-0 bg-transparent text-[1.25rem] leading-8 text-slate-900 uppercase outline-none placeholder:text-slate-400 placeholder:normal-case disabled:opacity-60"
         />
-      </label>
+        </label>
     </FieldCard>
   );
 }

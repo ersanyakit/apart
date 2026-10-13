@@ -38,6 +38,12 @@ func Bootstrap(ctx context.Context, db *gorm.DB, username, password, hotelName s
 		if err := tx.Create(&hotel).Error; err != nil {
 			return err
 		}
+		if err := seedGlobalCatalog(tx); err != nil {
+			return err
+		}
+		if err := ensureHotelCatalog(tx, hotel.HotelID); err != nil {
+			return err
+		}
 		branch := models.Branch{BranchID: uuid.New(), HotelID: hotel.HotelID, FacilityInfo: models.FacilityInfo{Name: "Merkez"}}
 		if err := tx.Create(&branch).Error; err != nil {
 			return err

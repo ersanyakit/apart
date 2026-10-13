@@ -5,6 +5,7 @@ import { confirmDialog } from "./ConfirmDialog";
 import { useI18n } from "./I18n";
 import { LOCALES, type Locale } from "../lib/i18n/config";
 import { CountrySelect } from "./CountrySelect";
+import { InlineSelectField } from "./fields";
 import {
   countryByCode,
   countryFlag,
@@ -15,7 +16,6 @@ import { BACKGROUND_OPTIONS, THEME_OPTIONS, useTheme } from "./Theme";
 import {
   CURRENCIES,
   MONEY_FORMATS,
-  currencySymbolClass,
   formatMoney,
   useCurrency,
 } from "./Currency";
@@ -170,14 +170,15 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
 
       <section lang={locale} dir={direction} aria-label={t("language.title")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
         <SectionHeading icon={<Globe size={20} />} title={t("language.title")} description={t("language.description")} />
-        <label className="block text-sm font-medium">
-          {t("language.title")}
-          <select value={locale} onChange={(event) => setLocale(event.target.value)} className="mt-2 block w-full rounded-xl border border-uni-border bg-uni-surface px-3 py-3">
-            {(Object.keys(LOCALES) as Locale[]).map((code) => (
-              <option key={code} value={code} lang={code}>{LOCALES[code].label}</option>
-            ))}
-          </select>
-        </label>
+        <InlineSelectField
+          label={t("language.title")}
+          value={locale}
+          onChange={(value) => setLocale(value)}
+          options={(Object.keys(LOCALES) as Locale[]).map((code) => ({
+            value: code,
+            label: LOCALES[code].label,
+          }))}
+        />
       </section>
 
       <section aria-label={t("country.defaultTitle")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
@@ -205,35 +206,15 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
 
       <section aria-label="Para birimi" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
         <SectionHeading icon={<Banknote size={20} />} title="Para birimi" description="Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez." />
-        <fieldset>
-          <legend className="sr-only">Para Birimi</legend>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {CURRENCIES.map((option) => (
-              <label key={option.id} className="relative min-w-0 cursor-pointer">
-                <input
-                  type="radio"
-                  name={`${groupId}-currency`}
-                  value={option.id}
-                  checked={currency === option.id}
-                  onChange={() => setCurrency(option.id)}
-                  className="peer sr-only"
-                  aria-label={`${option.label} (${option.symbol})`}
-                />
-                <span className="uni-choice flex min-h-[104px] flex-col items-center justify-center gap-1 rounded-2xl border border-transparent bg-uni-surface px-2 py-3 transition-colors duration-150 hover:bg-uni-hover peer-checked:border-slate-400 peer-checked:bg-white peer-checked:shadow-sm peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
-                  <span className={`flex h-8 w-8 items-center justify-center rounded-full bg-uni-hover font-bold text-uni-ink ${currencySymbolClass(option.symbol)}`}>
-                    {currency === option.id ? (
-                      <Check size={17} strokeWidth={2.5} />
-                    ) : (
-                      option.symbol
-                    )}
-                  </span>
-                  <span className="text-xs font-bold">{option.id}</span>
-                  <span className="text-[11px] text-uni-muted">{option.label}</span>
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <InlineSelectField
+          label="Para birimi"
+          value={currency}
+          onChange={(value) => setCurrency(value as typeof currency)}
+          options={CURRENCIES.map((option) => ({
+            value: option.id,
+            label: `${option.symbol} ${option.id} · ${option.label}`,
+          }))}
+        />
 
         <div className="my-6 border-t border-uni-border" />
 

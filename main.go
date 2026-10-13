@@ -63,7 +63,10 @@ func run() error {
 	defer pool.Close()
 	switch command {
 	case "migrate":
-		return migrations.Up(db)
+		if err := migrations.Up(db); err != nil {
+			return err
+		}
+		return persistence.EnsureDefaultCatalog(ctx, db)
 	case "migrate:rollback":
 		return migrations.Down(db, false)
 	case "migrate:reset":
@@ -112,6 +115,9 @@ func run() error {
 		return err
 	}
 	if err := migrations.Up(db); err != nil {
+		return err
+	}
+	if err := persistence.EnsureDefaultCatalog(ctx, db); err != nil {
 		return err
 	}
 	if !cfg.SkipUI {

@@ -138,6 +138,12 @@ export function BookingForm({
   );
   const [notes, setNotes] = useState(booking?.notes || "");
   const [guests, setGuests] = useState(booking?.guests || []);
+  // Panodan başka bir birime geçilince form aynı birime döner
+  // (diğer alanlardaki yazılar korunur).
+  React.useEffect(() => {
+    if (roomId) setRoom(roomId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roomId ]);
   // Yeni misafir satırları varsayılan uyrukla açılır (Ayarlar → Ülke).
   const { defaultCountry } = useCurrency();
   // Sahip adı değişince ilk misafir otomatik eşlenir (manuel girilmiş

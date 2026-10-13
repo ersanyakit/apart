@@ -10,11 +10,17 @@ import {
 } from "../lib/api";
 import {
   ErrorMessage,
-  Field,
-  inputStyle,
   buttonStyle,
   secondaryStyle,
 } from "./FormKit";
+import {
+  DateField,
+  InlineSelectField,
+  LocalizedTextFields,
+  MoneyField,
+  TextField,
+} from "./fields";
+import { CURRENCIES } from "./Currency";
 import { confirmDialog } from "./ConfirmDialog";
 import { localDate } from "./BookingForm";
 export const documentKinds: Record<string, string> = {
@@ -63,7 +69,6 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
   const [templates, setTemplates] = useState<Template[]>([]),
     [defaults, setDefaults] = useState<Template[]>([]),
     [kind, setKind] = useState("rental_contract"),
-    [language, setLanguage] = useState("TR"),
     [draft, setDraft] = useState<Template>({
       hotel_id: s.hotel_id,
       kind: "rental_contract",
@@ -128,85 +133,78 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       }}
     >
       <ErrorMessage message={error} />
-      <div className="flex flex-wrap gap-3 items-end">
-        <Field label="Belge türü">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={kind}
-            onChange={(e) => setKind(e.target.value)}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+        <InlineSelectField
+          label="Belge türü"
+          value={kind}
+          onChange={setKind}
+          options={Object.entries(documentKinds).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
+        <div className="flex items-end">
+          <button
+            type="button"
+            className={`uni-control ${secondaryStyle} w-full`}
+            onClick={async () => {
+              const example = defaults.find((t) => t.kind === kind);
+              if (!example) return;
+              const fillable = (current: LocalizedString, sample?: LocalizedString) => {
+                const next = { ...current };
+                let overwrites = false;
+                for (const [lang, text] of Object.entries(sample || {})) {
+                  if (!text) continue;
+                  if ((next[lang] || "").trim()) {
+                    if (next[lang] !== text) overwrites = true;
+                    continue;
+                  }
+                  next[lang] = text;
+                }
+                return { next, overwrites };
+              };
+              const title = fillable(draft.title, example.title);
+              const body = fillable(draft.body, example.body);
+              if (
+                (title.overwrites || body.overwrites) &&
+                !(await confirmDialog(
+                  "Dolu alanlardaki metin örnek şablonla değiştirilsin mi?",
+                ))
+              )
+                return;
+              if (title.overwrites) {
+                for (const [lang, text] of Object.entries(example.title || {})) {
+                  if (text) title.next[lang] = text;
+                }
+              }
+              if (body.overwrites) {
+                for (const [lang, text] of Object.entries(example.body || {})) {
+                  if (text) body.next[lang] = text;
+                }
+              }
+              setDraft({ ...draft, title: title.next, body: body.next });
+            }}
           >
-            {Object.entries(documentKinds).map(([v, l]) => (
-              <option key={v} value={v}>
-                {l}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Dil">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          >
-            {s.languages.map((l) => (
-              <option key={l}>{l}</option>
-            ))}
-          </select>
-        </Field>
-        <button
-          type="button"
-          className={`uni-control ${secondaryStyle}`}
-          onClick={async () => {
-            const example = defaults.find((t) => t.kind === kind);
-            if (!example) return;
-            if (
-              (draft.title[language] || draft.body[language]) &&
-              !(await confirmDialog(
-                "Seçilen dildeki metin örnek şablonla değiştirilsin mi?",
-              ))
-            )
-              return;
-            setDraft({
-              ...draft,
-              title: {
-                ...draft.title,
-                [language]: example.title[language] || "",
-              },
-              body: { ...draft.body, [language]: example.body[language] || "" },
-            });
-          }}
-        >
-          Örnek Metni Yükle
-        </button>
+            Örnek Metni Yükle
+          </button>
+        </div>
       </div>
-      <Field label="Belge başlığı">
-        <input
-          className={`uni-input ${inputStyle}`}
-          required
-          value={draft.title[language] || ""}
-          onChange={(e) =>
-            setDraft({
-              ...draft,
-              title: { ...draft.title, [language]: e.target.value },
-            })
-          }
-        />
-      </Field>
-      <Field label="Belge metni">
-        <textarea
-          className={`uni-input ${inputStyle + " min-h-[480px] font-mono text-xs leading-6"}`}
-          required
-          maxLength={16000}
-          value={draft.body[language] || ""}
-          onChange={(e) =>
-            setDraft({
-              ...draft,
-              body: { ...draft.body, [language]: e.target.value },
-            })
-          }
-        />
-      </Field>
-      <div className="rounded-2xl bg-slate-50 p-4 space-y-3">
+      <LocalizedTextFields
+        label="Belge başlığı"
+        hint="Her dil için ayrı başlık ekleyin."
+        values={draft.title}
+        onChange={(title) => setDraft({ ...draft, title })}
+      />
+      <LocalizedTextFields
+        label="Belge metni"
+        hint="Her dil için ayrı metin ekleyin."
+        values={draft.body}
+        onChange={(body) => setDraft({ ...draft, body })}
+        multiline
+        rows={12}
+        mono
+      />
+      <div className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3">
         <p className="text-xs text-slate-500">
           Konaklama bilgilerinden doldurulacak alanlar. İşletme unvanı, belge
           numarası ve koşulları metinde düzenleyebilirsiniz.
@@ -217,15 +215,19 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
               type="button"
               className="uni-control text-[10px] bg-white border rounded-lg px-2 py-1 font-mono"
               key={p}
-              onClick={() =>
+              onClick={() => {
+                const target =
+                  draft.body.TR !== undefined
+                    ? "TR"
+                    : (Object.keys(draft.body)[0] ?? "TR");
                 setDraft({
                   ...draft,
                   body: {
                     ...draft.body,
-                    [language]: (draft.body[language] || "") + `{{${p}}}`,
+                    [target]: (draft.body[target] || "") + `{{${p}}}`,
                   },
-                })
-              }
+                });
+              }}
             >{`{{${p}}}`}</button>
           ))}
         </div>
@@ -247,15 +249,37 @@ export function BookingDocuments({
 }) {
   const [kind, setKind] = useState(initialKind),
     [language, setLanguage] = useState("TR"),
-    [amount, setAmount] = useState(""),
+    [amountMinor, setAmountMinor] = useState(0),
     [currency, setCurrency] = useState("TRY"),
     [method, setMethod] = useState("cash"),
     [reference, setReference] = useState(""),
     [paidAt, setPaidAt] = useState(localDate(new Date().toISOString())),
     [preview, setPreview] = useState<Document | null>(null),
     [documents, setDocuments] = useState<Document[]>([]),
+    [channels, setChannels] = useState<
+      { code: string; labels: Record<string, string>; active: boolean }[]
+    >([]),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  useEffect(() => {
+    command<
+      { code: string; labels: Record<string, string>; active: boolean }[]
+    >("payment_channel.list", { hotel_id: s.hotel_id })
+      .then((rows) => {
+        const active = rows.filter((r) => r.active);
+        setChannels(active.length ? active : rows);
+      })
+      .catch(() => {});
+  }, [s.hotel_id]);
+  useEffect(() => {
+    if (
+      channels.length > 0 &&
+      !channels.some((c) => c.code === method)
+    ) {
+      setMethod(channels[0].code);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [channels ]);
   const reload = async () =>
     setDocuments(
       await command<Document[]>("document.list", {
@@ -279,7 +303,7 @@ export function BookingDocuments({
           booking_id: b.booking_id,
           kind,
           language,
-          amount_minor: Math.round(Number(amount || 0) * 100),
+          amount_minor: amountMinor,
           currency,
           payment_method: method,
           reference,
@@ -307,96 +331,82 @@ export function BookingDocuments({
       <p className="text-sm font-black">
         {b.guest_name} · {s.rooms.find((r) => r.room_id === b.room_id)?.code}
       </p>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Belge türü">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={kind}
-            onChange={(e) => {
-              setKind(e.target.value);
-              setPreview(null);
-            }}
-          >
-            {Object.entries(documentKinds).map(([v, l]) => (
-              <option key={v} value={v}>
-                {l}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Dil">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={language}
-            onChange={(e) => {
-              setLanguage(e.target.value);
-              setPreview(null);
-            }}
-          >
-            {s.languages.map((l) => (
-              <option key={l}>{l}</option>
-            ))}
-          </select>
-        </Field>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <InlineSelectField
+          label="Belge türü"
+          value={kind}
+          onChange={(v) => {
+            setKind(v);
+            setPreview(null);
+          }}
+          options={Object.entries(documentKinds).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
+        <InlineSelectField
+          label="Dil"
+          value={language}
+          onChange={(v) => {
+            setLanguage(v);
+            setPreview(null);
+          }}
+          options={s.languages.map((l) => ({ value: l, label: l }))}
+        />
         {["sale_receipt", "sale_contract"].includes(kind) && (
           <>
-            <Field
+            <MoneyField
               label={
                 kind === "sale_receipt"
                   ? "Tahsil edilen tutar"
                   : "Sözleşme bedeli"
               }
-            >
-              <input
-                className={`uni-input ${inputStyle}`}
-                type="number"
-                min="0"
-                step="0.01"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </Field>
-            <Field label="Para birimi">
-              <select
-                className={`uni-input ${inputStyle}`}
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-              >
-                {["TRY", "EUR", "USD", "GBP"].map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-            </Field>
+              valueMinor={amountMinor}
+              onChange={setAmountMinor}
+            />
+            <InlineSelectField
+              label="Para birimi"
+              value={currency}
+              onChange={setCurrency}
+              options={CURRENCIES.map((c) => ({
+                value: c.id,
+                label: `${c.id} · ${c.label}`,
+              }))}
+            />
           </>
         )}
         {kind === "sale_receipt" && (
           <>
-            <Field label="Ödeme yöntemi">
-              <select
-                className={`uni-input ${inputStyle}`}
-                value={method}
-                onChange={(e) => setMethod(e.target.value)}
-              >
-                <option value="cash">Nakit</option>
-                <option value="card">Kart</option>
-                <option value="bank_transfer">Banka transferi</option>
-              </select>
-            </Field>
-            <Field label="Ödeme tarihi">
-              <input
-                className={`uni-input ${inputStyle}`}
-                type="datetime-local"
-                value={paidAt}
-                onChange={(e) => setPaidAt(e.target.value)}
-              />
-            </Field>
-            <Field label="İşlem referansı">
-              <input
-                className={`uni-input ${inputStyle}`}
+            <InlineSelectField
+              label="Ödeme yöntemi"
+              value={method}
+              onChange={setMethod}
+              options={
+                channels.length > 0
+                  ? channels.map((c) => ({
+                      value: c.code,
+                      label: c.labels.TR || c.code,
+                    }))
+                  : [
+                      { value: "cash", label: "Nakit" },
+                      { value: "card", label: "Kart" },
+                      { value: "bank_transfer", label: "Banka transferi" },
+                    ]
+              }
+            />
+            <DateField
+              label="Ödeme tarihi"
+              value={paidAt}
+              onChange={setPaidAt}
+            />
+            <div className="sm:col-span-2">
+              <TextField
+                label="İşlem referansı"
+                autoComplete="off"
                 value={reference}
-                onChange={(e) => setReference(e.target.value)}
+                onChange={setReference}
               />
-            </Field>
+            </div>
           </>
         )}
       </div>
@@ -427,22 +437,22 @@ export function BookingDocuments({
         <article
           lang={language.toLowerCase()}
           dir={language === "AR" ? "rtl" : "ltr"}
-          className="uni-card border border-slate-200 rounded-xl bg-white p-7 shadow-sm"
+          className="uni-card rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm"
         >
-          <h3 className="font-black text-xl mb-5">{preview.title}</h3>
+          <h3 className="font-uninav-book mb-4 text-xl leading-7 text-slate-900">{preview.title}</h3>
           <pre className="font-sans text-sm whitespace-pre-wrap leading-7">
             {preview.body}
           </pre>
         </article>
       )}
-      <h3 className="text-xs font-black text-slate-500">KAYITLI BELGELER</h3>
+      <h3 className="font-uninav-book text-xs font-bold uppercase tracking-wider text-slate-500">Kayıtlı belgeler</h3>
       {documents.map((d) => (
         <div
-          className="flex justify-between gap-3 items-center p-4 border border-slate-200 rounded-xl"
+          className="flex justify-between gap-3 items-center rounded-[20px] bg-[#f9f9f9] p-4"
           key={d.document_id}
         >
-          <div>
-            <strong className="text-sm">{d.title}</strong>
+          <div className="min-w-0">
+            <strong className="block truncate text-sm text-slate-900">{d.title}</strong>
             <p className="text-xs text-slate-400">
               {d.language} · {new Date(d.created_at).toLocaleString("tr-TR")}
             </p>

@@ -116,13 +116,17 @@ Playwright Chromium gerekir (`cd ui && npx playwright install chromium`). İste�
 
 ## Seedler ve demo
 
-Seedler şema migrationlarından ayrıdır: `internal/infrastructure/seeding/Registry`. Tümü `go run . db:seed`, tek seed `go run . db:seed demo` ile çalıştırılır. İlk demo kurulumu için:
+Seedler şema migrationlarından ayrıdır: `internal/infrastructure/seeding/Registry`. `go run . db:seed` veya `go run . db:seed defaults` yalnızca zorunlu ortak kataloğu yükler; demo oteli, kullanıcı, oda veya stok oluşturmaz. İlk demo kurulumu ayrıca ve açıkça istenir:
 
 ```sh
 DEMO_PASSWORD='kendinizin-belirledigi-en-az-12-karakter' go run . db:seed demo
 ```
 
-`Interaktif Test Otel`, otel yöneticisi `demo` (ad: Demo, soyad: Demo), üç kat, beş örnek oda, daire, hostel odası ve fiziksel yatak örnekleri oluşur. Aynı seed tekrar çalıştırıldığında kayıt çoğaltılmaz, şifreler ve düzenlenmiş kayıtlar değiştirilmez. Silinmiş kayıtlar otomatik geri açılmaz. Seedler sunucu açılışında kendiliğinden çalışmaz; PostgreSQL kilidi ve tek transaction ile uygulanır.
+`Interaktif Test Otel`, otel yöneticisi `demo` (ad: Demo, soyad: Demo), üç kat, beş örnek oda, daire, hostel odası ve fiziksel yatak örnekleri oluşur. Aynı demo seed tekrar çalıştırıldığında kayıt çoğaltılmaz, şifreler ve düzenlenmiş işletme kayıtları değiştirilmez. Silinmiş demo kayıtları otomatik geri açılmaz. Demo seed sunucu açılışında çalışmaz; PostgreSQL kilidi ve tek transaction ile uygulanır.
+
+Zorunlu katalog `internal/domain/catalog/defaults.txt` içinde 20 ana kategori, alt gruplar ve 682 tanımdan oluşur. Sunucu açılışı ve `migrate` mevcut otellere, yeni otel kaydı ve ilk yönetici kurulumu yeni otele kataloğu otomatik ekler. `catalog.<kategori>.<alt_grup>.<ürün>` kodları ve `icon_key` değerleri tüm otellerde aynıdır. Türkçe ve İngilizce etiketler bulunur; arayüzde diğer diller için İngilizce yedek etiket kullanılır. Yeni çeviriler mevcut `LocalizedString` sözleşmesiyle eklenebilir. Standart tanımlar sistem tarafından yönetilir; oteller ayrıca kendi özelliklerini tanımlayabilir.
+
+`amenity_categories` / `amenities` ortak var-yok tanımlarını, `inventory_categories` / `inventory_items` fiziksel ürün ve sarf tanımlarını tutar. Mevcut tenant bazlı özellik API'si korunur: oda formunda yapılan seçimler aynı transaction içinde `room_amenities` ve adetleriyle `room_inventory` tablolarına da yazılır. Tesis atamaları `property_amenities` tablosuna yansır. `inventory_assets` tekil demirbaşlar için, `inventory_movements` stok giriş/çıkışları ve oda adet değişimleri için ayrıdır. Oda adet değişiminin türü `room_assignment` olup depo stok girişi olarak değerlendirilmez. Katalog yükleme hiçbir atama, fiziksel demirbaş veya stok hareketi oluşturmaz. Güvenlik kamerası ve tesis ekipmanları `property` kapsamındadır ve oda seçiminde görünmez; API de odaya atamayı reddeder. Envanterde yatak seçmek rezervasyon kapasitesi veya fiziksel yatak yeri oluşturmaz; bunlar Yataklar ekranından yönetilir.
 
 Giriş sırası otel → personel kartı → şifredir. `auth.people`, seçilen şubenin yetkili personelinin yalnızca adını ve kullanıcı kimliğini döndürür; soyadı, e-posta ve kullanıcı adı halka açık listeye gönderilmez. Personel tanımları otel bazında yapılır; rol ve şube erişimleri API tarafında denetlenir. Personel silme/güncelleme açık oturumları iptal eder.
 
@@ -136,7 +140,7 @@ Her `sleeping_place` mevcut rezervasyon birimine (`unit_id`) bağlanır. Seviye,
 
 Oda/birim, kat, tesis, fiziksel yatak, medya, personel ve özellik tanımı silme işlemleri soft delete kullanır. Toplu oda silme alt birimleri birlikte arşivler; aktif rezervasyonu olan birim veya üst birimi varsa batch bütünüyle reddedilir. Geçmiş rezervasyon tahsisleri, misafir geçmişi ve belge içerikleri korunur. Kayıt kodları yeniden kullanılamaz.
 
-GORM yazma callback'leri aynı transaction içinde otel kimliği, kullanıcı, komut, kayıt kimliği, işlem ve zaman içeren audit kaydı oluşturur. Parola ve belge/misafir içerikleri log metnine yazılmaz. `audit.list` yalnızca yetkili yöneticinin erişebildiği otel için çalışır. Sistem Logları ekranı tarih/işlem filtresi ve sayfalama içerir. Silinmiş kayıtların yönetim arayüzünden geri yüklenmesi henüz sunulmaz.
+GORM yazma callback'leri aynı transaction içinde otel kimliği, kullanıcı, komut, kayıt kimliği, işlem ve zaman içeren audit kaydı oluşturur. Parola ve belge/misafir içerikleri log metnine yazılmaz. `audit.list` yalnızca yetkili yöneticinin erişebildiği otel için çalışır. Sistem Logları ekranı tarih/işlem filtresi, sayfa numaraları ve 25/50/100 kayıt seçimi içerir. API `page_size` verilmediğinde eski 100 kayıt davranışını korur; yanıtta `total`, `page` ve `page_size` döner. Filtre, otel veya sayfa boyutu değiştiğinde ilk sayfaya dönülür. Silinmiş kayıtların yönetim arayüzünden geri yüklenmesi henüz sunulmaz.
 
 Oda durumları temiz, kirli, arızalı, tadilatta ve boştur; doluluk ve rezervasyon seçili tarihteki tahsislerden hesaplanır. Çıkış kullanılan birimleri kirli yapar. Bakım ve arıza, ilgili birim/üst birim/alt birimde yeni rezervasyon açılmasını engeller.
 

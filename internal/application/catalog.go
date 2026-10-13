@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"errors"
 	"otel/constants"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/features"
@@ -230,7 +231,13 @@ func (s *Catalog) DeleteBranch(ctx context.Context, u identity.User, id uuid.UUI
 	if _, err := s.Branch(ctx, u, id); err != nil {
 		return err
 	}
-	return s.Properties.DeleteBranch(ctx, id)
+	if err := s.Properties.DeleteBranch(ctx, id); err != nil {
+		if errors.Is(err, constants.ErrStructureInUse) {
+			return constants.ErrBranchInUse
+		}
+		return err
+	}
+	return nil
 }
 func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.Room, create bool) (property.Room, error) {
 	if !u.IsManager() {

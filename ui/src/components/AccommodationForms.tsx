@@ -11,7 +11,8 @@ import {
 } from "../lib/api";
 import { MediaEditor } from "./MediaEditor";
 import { FeatureFields } from "./FeatureFields";
-import { Field, ErrorMessage, inputStyle, buttonStyle } from "./FormKit";
+import { ErrorMessage, buttonStyle } from "./FormKit";
+import { InlineSelectField, LocalizedTextFields, Switch, TextField } from "./fields";
 const blankRoom = (s: Snapshot): APIRoom => ({
   room_id: "",
   branch_id: s.branch_id,
@@ -55,7 +56,6 @@ export function UnitForm({
         }
       : blankRoom(snapshot),
   );
-  const [language, setLanguage] = useState("TR");
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -82,118 +82,97 @@ export function UnitForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Birim kodu">
-          <input
-            required
-            maxLength={32}
-            className={`uni-input ${inputStyle}`}
-            value={draft.code}
-            onChange={(e) => patch({ code: e.target.value })}
-          />
-        </Field>
-        <Field label="Birim türü">
-          <select
-            disabled={draft.kind === "bed"}
-            className={`uni-input ${inputStyle}`}
-            value={draft.kind}
-            onChange={(e) =>
-              patch({
-                kind: e.target.value,
-                bed_level: e.target.value === "bed" ? 1 : 0,
-                bed_group: "",
-                capacity: e.target.value === "bed" ? 1 : 0,
-              })
-            }
-          >
-            {Object.entries(unitKinds)
-              .filter(([v]) => v !== "bed" || draft.kind === "bed")
-              .map(([v, label]) => (
-                <option key={v} value={v}>
-                  {label}
-                </option>
-              ))}
-          </select>
-        </Field>
-        <Field label="Kat">
-          <select
-            disabled={draft.kind === "bed"}
-            className={`uni-input ${inputStyle}`}
-            value={draft.floor_id || ""}
-            onChange={(e) => patch({ floor_id: e.target.value || null })}
-          >
-            <option value="">Kat atanmamış</option>
-            {snapshot.floors.map((f) => (
-              <option key={f.floor_id} value={f.floor_id}>
-                {localized(f.label) || f.code}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Üst birim">
-          <select
-            disabled={draft.kind === "bed"}
-            className={`uni-input ${inputStyle}`}
-            value={draft.parent_id || ""}
-            onChange={(e) => patch({ parent_id: e.target.value || null })}
-          >
-            <option value="">Bağımsız birim</option>
-            {snapshot.rooms
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <TextField
+          label="Birim kodu"
+          required
+          autoComplete="off"
+          uppercase
+          value={draft.code}
+          onChange={(v) => patch({ code: v })}
+        />
+        <InlineSelectField
+          label="Birim türü"
+          value={draft.kind}
+          disabled={draft.kind === "bed"}
+          onChange={(v) =>
+            patch({
+              kind: v,
+              bed_level: v === "bed" ? 1 : 0,
+              bed_group: "",
+              capacity: v === "bed" ? 1 : 0,
+            })
+          }
+          options={Object.entries(unitKinds)
+            .filter(([v]) => v !== "bed" || draft.kind === "bed")
+            .map(([value, label]) => ({ value, label }))}
+        />
+        <InlineSelectField
+          label="Kat"
+          value={draft.floor_id || ""}
+          disabled={draft.kind === "bed"}
+          onChange={(v) => patch({ floor_id: v || null })}
+          options={[
+            { value: "", label: "Kat atanmamış" },
+            ...snapshot.floors.map((f) => ({
+              value: f.floor_id,
+              label: localized(f.label) || f.code,
+            })),
+          ]}
+        />
+        <InlineSelectField
+          label="Üst birim"
+          value={draft.parent_id || ""}
+          disabled={draft.kind === "bed"}
+          onChange={(v) => patch({ parent_id: v || null })}
+          options={[
+            { value: "", label: "Bağımsız birim" },
+            ...snapshot.rooms
               .filter((r) => r.room_id !== draft.room_id && r.kind !== "bed")
-              .map((r) => (
-                <option key={r.room_id} value={r.room_id}>
-                  {r.code} · {unitKinds[r.kind]}
-                </option>
-              ))}
-          </select>
-        </Field>
-        <Field label="Oda tipi / düzeni">
-          <input
-            className={`uni-input ${inputStyle}`}
-            value={draft.type}
-            onChange={(e) => patch({ type: e.target.value })}
-            placeholder="2+1, stüdyo, aile…"
-          />
-        </Field>
+              .map((r) => ({
+                value: r.room_id,
+                label: `${r.code} · ${unitKinds[r.kind]}`,
+              })),
+          ]}
+        />
+        <TextField
+          label="Oda tipi / düzeni"
+          placeholder="2+1, stüdyo, aile…"
+          value={draft.type}
+          onChange={(v) => patch({ type: v })}
+        />
         {draft.kind === "bed" && (
           <>
-            <Field label="Ranza grubu (isteğe bağlı)">
-              <input
-                className={`uni-input ${inputStyle}`}
-                disabled
-                value={draft.bed_group}
-                onChange={(e) => patch({ bed_group: e.target.value })}
-                placeholder="RANZA-01"
-              />
-            </Field>
-            <Field label="Yatak seviyesi">
-              <input
-                className={`uni-input ${inputStyle}`}
-                type="number"
-                min={1}
-                max={10}
-                disabled
-                value={draft.bed_level}
-                onChange={(e) => patch({ bed_level: Number(e.target.value) })}
-              />
-            </Field>
+            <TextField
+              label="Ranza grubu (isteğe bağlı)"
+              disabled
+              placeholder="RANZA-01"
+              value={draft.bed_group}
+              onChange={(v) => patch({ bed_group: v })}
+            />
+            <TextField
+              label="Yatak seviyesi"
+              type="number"
+              disabled
+              value={String(draft.bed_level)}
+              onChange={(v) => patch({ bed_level: Number(v) })}
+            />
           </>
         )}
       </div>
       {draft.kind !== "bed" && (
-        <Field label="Oda yatak düzeni">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={draft.bed_layout || ""}
-            onChange={(e) => patch({ bed_layout: e.target.value })}
-          >
-            <option value="">Belirtilmemiş</option>
-            <option value="single">Tek yatak</option>
-            <option value="double">Çift kişilik yatak</option>
-            <option value="twin">Twin · Ayrı tek kişilik yataklar</option>
-            <option value="mixed">Karma düzen</option>
-          </select>
-        </Field>
+        <InlineSelectField
+          label="Oda yatak düzeni"
+          value={draft.bed_layout || ""}
+          onChange={(v) => patch({ bed_layout: v })}
+          options={[
+            { value: "", label: "Belirtilmemiş" },
+            { value: "single", label: "Tek yatak" },
+            { value: "double", label: "Çift kişilik yatak" },
+            { value: "twin", label: "Twin · Ayrı tek kişilik yataklar" },
+            { value: "mixed", label: "Karma düzen" },
+          ]}
+        />
       )}
       {draft.kind === "bed" && (
         <p className="text-xs text-brand-blue-700">
@@ -201,76 +180,52 @@ export function UnitForm({
           bölümünü kullanın.
         </p>
       )}
-      <label className="flex items-center gap-3 text-sm font-bold">
-        <input
-          type="checkbox"
-          disabled={draft.kind === "bed"}
-          checked={draft.rentable}
-          onChange={(e) => patch({ rentable: e.target.checked })}
-        />
-        Bu birim doğrudan kiralanabilir
-      </label>
+      <Switch
+        label="Bu birim doğrudan kiralanabilir"
+        checked={draft.rentable}
+        disabled={draft.kind === "bed"}
+        onChange={(v) => patch({ rentable: v })}
+      />
       <p className="text-xs text-slate-400">
         Oda ve dairelerde kişi sayısı rezervasyonda belirlenir. Dairenin tamamı
         kiralandığında alt birimlerin aynı tarihleri kapanır. Tek tek kiralanan
         yataklar ayrıca tanımlanır.
       </p>
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {(["x", "y", "width", "height"] as const).map((key, i) => (
-          <Field
+          <TextField
             key={key}
             label={["Plan X", "Plan Y", "Genişlik", "Yükseklik"][i]}
-          >
-            <input
-              type="number"
-              className={`uni-input ${inputStyle}`}
-              value={draft.position[key]}
-              onChange={(e) =>
-                patch({
-                  position: {
-                    ...draft.position,
-                    [key]: Number(e.target.value),
-                  },
-                })
-              }
-            />
-          </Field>
+            type="number"
+            value={String(draft.position[key])}
+            onChange={(v) =>
+              patch({
+                position: {
+                  ...draft.position,
+                  [key]: Number(v),
+                },
+              })
+            }
+          />
         ))}
       </div>
-      <Field label="Açıklama dili">
-        <select
-          className={`uni-input ${inputStyle}`}
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          {snapshot.languages.map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
-      </Field>
-      <Field label={`Açıklama (${language})`}>
-        <textarea
-          className={`uni-input ${inputStyle}`}
-          value={draft.description?.[language] || ""}
-          onChange={(e) =>
-            patch({
-              description: { ...draft.description, [language]: e.target.value },
-            })
-          }
-        />
-      </Field>
+      <LocalizedTextFields
+        label="Açıklama"
+        hint="Her dil için ayrı açıklama ekleyin."
+        values={draft.description || {}}
+        onChange={(description) => patch({ description })}
+        multiline
+      />
       <FeatureFields
         definitions={snapshot.feature_registry.definitions || []}
         scope="room"
         value={draft.feature_assignments}
         onChange={(feature_assignments) => patch({ feature_assignments })}
-        language={language}
       />
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => patch({ assets })}
         hotelId={snapshot.hotel_id}
-        languages={snapshot.languages}
         onBusy={setUploading}
       />
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
@@ -301,7 +256,6 @@ export function FloorForm({
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [language, setLanguage] = useState("TR");
   return (
     <form
       className="space-y-5"
@@ -324,65 +278,30 @@ export function FloorForm({
       }}
     >
       <ErrorMessage message={error} />
-      <Field label="Kat kodu">
-        <input
-          required
-          className={`uni-input ${inputStyle}`}
-          value={draft.code}
-          onChange={(e) => setDraft({ ...draft, code: e.target.value })}
-        />
-      </Field>
-      <div className="flex gap-2">
-        <select
-          aria-label="Kat adı dili"
-          className={`uni-input ${inputStyle}`}
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          {[
-            "TR",
-            "EN",
-            "DE",
-            "FR",
-            "RU",
-            "AR",
-            "NE",
-            "TH",
-            "ZH-CN",
-            "ZH-TW",
-          ].map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
-        <input
-          aria-label="Kat adı"
-          placeholder={`Kat adı (${language})`}
-          className={`uni-input ${inputStyle}`}
-          value={draft.label?.[language] || ""}
-          onChange={(e) =>
-            setDraft({
-              ...draft,
-              label: { ...draft.label, [language]: e.target.value },
-            })
-          }
-        />
-      </div>
-      <div className="grid grid-cols-3 gap-3">
+      <TextField
+        label="Kat kodu"
+        required
+        autoComplete="off"
+        uppercase
+        value={draft.code}
+        onChange={(v) => setDraft({ ...draft, code: v })}
+      />
+      <LocalizedTextFields
+        label="Kat adı"
+        hint="Her dil için ayrı ad ekleyin."
+        values={draft.label || {}}
+        onChange={(label) => setDraft({ ...draft, label })}
+      />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {(["sort_order", "width", "height"] as const).map((key, i) => (
-          <Field
+          <TextField
             key={key}
             label={["Sıralama", "Plan genişliği", "Plan yüksekliği"][i]}
-          >
-            <input
-              type="number"
-              required
-              className={`uni-input ${inputStyle}`}
-              value={draft[key]}
-              onChange={(e) =>
-                setDraft({ ...draft, [key]: Number(e.target.value) })
-              }
-            />
-          </Field>
+            type="number"
+            required
+            value={String(draft[key])}
+            onChange={(v) => setDraft({ ...draft, [key]: Number(v) })}
+          />
         ))}
       </div>
       <button disabled={busy} className={`uni-control ${buttonStyle}`}>
@@ -424,7 +343,6 @@ export function FacilityForm({
           feature_assignments: [],
         },
   );
-  const [language, setLanguage] = useState("TR");
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -455,7 +373,7 @@ export function FacilityForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {(
           [
             "name",
@@ -466,7 +384,7 @@ export function FacilityForm({
             "tax_office",
           ] as const
         ).map((key, i) => (
-          <Field
+          <TextField
             key={key}
             label={
               [
@@ -478,37 +396,20 @@ export function FacilityForm({
                 "Vergi dairesi",
               ][i]
             }
-          >
-            <input
-              required={key === "name"}
-              className={`uni-input ${inputStyle}`}
-              value={draft[key]}
-              onChange={(e) => setDraft({ ...draft, [key]: e.target.value })}
-            />
-          </Field>
+            required={key === "name"}
+            type={key === "email" ? "email" : "text"}
+            autoComplete="off"
+            value={draft[key]}
+            onChange={(v) => setDraft({ ...draft, [key]: v })}
+          />
         ))}
       </div>
-      <Field label="Açıklama dili">
-        <select
-          className={`uni-input ${inputStyle}`}
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          {snapshot.languages.map((l) => (
-            <option key={l}>{l}</option>
-          ))}
-        </select>
-      </Field>
-      <textarea
-        aria-label="Tesis açıklaması"
-        className={`uni-input ${inputStyle}`}
-        value={draft.description?.[language] || ""}
-        onChange={(e) =>
-          setDraft({
-            ...draft,
-            description: { ...draft.description, [language]: e.target.value },
-          })
-        }
+      <LocalizedTextFields
+        label="Açıklama"
+        hint="Her dil için ayrı açıklama ekleyin."
+        values={draft.description || {}}
+        onChange={(description) => setDraft({ ...draft, description })}
+        multiline
       />
       {kind === "branch" && (
         <FeatureFields
@@ -518,14 +419,12 @@ export function FacilityForm({
           onChange={(feature_assignments) =>
             setDraft({ ...draft, feature_assignments })
           }
-          language={language}
         />
       )}
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => setDraft({ ...draft, assets })}
         hotelId={create && kind === "hotel" ? undefined : snapshot.hotel_id}
-        languages={snapshot.languages}
         onBusy={setUploading}
       />
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
@@ -582,91 +481,71 @@ export function BulkUnitForm({
         100 yatak ve 2 ranza seviyesi seçildiğinde 50 ranza grubunda 100 ayrı
         yatak oluşturulur. Kayıtların tamamı birlikte kaydedilir.
       </p>
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Kat">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={floor}
-            onChange={(e) => setFloor(e.target.value)}
-          >
-            <option value="">Atanmamış</option>
-            {snapshot.floors.map((f) => (
-              <option key={f.floor_id} value={f.floor_id}>
-                {localized(f.label) || f.code}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Üst birim">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={parent}
-            onChange={(e) => setParent(e.target.value)}
-          >
-            <option value="">Bağımsız</option>
-            {snapshot.rooms
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <InlineSelectField
+          label="Kat"
+          value={floor}
+          onChange={setFloor}
+          options={[
+            { value: "", label: "Atanmamış" },
+            ...snapshot.floors.map((f) => ({
+              value: f.floor_id,
+              label: localized(f.label) || f.code,
+            })),
+          ]}
+        />
+        <InlineSelectField
+          label="Üst birim"
+          value={parent}
+          onChange={setParent}
+          options={[
+            { value: "", label: "Bağımsız" },
+            ...snapshot.rooms
               .filter((r) => r.kind !== "bed")
-              .map((r) => (
-                <option key={r.room_id} value={r.room_id}>
-                  {r.code}
-                </option>
-              ))}
-          </select>
-        </Field>
-        <Field label="Tür">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={kind}
-            onChange={(e) => setKind(e.target.value)}
-          >
-            {Object.entries(unitKinds).map(([v, l]) => (
-              <option key={v} value={v}>
-                {l}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Kod ön eki">
-          <input
-            required
-            className={`uni-input ${inputStyle}`}
-            value={prefix}
-            onChange={(e) => setPrefix(e.target.value)}
-          />
-        </Field>
-        <Field label="Birim sayısı">
-          <input
-            required
-            min={1}
-            max={1000}
-            type="number"
-            className={`uni-input ${inputStyle}`}
-            value={count}
-            onChange={(e) => setCount(Number(e.target.value))}
-          />
-        </Field>
-        {kind === "bed" && <Field label="Yatak kişi kapasitesi">
-          <input
-            min={1}
-            required
-            type="number"
-            className={`uni-input ${inputStyle}`}
-            value={capacity}
-            onChange={(e) => setCapacity(Number(e.target.value))}
-          />
-        </Field>}
+              .map((r) => ({ value: r.room_id, label: r.code })),
+          ]}
+        />
+        <InlineSelectField
+          label="Tür"
+          value={kind}
+          onChange={setKind}
+          options={Object.entries(unitKinds).map(([value, label]) => ({
+            value,
+            label,
+          }))}
+        />
+        <TextField
+          label="Kod ön eki"
+          required
+          autoComplete="off"
+          uppercase
+          value={prefix}
+          onChange={setPrefix}
+        />
+        <TextField
+          label="Birim sayısı"
+          type="number"
+          required
+          value={String(count)}
+          onChange={(v) => setCount(Number(v))}
+        />
         {kind === "bed" && (
-          <Field label="Ranza seviye sayısı">
-            <input
-              required
-              type="number"
-              min={1}
-              max={10}
-              className={`uni-input ${inputStyle}`}
-              value={levels}
-              onChange={(e) => setLevels(Number(e.target.value))}
-            />
-          </Field>
+          <TextField
+            label="Yatak kişi kapasitesi"
+            type="number"
+            required
+            value={String(capacity)}
+            onChange={(v) => setCapacity(Number(v))}
+          />
+        )}
+        {kind === "bed" && (
+          <TextField
+            label="Ranza seviye sayısı"
+            type="number"
+            required
+            value={String(levels)}
+            onChange={(v) => setLevels(Number(v))}
+          />
         )}
       </div>
       <button className={`uni-control ${buttonStyle}`} disabled={busy}>

@@ -15,16 +15,22 @@ type Seed struct {
 	Run  func(context.Context, *gorm.DB, Options) error
 }
 
-var Registry = []Seed{{Name: "demo", Run: demo}}
+var Registry = []Seed{
+	{Name: "defaults", Run: func(ctx context.Context, tx *gorm.DB, _ Options) error {
+		return persistence.EnsureDefaultCatalog(ctx, tx)
+	}},
+	{Name: "demo", Run: demo},
+}
 
 // Run serializes seed runs and commits all selected seeds atomically. Existing
-// records are reused, never updated, including credentials and operational state.
+// operational records are reused, never updated. The default catalog is system
+// vocabulary; an unnamed seed run never creates demo hotels or credentials.
 func Run(ctx context.Context, db *gorm.DB, name string, options Options) error {
 	persistence.InstallAudit(db)
 	ctx = audit.WithActor(ctx, audit.Actor{Command: "db:seed"})
 	selected := []Seed{}
 	for _, s := range Registry {
-		if name == "" || name == s.Name {
+		if name == "" && s.Name == "defaults" || name == s.Name {
 			selected = append(selected, s)
 		}
 	}
@@ -39,6 +45,9 @@ func Run(ctx context.Context, db *gorm.DB, name string, options Options) error {
 			if err := s.Run(ctx, tx, options); err != nil {
 				return err
 			}
+		}
+		if name == "demo" {
+			return persistence.EnsureDefaultCatalog(ctx, tx)
 		}
 		return nil
 	})

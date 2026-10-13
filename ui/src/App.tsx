@@ -115,12 +115,24 @@ const navigation = [
   { id: "features", label: "Olanak Tanımları", icon: Settings },
   { id: "appsettings", label: "Ayarlar", icon: Settings },
 ];
-export default function App({ initialData }: { initialData: Snapshot | null }) {
+const NAV_TAB_IDS = new Set(navigation.map((n) => n.id));
+
+/** URL'deki ?tab= değerini doğrular; geçersizse null döner. */
+function readTabFromUrl(): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const t = new URLSearchParams(window.location.search).get("tab");
+    return t && NAV_TAB_IDS.has(t) ? t : null;
+  } catch {
+    return null;
+  }
+}
+export default function App({ initialData, initialTab = "board" }: { initialData: Snapshot | null; initialTab?: string }) {
   const notify = useNotifications();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(
       initialData ? normalize(initialData) : null,
     ),
-    [tab, setTab] = useState("board"),
+    [tab, setTab] = useState(() => NAV_TAB_IDS.has(initialTab) ? initialTab : "board"),
     [sidebar, setSidebar] = useState(true),
     [modal, setModal] = useState<Modal | null>(null),
     [busy, setBusy] = useState(false),
@@ -143,11 +155,44 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     { kind: "create"; roomId?: string } | { kind: "edit"; booking: Booking } | null
   >(null);
   // Üst bardaki açık sekmeler (kapatılabilir; board sabitlenir).
-  const [openTabs, setOpenTabs] = useState<string[]>([
-    "board",
-    "bookings",
-    "stays",
-  ]);
+  const [openTabs, setOpenTabs] = useState<string[]>(() => {
+    const initial = NAV_TAB_IDS.has(initialTab) ? initialTab : "board";
+    const base = ["board", "bookings", "stays"];
+    return initial && !base.includes(initial) ? [...base, initial] : base;
+  });
+  // Sekme ↔ URL eşitlemesi: yenileme/paylaşımda ekran korunur,
+  // geri/ileri düğmeleri sekmeler arasında gezinir.
+  const skipPush = React.useRef(false);
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    if (NAV_TAB_IDS.has(tab)) {
+      if (url.searchParams.get("tab") === tab) return;
+      url.searchParams.set("tab", tab);
+      if (skipPush.current) {
+        skipPush.current = false;
+        window.history.replaceState(null, "", url);
+      } else {
+        window.history.pushState({ tab }, "", url);
+      }
+    } else if (url.searchParams.has("tab")) {
+      // Geçici sekmeler (rezervasyon açma/düzenleme) URL'ye yazılmaz.
+      url.searchParams.delete("tab");
+      window.history.replaceState(null, "", url);
+    }
+  }, [tab ]);
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onPopState = () => {
+      const t = readTabFromUrl();
+      if (!t) return;
+      skipPush.current = true;
+      setOpenTabs((prev) => (prev.includes(t) ? prev : [...prev, t]));
+      setTab(t);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
   const refresh = async (selection?: Selection) => {
     const data = await command<Snapshot>(
       "system.initial_sync",
@@ -262,6 +307,25 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       });
   };
   const title = navigation.find((n) => n.id === tab)?.label || "";
+  const removeBranch = async (id: string, name: string) => {
+    if (
+      !(await confirmDialog(
+        `"${name}" arşive kaldırılsın mı? Kayıtlar fiziksel olarak silinmez, geçmiş korunur.`,
+      ))
+    )
+      return;
+    await run(async () => {
+      await command("branch.delete", { id });
+      const remaining = s.branches.filter((b) => b.branch_id !== id);
+      await refresh();
+      if (s.branch_id === id) {
+        await changeBranch({
+          hotel_id: s.hotel_id,
+          branch_id: remaining[0]?.branch_id ?? "",
+        });
+      }
+    }, "Tesis arşive kaldırıldı.");
+  };
   const handleLogout = () =>
     void run(async () => {
       await command("auth.logout");
@@ -279,10 +343,6 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       ? "Yeni Rezervasyon"
       : bookingTab.booking.guest_name || "Rezervasyon";
   const isBookingTab = bookingTabId !== null && tab === bookingTabId;
-  const openBookingCreate = (roomId?: string) => {
-    setBookingTab({ kind: "create", roomId });
-    activateTab("newbooking");
-  };
   const openBookingEdit = (booking: Booking) => {
     setBookingTab({ kind: "edit", booking: s.bookings.find(item => item.booking_id === booking.booking_id) || booking });
     activateTab(`booking:${booking.booking_id}`);
@@ -370,6 +430,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 )}
               </p>
               <dl className="room-status-dates">
+                <div><dt>Rezervasyonu alan</dt><dd>{modal.booking.created_by_name || "Bilgi kaydedilmemiş"}</dd></div>
+                <div><dt>Çıkışı gerçekleştiren</dt><dd>{modal.booking.status === "completed" ? modal.booking.checked_out_by_name || "Bilgi kaydedilmemiş" : "Henüz çıkış yapılmadı"}</dd></div>
                 <div><dt>Planlanan giriş</dt><dd>{date(modal.booking.check_in)}</dd></div>
                 <div><dt>Planlanan çıkış</dt><dd>{date(modal.booking.check_out)}</dd></div>
                 {modal.booking.actual_check_in && <div><dt>Giriş yapıldı</dt><dd>{date(modal.booking.actual_check_in)}</dd></div>}
@@ -433,7 +495,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       {operator && s.branch_id && (
         <button
           className={`uni-control ${buttonStyle}`}
-          onClick={() => openBookingCreate()}
+          onClick={() => setModal({ type: "booking" })}
         >
           <Plus size={16} />
           Rezervasyon Al
@@ -456,7 +518,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       extraLabels={bookingTab ? { [bookingTabId as string]: bookingTabLabel } : {}}
       onSelection={changeBranch}
       onLogout={handleLogout}
-      onNewBooking={operator ? () => openBookingCreate() : undefined}
+      onNewBooking={operator ? () => setModal({ type: "booking" }) : undefined}
       at={atISO}
       onDate={(d) =>
         setDateFilter(
@@ -470,10 +532,10 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         {!isBookingTab && tab !== "appsettings" && tab !== "calendar" && (
         <div className="app-page-header flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-[.18em] text-slate-500">
+            <p className="font-uninav-book text-[0.875rem] leading-5 text-slate-500">
               {branch?.name || "TESİS"}
             </p>
-            <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-900">
+            <h2 className="font-uninav-book mt-1 text-[2.25rem] leading-[2.5rem] tracking-[-0.01em] text-slate-900">
               {title}
             </h2>
           </div>
@@ -558,10 +620,10 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   key={stat.label}
                   className="uni-card rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm"
                 >
-                  <span className="text-[9px] font-black tracking-widest text-slate-400">
+                  <span className="font-uninav-book text-xs font-medium uppercase tracking-wider text-slate-500">
                     {stat.label}
                   </span>
-                  <p className="mt-3 text-3xl font-black tracking-tight">
+                  <p className="font-uninav-book mt-3 text-3xl leading-none tracking-tight text-slate-900">
                     {stat.value}
                   </p>
                 </div>
@@ -659,7 +721,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         {tab === "board" && (
           <>
             <div className="flex flex-wrap justify-between gap-3">
-              <p className="text-xs text-slate-400">
+              <p className="font-uninav-book text-[0.875rem] leading-5 text-slate-500">
                 {dateFilter ? `${dateFilter} · Günün tamamı` : "Şu an"} ·{" "}
                 {visibleRooms.length} birim
               </p>
@@ -679,9 +741,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 at={atISO}
                 day={dateFilter}
                 onOpenBooking={booking => setModal({ type: "history", booking })}
-                onEdit={(room) => setModal({ type: "unit", room })}
                 onBook={(room) =>
-                  openBookingCreate(room.room_id)
+                  setModal({ type: "booking", roomId: room.room_id })
                 }
                 onRefresh={refresh}
                 canManage={manager}
@@ -758,7 +819,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           <button
                             className={`uni-control ${secondaryStyle}`}
                             onClick={() =>
-                              openBookingCreate(room.room_id)
+                              setModal({ type: "booking", roomId: room.room_id })
                             }
                           >
                             <Plus size={12} />
@@ -774,15 +835,6 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             }
                           >
                             <ArrowRightLeft size={13} />
-                          </button>
-                        )}
-                        {manager && (
-                          <button
-                            aria-label={`${room.code} düzenle`}
-                            className={`uni-control ${secondaryStyle}`}
-                            onClick={() => setModal({ type: "unit", room })}
-                          >
-                            <Pencil size={12} />
                           </button>
                         )}
                         {housekeeping && !state.current.length && (
@@ -824,7 +876,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             onFloor={(floor) => setModal({ type: "floor", floor })}
             onBulk={() => setModal({ type: "bulk" })}
             onBook={(room) =>
-              openBookingCreate(room.room_id)
+              setModal({ type: "booking", roomId: room.room_id })
             }
           />
         )}
@@ -846,6 +898,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 "Kişi",
                 "Tutar",
                 "Durum",
+                "İşlem yapanlar",
                 "İşlemler",
               ]}
             >
@@ -900,6 +953,12 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                     >
                       {bookingStatuses[b.status]}
                     </span>
+                  </td>
+                  <td className="p-4 min-w-48 text-sm">
+                    <dl className="space-y-2">
+                      <div><dt className="text-xs text-slate-500">Rezervasyonu alan</dt><dd className="font-medium">{b.created_by_name || "Bilgi kaydedilmemiş"}</dd></div>
+                      <div><dt className="text-xs text-slate-500">Çıkışı gerçekleştiren</dt><dd className="font-medium">{b.status === "completed" ? b.checked_out_by_name || "Bilgi kaydedilmemiş" : "Henüz çıkış yapılmadı"}</dd></div>
+                    </dl>
                   </td>
                   <td className="p-4">
                     {operator && (
@@ -1050,6 +1109,46 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   ),
               )}
             </div>
+            {s.branches.length > 0 && (
+              <div className="uni-card rounded-2xl border border-slate-200 bg-white p-6 space-y-3">
+                <h4 className="text-sm font-black uppercase tracking-wider text-slate-500">
+                  Tesisler · {s.branches.length}
+                </h4>
+                {s.branches.map((b) => (
+                  <div
+                    key={b.branch_id}
+                    className="flex items-center gap-3 rounded-xl bg-slate-50 px-4 py-3"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-bold text-slate-800">
+                        {b.name}
+                        {b.branch_id === s.branch_id && (
+                          <span className="ml-2 rounded-full bg-brand-blue-100 px-2 py-0.5 text-[10px] font-black uppercase text-brand-blue-700">
+                            Aktif
+                          </span>
+                        )}
+                      </p>
+                      <p className="truncate text-xs text-slate-400">{b.address}</p>
+                    </div>
+                    {manager && (
+                      <button
+                        type="button"
+                        aria-label={`${b.name} tesisini arşive kaldır`}
+                        title="Arşive kaldır"
+                        className="uni-control flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 outline-none transition-all duration-150 ease-out hover:bg-red-50 hover:text-red-500 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-neutral-400"
+                        onClick={() => b.branch_id && void removeBranch(b.branch_id, b.name)}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <p className="text-[11px] leading-5 text-slate-400">
+                  Silinen tesis arşive kaldırılır; kayıtlar fiziksel olarak silinmez,
+                  geçmiş korunur. Aktif veya yaklaşan konaklaması olan tesis kaldırılamaz.
+                </p>
+              </div>
+            )}
           </>
         )}
         {tab === "features" && (
@@ -1068,7 +1167,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         <Drawer
           title={editorTitle}
           onClose={() => setModal(null)}
-          layout={["history", "guests"].includes(modal.type) ? "center" : "side"}
+          layout={["history", "guests", "move", "booking"].includes(modal.type) ? "center" : "side"}
         >
           {editorContent}
         </Drawer>
@@ -1106,7 +1205,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               const b = contextMenu.booking;
               if (type === "reserve") {
                 setContextMenu(null);
-                openBookingCreate(contextMenu.room.room_id);
+                setModal({ type: "booking", roomId: contextMenu.room.room_id });
               } else if (type === "sale") {
                 if (!operator || (menuOperation === "create" && menuRoomOccupied)) return;
                 if (b && menuOperation === "check_in") transition(b, "check_in");

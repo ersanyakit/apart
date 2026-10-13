@@ -20,12 +20,15 @@ export function InlineSelectField({
   onChange,
   options,
   disabled,
+  tone = "surface",
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   options: InlineSelectOption[];
   disabled?: boolean;
+  /** "surface" ya da gri zemin üstünde "white" kart. */
+  tone?: "surface" | "white";
 }) {
   const [open, setOpen] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -43,7 +46,7 @@ export function InlineSelectField({
   }, [open ]);
 
   return (
-    <FieldCard className="h-full">
+    <FieldCard className={tone === "white" ? "h-full bg-white" : "h-full"}>
       <button
         type="button"
         aria-label={`${label}: ${selected?.label ?? "Seçin"}`}

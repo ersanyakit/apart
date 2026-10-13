@@ -63,6 +63,7 @@ const (
 	CMD_FEATURE_REGISTRY = "feature.registry"
 	CMD_CATEGORY_CREATE  = "feature.category.create"
 	CMD_CATEGORY_UPDATE  = "feature.category.update"
+	CMD_CATEGORY_DELETE  = "feature.category.delete"
 	CMD_FEATURE_CREATE   = "feature.create"
 	CMD_FEATURE_UPDATE   = "feature.update"
 	CMD_FEATURE_DELETE   = "feature.delete"
@@ -71,7 +72,7 @@ const (
 )
 
 func init() {
-	for code, method := range map[string]string{CMD_FEATURE_REGISTRY: "GET", CMD_CATEGORY_CREATE: "POST", CMD_CATEGORY_UPDATE: "PUT", CMD_FEATURE_CREATE: "POST", CMD_FEATURE_UPDATE: "PUT", CMD_FEATURE_DELETE: "DELETE", CMD_FEATURE_ASSIGN: "PUT", CMD_ROOM_FILTER: "GET"} {
+	for code, method := range map[string]string{CMD_FEATURE_REGISTRY: "GET", CMD_CATEGORY_CREATE: "POST", CMD_CATEGORY_UPDATE: "PUT", CMD_CATEGORY_DELETE: "DELETE", CMD_FEATURE_CREATE: "POST", CMD_FEATURE_UPDATE: "PUT", CMD_FEATURE_DELETE: "DELETE", CMD_FEATURE_ASSIGN: "PUT", CMD_ROOM_FILTER: "GET"} {
 		CommandMethods[code] = method
 	}
 }

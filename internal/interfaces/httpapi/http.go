@@ -531,7 +531,7 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Features.SaveDefinition(ctx, u, input, e.Code == constants.CMD_FEATURE_CREATE)
-	case constants.CMD_FEATURE_DELETE:
+	case constants.CMD_FEATURE_DELETE, constants.CMD_CATEGORY_DELETE:
 		var input struct {
 			HotelID uuid.UUID `json:"hotel_id"`
 			ID      uuid.UUID `json:"id"`
@@ -539,7 +539,11 @@ func (h *Handler) command(c fiber.Ctx) error {
 		if err = decode(e.Payload, &input); err != nil {
 			return err
 		}
-		err = h.Features.DeleteDefinition(ctx, u, input.HotelID, input.ID)
+		if e.Code == constants.CMD_CATEGORY_DELETE {
+			err = h.Features.DeleteCategory(ctx, u, input.HotelID, input.ID)
+		} else {
+			err = h.Features.DeleteDefinition(ctx, u, input.HotelID, input.ID)
+		}
 	case constants.CMD_FEATURE_ASSIGN:
 		var input struct {
 			Target      features.Target       `json:"target"`

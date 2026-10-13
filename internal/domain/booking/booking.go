@@ -2,6 +2,8 @@ package booking
 
 import (
 	"context"
+	"fmt"
+
 	"github.com/google/uuid"
 	"otel/constants"
 	"otel/internal/domain/property"
@@ -25,25 +27,28 @@ type Allocation struct {
 	End          time.Time `json:"end"`
 }
 type Booking struct {
-	BookingID       uuid.UUID        `json:"booking_id"`
-	BranchID        uuid.UUID        `json:"branch_id"`
-	RoomID          uuid.UUID        `json:"room_id"`
-	UserID          uuid.UUID        `json:"user_id"`
-	GuestName       string           `json:"guest_name"`
-	GuestCount      int              `json:"guest_count"`
-	DailyPriceMinor int64            `json:"daily_price_minor"`
-	DepositMinor    int64            `json:"deposit_minor"`
-	DepositChannel  string           `json:"deposit_channel"`
-	Guests          []property.Guest `json:"guests"`
-	Notes           string           `json:"notes"`
-	CheckIn         time.Time        `json:"check_in"`
-	CheckOut        time.Time        `json:"check_out"`
-	ActualCheckIn   *time.Time       `json:"actual_check_in"`
-	ActualCheckOut  *time.Time       `json:"actual_check_out"`
-	Status          string           `json:"status"`
-	Allocations     []Allocation     `json:"allocations"`
-	CreatedAt       time.Time        `json:"created_at"`
-	UpdatedAt       time.Time        `json:"updated_at"`
+	CreatedByName    string           `json:"created_by_name"`
+	CheckedOutByName string           `json:"checked_out_by_name"`
+	CheckedOutByID   *uuid.UUID       `json:"checked_out_by_id,omitempty"`
+	BookingID        uuid.UUID        `json:"booking_id"`
+	BranchID         uuid.UUID        `json:"branch_id"`
+	RoomID           uuid.UUID        `json:"room_id"`
+	UserID           uuid.UUID        `json:"user_id"`
+	GuestName        string           `json:"guest_name"`
+	GuestCount       int              `json:"guest_count"`
+	DailyPriceMinor  int64            `json:"daily_price_minor"`
+	DepositMinor     int64            `json:"deposit_minor"`
+	DepositChannel   string           `json:"deposit_channel"`
+	Guests           []property.Guest `json:"guests"`
+	Notes            string           `json:"notes"`
+	CheckIn          time.Time        `json:"check_in"`
+	CheckOut         time.Time        `json:"check_out"`
+	ActualCheckIn    *time.Time       `json:"actual_check_in"`
+	ActualCheckOut   *time.Time       `json:"actual_check_out"`
+	Status           string           `json:"status"`
+	Allocations      []Allocation     `json:"allocations"`
+	CreatedAt        time.Time        `json:"created_at"`
+	UpdatedAt        time.Time        `json:"updated_at"`
 }
 
 func (b Booking) Validate() error {
@@ -127,7 +132,17 @@ func ValidateAvailability(rooms []property.Room, branchID, roomID uuid.UUID, cou
 	}
 	related := property.Related(rooms, roomID)
 	for _, r := range rooms {
-		if related[r.RoomID] && (blocked[r.RoomID] || r.Status == "Arizali" || r.Status == "Tadilat" || (checkIn && r.Status == "Kirli")) {
+		if !related[r.RoomID] {
+			continue
+		}
+		if checkIn && r.Status == "Kirli" {
+			return &constants.Error{
+				Code:    constants.ErrRoomDirty.Code,
+				Message: fmt.Sprintf("%s birimi kirli olduğu için giriş yapılamaz. Önce oda durumunu Temiz olarak güncelleyin.", r.Code),
+				Kind:    constants.Conflict,
+			}
+		}
+		if blocked[r.RoomID] || r.Status == "Arizali" || r.Status == "Tadilat" {
 			return constants.ErrUnavailable
 		}
 	}

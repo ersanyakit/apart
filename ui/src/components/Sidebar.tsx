@@ -11,8 +11,8 @@ interface SidebarItemProps {
 }
 
 /**
- * iOS gruplu-liste menü bölümü: gri zemin üstünde başlık + beyaz kart,
- * satırlar renkli ikon kutucuklu, aktif satır dolgulu + tik işaretli.
+ * iOS gruplu menü: ortak yuvarlatılmış yüzey ve dairesel ikonlar.
+ * Grup yüzeyi ortak uni-surface, seçili satır tema vurgu rengini kullanır.
  * Daraltılmış kipte dairesel ray butonları. Açılır-kapanır grup yoktur;
  * bölümler her zaman görünür (mobil bottom sheet ile birebir aynı dil).
  */
@@ -37,11 +37,11 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
 
   return (
     <section aria-label={typeof item.label === "string" ? item.label : undefined}>
-      <p className="px-4 pb-1.5 text-[15px] font-medium leading-6 text-slate-500">
+      <p className="px-4 pb-2 text-[0.8125rem] font-medium leading-5 text-slate-500">
         {item.label}
       </p>
-      <div className="overflow-hidden rounded-[20px] bg-white ring-1 ring-slate-900/[0.06]">
-        <ul className="divide-y divide-slate-100">
+      <div className="sidebar-menu-group">
+        <ul>
           {(item.subItems ?? [item]).map((entry) => {
             const isActive = activeTab === entry.id;
             return (
@@ -51,17 +51,13 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                   aria-current={isActive ? "page" : undefined}
                   title={typeof entry.label === "string" ? entry.label : undefined}
                   onClick={() => onSelect(entry.id)}
-                  className={`uni-control flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left outline-none select-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-blue-500/40 ${
-                    isActive
-                      ? "bg-brand-blue-50/80"
-                      : "bg-white hover:bg-slate-50 active:bg-slate-100"
-                  }`}
+                  className="uni-control sidebar-menu-row flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left outline-none select-none"
                 >
                   <span
                     aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-brand-blue-50 text-brand-blue-500"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-blue-50 text-brand-blue-500"
                   >
-                    {entry.icon}
+                    <NavigationIcon name={entry.id} />
                   </span>
                   <span
                     className={`min-w-0 flex-1 truncate text-[15px] leading-6 ${
