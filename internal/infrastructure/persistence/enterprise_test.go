@@ -195,6 +195,64 @@ func TestEnterpriseWorkflows(t *testing.T) {
 			t.Fatal("deleted staff session remains live")
 		}
 	})
+	t.Run("guest search includes reservations and companions before check-in", func(t *testing.T) {
+		r := createRoom("SEARCH", 2)
+		b, err := service.SaveBooking(ctx, manager, booking.Booking{
+			BranchID: branch.BranchID, RoomID: r.RoomID, GuestName: "İlker Arama", GuestCount: 2,
+			CheckIn: time.Now().Add(48 * time.Hour), CheckOut: time.Now().Add(72 * time.Hour),
+			Guests: []property.Guest{
+				{Name: "İlker Arama", TCNo: "SEARCH-OWNER", Phone: "0532 123 45 67", Address: "Arama adresi", Nationality: "TR"},
+				{Name: "Işık Arama", Phone: "0544 765 43 21"},
+			},
+		}, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		q := guest.Query{HotelID: user.HotelID, BranchID: branch.BranchID, Search: "Arama"}
+		history, err := guests.List(ctx, manager, q, false)
+		if err != nil || history.Total != 0 {
+			t.Fatalf("unstarted reservation must not become a stay: %+v %v", history, err)
+		}
+		for _, term := range []string{"İLKER", "ilker", "SEARCH-OWNER", "05321234567", "Arama adresi", "IŞIK", "05447654321"} {
+			q.Search = term
+			found, err := guests.Search(ctx, manager, q)
+			if err != nil || found.Total != 1 || len(found.Items) != 1 {
+				t.Fatalf("search %q: %+v %v", term, found, err)
+			}
+		}
+		q.Search = "Arama"
+		found, err := guests.Search(ctx, manager, q)
+		if err != nil || found.Total != 2 {
+			t.Fatalf("both guests must be searchable: %+v %v", found, err)
+		}
+		// Reusing a selected guest without an identity number must preserve their profile.
+		b.Guests[1].ID = found.Items[0].GuestID.String()
+		for _, profile := range found.Items {
+			if profile.Name == "Işık Arama" {
+				b.Guests[1].ID = profile.GuestID.String()
+			}
+		}
+		if _, err := guests.Update(ctx, manager, guest.Update{BranchID: branch.BranchID, BookingID: b.BookingID, Guests: b.Guests, GuestCount: 2}); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := service.Transition(ctx, manager, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel"}); err != nil {
+			t.Fatal(err)
+		}
+		found, err = guests.Search(ctx, manager, q)
+		if err != nil || found.Total != 2 {
+			t.Fatalf("cancelled reservation guests must remain searchable without duplicates: %+v %v", found, err)
+		}
+		q.Search = "%"
+		found, err = guests.Search(ctx, manager, q)
+		if err != nil || found.Total != 0 {
+			t.Fatalf("wildcard must be literal: %+v %v", found, err)
+		}
+		outsider := manager
+		outsider.HotelID = uuid.New()
+		if _, err := guests.Search(ctx, outsider, q); !errors.Is(err, constants.ErrForbidden) {
+			t.Fatalf("cross-hotel search: %v", err)
+		}
+	})
 	t.Run("multiple guests, individual history, documents and soft deletion", func(t *testing.T) {
 		r := createRoom("GUESTS", 4)
 		target := createRoom("TARGET", 4)

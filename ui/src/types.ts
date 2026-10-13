@@ -3,6 +3,8 @@ export type RoomStatus = 'Rezervli' | 'Dolu' | 'Bos' | 'Temiz' | 'Kirli' | 'Ariz
 
 export interface Guest {
   relationship?: string;
+  /** Uyruk: ISO 3166-1 alpha-2 ülke kodu (örn. "TR"). */
+  nationality?: string;
   id: string;
   name: string;
   tcNo?: string;

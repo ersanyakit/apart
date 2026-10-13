@@ -160,7 +160,7 @@ test("staff, physical bunk beds, individual guests, documents, exports, soft del
     .click();
   await page.getByRole("button", { name: "Misafir Ekle", exact: true }).click();
   await page.getByLabel("3. Misafir Ad soyad").fill("Üçüncü Test");
-  await page.getByLabel("3. Misafir Yakınlık").fill("Arkadaşı");
+  await page.getByLabel("3. Misafir Uyruk").selectOption("TR");
   await page.getByRole("button", { name: "Misafirleri Kaydet" }).click();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await row.click({ button: "right" });

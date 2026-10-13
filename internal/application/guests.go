@@ -15,24 +15,36 @@ type Guests struct {
 }
 
 func (s *Guests) List(ctx context.Context, u identity.User, q guest.Query, export bool) (guest.Page, error) {
+	if err := s.validateQuery(ctx, u, q); err != nil {
+		return guest.Page{}, err
+	}
+	return s.Repository.GuestStays(ctx, q, export)
+}
+func (s *Guests) Search(ctx context.Context, u identity.User, q guest.Query) (guest.SearchPage, error) {
+	if err := s.validateQuery(ctx, u, q); err != nil {
+		return guest.SearchPage{}, err
+	}
+	return s.Repository.SearchGuests(ctx, q)
+}
+func (s *Guests) validateQuery(ctx context.Context, u identity.User, q guest.Query) error {
 	if !canBook(u) || q.HotelID == uuid.Nil || !u.CanAccessHotel(q.HotelID) {
-		return guest.Page{}, constants.ErrForbidden
+		return constants.ErrForbidden
 	}
 	if q.BranchID != uuid.Nil {
 		b, err := s.Catalog.Branch(ctx, u, q.BranchID)
 		if err != nil {
-			return guest.Page{}, err
+			return err
 		}
 		if b.HotelID != q.HotelID {
-			return guest.Page{}, constants.ErrForbidden
+			return constants.ErrForbidden
 		}
 	} else if !u.IsManager() {
-		return guest.Page{}, constants.ErrBranchRequired
+		return constants.ErrBranchRequired
 	}
 	if len(q.Search) > 200 || q.Page < 0 || q.Page > 100000 || (q.From != nil && q.To != nil && !q.To.After(*q.From)) {
-		return guest.Page{}, constants.ErrPayload
+		return constants.ErrPayload
 	}
-	return s.Repository.GuestStays(ctx, q, export)
+	return nil
 }
 func (s *Guests) Update(ctx context.Context, u identity.User, in guest.Update) (booking.Booking, error) {
 	if !canBook(u) {

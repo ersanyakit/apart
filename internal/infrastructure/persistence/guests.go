@@ -38,17 +38,23 @@ func syncGuests(tx *gorm.DB, b *booking.Booking) error {
 			}
 		}
 		if len(matches) == 0 && strings.TrimSpace(g.TCNo) != "" {
-			if err := tx.Where("hotel_id = ? AND tc_no = ?", branch.HotelID, strings.TrimSpace(g.TCNo)).Find(&matches).Error; err != nil {
+			if err := tx.Where("hotel_id = ? AND national_id = ?", branch.HotelID, strings.TrimSpace(g.TCNo)).Find(&matches).Error; err != nil {
 				return err
 			}
 		}
 		if len(matches) > 0 {
 			profile = matches[0]
 		} else {
-			profile = models.GuestProfile{GuestID: uuid.New(), HotelID: branch.HotelID, Name: strings.TrimSpace(g.Name), TCNo: strings.TrimSpace(g.TCNo), Phone: g.Phone, Address: g.Address}
+			profile = models.GuestProfile{GuestID: uuid.New(), HotelID: branch.HotelID, Name: strings.TrimSpace(g.Name), TCNo: strings.TrimSpace(g.TCNo), Phone: g.Phone, Address: g.Address, Nationality: strings.ToUpper(strings.TrimSpace(g.Nationality))}
 			if err := tx.Create(&profile).Error; err != nil {
 				return err
 			}
+		}
+		if nat := strings.ToUpper(strings.TrimSpace(g.Nationality)); nat != "" && nat != profile.Nationality {
+			if err := tx.Model(&models.GuestProfile{}).Where("guest_id = ?", profile.GuestID).Select("Nationality").Updates(&models.GuestProfile{Nationality: nat}).Error; err != nil {
+				return err
+			}
+			profile.Nationality = nat
 		}
 		if seen[profile.GuestID] {
 			return constants.ErrGuestIdentity
@@ -63,7 +69,7 @@ func syncGuests(tx *gorm.DB, b *booking.Booking) error {
 		if err := tx.Where("booking_id = ? AND guest_id = ?", b.BookingID, profile.GuestID).Find(&previous).Error; err != nil {
 			return err
 		}
-		membership := models.BookingGuest{BookingID: b.BookingID, GuestID: profile.GuestID, HotelID: branch.HotelID, Name: g.Name, TCNo: g.TCNo, Phone: g.Phone, Relationship: g.Relationship, JoinedAt: joined}
+		membership := models.BookingGuest{BookingID: b.BookingID, GuestID: profile.GuestID, HotelID: branch.HotelID, Name: g.Name, TCNo: g.TCNo, Phone: g.Phone, Relationship: g.Relationship, Nationality: strings.ToUpper(strings.TrimSpace(g.Nationality)), JoinedAt: joined}
 		if len(previous) > 0 {
 			// Re-adding someone who left would overwrite their stay interval; use a new booking.
 			if previous[0].LeftAt != nil && b.Status == booking.CheckedIn {
@@ -73,7 +79,7 @@ func syncGuests(tx *gorm.DB, b *booking.Booking) error {
 			if b.Status == booking.Confirmed {
 				membership.JoinedAt = b.CheckIn
 			}
-			if err := tx.Model(&models.BookingGuest{}).Where("booking_id = ? AND guest_id = ?", b.BookingID, profile.GuestID).Select("Name", "TCNo", "Phone", "Relationship", "JoinedAt", "LeftAt").Updates(&membership).Error; err != nil {
+			if err := tx.Model(&models.BookingGuest{}).Where("booking_id = ? AND guest_id = ?", b.BookingID, profile.GuestID).Select("Name", "TCNo", "Phone", "Relationship", "Nationality", "JoinedAt", "LeftAt").Updates(&membership).Error; err != nil {
 				return err
 			}
 		} else if err := tx.Create(&membership).Error; err != nil {
@@ -148,7 +154,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	}
 	if q.Search != "" {
 		search := "%" + strings.NewReplacer("\\", "\\\\", "%", "\\%", "_", "\\_").Replace(q.Search) + "%"
-		base = base.Where("bg.name ILIKE ? OR bg.tc_no ILIKE ? OR bg.phone ILIKE ?", search, search, search)
+		base = base.Where("bg.name ILIKE ? OR bg.national_id ILIKE ? OR bg.phone ILIKE ?", search, search, search)
 	}
 	if q.Status != "" {
 		base = base.Where("b.status = ?", q.Status)
@@ -176,7 +182,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	if q.Desc {
 		direction = " DESC"
 	}
-	selectSQL := `bg.guest_id,bg.name,bg.tc_no,bg.phone,b.booking_id,b.branch_id,br.name AS branch_name,a.room_id,r.code AS room_code,` + start + ` AS start,` + end + ` AS end,b.status`
+	selectSQL := `bg.guest_id,bg.name,bg.national_id,bg.phone,bg.nationality,b.booking_id,b.branch_id,br.name AS branch_name,a.room_id,r.code AS room_code,` + start + ` AS start,` + end + ` AS end,b.status`
 	query := base.Select(selectSQL).Order(column + direction + ",b.booking_id,bg.guest_id,a.allocation_id")
 	if export {
 		query = query.Limit(10000)
@@ -190,7 +196,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	defer rows.Close()
 	for rows.Next() {
 		var row guest.Stay
-		if err := rows.Scan(&row.GuestID, &row.Name, &row.TCNo, &row.Phone, &row.BookingID, &row.BranchID, &row.BranchName, &row.RoomID, &row.RoomCode, &row.Start, &row.End, &row.Status); err != nil {
+		if err := rows.Scan(&row.GuestID, &row.Name, &row.TCNo, &row.Phone, &row.Nationality, &row.BookingID, &row.BranchID, &row.BranchName, &row.RoomID, &row.RoomCode, &row.Start, &row.End, &row.Status); err != nil {
 			return out, err
 		}
 		out.Items = append(out.Items, row)

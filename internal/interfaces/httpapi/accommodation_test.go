@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"otel/constants"
 	"otel/internal/application"
+	"otel/internal/domain/guest"
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/persistence/models"
 	"otel/internal/interfaces/httpapi"
@@ -41,6 +42,7 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 	auth := &application.Auth{Properties: repo, Users: repo, Tokens: persistence.JWT{Secret: []byte("test-secret-only-at-least-thirty-two-bytes")}, Passwords: persistence.Bcrypt{}, TTL: time.Hour}
 	h := &httpapi.Handler{Auth: auth, Catalog: catalog, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: "http://localhost:3000"}
 	app := h.App("", func(context.Context) error { return nil })
+	h.Guests = &application.Guests{Catalog: catalog, Repository: repo}
 	defer app.Shutdown()
 	var cookie *http.Cookie
 	call := func(code, method string, payload any, origin string) (int, json.RawMessage) {
@@ -144,6 +146,11 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 		ID uuid.UUID `json:"booking_id"`
 	}
 	json.Unmarshal(body, &b)
+	status, body = call(constants.CMD_GUEST_SEARCH, "GET", map[string]any{"hotel_id": hotelID, "branch_id": branchID, "search": "api misafir"}, "")
+	var matches guest.SearchPage
+	if err := json.Unmarshal(body, &matches); err != nil || status != 200 || matches.Total != 1 || len(matches.Items) != 1 || matches.Items[0].GuestID == uuid.Nil {
+		t.Fatalf("guest search before check-in: status=%d body=%s err=%v", status, body, err)
+	}
 	status, body = call(constants.CMD_BOOKING_TRANSITION, "PUT", map[string]any{"branch_id": branchID, "booking_id": b.ID, "action": "check_in"}, "")
 	if status != 200 {
 		t.Fatalf("checkin %d %s", status, body)

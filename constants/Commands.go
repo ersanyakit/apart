@@ -128,6 +128,7 @@ const CMD_ROOM_DELETE_MANY = "room.delete_many"
 func init() { CommandMethods[CMD_AUDIT_LIST] = "GET"; CommandMethods[CMD_ROOM_DELETE_MANY] = "DELETE" }
 
 const (
+	CMD_GUEST_SEARCH      = "guest.search"
 	CMD_GUEST_STAYS       = "guest.stays"
 	CMD_GUEST_EXPORT      = "guest.export"
 	CMD_BOOKING_GUESTS    = "booking.guests.update"
@@ -144,7 +145,7 @@ const (
 )
 
 func init() {
-	for command, method := range map[string]string{CMD_GUEST_STAYS: "GET", CMD_GUEST_EXPORT: "GET", CMD_BOOKING_GUESTS: "PUT", CMD_TEMPLATE_LIST: "GET", CMD_TEMPLATE_SAVE: "PUT", CMD_DOCUMENT_LIST: "GET", CMD_DOCUMENT_PREVIEW: "POST", CMD_DOCUMENT_ISSUE: "POST", CMD_DOCUMENT_DOWNLOAD: "GET", CMD_STAFF_LIST: "GET", CMD_STAFF_CREATE: "POST", CMD_STAFF_UPDATE: "PUT", CMD_STAFF_DELETE: "DELETE"} {
+	for command, method := range map[string]string{CMD_GUEST_SEARCH: "GET", CMD_GUEST_STAYS: "GET", CMD_GUEST_EXPORT: "GET", CMD_BOOKING_GUESTS: "PUT", CMD_TEMPLATE_LIST: "GET", CMD_TEMPLATE_SAVE: "PUT", CMD_DOCUMENT_LIST: "GET", CMD_DOCUMENT_PREVIEW: "POST", CMD_DOCUMENT_ISSUE: "POST", CMD_DOCUMENT_DOWNLOAD: "GET", CMD_STAFF_LIST: "GET", CMD_STAFF_CREATE: "POST", CMD_STAFF_UPDATE: "PUT", CMD_STAFF_DELETE: "DELETE"} {
 		CommandMethods[command] = method
 	}
 }

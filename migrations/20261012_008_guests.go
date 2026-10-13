@@ -13,7 +13,7 @@ func init() {
 			return err
 		}
 		for _, sql := range []string{
-			`CREATE UNIQUE INDEX idx_guest_identity ON guest_profiles(hotel_id,tc_no) WHERE tc_no <> '' AND deleted_at IS NULL`,
+			`CREATE UNIQUE INDEX idx_guest_identity ON guest_profiles(hotel_id,national_id) WHERE national_id <> '' AND deleted_at IS NULL`,
 			`ALTER TABLE guest_profiles ADD CONSTRAINT fk_guest_hotel FOREIGN KEY(hotel_id) REFERENCES hotels(hotel_id) ON DELETE RESTRICT`,
 			`ALTER TABLE booking_guests ADD CONSTRAINT fk_booking_guest_profile FOREIGN KEY(guest_id,hotel_id) REFERENCES guest_profiles(guest_id,hotel_id) ON DELETE RESTRICT`,
 			`ALTER TABLE booking_guests ADD CONSTRAINT fk_booking_guest_booking FOREIGN KEY(booking_id) REFERENCES bookings(booking_id) ON DELETE RESTRICT`,
@@ -40,7 +40,7 @@ func init() {
 				profile := models.GuestProfile{GuestID: id, HotelID: branch.HotelID, Name: p.Name, TCNo: p.TCNo, Phone: p.Phone, Address: p.Address}
 				query := tx.Where("guest_id = ?", id)
 				if p.TCNo != "" {
-					query = tx.Where("hotel_id = ? AND tc_no = ?", branch.HotelID, p.TCNo)
+					query = tx.Where("hotel_id = ? AND national_id = ?", branch.HotelID, p.TCNo)
 				}
 				defaults := profile
 				profile = models.GuestProfile{}

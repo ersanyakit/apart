@@ -41,6 +41,7 @@
     "floor.plan.save": "PUT",
     "floor.update": "PUT",
     "guest.export": "GET",
+    "guest.search": "GET",
     "guest.stays": "GET",
     "hotel.create": "POST",
     "hotel.list": "GET",

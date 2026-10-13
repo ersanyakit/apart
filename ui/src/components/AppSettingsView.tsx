@@ -1,7 +1,13 @@
 "use client";
 import React, { useId, useState } from "react";
-import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, Banknote } from "lucide-react";
+import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, Banknote, Globe } from "lucide-react";
 import { confirmDialog } from "./ConfirmDialog";
+import { CountrySelect } from "./CountrySelect";
+import {
+  countryByCode,
+  countryFlag,
+  currencyForCountry,
+} from "../lib/countries";
 import { FONT_SIZE_OPTIONS, useFontSize } from "./FontSize";
 import { THEME_OPTIONS, useTheme } from "./Theme";
 import {
@@ -38,10 +44,12 @@ function SectionHeading({ icon, title, description }: {
 export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsViewProps) {
   const { size, setSize } = useFontSize();
   const { theme, setTheme } = useTheme();
-  const { currency, setCurrency, format, setFormat } = useCurrency();
+  const { currency, setCurrency, format, setFormat, defaultCountry, setDefaultCountry, currencyAuto, resetCurrencyAuto } = useCurrency();
   const groupId = useId();
   const [previewMessage, setPreviewMessage] = useState("");
   const currentTheme = THEME_OPTIONS.find((option) => option.id === theme)!;
+  const countryCurrency = currencyForCountry(defaultCountry);
+  const countryCurrencyLabel = CURRENCIES.find((o) => o.id === countryCurrency);
 
   return (
     <div className="mx-auto w-full max-w-[720px] space-y-5 pb-8 font-sans text-uni-ink">
@@ -127,6 +135,29 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </div>
       </section>
 
+      <section aria-label="Varsayılan ülke" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Globe size={20} />} title="Varsayılan ülke" description="Yeni misafirlerin uyruğu bu ülkeyle başlar. Ülkenin para birimi varsayılan para birimi olur." />
+        <CountrySelect label="Ülke" value={defaultCountry} onChange={setDefaultCountry} />
+        <div className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
+          <span aria-hidden="true" className="text-base leading-none">{countryFlag(defaultCountry)}</span>
+          <span>{countryByCode(defaultCountry)?.name}</span>
+          <span aria-hidden="true" className="mx-1">·</span>
+          {countryCurrencyLabel ? (
+            <span>Para birimi: <span className="font-bold text-uni-ink">{countryCurrencyLabel.label} ({countryCurrencyLabel.id})</span></span>
+          ) : (
+            <span>Bu ülkenin listede para birimi yok, mevcut korunur</span>
+          )}
+        </div>
+        {!currencyAuto && (
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-uni-surface px-4 py-3 text-xs text-uni-muted">
+            <span>Para birimi elle seçildiği için otomatik takip kapalı.</span>
+            <button type="button" className="uni-control cursor-pointer font-bold text-brand-blue-700 hover:underline" onClick={resetCurrencyAuto}>
+              Otomatik takibe dön
+            </button>
+          </div>
+        )}
+      </section>
+
       <section aria-label="Para birimi" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
         <SectionHeading icon={<Banknote size={20} />} title="Para birimi" description="Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez." />
         <fieldset>
@@ -187,6 +218,8 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
           <span>Örnek:</span>
           <span className="font-bold text-uni-ink">{formatMoney(450000, currency, format)} / gece</span>
+          <span aria-hidden="true" className="mx-1">·</span>
+          <span>{currencyAuto ? "Varsayılan ülkeyi takip ediyor" : "Elle seçim etkin"}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           <span>Otomatik kaydedildi</span>
         </div>

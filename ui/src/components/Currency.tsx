@@ -1,6 +1,8 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+import { countryByCode, currencyForCountry, DEFAULT_COUNTRY } from "../lib/countries";
+
 export type CurrencyId =
   | "TRY" | "USD" | "EUR" | "GBP"
   | "CHF" | "SEK" | "NOK" | "DKK"
@@ -76,13 +78,31 @@ export const MONEY_FORMATS: MoneyFormatOption[] = [
 
 const CURRENCY_KEY = "interactiveotel-currency";
 const FORMAT_KEY = "interactiveotel-money-format";
+const COUNTRY_KEY = "interactiveotel-default-country";
+const CURRENCY_EXPLICIT_KEY = "interactiveotel-currency-explicit";
 
 const CurrencyContext = createContext<{
   currency: CurrencyId;
   setCurrency: (c: CurrencyId) => void;
   format: MoneyFormatId;
   setFormat: (f: MoneyFormatId) => void;
-}>({ currency: "TRY", setCurrency: () => {}, format: "tr", setFormat: () => {} });
+  /** Varsayılan ülke (ISO kodu). Yeni misafir uyrukları buradan başlar. */
+  defaultCountry: string;
+  setDefaultCountry: (code: string) => void;
+  /** Elle para birimi seçilmediyse true: ülke değişince para birimi otomatik uyar. */
+  currencyAuto: boolean;
+  /** Para birimini varsayılan ülkenin para birimine döndürür. */
+  resetCurrencyAuto: () => void;
+}>({
+  currency: "TRY",
+  setCurrency: () => {},
+  format: "tr",
+  setFormat: () => {},
+  defaultCountry: DEFAULT_COUNTRY,
+  setDefaultCountry: () => {},
+  currencyAuto: true,
+  resetCurrencyAuto: () => {},
+});
 
 export const useCurrency = () => useContext(CurrencyContext);
 
@@ -145,11 +165,38 @@ export function sanitizeMoneyInput(raw: string, format: MoneyFormatId): string {
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<CurrencyId>("TRY");
   const [format, setFormatState] = useState<MoneyFormatId>("tr");
+  const [defaultCountry, setDefaultCountryState] = useState<string>(DEFAULT_COUNTRY);
+  // Elle para birimi seçimi (otomatik takibi kapatır).
+  const [explicit, setExplicit] = useState(false);
+  const explicitRef = React.useRef(false);
+  explicitRef.current = explicit;
 
   useEffect(() => {
     try {
-      const c = localStorage.getItem(CURRENCY_KEY) as CurrencyId | null;
-      if (c && CURRENCIES.some((o) => o.id === c)) setCurrencyState(c);
+      const storedCountry = localStorage.getItem(COUNTRY_KEY);
+      const country = countryByCode(storedCountry)?.code ?? DEFAULT_COUNTRY;
+      const storedCurrency = localStorage.getItem(CURRENCY_KEY) as CurrencyId | null;
+      const validStored =
+        storedCurrency && CURRENCIES.some((o) => o.id === storedCurrency)
+          ? storedCurrency
+          : null;
+      const auto = currencyForCountry(country);
+      const wasExplicit =
+        localStorage.getItem(CURRENCY_EXPLICIT_KEY) === "1" ||
+        (validStored !== null &&
+          auto !== null &&
+          validStored !== (CURRENCIES.some((o) => o.id === auto) ? auto : null));
+      setDefaultCountryState(country);
+      if (validStored && wasExplicit) {
+        explicitRef.current = true;
+        setExplicit(true);
+        setCurrencyState(validStored);
+      } else if (validStored && !wasExplicit && auto === null) {
+        // Ülkenin eşleşen para birimi yoksa kayıtlı değeri koru.
+        setCurrencyState(validStored);
+      } else if (auto && CURRENCIES.some((o) => o.id === auto)) {
+        setCurrencyState(auto as CurrencyId);
+      }
       const f = localStorage.getItem(FORMAT_KEY) as MoneyFormatId | null;
       if (f && MONEY_FORMATS.some((o) => o.id === f)) setFormatState(f);
     } catch {
@@ -160,10 +207,19 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       localStorage.setItem(CURRENCY_KEY, currency);
+      localStorage.setItem(CURRENCY_EXPLICIT_KEY, explicit ? "1" : "0");
     } catch {
       /* yoksay */
     }
-  }, [currency]);
+  }, [currency, explicit]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(COUNTRY_KEY, defaultCountry);
+    } catch {
+      /* yoksay */
+    }
+  }, [defaultCountry]);
 
   useEffect(() => {
     try {
@@ -173,9 +229,50 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     }
   }, [format]);
 
+  const setCurrency = React.useCallback((c: CurrencyId) => {
+    explicitRef.current = true;
+    setExplicit(true);
+    setCurrencyState(c);
+  }, []);
+
+  const applyCountryCurrency = React.useCallback((countryCode: string) => {
+    const mapped = currencyForCountry(countryCode);
+    if (mapped && CURRENCIES.some((o) => o.id === mapped)) {
+      setCurrencyState(mapped as CurrencyId);
+    }
+  }, []);
+
+  const setDefaultCountry = React.useCallback(
+    (code: string) => {
+      const valid = countryByCode(code)?.code ?? DEFAULT_COUNTRY;
+      setDefaultCountryState(valid);
+      // Otomatik takipteyse para birimi ülkenin para birimine uyar.
+      if (!explicitRef.current) applyCountryCurrency(valid);
+    },
+    [applyCountryCurrency],
+  );
+
+  const resetCurrencyAuto = React.useCallback(() => {
+    explicitRef.current = false;
+    setExplicit(false);
+    setDefaultCountryState((country) => {
+      applyCountryCurrency(country);
+      return country;
+    });
+  }, [applyCountryCurrency]);
+
   return (
     <CurrencyContext.Provider
-      value={{ currency, setCurrency: setCurrencyState, format, setFormat: setFormatState }}
+      value={{
+        currency,
+        setCurrency,
+        format,
+        setFormat: setFormatState,
+        defaultCountry,
+        setDefaultCountry,
+        currencyAuto: !explicit,
+        resetCurrencyAuto,
+      }}
     >
       {children}
     </CurrencyContext.Provider>

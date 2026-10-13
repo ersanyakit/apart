@@ -65,6 +65,7 @@ type Guest struct {
 	Phone        string `json:"phone,omitempty"`
 	Address      string `json:"address,omitempty"`
 	Note         string `json:"note,omitempty"`
+	Nationality  string `json:"nationality,omitempty"`
 }
 type Room struct {
 	Inactive           bool                   `json:"inactive"`

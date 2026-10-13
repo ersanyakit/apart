@@ -62,11 +62,15 @@ const endForNights = (
 import {
   StepperField,
   DateField,
+  GuestNameField,
+  NationalityField,
   TextField,
   TextAreaField,
   RoomSelectField,
   MoneyField,
 } from "./fields";
+import { useCurrency } from "./Currency";
+import { COUNTRIES, countryFlag } from "../lib/countries";
 /** Bölüm başlığı: referans bölüm dili (18px kitap + 14px açıklama). */
 function FormSection({
   title,
@@ -131,6 +135,8 @@ export function BookingForm({
   );
   const [notes, setNotes] = useState(booking?.notes || "");
   const [guests, setGuests] = useState(booking?.guests || []);
+  // Yeni misafir satırları varsayılan uyrukla açılır (Ayarlar → Ülke).
+  const { defaultCountry } = useCurrency();
   // Sahip adı değişince ilk misafir otomatik eşlenir (manuel girilmiş
   // isim ezilmez; eşleşme önceki sahip değeriyle takip edilir).
   const ownerPrev = React.useRef(booking?.guest_name || "");
@@ -140,7 +146,13 @@ export function BookingForm({
     setGuests((rows) => {
       if (!rows.length) {
         return ownerName.trim()
-          ? [{ id: crypto.randomUUID(), name: ownerName }]
+          ? [
+              {
+                id: crypto.randomUUID(),
+                name: ownerName,
+                nationality: defaultCountry,
+              },
+            ]
           : rows;
       }
       const [first, ...rest] = rows;
@@ -156,7 +168,9 @@ export function BookingForm({
       const ownerName = (booking?.guest_name || "").trim();
       if (rows.length || !ownerName) return rows;
       ownerPrev.current = booking?.guest_name || "";
-      return [{ id: crypto.randomUUID(), name: ownerName }];
+      return [
+        { id: crypto.randomUUID(), name: ownerName, nationality: defaultCountry },
+      ];
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -267,7 +281,10 @@ export function BookingForm({
             className={`uni-control ${secondaryStyle} gap-2`}
             type="button"
             onClick={() => {
-              setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
+              setGuests([
+                ...guests,
+                { id: crypto.randomUUID(), name: "", nationality: defaultCountry },
+              ]);
               setCount(Math.max(count, guests.length + 1));
             }}
           >
@@ -277,17 +294,37 @@ export function BookingForm({
         }
       >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
-      <TextField
+      <GuestNameField
         label="Rezervasyon sahibi"
         value={name}
-        onChange={(v) => {
-          setName(v);
-          syncOwnerToFirstGuest(v);
-        }}
+        hotelId={snapshot.hotel_id}
+        branchId={snapshot.branch_id}
         placeholder="Ad soyad"
         required
         autoComplete="off"
         uppercase
+        onChange={(v) => {
+          setName(v);
+          syncOwnerToFirstGuest(v);
+        }}
+        onPick={(picked) => {
+          // Sahiple eşlenen ilk satır varsa kayıtlı telefon/kimlik/uyruğu
+          // boş alanlara işle (elle girilmiş farklı kişiye dokunma).
+          setGuests((rows) =>
+            rows.map((r, n) =>
+              n === 0 && r.name === picked.name
+                ? {
+                    ...r,
+                    id: picked.id,
+                    address: picked.address || r.address,
+                    phone: r.phone || picked.phone,
+                    tcNo: r.tcNo || picked.tcNo,
+                    nationality: r.nationality || picked.nationality,
+                  }
+                : r,
+            ),
+          );
+        }}
       />
       <StepperField
         label="Kişi sayısı"
@@ -341,16 +378,36 @@ export function BookingForm({
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <TextField
+            <GuestNameField
               label="Ad Soyad"
               tone="white"
               required
               uppercase
               value={g.name}
+              hotelId={snapshot.hotel_id}
+              branchId={snapshot.branch_id}
               onChange={(v) =>
                 setGuests(
                   guests.map((n2) =>
                     n2.id === g.id ? { ...n2, name: v } : n2,
+                  ),
+                )
+              }
+              onPick={(picked) =>
+                setGuests(
+                  guests.map((n2) =>
+                    n2.id === g.id
+                      ? {
+                          ...n2,
+                          id: picked.id,
+                          address: picked.address || n2.address,
+                          name: picked.name,
+                          phone: n2.phone || picked.phone,
+                          tcNo: n2.tcNo || picked.tcNo,
+                          nationality:
+                            n2.nationality || picked.nationality,
+                        }
+                      : n2,
                   ),
                 )
               }
@@ -381,15 +438,14 @@ export function BookingForm({
                 )
               }
             />
-            <TextField
-              label="Yakınlık"
+            <NationalityField
+              label="Uyruk"
               tone="white"
-              uppercase
-              value={g.relationship || ""}
+              value={g.nationality || ""}
               onChange={(v) =>
                 setGuests(
                   guests.map((n2) =>
-                    n2.id === g.id ? { ...n2, relationship: v } : n2,
+                    n2.id === g.id ? { ...n2, nationality: v } : n2,
                   ),
                 )
               }
@@ -653,7 +709,6 @@ export function BookingGuestsForm({
                 ["name", "Ad soyad"],
                 ["tcNo", "Kimlik / Pasaport"],
                 ["phone", "Telefon"],
-                ["relationship", "Yakınlık"],
               ] as const
             ).map(([key, label]) => (
               <Field key={key} label={`${i + 1}. Misafir ${label}`}>
@@ -665,6 +720,21 @@ export function BookingGuestsForm({
                 />
               </Field>
             ))}
+            <Field label={`${i + 1}. Misafir Uyruk`}>
+              <select
+                className={`uni-input ${inputStyle}`}
+                aria-label={`${i + 1}. Misafir Uyruk`}
+                value={g.nationality || ""}
+                onChange={(e) => patch(i, { nationality: e.target.value })}
+              >
+                <option value="">Seçin</option>
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {countryFlag(c.code)} {c.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
           </div>
         </div>
       ))}

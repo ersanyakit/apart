@@ -203,6 +203,12 @@ func (h *Handler) command(c fiber.Ctx) error {
 	ctx = audit.WithActor(ctx, audit.Actor{UserID: u.UserID, RequestID: c.GetRespHeader("X-Request-ID"), Command: e.Code})
 	var result any
 	switch e.Code {
+	case constants.CMD_GUEST_SEARCH:
+		var input guest.Query
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Guests.Search(ctx, u, input)
 	case constants.CMD_GUEST_STAYS, constants.CMD_GUEST_EXPORT:
 		var input guest.Query
 		if err = decode(e.Payload, &input); err != nil {
