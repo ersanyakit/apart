@@ -1,7 +1,15 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-export type CurrencyId = "TRY" | "USD" | "EUR" | "GBP";
+export type CurrencyId =
+  | "TRY" | "USD" | "EUR" | "GBP"
+  | "CHF" | "SEK" | "NOK" | "DKK"
+  | "PLN" | "CZK" | "HUF" | "RON"
+  | "RUB" | "UAH" | "AZN" | "ILS" | "AED"
+  | "CNY" | "JPY" | "KRW" | "TWD" | "HKD" | "SGD" | "THB" | "MYR" | "IDR"
+  | "INR" | "PKR" | "NPR"
+  | "BRL" | "CAD" | "AUD" | "NZD" | "MXN"
+  | "ZAR";
 export type MoneyFormatId = "tr" | "en";
 
 export interface CurrencyOption {

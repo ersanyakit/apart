@@ -5,6 +5,7 @@ import {
   formatMoney,
   parseMoney,
   sanitizeMoneyInput,
+  currencySymbolClass,
   CURRENCIES,
 } from "../Currency";
 

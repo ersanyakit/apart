@@ -135,7 +135,7 @@ export function RoomSelectField({
               setOpen(true);
             }
           }}
-          className="flex w-full cursor-pointer items-center justify-between gap-3 text-left outline-none transition-colors duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-xl"
+          className="flex w-full cursor-pointer items-center justify-between gap-3 text-left outline-none transition-all duration-150 ease-out active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-xl"
         >
           <span className="min-w-0 flex-1">
             <FieldCaption>{label}</FieldCaption>

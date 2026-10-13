@@ -68,8 +68,37 @@ export function StepperField({
   // Basılı-tut tekrarı bayat değerle çalışmasın diye güncel değer ref'te tutulur.
   const valueRef = React.useRef(value);
   valueRef.current = value;
+  // Elle yazmayı serbest bırakmak için taslak metin tutulur:
+  // boş silme + çok haneli yazma engellenmez, geçerli sayı anında
+  // üst bileşene de yansıtılır (kaydet'e basılsa bile güncel kalır).
+  const [draft, setDraft] = React.useState<string | null>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  // Odak dışındayken dışarıdan gelen değerle senkronize ol (yazarken bölme).
+  React.useEffect(() => {
+    if (document.activeElement !== inputRef.current) setDraft(null);
+  }, [value]);
+  const commitDraft = React.useCallback(() => {
+    if (draft === null) return;
+    const t = draft.trim();
+    if (t === "") {
+      setDraft(null);
+      return;
+    }
+    const n = Number(t);
+    if (!Number.isFinite(n)) {
+      setDraft(null);
+      return;
+    }
+    const c = clamp(n);
+    setDraft(null);
+    if (c !== valueRef.current) onChange(c);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draft, min, max, onChange]);
   const step = React.useCallback(
-    (delta: number) => onChange(clamp(valueRef.current + delta)),
+    (delta: number) => {
+      setDraft(null);
+      onChange(clamp(valueRef.current + delta));
+    },
     [min, max, onChange],
   );
   const holdUp = useHoldStep(() => step(1), disabled || value >= max);
@@ -80,24 +109,39 @@ export function StepperField({
       <div
         role="group"
         aria-label={`${label} seçimi`}
-        className="flex items-center justify-between gap-4"
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("button,input")) return;
+          inputRef.current?.focus();
+        }}
+        className="flex cursor-text items-center justify-between gap-4"
       >
         <div className="min-w-0 flex-1">
           <FieldCaption>{label}</FieldCaption>
           <input
+            ref={inputRef}
             type="number"
             min={min}
             max={max}
             required
             disabled={disabled}
             aria-label={label}
-            value={value}
+            value={draft ?? value}
             onChange={(e) => {
-              if (e.target.value.trim() === "") return;
-              onChange(clamp(Number(e.target.value)));
+              const raw = e.target.value;
+              setDraft(raw);
+              // Boşken bekle (silip yeniden yazmaya izin ver).
+              if (raw.trim() === "") return;
+              const n = Number(raw);
+              if (!Number.isFinite(n)) return;
+              const c = clamp(n);
+              if (c !== valueRef.current) onChange(c);
             }}
-            onBlur={(e) => {
-              onChange(clamp(Number(e.target.value)));
+            onBlur={commitDraft}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                commitDraft();
+                (e.currentTarget as HTMLInputElement).blur();
+              }
             }}
             className="font-uninav-book mt-1 w-full min-w-0 bg-transparent text-[1.5rem] leading-[1.75rem] text-slate-900 outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />

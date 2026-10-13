@@ -23,6 +23,42 @@ export const localDate = (iso: string) => {
   const d = new Date(iso);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
+// Gece hesabı için yerel "YYYY-MM-DDTHH:mm" yardımcıları.
+const parseLocalInput = (v: string): Date | null => {
+  if (!v) return null;
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? null : d;
+};
+const toLocalInputValue = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+/** Takvim günü farkından gece sayısı (en az 1, en çok 365). */
+const calcNights = (startStr: string, endStr: string): number => {
+  const s = parseLocalInput(startStr);
+  const e = parseLocalInput(endStr);
+  if (!s || !e) return 1;
+  const sDay = new Date(s);
+  sDay.setHours(0, 0, 0, 0);
+  const eDay = new Date(e);
+  eDay.setHours(0, 0, 0, 0);
+  const diff = Math.round((eDay.getTime() - sDay.getTime()) / 86400000);
+  return Math.min(365, Math.max(1, diff <= 0 ? 1 : diff));
+};
+/** Verilen gece sayısına göre çıkış tarihini üretir (çıkışın saat-dakikası korunur). */
+const endForNights = (
+  startStr: string,
+  endStr: string,
+  nights: number,
+): string => {
+  const s = parseLocalInput(startStr);
+  if (!s) return endStr;
+  const e = parseLocalInput(endStr);
+  const h = e ? e.getHours() : 11;
+  const mi = e ? e.getMinutes() : 0;
+  const d = new Date(s);
+  d.setDate(d.getDate() + Math.min(365, Math.max(1, Math.floor(nights) || 1)));
+  d.setHours(h, mi, 0, 0);
+  return toLocalInputValue(d);
+};
 import {
   StepperField,
   DateField,
@@ -35,21 +71,26 @@ import {
 function FormSection({
   title,
   hint,
+  action,
   children,
 }: {
   title: string;
   hint?: string;
+  action?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
     <section className="space-y-4">
-      <div className="min-w-0">
-        <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">
-          {title}
-        </h3>
-        {hint && (
-          <p className="mt-1 text-[0.875rem] leading-5 text-slate-500">{hint}</p>
-        )}
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">
+            {title}
+          </h3>
+          {hint && (
+            <p className="mt-1 text-[0.875rem] leading-5 text-slate-500">{hint}</p>
+          )}
+        </div>
+        {action && <div className="shrink-0 pt-0.5">{action}</div>}
       </div>
       {children}
     </section>
@@ -124,6 +165,19 @@ export function BookingForm({
   const [error, setError] = useState("");
   // Giriş + Çıkış takvimleri tek obje gibi birlikte açılır/kapanır.
   const [datesOpen, setDatesOpen] = useState(false);
+  // Gece sayısı giriş/çıkıştan türetilir; tek kaynak tarih stringleridir.
+  const nights = React.useMemo(() => calcNights(start, end), [start, end]);
+  const handleNightsChange = (n: number) => {
+    if (!start) return;
+    setEnd(endForNights(start, end, n));
+    setOptions(null);
+  };
+  const handleStartChange = (v: string) => {
+    setStart(v);
+    // Giriş kayınca çıkış da aynı gece sayısını koruyarak ötelenir.
+    if (v) setEnd(endForNights(v, end, nights));
+    setOptions(null);
+  };
   const query = () => ({
     branch_id: snapshot.branch_id,
     check_in: new Date(start).toISOString(),
@@ -170,33 +224,57 @@ export function BookingForm({
         title="Konaklama Tarihleri"
         hint="Giriş ve çıkış tarih-saatleri"
       >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <DateField
-          label="Giriş"
-          value={start}
-          open={datesOpen}
-          onOpenChange={setDatesOpen}
-          onChange={(v) => {
-            setStart(v);
-            setOptions(null);
-          }}
-        />
-        <DateField
-          label="Çıkış"
-          value={end}
-          min={start || undefined}
-          open={datesOpen}
-          onOpenChange={setDatesOpen}
-          onChange={(v) => {
-            setEnd(v);
-            setOptions(null);
-          }}
-        />
+      <div className="grid grid-cols-12 gap-4 items-start">
+        <div className="col-span-12 sm:col-span-5 min-w-0">
+          <DateField
+            label="Giriş"
+            value={start}
+            open={datesOpen}
+            onOpenChange={setDatesOpen}
+            onChange={handleStartChange}
+          />
+        </div>
+        <div className="col-span-12 sm:col-span-2 min-w-0">
+          <StepperField
+            label="Gece"
+            value={nights}
+            min={1}
+            max={365}
+            onChange={handleNightsChange}
+            sub="gece"
+          />
+        </div>
+        <div className="col-span-12 sm:col-span-5 min-w-0">
+          <DateField
+            label="Çıkış"
+            value={end}
+            min={start || undefined}
+            open={datesOpen}
+            onOpenChange={setDatesOpen}
+            onChange={(v) => {
+              setEnd(v);
+              setOptions(null);
+            }}
+          />
+        </div>
       </div>
       </FormSection>
       <FormSection
         title={`Misafirler${guests.length ? ` · ${guests.length}` : ""}`}
         hint="Sahip, kişi sayısı ve konaklayanlar"
+        action={
+          <button
+            className={`uni-control ${secondaryStyle} gap-2`}
+            type="button"
+            onClick={() => {
+              setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
+              setCount(Math.max(count, guests.length + 1));
+            }}
+          >
+            <Plus className="w-4 h-4" aria-hidden="true" />
+            Misafir Ekle
+          </button>
+        }
       >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
       <TextField
@@ -228,19 +306,6 @@ export function BookingForm({
       />
       </div>
       <div className="space-y-3 pt-1">
-        <div className="flex justify-end">
-          <button
-            className={`uni-control ${secondaryStyle} gap-2`}
-            type="button"
-            onClick={() => {
-              setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
-              setCount(Math.max(count, guests.length + 1));
-            }}
-          >
-            <Plus className="w-4 h-4" aria-hidden="true" />
-            Misafir Ekle
-          </button>
-        </div>
         {guests.length === 0 && (
           <div className="rounded-xl border border-dashed border-slate-200 bg-white px-4 py-6 text-center">
             <p className="text-xs font-bold text-slate-600">
