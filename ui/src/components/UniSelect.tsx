@@ -113,7 +113,6 @@ export const UniSelect: React.FC<UniSelectProps> = ({
             {selected?.label ?? "—"}
           </span>
         </span>
-        {isField && <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-slate-600">{icon}</span>}
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }}

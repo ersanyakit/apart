@@ -72,7 +72,6 @@ import {
 } from "./fields";
 import { useCurrency } from "./Currency";
 import { useI18n } from "./I18n";
-import { getCountries, countryFlag } from "../lib/countries";
 /** Bölüm başlığı: referans bölüm dili (18px kitap + 14px açıklama). */
 function FormSection({
   title,
@@ -660,12 +659,15 @@ export function MoveBookingForm({
 
 export function BookingGuestsForm({
   booking,
+  hotelId,
   onSaved,
 }: {
   booking: Booking;
+  hotelId: string;
   onSaved: () => Promise<void>;
 }) {
-  const { locale, direction, t } = useI18n();
+  const { t } = useI18n();
+  const { defaultCountry } = useCurrency();
   const [guests, setGuests] = useState(booking.guests || []),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -701,54 +703,71 @@ export function BookingGuestsForm({
       {guests.map((g, i) => (
         <div
           key={g.id}
-          className="border border-slate-200 rounded-2xl p-4 space-y-3"
+          className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3"
         >
-          <div className="flex justify-between">
-            <strong className="text-sm">{i + 1}. Misafir</strong>
+          <div className="flex items-center justify-between gap-3">
+            <span className="flex min-w-0 items-center gap-2.5">
+              <span aria-hidden="true" className="font-uninav-book flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[13px] text-slate-700 shadow-sm ring-1 ring-slate-200/70">
+                {i + 1}
+              </span>
+              <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">
+                Misafir
+              </span>
+            </span>
             <button
               type="button"
-              className={`uni-control ${secondaryStyle}`}
+              aria-label="Misafiri kaldır"
+              title="Misafiri kaldır"
+              className="uni-control flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               onClick={() =>
                 setGuests((rows) => rows.filter((_, n) => n !== i))
               }
             >
-              Kaldır
+              <Trash2 className="w-4 h-4" />
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            {(
-              [
-                ["name", "Ad soyad"],
-                ["tcNo", "Kimlik / Pasaport"],
-                ["phone", "Telefon"],
-              ] as const
-            ).map(([key, label]) => (
-              <Field key={key} label={`${i + 1}. Misafir ${label}`}>
-                <input
-                  className={`uni-input ${inputStyle}`}
-                  required={key === "name"}
-                  value={g[key] || ""}
-                  onChange={(e) => patch(i, { [key]: e.target.value })}
-                />
-              </Field>
-            ))}
-            <Field label={t("guest.numberNationality", { number: i + 1 })}>
-              <select
-                className={`uni-input ${inputStyle}`}
-                aria-label={t("guest.numberNationality", { number: i + 1 })}
-                lang={locale}
-                dir={direction}
-                value={g.nationality || ""}
-                onChange={(e) => patch(i, { nationality: e.target.value })}
-              >
-                <option value="">{t("common.select")}</option>
-                {getCountries(locale).map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {countryFlag(c.code)} {c.name}
-                  </option>
-                ))}
-              </select>
-            </Field>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <GuestNameField
+              label="Ad Soyad"
+              tone="white"
+              required
+              uppercase
+              value={g.name}
+              guestId={g.id}
+              hotelId={hotelId}
+              branchId={booking.branch_id}
+              onChange={(v) => patch(i, { name: v })}
+              onPick={(picked) =>
+                patch(i, {
+                  id: picked.id || g.id,
+                  address: picked.address || g.address,
+                  name: picked.name,
+                  phone: g.phone || picked.phone,
+                  tcNo: g.tcNo || picked.tcNo,
+                  nationality: g.nationality || picked.nationality,
+                })
+              }
+            />
+            <TextField
+              label="Telefon"
+              tone="white"
+              uppercase
+              value={g.phone || ""}
+              onChange={(v) => patch(i, { phone: v })}
+            />
+            <TextField
+              label="Kimlik / Pasaport"
+              tone="white"
+              uppercase
+              value={g.tcNo || ""}
+              onChange={(v) => patch(i, { tcNo: v })}
+            />
+            <NationalityField
+              label={t("guest.nationality")}
+              tone="white"
+              value={g.nationality || ""}
+              onChange={(v) => patch(i, { nationality: v })}
+            />
           </div>
         </div>
       ))}
@@ -759,7 +778,7 @@ export function BookingGuestsForm({
           onClick={() =>
             setGuests((rows) => [
               ...rows,
-              { id: crypto.randomUUID(), name: "" },
+              { id: crypto.randomUUID(), name: "", nationality: defaultCountry },
             ])
           }
         >

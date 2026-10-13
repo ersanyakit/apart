@@ -21,11 +21,27 @@ export const THEME_OPTIONS: ThemeOption[] = [
 ];
 
 const STORAGE_KEY = "interactiveotel-theme";
+const BACKGROUND_STORAGE_KEY = "interactiveotel-background";
+
+export type BackgroundId = "white" | "gray";
+
+export interface BackgroundOption {
+  id: BackgroundId;
+  label: string;
+  hint: string;
+}
+
+export const BACKGROUND_OPTIONS: BackgroundOption[] = [
+  { id: "white", label: "Beyaz", hint: "Varsayılan" },
+  { id: "gray", label: "Açık gri", hint: "Klasik" },
+];
 
 const ThemeContext = createContext<{
   theme: ThemeId;
   setTheme: (theme: ThemeId) => void;
-}>({ theme: "blue", setTheme: () => {} });
+  background: BackgroundId;
+  setBackground: (background: BackgroundId) => void;
+}>({ theme: "blue", setTheme: () => {}, background: "white", setBackground: () => {} });
 
 export const useTheme = () => useContext(ThemeContext);
 
@@ -36,12 +52,17 @@ export const useTheme = () => useContext(ThemeContext);
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>("blue");
+  const [background, setBackgroundState] = useState<BackgroundId>("white");
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as ThemeId | null;
       if (saved && THEME_OPTIONS.some((o) => o.id === saved)) {
         setThemeState(saved);
+      }
+      const savedBg = localStorage.getItem(BACKGROUND_STORAGE_KEY) as BackgroundId | null;
+      if (savedBg && BACKGROUND_OPTIONS.some((o) => o.id === savedBg)) {
+        setBackgroundState(savedBg);
       }
     } catch {
       /* depolama yoksa varsayılanda kal */
@@ -56,6 +77,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (background === "white") {
+      document.documentElement.removeAttribute("data-background");
+    } else {
+      document.documentElement.setAttribute("data-background", background);
+    }
+  }, [background]);
+
   const setTheme = (next: ThemeId) => {
     setThemeState(next);
     try {
@@ -65,8 +94,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const setBackground = (next: BackgroundId) => {
+    setBackgroundState(next);
+    try {
+      localStorage.setItem(BACKGROUND_STORAGE_KEY, next);
+    } catch {
+      /* Depolama kapalıyken de bu oturumda çalışır. */
+    }
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, background, setBackground }}>
       {children}
     </ThemeContext.Provider>
   );

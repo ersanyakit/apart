@@ -28,7 +28,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
         <button key={entry.id} type="button" title={entry.label} aria-label={entry.label}
           aria-current={activeTab === entry.id ? "page" : undefined}
           onClick={() => onSelect(entry.id)}
-          className={`nav-rail-item border-0 shadow-none outline-none ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-700" : "text-slate-500 hover:bg-black/[0.04] active:bg-black/[0.06]"}`}>
+          className={`nav-rail-item border-0 shadow-none outline-none ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-500" : "text-slate-500 hover:bg-black/[0.04] active:bg-black/[0.06]"}`}>
           <NavigationIcon name={entry.id} />
         </button>
       ))}
@@ -59,7 +59,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                 >
                   <span
                     aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-brand-blue-50 text-brand-blue-700"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-brand-blue-50 text-brand-blue-500"
                   >
                     {entry.icon}
                   </span>
@@ -77,7 +77,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                       size={18}
                       strokeWidth={2.5}
                       aria-hidden="true"
-                      className="shrink-0 text-brand-blue-700"
+                      className="shrink-0 text-brand-blue-500"
                     />
                   ) : (
                     <ChevronRight

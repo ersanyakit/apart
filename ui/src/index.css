@@ -14,7 +14,7 @@
   --color-uni-border: #e7e7e7;
   --color-accent: #2ABDFF;
   --color-accent-hover: color-mix(in srgb, #2ABDFF 90%, black);
-  --color-accent-contrast: #131313;
+  --color-accent-contrast: #ffffff;
   --color-brand-blue-50: color-mix(in srgb, #2ABDFF 5%, white);
   --color-brand-blue-100: color-mix(in srgb, #2ABDFF 8%, white);
   --color-brand-blue-200: color-mix(in srgb, #2ABDFF 18%, white);
@@ -30,7 +30,7 @@
 [data-theme="pink"] {
   --color-accent: #FF37C7;
   --color-accent-hover: color-mix(in srgb, #FF37C7 90%, black);
-  --color-accent-contrast: #131313;
+  --color-accent-contrast: #ffffff;
   --color-brand-blue-50: color-mix(in srgb, #FF37C7 5%, white);
   --color-brand-blue-100: color-mix(in srgb, #FF37C7 8%, white);
   --color-brand-blue-200: color-mix(in srgb, #FF37C7 18%, white);
@@ -46,7 +46,7 @@
 [data-theme="green"] {
   --color-accent: #00C3A0;
   --color-accent-hover: color-mix(in srgb, #00C3A0 90%, black);
-  --color-accent-contrast: #131313;
+  --color-accent-contrast: #ffffff;
   --color-brand-blue-50: color-mix(in srgb, #00C3A0 5%, white);
   --color-brand-blue-100: color-mix(in srgb, #00C3A0 8%, white);
   --color-brand-blue-200: color-mix(in srgb, #00C3A0 18%, white);
@@ -62,7 +62,7 @@
 [data-theme="orange"] {
   --color-accent: #FF4D00;
   --color-accent-hover: color-mix(in srgb, #FF4D00 90%, black);
-  --color-accent-contrast: #131313;
+  --color-accent-contrast: #ffffff;
   --color-brand-blue-50: color-mix(in srgb, #FF4D00 5%, white);
   --color-brand-blue-100: color-mix(in srgb, #FF4D00 8%, white);
   --color-brand-blue-200: color-mix(in srgb, #FF4D00 18%, white);
@@ -94,7 +94,7 @@
 [data-theme="fuchsia"] {
   --color-accent: #F50DB4;
   --color-accent-hover: color-mix(in srgb, #F50DB4 90%, black);
-  --color-accent-contrast: #131313;
+  --color-accent-contrast: #ffffff;
   --color-brand-blue-50: color-mix(in srgb, #F50DB4 5%, white);
   --color-brand-blue-100: color-mix(in srgb, #F50DB4 8%, white);
   --color-brand-blue-200: color-mix(in srgb, #F50DB4 18%, white);
@@ -108,10 +108,19 @@
 }
 
 body {
-  @apply bg-slate-100 text-slate-800 antialiased;
+  @apply text-slate-800 antialiased;
+  background-color: var(--app-background);
   text-rendering: optimizeLegibility;
   font-kerning: normal;
   font-optical-sizing: auto;
+}
+
+/* Site zemini: varsayılan beyaz, ayarlardan açık griye alınabilir. */
+:root {
+  --app-background: #ffffff;
+}
+html[data-background="gray"] {
+  --app-background: #f5f5f7;
 }
 
 /*

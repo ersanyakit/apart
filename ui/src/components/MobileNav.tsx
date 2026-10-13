@@ -64,7 +64,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
           });
         }}>
         <div className="mb-6 flex items-center gap-3 px-1">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-lg font-semibold text-brand-blue-700">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-lg font-semibold text-brand-blue-500">
             {userName.trim().split(/\s+/).slice(0, 2).map((name) => name[0]).join("")}
           </span>
           <div className="min-w-0">
@@ -96,7 +96,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
                   className="mobile-menu-row">
                   <span className="mobile-menu-icon"><NavigationIcon name={item.id} /></span>
                   <span className="min-w-0 flex-1">{item.label}</span>
-                  {activeTab === item.id ? <Check size={18} className="shrink-0 text-brand-blue-600" /> : <ChevronRight size={17} className="shrink-0 text-slate-300" />}
+                  {activeTab === item.id ? <Check size={18} className="shrink-0 text-brand-blue-500" /> : <ChevronRight size={17} className="shrink-0 text-slate-300" />}
                 </button>
               ))}
             </div>

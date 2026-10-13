@@ -38,11 +38,44 @@ export function Drawer({
   title,
   children,
   onClose,
+  layout = "side",
 }: {
   title: string;
   children: React.ReactNode;
   onClose: () => void;
+  /** side: sağ panel · center: ortada Windows-formu tipi dialog */
+  layout?: "side" | "center";
 }) {
+  if (layout === "center") {
+    return (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm sm:p-8"
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
+      >
+        <section
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+          className="flex max-h-[88dvh] w-full max-w-3xl flex-col overflow-hidden rounded-[28px] bg-white shadow-2xl"
+        >
+          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-100 bg-white px-6 py-4">
+            <h2 className="min-w-0 truncate text-lg font-black tracking-tight">{title}</h2>
+            <button
+              type="button"
+              aria-label="Pencereyi kapat"
+              onClick={onClose}
+              className="uni-control flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 outline-none transition-all duration-150 ease-out hover:bg-slate-200 hover:text-slate-900 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-neutral-400"
+            >
+              <X size={18} strokeWidth={2.2} />
+            </button>
+          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto p-6">{children}</div>
+        </section>
+      </div>
+    );
+  }
   return (
     <div
       className="fixed inset-0 z-50 flex justify-end bg-slate-900/40 backdrop-blur-sm"

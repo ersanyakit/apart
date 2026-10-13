@@ -317,7 +317,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
   }[modal.type] : "";
   const editorContent = modal && (<>
           {modal.type === "guests" ? (
-            <BookingGuestsForm booking={modal.booking} onSaved={saved} />
+            <BookingGuestsForm booking={modal.booking} hotelId={s.hotel_id} onSaved={saved} />
           ) : modal.type === "documents" ? (
             <BookingDocuments
               snapshot={s}
@@ -456,6 +456,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       extraLabels={bookingTab ? { [bookingTabId as string]: bookingTabLabel } : {}}
       onSelection={changeBranch}
       onLogout={handleLogout}
+      onNewBooking={operator ? () => openBookingCreate() : undefined}
       at={atISO}
       onDate={(d) =>
         setDateFilter(
@@ -511,9 +512,9 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                   type="button"
                   aria-label="Sekmeyi kapat"
                   onClick={() => bookingTabId && closeTab(bookingTabId)}
-                  className="uni-control flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-400 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-blue-500/40"
+                  className="uni-control flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 outline-none transition-all duration-150 ease-out hover:bg-slate-200 hover:text-slate-900 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-brand-blue-500/40"
                 >
-                  <X size={18} strokeWidth={2} />
+                  <X size={18} strokeWidth={2.5} />
                 </button>
               </div>
                 {bookingTab.kind === "create" ? (
@@ -1064,7 +1065,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         </div>
       </main>
       {modal && !settingsEditorOpen && (
-        <Drawer title={editorTitle} onClose={() => setModal(null)}>{editorContent}</Drawer>
+        <Drawer
+          title={editorTitle}
+          onClose={() => setModal(null)}
+          layout={["history", "guests"].includes(modal.type) ? "center" : "side"}
+        >
+          {editorContent}
+        </Drawer>
       )}
       {contextMenu && (
         <>
