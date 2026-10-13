@@ -222,7 +222,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             placeholder={isArchive ? "Binlerce kayıt arasında akıllı arama..." : "Konaklayanlar listesinde ara..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="uni-input w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[13px] font-medium focus:outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500/40 transition-all placeholder:text-slate-300"
+            className="uni-input w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[13px] font-medium focus:outline-none focus:ring-4 focus:ring-neutral-300/5 focus:border-neutral-400/40 transition-all placeholder:text-slate-400"
           />
         </div>
 
@@ -296,7 +296,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
              <select
                value={table.getState().pagination.pageSize}
                onChange={e => table.setPageSize(Number(e.target.value))}
-               className="uni-input text-[10px] font-black bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-brand-blue-500"
+               className="uni-input text-[10px] font-black bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-neutral-400"
              >
                {[15, 30, 50, 100].map(size => (
                  <option key={size} value={size}>{size} SATIR</option>

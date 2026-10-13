@@ -158,7 +158,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       required
                       value={newStaff.name}
                       onChange={e => setNewStaff(prev => ({ ...prev, name: e.target.value }))}
-                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-neutral-400 transition-all"
                     />
                   </div>
                   <div className="space-y-2">
@@ -167,7 +167,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       required
                       value={newStaff.username}
                       onChange={e => setNewStaff(prev => ({ ...prev, username: e.target.value }))}
-                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-neutral-400 transition-all"
                     />
                   </div>
                   <div className="space-y-2 md:col-span-2">
@@ -241,7 +241,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     <input
                       value={newStaff.phone}
                       onChange={e => setNewStaff(prev => ({ ...prev, phone: e.target.value }))}
-                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-neutral-400 transition-all"
                     />
                   </div>
                 </div>

@@ -49,7 +49,7 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
             <input
               type="text"
               placeholder="LOGLARDA ARA (GERÇEKLEŞTİREN, EYLEM, AÇIKLAMA...)"
-              className="uni-input w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all shadow-sm"
+              className="uni-input w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 placeholder:text-slate-400 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all shadow-sm"
             />
           </div>
           <button className="uni-control px-6 py-4 bg-white border border-slate-200 rounded-2xl text-[10px]    text-slate-400 hover:text-slate-600 flex items-center gap-3  shrink-0">

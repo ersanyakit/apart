@@ -395,7 +395,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           })
                         }
                         placeholder="MİSAFİR İSMİ..."
-                        className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-300"
+                        className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-400"
                       />
                     </div>
 
@@ -419,7 +419,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                   setHistorySearch(e.target.value)
                                 }
                                 placeholder="İSİM, TELEFON VEYA TC ARA..."
-                                className="uni-input w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500 placeholder:text-slate-300 shadow-inner"
+                                className="uni-input w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-neutral-400 placeholder:text-slate-400 shadow-inner"
                               />
                             </div>
                           </div>
@@ -689,7 +689,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                     <textarea
                       rows={2}
                       placeholder="Misafir ile ilgili ek bilgiler..."
-                      className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-brand-blue-500 transition-all"
+                      className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-neutral-400 transition-all"
                       value={formData.notes || ""}
                       onChange={(e) =>
                         setFormData({ ...formData, notes: e.target.value })
@@ -805,7 +805,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                             onChange={(e) =>
                               updateGuest(guest.id, "note", e.target.value)
                             }
-                            className="uni-input w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-300"
+                            className="uni-input w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-400"
                             placeholder="Bu misafir için özel bir not yazın..."
                           />
                         </div>

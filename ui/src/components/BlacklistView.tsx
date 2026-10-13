@@ -87,7 +87,7 @@ export const BlacklistView: React.FC<BlacklistViewProps> = ({ blacklist, onAdd, 
             placeholder="İSİM VEYA KİMLİK NO İLE ARA..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="uni-input w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[32px] text-xs font-bold text-slate-700 placeholder:text-slate-300 outline-none focus:ring-4 focus:ring-red-500/5 focus:border-red-500 transition-all shadow-sm"
+            className="uni-input w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[32px] text-xs font-bold text-slate-700 placeholder:text-slate-400 outline-none focus:ring-4 focus:ring-red-500/5 focus:border-red-500 transition-all shadow-sm"
           />
         </div>
 

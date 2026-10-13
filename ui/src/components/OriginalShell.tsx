@@ -25,12 +25,12 @@ import {
   Search,
   X,
   Shield,
-  FileText,
   FileX,
   Monitor,
   Wind,
   History,
 } from "lucide-react";
+import type { StaticImageData } from "next/image";
 import { SidebarItem } from "./Sidebar";
 import { TreeIcon, treePng } from "./TreeIcon";
 import { UniSelect } from "./UniSelect";
@@ -47,6 +47,9 @@ type Props = {
   snapshot: Snapshot;
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  openTabs: string[];
+  onCloseTab: (tab: string) => void;
+  extraLabels?: Record<string, string>;
   onSelection: (selection: Selection) => void;
   onLogout: () => void;
   at: string;
@@ -57,6 +60,9 @@ export function OriginalShell({
   snapshot,
   activeTab,
   setActiveTab,
+  openTabs,
+  onCloseTab,
+  extraLabels = {},
   onSelection,
   onLogout,
   at,
@@ -100,11 +106,6 @@ export function OriginalShell({
       snapshot.feature_registry,
     );
   });
-  const TABS = [
-    { id: "board", label: "Oda Durum Çizelgesi" },
-    { id: "bookings", label: "Rezervasyon Listesi" },
-    { id: "stays", label: "Konaklayan Listesi" },
-  ];
   const manager = ["admin", "management"].includes(snapshot.user.role);
   // Referans tasarım standardında açılır-kapanır gruplar (tree): operasyon + sistem
   // ayarları. Tipografi referans tokenlar, renk tonları projenin paleti.
@@ -139,6 +140,28 @@ export function OriginalShell({
         ]
       : []),
   ];
+  // Üst bardaki kapanabilir sekmelerin etiketleri (sidebar ağacından).
+  const TAB_LABELS: Record<string, string> = { ...extraLabels };
+  for (const group of SIDEBAR_ITEMS) {
+    for (const sub of group.subItems ?? []) {
+      TAB_LABELS[sub.id] ??= sub.label;
+    }
+  }
+  // Üst sekme ikonları: sidebar ağacıyla birebir aynı PNG dili.
+  const TAB_ICONS: Record<string, StaticImageData> = {
+    board: treePng.board,
+    bookings: treePng.bookings,
+    stays: treePng.stays,
+    guests: treePng.guests,
+    facility: treePng.facility,
+    units: treePng.units,
+    staff: treePng.staff,
+    templates: treePng.templates,
+    logs: treePng.logs,
+    features: treePng.features,
+    appsettings: treePng.appSettings,
+    newbooking: treePng.bookingNew,
+  };
   return (
     <div className="flex flex-col h-screen bg-[#f0f2f5] overflow-hidden font-sans">
       {/* Top Header */}
@@ -164,22 +187,52 @@ export function OriginalShell({
           </span>
         </div>
 
-        <nav aria-label="Ana sekmeler" className="flex items-center h-full px-2 gap-1 md:gap-3 overflow-x-auto no-scrollbar scroll-smooth flex-1 max-w-full">
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab.id;
+        <nav aria-label="Ana sekmeler" className="flex items-center h-full px-1 gap-0.5 overflow-x-auto no-scrollbar scroll-smooth flex-1 max-w-full">
+          {openTabs.map((id) => {
+            const label = TAB_LABELS[id] ?? id;
+            const isActive = activeTab === id;
+            const pinned = id === "board";
+            const iconSrc = TAB_ICONS[id] ?? (id.startsWith("booking:") ? treePng.bookingEdit : treePng.board);
             return (
-              <button
-                key={tab.id}
-                type="button"
-                aria-current={isActive ? "page" : undefined}
-                title={tab.label}
-                onClick={() => setActiveTab(tab.id)}
-                className={`uni-control uni-top-tab flex items-center justify-center h-full px-3 md:px-4 shrink-0 select-none cursor-pointer outline-none       max-w-[220px] ${
-                  isActive ? "text-slate-900" : "text-slate-500 hover:text-slate-900"
+              <div
+                key={id}
+                className={`group flex shrink-0 items-center gap-0.5 rounded-lg px-1 my-1 transition-colors duration-150 ease-out ${
+                  isActive ? "bg-brand-blue-50" : "hover:bg-slate-50"
                 }`}
               >
-                {tab.label}
-              </button>
+                <button
+                  type="button"
+                  aria-current={isActive ? "page" : undefined}
+                  title={label}
+                  onClick={() => setActiveTab(id)}
+                  className={`uni-control uni-top-tab flex items-center justify-center gap-2 px-2 md:px-3 py-1.5 select-none cursor-pointer active:scale-[0.98] outline-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-brand-blue-500/30 ${
+                    isActive ? "text-brand-blue-700" : "text-slate-500 hover:text-slate-900"
+                  }`}
+                >
+                  <span className="flex shrink-0 items-center justify-center">
+                    <TreeIcon src={iconSrc} alt="" />
+                  </span>
+                  <span className="block max-w-[160px] truncate">{label}</span>
+                </button>
+                {!pinned && (
+                  <button
+                    type="button"
+                    aria-label={`Sekmeyi kapat: ${label}`}
+                    title={`Kapat: ${label}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onCloseTab(id);
+                    }}
+                    className={`uni-control mr-0.5 rounded-full p-1 outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-brand-blue-500/30 cursor-pointer active:scale-[0.98] ${
+                      isActive
+                        ? "text-brand-blue-400 hover:text-brand-blue-700 hover:bg-brand-blue-100/70 active:bg-brand-blue-100"
+                        : "text-slate-300 hover:text-slate-700 hover:bg-slate-200/70 active:bg-slate-200/70 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+                    }`}
+                  >
+                    <X size={12} strokeWidth={2.5} />
+                  </button>
+                )}
+              </div>
             );
           })}
         </nav>
@@ -187,7 +240,7 @@ export function OriginalShell({
         {/* Global Search Bar */}
         <div className="hidden lg:flex items-center gap-2 px-4 border-l border-slate-100 h-full relative">
           <div
-            className={`flex items-center transition-all duration-500 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner ${isSearchOpen ? "w-64 ring-4 ring-brand-blue-500/5" : "w-10"}`}
+            className={`flex items-center transition-all duration-500 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner ${isSearchOpen ? "w-64 ring-4 ring-neutral-200" : "w-10"}`}
           >
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -202,7 +255,7 @@ export function OriginalShell({
                 value={globalSearch}
                 onChange={(e) => setGlobalSearch(e.target.value)}
                 placeholder="MÜŞTERİ VEYA ODA ARA..."
-                className="uni-input w-full bg-transparent border-none text-[10px] font-black outline-none text-slate-700 placeholder:text-slate-300 uppercase tracking-widest"
+                className="uni-input w-full bg-transparent border-none text-[10px] font-black outline-none text-slate-700 placeholder:text-slate-400 uppercase tracking-widest"
               />
             )}
             {isSearchOpen && globalSearch && (
@@ -372,7 +425,7 @@ export function OriginalShell({
               type="button"
               aria-label={isSidebarOpen ? "Menüyü daralt" : "Menüyü genişlet"}
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="uni-control p-2.5 rounded-full hover:bg-slate-100     outline-none   text-slate-700 cursor-pointer"
+              className="uni-control p-2.5 rounded-full hover:bg-slate-100 active:bg-slate-200/70 active:scale-[0.98]     outline-none   text-slate-700 cursor-pointer"
             >
               {isSidebarOpen ? (
                 <ChevronLeft className="w-5 h-5" />
@@ -442,7 +495,7 @@ export function OriginalShell({
                   onLogout();
                 }
               }}
-              className={`uni-control w-full flex items-center gap-3 min-h-16 px-3 rounded-full hover:bg-slate-100    active:bg-slate-100  cursor-pointer outline-none   ${isSidebarOpen ? "" : "justify-center px-0"}`}
+              className={`uni-control w-full flex items-center gap-3 min-h-16 px-3 rounded-full hover:bg-slate-100    active:bg-slate-100 active:scale-[0.98]  cursor-pointer outline-none   ${isSidebarOpen ? "" : "justify-center px-0"}`}
             >
               <span className="w-10 h-10 rounded-full bg-brand-blue-600 flex items-center justify-center text-white text-sm font-bold shrink-0 shadow-md shadow-brand-blue-100 uppercase">
                 {user.name

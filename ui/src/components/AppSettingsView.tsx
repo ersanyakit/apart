@@ -58,7 +58,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   className="peer sr-only"
                   aria-label={option.label}
                 />
-                <span className="uni-choice flex min-h-[100px] flex-col items-center justify-center gap-3 rounded-2xl border border-transparent bg-uni-surface px-2 py-4 transition-colors duration-150 hover:bg-uni-hover peer-checked:border-brand-blue-300 peer-checked:bg-brand-blue-50 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-blue-600">
+                <span className="uni-choice flex min-h-[100px] flex-col items-center justify-center gap-3 rounded-2xl border border-transparent bg-uni-surface px-2 py-4 transition-colors duration-150 hover:bg-uni-hover peer-checked:border-slate-400 peer-checked:bg-white peer-checked:shadow-sm peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: option.color }}>
                     {theme === option.id && <Check size={17} strokeWidth={2.5} className={option.id === "purple" ? "text-white" : "text-[#131313]"} />}
                   </span>
@@ -92,7 +92,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   className="peer sr-only"
                   aria-label={option.label}
                 />
-                <span className="uni-choice flex min-h-10 items-center justify-center rounded-2xl px-2 py-2 text-xs font-medium text-uni-muted transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-checked:text-uni-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-blue-600">
+                <span className="uni-choice flex min-h-10 items-center justify-center rounded-2xl px-2 py-2 text-xs font-medium text-uni-muted transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-checked:text-uni-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
                   {option.label}
                 </span>
               </label>

@@ -235,7 +235,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                             required
                             value={newRoom.number}
                             onChange={e => setNewRoom(prev => ({ ...prev, number: e.target.value }))}
-                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black outline-none focus:border-brand-blue-500 transition-all"
+                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black outline-none focus:border-neutral-400 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -362,7 +362,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                             value={newRoom.description}
                             onChange={e => setNewRoom(prev => ({ ...prev, description: e.target.value }))}
                             placeholder="Oda hakkında kısa bilgi, manzara durumu vb..."
-                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold outline-none focus:border-brand-blue-500 transition-all min-h-[80px] resize-none"
+                            className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold outline-none focus:border-neutral-400 transition-all min-h-[80px] resize-none"
                           />
                         </div>
                       </div>
@@ -472,7 +472,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     placeholder="Yeni demirbaş adı... (Örn: Klima)"
                     value={newItemName}
                     onChange={e => setNewItemName(e.target.value)}
-                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-brand-blue-500 transition-all"
+                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-neutral-400 transition-all"
                   />
                 </div>
                 <button type="submit" className="uni-control px-8 py-4 uni-button-primary text-white rounded-2xl   text-[10px]  shadow-brand-blue-100">EKLE</button>

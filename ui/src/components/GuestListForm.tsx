@@ -130,7 +130,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     value={guest.name || ''}
                     onChange={(e) => updateGuest(guest.id, 'name', e.target.value.toUpperCase())}
                     placeholder="MİSAFİR ADI VE SOYADI"
-                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner uppercase"
+                    className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner uppercase"
                   />
                   {guest.name && (
                     <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -150,7 +150,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.tcNo || ''}
                   onChange={(e) => updateGuest(guest.id, 'tcNo', e.target.value.replace(/\D/g, ''))}
                   placeholder="KİMLİK NUMARASI"
-                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner"
                 />
               </div>
 
@@ -163,7 +163,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.phone || ''}
                   onChange={(e) => updateGuest(guest.id, 'phone', e.target.value)}
                   placeholder="TELEFON NUMARASI"
-                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner"
                 />
               </div>
 
@@ -176,7 +176,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                   value={guest.note || ''}
                   onChange={(e) => updateGuest(guest.id, 'note', e.target.value)}
                   placeholder="ÖZEL TALEPLER, ALERJİLER VEYA KİMLİK AYRINTILARI..."
-                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-[32px] text-sm font-bold text-slate-700 focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 outline-none transition-all resize-none shadow-inner"
+                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-[32px] text-sm font-bold text-slate-700 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all resize-none shadow-inner"
                 />
               </div>
             </div>
@@ -251,7 +251,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="İsim veya T.C. Kimlik ile ara..."
-                    className="uni-input w-full pl-11 pr-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-300 transition-all placeholder:text-slate-300"
+                    className="uni-input w-full pl-11 pr-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-800 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-300 transition-all placeholder:text-slate-400"
                   />
                 </div>
 

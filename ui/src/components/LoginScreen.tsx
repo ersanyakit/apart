@@ -270,7 +270,7 @@ export const LoginScreen: React.FC<{
                       placeholder="OTELİNİZİN ADI VEYA LOKASYONU..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="uni-input w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all uppercase tracking-widest placeholder:text-slate-300"
+                      className="uni-input w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all uppercase tracking-widest placeholder:text-slate-400"
                     />
                   </div>
 
@@ -394,7 +394,7 @@ export const LoginScreen: React.FC<{
                           autoComplete="username"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
-                          className="uni-input mt-3 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:border-brand-blue-500"
+                          className="uni-input mt-3 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:border-neutral-400"
                         />
                       </label>
                       <button className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer">
@@ -439,7 +439,7 @@ export const LoginScreen: React.FC<{
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="uni-input w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500 transition-all placeholder:text-slate-200"
+                        className="uni-input w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black text-slate-800 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all placeholder:text-slate-200"
                       />
                     </div>
                     <motion.button

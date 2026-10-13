@@ -90,16 +90,16 @@ export const UniSelect: React.FC<UniSelectProps> = ({
         onClick={() => setOpen((v) => !v)}
         className={`uni-control
           uni-select-trigger w-full flex items-center gap-2 min-h-11 px-3 py-2 rounded-xl
-          border bg-white    cursor-pointer
+          border bg-white    cursor-pointer active:scale-[0.98]
           outline-none
-          ${open ? "border-brand-blue-300 bg-brand-blue-50/40" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 active:bg-slate-50/60"}
+          ${open ? "border-slate-300 bg-white" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 active:bg-slate-50/60"}
         `}
       >
         <span className="w-8 h-8 rounded-lg bg-brand-blue-50 text-brand-blue-600 flex items-center justify-center shrink-0">
           {icon}
         </span>
         <span className="flex-1 min-w-0 text-left">
-          <span className="font-uninav-book block text-[10px] leading-3 tracking-[0.08em] uppercase text-slate-400">
+          <span className="font-uninav-book block text-[10px] leading-3 tracking-[0.08em] uppercase text-slate-500">
             {caption}
           </span>
           <span className="uni-nav-sub-active block truncate text-slate-800 mt-0.5">
@@ -146,7 +146,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
                       }}
                       className={`uni-control
                         uni-menu-item w-full flex items-center gap-2 px-3 py-2 min-h-10 rounded-xl
-                           text-left select-none cursor-pointer
+                           text-left select-none cursor-pointer active:scale-[0.98]
                         outline-none
                         ${isSelected ? "uni-nav-sub-active" : "uni-nav-sub"}
                         ${isSelected ? "bg-brand-blue-50/70 text-brand-blue-700" : "text-slate-600 hover:bg-slate-50 active:bg-slate-50 hover:text-slate-900"}

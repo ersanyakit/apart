@@ -13,6 +13,8 @@ import reportPng from "../assets/icons/report.png";
 import starPng from "../assets/icons/star.png";
 import mapPng from "../assets/icons/map.png";
 import wrenchPng from "../assets/icons/wrench.png";
+import calendarAddPng from "../assets/icons/calendar_add.png";
+import calendarEditPng from "../assets/icons/calendar_edit.png";
 
 /** Sol menü ağacı için PNG ikon haritası (src/assets/icons — Silk 16px seti). */
 export const treePng = {
@@ -30,6 +32,8 @@ export const treePng = {
   features: starPng,
   map: mapPng,
   appSettings: wrenchPng,
+  bookingNew: calendarAddPng,
+  bookingEdit: calendarEditPng,
 } satisfies Record<string, StaticImageData>;
 
 export type TreePngKey = keyof typeof treePng;

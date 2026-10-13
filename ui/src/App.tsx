@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   Building2,
   LayoutGrid,
@@ -18,6 +19,7 @@ import {
   Menu,
   Check,
   Map,
+  X,
 } from "lucide-react";
 import {
   command,
@@ -131,6 +133,17 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     room: APIRoom;
     booking?: Booking;
   } | null>(null);
+  // Rezervasyon sekmesi: oluşturma veya düzenleme formu üst barda sekme
+  // olarak açılır (VSCode modeli — sekme değişiminde form durumu korunur).
+  const [bookingTab, setBookingTab] = useState<
+    { kind: "create"; roomId?: string } | { kind: "edit"; booking: Booking } | null
+  >(null);
+  // Üst bardaki açık sekmeler (kapatılabilir; board sabitlenir).
+  const [openTabs, setOpenTabs] = useState<string[]>([
+    "board",
+    "bookings",
+    "stays",
+  ]);
   const refresh = async (selection?: Selection) => {
     const data = await command<Snapshot>(
       "system.initial_sync",
@@ -171,8 +184,11 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         onLogin={async (selection, register) => {
           await refresh(selection);
           setError("");
+          setTab("board");
+          setBookingTab(null);
+          setOpenTabs(["board", "bookings", "stays"]);
           if (register) {
-            setTab("facility");
+            activateTab("facility");
             setModal({ type: "facility", kind: "hotel", create: true });
           }
         }}
@@ -249,17 +265,57 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       setSnapshot(null);
       setModal(null);
     });
+  const bookingTabId = bookingTab
+    ? bookingTab.kind === "create"
+      ? "newbooking"
+      : `booking:${bookingTab.booking.booking_id}`
+    : null;
+  const bookingTabLabel = !bookingTab
+    ? ""
+    : bookingTab.kind === "create"
+      ? "Yeni Rezervasyon"
+      : bookingTab.booking.guest_name || "Rezervasyon";
+  const isBookingTab = bookingTabId !== null && tab === bookingTabId;
+  const openBookingCreate = (roomId?: string) => {
+    setBookingTab({ kind: "create", roomId });
+    activateTab("newbooking");
+  };
+  const openBookingEdit = (booking: Booking) => {
+    setBookingTab({ kind: "edit", booking });
+    activateTab(`booking:${booking.booking_id}`);
+  };
+  const activateTab = (next: string) => {
+    setOpenTabs((prev) => (prev.includes(next) ? prev : [...prev, next]));
+    setTab(next);
+    setSearch("");
+    setError("");
+  };
+  const closeTab = (id: string) => {
+    if (id === "board") return;
+    if (bookingTabId && id === bookingTabId) setBookingTab(null);
+    if (tab === id) {
+      const rest = openTabs.filter((t) => t !== id);
+      const idx = openTabs.indexOf(id);
+      const fallback = rest[Math.min(idx, rest.length - 1)] ?? "board";
+      setTab(fallback);
+      setSearch("");
+      setError("");
+    }
+    setOpenTabs((prev) => {
+      const next = prev.filter((t) => t !== id);
+      return next.length ? next : ["board"];
+    });
+  };
   return (
     <FontSizeProvider>
     <ThemeProvider>
     <OriginalShell
       snapshot={s}
       activeTab={tab}
-      setActiveTab={(next) => {
-        setTab(next);
-        setSearch("");
-        setError("");
-      }}
+      setActiveTab={activateTab}
+      openTabs={openTabs}
+      onCloseTab={closeTab}
+      extraLabels={bookingTab ? { [bookingTabId as string]: bookingTabLabel } : {}}
       onSelection={changeBranch}
       onLogout={handleLogout}
       at={atISO}
@@ -270,10 +326,10 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       }
     >
       <main className="flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6">
-        {tab !== "appsettings" && (
+        {!isBookingTab && tab !== "appsettings" && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-[.18em] text-slate-400">
+            <p className="text-[10px] uppercase font-bold tracking-[.18em] text-slate-500">
               {branch?.name || "TESİS"}
             </p>
             <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-900">
@@ -292,7 +348,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             {operator && s.branch_id && (
               <button
                 className={`uni-control ${buttonStyle}`}
-                onClick={() => setModal({ type: "booking" })}
+                onClick={() => openBookingCreate()}
               >
                 <Plus size={16} />
                 Rezervasyon Al
@@ -301,6 +357,66 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
           </div>
         </div>
         )}
+        <AnimatePresence>
+          {bookingTab && bookingTabId && (
+            <motion.section
+              key={bookingTabId}
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.18, ease: [0.32, 0.72, 0, 1] }}
+              aria-label={bookingTabLabel}
+              ref={(node) => {
+                node?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              className={tab === bookingTabId ? "block" : "hidden"}
+            >
+              <div className="mx-auto w-full max-w-[720px] space-y-6">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                  <h2 className="font-uninav-book text-[2.25rem] leading-[2.5rem] tracking-[-0.01em] text-slate-900">
+                    {bookingTab.kind === "create" ? "Yeni Rezervasyon" : "Rezervasyonu Düzenle"}
+                  </h2>
+                  <p className="mt-2 text-[0.875rem] leading-5 text-slate-500">
+                    {bookingTab.kind === "create"
+                      ? bookingTab.roomId
+                        ? `${s.rooms.find((r) => r.room_id === bookingTab.roomId)?.code ?? ""} birimi için tarih, misafir ve ödeme öncesi bilgileri girin.`
+                        : "Tarih, birim ve misafir bilgilerini girin."
+                      : `${bookingTab.booking.guest_name} kaydını güncelleyin.`}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Sekmeyi kapat"
+                  onClick={() => bookingTabId && closeTab(bookingTabId)}
+                  className="uni-control flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-slate-400 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-blue-500/40"
+                >
+                  <X size={18} strokeWidth={2} />
+                </button>
+              </div>
+                {bookingTab.kind === "create" ? (
+                  <BookingForm
+                    snapshot={s}
+                    roomId={bookingTab.roomId}
+                    onSaved={async () => {
+                      closeTab(bookingTabId);
+                      await saved();
+                    }}
+                  />
+                ) : (
+                  <BookingForm
+                    snapshot={s}
+                    booking={bookingTab.booking}
+                    onSaved={async () => {
+                      closeTab(bookingTabId);
+                      await saved();
+                    }}
+                  />
+                )}
+              </div>
+            </motion.section>
+          )}
+        </AnimatePresence>
         <ErrorMessage message={error} />
         {notice && (
           <div
@@ -438,7 +554,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 at={atISO}
                 onEdit={(room) => setModal({ type: "unit", room })}
                 onBook={(room) =>
-                  setModal({ type: "booking", roomId: room.room_id })
+                  openBookingCreate(room.room_id)
                 }
                 onRefresh={refresh}
                 canManage={manager}
@@ -557,10 +673,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           <button
                             className={`uni-control ${secondaryStyle}`}
                             onClick={() =>
-                              setModal({
-                                type: "booking",
-                                roomId: room.room_id,
-                              })
+                              openBookingCreate(room.room_id)
                             }
                           >
                             <Plus size={12} />
@@ -641,7 +754,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             onFloor={(floor) => setModal({ type: "floor", floor })}
             onBulk={() => setModal({ type: "bulk" })}
             onBook={(room) =>
-              setModal({ type: "booking", roomId: room.room_id })
+              openBookingCreate(room.room_id)
             }
           />
         )}
@@ -721,7 +834,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             <button
                               className={`uni-control ${secondaryStyle}`}
                               onClick={() =>
-                                setModal({ type: "booking", booking: b })
+                                openBookingEdit(b)
                               }
                             >
                               Düzenle
@@ -998,7 +1111,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             onOperation={(type) => {
               const b = contextMenu.booking;
               if (type === "reserve") {
-                setModal({ type: "booking", roomId: contextMenu.room.room_id });
+                setContextMenu(null);
+                openBookingCreate(contextMenu.room.room_id);
               } else if (type === "sale") {
                 if (b?.status === "confirmed") transition(b, "check_in");
                 else if (b)
@@ -1104,7 +1218,7 @@ function Table({
   return (
     <div className="rounded-2xl border border-slate-200 bg-white overflow-x-auto">
       <table className="w-full text-left text-xs">
-        <thead className="bg-slate-50 text-[10px] uppercase text-slate-400">
+        <thead className="bg-slate-50 text-[10px] uppercase text-slate-500">
           <tr>
             {headings.map((h) => (
               <th key={h} className="p-4">

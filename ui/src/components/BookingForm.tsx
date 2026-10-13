@@ -8,6 +8,11 @@ import {
   unitKinds,
 } from "../lib/api";
 import {
+  Trash2,
+  Info,
+  Plus,
+} from "lucide-react";
+import {
   Field,
   ErrorMessage,
   inputStyle,
@@ -18,6 +23,39 @@ export const localDate = (iso: string) => {
   const d = new Date(iso);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
+/** Girilen metinleri tr-TR büyük harfe çevirir (otel kayıt disiplini). */
+export const upperTR = (v: string) => v.toLocaleUpperCase("tr-TR");
+import {
+  StepperField,
+  DateField,
+  TextField,
+  SelectField,
+  TextAreaField,
+} from "./fields";
+/** Bölüm başlığı: referans bölüm dili (18px kitap + 14px açıklama). */
+function FormSection({
+  title,
+  hint,
+  children,
+}: {
+  title: string;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="space-y-4">
+      <div className="min-w-0">
+        <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">
+          {title}
+        </h3>
+        {hint && (
+          <p className="mt-1 text-[0.875rem] leading-5 text-slate-500">{hint}</p>
+        )}
+      </div>
+      {children}
+    </section>
+  );
+}
 export function BookingForm({
   snapshot,
   booking,
@@ -56,9 +94,10 @@ export function BookingForm({
     check_out: new Date(end).toISOString(),
     guest_count: count,
   });
+  const selectedRoom = snapshot.rooms.find((r) => r.room_id === room);
   return (
     <form
-      className="space-y-5"
+      className="space-y-6"
       onSubmit={async (e) => {
         e.preventDefault();
         setBusy(true);
@@ -90,74 +129,192 @@ export function BookingForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-2 gap-4">
-        <Field label="Giriş">
-          <input
-            type="datetime-local"
-            required
-            className={`uni-input ${inputStyle}`}
-            value={start}
-            onChange={(e) => {
-              setStart(e.target.value);
-              setOptions(null);
-            }}
-          />
-        </Field>
-        <Field label="Çıkış">
-          <input
-            type="datetime-local"
-            required
-            className={`uni-input ${inputStyle}`}
-            value={end}
-            onChange={(e) => {
-              setEnd(e.target.value);
-              setOptions(null);
-            }}
-          />
-        </Field>
-        <Field label="Rezervasyon sahibi">
-          <input
-            required
-            className={`uni-input ${inputStyle}`}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Field>
-        <Field label="Kişi sayısı">
-          <input
-            type="number"
-            min={1}
-            max={100000}
-            required
-            className={`uni-input ${inputStyle}`}
-            value={count}
-            onChange={(e) => {
-              setCount(Number(e.target.value));
-              setOptions(null);
-            }}
-          />
-        </Field>
+      <FormSection
+        title="Konaklama Tarihleri"
+        hint="Giriş ve çıkış tarih-saatleri"
+      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <DateField
+          label="Giriş"
+          value={start}
+          onChange={(v) => {
+            setStart(v);
+            setOptions(null);
+          }}
+        />
+        <DateField
+          label="Çıkış"
+          value={end}
+          min={start || undefined}
+          onChange={(v) => {
+            setEnd(v);
+            setOptions(null);
+          }}
+        />
       </div>
-      <div className="flex gap-3 items-end">
-        <div className="flex-1">
-          <Field label="Kiralanacak birim">
-            <select
+      </FormSection>
+      <FormSection
+        title={`Misafirler${guests.length ? ` · ${guests.length}` : ""}`}
+        hint="Sahip, kişi sayısı ve konaklayanlar"
+      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+      <TextField
+        label="Rezervasyon sahibi"
+        value={name}
+        onChange={setName}
+        placeholder="Ad soyad"
+        required
+        autoComplete="off"
+        uppercase
+      />
+      <StepperField
+        label="Kişi sayısı"
+        value={count}
+        min={1}
+        max={100000}
+        onChange={(v) => {
+          setCount(v);
+          setOptions(null);
+        }}
+        sub={
+          selectedRoom
+            ? `Birim kapasitesi: ${selectedRoom.effective_capacity || selectedRoom.capacity} kişi`
+            : "kişi"
+        }
+      />
+      </div>
+      <div className="space-y-3 pt-1">
+        <div className="flex justify-between items-center gap-3">
+          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+            Konaklayanlar
+          </p>
+          <button
+            className={`uni-control ${secondaryStyle}`}
+            type="button"
+            onClick={() => {
+              setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
+              setCount(Math.max(count, guests.length + 1));
+            }}
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Misafir Ekle
+          </button>
+        </div>
+        {guests.length === 0 && (
+          <div className="rounded-xl border border-dashed border-slate-200 bg-white px-4 py-6 text-center">
+            <p className="text-xs font-bold text-slate-400">
+              Henüz misafir eklenmedi
+            </p>
+            <p className="text-[11px] text-slate-400 font-medium mt-1">
+              Yukarıdaki butonla konaklayanları tek tek ekleyin
+            </p>
+          </div>
+        )}
+        {guests.map((g, i) => (
+          <div
+            className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3"
+            key={g.id}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex min-w-0 items-center gap-2.5">
+                <span aria-hidden="true" className="font-uninav-book flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[13px] text-slate-700 shadow-sm ring-1 ring-slate-200/70">
+                  {i + 1}
+                </span>
+                <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">
+                  Misafir
+                </span>
+              </span>
+              <button
+                type="button"
+                aria-label="Misafiri kaldır"
+                title="Misafiri kaldır"
+                className="uni-control flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                onClick={() => setGuests(guests.filter((_, n) => n !== i))}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              aria-label={`Misafir ${i + 1} adı`}
               required
-              className={`uni-input ${inputStyle}`}
-              value={room}
-              onChange={(e) => setRoom(e.target.value)}
-            >
-              <option value="">Birim seçin</option>
-              {(options || snapshot.rooms.filter((r) => r.rentable)).map(
-                (r) => (
-                  <option key={r.room_id} value={r.room_id}>
-                    {r.code} · {unitKinds[r.kind]} ·{" "}
-                    {r.effective_capacity || r.capacity} kişi
-                  </option>
-                ),
-              )}
-            </select>
-          </Field>
+              placeholder="Ad soyad"
+              className={`uni-input ${inputStyle} uppercase`}
+              value={g.name}
+              onChange={(e) =>
+                setGuests(
+                  guests.map((v, n) =>
+                    n === i ? { ...v, name: upperTR(e.target.value) } : v,
+                  ),
+                )
+              }
+            />
+            <input
+              aria-label={`Misafir ${i + 1} telefon`}
+              placeholder="Telefon"
+              className={`uni-input ${inputStyle} uppercase`}
+              value={g.phone || ""}
+              onChange={(e) =>
+                setGuests(
+                  guests.map((v, n) =>
+                    n === i ? { ...v, phone: upperTR(e.target.value) } : v,
+                  ),
+                )
+              }
+            />
+            <input
+              aria-label={`Misafir ${i + 1} kimlik`}
+              placeholder="Kimlik / pasaport"
+              className={`uni-input ${inputStyle} uppercase`}
+              value={g.tcNo || ""}
+              onChange={(e) =>
+                setGuests(
+                  guests.map((v, n) =>
+                    n === i ? { ...v, tcNo: upperTR(e.target.value) } : v,
+                  ),
+                )
+              }
+            />
+            <input
+              aria-label={`Misafir ${i + 1} yakınlık`}
+              placeholder="Yakınlık"
+              className={`uni-input ${inputStyle} uppercase`}
+              value={g.relationship || ""}
+              onChange={(e) =>
+                setGuests(
+                  guests.map((v, n) =>
+                    n === i ? { ...v, relationship: upperTR(e.target.value) } : v,
+                  ),
+                )
+              }
+            />
+            </div>
+          </div>
+        ))}
+      </div>
+      </FormSection>
+      <FormSection
+        title="Birim"
+        hint="Tarihlere uygun birim seçin"
+      >
+      <div className="flex flex-col sm:flex-row gap-3 sm:items-end">
+        <div className="flex-1">
+          <SelectField
+            label="Kiralanacak birim"
+            required
+            value={room}
+            onChange={setRoom}
+          >
+            <option value="">Birim seçin</option>
+            {(options || snapshot.rooms.filter((r) => r.rentable)).map(
+              (r) => (
+                <option key={r.room_id} value={r.room_id}>
+                  {r.code} · {unitKinds[r.kind]} ·{" "}
+                  {r.effective_capacity || r.capacity} kişi
+                </option>
+              ),
+            )}
+          </SelectField>
         </div>
         <button
           type="button"
@@ -184,110 +341,32 @@ export function BookingForm({
         </button>
       </div>
       {options && (
-        <p className="text-xs text-brand-blue-700">
-          Bu tarih ve kişi sayısına uygun {options.length} birim. Kesin
-          müsaitlik kaydetme sırasında tekrar kontrol edilir.
+        <p className="flex items-start gap-2 rounded-xl border border-emerald-200/70 bg-emerald-50/60 px-4 py-3 text-xs text-emerald-800">
+          <Info className="w-4 h-4 shrink-0 mt-0.5" />
+          <span>
+            Bu tarih ve kişi sayısına uygun {options.length} birim. Kesin
+            müsaitlik kaydetme sırasında tekrar kontrol edilir.
+          </span>
         </p>
       )}
-      <p className="rounded-xl bg-brand-blue-50 p-3 text-xs text-brand-blue-800">
-        Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve
-        yatakları da aynı tarihler için kapatır.
+      <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
+        <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
+        <span>
+          Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve
+          yatakları da aynı tarihler için kapatır.
+        </span>
       </p>
-      <div className="space-y-3">
-        <div className="flex justify-between items-center">
-          <h3 className="text-xs font-black text-slate-500">MİSAFİRLER</h3>
-          <button
-            className={`uni-control ${secondaryStyle}`}
-            type="button"
-
-            onClick={() => {
-              setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
-              setCount(Math.max(count, guests.length + 1));
-            }}
-          >
-            Misafir Ekle
-          </button>
-        </div>
-        {guests.map((g, i) => (
-          <div
-            className="grid grid-cols-2 gap-2 rounded-xl border border-slate-200 p-3"
-            key={g.id}
-          >
-            <p className="col-span-2 text-xs font-bold text-slate-500">
-              {i + 1}. Misafir
-            </p>
-            <input
-              aria-label={`Misafir ${i + 1} adı`}
-              required
-              placeholder="Ad soyad"
-              className={`uni-input ${inputStyle}`}
-              value={g.name}
-              onChange={(e) =>
-                setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, name: e.target.value } : v,
-                  ),
-                )
-              }
-            />
-            <input
-              aria-label={`Misafir ${i + 1} telefon`}
-              placeholder="Telefon"
-              className={`uni-input ${inputStyle}`}
-              value={g.phone || ""}
-              onChange={(e) =>
-                setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, phone: e.target.value } : v,
-                  ),
-                )
-              }
-            />
-            <input
-              aria-label={`Misafir ${i + 1} kimlik`}
-              placeholder="Kimlik / pasaport"
-              className={`uni-input ${inputStyle}`}
-              value={g.tcNo || ""}
-              onChange={(e) =>
-                setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, tcNo: e.target.value } : v,
-                  ),
-                )
-              }
-            />
-            <input
-              aria-label={`Misafir ${i + 1} yakınlık`}
-              placeholder="Yakınlık"
-              className={`uni-input ${inputStyle}`}
-              value={g.relationship || ""}
-              onChange={(e) =>
-                setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, relationship: e.target.value } : v,
-                  ),
-                )
-              }
-            />
-            <button
-              type="button"
-              aria-label="Misafiri kaldır"
-              className={`uni-control ${secondaryStyle}`}
-              onClick={() => setGuests(guests.filter((_, n) => n !== i))}
-            >
-              ×
-            </button>
-          </div>
-        ))}
-      </div>
-      <Field label="Notlar">
-        <textarea
-          className={`uni-input ${inputStyle}`}
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-        />
-      </Field>
-      <button className={`uni-control ${buttonStyle}`} disabled={busy || !room}>
+      </FormSection>
+      <FormSection title="Notlar" hint="Rezervasyonla ilgili ek bilgi">
+      <TextAreaField
+        label="Notlar"
+        value={notes}
+        onChange={setNotes}
+        placeholder="Özel istekler, varış saati vb."
+        uppercase
+      />
+      </FormSection>
+      <button className={`uni-control ${buttonStyle} w-full !rounded-[20px] !px-5 !py-4 !text-lg`} disabled={busy || !room}>
         {busy ? "Kaydediliyor…" : "Rezervasyonu Kaydet"}
       </button>
     </form>

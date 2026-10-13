@@ -52,7 +52,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="uni-control w-full flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:border-brand-blue-500  shadow-sm group text-left"
+        className="uni-control w-full flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 hover:border-slate-300  shadow-sm group text-left"
       >
         <CalendarIcon className={`w-4 h-4 transition-colors ${isOpen ? 'text-brand-blue-600' : 'text-slate-400'}`} />
         <span className="flex-1 truncate">
@@ -132,14 +132,14 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                       type="text"
                       value={format(value, 'HH')}
                       onChange={(e) => updateTime('h', e.target.value)}
-                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
+                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-neutral-400"
                     />
                     <span className="font-black text-slate-300">:</span>
                     <input
                       type="text"
                       value={format(value, 'mm')}
                       onChange={(e) => updateTime('m', e.target.value)}
-                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-brand-blue-500"
+                      className="uni-input w-8 h-8 bg-slate-50 border border-slate-200 rounded-lg text-center font-black text-xs text-slate-700 outline-none focus:border-neutral-400"
                     />
                   </div>
                 </div>

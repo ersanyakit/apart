@@ -55,10 +55,10 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
         }}
         className={`uni-control uni-menu-item
           w-full flex items-center gap-2 min-h-12 px-3 py-3 rounded-xl
-             group select-none cursor-pointer
+             group select-none cursor-pointer active:scale-[0.98]
           outline-none
           ${!isOpen ? "justify-center px-0" : ""}
-          ${isParentActive && isOpen ? "bg-brand-blue-100 text-brand-blue-600" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}
+          ${isParentActive && isOpen ? "bg-brand-blue-100 text-brand-blue-600" : "text-slate-600 hover:bg-slate-50 active:bg-slate-100 hover:text-slate-900"}
         `}
       >
         <div
@@ -101,12 +101,12 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                   aria-current={isActive ? "page" : undefined}
                   title={typeof sub.label === "string" ? sub.label : undefined}
                   onClick={() => onSelect(sub.id)}
-                  className={`uni-control uni-menu-item w-full flex items-center gap-2 min-h-10 px-3 py-2 rounded-xl    outline-none   text-left select-none cursor-pointer ${
+                  className={`uni-control uni-menu-item w-full flex items-center gap-2 min-h-10 px-3 py-2 rounded-xl    outline-none   text-left select-none cursor-pointer active:scale-[0.98] ${
                     isActive ? "uni-nav-sub-active" : "uni-nav-sub"
                   } ${
                     isActive
                       ? "text-brand-blue-600 bg-brand-blue-100"
-                      : "text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50/30"
+                      : "text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50/30 active:bg-brand-blue-100/60"
                   }`}
                 >
                   {sub.icon ? (

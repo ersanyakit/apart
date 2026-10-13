@@ -51,7 +51,7 @@ export const Chat: React.FC = () => {
             <input
               type="text"
               placeholder="Sohbet ara..."
-              className="uni-input w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brand-blue-500"
+              className="uni-input w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-neutral-400"
             />
           </div>
         </div>

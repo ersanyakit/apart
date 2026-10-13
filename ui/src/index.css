@@ -359,8 +359,8 @@ body {
   --interaction-fast: 100ms;
   --interaction-ease: cubic-bezier(0.17, 0.67, 0.45, 1);
   --interaction-press-scale: 0.98;
-  --control-ring: var(--color-brand-blue-600);
-  --control-halo: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --control-ring: #737373;
+  --control-halo: rgba(19, 19, 19, 0.08);
   --control-border: #e7e7e7;
   --control-border-hover: #d4d4d4;
 }
@@ -439,7 +439,7 @@ body {
 .uni-input[aria-invalid="true"] { border-color: #e10f0f; }
 .uni-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px #e10f0f1a; }
 .uni-input:disabled { background-color: var(--color-uni-hover); color: #767676; cursor: not-allowed; }
-input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: var(--color-brand-blue-600); }
+input[type="checkbox"], input[type="radio"], input[type="range"] { accent-color: #737373; }
 .uni-card { border-width: 1px; box-shadow: none; }
 .uni-card-interactive {
   transition: scale var(--interaction-fast) var(--interaction-ease), border-color var(--interaction-fast) ease, background-color var(--interaction-fast) ease;

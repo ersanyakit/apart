@@ -84,7 +84,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                 <input
                   autoFocus
                   placeholder="Kapak Görsel URL girin..."
-                  className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none focus:border-brand-blue-500"
+                  className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none focus:border-neutral-400"
                   value={formData.coverUrl || ''}
                   onChange={e => setFormData({...formData, coverUrl: e.target.value})}
                   onKeyDown={e => e.key === 'Enter' && setShowCoverInput(false)}
@@ -125,7 +125,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                 <input
                   autoFocus
                   placeholder="https://gorsel-linki.com/logo.png"
-                  className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none focus:border-brand-blue-500"
+                  className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none focus:border-neutral-400"
                   value={formData.logoUrl || ''}
                   onChange={e => setFormData({...formData, logoUrl: e.target.value})}
                   onKeyDown={e => e.key === 'Enter' && setShowLogoInput(false)}
@@ -155,7 +155,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                     required
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
-                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-base font-black text-slate-800 outline-none focus:ring-4 focus:ring-brand-blue-500/5 focus:border-brand-blue-500/50 transition-all placeholder:text-slate-300"
+                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-base font-black text-slate-800 outline-none focus:ring-4 focus:ring-neutral-300/5 focus:border-neutral-400/50 transition-all placeholder:text-slate-400"
                     placeholder="Grand Hotel Luxury Resort..."
                   />
                 </div>
@@ -165,7 +165,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                   <input
                     value={formData.taxOffice || ''}
                     onChange={e => setFormData({...formData, taxOffice: e.target.value})}
-                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-brand-blue-500/50 transition-all"
+                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-neutral-400/50 transition-all"
                   />
                 </div>
 
@@ -174,7 +174,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                   <input
                     value={formData.taxNumber || ''}
                     onChange={e => setFormData({...formData, taxNumber: e.target.value})}
-                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-brand-blue-500/50 transition-all"
+                    className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-neutral-400/50 transition-all"
                   />
                 </div>
               </div>
@@ -195,7 +195,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                       rows={3}
                       value={formData.address}
                       onChange={e => setFormData({...formData, address: e.target.value})}
-                      className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-brand-blue-500/50 transition-all resize-none"
+                      className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-neutral-400/50 transition-all resize-none"
                       placeholder="Bölge, mahalle, sokak ve kapı numarası..."
                     />
                   </div>
@@ -206,7 +206,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                       rows={6}
                       value={formData.description || ''}
                       onChange={e => setFormData({...formData, description: e.target.value})}
-                      className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium leading-relaxed text-slate-600 outline-none focus:border-brand-blue-500/50 transition-all resize-none"
+                      className="uni-input w-full px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium leading-relaxed text-slate-600 outline-none focus:border-neutral-400/50 transition-all resize-none"
                       placeholder="Tesisinizin özellikleri, manzarası ve sunduğu ayrıcalıklar hakkında detaylı bilgi verin..."
                     />
                     <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-2 mt-2 px-1">
@@ -236,7 +236,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                       required
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
-                      className="uni-input w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-brand-blue-500/50 transition-all"
+                      className="uni-input w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-neutral-400/50 transition-all"
                     />
                   </div>
                 </div>
@@ -250,7 +250,7 @@ export const HotelSettingsView: React.FC<HotelSettingsViewProps> = ({ config, on
                       type="email"
                       value={formData.email}
                       onChange={e => setFormData({...formData, email: e.target.value})}
-                      className="uni-input w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-brand-blue-500/50 transition-all"
+                      className="uni-input w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-neutral-400/50 transition-all"
                     />
                   </div>
                 </div>
