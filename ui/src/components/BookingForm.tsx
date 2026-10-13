@@ -23,14 +23,13 @@ export const localDate = (iso: string) => {
   const d = new Date(iso);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
 };
-/** Girilen metinleri tr-TR büyük harfe çevirir (otel kayıt disiplini). */
-export const upperTR = (v: string) => v.toLocaleUpperCase("tr-TR");
 import {
   StepperField,
   DateField,
   TextField,
-  SelectField,
   TextAreaField,
+  RoomSelectField,
+  MoneyField,
 } from "./fields";
 /** Bölüm başlığı: referans bölüm dili (18px kitap + 14px açıklama). */
 function FormSection({
@@ -72,22 +71,59 @@ export function BookingForm({
   const [room, setRoom] = useState(booking?.room_id || roomId || "");
   const [name, setName] = useState(booking?.guest_name || "");
   const [count, setCount] = useState(booking?.guest_count || 1);
+  const [priceMinor, setPriceMinor] = useState(booking?.daily_price_minor || 0);
   const [start, setStart] = useState(
     localDate(booking?.check_in || snapshot.server_time),
   );
-  const [end, setEnd] = useState(
+  const [end, setEnd] = useState(() =>
     localDate(
       booking?.check_out ||
-        new Date(
-          new Date(snapshot.server_time).getTime() + 86400000,
-        ).toISOString(),
+        (() => {
+          // Varsayılan çıkış: ertesi gün 11:00 (otel standardı).
+          const d = new Date(
+            new Date(snapshot.server_time).getTime() + 86400000,
+          );
+          d.setHours(11, 0, 0, 0);
+          return d.toISOString();
+        })(),
     ),
   );
   const [notes, setNotes] = useState(booking?.notes || "");
   const [guests, setGuests] = useState(booking?.guests || []);
+  // Sahip adı değişince ilk misafir otomatik eşlenir (manuel girilmiş
+  // isim ezilmez; eşleşme önceki sahip değeriyle takip edilir).
+  const ownerPrev = React.useRef(booking?.guest_name || "");
+  const syncOwnerToFirstGuest = (ownerName: string) => {
+    const prev = ownerPrev.current;
+    ownerPrev.current = ownerName;
+    setGuests((rows) => {
+      if (!rows.length) {
+        return ownerName.trim()
+          ? [{ id: crypto.randomUUID(), name: ownerName }]
+          : rows;
+      }
+      const [first, ...rest] = rows;
+      if (first.name === "" || first.name === prev) {
+        return [{ ...first, name: ownerName }, ...rest];
+      }
+      return rows;
+    });
+  };
+  // Kayıtlı sahibi olup misafir satırı olmayan eski kayıtlarda ilk satırı tohumla.
+  React.useEffect(() => {
+    setGuests((rows) => {
+      const ownerName = (booking?.guest_name || "").trim();
+      if (rows.length || !ownerName) return rows;
+      ownerPrev.current = booking?.guest_name || "";
+      return [{ id: crypto.randomUUID(), name: ownerName }];
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [options, setOptions] = useState<APIRoom[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  // Giriş + Çıkış takvimleri tek obje gibi birlikte açılır/kapanır.
+  const [datesOpen, setDatesOpen] = useState(false);
   const query = () => ({
     branch_id: snapshot.branch_id,
     check_in: new Date(start).toISOString(),
@@ -110,6 +146,7 @@ export function BookingForm({
               ...(booking ? { booking_id: booking.booking_id } : {}),
               room_id: room,
               guest_name: name,
+              daily_price_minor: priceMinor,
               guests,
               notes,
             },
@@ -137,6 +174,8 @@ export function BookingForm({
         <DateField
           label="Giriş"
           value={start}
+          open={datesOpen}
+          onOpenChange={setDatesOpen}
           onChange={(v) => {
             setStart(v);
             setOptions(null);
@@ -146,6 +185,8 @@ export function BookingForm({
           label="Çıkış"
           value={end}
           min={start || undefined}
+          open={datesOpen}
+          onOpenChange={setDatesOpen}
           onChange={(v) => {
             setEnd(v);
             setOptions(null);
@@ -161,7 +202,10 @@ export function BookingForm({
       <TextField
         label="Rezervasyon sahibi"
         value={name}
-        onChange={setName}
+        onChange={(v) => {
+          setName(v);
+          syncOwnerToFirstGuest(v);
+        }}
         placeholder="Ad soyad"
         required
         autoComplete="off"
@@ -184,28 +228,25 @@ export function BookingForm({
       />
       </div>
       <div className="space-y-3 pt-1">
-        <div className="flex justify-between items-center gap-3">
-          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
-            Konaklayanlar
-          </p>
+        <div className="flex justify-end">
           <button
-            className={`uni-control ${secondaryStyle}`}
+            className={`uni-control ${secondaryStyle} gap-2`}
             type="button"
             onClick={() => {
               setGuests([...guests, { id: crypto.randomUUID(), name: "" }]);
               setCount(Math.max(count, guests.length + 1));
             }}
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-4 h-4" aria-hidden="true" />
             Misafir Ekle
           </button>
         </div>
         {guests.length === 0 && (
           <div className="rounded-xl border border-dashed border-slate-200 bg-white px-4 py-6 text-center">
-            <p className="text-xs font-bold text-slate-400">
+            <p className="text-xs font-bold text-slate-600">
               Henüz misafir eklenmedi
             </p>
-            <p className="text-[11px] text-slate-400 font-medium mt-1">
+            <p className="text-[11px] text-slate-500 font-medium mt-1">
               Yukarıdaki butonla konaklayanları tek tek ekleyin
             </p>
           </div>
@@ -235,55 +276,55 @@ export function BookingForm({
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input
-              aria-label={`Misafir ${i + 1} adı`}
+            <TextField
+              label="Ad Soyad"
+              tone="white"
               required
-              placeholder="Ad soyad"
-              className={`uni-input ${inputStyle} uppercase`}
+              uppercase
               value={g.name}
-              onChange={(e) =>
+              onChange={(v) =>
                 setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, name: upperTR(e.target.value) } : v,
+                  guests.map((n2) =>
+                    n2.id === g.id ? { ...n2, name: v } : n2,
                   ),
                 )
               }
             />
-            <input
-              aria-label={`Misafir ${i + 1} telefon`}
-              placeholder="Telefon"
-              className={`uni-input ${inputStyle} uppercase`}
+            <TextField
+              label="Telefon"
+              tone="white"
+              uppercase
               value={g.phone || ""}
-              onChange={(e) =>
+              onChange={(v) =>
                 setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, phone: upperTR(e.target.value) } : v,
+                  guests.map((n2) =>
+                    n2.id === g.id ? { ...n2, phone: v } : n2,
                   ),
                 )
               }
             />
-            <input
-              aria-label={`Misafir ${i + 1} kimlik`}
-              placeholder="Kimlik / pasaport"
-              className={`uni-input ${inputStyle} uppercase`}
+            <TextField
+              label="Kimlik / Pasaport"
+              tone="white"
+              uppercase
               value={g.tcNo || ""}
-              onChange={(e) =>
+              onChange={(v) =>
                 setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, tcNo: upperTR(e.target.value) } : v,
+                  guests.map((n2) =>
+                    n2.id === g.id ? { ...n2, tcNo: v } : n2,
                   ),
                 )
               }
             />
-            <input
-              aria-label={`Misafir ${i + 1} yakınlık`}
-              placeholder="Yakınlık"
-              className={`uni-input ${inputStyle} uppercase`}
+            <TextField
+              label="Yakınlık"
+              tone="white"
+              uppercase
               value={g.relationship || ""}
-              onChange={(e) =>
+              onChange={(v) =>
                 setGuests(
-                  guests.map((v, n) =>
-                    n === i ? { ...v, relationship: upperTR(e.target.value) } : v,
+                  guests.map((n2) =>
+                    n2.id === g.id ? { ...n2, relationship: v } : n2,
                   ),
                 )
               }
@@ -297,28 +338,30 @@ export function BookingForm({
         title="Birim"
         hint="Tarihlere uygun birim seçin"
       >
-      <div className="flex flex-col sm:flex-row gap-3 sm:items-end">
-        <div className="flex-1">
-          <SelectField
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="lg:col-span-3">
+          <RoomSelectField
             label="Kiralanacak birim"
-            required
             value={room}
             onChange={setRoom}
-          >
-            <option value="">Birim seçin</option>
-            {(options || snapshot.rooms.filter((r) => r.rentable)).map(
-              (r) => (
-                <option key={r.room_id} value={r.room_id}>
-                  {r.code} · {unitKinds[r.kind]} ·{" "}
-                  {r.effective_capacity || r.capacity} kişi
-                </option>
-              ),
-            )}
-          </SelectField>
+            snapshot={snapshot}
+            checkInISO={start ? new Date(start).toISOString() : snapshot.server_time}
+            excludeBookingId={booking?.booking_id}
+            rooms={options ?? undefined}
+          />
         </div>
+        <div className="lg:col-span-2">
+          <MoneyField
+            label="Günlük Fiyat"
+            valueMinor={priceMinor}
+            onChange={setPriceMinor}
+          />
+        </div>
+      </div>
+      <div>
         <button
           type="button"
-          className={`uni-control ${secondaryStyle}`}
+          className={`uni-control ${secondaryStyle} w-full`}
           disabled={busy || !start || !end}
           onClick={async () => {
             setBusy(true);

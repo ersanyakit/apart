@@ -214,6 +214,7 @@ export type Booking = {
   user_id?: string;
   guest_name: string;
   guest_count: number;
+  daily_price_minor: number;
   guests: import("../types").Guest[];
   notes: string;
   check_in: string;

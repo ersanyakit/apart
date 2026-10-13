@@ -25,22 +25,23 @@ type Allocation struct {
 	End          time.Time `json:"end"`
 }
 type Booking struct {
-	BookingID      uuid.UUID        `json:"booking_id"`
-	BranchID       uuid.UUID        `json:"branch_id"`
-	RoomID         uuid.UUID        `json:"room_id"`
-	UserID         uuid.UUID        `json:"user_id"`
-	GuestName      string           `json:"guest_name"`
-	GuestCount     int              `json:"guest_count"`
-	Guests         []property.Guest `json:"guests"`
-	Notes          string           `json:"notes"`
-	CheckIn        time.Time        `json:"check_in"`
-	CheckOut       time.Time        `json:"check_out"`
-	ActualCheckIn  *time.Time       `json:"actual_check_in"`
-	ActualCheckOut *time.Time       `json:"actual_check_out"`
-	Status         string           `json:"status"`
-	Allocations    []Allocation     `json:"allocations"`
-	CreatedAt      time.Time        `json:"created_at"`
-	UpdatedAt      time.Time        `json:"updated_at"`
+	BookingID       uuid.UUID        `json:"booking_id"`
+	BranchID        uuid.UUID        `json:"branch_id"`
+	RoomID          uuid.UUID        `json:"room_id"`
+	UserID          uuid.UUID        `json:"user_id"`
+	GuestName       string           `json:"guest_name"`
+	GuestCount      int              `json:"guest_count"`
+	DailyPriceMinor int64            `json:"daily_price_minor"`
+	Guests          []property.Guest `json:"guests"`
+	Notes           string           `json:"notes"`
+	CheckIn         time.Time        `json:"check_in"`
+	CheckOut        time.Time        `json:"check_out"`
+	ActualCheckIn   *time.Time       `json:"actual_check_in"`
+	ActualCheckOut  *time.Time       `json:"actual_check_out"`
+	Status          string           `json:"status"`
+	Allocations     []Allocation     `json:"allocations"`
+	CreatedAt       time.Time        `json:"created_at"`
+	UpdatedAt       time.Time        `json:"updated_at"`
 }
 
 func (b Booking) Validate() error {
@@ -52,6 +53,9 @@ func (b Booking) Validate() error {
 	}
 	if b.GuestCount < 1 || b.GuestCount > 100000 || len(b.Guests) > b.GuestCount {
 		return constants.ErrCapacity
+	}
+	if b.DailyPriceMinor < 0 || b.DailyPriceMinor > 999999999999 {
+		return constants.ErrPayload
 	}
 	if b.CheckIn.IsZero() || !b.CheckOut.After(b.CheckIn) {
 		return constants.ErrDates

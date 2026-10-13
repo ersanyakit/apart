@@ -1,9 +1,16 @@
 "use client";
 import React, { useId, useState } from "react";
-import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User } from "lucide-react";
+import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, Banknote } from "lucide-react";
 import { confirmDialog } from "./ConfirmDialog";
 import { FONT_SIZE_OPTIONS, useFontSize } from "./FontSize";
 import { THEME_OPTIONS, useTheme } from "./Theme";
+import {
+  CURRENCIES,
+  MONEY_FORMATS,
+  currencySymbolClass,
+  formatMoney,
+  useCurrency,
+} from "./Currency";
 import { buttonStyle, secondaryStyle } from "./FormKit";
 
 interface AppSettingsViewProps {
@@ -31,6 +38,7 @@ function SectionHeading({ icon, title, description }: {
 export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsViewProps) {
   const { size, setSize } = useFontSize();
   const { theme, setTheme } = useTheme();
+  const { currency, setCurrency, format, setFormat } = useCurrency();
   const groupId = useId();
   const [previewMessage, setPreviewMessage] = useState("");
   const currentTheme = THEME_OPTIONS.find((option) => option.id === theme)!;
@@ -116,6 +124,71 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
             </button>
           </div>
           <p role="status" className="mt-3 text-xs leading-5 text-uni-muted">{previewMessage || "Butonları deneyerek renk ve etkileşimleri önizleyebilirsin."}</p>
+        </div>
+      </section>
+
+      <section aria-label="Para birimi" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Banknote size={20} />} title="Para birimi" description="Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez." />
+        <fieldset>
+          <legend className="sr-only">Para Birimi</legend>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {CURRENCIES.map((option) => (
+              <label key={option.id} className="relative min-w-0 cursor-pointer">
+                <input
+                  type="radio"
+                  name={`${groupId}-currency`}
+                  value={option.id}
+                  checked={currency === option.id}
+                  onChange={() => setCurrency(option.id)}
+                  className="peer sr-only"
+                  aria-label={`${option.label} (${option.symbol})`}
+                />
+                <span className="uni-choice flex min-h-[104px] flex-col items-center justify-center gap-1 rounded-2xl border border-transparent bg-uni-surface px-2 py-3 transition-colors duration-150 hover:bg-uni-hover peer-checked:border-slate-400 peer-checked:bg-white peer-checked:shadow-sm peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
+                  <span className={`flex h-8 w-8 items-center justify-center rounded-full bg-uni-hover font-bold text-uni-ink ${currencySymbolClass(option.symbol)}`}>
+                    {currency === option.id ? (
+                      <Check size={17} strokeWidth={2.5} />
+                    ) : (
+                      option.symbol
+                    )}
+                  </span>
+                  <span className="text-xs font-bold">{option.id}</span>
+                  <span className="text-[11px] text-uni-muted">{option.label}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="my-6 border-t border-uni-border" />
+
+        <fieldset>
+          <legend className="text-xs font-medium text-uni-muted">Sayı biçimi</legend>
+          <div className="mt-2 grid grid-cols-2 gap-1 rounded-[20px] border border-uni-border p-1">
+            {MONEY_FORMATS.map((option) => (
+              <label key={option.id} className="relative min-w-0 cursor-pointer">
+                <input
+                  type="radio"
+                  name={`${groupId}-format`}
+                  value={option.id}
+                  checked={format === option.id}
+                  onChange={() => setFormat(option.id)}
+                  className="peer sr-only"
+                  aria-label={`${option.hint} (${option.label})`}
+                />
+                <span className="uni-choice flex min-h-10 flex-col items-center justify-center rounded-2xl px-2 py-2 transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
+                  <span className="text-xs font-bold text-uni-ink">{option.label}</span>
+                  <span className="text-[11px] text-uni-muted">{option.hint}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
+          <span>Örnek:</span>
+          <span className="font-bold text-uni-ink">{formatMoney(450000, currency, format)} / gece</span>
+          <span aria-hidden="true" className="mx-1">·</span>
+          <span>Otomatik kaydedildi</span>
         </div>
       </section>
 

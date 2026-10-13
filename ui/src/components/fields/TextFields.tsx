@@ -14,6 +14,7 @@ export function TextField({
   type = "text",
   autoComplete,
   uppercase = false,
+  tone = "surface",
 }: {
   label: string;
   value: string;
@@ -25,9 +26,13 @@ export function TextField({
   autoComplete?: string;
   /** Açıkken girilen metin tr-TR büyük harfe çevrilir. */
   uppercase?: boolean;
+  /** "surface" (varsayılan gri kart) ya da gri zemin üstünde "white" kart. */
+  tone?: "surface" | "white";
 }) {
   return (
-    <FieldCard>
+    <FieldCard
+      className={tone === "white" ? "bg-white" : undefined}
+    >
       <label className="block min-w-0 cursor-text">
         <FieldCaption>{label}</FieldCaption>
         <input

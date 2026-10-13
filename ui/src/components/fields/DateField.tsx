@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Minus, Plus, X } from "lucide-react";
+import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import { FieldCaption } from "./FieldCard";
 import { useHoldStep } from "./StepperField";
 
@@ -74,11 +74,11 @@ function TimeStepper({
       <p className="font-uninav-book text-[11px] leading-4 tracking-[0.06em] text-slate-400 uppercase">
         {label}
       </p>
-      <div className="mt-1.5 flex items-center gap-1.5">
+      <div className="mt-1.5 flex items-center justify-between gap-1.5">
         <button type="button" aria-label={`${label} azalt`} disabled={value <= min} {...holdDown} className={circleMiniClass}>
           <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
         </button>
-        <span aria-live="polite" className="font-uninav-book w-8 select-none text-center text-[1.125rem] leading-7 text-slate-900 tabular-nums">
+        <span aria-live="polite" className="font-uninav-book min-w-0 flex-1 text-center text-[1.125rem] leading-7 text-slate-900 tabular-nums">
           {pad(value)}
         </span>
         <button type="button" aria-label={`${label} artır`} disabled={value >= max} {...holdUp} className={circleMiniClass}>
@@ -111,6 +111,8 @@ export function DateField({
   max,
   disabled,
   sub,
+  open: controlledOpen,
+  onOpenChange,
 }: {
   label: string;
   /** Yerel "YYYY-MM-DDTHH:mm" biçiminde değer. */
@@ -120,8 +122,18 @@ export function DateField({
   max?: string;
   disabled?: boolean;
   sub?: string;
+  /** Verilirse açık/kapalı durum dışarıdan yönetilir (örn. iki alan birlikte). */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const [innerOpen, setInnerOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : innerOpen;
+  const setOpen = (v: boolean | ((prev: boolean) => boolean)) => {
+    const next = typeof v === "function" ? v(open) : v;
+    if (isControlled) onOpenChange?.(next);
+    else setInnerOpen(next);
+  };
   const [mode, setMode] = useState<"day" | "monthyear">("day");
   const rootRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -147,6 +159,11 @@ export function DateField({
   useEffect(() => {
     if (!open) return;
     const onPointerDown = (e: PointerEvent) => {
+      // Kontrollü kipte (paylaşımlı açık durumu) dışarı-tıklama ile kapatma
+      // YOKTUR: kardeş alanın dinleyicisi bu alanın içindeki tıklamayı
+      // "dışarı" sanıp seçimi anında kapatıyordu. Kapatma Tamam / başlık /
+      // Esc ile olur.
+      if (isControlled) return;
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
@@ -160,7 +177,7 @@ export function DateField({
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open ]);
+  }, [open, isControlled]);
 
   const moveMonth = (delta: number) => {
     const d = new Date(viewY, viewM + delta, 1);
@@ -239,15 +256,14 @@ export function DateField({
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className={`rounded-[20px] bg-[#f9f9f9] p-4 transition-colors duration-150 ease-out ${open ? "" : "hover:bg-[#efefef]"}`}>
       <button
         type="button"
         aria-label={`${label} seçin. Seçili: ${valid && parsed ? displayFmt.format(parsed) : "yok"}`}
-        aria-haspopup="dialog"
         aria-expanded={open}
         disabled={disabled}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full cursor-pointer items-center justify-between gap-4 rounded-[20px] bg-[#f9f9f9] p-4 text-left outline-none transition-all duration-150 ease-out hover:bg-[#efefef] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-neutral-400"
+        className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl text-left outline-none transition-transform duration-150 ease-out active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-neutral-400"
       >
         <span className="min-w-0 flex-1">
           <FieldCaption>{label}</FieldCaption>
@@ -262,50 +278,36 @@ export function DateField({
             {sub ?? (valid && parsed ? subFmt.format(parsed) : "gün • saat")}
           </span>
         </span>
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-slate-600">
-          <CalendarDays size={18} strokeWidth={2} aria-hidden="true" />
+        <span className="flex shrink-0 items-center gap-2">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-slate-600 transition-colors duration-150 ease-out group-hover:bg-[rgba(19,19,19,0.12)]">
+            <CalendarDays size={18} strokeWidth={2} aria-hidden="true" />
+          </span>
+          <ChevronDown
+            size={16}
+            strokeWidth={2.5}
+            aria-hidden="true"
+            className={`shrink-0 text-slate-400 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          />
         </span>
       </button>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {open && (
           <motion.div
-            role="dialog"
-            aria-label={`${label} takvimi`}
-            initial={{ opacity: 0, scale: 0.97, y: -4 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -4 }}
-            transition={{ duration: reducedMotion ? 0 : 0.15, ease: [0.32, 0.72, 0, 1] }}
-            className="absolute left-0 z-50 mt-2 w-[320px] max-w-full origin-top select-none rounded-[20px] border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 ring-1 ring-slate-900/5"
+            key="cal-body"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0 : 0.18, ease: [0.32, 0.72, 0, 1] }}
+            className="select-none overflow-hidden"
           >
-            <div className="flex items-center gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-blue-50 text-brand-blue-600">
-                <CalendarDays size={18} strokeWidth={2} aria-hidden="true" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[15px] font-black tracking-tight text-slate-800">
-                  {label} Seç
-                </span>
-                <span className="mt-0.5 block truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                  {valid && parsed ? displayFmt.format(parsed) : "Seçim yapılmadı"}
-                </span>
-              </span>
-              <button
-                type="button"
-                aria-label="Takvimi kapat"
-                onClick={() => setOpen(false)}
-                className="uni-control flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
-              >
-                <X size={16} strokeWidth={2} aria-hidden="true" />
-              </button>
-            </div>
-            <div aria-hidden="true" className="my-3 border-t border-slate-100" />
+            <div className="mt-3 border-t border-slate-200/70 pt-3">
             <div className="flex items-center justify-between">
               <button
                 type="button"
                 aria-label={mode === "day" ? "Önceki ay" : "Önceki yıl"}
                 onClick={() => (mode === "day" ? moveMonth(-1) : setViewY((y) => y - 1))}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-white hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               >
                 <ChevronLeft size={16} strokeWidth={2.5} aria-hidden="true" />
               </button>
@@ -332,7 +334,7 @@ export function DateField({
                 type="button"
                 aria-label={mode === "day" ? "Sonraki ay" : "Sonraki yıl"}
                 onClick={() => (mode === "day" ? moveMonth(1) : setViewY((y) => y + 1))}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-white hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               >
                 <ChevronRight size={16} strokeWidth={2.5} aria-hidden="true" />
               </button>
@@ -349,11 +351,11 @@ export function DateField({
                         type="button"
                         aria-pressed={active}
                         onClick={() => pickPreset(p.offset)}
-                        className={`flex-1 cursor-pointer rounded-full border px-2 py-1.5 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-                          active
-                            ? "border-brand-blue-300 bg-brand-blue-50 text-brand-blue-700"
-                            : "border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
-                        }`}
+                      className={`flex-1 cursor-pointer rounded-full border px-2 py-1.5 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${
+                        active
+                          ? "border-brand-blue-300 bg-brand-blue-50 text-brand-blue-700"
+                          : "border-slate-300/80 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                      }`}
                       >
                         {p.label}
                       </button>
@@ -391,13 +393,13 @@ export function DateField({
                         aria-label={`${day} ${monthFmt.format(new Date(viewY, viewM, 1))}`}
                         aria-pressed={isSel}
                         onClick={() => pickDay(day)}
-                        className={`flex h-10 w-full items-center justify-center rounded-full text-[0.9375rem] tabular-nums outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 ${
+                        className={`flex aspect-square w-full items-center justify-center rounded-full text-[0.9375rem] tabular-nums outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 ${
                           isSel
                             ? "bg-brand-blue-600 font-bold text-white shadow-md active:scale-[0.98] cursor-pointer"
                             : out
                               ? "cursor-not-allowed text-slate-300"
                               : "text-slate-700 hover:bg-slate-100 active:scale-[0.98] cursor-pointer"
-                        } ${!isSel && isToday ? "ring-1 ring-inset ring-slate-300" : ""}`}
+                        } ${!isSel && isToday ? "ring-1 ring-inset ring-slate-400" : ""}`}
                       >
                         {day}
                       </button>
@@ -405,7 +407,7 @@ export function DateField({
                   })}
                 </div>
 
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-3">
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-200/70 pt-3">
               <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
                 <TimeStepper label="Saat" value={curH} min={0} max={23} onChange={(h) => setTime(h, curMi)} />
               </div>
@@ -429,7 +431,7 @@ export function DateField({
                       className={`rounded-xl px-1 py-2.5 text-[13px] font-bold outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 active:scale-[0.98] cursor-pointer ${
                         isSel
                           ? "bg-brand-blue-600 text-white shadow-md"
-                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                          : "text-slate-600 hover:bg-white hover:text-slate-900"
                       } ${!isSel && isCur ? "ring-1 ring-inset ring-slate-300" : ""}`}
                     >
                       {name}
@@ -457,6 +459,7 @@ export function DateField({
               >
                 Tamam
               </button>
+            </div>
             </div>
           </motion.div>
         )}

@@ -14,7 +14,7 @@ import (
 var _ booking.Repository = (*Repository)(nil)
 
 func fromBooking(v models.Booking) booking.Booking {
-	b := booking.Booking{BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
+	b := booking.Booking{BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, DailyPriceMinor: v.DailyPriceMinor, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
 	for _, g := range v.GuestDetails {
 		b.Guests = append(b.Guests, property.Guest(g))
 	}
@@ -24,7 +24,7 @@ func fromBooking(v models.Booking) booking.Booking {
 	return b
 }
 func toBooking(b booking.Booking) models.Booking {
-	v := models.Booking{BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
+	v := models.Booking{BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, DailyPriceMinor: b.DailyPriceMinor, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
 	for _, g := range b.Guests {
 		v.GuestDetails = append(v.GuestDetails, models.RoomGuest(g))
 	}

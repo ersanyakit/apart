@@ -54,6 +54,7 @@ import {
   MoveBookingForm,
   BookingGuestsForm,
 } from "./components/BookingForm";
+import { MoneyText } from "./components/fields";
 import { FloorBoard } from "./components/FloorBoard";
 import { confirmDialog } from "./components/ConfirmDialog";
 import { ContextMenu } from "./components/ContextMenu";
@@ -72,6 +73,7 @@ import { FeatureRegistryView } from "./components/FeatureRegistryView";
 import { AppSettingsView } from "./components/AppSettingsView";
 import { FontSizeProvider } from "./components/FontSize";
 import { ThemeProvider } from "./components/Theme";
+import { CurrencyProvider } from "./components/Currency";
 const date = (value: string) =>
   new Date(value).toLocaleString("tr-TR", {
     timeZone: "Europe/Istanbul",
@@ -180,6 +182,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     return (
       <FontSizeProvider>
       <ThemeProvider>
+      <CurrencyProvider>
       <LoginScreen
         onLogin={async (selection, register) => {
           await refresh(selection);
@@ -193,6 +196,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
           }
         }}
       />
+      </CurrencyProvider>
       </ThemeProvider>
       </FontSizeProvider>
     );
@@ -309,6 +313,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
   return (
     <FontSizeProvider>
     <ThemeProvider>
+    <CurrencyProvider>
     <OriginalShell
       snapshot={s}
       activeTab={tab}
@@ -770,6 +775,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 "Birim",
                 "Tarihler",
                 "Kişi",
+                "Tutar",
                 "Durum",
                 "İşlemler",
               ]}
@@ -812,6 +818,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                     <span className="text-slate-400">{date(b.check_out)}</span>
                   </td>
                   <td>{b.guest_count}</td>
+                  <td className="whitespace-nowrap font-bold">
+                    {(b.daily_price_minor ?? 0) > 0 ? (
+                      <MoneyText minor={b.daily_price_minor ?? 0} />
+                    ) : (
+                      "—"
+                    )}
+                  </td>
                   <td>
                     <span
                       className={`rounded-lg px-2 py-1 text-[10px] font-bold ${b.status === "checked_in" ? "bg-red-50 text-red-600" : b.status === "confirmed" ? "bg-brand-blue-50 text-brand-blue-700" : "bg-slate-100 text-slate-500"}`}
@@ -1039,6 +1052,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               <p className="text-sm text-slate-500">
                 {bookingStatuses[modal.booking.status]} ·{" "}
                 {modal.booking.guest_count} kişi
+                {(modal.booking.daily_price_minor ?? 0) > 0 && (
+                  <>
+                    {" · "}
+                    <MoneyText minor={modal.booking.daily_price_minor ?? 0} />
+                    /gece
+                  </>
+                )}
               </p>
               <div className="flex gap-2">
                 {["confirmed", "checked_in"].includes(modal.booking.status) && (
@@ -1190,6 +1210,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         </>
       )}
     </OriginalShell>
+    </CurrencyProvider>
     </ThemeProvider>
     </FontSizeProvider>
   );
