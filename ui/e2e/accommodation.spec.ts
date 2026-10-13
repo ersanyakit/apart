@@ -123,7 +123,8 @@ test("original business selector, 100 beds, persistence, reservation movement an
     .getByRole("button", { name: "Oda Durum Çizelgesi", exact: true })
     .first()
     .click();
-  await page.getByLabel("Kat filtresi").selectOption({ label: "3. Kat" });
+  await page.getByLabel(/Kat:/).click();
+  await page.getByRole("option", { name: "3. Kat" }).click();
   await page.getByRole("button", { name: "Kat Planı", exact: true }).click();
   await page.getByRole("button", { name: "Planı Düzenle" }).click();
   const unit = page.getByRole("button", {

@@ -1,6 +1,5 @@
-import React, { useState, useId } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import React from "react";
+import { Check, ChevronRight } from "lucide-react";
 import { NavigationIcon } from "./NavigationIcon";
 import { MenuItem } from "../types";
 
@@ -12,10 +11,10 @@ interface SidebarItemProps {
 }
 
 /**
- * Referans tasarım standardında açılır-kapanır grup satırı:
- * 48px parent (ikon + 14px etiket + döner chevron), girintili 14px alt satırlar.
- * Tipografi referans tokenlar (rem, kök font-size ile ölçeklenir),
- * renk tonları projenin kendi paleti (brand-blue / slate).
+ * iOS gruplu-liste menü bölümü: gri zemin üstünde başlık + beyaz kart,
+ * satırlar renkli ikon kutucuklu, aktif satır dolgulu + tik işaretli.
+ * Daraltılmış kipte dairesel ray butonları. Açılır-kapanır grup yoktur;
+ * bölümler her zaman görünür (mobil bottom sheet ile birebir aynı dil).
  */
 export const SidebarItem: React.FC<SidebarItemProps> = ({
   item,
@@ -23,27 +22,13 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   activeTab,
   onSelect,
 }) => {
-  const submenuId = useId();
-  const reducedMotion = useReducedMotion();
-  const [isExpanded, setIsExpanded] = useState(
-    () => !!item.subItems?.some((sub) => sub.id === activeTab),
-  );
-
-  // Check if any sub-item is active
-  const hasActiveSubItem = item.subItems?.some((sub) => sub.id === activeTab);
-  React.useEffect(() => {
-    if (hasActiveSubItem) setIsExpanded(true);
-  }, [activeTab, hasActiveSubItem]);
-
-  const isParentActive = !!hasActiveSubItem || activeTab === item.id;
-
   if (!isOpen) {
     return <div className="space-y-1">
       {(item.subItems ?? [item]).map((entry) => (
         <button key={entry.id} type="button" title={entry.label} aria-label={entry.label}
           aria-current={activeTab === entry.id ? "page" : undefined}
           onClick={() => onSelect(entry.id)}
-          className={`nav-rail-item ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-700" : "text-slate-500 hover:bg-black/[0.04]"}`}>
+          className={`nav-rail-item border-0 shadow-none outline-none ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-700" : "text-slate-500 hover:bg-black/[0.04] active:bg-black/[0.06]"}`}>
           <NavigationIcon name={entry.id} />
         </button>
       ))}
@@ -51,88 +36,63 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   }
 
   return (
-    <div className="space-y-1">
-      <motion.button
-        type="button"
-        aria-expanded={item.subItems ? isExpanded && isOpen : undefined}
-        aria-controls={item.subItems ? submenuId : undefined}
-        aria-label={typeof item.label === "string" ? item.label : undefined}
-        aria-current={!item.subItems && activeTab === item.id ? "page" : undefined}
-        title={typeof item.label === "string" ? item.label : undefined}
-        onClick={() => {
-          if (item.subItems) {
-            if (!isOpen) onSelect(item.subItems[0].id);
-            else setIsExpanded(!isExpanded);
-          } else {
-            onSelect(item.id);
-          }
-        }}
-        className={`uni-control uni-menu-item
-          w-full min-w-0 flex items-center gap-2 min-h-11 px-3 py-2.5 rounded-xl
-             group select-none cursor-pointer active:scale-[0.98]
-          outline-none
-          ${!isOpen ? "justify-center px-0" : ""}
-          ${isParentActive && isOpen ? "bg-brand-blue-100 text-brand-blue-600" : "text-slate-600 hover:bg-slate-50 active:bg-slate-100 hover:text-slate-900"}
-        `}
-      >
-        <div
-          className={`p-1.5 rounded-lg transition-colors duration-150 shrink-0 ${isParentActive && isOpen ? "bg-white shadow-sm" : "group-hover:bg-white"}`}
-        >
-          {item.icon}
-        </div>
-        {isOpen && (
-          <span className="uni-nav-parent min-w-0 flex-1 text-left">
-            {item.label}
-          </span>
-        )}
-        {isOpen && item.subItems && (
-          <motion.div
-            animate={{ rotate: isExpanded ? 180 : 0 }}
-            transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }}
-            className="shrink-0 flex items-center justify-center"
-          >
-            <ChevronDown className="w-4 h-4 text-slate-400" strokeWidth={2} />
-          </motion.div>
-        )}
-      </motion.button>
-
-      <AnimatePresence initial={false}>
-        {isExpanded && isOpen && item.subItems && (
-          <motion.div
-            id={submenuId}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: reducedMotion ? 0 : 0.18, ease: [0.32, 0.72, 0, 1] }}
-            className="overflow-hidden pl-3 pr-1 py-1 space-y-1"
-          >
-            {item.subItems.map((sub) => {
-              const isActive = activeTab === sub.id;
-              return (
-                <motion.button
-                  key={sub.id}
+    <section aria-label={typeof item.label === "string" ? item.label : undefined}>
+      <p className="px-4 pb-1.5 text-[15px] font-medium leading-6 text-slate-500">
+        {item.label}
+      </p>
+      <div className="overflow-hidden rounded-[20px] bg-white ring-1 ring-slate-900/[0.06]">
+        <ul className="divide-y divide-slate-100">
+          {(item.subItems ?? [item]).map((entry) => {
+            const isActive = activeTab === entry.id;
+            return (
+              <li key={entry.id}>
+                <button
                   type="button"
                   aria-current={isActive ? "page" : undefined}
-                  title={typeof sub.label === "string" ? sub.label : undefined}
-                  onClick={() => onSelect(sub.id)}
-                  className={`uni-control uni-menu-item w-full flex items-center gap-2 min-h-10 px-3 py-2 rounded-xl    outline-none   text-left select-none cursor-pointer active:scale-[0.98] ${
-                    isActive ? "uni-nav-sub-active" : "uni-nav-sub"
-                  } ${
+                  title={typeof entry.label === "string" ? entry.label : undefined}
+                  onClick={() => onSelect(entry.id)}
+                  className={`uni-control flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left outline-none select-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-blue-500/40 ${
                     isActive
-                      ? "text-brand-blue-600 bg-brand-blue-100"
-                      : "text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50/30 active:bg-brand-blue-100/60"
+                      ? "bg-brand-blue-50/80"
+                      : "bg-white hover:bg-slate-50 active:bg-slate-100"
                   }`}
                 >
-                  {sub.icon ? (
-                    <span className="flex shrink-0 items-center">{sub.icon}</span>
-                  ) : null}
-                  <span className="truncate flex-1">{sub.label}</span>
-                </motion.button>
-              );
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+                  <span
+                    aria-hidden="true"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-brand-blue-50 text-brand-blue-700"
+                  >
+                    {entry.icon}
+                  </span>
+                  <span
+                    className={`min-w-0 flex-1 truncate text-[15px] leading-6 ${
+                      isActive
+                        ? "font-semibold text-brand-blue-700"
+                        : "font-medium text-slate-900"
+                    }`}
+                  >
+                    {entry.label}
+                  </span>
+                  {isActive ? (
+                    <Check
+                      size={18}
+                      strokeWidth={2.5}
+                      aria-hidden="true"
+                      className="shrink-0 text-brand-blue-700"
+                    />
+                  ) : (
+                    <ChevronRight
+                      size={18}
+                      strokeWidth={2}
+                      aria-hidden="true"
+                      className="shrink-0 text-slate-300"
+                    />
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
   );
 };

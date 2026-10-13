@@ -51,7 +51,7 @@ import {
   MoveBookingForm,
   BookingGuestsForm,
 } from "./components/BookingForm";
-import { MoneyText } from "./components/fields";
+import { MoneyText, FieldCard, FieldCaption, DateField, InlineSelectField } from "./components/fields";
 import { useNotifications } from "./components/Toast";
 import { SettingsEditor } from "./components/SettingsEditor";
 import { HotelCalendar } from "./components/hotel-calendar/HotelCalendar";
@@ -67,6 +67,7 @@ import {
 import { InventoryView } from "./components/InventoryView";
 import { AuditView } from "./components/AuditView";
 import { RoomStatusCard } from "./components/RoomStatusCard";
+import { RoomStatusPicker } from "./components/RoomStatusPicker";
 import { roomBoardState, roomMenuOperation, bookingCanCheckIn } from "./lib/room-board";
 import { roomView } from "./lib/adapters";
 import { OriginalShell } from "./components/OriginalShell";
@@ -565,75 +566,91 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 </div>
               ))}
             </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="relative flex-1 min-w-44">
-                <Search
-                  size={15}
-                  className="absolute left-3 top-3 text-slate-400"
-                />
-                <input
-                  aria-label="Kayıtlarda ara"
-                  className={`uni-input ${inputStyle} !pl-9 !bg-white`}
-                  placeholder="Birim veya misafir ara…"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-              </div>
+            <div className="flex flex-wrap items-stretch gap-3">
+              <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
+                <label className="block min-w-0 cursor-text">
+                  <FieldCaption>Ara</FieldCaption>
+                  <span className="mt-1 flex items-center gap-2">
+                    <Search size={16} strokeWidth={2.2} aria-hidden="true" className="shrink-0 text-slate-400" />
+                    <input
+                      aria-label="Kayıtlarda ara"
+                      placeholder="Birim veya misafir ara…"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="font-uninav-book w-full min-w-0 bg-transparent text-[1.125rem] leading-7 text-slate-900 outline-none placeholder:text-slate-400 placeholder:text-base"
+                    />
+                    {search && (
+                      <button
+                        type="button"
+                        aria-label="Aramayı temizle"
+                        onClick={() => setSearch("")}
+                        className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 outline-none transition-colors hover:bg-slate-200/60 hover:text-slate-700 focus-visible:ring-2 focus-visible:ring-neutral-400"
+                      >
+                        <X size={14} strokeWidth={2.5} aria-hidden="true" />
+                      </button>
+                    )}
+                  </span>
+                </label>
+              </FieldCard>
               {["board", "units"].includes(tab) ? (
                 <>
-                  <select
-                    aria-label="Kat filtresi"
-                    className={`uni-input ${inputStyle} !w-auto`}
-                    value={floorId}
-                    onChange={(e) => {
-                      setFloorId(e.target.value);
-                      if (!e.target.value) setPlan(false);
-                    }}
-                  >
-                    <option value="">Tüm katlar</option>
-                    {s.floors.map((f) => (
-                      <option key={f.floor_id} value={f.floor_id}>
-                        {localized(f.label) || f.code}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    aria-label="Birim türü filtresi"
-                    className={`uni-input ${inputStyle} !w-auto`}
-                    value={kind}
-                    onChange={(e) => setKind(e.target.value)}
-                  >
-                    <option value="">Tüm birimler</option>
-                    {Object.entries(unitKinds).map(([v, l]) => (
-                      <option key={v} value={v}>
-                        {l}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="min-w-36 flex-1">
+                    <InlineSelectField
+                      label="Kat"
+                      value={floorId}
+                      onChange={(v) => {
+                        setFloorId(v);
+                        if (!v) setPlan(false);
+                      }}
+                      options={[
+                        { value: "", label: "Tüm katlar" },
+                        ...s.floors.map((f) => ({
+                          value: f.floor_id,
+                          label: localized(f.label) || f.code,
+                        })),
+                      ]}
+                    />
+                  </div>
+                  <div className="min-w-36 flex-1">
+                    <InlineSelectField
+                      label="Birim türü"
+                      value={kind}
+                      onChange={(v) => setKind(v)}
+                      options={[
+                        { value: "", label: "Tüm birimler" },
+                        ...Object.entries(unitKinds).map(([v, l]) => ({
+                          value: v,
+                          label: l,
+                        })),
+                      ]}
+                    />
+                  </div>
                 </>
               ) : (
-                <select
-                  aria-label="Rezervasyon durumu"
-                  className={`uni-input ${inputStyle} !w-auto`}
-                  value={bookingFilter}
-                  onChange={(e) => setBookingFilter(e.target.value)}
-                >
-                  <option value="">Tüm durumlar</option>
-                  {Object.entries(bookingStatuses).map(([v, l]) => (
-                    <option key={v} value={v}>
-                      {l}
-                    </option>
-                  ))}
-                </select>
+                <div className="min-w-36 flex-1">
+                  <InlineSelectField
+                    label="Durum"
+                    value={bookingFilter}
+                    onChange={(v) => setBookingFilter(v)}
+                    options={[
+                      { value: "", label: "Tüm durumlar" },
+                      ...Object.entries(bookingStatuses).map(([v, l]) => ({
+                        value: v,
+                        label: l,
+                      })),
+                    ]}
+                  />
+                </div>
               )}
               {tab !== "units" && (
-                <input
-                  aria-label="Tarih filtresi"
-                  type="date"
-                  className={`uni-input ${inputStyle} !w-auto`}
-                  value={dateFilter}
-                  onChange={(e) => setDateFilter(e.target.value)}
-                />
+                <div className="min-w-40 flex-1">
+                  <DateField
+                    label="Tarih"
+                    value={dateFilter}
+                    onChange={(v) => setDateFilter(v)}
+                    withTime={false}
+                  />
+                </div>
               )}
             </div>
           </>
@@ -768,36 +785,20 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           </button>
                         )}
                         {housekeeping && !state.current.length && (
-                          <select
-                            aria-label={`${room.code} oda durumu`}
-                            className="uni-input text-[10px] rounded-lg border border-slate-200 p-1"
-                            value={room.status}
-                            onChange={(e) =>
+                          <RoomStatusPicker
+                            roomCode={room.code}
+                            status={room.status}
+                            canSetAdvanced={operator}
+                            onPick={(status) =>
                               void run(async () => {
                                 await command("room.state", {
                                   room_id: room.room_id,
-                                  status: e.target.value,
+                                  status,
                                 });
                                 await refresh();
                               })
                             }
-                          >
-                            {Object.entries({
-                              Temiz: "Temiz",
-                              Kirli: "Kirli",
-                              ...(operator
-                                ? {
-                                    Bos: "Boş",
-                                    Arizali: "Arızalı",
-                                    Tadilat: "Tadilat",
-                                  }
-                                : {}),
-                            }).map(([v, l]) => (
-                              <option key={v} value={v}>
-                                {l}
-                              </option>
-                            ))}
-                          </select>
+                          />
                         )}
                       </RoomStatusCard>
                     </div>

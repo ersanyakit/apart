@@ -31,6 +31,13 @@ const MONTHS_SHORT = Array.from({ length: 12 }, (_, m) =>
 const pad = (n: number) => String(n).padStart(2, "0");
 const toLocalValue = (d: Date) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const toDateOnlyValue = (d: Date) =>
+  `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const displayDateFmt = new Intl.DateTimeFormat("tr-TR", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 const startOfDay = (d: Date) => {
   const c = new Date(d);
   c.setHours(0, 0, 0, 0);
@@ -100,8 +107,10 @@ const PRESETS = [
  * formatlı değer, sağda takvim dairesi. Tıklayınca sete özel takvim
  * popover'ı açılır (native popup kullanılmaz):
  * hazır presetler (Bugün/Yarın/Öbür Gün), ay-yıl seçici, gün ızgarası,
- * saat/dakika stepperları.
- * Değer "YYYY-MM-DDTHH:mm" yerel biçiminde taşınır.
+ * saat/dakika stepperları (withTime kapalıyken gizlenir).
+ * Değer datetime kipinde "YYYY-MM-DDTHH:mm", tarih kipinde "YYYY-MM-DD"
+ * yerel biçiminde taşınır; her yerde (rezervasyon formu, pano
+ * filtreleri vb.) aynı picker kullanılır.
  */
 export function DateField({
   label,
@@ -111,17 +120,20 @@ export function DateField({
   max,
   disabled,
   sub,
+  withTime = true,
   open: controlledOpen,
   onOpenChange,
 }: {
   label: string;
-  /** Yerel "YYYY-MM-DDTHH:mm" biçiminde değer. */
+  /** Yerel "YYYY-MM-DDTHH:mm" (withTime) ya da "YYYY-MM-DD" biçiminde değer. */
   value: string;
   onChange: (value: string) => void;
   min?: string;
   max?: string;
   disabled?: boolean;
   sub?: string;
+  /** Kapalıysa saat/dakika seçimi gizlenir, değer gününe taşınır. */
+  withTime?: boolean;
   /** Verilirse açık/kapalı durum dışarıdan yönetilir (örn. iki alan birlikte). */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -191,7 +203,7 @@ export function DateField({
     let c = new Date(d);
     if (lo && c < lo) c = lo;
     if (hi && c > hi) c = hi;
-    onChange(toLocalValue(c));
+    onChange(withTime ? toLocalValue(c) : toDateOnlyValue(c));
   };
 
   const timeOf = (fallbackH: number, fallbackMi: number) => {
@@ -259,7 +271,7 @@ export function DateField({
     <div ref={rootRef} className={`rounded-[20px] bg-[#f9f9f9] p-4 transition-colors duration-150 ease-out ${open ? "" : "hover:bg-[#efefef]"}`}>
       <button
         type="button"
-        aria-label={`${label} seçin. Seçili: ${valid && parsed ? displayFmt.format(parsed) : "yok"}`}
+        aria-label={`${label} seçin. Seçili: ${valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "yok"}`}
         aria-expanded={open}
         disabled={disabled}
         onClick={() => setOpen((v) => !v)}
@@ -272,10 +284,10 @@ export function DateField({
                 valid ? "text-slate-900" : "text-slate-400"
               }`}
             >
-            {valid && parsed ? displayFmt.format(parsed) : "Tarih seçin"}
+            {valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "Tarih seçin"}
           </span>
           <span className="mt-1 block truncate text-[0.875rem] leading-5 text-slate-500">
-            {sub ?? (valid && parsed ? subFmt.format(parsed) : "gün • saat")}
+            {sub ?? (valid && parsed ? subFmt.format(parsed) : withTime ? "gün • saat" : "gün • ay • yıl")}
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-2">
@@ -407,14 +419,16 @@ export function DateField({
                   })}
                 </div>
 
-            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-200/70 pt-3">
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
-                <TimeStepper label="Saat" value={curH} min={0} max={23} onChange={(h) => setTime(h, curMi)} />
+            {withTime && (
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-200/70 pt-3">
+                <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
+                  <TimeStepper label="Saat" value={curH} min={0} max={23} onChange={(h) => setTime(h, curMi)} />
+                </div>
+                <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
+                  <TimeStepper label="Dakika" value={curMi} min={0} max={59} onChange={(mi) => setTime(curH, mi)} />
+                </div>
               </div>
-              <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
-                <TimeStepper label="Dakika" value={curMi} min={0} max={59} onChange={(mi) => setTime(curH, mi)} />
-              </div>
-            </div>
+            )}
               </>
             ) : (
               <div className="mt-3 grid grid-cols-3 gap-1.5">

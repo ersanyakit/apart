@@ -465,19 +465,15 @@ export function OriginalShell({
               />
             </div>
           )}
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2">
-            {SIDEBAR_ITEMS.map((item, index) => (
-              <React.Fragment key={item.id}>
-                {index > 0 && (
-                  <div aria-hidden="true" className="mx-3 my-2 border-t border-slate-100" />
-                )}
-                <SidebarItem
-                  item={item}
-                  isOpen={isSidebarOpen}
-                  activeTab={activeTab}
-                  onSelect={setActiveTab}
-                />
-              </React.Fragment>
+          <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-3 py-3">
+            {SIDEBAR_ITEMS.map((item) => (
+              <SidebarItem
+                key={item.id}
+                item={item}
+                isOpen={isSidebarOpen}
+                activeTab={activeTab}
+                onSelect={setActiveTab}
+              />
             ))}
           </div>
 

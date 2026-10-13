@@ -19,6 +19,7 @@ import (
 	"otel/internal/domain/guest"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/media"
+	"otel/internal/domain/payment"
 	"otel/internal/domain/property"
 	"strings"
 	"time"
@@ -39,6 +40,7 @@ type Handler struct {
 	Reports       *application.Reports
 	Documents     *application.Documents
 	Staff         *application.Staff
+	Payments      *application.Payments
 	Audit         *application.Audit
 	Beds          *application.Beds
 	Accommodation *application.Accommodation
@@ -557,7 +559,36 @@ func (h *Handler) command(c fiber.Ctx) error {
 		}
 		result, err = h.Features.FilterRooms(ctx, u, input.BranchID, input.Filters)
 	case constants.CMD_PAYMENT_METHODS:
-		result = []string{"cash", "credit_card", "bank_transfer"}
+		var methodsInput struct {
+			HotelID uuid.UUID `json:"hotel_id"`
+		}
+		if err = decode(e.Payload, &methodsInput); err != nil {
+			return err
+		}
+		result, err = h.Payments.List(ctx, u, methodsInput.HotelID)
+	case constants.CMD_PAYMENT_LIST:
+		var paymentListInput struct {
+			HotelID uuid.UUID `json:"hotel_id"`
+		}
+		if err = decode(e.Payload, &paymentListInput); err != nil {
+			return err
+		}
+		result, err = h.Payments.List(ctx, u, paymentListInput.HotelID)
+	case constants.CMD_PAYMENT_CREATE, constants.CMD_PAYMENT_UPDATE:
+		var channel payment.Channel
+		if err = decode(e.Payload, &channel); err != nil {
+			return err
+		}
+		result, err = h.Payments.Save(ctx, u, channel, e.Code == constants.CMD_PAYMENT_CREATE)
+	case constants.CMD_PAYMENT_DELETE:
+		var paymentDeleteInput struct {
+			HotelID uuid.UUID `json:"hotel_id"`
+			ID      uuid.UUID `json:"id"`
+		}
+		if err = decode(e.Payload, &paymentDeleteInput); err != nil {
+			return err
+		}
+		err = h.Payments.Delete(ctx, u, paymentDeleteInput.HotelID, paymentDeleteInput.ID)
 	default:
 		return constants.ErrCommand
 	}

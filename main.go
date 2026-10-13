@@ -125,7 +125,7 @@ func run() error {
 	mediaService := &application.Media{Repository: repo, Storage: storage.Local{Root: filepath.Join(cfg.DataDir, "media")}, Catalog: catalog}
 	guestService := &application.Guests{Catalog: catalog, Repository: repo}
 	renderer := exporter.Renderer{}
-	handler := &httpapi.Handler{Guests: guestService, Reports: &application.Reports{Guests: guestService, Exporter: renderer}, Documents: &application.Documents{Catalog: catalog, Repository: repo, Exporter: renderer}, Staff: &application.Staff{Catalog: catalog, Repository: repo, Users: repo, Passwords: persistence.Bcrypt{}}, Audit: &application.Audit{Repository: repo}, Beds: &application.Beds{Catalog: catalog, Repository: repo}, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Auth: auth, Catalog: catalog, Media: mediaService, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: cfg.Origin, SecureCookies: cfg.SecureCookies}
+	handler := &httpapi.Handler{Guests: guestService, Reports: &application.Reports{Guests: guestService, Exporter: renderer}, Documents: &application.Documents{Catalog: catalog, Repository: repo, Exporter: renderer}, Staff: &application.Staff{Catalog: catalog, Repository: repo, Users: repo, Passwords: persistence.Bcrypt{}}, Payments: &application.Payments{Repository: repo}, Audit: &application.Audit{Repository: repo}, Beds: &application.Beds{Catalog: catalog, Repository: repo}, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Auth: auth, Catalog: catalog, Media: mediaService, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: cfg.Origin, SecureCookies: cfg.SecureCookies}
 	uiURL := cfg.UIURL
 	if cfg.SkipUI {
 		uiURL = ""

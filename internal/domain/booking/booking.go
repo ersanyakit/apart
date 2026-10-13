@@ -32,6 +32,8 @@ type Booking struct {
 	GuestName       string           `json:"guest_name"`
 	GuestCount      int              `json:"guest_count"`
 	DailyPriceMinor int64            `json:"daily_price_minor"`
+	DepositMinor    int64            `json:"deposit_minor"`
+	DepositChannel  string           `json:"deposit_channel"`
 	Guests          []property.Guest `json:"guests"`
 	Notes           string           `json:"notes"`
 	CheckIn         time.Time        `json:"check_in"`
@@ -55,6 +57,9 @@ func (b Booking) Validate() error {
 		return constants.ErrCapacity
 	}
 	if b.DailyPriceMinor < 0 || b.DailyPriceMinor > 999999999999 {
+		return constants.ErrPayload
+	}
+	if b.DepositMinor < 0 || b.DepositMinor > 999999999999 || len(strings.TrimSpace(b.DepositChannel)) > 64 {
 		return constants.ErrPayload
 	}
 	if b.CheckIn.IsZero() || !b.CheckOut.After(b.CheckIn) {
