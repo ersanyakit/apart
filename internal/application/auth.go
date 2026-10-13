@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"otel/constants"
+	"otel/internal/domain/audit"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/property"
 	"strings"
@@ -62,6 +63,9 @@ func (a *Auth) Login(ctx context.Context, login, password string, selection Sele
 	if err != nil {
 		return LoginResult{}, constants.Wrap(constants.ErrAuth, err)
 	}
+	actor := audit.ActorFrom(ctx)
+	actor.UserID, actor.Command = user.UserID, constants.CMD_AUTH_LOGIN
+	ctx = audit.WithActor(ctx, actor)
 	if err := a.Users.CreateSession(ctx, identity.Session{ID: claims.SessionID, UserID: user.UserID, ExpiresAt: expires}); err != nil {
 		return LoginResult{}, err
 	}
@@ -79,6 +83,9 @@ func (a *Auth) Authenticate(ctx context.Context, token string) (identity.User, e
 	return user, nil
 }
 func (a *Auth) Logout(ctx context.Context, user identity.User) error {
+	actor := audit.ActorFrom(ctx)
+	actor.UserID, actor.Command = user.UserID, constants.CMD_AUTH_LOGOUT
+	ctx = audit.WithActor(ctx, actor)
 	return a.Users.DeleteSession(ctx, user.SessionID)
 }
 

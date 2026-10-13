@@ -4,11 +4,12 @@ import {
   messageOf,
   localized,
   unitKinds,
-  occupancy,
   type APIRoom,
   type Snapshot,
   type Position,
+  type Booking,
 } from "../lib/api";
+import { roomBoardState } from "../lib/room-board";
 import { buttonStyle, secondaryStyle, ErrorMessage } from "./FormKit";
 export function FloorBoard({
   snapshot,
@@ -18,6 +19,8 @@ export function FloorBoard({
   onBook,
   onRefresh,
   canManage,
+  day,
+  onOpenBooking,
 }: {
   snapshot: Snapshot;
   floorId: string;
@@ -26,6 +29,8 @@ export function FloorBoard({
   onBook: (room: APIRoom) => void;
   onRefresh: () => Promise<void>;
   canManage: boolean;
+  day?: string;
+  onOpenBooking?: (booking: Booking) => void;
 }) {
   const floor = snapshot.floors.find((f) => f.floor_id === floorId)!;
   const rooms = snapshot.rooms.filter((r) => r.floor_id === floorId);
@@ -147,15 +152,11 @@ export function FloorBoard({
         >
           {rooms.map((room) => {
             const p = positions[room.room_id] || room.position;
-            const occupied = occupancy(
-              snapshot.rooms,
-              snapshot.bookings,
-              room,
-              at,
-            );
-            const color = occupied.some((b) => b.status === "checked_in")
-              ? "bg-red-50 border-red-200 text-red-800"
-              : occupied.length
+            const state = roomBoardState(snapshot.rooms, snapshot.bookings, room, snapshot.server_time, day);
+            const occupied = state.bookings;
+            const color = state.tone === "occupied"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+              : state.tone === "reserved"
                 ? "bg-brand-blue-50 border-brand-blue-200 text-brand-blue-900"
                 : ["Arizali", "Tadilat"].includes(room.status)
                   ? "bg-slate-200 border-slate-400 text-slate-700"
@@ -166,7 +167,7 @@ export function FloorBoard({
               <button
                 type="button"
                 key={room.room_id}
-                title={`${room.code} · ${unitKinds[room.kind]}`}
+                title={`${room.code} · ${state.label}${occupied.length ? ` · ${occupied.map(b => b.guest_name).join(", ")}` : ""}`}
                 className={`uni-control absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${color} ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
                 style={{
                   left: `${(p.x / floor.width) * 100}%`,
@@ -189,15 +190,17 @@ export function FloorBoard({
                   };
                 }}
                 onClick={() => {
-                  if (!editing) (canManage ? onEdit : onBook)(room);
+                  if (!editing) {
+                    if (occupied[0] && onOpenBooking) onOpenBooking(occupied[0]);
+                    else (canManage ? onEdit : onBook)(room);
+                  }
                 }}
               >
                 <strong className="text-[10px] font-mono leading-none shrink-0">
                   {room.code}
                 </strong>
                 <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0">
-                  {unitKinds[room.kind]}
-                  {room.bed_group ? ` · ${room.bed_level}. seviye` : ""}
+                  {state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
                 </span>
               </button>
             );

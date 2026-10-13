@@ -1,3 +1,4 @@
+import { SettingsEditor } from "./SettingsEditor";
 import React, { useState } from "react";
 import {
   command,
@@ -10,7 +11,6 @@ import { MediaEditor } from "./MediaEditor";
 import {
   Field,
   ErrorMessage,
-  Drawer,
   inputStyle,
   buttonStyle,
   secondaryStyle,
@@ -48,41 +48,43 @@ export function FeatureRegistryView({
   });
   return (
     <div className="space-y-5">
-      <ErrorMessage message={error} />
-      <div className="flex gap-2">
-        <button
-          className={`uni-control ${buttonStyle}`}
-          disabled={!snapshot.feature_registry.categories?.length}
-          onClick={() => setDraft(empty())}
-        >
-          Özellik Ekle
-        </button>
-        <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>
-          Kategori Ekle
-        </button>
-      </div>
-      <div className="grid md:grid-cols-3 gap-4">
-        {(snapshot.feature_registry.definitions || []).map((d) => (
+      <div hidden={category || !!draft} className="space-y-5">
+        <ErrorMessage message={error} />
+        <div className="flex gap-2">
           <button
-            key={d.code}
-            className="uni-control rounded-2xl border border-slate-200 bg-white p-5 text-left"
-            onClick={() => setDraft({ ...d, assets: d.assets || [] })}
+            className={`uni-control ${buttonStyle}`}
+            disabled={!snapshot.feature_registry.categories?.length}
+            onClick={() => setDraft(empty())}
           >
-            <h3 className="font-black">{localized(d.label) || d.code}</h3>
-            <p className="mt-2 text-xs text-slate-400">
-              {d.code} · {d.value_type}
-            </p>
+            Özellik Ekle
           </button>
-        ))}
+          <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>
+            Kategori Ekle
+          </button>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {(snapshot.feature_registry.definitions || []).map((d) => (
+            <button
+              key={d.code}
+              className="uni-control rounded-2xl border border-slate-200 bg-white p-5 text-left"
+              onClick={() => setDraft({ ...d, assets: d.assets || [] })}
+            >
+              <h3 className="font-black">{localized(d.label) || d.code}</h3>
+              <p className="mt-2 text-xs text-slate-400">
+                {d.code} · {d.value_type}
+              </p>
+            </button>
+          ))}
+        </div>
+        {!snapshot.feature_registry.definitions?.length && (
+          <p className="text-sm text-slate-400 p-8">
+            Havuz, jakuzi ve manzara gibi özellikleri tanımlamak için önce bir
+            kategori ekleyin.
+          </p>
+        )}
       </div>
-      {!snapshot.feature_registry.definitions?.length && (
-        <p className="text-sm text-slate-400 p-8">
-          Havuz, jakuzi ve manzara gibi özellikleri tanımlamak için önce bir
-          kategori ekleyin.
-        </p>
-      )}
       {category && (
-        <Drawer title="Kategori Ekle" onClose={() => setCategory(false)}>
+        <SettingsEditor title="Kategori Ekle" onClose={() => setCategory(false)}>
           <form
             className="space-y-4"
             onSubmit={async (e) => {
@@ -126,10 +128,10 @@ export function FeatureRegistryView({
               Kaydet
             </button>
           </form>
-        </Drawer>
+        </SettingsEditor>
       )}
       {draft && (
-        <Drawer title="Özellik Tanımı" onClose={() => setDraft(null)}>
+        <SettingsEditor title="Özellik Tanımı" onClose={() => setDraft(null)}>
           <form
             className="space-y-5"
             onSubmit={async (e) => {
@@ -336,7 +338,7 @@ export function FeatureRegistryView({
               Özelliği Kaydet
             </button>
           </form>
-        </Drawer>
+        </SettingsEditor>
       )}
     </div>
   );

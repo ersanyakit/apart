@@ -16,6 +16,7 @@ import {
 
 import { command, messageOf, contracts, type Selection } from "../lib/api";
 import { ErrorMessage } from "./FormKit";
+import brandLogo from "../assets/brand/researchcave.svg";
 
 interface Hotel {
   id: string;
@@ -501,14 +502,12 @@ export const LoginScreen: React.FC<{
 
           {/* Footer Branding */}
           <div className="pt-10 flex items-center justify-between border-t border-slate-100 mt-auto">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400 text-[10px] font-black">
-                OK
-              </div>
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">
-                Okan Yazılım A.Ş.
+            <a href={contracts.brandURL} target="_blank" rel="noopener noreferrer" className="uni-control flex min-h-11 items-center gap-2 rounded-lg px-1">
+              <img src={brandLogo.src} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
+              <span className="text-xs font-semibold text-slate-500">
+                {contracts.brandName}
               </span>
-            </div>
+            </a>
             <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
               interaktifotel.com
             </div>

@@ -17,7 +17,6 @@ import {
   Pencil,
   Trash2,
   Menu,
-  Check,
   Map,
   X,
 } from "lucide-react";
@@ -28,7 +27,6 @@ import {
   localized,
   unitKinds,
   bookingStatuses,
-  occupancy,
   type Snapshot,
   type Selection,
   type APIRoom,
@@ -38,7 +36,6 @@ import {
 import { LoginScreen } from "./components/LoginScreen";
 import {
   Drawer,
-  ErrorMessage,
   inputStyle,
   buttonStyle,
   secondaryStyle,
@@ -55,6 +52,9 @@ import {
   BookingGuestsForm,
 } from "./components/BookingForm";
 import { MoneyText } from "./components/fields";
+import { useNotifications } from "./components/Toast";
+import { SettingsEditor } from "./components/SettingsEditor";
+import { HotelCalendar } from "./components/hotel-calendar/HotelCalendar";
 import { FloorBoard } from "./components/FloorBoard";
 import { confirmDialog } from "./components/ConfirmDialog";
 import { ContextMenu } from "./components/ContextMenu";
@@ -66,7 +66,8 @@ import {
 } from "./components/DocumentsView";
 import { InventoryView } from "./components/InventoryView";
 import { AuditView } from "./components/AuditView";
-import { RoomCard } from "./components/RoomCard";
+import { RoomStatusCard } from "./components/RoomStatusCard";
+import { roomBoardState, roomMenuOperation, bookingCanCheckIn } from "./lib/room-board";
 import { roomView } from "./lib/adapters";
 import { OriginalShell } from "./components/OriginalShell";
 import { FeatureRegistryView } from "./components/FeatureRegistryView";
@@ -101,6 +102,7 @@ type Modal =
   | { type: "history"; booking: Booking };
 const navigation = [
   { id: "board", label: "Oda Durum Çizelgesi", icon: LayoutGrid },
+  { id: "calendar", label: "Konaklama Takvimi", icon: CalendarDays },
   { id: "bookings", label: "Rezervasyonlar", icon: CalendarDays },
   { id: "stays", label: "Konaklayan Listesi", icon: Users },
   { id: "units", label: "Kat ve Oda Tanımları", icon: DoorOpen },
@@ -113,6 +115,7 @@ const navigation = [
   { id: "appsettings", label: "Ayarlar", icon: Settings },
 ];
 export default function App({ initialData }: { initialData: Snapshot | null }) {
+  const notify = useNotifications();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(
       initialData ? normalize(initialData) : null,
     ),
@@ -120,8 +123,6 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     [sidebar, setSidebar] = useState(true),
     [modal, setModal] = useState<Modal | null>(null),
     [busy, setBusy] = useState(false),
-    [error, setError] = useState(""),
-    [notice, setNotice] = useState(""),
     [search, setSearch] = useState(""),
     [floorId, setFloorId] = useState(""),
     [plan, setPlan] = useState(false),
@@ -159,21 +160,18 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
   const saved = async () => {
     await refresh();
     setModal(null);
-    setNotice("Değişiklikler kaydedildi.");
-    setError("");
+    notify("Değişiklikler kaydedildi.");
   };
   const run = async (
     task: () => Promise<void>,
     message = "İşlem tamamlandı.",
   ) => {
     setBusy(true);
-    setError("");
-    setNotice("");
     try {
       await task();
-      setNotice(message);
+      notify(message);
     } catch (e) {
-      setError(messageOf(e));
+      notify(messageOf(e), "error");
     } finally {
       setBusy(false);
     }
@@ -186,7 +184,6 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       <LoginScreen
         onLogin={async (selection, register) => {
           await refresh(selection);
-          setError("");
           setTab("board");
           setBookingTab(null);
           setOpenTabs(["board", "bookings", "stays"]);
@@ -209,20 +206,21 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     atISO = dateFilter
       ? new Date(`${dateFilter}T12:00:00+03:00`).toISOString()
       : s.server_time;
+  const roomStates = new globalThis.Map(s.rooms.map(room => [room.room_id, roomBoardState(s.rooms, s.bookings, room, s.server_time, dateFilter)]));
   const visibleRooms = s.rooms.filter(
     (r) =>
       (!floorId || r.floor_id === floorId) &&
       (!kind || r.kind === kind) &&
-      `${r.code} ${r.type} ${unitKinds[r.kind]}`
+      `${r.code} ${r.type} ${unitKinds[r.kind]} ${(roomStates.get(r.room_id)?.bookings || []).map(b => [b.guest_name, ...(b.guests || []).map(g => g.name)].join(" ")).join(" ")}`
         .toLocaleLowerCase("tr")
         .includes(search.toLocaleLowerCase("tr")),
   );
   const leafRooms = s.rooms.filter(
       (r) => !s.rooms.some((c) => c.parent_id === r.room_id),
     ),
-    totalCapacity = leafRooms.reduce((sum, r) => sum + r.capacity, 0),
-    capacityInUse = leafRooms
-      .filter((r) => occupancy(s.rooms, s.bookings, r, atISO).length > 0)
+    totalCapacity = leafRooms.filter((r) => r.kind === "bed").reduce((sum, r) => sum + r.capacity, 0),
+    capacityInUse = leafRooms.filter((r) => r.kind === "bed")
+      .filter((r) => (dateFilter ? roomStates.get(r.room_id)!.bookings : roomStates.get(r.room_id)!.current).length > 0)
       .reduce((sum, r) => sum + r.capacity, 0);
   const bookings = s.bookings.filter(
     (b) =>
@@ -285,31 +283,165 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
     activateTab("newbooking");
   };
   const openBookingEdit = (booking: Booking) => {
-    setBookingTab({ kind: "edit", booking });
+    setBookingTab({ kind: "edit", booking: s.bookings.find(item => item.booking_id === booking.booking_id) || booking });
     activateTab(`booking:${booking.booking_id}`);
   };
   const activateTab = (next: string) => {
+    setModal(null);
     setOpenTabs((prev) => (prev.includes(next) ? prev : [...prev, next]));
     setTab(next);
     setSearch("");
-    setError("");
   };
   const closeTab = (id: string) => {
     if (id === "board") return;
     if (bookingTabId && id === bookingTabId) setBookingTab(null);
     if (tab === id) {
+      setModal(null);
       const rest = openTabs.filter((t) => t !== id);
       const idx = openTabs.indexOf(id);
       const fallback = rest[Math.min(idx, rest.length - 1)] ?? "board";
       setTab(fallback);
       setSearch("");
-      setError("");
     }
     setOpenTabs((prev) => {
       const next = prev.filter((t) => t !== id);
       return next.length ? next : ["board"];
     });
   };
+  const settingsEditorOpen = !!modal && ["unit", "floor", "facility", "bulk"].includes(modal.type);
+  const editorTitle = modal ? {
+    unit: "Birim Tanımı", floor: "Kat Tanımı", booking: modal.type === "booking" && modal.sale ? "Yeni Konaklama" : "Rezervasyon", move: "Birim Değişikliği",
+    facility: "Tesis Bilgileri", bulk: "Toplu Birim Tanımı", history: "Rezervasyon Geçmişi",
+    guests: "Konaklama Misafirleri", documents: "Sözleşme ve Dekontlar",
+  }[modal.type] : "";
+  const editorContent = modal && (<>
+          {modal.type === "guests" ? (
+            <BookingGuestsForm booking={modal.booking} onSaved={saved} />
+          ) : modal.type === "documents" ? (
+            <BookingDocuments
+              snapshot={s}
+              booking={modal.booking}
+              initialKind={modal.kind}
+            />
+          ) : modal.type === "unit" ? (
+            <UnitForm snapshot={s} room={modal.room} onSaved={saved} />
+          ) : modal.type === "floor" ? (
+            <FloorForm
+              branchId={s.branch_id}
+              floor={modal.floor}
+              onSaved={saved}
+            />
+          ) : modal.type === "booking" ? (
+            <BookingForm
+              snapshot={s}
+              booking={modal.booking}
+              roomId={modal.roomId}
+              checkInAfterSave={modal.sale}
+              onSaved={saved}
+            />
+          ) : modal.type === "move" ? (
+            <MoveBookingForm
+              snapshot={s}
+              booking={modal.booking}
+              onSaved={saved}
+            />
+          ) : modal.type === "facility" ? (
+            <FacilityForm
+              snapshot={s}
+              kind={modal.kind}
+              create={modal.create}
+              onSaved={saved}
+            />
+          ) : modal.type === "bulk" ? (
+            <BulkUnitForm snapshot={s} onSaved={saved} />
+          ) : (
+            <div className="space-y-4">
+              <h3 className="text-xl font-black">{modal.booking.guest_name}</h3>
+              <p className="text-sm text-slate-500">
+                {bookingStatuses[modal.booking.status]} ·{" "}
+                {modal.booking.guest_count} kişi
+                {(modal.booking.daily_price_minor ?? 0) > 0 && (
+                  <>
+                    {" · "}
+                    <MoneyText minor={modal.booking.daily_price_minor ?? 0} />
+                    /gece
+                  </>
+                )}
+              </p>
+              <dl className="room-status-dates">
+                <div><dt>Planlanan giriş</dt><dd>{date(modal.booking.check_in)}</dd></div>
+                <div><dt>Planlanan çıkış</dt><dd>{date(modal.booking.check_out)}</dd></div>
+                {modal.booking.actual_check_in && <div><dt>Giriş yapıldı</dt><dd>{date(modal.booking.actual_check_in)}</dd></div>}
+                {modal.booking.actual_check_out && <div><dt>Çıkış yapıldı</dt><dd>{date(modal.booking.actual_check_out)}</dd></div>}
+              </dl>
+              <div className="flex flex-wrap gap-2">
+                {operator && ["confirmed", "checked_in"].includes(modal.booking.status) && <button className={`uni-control ${secondaryStyle}`} onClick={() => openBookingEdit(modal.booking)}>Rezervasyonu Düzenle</button>}
+                {operator && ["confirmed", "checked_in"].includes(modal.booking.status) && (
+                  <button
+                    className={`uni-control ${secondaryStyle}`}
+                    onClick={() =>
+                      setModal({ type: "guests", booking: modal.booking })
+                    }
+                  >
+                    Misafirleri Düzenle
+                  </button>
+                )}
+                <button
+                  className={`uni-control ${secondaryStyle}`}
+                  onClick={() =>
+                    setModal({ type: "documents", booking: modal.booking })
+                  }
+                >
+                  Sözleşme / Dekont
+                </button>
+              </div>
+              {modal.booking.allocations.map((a) => (
+                <div
+                  key={a.allocation_id}
+                  className="rounded-xl border border-slate-200 p-4"
+                >
+                  <strong>
+                    {s.rooms.find((r) => r.room_id === a.room_id)?.code}
+                  </strong>
+                  <p className="text-xs text-slate-400 mt-2">
+                    {date(a.start)} → {date(a.end)}
+                  </p>
+                </div>
+              ))}
+              {modal.booking.guests?.map((g) => (
+                <p key={g.id} className="text-sm">
+                  {g.name} · {g.phone}
+                </p>
+              ))}
+              <p className="text-sm text-slate-500 whitespace-pre-wrap">
+                {modal.booking.notes}
+              </p>
+            </div>
+          )}
+  </>);
+  const pageActions = (
+    <div className="flex gap-2">
+      <button
+        aria-label="Yenile"
+        disabled={busy}
+        className={`uni-control ${secondaryStyle}`}
+        onClick={() => void run(() => refresh(), "Kayıtlar güncellendi.")}
+      >
+        <RefreshCw size={16} className={busy ? "animate-spin" : ""} />
+      </button>
+      {operator && s.branch_id && (
+        <button
+          className={`uni-control ${buttonStyle}`}
+          onClick={() => openBookingCreate()}
+        >
+          <Plus size={16} />
+          Rezervasyon Al
+        </button>
+      )}
+    </div>
+  );
+  const menuOperation = roomMenuOperation(contextMenu?.booking, s.server_time);
+  const menuRoomOccupied = !!contextMenu && !!roomStates.get(contextMenu.room.room_id)?.current.length;
   return (
     <FontSizeProvider>
     <ThemeProvider>
@@ -331,8 +463,10 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
       }
     >
       <main className="flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6">
-        {!isBookingTab && tab !== "appsettings" && (
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        {settingsEditorOpen && <SettingsEditor title={editorTitle} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
+        <div hidden={settingsEditorOpen} className="app-page-content space-y-6">
+        {!isBookingTab && tab !== "appsettings" && tab !== "calendar" && (
+        <div className="app-page-header flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-[10px] uppercase font-bold tracking-[.18em] text-slate-500">
               {branch?.name || "TESİS"}
@@ -341,25 +475,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
               {title}
             </h2>
           </div>
-          <div className="flex gap-2">
-            <button
-              aria-label="Yenile"
-              disabled={busy}
-              className={`uni-control ${secondaryStyle}`}
-              onClick={() => void run(() => refresh(), "Kayıtlar güncellendi.")}
-            >
-              <RefreshCw size={16} className={busy ? "animate-spin" : ""} />
-            </button>
-            {operator && s.branch_id && (
-              <button
-                className={`uni-control ${buttonStyle}`}
-                onClick={() => openBookingCreate()}
-              >
-                <Plus size={16} />
-                Rezervasyon Al
-              </button>
-            )}
-          </div>
+          {pageActions}
         </div>
         )}
         <AnimatePresence>
@@ -411,6 +527,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 ) : (
                   <BookingForm
                     snapshot={s}
+                    key={`${bookingTab.booking.booking_id}:${bookingTab.booking.updated_at || ""}`}
                     booking={bookingTab.booking}
                     onSaved={async () => {
                       closeTab(bookingTabId);
@@ -422,28 +539,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             </motion.section>
           )}
         </AnimatePresence>
-        <ErrorMessage message={error} />
-        {notice && (
-          <div
-            role="status"
-            className="flex items-center justify-between rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-xs text-emerald-800"
-          >
-            <span className="flex gap-2 items-center">
-              <Check size={15} />
-              {notice}
-            </span>
-            <button className="uni-control" aria-label="Bildirimi kapat" onClick={() => setNotice("")}>
-              ×
-            </button>
-          </div>
-        )}
         {["board", "bookings", "stays"].includes(tab) && (
           <>
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
               {[
                 { label: "TANIMLI BİRİM", value: s.rooms.length },
-                { label: "TOPLAM KAPASİTE", value: totalCapacity },
-                { label: "AYRILMIŞ KAPASİTE", value: capacityInUse },
+                { label: "TANIMLI YATAK KAPASİTESİ", value: totalCapacity },
+                { label: "AYRILMIŞ YATAK KAPASİTESİ", value: capacityInUse },
                 {
                   label: "AKTİF KONAKLAMA",
                   value: s.bookings.filter((b) => b.status === "checked_in")
@@ -540,7 +642,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
           <>
             <div className="flex flex-wrap justify-between gap-3">
               <p className="text-xs text-slate-400">
-                {dateFilter ? `${dateFilter} · 12:00` : "Şu an"} ·{" "}
+                {dateFilter ? `${dateFilter} · Günün tamamı` : "Şu an"} ·{" "}
                 {visibleRooms.length} birim
               </p>
               <button
@@ -557,6 +659,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 snapshot={s}
                 floorId={floorId}
                 at={atISO}
+                day={dateFilter}
+                onOpenBooking={booking => setModal({ type: "history", booking })}
                 onEdit={(room) => setModal({ type: "unit", room })}
                 onBook={(room) =>
                   openBookingCreate(room.room_id)
@@ -565,41 +669,24 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 canManage={manager}
               />
             ) : (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(225px,1fr))] gap-6">
-                {visibleRooms.map((room, index) => {
-                  const stays = occupancy(s.rooms, s.bookings, room, atISO),
-                    active = stays[0];
-                  const view = roomView(
-                    {
-                      ...room,
-                      type: `${unitKinds[room.kind]} · ${room.effective_capacity || room.capacity} kişi`,
-                      name: active
-                        ? stays.length > 1
-                          ? `${stays.length} alt birim rezervasyonu`
-                          : active.guest_name
-                        : room.bed_group
-                          ? `${room.bed_group} / ${room.bed_level}. seviye`
-                          : "",
-                      ...(active
-                        ? {
-                            status:
-                              active.status === "checked_in"
-                                ? "Dolu"
-                                : "Rezervli",
-                            check_in: active.check_in,
-                            check_out: active.check_out,
-                            guests: active.guests,
-                          }
-                        : {}),
-                    },
-                    s.feature_registry,
-                  );
+              <div className="room-status-grid">
+                {visibleRooms.map((room) => {
+                  const state = roomStates.get(room.room_id)!;
+                  const active = state.bookings[0];
                   return (
                     <div id={"unit-" + room.room_id} key={room.room_id}>
-                      <RoomCard
-                        room={view}
-                        index={index}
-                        isSelected={false}
+                      <RoomStatusCard
+                        room={room}
+                        state={state}
+                        now={s.server_time}
+                        day={dateFilter}
+                        floorName={localized(s.floors.find(f => f.floor_id === room.floor_id)?.label) || s.floors.find(f => f.floor_id === room.floor_id)?.code}
+                        busy={busy}
+                        onOpenBooking={booking => setModal({ type: "history", booking })}
+                        onTransition={operator ? async (booking, action) => {
+                          if (action === "check_out" && !(await confirmDialog(`${booking.guest_name} için çıkış yapılsın mı?`))) return;
+                          transition(booking, action);
+                        } : undefined}
                         onContextMenu={(e) => {
                           e.preventDefault();
                           setContextMenu({
@@ -615,36 +702,12 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             booking: active,
                           });
                         }}
-                        onDragStart={operator ? setDragged : undefined}
+                        onDragStart={operator && !dateFilter && state.current.length === 1 ? setDragged : undefined}
                         onDrop={
-                          operator
+                          operator && !dateFilter
                             ? async (target) => {
-                                const sourceBooking = s.bookings.find(
-                                  (b) =>
-                                    b.room_id === dragged &&
-                                    ["checked_in", "confirmed"].includes(
-                                      b.status,
-                                    ) &&
-                                    b.allocations.some(
-                                      (a) =>
-                                        a.room_id === dragged &&
-                                        a.start <= atISO &&
-                                        a.end > atISO,
-                                    ),
-                                );
-                                const targetBooking = s.bookings.find(
-                                  (b) =>
-                                    b.room_id === target &&
-                                    ["checked_in", "confirmed"].includes(
-                                      b.status,
-                                    ) &&
-                                    b.allocations.some(
-                                      (a) =>
-                                        a.room_id === target &&
-                                        a.start <= atISO &&
-                                        a.end > atISO,
-                                    ),
-                                );
+                                const sourceBooking = roomStates.get(dragged || "")?.current.find(b => b.room_id === dragged);
+                                const targetBooking = roomStates.get(target)?.current.find(b => b.room_id === target);
                                 if (!sourceBooking || dragged === target) {
                                   setDragged(null);
                                   return;
@@ -672,8 +735,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                               }
                             : undefined
                         }
-                      />
-                      <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2">
+                      >
                         {operator && room.rentable && (
                           <button
                             className={`uni-control ${secondaryStyle}`}
@@ -685,7 +747,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             Rezervasyon
                           </button>
                         )}
-                        {operator && active && stays.length === 1 && (
+                        {operator && active && state.bookings.length === 1 && ["confirmed", "checked_in"].includes(active.status) && (
                           <button
                             aria-label={`${room.code} rezervasyonunu taşı`}
                             className={`uni-control ${secondaryStyle}`}
@@ -705,7 +767,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             <Pencil size={12} />
                           </button>
                         )}
-                        {housekeeping && !active && (
+                        {housekeeping && !state.current.length && (
                           <select
                             aria-label={`${room.code} oda durumu`}
                             className="uni-input text-[10px] rounded-lg border border-slate-200 p-1"
@@ -737,7 +799,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                             ))}
                           </select>
                         )}
-                      </div>
+                      </RoomStatusCard>
                     </div>
                   );
                 })}
@@ -753,6 +815,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
         )}
         {tab === "units" && (
           <InventoryView
+            key={s.branch_id}
             snapshot={s}
             onRefresh={refresh}
             onUnit={(room) => setModal({ type: "unit", room })}
@@ -763,9 +826,13 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             }
           />
         )}
-        {tab === "staff" && <StaffView snapshot={s} />}
+        {tab === "staff" && <StaffView key={s.hotel_id} snapshot={s} />}
         {tab === "guests" && <GuestView snapshot={s} />}
         {tab === "templates" && <DocumentTemplates snapshot={s} />}
+        {tab === "calendar" && <HotelCalendar key={s.branch_id} bookings={s.bookings} rooms={s.rooms}
+          propertyName={s.branches.find(b => b.branch_id === s.branch_id)?.name || s.hotels.find(h => h.hotel_id === s.hotel_id)?.name || "Otel"}
+          headerActions={pageActions}
+          onOpenBooking={operator ? openBookingEdit : undefined} />}
         {tab === "logs" && <AuditView hotelId={s.hotel_id} />}
         {["bookings", "stays"].includes(tab) && (
           <>
@@ -813,7 +880,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                     {s.rooms.find((r) => r.room_id === b.room_id)?.code}
                   </td>
                   <td className="p-4 whitespace-nowrap">
-                    {date(b.check_in)}
+                    {date(b.actual_check_in || b.check_in)}
                     <br />
                     <span className="text-slate-400">{date(b.check_out)}</span>
                   </td>
@@ -838,11 +905,12 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                         {b.status === "confirmed" && (
                           <>
                             <button
-                              disabled={busy}
+                              disabled={busy || !bookingCanCheckIn(b, s.server_time)}
+                              title={!bookingCanCheckIn(b, s.server_time) ? "Çıkış tarihi geçmiş. Önce rezervasyon tarihlerini düzenleyin." : undefined}
                               className={`uni-control ${secondaryStyle}`}
                               onClick={() => transition(b, "check_in")}
                             >
-                              Giriş
+                              {Date.parse(b.check_in) > Date.parse(s.server_time) ? "Erken giriş" : "Giriş"}
                             </button>
                             <button
                               className={`uni-control ${secondaryStyle}`}
@@ -869,6 +937,8 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           </>
                         )}
                         {b.status === "checked_in" && (
+                          <>
+                          <button className={`uni-control ${secondaryStyle}`} onClick={() => openBookingEdit(b)}>Düzenle</button>
                           <button
                             disabled={busy}
                             className={`uni-control ${secondaryStyle}`}
@@ -883,6 +953,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                           >
                             Çıkış
                           </button>
+                          </>
                         )}
                         {["confirmed", "checked_in"].includes(b.status) && (
                           <button
@@ -980,7 +1051,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
           </>
         )}
         {tab === "features" && (
-          <FeatureRegistryView snapshot={s} onRefresh={refresh} />
+          <FeatureRegistryView key={s.hotel_id} snapshot={s} onRefresh={refresh} />
         )}
         {tab === "appsettings" && (
           <AppSettingsView
@@ -989,121 +1060,10 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             onLogout={handleLogout}
           />
         )}
+        </div>
       </main>
-      {modal && (
-        <Drawer
-          title={
-            {
-              unit: "Birim Tanımı",
-              floor: "Kat Tanımı",
-              booking: "Rezervasyon",
-              move: "Birim Değişikliği",
-              facility: "Tesis Bilgileri",
-              bulk: "Toplu Birim Tanımı",
-              history: "Rezervasyon Geçmişi",
-              guests: "Konaklama Misafirleri",
-              documents: "Sözleşme ve Dekontlar",
-            }[modal.type]
-          }
-          onClose={() => setModal(null)}
-        >
-          {modal.type === "guests" ? (
-            <BookingGuestsForm booking={modal.booking} onSaved={saved} />
-          ) : modal.type === "documents" ? (
-            <BookingDocuments
-              snapshot={s}
-              booking={modal.booking}
-              initialKind={modal.kind}
-            />
-          ) : modal.type === "unit" ? (
-            <UnitForm snapshot={s} room={modal.room} onSaved={saved} />
-          ) : modal.type === "floor" ? (
-            <FloorForm
-              branchId={s.branch_id}
-              floor={modal.floor}
-              onSaved={saved}
-            />
-          ) : modal.type === "booking" ? (
-            <BookingForm
-              snapshot={s}
-              booking={modal.booking}
-              roomId={modal.roomId}
-              checkInAfterSave={modal.sale}
-              onSaved={saved}
-            />
-          ) : modal.type === "move" ? (
-            <MoveBookingForm
-              snapshot={s}
-              booking={modal.booking}
-              onSaved={saved}
-            />
-          ) : modal.type === "facility" ? (
-            <FacilityForm
-              snapshot={s}
-              kind={modal.kind}
-              create={modal.create}
-              onSaved={saved}
-            />
-          ) : modal.type === "bulk" ? (
-            <BulkUnitForm snapshot={s} onSaved={saved} />
-          ) : (
-            <div className="space-y-4">
-              <h3 className="text-xl font-black">{modal.booking.guest_name}</h3>
-              <p className="text-sm text-slate-500">
-                {bookingStatuses[modal.booking.status]} ·{" "}
-                {modal.booking.guest_count} kişi
-                {(modal.booking.daily_price_minor ?? 0) > 0 && (
-                  <>
-                    {" · "}
-                    <MoneyText minor={modal.booking.daily_price_minor ?? 0} />
-                    /gece
-                  </>
-                )}
-              </p>
-              <div className="flex gap-2">
-                {["confirmed", "checked_in"].includes(modal.booking.status) && (
-                  <button
-                    className={`uni-control ${secondaryStyle}`}
-                    onClick={() =>
-                      setModal({ type: "guests", booking: modal.booking })
-                    }
-                  >
-                    Misafirleri Düzenle
-                  </button>
-                )}
-                <button
-                  className={`uni-control ${secondaryStyle}`}
-                  onClick={() =>
-                    setModal({ type: "documents", booking: modal.booking })
-                  }
-                >
-                  Sözleşme / Dekont
-                </button>
-              </div>
-              {modal.booking.allocations.map((a) => (
-                <div
-                  key={a.allocation_id}
-                  className="rounded-xl border border-slate-200 p-4"
-                >
-                  <strong>
-                    {s.rooms.find((r) => r.room_id === a.room_id)?.code}
-                  </strong>
-                  <p className="text-xs text-slate-400 mt-2">
-                    {date(a.start)} → {date(a.end)}
-                  </p>
-                </div>
-              ))}
-              {modal.booking.guests?.map((g) => (
-                <p key={g.id} className="text-sm">
-                  {g.name} · {g.phone}
-                </p>
-              ))}
-              <p className="text-sm text-slate-500 whitespace-pre-wrap">
-                {modal.booking.notes}
-              </p>
-            </div>
-          )}
-        </Drawer>
+      {modal && !settingsEditorOpen && (
+        <Drawer title={editorTitle} onClose={() => setModal(null)}>{editorContent}</Drawer>
       )}
       {contextMenu && (
         <>
@@ -1116,6 +1076,12 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             }}
           />
           <ContextMenu
+            saleLabel={menuOperation === "check_in" ? (Date.parse(contextMenu.booking!.check_in) > Date.parse(s.server_time) ? "Rezervasyona erken giriş yap" : "Rezervasyona giriş yap") : menuOperation === "receipt" ? "Satış belgeleri" : "Yeni konaklama başlat"}
+            saleDisabled={!operator || (menuOperation === "create" && menuRoomOccupied)}
+            canCheckOut={operator && contextMenu.booking?.status === "checked_in"}
+            canExchange={operator && !!contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status)}
+            bookingHint={contextMenu.booking?.status === "confirmed" ? `Planlanan: ${date(contextMenu.booking.check_in)} – ${date(contextMenu.booking.check_out)}. Erken girişte oda müsaitliği kontrol edilir.` : undefined}
+            onEditBooking={operator && contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status) ? () => openBookingEdit(contextMenu.booking!) : undefined}
             x={contextMenu.x}
             y={contextMenu.y}
             room={{
@@ -1134,8 +1100,9 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                 setContextMenu(null);
                 openBookingCreate(contextMenu.room.room_id);
               } else if (type === "sale") {
-                if (b?.status === "confirmed") transition(b, "check_in");
-                else if (b)
+                if (!operator || (menuOperation === "create" && menuRoomOccupied)) return;
+                if (b && menuOperation === "check_in") transition(b, "check_in");
+                else if (b && menuOperation === "receipt")
                   setModal({
                     type: "documents",
                     booking: b,
@@ -1147,9 +1114,9 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
                     roomId: contextMenu.room.room_id,
                     sale: true,
                   });
-              } else if (type === "exchange" && b)
+              } else if (type === "exchange" && operator && b && ["confirmed", "checked_in"].includes(b.status))
                 setModal({ type: "move", booking: b });
-              else if (type === "checkout" && b)
+              else if (type === "checkout" && operator && b?.status === "checked_in")
                 void confirmDialog(
                   `${b.guest_name} için çıkış yapılsın mı?`,
                 ).then((ok) => {
@@ -1168,7 +1135,7 @@ export default function App({ initialData }: { initialData: Snapshot | null }) {
             onPrint={(type) => {
               const b = contextMenu.booking;
               if (!b) {
-                setError(contracts.errors.booking_required);
+                notify(contracts.errors.booking_required, "error");
                 return;
               }
               setModal({

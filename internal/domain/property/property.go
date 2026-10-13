@@ -106,7 +106,7 @@ func (r Room) Validate() error {
 	default:
 		return apperrors.ErrUnitKind
 	}
-	if r.Capacity < 1 || r.Capacity > 100000 {
+	if r.Capacity < 0 || r.Capacity > 100000 || (r.Kind == "bed" && r.Capacity < 1) {
 		return apperrors.ErrCapacity
 	}
 	if r.Kind == "bed" {

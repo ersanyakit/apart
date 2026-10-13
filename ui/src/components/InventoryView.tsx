@@ -1,3 +1,4 @@
+import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useState } from "react";
 import { Layers, Plus, Pencil, Trash2, BedDouble, Map } from "lucide-react";
 import {
@@ -10,7 +11,6 @@ import {
   type Floor,
 } from "../lib/api";
 import {
-  Drawer,
   ErrorMessage,
   Field,
   inputStyle,
@@ -158,335 +158,337 @@ export function InventoryView({
     });
   return (
     <div className="space-y-5">
-      <ErrorMessage message={error} />
-      <div className="flex gap-2 overflow-x-auto pb-2">
-        <button
-          className={`uni-control ${!floor ? buttonStyle : secondaryStyle}`}
-          onClick={() => {
-            setFloor("");
-            setSelected([]);
-          }}
-        >
-          Tüm katlar
-        </button>
-        {s.floors.map((f) => (
+      <div hidden={!!bed} className="space-y-5">
+        <ErrorMessage message={error} />
+        <div className="flex gap-2 overflow-x-auto pb-2">
           <button
-            key={f.floor_id}
-            className={`uni-control ${floor === f.floor_id ? buttonStyle : secondaryStyle}`}
+            className={`uni-control ${!floor ? buttonStyle : secondaryStyle}`}
             onClick={() => {
-              setFloor(f.floor_id);
+              setFloor("");
               setSelected([]);
             }}
           >
-            <Layers size={14} />
-            {localized(f.label) || f.code}
-            <span className="opacity-60">
-              {
-                s.rooms.filter(
-                  (r) => r.floor_id === f.floor_id && r.kind !== "bed",
-                ).length
-              }
-            </span>
+            Tüm katlar
           </button>
-        ))}
-        <button className={`uni-control ${secondaryStyle}`} onClick={() => onFloor()}>
-          <Plus size={14} />
-          Kat Ekle
-        </button>
-      </div>
-      <div className="flex flex-wrap justify-between gap-3 items-center">
-        <div>
-          <h3 className="text-lg font-black">
-            {currentFloor
-              ? localized(currentFloor.label) || currentFloor.code
-              : "Tüm kat ve odalar"}
-          </h3>
-          <p className="text-xs text-slate-400 mt-1">
-            Kat, oda, yatak ve fiziksel yerleşim tanımları
-          </p>
-        </div>
-        {currentFloor && (
-          <div className="flex gap-2">
+          {s.floors.map((f) => (
             <button
-              className={`uni-control ${secondaryStyle}`}
-              onClick={() => onFloor(currentFloor)}
-            >
-              <Pencil size={13} />
-              Katı Düzenle
-            </button>
-            <button
-              className={`uni-control ${secondaryStyle}`}
-              disabled={busy}
-              onClick={async () => {
-                if (
-                  await confirmDialog(
-                    "Kat silinsin mi? İçindeki birimleri önce silmelisiniz.",
-                  )
-                )
-                  await work(() =>
-                    command("floor.delete", { id: currentFloor.floor_id }),
-                  );
+              key={f.floor_id}
+              className={`uni-control ${floor === f.floor_id ? buttonStyle : secondaryStyle}`}
+              onClick={() => {
+                setFloor(f.floor_id);
+                setSelected([]);
               }}
             >
-              <Trash2 size={13} />
-              Katı Sil
+              <Layers size={14} />
+              {localized(f.label) || f.code}
+              <span className="opacity-60">
+                {
+                  s.rooms.filter(
+                    (r) => r.floor_id === f.floor_id && r.kind !== "bed",
+                  ).length
+                }
+              </span>
             </button>
+          ))}
+          <button className={`uni-control ${secondaryStyle}`} onClick={() => onFloor()}>
+            <Plus size={14} />
+            Kat Ekle
+          </button>
+        </div>
+        <div className="flex flex-wrap justify-between gap-3 items-center">
+          <div>
+            <h3 className="text-lg font-black">
+              {currentFloor
+                ? localized(currentFloor.label) || currentFloor.code
+                : "Tüm kat ve odalar"}
+            </h3>
+            <p className="text-xs text-slate-400 mt-1">
+              Kat, oda, yatak ve fiziksel yerleşim tanımları
+            </p>
           </div>
-        )}
-      </div>
-      <div className="flex flex-wrap gap-2">
-        <button
-          className={`uni-control ${mode === "rooms" ? buttonStyle : secondaryStyle}`}
-          onClick={() => setMode("rooms")}
-        >
-          Odalar ve Birimler
-        </button>
-        <button
-          className={`uni-control ${mode === "beds" ? buttonStyle : secondaryStyle}`}
-          onClick={() => {
-            setMode("beds");
-            setParent(null);
-          }}
-        >
-          <BedDouble size={14} />
-          Yataklar
-        </button>
-        <button
-          className={`uni-control ${mode === "plan" ? buttonStyle : secondaryStyle}`}
-          disabled={!floor}
-          onClick={() => setMode("plan")}
-        >
-          <Map size={14} />
-          Kat Planı
-        </button>
-      </div>
-      {mode === "rooms" && (
-        <>
-          <div className="flex flex-wrap gap-2">
-            <button className={`uni-control ${buttonStyle}`} onClick={() => onUnit()}>
-              <Plus size={14} />
-              Oda / Birim Ekle
-            </button>
-            <button className={`uni-control ${secondaryStyle}`} onClick={onBulk}>
-              Toplu Oda / Yatak Ekle
-            </button>
-            <button
-              className={`uni-control ${secondaryStyle}`}
-              disabled={!selected.length || busy}
-              onClick={() => remove(selected)}
-            >
-              <Trash2 size={14} />
-              Seçilenleri Sil ({selected.length})
-            </button>
-            <button
-              className={`uni-control ${secondaryStyle}`}
-              disabled={!rooms.length || busy}
-              onClick={() => remove(rooms.map((r) => r.room_id))}
-            >
-              Bu Görünümdeki Tümünü Sil
-            </button>
-          </div>
-          <div className="rounded-2xl border border-slate-200 overflow-auto bg-white">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-400">
-                <tr>
-                  <th className="p-4">
-                    <input
-                      aria-label="Tüm birimleri seç"
-                      type="checkbox"
-                      checked={
-                        rooms.length > 0 &&
-                        rooms.every((r) => selected.includes(r.room_id))
-                      }
-                      onChange={(e) =>
-                        setSelected(
-                          e.target.checked ? rooms.map((r) => r.room_id) : [],
-                        )
-                      }
-                    />
-                  </th>
-                  {[
-                    "Birim",
-                    "Kat",
-                    "Üst birim",
-                    "Tür",
-                    "Kapasite",
-                    "Durum",
-                    "İşlemler",
-                  ].map((h) => (
-                    <th className="p-3" key={h}>
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.map((r) => (
-                  <tr key={r.room_id} className="border-t border-slate-100">
-                    <td className="p-4">
+          {currentFloor && (
+            <div className="flex gap-2">
+              <button
+                className={`uni-control ${secondaryStyle}`}
+                onClick={() => onFloor(currentFloor)}
+              >
+                <Pencil size={13} />
+                Katı Düzenle
+              </button>
+              <button
+                className={`uni-control ${secondaryStyle}`}
+                disabled={busy}
+                onClick={async () => {
+                  if (
+                    await confirmDialog(
+                      "Kat silinsin mi? İçindeki birimleri önce silmelisiniz.",
+                    )
+                  )
+                    await work(() =>
+                      command("floor.delete", { id: currentFloor.floor_id }),
+                    );
+                }}
+              >
+                <Trash2 size={13} />
+                Katı Sil
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <button
+            className={`uni-control ${mode === "rooms" ? buttonStyle : secondaryStyle}`}
+            onClick={() => setMode("rooms")}
+          >
+            Odalar ve Birimler
+          </button>
+          <button
+            className={`uni-control ${mode === "beds" ? buttonStyle : secondaryStyle}`}
+            onClick={() => {
+              setMode("beds");
+              setParent(null);
+            }}
+          >
+            <BedDouble size={14} />
+            Yataklar
+          </button>
+          <button
+            className={`uni-control ${mode === "plan" ? buttonStyle : secondaryStyle}`}
+            disabled={!floor}
+            onClick={() => setMode("plan")}
+          >
+            <Map size={14} />
+            Kat Planı
+          </button>
+        </div>
+        {mode === "rooms" && (
+          <>
+            <div className="flex flex-wrap gap-2">
+              <button className={`uni-control ${buttonStyle}`} onClick={() => onUnit()}>
+                <Plus size={14} />
+                Oda / Birim Ekle
+              </button>
+              <button className={`uni-control ${secondaryStyle}`} onClick={onBulk}>
+                Toplu Oda / Yatak Ekle
+              </button>
+              <button
+                className={`uni-control ${secondaryStyle}`}
+                disabled={!selected.length || busy}
+                onClick={() => remove(selected)}
+              >
+                <Trash2 size={14} />
+                Seçilenleri Sil ({selected.length})
+              </button>
+              <button
+                className={`uni-control ${secondaryStyle}`}
+                disabled={!rooms.length || busy}
+                onClick={() => remove(rooms.map((r) => r.room_id))}
+              >
+                Bu Görünümdeki Tümünü Sil
+              </button>
+            </div>
+            <div className="rounded-2xl border border-slate-200 overflow-auto bg-white">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-400">
+                  <tr>
+                    <th className="p-4">
                       <input
+                        aria-label="Tüm birimleri seç"
                         type="checkbox"
-                        aria-label={`${r.code} seç`}
-                        checked={selected.includes(r.room_id)}
+                        checked={
+                          rooms.length > 0 &&
+                          rooms.every((r) => selected.includes(r.room_id))
+                        }
                         onChange={(e) =>
-                          setSelected((v) =>
-                            e.target.checked
-                              ? [...v, r.room_id]
-                              : v.filter((id) => id !== r.room_id),
+                          setSelected(
+                            e.target.checked ? rooms.map((r) => r.room_id) : [],
                           )
                         }
                       />
-                    </td>
-                    <td className="font-black">{r.code}</td>
-                    <td>
-                      {s.floors.find((f) => f.floor_id === r.floor_id)?.code ||
-                        "—"}
-                    </td>
-                    <td>
-                      {s.rooms.find((p) => p.room_id === r.parent_id)?.code ||
-                        "—"}
-                    </td>
-                    <td>{unitKinds[r.kind]}</td>
-                    <td>{r.effective_capacity}</td>
-                    <td>{r.status}</td>
-                    <td className="p-3">
-                      <div className="flex gap-2">
-                        <button
-                          className={`uni-control ${secondaryStyle}`}
-                          aria-label={`${r.code} düzenle`}
-                          onClick={() => onUnit(r)}
-                        >
-                          <Pencil size={13} />
-                        </button>
-                        {r.kind !== "bed" && (
+                    </th>
+                    {[
+                      "Birim",
+                      "Kat",
+                      "Üst birim",
+                      "Tür",
+                      "Kişi sınırı",
+                      "Durum",
+                      "İşlemler",
+                    ].map((h) => (
+                      <th className="p-3" key={h}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rooms.map((r) => (
+                    <tr key={r.room_id} className="border-t border-slate-100">
+                      <td className="p-4">
+                        <input
+                          type="checkbox"
+                          aria-label={`${r.code} seç`}
+                          checked={selected.includes(r.room_id)}
+                          onChange={(e) =>
+                            setSelected((v) =>
+                              e.target.checked
+                                ? [...v, r.room_id]
+                                : v.filter((id) => id !== r.room_id),
+                            )
+                          }
+                        />
+                      </td>
+                      <td className="font-black">{r.code}</td>
+                      <td>
+                        {s.floors.find((f) => f.floor_id === r.floor_id)?.code ||
+                          "—"}
+                      </td>
+                      <td>
+                        {s.rooms.find((p) => p.room_id === r.parent_id)?.code ||
+                          "—"}
+                      </td>
+                      <td>{unitKinds[r.kind]}</td>
+                      <td>{r.kind === "bed" ? r.capacity : "Yok"}</td>
+                      <td>{r.status}</td>
+                      <td className="p-3">
+                        <div className="flex gap-2">
                           <button
                             className={`uni-control ${secondaryStyle}`}
-                            onClick={() => {
-                              setParent(r.room_id);
-                              setMode("beds");
-                            }}
+                            aria-label={`${r.code} düzenle`}
+                            onClick={() => onUnit(r)}
                           >
-                            Yatakları
+                            <Pencil size={13} />
                           </button>
-                        )}
-                        <button
-                          className={`uni-control ${secondaryStyle}`}
-                          aria-label={`${r.code} sil`}
-                          onClick={() => remove([r.room_id])}
-                        >
-                          <Trash2 size={13} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {!rooms.length && (
-              <p className="p-10 text-sm text-slate-400">
-                Bu katta henüz birim tanımlanmamış.
-              </p>
-            )}
-          </div>
-        </>
-      )}
-      {mode === "beds" && (
-        <>
-          <div className="flex gap-3 items-end">
-            <Field label="Oda">
-              <select
-                className={`uni-input ${inputStyle}`}
-                value={parent || ""}
-                onChange={(e) => setParent(e.target.value || null)}
-              >
-                <option value="">Tüm odalar / bağımsız yataklar</option>
-                {rooms
-                  .filter((r) => r.kind !== "bed")
-                  .map((r) => (
-                    <option key={r.room_id} value={r.room_id}>
-                      {r.code}
-                    </option>
+                          {r.kind !== "bed" && (
+                            <button
+                              className={`uni-control ${secondaryStyle}`}
+                              onClick={() => {
+                                setParent(r.room_id);
+                                setMode("beds");
+                              }}
+                            >
+                              Yatakları
+                            </button>
+                          )}
+                          <button
+                            className={`uni-control ${secondaryStyle}`}
+                            aria-label={`${r.code} sil`}
+                            onClick={() => remove([r.room_id])}
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
                   ))}
-              </select>
-            </Field>
-            <button className={`uni-control ${buttonStyle}`} onClick={newBed}>
-              <Plus size={14} />
-              Fiziksel Yatak Ekle
-            </button>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {beds
-              .filter(
-                (b) =>
-                  (!floor || b.floor_id === floor) &&
-                  (!parent || b.room_id === parent),
-              )
-              .map((b) => (
-                <article
-                  key={b.bed_id}
-                  className="uni-card border border-slate-200 rounded-2xl p-5 bg-white space-y-3"
+                </tbody>
+              </table>
+              {!rooms.length && (
+                <p className="p-10 text-sm text-slate-400">
+                  Bu katta henüz birim tanımlanmamış.
+                </p>
+              )}
+            </div>
+          </>
+        )}
+        {mode === "beds" && (
+          <>
+            <div className="flex gap-3 items-end">
+              <Field label="Oda">
+                <select
+                  className={`uni-input ${inputStyle}`}
+                  value={parent || ""}
+                  onChange={(e) => setParent(e.target.value || null)}
                 >
-                  <div className="flex justify-between">
-                    <strong>{b.code}</strong>
-                    <BedDouble className="text-brand-blue-500" size={20} />
-                  </div>
-                  <p className="text-xs text-slate-500">
-                    {bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}
-                    seviye · {b.width_cm || "—"} × {b.length_cm || "—"} cm
-                  </p>
-                  <p className="text-xs font-bold">
-                    {b.places
-                      .filter((p) => p.is_active)
-                      .reduce((n, p) => n + p.capacity, 0)}{" "}
-                    kişi · {b.places.length} yatak yeri
-                  </p>
-                  {b.places.map((p) => (
-                    <p key={p.unit_id} className="text-xs text-slate-400">
-                      {p.code} · Seviye {p.level} · {p.capacity} kişi ·{" "}
-                      {p.is_active ? "Aktif" : "Pasif"}
+                  <option value="">Tüm odalar / bağımsız yataklar</option>
+                  {rooms
+                    .filter((r) => r.kind !== "bed")
+                    .map((r) => (
+                      <option key={r.room_id} value={r.room_id}>
+                        {r.code}
+                      </option>
+                    ))}
+                </select>
+              </Field>
+              <button className={`uni-control ${buttonStyle}`} onClick={newBed}>
+                <Plus size={14} />
+                Fiziksel Yatak Ekle
+              </button>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {beds
+                .filter(
+                  (b) =>
+                    (!floor || b.floor_id === floor) &&
+                    (!parent || b.room_id === parent),
+                )
+                .map((b) => (
+                  <article
+                    key={b.bed_id}
+                    className="uni-card border border-slate-200 rounded-2xl p-5 bg-white space-y-3"
+                  >
+                    <div className="flex justify-between">
+                      <strong>{b.code}</strong>
+                      <BedDouble className="text-brand-blue-500" size={20} />
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      {bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}
+                      seviye · {b.width_cm || "—"} × {b.length_cm || "—"} cm
                     </p>
-                  ))}
-                  <div className="flex gap-2">
-                    <button
-                      className={`uni-control ${secondaryStyle}`}
-                      onClick={() => setBed(b)}
-                    >
-                      Düzenle
-                    </button>
-                    <button
-                      className={`uni-control ${secondaryStyle}`}
-                      onClick={async () => {
-                        if (
-                          await confirmDialog(
-                            `${b.code} fiziksel yatağı ve yatak yerleri silinsin mi?`,
+                    <p className="text-xs font-bold">
+                      {b.places
+                        .filter((p) => p.is_active)
+                        .reduce((n, p) => n + p.capacity, 0)}{" "}
+                      kişi · {b.places.length} yatak yeri
+                    </p>
+                    {b.places.map((p) => (
+                      <p key={p.unit_id} className="text-xs text-slate-400">
+                        {p.code} · Seviye {p.level} · {p.capacity} kişi ·{" "}
+                        {p.is_active ? "Aktif" : "Pasif"}
+                      </p>
+                    ))}
+                    <div className="flex gap-2">
+                      <button
+                        className={`uni-control ${secondaryStyle}`}
+                        onClick={() => setBed(b)}
+                      >
+                        Düzenle
+                      </button>
+                      <button
+                        className={`uni-control ${secondaryStyle}`}
+                        onClick={async () => {
+                          if (
+                            await confirmDialog(
+                              `${b.code} fiziksel yatağı ve yatak yerleri silinsin mi?`,
+                            )
                           )
-                        )
-                          await work(() =>
-                            command("bed.delete", { id: b.bed_id }),
-                          );
-                      }}
-                    >
-                      Sil
-                    </button>
-                  </div>
-                </article>
-              ))}
-          </div>
-        </>
-      )}
-      {mode === "plan" && currentFloor && (
-        <FloorBoard
-          snapshot={s}
-          floorId={floor}
-          at={s.server_time}
-          canManage
-          onRefresh={onRefresh}
-          onEdit={onUnit}
-          onBook={onBook}
-        />
-      )}
+                            await work(() =>
+                              command("bed.delete", { id: b.bed_id }),
+                            );
+                        }}
+                      >
+                        Sil
+                      </button>
+                    </div>
+                  </article>
+                ))}
+            </div>
+          </>
+        )}
+        {mode === "plan" && currentFloor && (
+          <FloorBoard
+            snapshot={s}
+            floorId={floor}
+            at={s.server_time}
+            canManage
+            onRefresh={onRefresh}
+            onEdit={onUnit}
+            onBook={onBook}
+          />
+        )}
+      </div>
       {bed && (
-        <Drawer title="Fiziksel Yatak Tanımı" onClose={() => setBed(null)}>
+        <SettingsEditor title="Fiziksel Yatak Tanımı" onClose={() => setBed(null)}>
           <BedForm
             bed={bed}
             snapshot={s}
@@ -495,7 +497,7 @@ export function InventoryView({
               await onRefresh();
             }}
           />
-        </Drawer>
+        </SettingsEditor>
       )}
     </div>
   );

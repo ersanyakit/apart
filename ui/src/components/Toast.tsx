@@ -1,54 +1,57 @@
-import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, Info, AlertTriangle, X } from 'lucide-react';
+"use client";
 
-export type ToastType = 'success' | 'info' | 'error';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { CheckCircle2, Info, AlertCircle, X } from "lucide-react";
 
-interface ToastProps {
-  message: string;
-  type: ToastType;
-  isVisible: boolean;
-  onClose: () => void;
+export type ToastType = "success" | "info" | "error";
+type Notice = { id: number; message: string; type: ToastType };
+type Notify = (message: string, type?: ToastType) => void;
+const NotificationContext = createContext<Notify | null>(null);
+
+export function useNotifications() {
+  const notify = useContext(NotificationContext);
+  if (!notify) throw new Error("NotificationProvider is required");
+  return notify;
 }
 
-export const Toast: React.FC<ToastProps> = ({ message, type, isVisible, onClose }) => {
+function Toast({ notice, dismiss }: { notice: Notice; dismiss: (id: number) => void }) {
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const reducedMotion = useReducedMotion();
   useEffect(() => {
-    if (isVisible) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, onClose]);
+    if (hovered || focused) return;
+    const timer = setTimeout(() => dismiss(notice.id), notice.type === "error" ? 8000 : 5000);
+    return () => clearTimeout(timer);
+  }, [notice.id, notice.type, dismiss, hovered, focused]);
+  const Icon = { success: CheckCircle2, info: Info, error: AlertCircle }[notice.type];
+  return <motion.div layout={!reducedMotion} className={`app-toast app-toast-${notice.type}`}
+    initial={{ opacity: 0, x: reducedMotion ? 0 : 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: reducedMotion ? 0 : 24 }}
+    transition={{ duration: reducedMotion ? 0 : 0.18 }}
+    onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+    onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false); }}>
+    <span className="app-toast-icon"><Icon size={21} aria-hidden="true" /></span>
+    <p role={notice.type === "error" ? "alert" : "status"} aria-atomic="true">{notice.message}</p>
+    <button type="button" className="nav-icon-button app-toast-close" aria-label="Bildirimi kapat" onClick={() => dismiss(notice.id)}><X size={18} aria-hidden="true" /></button>
+  </motion.div>;
+}
 
-  const icons = {
-    success: <CheckCircle2 className="w-5 h-5 text-green-500" />,
-    info: <Info className="w-5 h-5 text-brand-blue-500" />,
-    error: <AlertTriangle className="w-5 h-5 text-red-500" />
-  };
-
-  const bgColors = {
-    success: 'bg-green-50 border-green-200',
-    info: 'bg-brand-blue-50 border-brand-blue-200',
-    error: 'bg-red-50 border-red-200'
-  };
-
-  return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-          className={`fixed bottom-20 left-1/2 -translate-x-1/2 z-[200] px-6 py-4 rounded-3xl border shadow-2xl flex items-center gap-3 min-w-[320px] ${bgColors[type]}`}
-        >
-          <div className="shrink-0">{icons[type]}</div>
-          <p className="text-sm font-bold text-slate-800 flex-1">{message}</p>
-          <button onClick={onClose} className="uni-control p-1 hover:bg-black/5 rounded-lg ">
-            <X className="w-4 h-4 text-slate-400" />
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
+export function NotificationProvider({ children }: { children: React.ReactNode }) {
+  const [notices, setNotices] = useState<Notice[]>([]);
+  const [mounted, setMounted] = useState(false);
+  const sequence = useRef(0);
+  useEffect(() => setMounted(true), []);
+  const dismiss = useCallback((id: number) => setNotices(items => items.filter(item => item.id !== id)), []);
+  const notify = useCallback<Notify>((message, type = "success") => {
+    if (!message.trim()) return;
+    const notice = { id: ++sequence.current, message, type };
+    setNotices(items => [...items, notice].slice(-3));
+  }, []);
+  return <NotificationContext.Provider value={notify}>
+    {children}
+    {mounted && createPortal(<section className="app-toast-stack" aria-label="Bildirimler">
+      <AnimatePresence initial={false}>{notices.map(notice => <Toast key={notice.id} notice={notice} dismiss={dismiss} />)}</AnimatePresence>
+    </section>, document.body)}
+  </NotificationContext.Provider>;
+}

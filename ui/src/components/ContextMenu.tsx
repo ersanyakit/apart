@@ -16,6 +16,12 @@ interface ContextMenuProps {
   x: number;
   y: number;
   room: Room;
+  saleLabel: string;
+  saleDisabled: boolean;
+  canCheckOut: boolean;
+  canExchange: boolean;
+  bookingHint?: string;
+  onEditBooking?: () => void;
   onClose: () => void;
   onOperation: (type: "reserve" | "sale" | "checkout" | "exchange") => void;
   onStatusChange: (status: RoomStatus) => void;
@@ -31,6 +37,12 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   x,
   y,
   room,
+  saleLabel,
+  saleDisabled,
+  canCheckOut,
+  canExchange,
+  bookingHint,
+  onEditBooking,
   onClose,
   onOperation,
   onStatusChange,
@@ -60,6 +72,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
         <p className="text-xs font-black text-brand-blue-700">
           ODA #{room.number}
         </p>
+        {bookingHint && <p className="mt-2 max-w-64 text-xs text-slate-500 normal-case tracking-normal">{bookingHint}</p>}
       </div>
 
       <ContextMenuItem
@@ -73,7 +86,8 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       />
       <ContextMenuItem
         icon={<Power className="text-brand-blue-500" />}
-        label="Satış Yap"
+        label={saleLabel}
+        disabled={saleDisabled}
         onClick={() => {
           onOperation("sale");
           onClose();
@@ -83,12 +97,15 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       <ContextMenuItem
         icon={<LogOut className="text-red-500" />}
         label="Çıkış İşlemleri"
+        disabled={!canCheckOut}
         onClick={() => {
           onOperation("checkout");
           onClose();
         }}
         onMouseEnter={() => setActiveSubMenu(null)}
       />
+
+      {onEditBooking && <ContextMenuItem icon={<CheckCircle2 />} label="Rezervasyon tarihlerini düzenle" onClick={() => { onEditBooking(); onClose(); }} />}
 
       <div className="h-px bg-slate-100 my-1 mx-2" />
 
@@ -207,6 +224,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       <ContextMenuItem
         icon={<Repeat className="text-slate-400" />}
         label="Oda Değiştir"
+        disabled={!canExchange}
         onClick={() => {
           onOperation("exchange");
           onClose();
@@ -270,15 +288,18 @@ function ContextMenuItem({
   onClick,
   onMouseEnter,
   hasSubMenu,
+  disabled,
 }: {
   icon: React.ReactNode;
   label: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
   hasSubMenu?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       className="uni-control uni-menu-item rounded-xl w-full flex items-center px-3 py-2.5 text-xs font-bold text-slate-700 hover:bg-brand-blue-50 hover:text-brand-blue-700    active:bg-brand-blue-50  cursor-pointer"

@@ -52,15 +52,7 @@ func (auditPlugin) Initialize(db *gorm.DB) error {
 			return
 		}
 		var rows []map[string]any
-		columns := pk
-		if table != "hotels" {
-			if tx.Statement.Schema.LookUpField("HotelID") != nil {
-				columns += ",hotel_id"
-			} else {
-				columns += ",branch_id"
-			}
-		}
-		if err := q.Select(columns).Find(&rows).Error; err != nil {
+		if err := q.Select(auditColumns(tx, pk)).Find(&rows).Error; err != nil {
 			tx.AddError(err)
 			return
 		}
@@ -121,8 +113,23 @@ func (auditPlugin) Initialize(db *gorm.DB) error {
 					}
 					hotelID = branch.HotelID
 				}
-				entry := models.AuditLog{ID: uuid.New(), HotelID: hotelID, ActorID: actor.UserID, Command: actor.Command, Action: action, Entity: table, EntityID: id, RequestID: actor.RequestID, CreatedAt: time.Now().UTC()}
-				if err := tx.Session(&gorm.Session{NewDB: true}).Create(&entry).Error; err != nil {
+				details := map[string]any{}
+				if action != "create" {
+					details["before"] = row
+				}
+				if action != "delete" {
+					var current map[string]any
+					if err := tx.Session(&gorm.Session{NewDB: true}).Table(table).Select(auditColumns(tx, pk)).Where(clause.Eq{Column: pk, Value: id}).Take(&current).Error; err != nil {
+						tx.AddError(err)
+						return
+					}
+					details["after"] = current
+				}
+				eventAction := action
+				if actor.Entity == table && actor.Action != "" {
+					eventAction = actor.Action
+				}
+				if err := recordAudit(tx, hotelID, eventAction, table, id, details); err != nil {
 					tx.AddError(err)
 					return
 				}
@@ -142,6 +149,33 @@ func (auditPlugin) Initialize(db *gorm.DB) error {
 		return err
 	}
 	return db.Callback().Delete().After("gorm:delete").Before("gorm:commit_or_rollback_transaction").Register("hotel_audit:delete", after("delete"))
+}
+
+// An allow-list keeps passwords, tokens, identity numbers and contact data out
+// of the audit trail while retaining the operational before/after context.
+func auditColumns(tx *gorm.DB, pk string) []string {
+	columns := []string{pk}
+	if tx.Statement.Schema == nil {
+		return columns
+	}
+	for _, column := range []string{"hotel_id", "branch_id", "room_id", "kind", "name", "code", "display_name", "status", "guest_name", "guest_count", "daily_price_minor", "check_in", "check_out", "actual_check_in", "actual_check_out"} {
+		if column != pk && tx.Statement.Schema.LookUpField(column) != nil {
+			columns = append(columns, column)
+		}
+	}
+	return columns
+}
+
+// Use the caller's transaction: an operation must not commit without its log.
+func recordAudit(tx *gorm.DB, hotelID uuid.UUID, action, entity string, id uuid.UUID, details map[string]any) error {
+	actor := audit.ActorFrom(tx.Statement.Context)
+	entry := models.AuditLog{ID: uuid.New(), HotelID: hotelID, ActorID: actor.UserID, Command: actor.Command, Action: action, Entity: entity, EntityID: id, RequestID: actor.RequestID, CreatedAt: time.Now().UTC(), Details: details}
+	entries := []models.AuditLog{entry}
+	if err := enrichAuditLocations(tx.Session(&gorm.Session{NewDB: true}), hotelID, entries, true); err != nil {
+		return err
+	}
+	entry = entries[0]
+	return tx.Session(&gorm.Session{NewDB: true}).Create(&entry).Error
 }
 func auditUUID(value any) uuid.UUID {
 	switch v := value.(type) {
@@ -178,6 +212,10 @@ func (r *Repository) AuditLogs(ctx context.Context, q audit.Query) (audit.Page, 
 	if err := query.Order("created_at DESC,id DESC").Limit(100).Offset((q.Page - 1) * 100).Find(&rows).Error; err != nil {
 		return out, err
 	}
+	// Older entries remain immutable; missing labels are resolved for this response.
+	if err := enrichAuditLocations(r.db.WithContext(ctx), q.HotelID, rows, false); err != nil {
+		return out, err
+	}
 	names := map[uuid.UUID]string{}
 	var users []models.User
 	if err := r.db.WithContext(ctx).Unscoped().Select("user_id,display_name").Where("hotel_id = ?", q.HotelID).Find(&users).Error; err != nil {
@@ -194,7 +232,7 @@ func (r *Repository) AuditLogs(ctx context.Context, q audit.Query) (audit.Page, 
 				name = "Yetkili kullanıcı"
 			}
 		}
-		out.Items = append(out.Items, audit.Entry{ID: e.ID, HotelID: e.HotelID, ActorID: e.ActorID, ActorName: name, Command: e.Command, Action: e.Action, Entity: e.Entity, EntityID: e.EntityID, RequestID: e.RequestID, CreatedAt: e.CreatedAt})
+		out.Items = append(out.Items, audit.Entry{ID: e.ID, HotelID: e.HotelID, ActorID: e.ActorID, ActorName: name, Command: e.Command, Action: e.Action, Entity: e.Entity, EntityID: e.EntityID, RequestID: e.RequestID, CreatedAt: e.CreatedAt, Details: e.Details})
 	}
 	return out, nil
 }

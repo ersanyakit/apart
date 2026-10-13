@@ -18,8 +18,8 @@ const blankRoom = (s: Snapshot): APIRoom => ({
   floor_id: s.floors[0]?.floor_id || null,
   parent_id: null,
   kind: "room",
-  capacity: 2,
-  effective_capacity: 2,
+  capacity: 0,
+  effective_capacity: 0,
   rentable: true,
   bed_group: "",
   bed_level: 0,
@@ -102,7 +102,7 @@ export function UnitForm({
                 kind: e.target.value,
                 bed_level: e.target.value === "bed" ? 1 : 0,
                 bed_group: "",
-                capacity: e.target.value === "bed" ? 1 : draft.capacity,
+                capacity: e.target.value === "bed" ? 1 : 0,
               })
             }
           >
@@ -146,18 +146,6 @@ export function UnitForm({
                 </option>
               ))}
           </select>
-        </Field>
-        <Field label="Kişi kapasitesi (alt birim yoksa)">
-          <input
-            disabled={draft.kind === "bed"}
-            type="number"
-            required
-            min={1}
-            max={100000}
-            value={draft.capacity}
-            onChange={(e) => patch({ capacity: Number(e.target.value) })}
-            className={`uni-input ${inputStyle}`}
-          />
         </Field>
         <Field label="Oda tipi / düzeni">
           <input
@@ -223,9 +211,9 @@ export function UnitForm({
         Bu birim doğrudan kiralanabilir
       </label>
       <p className="text-xs text-slate-400">
-        Alt birimler varsa toplam kapasite onlardan hesaplanır. Dairenin tamamı
-        kiralandığında alt birimlerin aynı tarihleri kapanır. Ranza için her
-        yatak ayrı tanımlanır.
+        Oda ve dairelerde kişi sayısı rezervasyonda belirlenir. Dairenin tamamı
+        kiralandığında alt birimlerin aynı tarihleri kapanır. Tek tek kiralanan
+        yataklar ayrıca tanımlanır.
       </p>
       <div className="grid grid-cols-4 gap-3">
         {(["x", "y", "width", "height"] as const).map((key, i) => (
@@ -578,7 +566,7 @@ export function BulkUnitForm({
             prefix,
             count,
             levels: kind === "bed" ? levels : 1,
-            capacity,
+            capacity: kind === "bed" ? capacity : 0,
             rentable: true,
           });
           await onSaved();
@@ -657,7 +645,7 @@ export function BulkUnitForm({
             onChange={(e) => setCount(Number(e.target.value))}
           />
         </Field>
-        <Field label="Her birimin kapasitesi">
+        {kind === "bed" && <Field label="Yatak kişi kapasitesi">
           <input
             min={1}
             required
@@ -666,7 +654,7 @@ export function BulkUnitForm({
             value={capacity}
             onChange={(e) => setCapacity(Number(e.target.value))}
           />
-        </Field>
+        </Field>}
         {kind === "bed" && (
           <Field label="Ranza seviye sayısı">
             <input

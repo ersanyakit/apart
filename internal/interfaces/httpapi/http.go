@@ -157,6 +157,7 @@ func (h *Handler) command(c fiber.Ctx) error {
 	e := c.Locals(envelopeKey).(constants.CommandEnvelope)
 	ctx, cancel := context.WithTimeout(c.Context(), 90*time.Second)
 	defer cancel()
+	ctx = audit.WithActor(ctx, audit.Actor{RequestID: c.GetRespHeader("X-Request-ID"), Command: e.Code})
 	c.SetContext(ctx)
 	if e.Code == constants.CMD_AUTH_PROPERTIES {
 		items, err := h.Catalog.Properties.PublicProperties(ctx)

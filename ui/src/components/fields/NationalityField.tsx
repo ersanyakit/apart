@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
+import { useI18n } from "../I18n";
 import { FieldCard, FieldCaption } from "./FieldCard";
 import {
   countryByCode,
   countryFlag,
   searchCountries,
+  normalizeCountrySearch,
   type Country,
 } from "../../lib/countries";
 
@@ -26,7 +28,7 @@ export function CountryRow({
       // Fareyle seçimde input blur'ü seçimi yutmaması için.
       onMouseDown={(e) => e.preventDefault()}
       onClick={onPick}
-      className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
+      className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-start outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
         selected
           ? "bg-brand-blue-50/70 text-brand-blue-700"
           : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -57,7 +59,7 @@ export function NationalityField({
   required,
   disabled,
   tone = "surface",
-  placeholder = "Ülke arayın…",
+  placeholder,
 }: {
   label: string;
   /** ISO 3166-1 alpha-2 ülke kodu (örn. "TR"), boş olabilir. */
@@ -68,21 +70,19 @@ export function NationalityField({
   tone?: "surface" | "white";
   placeholder?: string;
 }) {
-  const selected = countryByCode(value);
+  const { locale, direction, t } = useI18n();
+  const selected = countryByCode(value, locale);
   const [text, setText] = useState(selected?.name ?? "");
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const reducedMotion = useReducedMotion();
 
-  // Dışarıdan gelen kod değişince (kayıtlı misafir seçimi vb.)
-  // yazı odakta değilse ülke adıyla senkronize olur.
+  // External selections and language changes must update the displayed name.
   useEffect(() => {
-    if (document.activeElement !== inputRef.current) {
-      setText(countryByCode(value)?.name ?? "");
-    }
-  }, [value ]);
+    setText(countryByCode(value, locale)?.name ?? "");
+  }, [value, locale]);
 
-  const matches = useMemo(() => searchCountries(text, 40), [text]);
+  const matches = useMemo(() => searchCountries(text, 40, locale), [text, locale]);
 
   // Esc ile kapatma (takvim kartındaki gibi; dışarı tıklama kapatmaz,
   // form içi etkileşimi kesmemesi için).
@@ -100,7 +100,7 @@ export function NationalityField({
   const commit = () => {
     // Birebir eşleşme varsa kodu al, yoksa seçimi koru/temizle.
     const exact = matches.find(
-      (c) => c.name.toLocaleLowerCase("tr-TR") === text.trim().toLocaleLowerCase("tr-TR"),
+      (c) => normalizeCountrySearch(c.name, locale) === normalizeCountrySearch(text, locale) || c.code.toLowerCase() === text.trim().toLowerCase(),
     );
     if (exact) {
       if (exact.code !== value) onChange(exact.code);
@@ -124,6 +124,7 @@ export function NationalityField({
   const flag = countryFlag(value);
 
   return (
+    <div className="h-full" lang={locale} dir={direction}>
     <FieldCard className={tone === "white" ? "h-full bg-white" : "h-full"}>
       <div className="flex items-center justify-between gap-3">
         <span
@@ -144,7 +145,7 @@ export function NationalityField({
             aria-autocomplete="list"
             required={required}
             disabled={disabled}
-            placeholder={placeholder}
+            placeholder={placeholder ?? t("country.searchPlaceholder")}
             autoComplete="off"
             value={text}
             onChange={(e) => {
@@ -190,7 +191,7 @@ export function NationalityField({
           >
             <div
               role="listbox"
-              aria-label="Ülke sonuçları"
+              aria-label={t("country.results")}
               className="mt-3 max-h-72 overflow-y-auto border-t border-slate-200/70 pt-3"
             >
               {matches.map((c) => (
@@ -203,7 +204,7 @@ export function NationalityField({
               ))}
               {matches.length === 0 && (
                 <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
-                  Bu aramaya uygun ülke yok
+                  {t("country.noResults")}
                 </p>
               )}
             </div>
@@ -211,5 +212,6 @@ export function NationalityField({
         )}
       </AnimatePresence>
     </FieldCard>
+    </div>
   );
 }

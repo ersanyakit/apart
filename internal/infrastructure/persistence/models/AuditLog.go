@@ -15,5 +15,6 @@ type AuditLog struct {
 	Entity    string
 	EntityID  uuid.UUID `gorm:"type:uuid"`
 	RequestID string
-	CreatedAt time.Time `gorm:"index:idx_audit_hotel_time,priority:2"`
+	CreatedAt time.Time      `gorm:"index:idx_audit_hotel_time,priority:2"`
+	Details   map[string]any `gorm:"serializer:json;type:jsonb"`
 }

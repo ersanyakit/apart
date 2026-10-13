@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ChevronDown, Globe, Search } from "lucide-react";
+import { useI18n } from "./I18n";
 import { CountryRow } from "./fields/NationalityField";
 import {
   countryByCode,
@@ -21,12 +22,13 @@ export function CountrySelect({
   onChange: (code: string) => void;
   label: string;
 }) {
+  const { locale, direction, t } = useI18n();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const rootRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const reducedMotion = useReducedMotion();
-  const selected = countryByCode(value);
+  const selected = countryByCode(value, locale);
 
   useEffect(() => {
     if (!open) return;
@@ -53,17 +55,17 @@ export function CountrySelect({
     };
   }, [open ]);
 
-  const matches = useMemo(() => searchCountries(q, 100), [q]);
+  const matches = useMemo(() => searchCountries(q, 100, locale), [q, locale]);
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="relative" lang={locale} dir={direction}>
       <button
         type="button"
-        aria-label={`${label} seçin. Seçili: ${selected?.name ?? "yok"}`}
+        aria-label={t("country.trigger", { label, name: selected?.name ?? t("common.none") })}
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-[20px] border border-uni-border bg-uni-surface px-4 py-3 text-left outline-none transition-all duration-150 ease-out hover:bg-uni-hover active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-neutral-400"
+        className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-[20px] border border-uni-border bg-uni-surface px-4 py-3 text-start outline-none transition-all duration-150 ease-out hover:bg-uni-hover active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-neutral-400"
       >
         <span className="flex min-w-0 flex-1 items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-xl leading-none shadow-sm ring-1 ring-slate-200/70">
@@ -74,7 +76,7 @@ export function CountrySelect({
               {label}
             </span>
             <span className="block truncate text-[1.125rem] font-medium leading-7 text-uni-ink">
-              {selected ? `${selected.name}` : "Ülke seçin"}
+              {selected ? `${selected.name}` : t("country.select")}
             </span>
           </span>
         </span>
@@ -104,21 +106,21 @@ export function CountrySelect({
                   <Search
                     size={15}
                     aria-hidden="true"
-                    className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-slate-400"
                   />
                   <input
                     ref={searchInputRef}
-                    aria-label="Ülke ara"
-                    placeholder="Ülke adı yazın…"
+                    aria-label={t("country.search")}
+                    placeholder={t("country.searchPlaceholder")}
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-3 text-sm text-slate-800 outline-none transition-all duration-150 ease-out placeholder:text-slate-400 focus:border-neutral-400 focus:bg-white focus:ring-2 focus:ring-neutral-300"
+                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 ps-9 pe-3 text-sm text-slate-800 outline-none transition-all duration-150 ease-out placeholder:text-slate-400 focus:border-neutral-400 focus:bg-white focus:ring-2 focus:ring-neutral-300"
                   />
                 </div>
               </div>
               <div
                 role="listbox"
-                aria-label="Ülkeler"
+                aria-label={t("country.results")}
                 className="max-h-72 overflow-y-auto p-1.5"
               >
                 {matches.map((c) => (
@@ -134,7 +136,7 @@ export function CountrySelect({
                 ))}
                 {matches.length === 0 && (
                   <p className="px-3 py-4 text-center text-[12px] text-slate-400">
-                    Bu aramaya uygun ülke yok
+                    {t("country.noResults")}
                   </p>
                 )}
               </div>

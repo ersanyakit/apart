@@ -40,6 +40,13 @@ func (r *Repository) SaveFloor(ctx context.Context, f property.Floor, create boo
 		if err := lockBranch(tx, f.BranchID); err != nil {
 			return err
 		}
+		var duplicates int64
+		if err := tx.Model(&models.Floor{}).Where("branch_id = ? AND code = ? AND floor_id <> ?", f.BranchID, f.Code, f.FloorID).Count(&duplicates).Error; err != nil {
+			return err
+		}
+		if duplicates > 0 {
+			return constants.ErrFloorCodeExists
+		}
 		row := models.Floor{FloorID: f.FloorID, BranchID: f.BranchID, Code: f.Code, Label: utils.LocalizedString(f.Label), SortOrder: f.SortOrder, Width: f.Width, Height: f.Height}
 		if create {
 			return tx.Omit("Branch").Create(&row).Error

@@ -1,3 +1,4 @@
+import { useNotifications } from "./Toast";
 import React, { useEffect, useState } from "react";
 import {
   command,
@@ -58,6 +59,7 @@ const placeholders = [
   "booking_id",
 ];
 export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
+  const notify = useNotifications();
   const [templates, setTemplates] = useState<Template[]>([]),
     [defaults, setDefaults] = useState<Template[]>([]),
     [kind, setKind] = useState("rental_contract"),
@@ -69,7 +71,6 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       body: {},
     }),
     [error, setError] = useState(""),
-    [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false);
   useEffect(() => {
     let active = true;
@@ -116,7 +117,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
             ...rows.filter((t) => t.kind !== kind),
             saved,
           ]);
-          setNotice(
+          notify(
             "Şablon kaydedildi. Daha önce oluşturulan belgeler değişmedi.",
           );
         } catch (e) {
@@ -127,14 +128,6 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       }}
     >
       <ErrorMessage message={error} />
-      {notice && (
-        <p
-          role="status"
-          className="rounded-xl bg-emerald-50 text-emerald-700 p-4 text-sm"
-        >
-          {notice}
-        </p>
-      )}
       <div className="flex flex-wrap gap-3 items-end">
         <Field label="Belge türü">
           <select

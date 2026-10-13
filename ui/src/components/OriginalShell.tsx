@@ -1,6 +1,6 @@
 import { confirmDialog } from "./ConfirmDialog";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import {
   Home,
   MessageSquare,
@@ -9,7 +9,6 @@ import {
   Info,
   Mail,
   ChevronRight,
-  Bell,
   Settings,
   LogOut,
   Key,
@@ -22,17 +21,15 @@ import {
   ChevronLeft,
   Power,
   Repeat,
-  Search,
-  X,
   Shield,
   FileX,
   Monitor,
   Wind,
   History,
 } from "lucide-react";
-import type { StaticImageData } from "next/image";
 import { SidebarItem } from "./Sidebar";
-import { TreeIcon, treePng } from "./TreeIcon";
+import { NavigationIcon } from "./NavigationIcon";
+import { MobileNav } from "./MobileNav";
 import { UniSelect } from "./UniSelect";
 import { ReservationCalendar } from "./Calendar";
 import { facilityView, roomView } from "../lib/adapters";
@@ -69,6 +66,7 @@ export function OriginalShell({
   onDate,
   children,
 }: Props) {
+  const reducedMotion = useReducedMotion();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true),
     [globalSearch, setGlobalSearch] = useState(""),
     [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -113,12 +111,13 @@ export function OriginalShell({
     {
       id: "operations",
       label: "Otel Operasyonu",
-      icon: <TreeIcon src={treePng.operations} alt="" />,
+      icon: <NavigationIcon name="operations" />,
       subItems: [
-        { id: "board", label: "Oda Durum Çizelgesi", icon: <TreeIcon src={treePng.board} alt="" /> },
-        { id: "bookings", label: "Rezervasyon Listesi", icon: <TreeIcon src={treePng.bookings} alt="" /> },
-        { id: "stays", label: "Konaklayan Listesi", icon: <TreeIcon src={treePng.stays} alt="" /> },
-        { id: "guests", label: "Misafir Arama ve Geçmiş", icon: <TreeIcon src={treePng.guests} alt="" /> },
+        { id: "board", label: "Oda Durum Çizelgesi", icon: <NavigationIcon name="board" /> },
+        { id: "calendar", label: "Konaklama Takvimi", icon: <NavigationIcon name="calendar" /> },
+        { id: "bookings", label: "Rezervasyon Listesi", icon: <NavigationIcon name="bookings" /> },
+        { id: "stays", label: "Konaklayan Listesi", icon: <NavigationIcon name="stays" /> },
+        { id: "guests", label: "Misafir Arama ve Geçmiş", icon: <NavigationIcon name="guests" /> },
       ],
     },
     ...(manager
@@ -126,15 +125,15 @@ export function OriginalShell({
           {
             id: "settings",
             label: "Sistem Ayarları",
-            icon: <TreeIcon src={treePng.settings} alt="" />,
+            icon: <NavigationIcon name="settings" />,
             subItems: [
-              { id: "facility", label: "Kurumsal Tesis Kartı", icon: <TreeIcon src={treePng.facility} alt="" /> },
-              { id: "units", label: "Kat ve Oda Tanımları", icon: <TreeIcon src={treePng.units} alt="" /> },
-              { id: "staff", label: "Personel Tanımları", icon: <TreeIcon src={treePng.staff} alt="" /> },
-              { id: "templates", label: "Belge Şablonları", icon: <TreeIcon src={treePng.templates} alt="" /> },
-              { id: "logs", label: "Sistem Logları", icon: <TreeIcon src={treePng.logs} alt="" /> },
-              { id: "features", label: "Olanak Tanımları", icon: <TreeIcon src={treePng.features} alt="" /> },
-              { id: "appsettings", label: "Ayarlar", icon: <TreeIcon src={treePng.appSettings} alt="" /> },
+              { id: "facility", label: "Kurumsal Tesis Kartı", icon: <NavigationIcon name="facility" /> },
+              { id: "units", label: "Kat ve Oda Tanımları", icon: <NavigationIcon name="units" /> },
+              { id: "staff", label: "Personel Tanımları", icon: <NavigationIcon name="staff" /> },
+              { id: "templates", label: "Belge Şablonları", icon: <NavigationIcon name="templates" /> },
+              { id: "logs", label: "Sistem Logları", icon: <NavigationIcon name="logs" /> },
+              { id: "features", label: "Olanak Tanımları", icon: <NavigationIcon name="features" /> },
+              { id: "appsettings", label: "Ayarlar", icon: <NavigationIcon name="appsettings" /> },
             ],
           },
         ]
@@ -147,26 +146,20 @@ export function OriginalShell({
       TAB_LABELS[sub.id] ??= sub.label;
     }
   }
-  // Üst sekme ikonları: sidebar ağacıyla birebir aynı PNG dili.
-  const TAB_ICONS: Record<string, StaticImageData> = {
-    board: treePng.board,
-    bookings: treePng.bookings,
-    stays: treePng.stays,
-    guests: treePng.guests,
-    facility: treePng.facility,
-    units: treePng.units,
-    staff: treePng.staff,
-    templates: treePng.templates,
-    logs: treePng.logs,
-    features: treePng.features,
-    appsettings: treePng.appSettings,
-    newbooking: treePng.bookingNew,
-  };
   return (
-    <div className="flex flex-col h-screen bg-[#f0f2f5] overflow-hidden font-sans">
-      {/* Top Header */}
-      <header className="h-12 md:h-14 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 z-30 shadow-sm px-4 md:px-0">
-        <div className="flex items-center gap-3 px-5 border-r border-slate-100 h-full hidden lg:flex bg-slate-50/50 shrink-0">
+    <div className="app-shell flex flex-col bg-[#f5f5f7] overflow-hidden">
+      <header className="mobile-app-header">
+        <div className="mobile-app-heading">
+          <p className="truncate text-[12px] font-medium text-slate-500">{hotelConfig.name}</p>
+          <p className="mt-0.5 truncate text-[17px] font-semibold tracking-tight text-slate-900">{TAB_LABELS[activeTab] ?? "Rezervasyon"}</p>
+        </div>
+        <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-sm font-semibold text-brand-blue-700">
+          {user.name.trim().split(/\s+/).slice(0, 2).map((name) => name[0]).join("")}
+        </span>
+      </header>
+      {/* Desktop tabs stay on desktop; mobile uses the tab bar below. */}
+      <header className="desktop-app-header hidden lg:flex h-16 min-w-0 items-center justify-between shrink-0 z-30 border-b border-black/[0.06] bg-white/90">
+        <div style={{ width: isSidebarOpen ? 264 : 76 }} className="flex min-w-0 items-center gap-3 px-5 border-r border-slate-100 h-full shrink-0 transition-[width] duration-200 motion-reduce:transition-none">
           <div className="w-7 h-7 md:w-8 md:h-8 bg-brand-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg shadow-brand-blue-100 shrink-0 overflow-hidden">
             {hotelConfig.logoUrl ? (
               <img
@@ -175,10 +168,10 @@ export function OriginalShell({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <Home className="w-4 h-4 md:w-5 md:h-5" />
+              <NavigationIcon name="home" />
             )}
           </div>
-          <span className="font-bold text-slate-800 text-[11px] md:text-[13px] leading-tight uppercase tracking-tight whitespace-nowrap">
+          <span className={`${isSidebarOpen ? "block" : "hidden"} min-w-0 flex-1 font-semibold text-slate-800 text-[13px] leading-tight tracking-tight truncate`}>
             {hotelConfig.name || "KYS OTEL"}
             <br />
             <span className="text-[7px] md:text-[8px] text-brand-blue-500 font-medium uppercase">
@@ -187,12 +180,11 @@ export function OriginalShell({
           </span>
         </div>
 
-        <nav aria-label="Ana sekmeler" className="flex items-center h-full px-1 gap-0.5 overflow-x-auto no-scrollbar scroll-smooth flex-1 max-w-full">
+        <nav aria-label="Ana sekmeler" className="flex min-w-0 items-center h-full px-2 gap-1 overflow-x-auto no-scrollbar scroll-smooth flex-1">
           {openTabs.map((id) => {
             const label = TAB_LABELS[id] ?? id;
             const isActive = activeTab === id;
             const pinned = id === "board";
-            const iconSrc = TAB_ICONS[id] ?? (id.startsWith("booking:") ? treePng.bookingEdit : treePng.board);
             return (
               <div
                 key={id}
@@ -205,12 +197,12 @@ export function OriginalShell({
                   aria-current={isActive ? "page" : undefined}
                   title={label}
                   onClick={() => setActiveTab(id)}
-                  className={`uni-control uni-top-tab flex items-center justify-center gap-2 px-2 md:px-3 py-1.5 select-none cursor-pointer active:scale-[0.98] outline-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-brand-blue-500/30 ${
+                  className={`uni-control uni-top-tab min-h-11 flex items-center justify-center gap-2 px-2 md:px-3 py-1.5 select-none cursor-pointer active:scale-[0.98] outline-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-brand-blue-500/30 ${
                     isActive ? "text-brand-blue-700" : "text-slate-500 hover:text-slate-900"
                   }`}
                 >
                   <span className="flex shrink-0 items-center justify-center">
-                    <TreeIcon src={iconSrc} alt="" />
+                    <NavigationIcon name={id} />
                   </span>
                   <span className="block max-w-[160px] truncate">{label}</span>
                 </button>
@@ -223,13 +215,13 @@ export function OriginalShell({
                       e.stopPropagation();
                       onCloseTab(id);
                     }}
-                    className={`uni-control mr-0.5 rounded-full p-1 outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-brand-blue-500/30 cursor-pointer active:scale-[0.98] ${
+                    className={`nav-icon-button mr-0.5 ${
                       isActive
                         ? "text-brand-blue-400 hover:text-brand-blue-700 hover:bg-brand-blue-100/70 active:bg-brand-blue-100"
                         : "text-slate-300 hover:text-slate-700 hover:bg-slate-200/70 active:bg-slate-200/70 opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
                     }`}
                   >
-                    <X size={12} strokeWidth={2.5} />
+                    <NavigationIcon name="close" />
                   </button>
                 )}
               </div>
@@ -240,13 +232,16 @@ export function OriginalShell({
         {/* Global Search Bar */}
         <div className="hidden lg:flex items-center gap-2 px-4 border-l border-slate-100 h-full relative">
           <div
-            className={`flex items-center transition-all duration-500 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner ${isSearchOpen ? "w-64 ring-4 ring-neutral-200" : "w-10"}`}
+            className={`flex items-center transition-all duration-500 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner ${isSearchOpen ? "w-64 ring-4 ring-neutral-200" : "w-11"}`}
           >
             <button
+              type="button"
+              aria-label={isSearchOpen ? "Aramayı kapat" : "Müşteri veya oda ara"}
+              aria-expanded={isSearchOpen}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="uni-control w-10 h-10 flex items-center justify-center text-slate-400 hover:text-brand-blue-600  shrink-0"
+              className="nav-icon-button text-slate-500 hover:text-brand-blue-600"
             >
-              <Search className="w-4 h-4" />
+              <NavigationIcon name="search" />
             </button>
             {isSearchOpen && (
               <input
@@ -260,10 +255,12 @@ export function OriginalShell({
             )}
             {isSearchOpen && globalSearch && (
               <button
+                type="button"
+                aria-label="Aramayı temizle"
                 onClick={() => setGlobalSearch("")}
-                className="uni-control w-8 h-10 flex items-center justify-center text-slate-300 hover:text-rose-500  shrink-0"
+                className="nav-icon-button text-slate-500 hover:text-rose-500"
               >
-                <X className="w-3 h-3" />
+                <NavigationIcon name="close" />
               </button>
             )}
           </div>
@@ -375,8 +372,8 @@ export function OriginalShell({
         </div>
 
         <div className="flex items-center px-4 md:px-5 gap-3 md:gap-4 shrink-0 bg-white ml-auto">
-          <button className="uni-control hidden sm:flex p-1.5 text-slate-400 hover:text-brand-blue-600 hover:bg-brand-blue-50 rounded-full  relative">
-            <Bell className="w-4 h-4 md:w-5 md:h-5" />
+          <button type="button" aria-label="Bildirimler" className="nav-icon-button text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50 relative">
+            <NavigationIcon name="notifications" />
             <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 border border-white rounded-full"></span>
           </button>
           <div className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 border-l border-slate-200 min-w-0">
@@ -399,11 +396,13 @@ export function OriginalShell({
       </header>
 
       <div className="flex flex-1 overflow-hidden relative">
-        {/* Left Sidebar */}
+        {/* Left Sidebar (masaüstü; mobilde alt bar + bottom sheet) */}
         <motion.aside
           initial={false}
-          animate={{ width: isSidebarOpen ? 275 : 88 }}
-          className="bg-white border-r border-slate-200 flex flex-col z-20 shrink-0"
+          animate={{ width: isSidebarOpen ? 264 : 76 }}
+          transition={{ duration: reducedMotion ? 0 : 0.2, ease: "easeOut" }}
+          aria-label="Ana menü"
+          className="desktop-sidebar hidden lg:flex min-h-0 bg-[#fafafa] border-r border-black/[0.06] flex-col z-20 shrink-0"
         >
           <div
             className={`flex items-center min-h-16 py-2 ${isSidebarOpen ? "justify-between px-4" : "justify-center px-0"}`}
@@ -440,7 +439,7 @@ export function OriginalShell({
               <UniSelect
                 caption="Otel"
                 ariaLabel="Otel seçimi"
-                icon={<TreeIcon src={treePng.facility} alt="" />}
+                icon={<NavigationIcon name="facility" />}
                 value={snapshot.hotel_id}
                 options={snapshot.hotels.map((h) => ({
                   value: h.hotel_id,
@@ -451,7 +450,7 @@ export function OriginalShell({
               <UniSelect
                 caption="Tesis"
                 ariaLabel="Tesis seçimi"
-                icon={<TreeIcon src={treePng.map} alt="" />}
+                icon={<NavigationIcon name="map" />}
                 value={snapshot.branch_id}
                 options={snapshot.branches.map((b) => ({
                   value: b.branch_id ?? "",
@@ -466,7 +465,7 @@ export function OriginalShell({
               />
             </div>
           )}
-          <div className="flex-1 overflow-y-auto px-3 py-2">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 py-2">
             {SIDEBAR_ITEMS.map((item, index) => (
               <React.Fragment key={item.id}>
                 {index > 0 && (
@@ -522,7 +521,7 @@ export function OriginalShell({
 
         <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
           {children} {/* Footer Info */}
-          <footer className="bg-white border-t border-slate-200 px-6 py-2 flex items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm overflow-x-auto no-scrollbar">
+          <footer className="hidden lg:flex bg-white border-t border-slate-200 px-6 py-2 items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm overflow-x-auto no-scrollbar">
             <div className="flex items-center gap-6 min-w-max">
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full bg-red-500 shadow-sm shadow-red-200"></div>{" "}
@@ -559,7 +558,7 @@ export function OriginalShell({
           </footer>
         </div>
         {activeTab === "board" && (
-          <aside className="w-72 bg-white border-l border-slate-200 flex flex-col hidden xl:flex z-20 shadow-xl shadow-slate-200/50">
+          <aside className="w-64 bg-white border-l border-slate-200 flex-col hidden 2xl:flex shrink-0 z-20">
             <div className="p-6 flex flex-col items-center border-b border-slate-100 bg-slate-50/50">
               <div className="w-16 h-16 bg-brand-blue-600 rounded-2xl flex items-center justify-center text-white mb-4 shadow-xl shadow-brand-blue-100 ring-4 ring-white">
                 <Home className="w-8 h-8" />
@@ -626,6 +625,14 @@ export function OriginalShell({
           </aside>
         )}
       </div>
+      <MobileNav
+        snapshot={snapshot}
+        groups={SIDEBAR_ITEMS}
+        activeTab={activeTab}
+        onSelect={setActiveTab}
+        onSelection={onSelection}
+        onLogout={onLogout}
+      />
     </div>
   );
 }

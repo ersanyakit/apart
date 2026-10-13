@@ -1,6 +1,8 @@
 {
   "application": "INTERACTIVEOTEL",
   "application_version": "1.0.0",
+  "brandName": "researchcave",
+  "brandURL": "https://researchcave.com",
   "commands": {
     "audit.list": "GET",
     "auth.login": "POST",
@@ -74,6 +76,7 @@
     "auth_failed": "Oturum işlemi tamamlanamadı.",
     "booking_required": "Konaklama işlemleri rezervasyon kaydı üzerinden yapılmalıdır.",
     "branch_required": "Şube bilgisi gereklidir.",
+    "check_in_expired": "Rezervasyonun çıkış tarihi geçmiş. Giriş yapmadan önce rezervasyon tarihlerini düzenleyin.",
     "conflict": "Kayıt mevcut veya başka kayıtlar tarafından kullanılıyor.",
     "database_failed": "PostgreSQL bağlantısı veya sorgusu başarısız.",
     "database_url_required": "DATABASE_URL gereklidir; .env.example dosyasına bakın.",
@@ -86,6 +89,7 @@
     "export_limit": "Tek çıktıda en fazla 10000 kayıt alınabilir. Tarih aralığını daraltın.",
     "feature_in_use": "Bu değişiklik mevcut özellik atamalarını geçersiz kılar.",
     "feature_out_of_range": "Özellik değeri izin verilen aralığın dışında.",
+    "floor_code_exists": "Bu kat kodu tesiste zaten kullanılıyor. Mevcut katı düzenleyin veya farklı bir kod girin.",
     "forbidden": "Bu işlem için yetkiniz yok.",
     "guest_rejoin": "Çıkış yapan misafirin yeniden gelişi için yeni konaklama kaydı açın.",
     "guest_required": "Rezervasyon ve konaklama için misafir adı gereklidir.",

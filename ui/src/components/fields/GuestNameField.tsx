@@ -1,8 +1,10 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Search } from "lucide-react";
+import { Info, Search } from "lucide-react";
 import { command, messageOf } from "../../lib/api";
 import { FieldCard, FieldCaption } from "./FieldCard";
+import { GuestHistoryModal } from "../GuestHistoryModal";
+import { countryFlag } from "../../lib/countries";
 
 export type PastGuest = {
   id: string;
@@ -20,6 +22,7 @@ type GuestRow = {
   phone: string;
   address: string;
   nationality: string;
+  last_daily_price_minor: number;
 };
 
 const searchCircleClass =
@@ -33,6 +36,7 @@ export function GuestNameField({
   onPick,
   hotelId,
   branchId,
+  guestId,
   placeholder,
   required,
   disabled,
@@ -47,6 +51,8 @@ export function GuestNameField({
   onPick?: (guest: PastGuest) => void;
   hotelId: string;
   branchId: string;
+  /** Varsa seçili kaydın kimliği (bilgi butonu ve detay için). */
+  guestId?: string;
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
@@ -62,6 +68,16 @@ export function GuestNameField({
   const listId = useId();
   const [error, setError] = useState("");
   const reducedMotion = useReducedMotion();
+  const [historyGuest, setHistoryGuest] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+  // Seçili kayıt: listeden seçimde atanır, elle yazınca düşer.
+  // Bilgi butonu detayı bununla açar.
+  const [selectedId, setSelectedId] = useState<string | null>(guestId ?? null);
+  useEffect(() => {
+    setSelectedId(guestId ?? null);
+  }, [guestId ]);
 
   // Search profiles regardless of reservation/check-in status.
   useEffect(() => {
@@ -122,6 +138,7 @@ export function GuestNameField({
       tcNo: r.national_id || "",
       nationality: (r.nationality || "").toUpperCase(),
     });
+    setSelectedId(r.guest_id);
     setOpen(false);
   };
 
@@ -133,6 +150,7 @@ export function GuestNameField({
 
   const write = (raw: string) => {
     onChange(uppercase ? raw.toLocaleUpperCase("tr-TR") : raw);
+    setSelectedId(null);
     setRows([]);
     setBusy(true);
     setOpen(true);
@@ -171,18 +189,45 @@ export function GuestNameField({
               className="font-uninav-book mt-1 w-full min-w-0 bg-transparent text-[1.25rem] leading-8 text-slate-900 uppercase outline-none placeholder:text-slate-400 placeholder:normal-case disabled:opacity-60"
             />
           </label>
-          <button
-            type="button"
-            aria-label="Kayıtlı misafir aramasını aç/kapat"
-            title="Kayıtlı misafir aramasını aç/kapat"
-            aria-expanded={open}
-            aria-haspopup="listbox"
-            disabled={disabled}
-            onClick={toggle}
-            className={searchCircleClass}
-          >
-            <Search size={18} strokeWidth={2} aria-hidden="true" />
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              aria-label="Kayıtlı misafir aramasını aç/kapat"
+              title="Kayıtlı misafir aramasını aç/kapat"
+              aria-expanded={open}
+              aria-haspopup="listbox"
+              disabled={disabled}
+              onClick={toggle}
+              className={searchCircleClass}
+            >
+              <Search size={18} strokeWidth={2} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              aria-label={
+                selectedId
+                  ? "Seçili misafirin geçmişi ve notları"
+                  : "Detay için önce listeden bir kayıt seçin"
+              }
+              title={
+                selectedId
+                  ? "Geçmiş ve notlar"
+                  : "Detay için önce listeden bir kayıt seçin"
+              }
+              aria-haspopup="dialog"
+              disabled={disabled || !selectedId || !!historyGuest}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (!selectedId || historyGuest) return;
+                // Detay modalı tek katman açılır: arama listesi kapatılır.
+                setOpen(false);
+                setHistoryGuest({ id: selectedId, name: value });
+              }}
+              className={`${searchCircleClass} disabled:opacity-40 disabled:pointer-events-none`}
+            >
+              <Info size={18} strokeWidth={2} aria-hidden="true" />
+            </button>
+          </div>
       </div>
 
       <AnimatePresence initial={false}>
@@ -206,33 +251,53 @@ export function GuestNameField({
                 aria-label="Kayıtlı misafir sonuçları"
                 className="max-h-72 overflow-y-auto"
               >
-                {rows.map((r) => (
-                  <button
-                    key={r.guest_id}
-                    type="button"
-                    role="option"
-                    aria-selected={false}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => pick(r)}
-                    className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left outline-none transition-colors duration-150 ease-out select-none hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-neutral-400"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="font-uninav-book flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue-50 text-[15px] text-brand-blue-700 uppercase"
+                {rows.map((r) => {
+                  const flag = countryFlag(r.nationality);
+                  return (
+                    <button
+                      key={r.guest_id}
+                      type="button"
+                      role="option"
+                      aria-selected={false}
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => pick(r)}
+                      className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left outline-none transition-colors duration-150 ease-out select-none hover:bg-slate-100 focus-visible:ring-2 focus-visible:ring-neutral-400"
                     >
-                      {(r.name || "?").trim().charAt(0)}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[0.9375rem] font-bold leading-5 text-slate-900">
-                        {r.name}
+                      <span
+                        aria-hidden="true"
+                        className="font-uninav-book flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-blue-50 text-[15px] text-brand-blue-700 uppercase"
+                      >
+                        {(r.name || "?").trim().charAt(0)}
                       </span>
-                      <span className="block truncate text-xs leading-4 text-slate-500">
-                        {[r.phone, r.national_id].filter(Boolean).join(" · ") ||
-                          "iletişim yok"}
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[0.9375rem] font-bold leading-5 text-slate-900">
+                          {r.name}
+                        </span>
+                        <span className="block truncate text-xs leading-4 text-slate-500">
+                          {[r.phone, r.national_id].filter(Boolean).join(" · ") ||
+                            "iletişim yok"}
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                ))}
+                      <span
+                        className="flex shrink-0 items-center gap-1.5"
+                        title={
+                          r.nationality
+                            ? `Uyruk: ${r.nationality}`
+                            : "Uyruk kayıtlı değil"
+                        }
+                      >
+                        <span aria-hidden="true" className="text-xl leading-none">
+                          {flag || "—"}
+                        </span>
+                        {r.nationality ? (
+                          <span className="text-[11px] font-bold tracking-wider text-slate-400">
+                            {r.nationality.toUpperCase()}
+                          </span>
+                        ) : null}
+                      </span>
+                    </button>
+                  );
+                })}
                 {!busy && !error && rows.length === 0 && (
                   <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
                     {value.trim()
@@ -255,6 +320,15 @@ export function GuestNameField({
           </motion.div>
         )}
       </AnimatePresence>
+      {historyGuest && (
+        <GuestHistoryModal
+          hotelId={hotelId}
+          branchId={branchId}
+          guestId={historyGuest.id}
+          guestName={historyGuest.name}
+          onClose={() => setHistoryGuest(null)}
+        />
+      )}
     </FieldCard>
   );
 }

@@ -164,6 +164,10 @@ func (r *Repository) Assign(ctx context.Context, t features.Target, items []feat
 		if err := features.ValidateAssignments(registry.Definitions, t, items); err != nil {
 			return err
 		}
+		previous, err := New(tx).Assignments(ctx, t)
+		if err != nil {
+			return err
+		}
 		ids := map[string]uuid.UUID{}
 		for _, d := range registry.Definitions {
 			ids[d.Code] = d.FeatureID
@@ -189,7 +193,11 @@ func (r *Repository) Assign(ctx context.Context, t features.Target, items []feat
 				}
 			}
 		}
-		return nil
+		entity := "branches"
+		if t.Scope == features.ScopeRoom {
+			entity = "rooms"
+		}
+		return recordAudit(tx, t.HotelID, "assign", entity, t.ID, map[string]any{"before_assignments": previous, "after_assignments": items})
 	}))
 }
 func (r *Repository) FilterRooms(ctx context.Context, hotelID, branchID uuid.UUID, filters []features.Filter) ([]uuid.UUID, error) {

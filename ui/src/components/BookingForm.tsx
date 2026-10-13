@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   command,
+  contracts,
   messageOf,
   type APIRoom,
   type Booking,
@@ -70,7 +71,8 @@ import {
   MoneyField,
 } from "./fields";
 import { useCurrency } from "./Currency";
-import { COUNTRIES, countryFlag } from "../lib/countries";
+import { useI18n } from "./I18n";
+import { getCountries, countryFlag } from "../lib/countries";
 /** Bölüm başlığı: referans bölüm dili (18px kitap + 14px açıklama). */
 function FormSection({
   title,
@@ -113,6 +115,8 @@ export function BookingForm({
   checkInAfterSave?: boolean;
   onSaved: () => Promise<void>;
 }) {
+  const { t } = useI18n();
+  const checkedIn = booking?.status === "checked_in";
   const [room, setRoom] = useState(booking?.room_id || roomId || "");
   const [name, setName] = useState(booking?.guest_name || "");
   const [count, setCount] = useState(booking?.guest_count || 1);
@@ -207,6 +211,10 @@ export function BookingForm({
         setBusy(true);
         setError("");
         try {
+          if (checkInAfterSave && !booking) {
+            const now = Date.now();
+            if (new Date(end).getTime() <= now) throw new Error(contracts.errors.check_in_expired);
+          }
           const result = await command<Booking>(
             booking ? "booking.update" : "booking.create",
             {
@@ -236,12 +244,12 @@ export function BookingForm({
       <ErrorMessage message={error} />
       <FormSection
         title="Konaklama Tarihleri"
-        hint="Giriş ve çıkış tarih-saatleri"
+        hint={checkedIn ? "Planlanan tarihleri düzenliyorsunuz. Gerçek giriş saati ve oda değişikliği geçmişi korunur." : checkInAfterSave ? "Konaklama kaydedilince oda müsaitse hemen giriş yapılır. Gerçek giriş saati ayrıca kaydedilir." : "Giriş ve çıkış tarih-saatleri"}
       >
       <div className="grid grid-cols-12 gap-4 items-start">
         <div className="col-span-12 sm:col-span-5 min-w-0">
           <DateField
-            label="Giriş"
+            label={checkedIn ? "Planlanan giriş" : "Giriş"}
             value={start}
             open={datesOpen}
             onOpenChange={setDatesOpen}
@@ -260,7 +268,7 @@ export function BookingForm({
         </div>
         <div className="col-span-12 sm:col-span-5 min-w-0">
           <DateField
-            label="Çıkış"
+            label={checkedIn ? "Planlanan çıkış" : "Çıkış"}
             value={end}
             min={start || undefined}
             open={datesOpen}
@@ -272,6 +280,7 @@ export function BookingForm({
           />
         </div>
       </div>
+      {booking?.actual_check_in && <p className="text-sm text-emerald-700">Gerçek giriş: {new Date(booking.actual_check_in).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" })}</p>}
       </FormSection>
       <FormSection
         title={`Misafirler${guests.length ? ` · ${guests.length}` : ""}`}
@@ -336,9 +345,9 @@ export function BookingForm({
           setOptions(null);
         }}
         sub={
-          selectedRoom
-            ? `Birim kapasitesi: ${selectedRoom.effective_capacity || selectedRoom.capacity} kişi`
-            : "kişi"
+          selectedRoom?.kind === "bed"
+            ? `Yatak kapasitesi: ${selectedRoom.capacity} kişi`
+            : "Konaklayacak kişi sayısı"
         }
       />
       </div>
@@ -384,6 +393,7 @@ export function BookingForm({
               required
               uppercase
               value={g.name}
+              guestId={g.id}
               hotelId={snapshot.hotel_id}
               branchId={snapshot.branch_id}
               onChange={(v) =>
@@ -439,7 +449,7 @@ export function BookingForm({
               }
             />
             <NationalityField
-              label="Uyruk"
+              label={t("guest.nationality")}
               tone="white"
               value={g.nationality || ""}
               onChange={(v) =>
@@ -457,12 +467,13 @@ export function BookingForm({
       </FormSection>
       <FormSection
         title="Birim"
-        hint="Tarihlere uygun birim seçin"
+        hint={checkedIn ? "Odayı değiştirmek için Oda Taşı işlemini kullanın." : "Tarihlere uygun birim seçin"}
       >
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         <div className="lg:col-span-3">
           <RoomSelectField
             label="Kiralanacak birim"
+            disabled={checkedIn}
             value={room}
             onChange={setRoom}
             snapshot={snapshot}
@@ -483,7 +494,7 @@ export function BookingForm({
         <button
           type="button"
           className={`uni-control ${secondaryStyle} w-full`}
-          disabled={busy || !start || !end}
+          disabled={busy || checkedIn || !start || !end}
           onClick={async () => {
             setBusy(true);
             setError("");
@@ -531,7 +542,7 @@ export function BookingForm({
       />
       </FormSection>
       <button className={`uni-control ${buttonStyle} w-full !rounded-[20px] !px-5 !py-4 !text-lg`} disabled={busy || !room}>
-        {busy ? "Kaydediliyor…" : "Rezervasyonu Kaydet"}
+        {busy ? "Kaydediliyor…" : checkInAfterSave ? "Konaklamayı Başlat" : "Rezervasyonu Kaydet"}
       </button>
     </form>
   );
@@ -603,7 +614,7 @@ export function MoveBookingForm({
               .map((r) => (
                 <option key={r.room_id} value={r.room_id}>
                   {r.code} · {unitKinds[r.kind]} ·{" "}
-                  {r.effective_capacity || r.capacity} kişi
+                  {r.kind === "bed" ? `${r.capacity} kişi` : "Kişi sayısı rezervasyonda"}
                 </option>
               ))}
           </select>
@@ -637,8 +648,8 @@ export function MoveBookingForm({
       <p className="text-xs text-slate-500">
         Konaklayan misafir için değişiklik işlem anından itibaren uygulanır;
         önceki birim geçmişte korunur. Rezervasyon değişikliği planlanan
-        konaklamanın tamamını kapsar. Kapasite ve tarih çakışmaları iki taraf
-        için birlikte kontrol edilir.
+        konaklamanın tamamını kapsar. Tarih çakışmaları ve tek tek kiralanan
+        yatakların kişi sınırları iki taraf için birlikte kontrol edilir.
       </p>
       <button disabled={busy} className={`uni-control ${buttonStyle}`}>
         Değişikliği Kaydet
@@ -654,6 +665,7 @@ export function BookingGuestsForm({
   booking: Booking;
   onSaved: () => Promise<void>;
 }) {
+  const { locale, direction, t } = useI18n();
   const [guests, setGuests] = useState(booking.guests || []),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -720,15 +732,17 @@ export function BookingGuestsForm({
                 />
               </Field>
             ))}
-            <Field label={`${i + 1}. Misafir Uyruk`}>
+            <Field label={t("guest.numberNationality", { number: i + 1 })}>
               <select
                 className={`uni-input ${inputStyle}`}
-                aria-label={`${i + 1}. Misafir Uyruk`}
+                aria-label={t("guest.numberNationality", { number: i + 1 })}
+                lang={locale}
+                dir={direction}
                 value={g.nationality || ""}
                 onChange={(e) => patch(i, { nationality: e.target.value })}
               >
-                <option value="">Seçin</option>
-                {COUNTRIES.map((c) => (
+                <option value="">{t("common.select")}</option>
+                {getCountries(locale).map((c) => (
                   <option key={c.code} value={c.code}>
                     {countryFlag(c.code)} {c.name}
                   </option>

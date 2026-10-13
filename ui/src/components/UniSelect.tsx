@@ -1,6 +1,7 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
+import { FieldCard, FieldCaption } from "./fields/FieldCard";
 
 export interface UniOption {
   value: string;
@@ -15,6 +16,7 @@ interface UniSelectProps {
   options: UniOption[];
   onChange: (value: string) => void;
   ariaLabel: string;
+  variant?: "compact" | "field";
 }
 
 /**
@@ -33,6 +35,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
   options,
   onChange,
   ariaLabel,
+  variant = "compact",
 }) => {
   const reducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -40,6 +43,8 @@ export const UniSelect: React.FC<UniSelectProps> = ({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listId = useId();
   const selected = options.find((o) => o.value === value);
+  const isField = variant === "field";
+  const Container = isField ? FieldCard : "div";
 
   useEffect(() => {
     if (!open) return;
@@ -48,17 +53,9 @@ export const UniSelect: React.FC<UniSelectProps> = ({
         setOpen(false);
       }
     };
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
     document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
     };
   }, [open ]);
 
@@ -72,6 +69,13 @@ export const UniSelect: React.FC<UniSelectProps> = ({
     <div ref={rootRef} className="relative" onBlur={(event) => {
       if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
     }} onKeyDown={(event) => {
+      if (event.key === "Escape" && open) {
+        event.preventDefault();
+        event.stopPropagation();
+        setOpen(false);
+        triggerRef.current?.focus();
+        return;
+      }
       if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
       event.preventDefault();
       if (!open) { setOpen(true); return; }
@@ -80,6 +84,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
       const next = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1 : (index + (event.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
       items[next]?.focus();
     }}>
+      <Container className={isField ? "bg-white" : undefined}>
       <button
         ref={triggerRef}
         type="button"
@@ -88,24 +93,27 @@ export const UniSelect: React.FC<UniSelectProps> = ({
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => setOpen((v) => !v)}
-        className={`uni-control
+        className={isField
+          ? "flex min-h-16 w-full cursor-pointer items-center justify-between gap-3 rounded-xl text-left outline-none transition-all duration-150 ease-out active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-neutral-400"
+          : `uni-control
           uni-select-trigger w-full flex items-center gap-2 min-h-11 px-3 py-2 rounded-xl
           border bg-white    cursor-pointer active:scale-[0.98]
           outline-none
           ${open ? "border-slate-300 bg-white" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 active:bg-slate-50/60"}
         `}
       >
-        <span className="w-8 h-8 rounded-lg bg-brand-blue-50 text-brand-blue-600 flex items-center justify-center shrink-0">
+        {!isField && <span className="w-8 h-8 rounded-lg bg-brand-blue-50 text-brand-blue-600 flex items-center justify-center shrink-0">
           {icon}
-        </span>
+        </span>}
         <span className="flex-1 min-w-0 text-left">
-          <span className="font-uninav-book block text-[10px] leading-3 tracking-[0.08em] uppercase text-slate-500">
+          {isField ? <FieldCaption>{caption}</FieldCaption> : <span className="font-uninav-book block text-[10px] leading-3 tracking-[0.08em] uppercase text-slate-500">
             {caption}
-          </span>
-          <span className="uni-nav-sub-active block truncate text-slate-800 mt-0.5">
+          </span>}
+          <span title={selected?.label} className={isField ? "font-uninav-book mt-1 block truncate text-[1.25rem] leading-8 text-slate-900" : "uni-nav-sub-active block truncate text-slate-800 mt-0.5"}>
             {selected?.label ?? "—"}
           </span>
         </span>
+        {isField && <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-slate-600">{icon}</span>}
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: reducedMotion ? 0 : 0.18, ease: "easeOut" }}
@@ -118,17 +126,17 @@ export const UniSelect: React.FC<UniSelectProps> = ({
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: -4 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -4 }}
+            initial={isField ? { height: 0, opacity: 0 } : { opacity: 0, scale: 0.97, y: -4 }}
+            animate={isField ? { height: "auto", opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={isField ? { height: 0, opacity: 0 } : { opacity: 0, scale: 0.97, y: -4 }}
             transition={{ duration: reducedMotion ? 0 : 0.15, ease: [0.32, 0.72, 0, 1] }}
-            className="absolute top-full left-0 right-0 mt-2 z-50 origin-top"
+            className={isField ? "overflow-hidden" : "absolute top-full left-0 right-0 mt-2 z-50 origin-top"}
           >
             <div
               id={listId}
               role="listbox"
               aria-label={ariaLabel}
-              className="uni-card bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-slate-900/8 ring-1 ring-slate-900/5 p-1.5 max-h-64 overflow-y-auto"
+              className={isField ? "mt-3 max-h-64 overflow-y-auto overscroll-contain border-t border-slate-200/70 pt-3" : "uni-card bg-white rounded-2xl border border-slate-200 shadow-2xl shadow-slate-900/8 ring-1 ring-slate-900/5 p-1.5 max-h-64 overflow-y-auto"}
             >
               <div className="space-y-0.5">
                 {options.map((opt) => {
@@ -148,7 +156,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
                         uni-menu-item w-full flex items-center gap-2 px-3 py-2 min-h-10 rounded-xl
                            text-left select-none cursor-pointer active:scale-[0.98]
                         outline-none
-                        ${isSelected ? "uni-nav-sub-active" : "uni-nav-sub"}
+                        ${isField ? "min-h-12" : ""} ${isSelected ? "uni-nav-sub-active" : "uni-nav-sub"}
                         ${isSelected ? "bg-brand-blue-50/70 text-brand-blue-700" : "text-slate-600 hover:bg-slate-50 active:bg-slate-50 hover:text-slate-900"}
                       `}
                     >
@@ -176,6 +184,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+      </Container>
     </div>
   );
 };

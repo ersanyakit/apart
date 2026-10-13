@@ -65,7 +65,17 @@ func (r *Repository) SearchGuests(ctx context.Context, q guest.Query) (guest.Sea
 	if err := base.Count(&out.Total).Error; err != nil {
 		return out, err
 	}
-	err := base.Select("gp.guest_id,gp.name,gp.national_id,gp.phone,gp.address,gp.nationality").
+	// Son konaklamanın gecelik fiyatı (şube seçiliyse o şubedeki son kayıt).
+	lastPrice := `COALESCE((SELECT b2.daily_price_minor FROM booking_guests bg2
+		JOIN bookings b2 ON b2.booking_id = bg2.booking_id
+		WHERE bg2.guest_id = gp.guest_id AND bg2.hotel_id = gp.hotel_id`
+	var lastArgs []any
+	if q.BranchID != uuid.Nil {
+		lastPrice += ` AND b2.branch_id = ?`
+		lastArgs = append(lastArgs, q.BranchID)
+	}
+	lastPrice += ` ORDER BY b2.check_in DESC LIMIT 1), 0)`
+	err := base.Select("gp.guest_id,gp.name,gp.national_id,gp.phone,gp.address,gp.nationality,"+lastPrice+" AS last_daily_price_minor", lastArgs...).
 		Order("gp.name,gp.guest_id").Limit(100).Offset((q.Page - 1) * 100).Scan(&out.Items).Error
 	return out, err
 }

@@ -2,6 +2,8 @@
 import React, { useId, useState } from "react";
 import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, Banknote, Globe } from "lucide-react";
 import { confirmDialog } from "./ConfirmDialog";
+import { useI18n } from "./I18n";
+import { LOCALES, type Locale } from "../lib/i18n/config";
 import { CountrySelect } from "./CountrySelect";
 import {
   countryByCode,
@@ -42,6 +44,7 @@ function SectionHeading({ icon, title, description }: {
 }
 
 export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsViewProps) {
+  const { locale, direction, setLocale, t } = useI18n();
   const { size, setSize } = useFontSize();
   const { theme, setTheme } = useTheme();
   const { currency, setCurrency, format, setFormat, defaultCountry, setDefaultCountry, currencyAuto, resetCurrencyAuto } = useCurrency();
@@ -135,12 +138,24 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </div>
       </section>
 
-      <section aria-label="Varsayılan ülke" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
-        <SectionHeading icon={<Globe size={20} />} title="Varsayılan ülke" description="Yeni misafirlerin uyruğu bu ülkeyle başlar. Ülkenin para birimi varsayılan para birimi olur." />
-        <CountrySelect label="Ülke" value={defaultCountry} onChange={setDefaultCountry} />
+      <section lang={locale} dir={direction} aria-label={t("language.title")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Globe size={20} />} title={t("language.title")} description={t("language.description")} />
+        <label className="block text-sm font-medium">
+          {t("language.title")}
+          <select value={locale} onChange={(event) => setLocale(event.target.value)} className="mt-2 block w-full rounded-xl border border-uni-border bg-uni-surface px-3 py-3">
+            {(Object.keys(LOCALES) as Locale[]).map((code) => (
+              <option key={code} value={code} lang={code}>{LOCALES[code].label}</option>
+            ))}
+          </select>
+        </label>
+      </section>
+
+      <section aria-label={t("country.defaultTitle")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Globe size={20} />} title={t("country.defaultTitle")} description={t("country.defaultDescription")} />
+        <CountrySelect label={t("country.label")} value={defaultCountry} onChange={setDefaultCountry} />
         <div className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
           <span aria-hidden="true" className="text-base leading-none">{countryFlag(defaultCountry)}</span>
-          <span>{countryByCode(defaultCountry)?.name}</span>
+          <span>{countryByCode(defaultCountry, locale)?.name}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           {countryCurrencyLabel ? (
             <span>Para birimi: <span className="font-bold text-uni-ink">{countryCurrencyLabel.label} ({countryCurrencyLabel.id})</span></span>

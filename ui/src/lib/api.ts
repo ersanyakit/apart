@@ -269,15 +269,33 @@ export function occupancy(
   bookings: Booking[],
   room: APIRoom,
   at: string,
+  now = at,
 ) {
   const ids = related(rooms, room.room_id);
+  const instant = Date.parse(at);
   return bookings.filter(
     (b) =>
+      b.branch_id === room.branch_id &&
       ["confirmed", "checked_in"].includes(b.status) &&
-      b.allocations.some(
-        (a) => ids.has(a.room_id) && a.start <= at && a.end > at,
+      bookingIntervals(b, now).some(
+        (a) => ids.has(a.roomId) && a.start <= instant && a.end > instant,
       ),
-  );
+  ).sort((a, b) => Number(b.status === "checked_in") - Number(a.status === "checked_in") || Date.parse(a.check_in) - Date.parse(b.check_in));
+}
+
+/** Compare instants, never ISO strings: offsets and precision may differ. */
+export function bookingIntervals(booking: Booking, now: string) {
+  const segments = booking.allocations?.length ? booking.allocations : [{ room_id: booking.room_id, start: booking.check_in, end: booking.check_out }];
+  return segments.map(segment => {
+    let start = Date.parse(segment.start), end = Date.parse(segment.end);
+    if (booking.actual_check_in) start = Math.max(start, Date.parse(booking.actual_check_in));
+    if (booking.actual_check_out) end = Math.min(end, Date.parse(booking.actual_check_out));
+    // An overdue stay still occupies its last room until checkout is recorded.
+    if (booking.status === "checked_in" && segment.room_id === booking.room_id && end === Date.parse(booking.check_out)) {
+      end = Math.max(end, Date.parse(now) + 1);
+    }
+    return { roomId: segment.room_id, start, end };
+  }).filter(segment => Number.isFinite(segment.start) && Number.isFinite(segment.end) && segment.end > segment.start);
 }
 
 export async function downloadCommand(

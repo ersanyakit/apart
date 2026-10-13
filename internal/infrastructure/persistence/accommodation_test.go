@@ -78,8 +78,12 @@ func TestAccommodation(t *testing.T) {
 			t.Fatalf("expected hierarchy rejection: %v", err)
 		}
 		apartment.ParentID = nil
-		if _, err := reserve(apartment.RoomID, 3, start, end); !errors.Is(err, constants.ErrCapacity) {
-			t.Fatalf("capacity rejection: %v", err)
+		b, err := reserve(apartment.RoomID, 10, start, end)
+		if err != nil {
+			t.Fatalf("apartment guest count must be flexible: %v", err)
+		}
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel"}); err != nil {
+			t.Fatal(err)
 		}
 	})
 	t.Run("whole apartment blocks descendants; cancellation frees them", func(t *testing.T) {
@@ -165,9 +169,98 @@ func TestAccommodation(t *testing.T) {
 			t.Fatalf("invalid transition accepted: %v", err)
 		}
 	})
+	t.Run("early arrival checks availability and preserves planned dates", func(t *testing.T) {
+		suite := unit("FUTURE-SUITE", "room", nil, 0)
+		upcoming, err := reserve(suite.RoomID, 2, time.Now().Add(24*time.Hour), time.Now().Add(48*time.Hour))
+		if err != nil {
+			t.Fatal(err)
+		}
+		blocker, err := reserve(suite.RoomID, 1, time.Now().Add(-time.Hour), upcoming.CheckIn)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: upcoming.BookingID, Action: "check_in"}); !errors.Is(err, constants.ErrUnavailable) {
+			t.Fatalf("early arrival must respect bookings before planned arrival: %v", err)
+		}
+		var unchanged models.Booking
+		if err := db.First(&unchanged, "booking_id = ?", upcoming.BookingID).Error; err != nil {
+			t.Fatal(err)
+		}
+		if unchanged.Status != booking.Confirmed || unchanged.ActualCheckIn != nil {
+			t.Fatal("failed early check-in changed the booking")
+		}
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: blocker.BookingID, Action: "cancel"}); err != nil {
+			t.Fatal(err)
+		}
+		arrived, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: upcoming.BookingID, Action: "check_in"})
+		if err != nil {
+			t.Fatalf("early arrival in available suite: %v", err)
+		}
+		if arrived.Status != booking.CheckedIn || arrived.ActualCheckIn == nil || !arrived.ActualCheckIn.Before(arrived.CheckIn) || !arrived.CheckIn.Equal(upcoming.CheckIn) {
+			t.Fatalf("early arrival did not preserve planned dates: %+v", arrived)
+		}
+		if len(arrived.Allocations) != 1 || !arrived.Allocations[0].Start.Equal(*arrived.ActualCheckIn) {
+			t.Fatal("room must be allocated from the actual arrival")
+		}
+		if _, err := reserve(suite.RoomID, 1, time.Now(), upcoming.CheckIn); !errors.Is(err, constants.ErrUnavailable) {
+			t.Fatalf("early arrival must block the room now: %v", err)
+		}
+		target := unit("EARLY-MOVE-TARGET", "room", nil, 0)
+		moved, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: upcoming.BookingID, Action: "move", TargetID: target.RoomID})
+		if err != nil {
+			t.Fatalf("early guest can move before planned check-in: %v", err)
+		}
+		if len(moved.Allocations) != 2 || !moved.Allocations[0].End.Equal(moved.Allocations[1].Start) {
+			t.Fatal("early arrival movement history is incomplete")
+		}
+		originalStart, originalMove := moved.Allocations[0].Start, moved.Allocations[0].End
+		originalArrival := *moved.ActualCheckIn
+		for i := 1; i <= 2; i++ {
+			moved.CheckIn = time.Now().Add(-time.Duration(i) * time.Hour)
+			planned := moved.CheckIn
+			moved, err = service.SaveBooking(ctx, admin, moved, false)
+			if err != nil {
+				t.Fatalf("amend checked-in dates: %v", err)
+			}
+			if !moved.CheckIn.Equal(planned) || moved.Status != booking.CheckedIn || !moved.ActualCheckIn.Equal(originalArrival) {
+				t.Fatal("date amendment lost planned date, status or actual arrival")
+			}
+			if len(moved.Allocations) != 2 || !moved.Allocations[0].Start.Equal(originalStart) || !moved.Allocations[0].End.Equal(originalMove) {
+				t.Fatal("date amendment rewrote movement history")
+			}
+			loaded, err := service.ListBookings(ctx, admin, booking.Query{BranchID: branch.BranchID, BookingID: moved.BookingID})
+			if err != nil || len(loaded) != 1 || !loaded[0].CheckIn.Equal(planned) {
+				t.Fatalf("updated date did not survive reload: %v", err)
+			}
+		}
+		next, err := reserve(target.RoomID, 1, moved.CheckOut, moved.CheckOut.Add(24*time.Hour))
+		if err != nil {
+			t.Fatal(err)
+		}
+		conflicting := moved
+		conflicting.CheckOut = next.CheckOut
+		if _, err := service.SaveBooking(ctx, admin, conflicting, false); !errors.Is(err, constants.ErrUnavailable) {
+			t.Fatalf("extension conflict was accepted: %v", err)
+		}
+		loaded, err := service.ListBookings(ctx, admin, booking.Query{BranchID: branch.BranchID, BookingID: moved.BookingID})
+		if err != nil || len(loaded) != 1 || !loaded[0].CheckOut.Equal(moved.CheckOut) {
+			t.Fatal("failed extension changed checkout")
+		}
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: upcoming.BookingID, Action: "check_out"}); err != nil {
+			t.Fatalf("early checkout: %v", err)
+		}
+		expiredRoom := unit("EXPIRED-SUITE", "room", nil, 0)
+		expired, err := reserve(expiredRoom.RoomID, 1, time.Now().Add(-48*time.Hour), time.Now().Add(-24*time.Hour))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: expired.BookingID, Action: "check_in"}); !errors.Is(err, constants.ErrCheckInExpired) {
+			t.Fatalf("expected clear expired check-in error, got %v", err)
+		}
+	})
 	t.Run("swap atomic capacity checks", func(t *testing.T) {
-		small := unit("S", "room", nil, 1)
-		large := unit("L", "room", nil, 4)
+		small := unit("S", "bed", nil, 1)
+		large := unit("L", "bed", nil, 4)
 		a, err := reserve(small.RoomID, 1, end.Add(2*time.Hour), end.Add(4*time.Hour))
 		if err != nil {
 			t.Fatal(err)

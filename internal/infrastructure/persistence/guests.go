@@ -127,7 +127,7 @@ func (r *Repository) UpdateBookingGuests(ctx context.Context, in guest.Update) (
 		if err != nil {
 			return err
 		}
-		if b.GuestCount > property.EffectiveCapacity(rooms, b.RoomID) {
+		if limit := property.GuestLimit(rooms, b.RoomID); limit > 0 && b.GuestCount > limit {
 			return constants.ErrCapacity
 		}
 		if err := syncGuests(tx, &b); err != nil {
@@ -182,7 +182,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	if q.Desc {
 		direction = " DESC"
 	}
-	selectSQL := `bg.guest_id,bg.name,bg.national_id,bg.phone,bg.nationality,b.booking_id,b.branch_id,br.name AS branch_name,a.room_id,r.code AS room_code,` + start + ` AS start,` + end + ` AS end,b.status`
+	selectSQL := `bg.guest_id,bg.name,bg.national_id,bg.phone,bg.nationality,b.booking_id,b.branch_id,br.name AS branch_name,a.room_id,r.code AS room_code,` + start + ` AS start,` + end + ` AS end,b.status,b.daily_price_minor`
 	query := base.Select(selectSQL).Order(column + direction + ",b.booking_id,bg.guest_id,a.allocation_id")
 	if export {
 		query = query.Limit(10000)
@@ -196,7 +196,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	defer rows.Close()
 	for rows.Next() {
 		var row guest.Stay
-		if err := rows.Scan(&row.GuestID, &row.Name, &row.TCNo, &row.Phone, &row.Nationality, &row.BookingID, &row.BranchID, &row.BranchName, &row.RoomID, &row.RoomCode, &row.Start, &row.End, &row.Status); err != nil {
+		if err := rows.Scan(&row.GuestID, &row.Name, &row.TCNo, &row.Phone, &row.Nationality, &row.BookingID, &row.BranchID, &row.BranchName, &row.RoomID, &row.RoomCode, &row.Start, &row.End, &row.Status, &row.DailyPriceMinor); err != nil {
 			return out, err
 		}
 		out.Items = append(out.Items, row)
@@ -209,6 +209,34 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	}
 	if len(out.Items) == 0 {
 		return out, nil
+	}
+	// Rezervasyon ve kişi notlarını tek sorguda iliştir.
+	bookingIDs := map[uuid.UUID]bool{}
+	for _, row := range out.Items {
+		bookingIDs[row.BookingID] = true
+	}
+	bookingList := make([]uuid.UUID, 0, len(bookingIDs))
+	for id := range bookingIDs {
+		bookingList = append(bookingList, id)
+	}
+	var bookings []models.Booking
+	if err := r.db.WithContext(ctx).Where("booking_id IN ?", bookingList).Find(&bookings).Error; err != nil {
+		return out, err
+	}
+	byBooking := map[uuid.UUID]models.Booking{}
+	for _, b := range bookings {
+		byBooking[b.BookingID] = b
+	}
+	for i, row := range out.Items {
+		if b, ok := byBooking[row.BookingID]; ok {
+			out.Items[i].BookingNotes = b.Notes
+			for _, gd := range b.GuestDetails {
+				if gd.ID == row.GuestID.String() && strings.TrimSpace(gd.Note) != "" {
+					out.Items[i].GuestNote = gd.Note
+					break
+				}
+			}
+		}
 	}
 	branchIDs := []uuid.UUID{}
 	first, last := out.Items[0].Start, out.Items[0].End

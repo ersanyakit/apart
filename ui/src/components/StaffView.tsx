@@ -1,8 +1,8 @@
+import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, User } from "lucide-react";
 import { command, messageOf, type Snapshot } from "../lib/api";
 import {
-  Drawer,
   ErrorMessage,
   Field,
   inputStyle,
@@ -51,88 +51,90 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
   }, [s.hotel_id, revision]);
   return (
     <div className="space-y-5">
-      <ErrorMessage message={error} />
-      <button
-        className={`uni-control ${buttonStyle}`}
-        onClick={() =>
-          setEditing({
-            hotel_id: s.hotel_id,
-            username: "",
-            first_name: "",
-            last_name: "",
-            email: "",
-            role: "reception",
-            branch_ids: [s.branch_id],
-            password: "",
-          })
-        }
-      >
-        <Plus size={14} />
-        Personel Ekle
-      </button>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {people.map((p) => (
-          <article
-            key={p.user_id}
-            className="uni-card rounded-2xl border border-slate-200 bg-white p-5 space-y-4"
-          >
-            <User className="text-brand-blue-500" />
-            <div>
-              <h3 className="font-black">
-                {p.first_name} {p.last_name}
-              </h3>
-              <p className="text-xs text-slate-400 mt-1">
-                {p.username} · {roles[p.role]}
+      <div hidden={!!editing} className="space-y-5">
+        <ErrorMessage message={error} />
+        <button
+          className={`uni-control ${buttonStyle}`}
+          onClick={() =>
+            setEditing({
+              hotel_id: s.hotel_id,
+              username: "",
+              first_name: "",
+              last_name: "",
+              email: "",
+              role: "reception",
+              branch_ids: [s.branch_id],
+              password: "",
+            })
+          }
+        >
+          <Plus size={14} />
+          Personel Ekle
+        </button>
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {people.map((p) => (
+            <article
+              key={p.user_id}
+              className="uni-card rounded-2xl border border-slate-200 bg-white p-5 space-y-4"
+            >
+              <User className="text-brand-blue-500" />
+              <div>
+                <h3 className="font-black">
+                  {p.first_name} {p.last_name}
+                </h3>
+                <p className="text-xs text-slate-400 mt-1">
+                  {p.username} · {roles[p.role]}
+                </p>
+              </div>
+              <p className="text-xs text-slate-500">
+                {["management", "admin"].includes(p.role)
+                  ? "Otelin tüm şubeleri"
+                  : p.branch_ids
+                      .map(
+                        (id) =>
+                          s.branches.find((b) => b.branch_id === id)?.name || id,
+                      )
+                      .join(", ")}
               </p>
-            </div>
-            <p className="text-xs text-slate-500">
-              {["management", "admin"].includes(p.role)
-                ? "Otelin tüm şubeleri"
-                : p.branch_ids
-                    .map(
-                      (id) =>
-                        s.branches.find((b) => b.branch_id === id)?.name || id,
+              <div className="flex gap-2">
+                <button
+                  className={`uni-control ${secondaryStyle}`}
+                  onClick={() => setEditing({ ...p, password: "" })}
+                >
+                  <Pencil size={13} />
+                  Düzenle
+                </button>
+                <button
+                  className={`uni-control ${secondaryStyle}`}
+                  disabled={p.user_id === s.user.user_id}
+                  onClick={async () => {
+                    if (
+                      !(await confirmDialog(
+                        `${p.first_name} ${p.last_name} personel kaydı silinsin mi? Açık oturumları kapatılacak, işlem geçmişi korunacak.`,
+                      ))
                     )
-                    .join(", ")}
-            </p>
-            <div className="flex gap-2">
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                onClick={() => setEditing({ ...p, password: "" })}
-              >
-                <Pencil size={13} />
-                Düzenle
-              </button>
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                disabled={p.user_id === s.user.user_id}
-                onClick={async () => {
-                  if (
-                    !(await confirmDialog(
-                      `${p.first_name} ${p.last_name} personel kaydı silinsin mi? Açık oturumları kapatılacak, işlem geçmişi korunacak.`,
-                    ))
-                  )
-                    return;
-                  try {
-                    await command("staff.delete", {
-                      hotel_id: s.hotel_id,
-                      id: p.user_id,
-                    });
-                    setRevision((v) => v + 1);
-                  } catch (e) {
-                    setError(messageOf(e));
-                  }
-                }}
-              >
-                <Trash2 size={13} />
-                Sil
-              </button>
-            </div>
-          </article>
-        ))}
+                      return;
+                    try {
+                      await command("staff.delete", {
+                        hotel_id: s.hotel_id,
+                        id: p.user_id,
+                      });
+                      setRevision((v) => v + 1);
+                    } catch (e) {
+                      setError(messageOf(e));
+                    }
+                  }}
+                >
+                  <Trash2 size={13} />
+                  Sil
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
       {editing && (
-        <Drawer
+        <SettingsEditor
           title={editing.user_id ? "Personeli Düzenle" : "Yeni Personel"}
           onClose={() => setEditing(null)}
         >
@@ -144,7 +146,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
               setRevision((v) => v + 1);
             }}
           />
-        </Drawer>
+        </SettingsEditor>
       )}
     </div>
   );

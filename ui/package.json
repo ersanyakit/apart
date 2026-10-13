@@ -9,7 +9,12 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 3001",
     "lint": "tsc --noEmit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:i18n": "node --test tests/i18n.test.cjs",
+    "test:navigation": "node --test tests/navigation.test.cjs",
+    "test:calendar": "node --test tests/hotel-calendar.test.cjs",
+    "test:room-board": "node --test tests/room-board.test.cjs",
+    "test:audit": "node --test tests/audit-location.test.cjs"
   },
   "dependencies": {
     "@tanstack/react-table": "^8.21.3",

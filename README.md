@@ -26,7 +26,7 @@ Go 1.26+, Node.js 20.9+ ve PostgreSQL gerekir.
 - Otel → tesis/şube → katlar. Kat kodları tesis içinde benzersizdir; bodrum, asma kat vb. serbest kod ve sıralama ile tanımlanabilir.
 - Birim türleri: `apartment`, `room`, `dormitory`, `bed`. `parent_id` aynı tesisteki başka birime bağlar; daire içinde oda, oda içinde yatak tanımlanabilir. Yatak altına birim eklenemez; döngüler reddedilir.
 - `floor_id` fiziksel katı belirtir. Kat ataması olmayan birimler de desteklenir. Çok katlı bir dairenin alt birimleri farklı katlarda bulunabilir.
-- `rentable` her birimin bağımsız kiralanıp kiralanamayacağını belirler. Alt birimleri bulunan birimin kapasitesi terminal alt birimlerden hesaplanır; daire/oda/yatak kapasitesi iki kez toplanmaz.
+- `rentable` her birimin bağımsız kiralanıp kiralanamayacağını belirler. Fiziksel yatak kapasitesi terminal alt birimlerden hesaplanır; oda ve daire rezervasyonlarında kişi sayısına üst sınır koymaz.
 - Ranza bir konaklama türü değil, yatakların `bed_group` ve `bed_level` ile tanımlanan fiziksel düzenidir. 100 yatak / 2 seviye toplu tanımı 50 ranza grubu oluşturur. Çift kişilik yatak için yatak kapasitesi 2 seçilebilir.
 - Kat planı `x`, `y`, `width`, `height` koordinatlarıyla saklanır. Toplu plan değişiklikleri ve toplu birim oluşturma atomiktir. Toplu oluşturmada tek istekte en fazla 1000 birim tanımlanır.
 - Birim tanımından kat/üst birim değiştirilebilir. Aktif rezervasyonu etkileyecek yapısal değişiklik ve silme engellenir; önce rezervasyon taşınmalı veya iptal edilmelidir.
@@ -35,11 +35,15 @@ Go 1.26+, Node.js 20.9+ ve PostgreSQL gerekir.
 
 Rezervasyon oda üzerindeki geçici alanlardan bağımsız bir kayıttır. Başlangıç durumu `confirmed`; `check_in` → `checked_in`, `check_out` → `completed`, giriş yapılmamış rezervasyon için `cancel` → `cancelled`.
 
+Planlanan girişten önce gelen misafir, birim gerçek giriş anından planlanan çıkışa kadar müsaitse aynı rezervasyon üzerinden erken giriş yapabilir. Planlanan tarihler korunur; `actual_check_in` ve birim tahsisinin başlangıcı gerçek giriş anını kaydeder. Erken girişten sonra taşıma ve çıkış işlemleri bu gerçek başlangıcı kullanır.
+
+Giriş yapılmış rezervasyonların planlanan tarihleri düzenlenebilir. Gerçek giriş saati, konaklama durumu ve önceki oda tahsisleri korunur; yeni çıkış tarihi ileri bir zaman olmalı ve mevcut odada başka rezervasyonla çakışmamalıdır. Oda değişikliği rezervasyon düzenleme yerine taşıma işlemiyle yapılır.
+
 Bir rezervasyon bir kiralanabilir birimin tamamını ayırır: daire, oda veya tek yatak. Aynı tarihlerde birimin kendisi, üst birimleri ve alt birimleri çakışır; kardeş yataklar ayrı kiralanabilir. Zaman aralıkları `[giriş, çıkış)` olarak değerlendirilir; aynı çıkış anında sonraki rezervasyon başlayabilir. Çıkışı gecikmiş ve hâlâ konaklayan misafir yeni rezervasyon için engel sayılır.
 
-Rezervasyon oluşturma/güncelleme, taşıma ve karşılıklı değişim aynı tesis için PostgreSQL transaction advisory lock altında doğrulanır. Kapasite, bakım durumu ve tarih çakışması kontrolü ile kayıt aynı transaction içindedir. Bu koruma uygulamadaki yazma yolları içindir; doğrudan SQL yazan başka bir sistem aynı kilit protokolüne uymalıdır.
+Rezervasyon oluşturma/güncelleme, taşıma ve karşılıklı değişim aynı tesis için PostgreSQL transaction advisory lock altında doğrulanır. Tek tek kiralanan yatakların kişi sınırı, bakım durumu ve tarih çakışması kontrolü ile kayıt aynı transaction içindedir. Bu koruma uygulamadaki yazma yolları içindir; doğrudan SQL yazan başka bir sistem aynı kilit protokolüne uymalıdır.
 
-`move` konaklayan misafiri işlem anından itibaren başka birime taşır; eski tahsis süresi saklanır. `swap` iki rezervasyonun birimlerini atomik değiştirir ve iki tarafın kapasitesini kontrol eder. Giriş yapılmamış iki rezervasyonun karşılıklı değişimi aynı giriş anını gerektirir. Çıkışta kullanılan birim ve alt birimleri kirli duruma alınır; temizlik durumu rezervasyondan ayrıdır.
+`move` konaklayan misafiri işlem anından itibaren başka birime taşır; eski tahsis süresi saklanır. `swap` iki rezervasyonun birimlerini atomik değiştirir ve iki tarafın uygunluğunu ve yatak birimlerinde kişi sınırını kontrol eder. Giriş yapılmamış iki rezervasyonun karşılıklı değişimi aynı giriş anını gerektirir. Çıkışta kullanılan birim ve alt birimleri kirli duruma alınır; temizlik durumu rezervasyondan ayrıdır.
 
 Bu kapsam rezervasyon/konaklama ve fiziksel birim yönetimidir. Ödeme, faturalama, kanal yöneticisi veya resmî kimlik bildirimi entegrasyonu içermez; bunlar için başarı simülasyonu yapılmaz.
 
@@ -138,7 +142,7 @@ Oda durumları temiz, kirli, arızalı, tadilatta ve boştur; doluluk ve rezerva
 
 ## Misafir geçmişi, belgeler ve çıktılar
 
-Misafirler otel bazlı kimliklerle ve rezervasyon üyelikleriyle saklanır. Konaklama başladıktan sonra `booking.guests.update` ile yeni kişi eklenebilir; oda kapasitesi tekrar kontrol edilir. Eklenme/ayrılma zamanları saklanır. İsim benzerliğiyle farklı insanlar birleştirilmez. Bir misafirin geçmişine tıklandığında oda tahsisleri, saatler ve o aralıkta birlikte kaldığı kişiler görüntülenir. Tarih, isim/kimlik/telefon, durum filtreleri ve sütun başlıklarından sıralama desteklenir.
+Misafirler otel bazlı kimliklerle ve rezervasyon üyelikleriyle saklanır. Konaklama başladıktan sonra `booking.guests.update` ile yeni kişi eklenebilir. Oda/daire kişi sayısı rezervasyonda belirlenir; kapasite sınırı yalnızca tek tek kiralanan yataklarda kontrol edilir. Eklenme/ayrılma zamanları saklanır. İsim benzerliğiyle farklı insanlar birleştirilmez. Bir misafirin geçmişine tıklandığında oda tahsisleri, saatler ve o aralıkta birlikte kaldığı kişiler görüntülenir. Tarih, isim/kimlik/telefon, durum filtreleri ve sütun başlıklarından sıralama desteklenir.
 
 Excel/PDF çıktıları ekrandaki sorgunun tamamını kapsar (en fazla 10000 satır); yalnızca görünen sayfa dışa aktarılmaz. Excel hücrelerine kullanıcı girdileri formül olarak yazılmaz. PDF üretiminde Playwright Chromium kullanılır:
 
@@ -161,3 +165,21 @@ Her otel için ayrı kira/satış sözleşmesi, rezervasyon/tahsilat/iptal belge
 | Belgeler | `document.list/preview/issue/download` |
 
 Sağ tık menüsü rezervasyon, satış/giriş, çıkış, misafirler, oda değişimi, durum ve belge işlemlerine bağlıdır. Onaylar uygulama modalı olarak gösterilir; native `alert`, `confirm` ve `prompt` kullanılmaz.
+
+## Ülke adları ve arayüz dili
+
+Ayarlar → Dil seçimi ülke/uyruk adlarını ve ilgili seçim alanlarını günceller. Desteklenen diller backend ile aynıdır: TR, EN, DE, FR, RU, AR, NE, TH, ZH-CN ve ZH-TW. Tercih bu cihazda `interactiveotel.locale` anahtarıyla saklanır; başlangıç dili Türkçedir. Dil değişikliği kayıtlı ülke kodlarını, misafir uyruğunu veya para birimi tercihini değiştirmez.
+
+Ortak `I18nProvider` ve `useI18n()` arayüze `locale`, `direction`, `setLocale` ve tip kontrollü `t(key, params)` sağlar. Dil tanımları `ui/src/lib/i18n/config.ts`, metin sözlükleri `messages.ts` içindedir. Yeni çevrilebilir metinleri bu sözlüklere ekleyip `t()` ile kullanın. Bu aşamada ülke/uyruk alanları çevrilmiştir; diğer ekran metinleri henüz bu sözlüklere taşınmamıştır.
+
+Ülke adları `Intl.DisplayNames` ile üretilir, dile göre sıralanır ve önbelleğe alınır. `getCountries(locale)`, `countryByCode(code, locale)` ve `searchCountries(query, limit, locale)` aynı kaynağı kullanır. Arama seçili dildeki adları, İngilizce/Türkçe adları ve ISO kodlarını kabul eder; sonuçları seçili dilde gösterir. Arapça seçim alanları sağdan sola görüntülenir. Yerelleştirme desteği bulunmayan ortamlarda paketlenmiş ülke adlarına dönülür.
+
+Dil ve ülke araması kontrolleri: `npm --prefix ui run test:i18n`. Tip kontrolü: `npm --prefix ui run lint`.
+
+## Konaklama takvimi ve işlem kayıtları
+
+Menü → Konaklama Takvimi günlük/haftalık oda çizelgesini ve aylık çok günlük konaklama şeritlerini gösterir. Bir kayda dokunmak konaklayanları, tarihler, notlar ve gecelik fiyatı açar. Arama ve durum filtreleri uygulanır; CSV seçilen dönemin filtrelenmiş oda tahsislerini, Yazdır / PDF görünen takvimi dışa aktarır. PDF tarayıcının yazdırma penceresinden kaydedilir. Bileşen `ui/src/components/hotel-calendar/HotelCalendar.tsx` üzerinden rezervasyon/birim verisi ve tesis adı alır; API veya oturum bağımlılığı yoktur. Tarih ve export kontrolleri: `npm --prefix ui run test:calendar`.
+
+İşlem logları başarılı veri değişiklikleriyle aynı veritabanı işleminde yazılır. Misafir girişi/çıkışı, iptal, taşıma, takas, oturum açma/kapatma ve özellik atamaları ayrı adlarla görünür. Mevcut oluşturma/güncelleme/silme kayıtları korunur. Rezervasyonlarda önceki/sonraki durum, kişi sayısı, tarihler ve fiyat bulunur; parola, oturum anahtarı ve kimlik numarası log detaylarına kopyalanmaz. Başarısız işlemler başarı kaydı üretmez. Eski logların bulunmayan işlem detayları geriye dönük uydurulmaz.
+
+Login footer markası `constants/Brand.go` içindeki `BrandName` ve `BrandURL` değerlerinden `go generate ./constants` ile UI sözleşmesine aktarılır. Logo `ui/src/assets/brand/researchcave.svg` dosyasındadır.

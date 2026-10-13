@@ -26,20 +26,26 @@ type Companion struct {
 	Name    string    `json:"name"`
 }
 type Stay struct {
-	GuestID     uuid.UUID   `json:"guest_id"`
-	Name        string      `json:"name"`
-	TCNo        string      `json:"tc_no"`
-	Phone       string      `json:"phone"`
-	Nationality string      `json:"nationality"`
-	BookingID   uuid.UUID   `json:"booking_id"`
-	BranchID    uuid.UUID   `json:"branch_id"`
-	BranchName  string      `json:"branch_name"`
-	RoomID      uuid.UUID   `json:"room_id"`
-	RoomCode    string      `json:"room_code"`
-	Start       time.Time   `json:"start"`
-	End         time.Time   `json:"end"`
-	Status      string      `json:"status"`
-	Companions  []Companion `json:"companions"`
+	GuestID     uuid.UUID `json:"guest_id"`
+	Name        string    `json:"name"`
+	TCNo        string    `json:"tc_no"`
+	Phone       string    `json:"phone"`
+	Nationality string    `json:"nationality"`
+	BookingID   uuid.UUID `json:"booking_id"`
+	BranchID    uuid.UUID `json:"branch_id"`
+	BranchName  string    `json:"branch_name"`
+	RoomID      uuid.UUID `json:"room_id"`
+	RoomCode    string    `json:"room_code"`
+	Start       time.Time `json:"start"`
+	End         time.Time `json:"end"`
+	Status      string    `json:"status"`
+	// Gecelik fiyat (kuruş). Kayıt sırasında girilmediyse 0 gelir.
+	DailyPriceMinor int64 `json:"daily_price_minor"`
+	// Rezervasyon notu (kayıt sırasında girildiyse).
+	BookingNotes string `json:"booking_notes"`
+	// Kişiye özel not (misafir satırına yazıldıysa).
+	GuestNote  string      `json:"guest_note"`
+	Companions []Companion `json:"companions"`
 }
 type Page struct {
 	Items []Stay `json:"items"`
@@ -53,6 +59,8 @@ type Profile struct {
 	Phone       string    `json:"phone"`
 	Address     string    `json:"address"`
 	Nationality string    `json:"nationality"`
+	// Son konaklamanın gecelik fiyatı (kuruş). Fiyat girilmediyse 0 gelir.
+	LastDailyPriceMinor int64 `json:"last_daily_price_minor"`
 }
 type SearchPage struct {
 	Items []Profile `json:"items"`

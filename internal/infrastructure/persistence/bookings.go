@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"otel/constants"
+	"otel/internal/domain/audit"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/property"
 	"otel/internal/infrastructure/persistence/models"
@@ -126,8 +127,12 @@ func (r *Repository) SaveBooking(ctx context.Context, b booking.Booking, create 
 			return err
 		}
 		if !create {
-			var old models.Booking
-			if err := tx.First(&old, "booking_id = ? AND branch_id = ?", b.BookingID, b.BranchID).Error; err != nil {
+			old, err := loadBooking(tx, b.BranchID, b.BookingID)
+			if err != nil {
+				return err
+			}
+			if old.Status == booking.CheckedIn {
+				out, err = updateCurrentStay(tx, b, old)
 				return err
 			}
 			if old.Status != booking.Confirmed {
@@ -172,6 +177,40 @@ func (r *Repository) SaveBooking(ctx context.Context, b booking.Booking, create 
 	})
 	return out, translate(err)
 }
+
+// Amend planned dates without replacing actual arrival or the room-move history.
+// The caller holds the branch lock and transaction used by every booking write.
+func updateCurrentStay(tx *gorm.DB, b, old booking.Booking) (booking.Booking, error) {
+	now := time.Now().UTC()
+	if old.ActualCheckIn == nil || b.RoomID != old.RoomID || !b.CheckOut.After(now) {
+		return b, constants.ErrBookingState
+	}
+	rooms, err := inventory(tx, b.BranchID)
+	if err != nil {
+		return b, err
+	}
+	if err := checkAvailable(tx, rooms, b.BranchID, b.RoomID, now, b.CheckOut, b.GuestCount, []uuid.UUID{b.BookingID}, false); err != nil {
+		return b, err
+	}
+	result := tx.Model(&models.BookingAllocation{}).
+		Where("booking_id = ? AND room_id = ? AND \"end\" = ?", old.BookingID, old.RoomID, old.CheckOut).
+		Update("end", b.CheckOut)
+	if result.Error != nil {
+		return b, result.Error
+	}
+	if result.RowsAffected != 1 {
+		return b, constants.ErrBookingState
+	}
+	b.Status, b.ActualCheckIn, b.ActualCheckOut = old.Status, old.ActualCheckIn, old.ActualCheckOut
+	b.UserID, b.CreatedAt = old.UserID, old.CreatedAt
+	if err := persistBooking(tx, b); err != nil {
+		return b, err
+	}
+	if err := syncGuests(tx, &b); err != nil {
+		return b, err
+	}
+	return loadBooking(tx, b.BranchID, b.BookingID)
+}
 func loadBooking(tx *gorm.DB, branch, id uuid.UUID) (booking.Booking, error) {
 	var row models.Booking
 	err := tx.Preload("Allocations", func(tx *gorm.DB) *gorm.DB { return tx.Order("start") }).First(&row, "booking_id = ? AND branch_id = ?", id, branch).Error
@@ -185,7 +224,11 @@ func moveBooking(tx *gorm.DB, b *booking.Booking, target uuid.UUID, at time.Time
 	if b.Status != booking.Confirmed && b.Status != booking.CheckedIn {
 		return constants.ErrBookingState
 	}
-	if at.Before(b.CheckIn) || !at.Before(b.CheckOut) || target == b.RoomID {
+	start := b.CheckIn
+	if b.ActualCheckIn != nil && b.ActualCheckIn.Before(start) {
+		start = *b.ActualCheckIn
+	}
+	if at.Before(start) || !at.Before(b.CheckOut) || target == b.RoomID {
 		return constants.ErrBookingState
 	}
 	// Keep completed segments and truncate the current one, retaining movement history.
@@ -252,6 +295,7 @@ func markDirty(tx *gorm.DB, branchID, roomID uuid.UUID) error {
 	return tx.Model(&models.Room{}).Where("room_id IN ?", ids).Update("status", "Kirli").Error
 }
 func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transition) (booking.Booking, error) {
+	ctx = audit.WithAction(ctx, "bookings", input.Action)
 	var out booking.Booking
 	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := lockBranch(tx, input.BranchID); err != nil {
@@ -273,11 +317,27 @@ func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transi
 			}
 			b.Status = booking.Cancelled
 		case "check_in":
-			if b.Status != booking.Confirmed || now.Before(b.CheckIn) || !now.Before(b.CheckOut) {
+			if b.Status != booking.Confirmed {
 				return constants.ErrBookingState
+			}
+			if !now.Before(b.CheckOut) {
+				return constants.ErrCheckInExpired
 			}
 			if err := checkAvailable(tx, rooms, b.BranchID, b.RoomID, now, b.CheckOut, b.GuestCount, []uuid.UUID{b.BookingID}, true); err != nil {
 				return err
+			}
+			if now.Before(b.CheckIn) {
+				// Preserve the planned dates; reserve the room from the actual arrival
+				// so cards, availability and later moves include the early stay.
+				result := tx.Model(&models.BookingAllocation{}).
+					Where("booking_id = ? AND room_id = ? AND start = ?", b.BookingID, b.RoomID, b.CheckIn).
+					Update("start", now)
+				if result.Error != nil {
+					return result.Error
+				}
+				if result.RowsAffected != 1 {
+					return constants.ErrBookingState
+				}
 			}
 			b.Status = booking.CheckedIn
 			b.ActualCheckIn = &now
@@ -348,8 +408,11 @@ func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transi
 		default:
 			return constants.ErrBookingState
 		}
-		if err := persistBooking(tx, b); err != nil {
-			return err
+		// moveBooking already persisted each moved booking; do not log it twice.
+		if input.Action != "move" && input.Action != "swap" {
+			if err := persistBooking(tx, b); err != nil {
+				return err
+			}
 		}
 		out, err = loadBooking(tx, b.BranchID, b.BookingID)
 		return err

@@ -1,12 +1,10 @@
-/**
- * Ülke verisi: ISO 3166-1 alpha-2 kodu, Türkçe ad ve (uygulamada
- * tanımlıysa) para birimi. Bayraklar koddan bölgesel gösterge
- * simgesiyle üretilir; ek bağımlılık ve ağ isteği gerekmez.
- */
+import { DEFAULT_LOCALE, resolveLocale, type Locale } from "./i18n/config";
+
+/** ISO codes are persisted; country names are resolved for display only. */
 export interface Country {
   /** ISO 3166-1 alpha-2, örn. "TR". */
   code: string;
-  /** Türkçe ad, örn. "Türkiye". */
+  /** Localized display name. */
   name: string;
   /**
    * Para birimi (uygulamanın para birimi listesindeki karşılık).
@@ -17,7 +15,7 @@ export interface Country {
 
 export const DEFAULT_COUNTRY = "TR";
 
-export const COUNTRIES: Country[] = [
+const COUNTRY_DATA: Country[] = [
   { code: "TR", name: "Türkiye", currency: "TRY" },
   { code: "US", name: "Amerika Birleşik Devletleri", currency: "USD" },
   { code: "DE", name: "Almanya", currency: "EUR" },
@@ -269,11 +267,32 @@ export const COUNTRIES: Country[] = [
   { code: "EH", name: "Batı Sahra", currency: null },
 ];
 
-const byCode = new Map(COUNTRIES.map((c) => [c.code, c]));
+const byCode = new Map(COUNTRY_DATA.map((country) => [country.code, country]));
+const localizedLists = new Map<Locale, Country[]>();
 
-export function countryByCode(code: string | undefined | null): Country | undefined {
+export function getCountries(language: string = DEFAULT_LOCALE): readonly Country[] {
+  const locale = resolveLocale(language);
+  const cached = localizedLists.get(locale);
+  if (cached) return cached;
+  let names: Intl.DisplayNames | undefined;
+  let english: Intl.DisplayNames | undefined;
+  try {
+    names = new Intl.DisplayNames([locale, "en"], { type: "region", fallback: "none" });
+    english = new Intl.DisplayNames(["en"], { type: "region", fallback: "none" });
+  } catch { /* Older runtimes fall back to the bundled names. */ }
+  const collator = new Intl.Collator(locale);
+  const countries = COUNTRY_DATA.map((country) => ({
+    ...country,
+    name: names?.of(country.code) ?? english?.of(country.code) ?? country.name,
+  })).sort((a, b) => collator.compare(a.name, b.name));
+  localizedLists.set(locale, countries);
+  return countries;
+}
+
+export function countryByCode(code: string | undefined | null, locale: string = DEFAULT_LOCALE): Country | undefined {
   if (!code) return undefined;
-  return byCode.get(code.trim().toUpperCase());
+  const normalized = code.trim().toUpperCase();
+  return getCountries(locale).find((country) => country.code === normalized);
 }
 
 /** ISO koddan bayrak simgesi (bölgesel gösterge harfleri). */
@@ -285,30 +304,33 @@ export function countryFlag(code: string | undefined | null): string {
   );
 }
 
-const trLower = (s: string) => s.toLocaleLowerCase("tr-TR");
-
-/**
- * Yazdıkça ülke bulma: önce adın başından eşleşenler, sonra
- * içinde geçenler; kodla da eşleşir ("tr" → Türkiye).
- */
-export function searchCountries(query: string, limit = 50): Country[] {
-  const q = trLower(query.trim());
-  if (!q) return COUNTRIES.slice(0, limit);
-  const starts: Country[] = [];
-  const contains: Country[] = [];
-  for (const c of COUNTRIES) {
-    const name = trLower(c.name);
-    if (name.startsWith(q) || c.code.toLowerCase() === q) {
-      starts.push(c);
-    } else if (name.includes(q)) {
-      contains.push(c);
-    }
-    if (starts.length + contains.length >= limit) break;
-  }
-  return [...starts, ...contains].slice(0, limit);
+/** Fold accents and Turkish I variants for forgiving, locale-aware search. */
+export function normalizeCountrySearch(value: string, language: string = DEFAULT_LOCALE): string {
+  return value.trim().toLocaleLowerCase(resolveLocale(language)).normalize("NFD")
+    .replace(/\p{M}/gu, "").replace(/ı/g, "i");
 }
 
-/** Ülkenin para birimi (listede yoksa null → mevcut korunur). */
+/** Rank ISO codes and name prefixes first, then substring matches, before limiting. */
+export function searchCountries(query: string, limit = 50, language: string = DEFAULT_LOCALE): Country[] {
+  const locale = resolveLocale(language);
+  const q = normalizeCountrySearch(query, locale);
+  const countries = getCountries(locale);
+  if (!q) return countries.slice(0, limit);
+  const english = new Map(getCountries("en").map((country) => [country.code, country.name]));
+  return countries.map((country) => {
+    const names = [country.name, english.get(country.code) ?? "", byCode.get(country.code)?.name ?? ""]
+      .map((name) => normalizeCountrySearch(name, locale));
+    const rank = country.code.toLowerCase() === q ? 0
+      : names.some((name) => name === q) ? 1
+      : names.some((name) => name.startsWith(q)) ? 2
+      : names.some((name) => name.includes(q)) ? 3 : 4;
+    return { country, rank };
+  }).filter(({ rank }) => rank < 4)
+    .sort((a, b) => a.rank - b.rank)
+    .slice(0, limit).map(({ country }) => country);
+}
+
+/** Currency mapping is independent of the display language. */
 export function currencyForCountry(code: string | undefined | null): string | null {
-  return countryByCode(code)?.currency ?? null;
+  return byCode.get((code ?? "").trim().toUpperCase())?.currency ?? null;
 }

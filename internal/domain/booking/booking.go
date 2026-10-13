@@ -116,7 +116,8 @@ func ValidateAvailability(rooms []property.Room, branchID, roomID uuid.UUID, cou
 	if target.Inactive || !target.Rentable {
 		return constants.ErrUnavailable
 	}
-	if count < 1 || count > property.EffectiveCapacity(rooms, roomID) {
+	limit := property.GuestLimit(rooms, roomID)
+	if count < 1 || count > 100000 || (limit > 0 && count > limit) {
 		return constants.ErrCapacity
 	}
 	related := property.Related(rooms, roomID)

@@ -96,6 +96,18 @@ func Related(rooms []Room, id uuid.UUID) map[uuid.UUID]bool {
 	}
 	return out
 }
+
+// GuestLimit applies only to an individually rented sleeping place. A room or
+// apartment is rented as a whole; its guest count belongs to the booking.
+func GuestLimit(rooms []Room, id uuid.UUID) int {
+	for _, room := range rooms {
+		if room.RoomID == id && room.Kind == "bed" {
+			return room.Capacity
+		}
+	}
+	return 0
+}
+
 func EffectiveCapacity(rooms []Room, id uuid.UUID) int {
 	byID := map[uuid.UUID]Room{}
 	children := map[uuid.UUID][]uuid.UUID{}

@@ -1,0 +1,113 @@
+import React, { useEffect, useRef, useState } from "react";
+import { Check, ChevronRight, LogOut, Menu } from "lucide-react";
+import { BottomSheet } from "./BottomSheet";
+import { NavigationIcon } from "./NavigationIcon";
+import { UniSelect } from "./UniSelect";
+import { confirmDialog } from "./ConfirmDialog";
+import type { Snapshot, Selection } from "../lib/api";
+import type { MenuItem } from "../types";
+
+const PRIMARY_TABS = [
+  { id: "board", label: "Durum" },
+  { id: "bookings", label: "Rezervasyon" },
+  { id: "stays", label: "Konaklayan" },
+  { id: "guests", label: "Misafir" },
+] as const;
+
+export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, onLogout }: {
+  snapshot: Snapshot;
+  groups: MenuItem[];
+  activeTab: string;
+  onSelect: (id: string) => void;
+  onSelection: (selection: Selection) => void;
+  onLogout: () => void;
+}) {
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const pendingLogout = useRef(false);
+  const userName = snapshot.user.displayname || snapshot.user.username;
+  const primaryActive = PRIMARY_TABS.some((tab) => tab.id === activeTab);
+  const visibleTabs = PRIMARY_TABS.filter((tab) => groups.some((group) => group.subItems?.some((item) => item.id === tab.id)));
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => { if (desktop.matches) setSheetOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
+  const pick = (id: string) => { setSheetOpen(false); onSelect(id); };
+
+  return (
+    <>
+      <nav aria-label="Mobil ana gezinti" className="mobile-tab-bar">
+        {visibleTabs.map((tab) => (
+          <button key={tab.id} type="button" aria-current={activeTab === tab.id ? "page" : undefined}
+            onClick={() => pick(tab.id)} className="mobile-tab">
+            <NavigationIcon name={tab.id} size={24} />
+            <span>{tab.label}</span>
+          </button>
+        ))}
+        <button type="button" aria-label="Menüyü aç" aria-expanded={sheetOpen} aria-haspopup="dialog"
+          data-active={!primaryActive || sheetOpen} onClick={() => setSheetOpen(true)} className="mobile-tab">
+          <Menu size={24} strokeWidth={1.8} aria-hidden="true" /><span>Menü</span>
+        </button>
+      </nav>
+      <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="Menü" closeLabel="Menüyü kapat"
+        onExitComplete={() => {
+          if (!pendingLogout.current) return;
+          pendingLogout.current = false;
+          // Wait until the native dialog has left the top layer before confirming.
+          requestAnimationFrame(() => {
+            void confirmDialog("Oturumu kapatmak istediğinize emin misiniz?").then((confirmed) => {
+              if (confirmed) onLogout();
+            });
+          });
+        }}>
+        <div className="mb-6 flex items-center gap-3 px-1">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-lg font-semibold text-brand-blue-700">
+            {userName.trim().split(/\s+/).slice(0, 2).map((name) => name[0]).join("")}
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-[17px] font-semibold text-slate-900">{userName}</p>
+            <p className="mt-0.5 truncate text-[13px] text-slate-500">{snapshot.branches.find((b) => b.branch_id === snapshot.branch_id)?.name}</p>
+          </div>
+        </div>
+        <section aria-label="Aktif işletme" className="mb-6">
+          <h3 className="mobile-menu-heading">İşletme</h3>
+          <div className="space-y-3">
+            <UniSelect variant="field" caption="Otel" ariaLabel="Otel seçimi"
+              icon={<NavigationIcon name="facility" size={18} />}
+              value={snapshot.hotel_id}
+              options={snapshot.hotels.map((hotel) => ({ value: hotel.hotel_id, label: hotel.name }))}
+              onChange={(hotel_id) => onSelection({ hotel_id })} />
+            <UniSelect key={snapshot.hotel_id} variant="field" caption="Tesis" ariaLabel="Tesis seçimi"
+              icon={<NavigationIcon name="units" size={18} />}
+              value={snapshot.branch_id}
+              options={snapshot.branches.map((branch) => ({ value: branch.branch_id ?? "", label: branch.name }))}
+              onChange={(branch_id) => onSelection({ hotel_id: snapshot.hotel_id, branch_id })} />
+          </div>
+        </section>
+        {groups.map((group) => (
+          <section key={group.id} aria-label={group.label} className="mb-6">
+            <h3 className="mobile-menu-heading">{group.label}</h3>
+            <div className="mobile-menu-group">
+              {(group.subItems ?? [group]).map((item) => (
+                <button key={item.id} type="button" onClick={() => pick(item.id)} aria-current={activeTab === item.id ? "page" : undefined}
+                  className="mobile-menu-row">
+                  <span className="mobile-menu-icon"><NavigationIcon name={item.id} /></span>
+                  <span className="min-w-0 flex-1">{item.label}</span>
+                  {activeTab === item.id ? <Check size={18} className="shrink-0 text-brand-blue-600" /> : <ChevronRight size={17} className="shrink-0 text-slate-300" />}
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
+        <button type="button" data-destructive="true" className="mobile-menu-row w-full rounded-2xl bg-white"
+          onClick={() => { pendingLogout.current = true; setSheetOpen(false); }}>
+          <span className="mobile-menu-icon bg-red-50 text-red-600"><LogOut size={20} /></span>
+          <span>Oturumu kapat</span>
+        </button>
+      </BottomSheet>
+    </>
+  );
+}

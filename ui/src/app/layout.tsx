@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ConfirmDialogHost } from "../components/ConfirmDialog";
+import { I18nProvider } from "../components/I18n";
+import { NotificationProvider } from "../components/Toast";
 import "../index.css";
 
 // Inter variable — latin-ext Türkçe (ğ, ş, İ, ı, ç, ö, ü) için şart.
@@ -15,6 +17,13 @@ export const metadata: Metadata = {
   title: "INTERACTIVEOTEL",
   description: "Otel, tesis ve oda yönetimi",
 };
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f5f5f7",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -23,8 +32,12 @@ export default function RootLayout({
   return (
     <html lang="tr" className={inter.variable}>
       <body>
-        {children}
-        <ConfirmDialogHost />
+        <I18nProvider>
+          <NotificationProvider>
+          {children}
+          <ConfirmDialogHost />
+          </NotificationProvider>
+        </I18nProvider>
       </body>
     </html>
   );

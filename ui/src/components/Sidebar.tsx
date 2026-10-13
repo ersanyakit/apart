@@ -1,6 +1,7 @@
 import React, { useState, useId } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
+import { NavigationIcon } from "./NavigationIcon";
 import { MenuItem } from "../types";
 
 interface SidebarItemProps {
@@ -34,7 +35,20 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
     if (hasActiveSubItem) setIsExpanded(true);
   }, [activeTab, hasActiveSubItem]);
 
-  const isParentActive = !!hasActiveSubItem || isExpanded;
+  const isParentActive = !!hasActiveSubItem || activeTab === item.id;
+
+  if (!isOpen) {
+    return <div className="space-y-1">
+      {(item.subItems ?? [item]).map((entry) => (
+        <button key={entry.id} type="button" title={entry.label} aria-label={entry.label}
+          aria-current={activeTab === entry.id ? "page" : undefined}
+          onClick={() => onSelect(entry.id)}
+          className={`nav-rail-item ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-700" : "text-slate-500 hover:bg-black/[0.04]"}`}>
+          <NavigationIcon name={entry.id} />
+        </button>
+      ))}
+    </div>;
+  }
 
   return (
     <div className="space-y-1">
@@ -43,7 +57,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
         aria-expanded={item.subItems ? isExpanded && isOpen : undefined}
         aria-controls={item.subItems ? submenuId : undefined}
         aria-label={typeof item.label === "string" ? item.label : undefined}
-        aria-current={hasActiveSubItem ? "true" : undefined}
+        aria-current={!item.subItems && activeTab === item.id ? "page" : undefined}
         title={typeof item.label === "string" ? item.label : undefined}
         onClick={() => {
           if (item.subItems) {
@@ -54,7 +68,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
           }
         }}
         className={`uni-control uni-menu-item
-          w-full flex items-center gap-2 min-h-12 px-3 py-3 rounded-xl
+          w-full min-w-0 flex items-center gap-2 min-h-11 px-3 py-2.5 rounded-xl
              group select-none cursor-pointer active:scale-[0.98]
           outline-none
           ${!isOpen ? "justify-center px-0" : ""}
@@ -67,7 +81,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
           {item.icon}
         </div>
         {isOpen && (
-          <span className="uni-nav-parent flex-1 text-left">
+          <span className="uni-nav-parent min-w-0 flex-1 text-left">
             {item.label}
           </span>
         )}
@@ -90,7 +104,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: reducedMotion ? 0 : 0.18, ease: [0.32, 0.72, 0, 1] }}
-            className="overflow-hidden pl-9 pr-1 py-1 space-y-1"
+            className="overflow-hidden pl-3 pr-1 py-1 space-y-1"
           >
             {item.subItems.map((sub) => {
               const isActive = activeTab === sub.id;

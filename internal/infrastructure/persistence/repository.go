@@ -42,10 +42,36 @@ func (r *Repository) FindSessionUser(ctx context.Context, id string, userID uuid
 	return u, translate(err)
 }
 func (r *Repository) CreateSession(ctx context.Context, s identity.Session) error {
-	return translate(r.db.WithContext(ctx).Create(&models.Session{ID: s.ID, UserID: s.UserID, ExpiresAt: s.ExpiresAt}).Error)
+	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var user models.User
+		if err := tx.Select("user_id", "hotel_id").First(&user, "user_id = ?", s.UserID).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(&models.Session{ID: s.ID, UserID: s.UserID, ExpiresAt: s.ExpiresAt}).Error; err != nil {
+			return err
+		}
+		return recordAudit(tx, user.HotelID, "login", "users", user.UserID, nil)
+	}))
 }
 func (r *Repository) DeleteSession(ctx context.Context, id string) error {
-	return translate(r.db.WithContext(ctx).Delete(&models.Session{}, "id = ?", id).Error)
+	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var session models.Session
+		if err := tx.First(&session, "id = ?", id).Error; err != nil {
+			return err
+		}
+		var user models.User
+		if err := tx.Unscoped().Select("user_id", "hotel_id").First(&user, "user_id = ?", session.UserID).Error; err != nil {
+			return err
+		}
+		result := tx.Delete(&models.Session{}, "id = ?", id)
+		if result.Error != nil {
+			return result.Error
+		}
+		if result.RowsAffected == 0 {
+			return nil
+		}
+		return recordAudit(tx, user.HotelID, "logout", "users", user.UserID, nil)
+	}))
 }
 
 func (r *Repository) ListHotels(ctx context.Context, u identity.User) ([]property.Hotel, error) {
