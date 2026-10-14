@@ -92,3 +92,26 @@ test('early arrival is visible now while planned arrival remains tomorrow', () =
   assert.equal(state.current.length,1);
   assert.equal(state.upcoming,false);
 });
+
+test('a clean parent exposes the dirty bed that prevents early arrival', () => {
+  const bed={...room,room_id:'bed',parent_id:'r1',kind:'bed',code:'301-Y67873EA2-1-1',status:'Kirli'};
+  const state=roomBoardState([room,bed],[booking()],room,'2026-10-13T10:00:00Z');
+  assert.equal(state.operationalStatus,'Kirli');
+  assert.equal(state.blockingUnit.room_id,'bed');
+  const markup=renderToStaticMarkup(React.createElement(RoomStatusCard,{room,state,now,busy:false,onOpenBooking(){},onContextMenu(){}}));
+  assert.ok(markup.includes('301-Y67873EA2-1-1 birimi: Kirli'));
+  assert.ok(!markup.includes('>Temiz<'));
+  const cleaned=roomBoardState([room,{...bed,status:'Temiz'}],[],room,now);
+  assert.equal(cleaned.operationalStatus,'Temiz');
+  assert.equal(cleaned.blockingUnit,undefined);
+});
+
+test('operational status includes ancestors but not sibling beds', () => {
+  const clean={...room,room_id:'bed1',parent_id:'r1',kind:'bed'};
+  const dirty={...clean,room_id:'bed2',status:'Kirli'};
+  assert.equal(roomBoardState([room,clean,dirty],[],clean,now).operationalStatus,'Temiz');
+  assert.equal(roomBoardState([{...room,status:'Kirli'},clean,dirty],[],clean,now).operationalStatus,'Kirli');
+  const state=roomBoardState([room,clean,dirty,{...clean,room_id:'bed3',status:'Arizali'}],[],room,now);
+  assert.equal(state.operationalStatus,'Arizali');
+  assert.equal(state.tone,'warning');
+});

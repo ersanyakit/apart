@@ -277,29 +277,10 @@ func markDirty(tx *gorm.DB, branchID, roomID uuid.UUID) error {
 	if err != nil {
 		return err
 	}
-	ids := []uuid.UUID{roomID}
-	// Mark the rented unit and its descendants; ancestors are not dirtied when a bed is released.
-	for _, room := range rooms {
-		if room.RoomID != roomID && property.Related(rooms, room.RoomID)[roomID] {
-			current := room
-			for current.ParentID != nil {
-				if *current.ParentID == roomID {
-					ids = append(ids, room.RoomID)
-					break
-				}
-				found := false
-				for _, p := range rooms {
-					if p.RoomID == *current.ParentID {
-						current = p
-						found = true
-						break
-					}
-				}
-				if !found {
-					break
-				}
-			}
-		}
+	ids := []uuid.UUID{}
+	// Checkout and housekeeping act on the same unit subtree.
+	for id := range property.Descendants(rooms, roomID) {
+		ids = append(ids, id)
 	}
 	return tx.Model(&models.Room{}).Where("room_id IN ?", ids).Update("status", "Kirli").Error
 }

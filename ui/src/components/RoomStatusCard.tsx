@@ -58,7 +58,8 @@ export function RoomStatusCard({ room, state, now, day, floorName, busy, onOpenB
       <div className="room-status-heading"><h3>{room.code}</h3><p>{[unitKinds[room.kind], floorName].filter(Boolean).join(" · ")}</p></div>
       <button type="button" className="nav-icon-button" aria-label={`${room.code} işlemleri`} onClick={e => { const rect = e.currentTarget.getBoundingClientRect(); onContextMenu({ preventDefault() {}, clientX: rect.left, clientY: rect.bottom }); }}><MoreHorizontal size={20} /></button>
     </header>
-    <div className="room-status-state"><span className="room-status-badge">{state.label}</span><span className="room-status-housekeeping">{state.upcoming ? "Şu an boş · " : ""}{room.status === "Bos" ? "Boş" : room.status === "Arizali" ? "Arızalı" : room.status === "Rezervli" || room.status === "Dolu" ? "" : room.status}</span></div>
+    <div className="room-status-state"><span className="room-status-badge">{state.label}</span><span className="room-status-housekeeping">{state.upcoming ? "Şu an boş · " : ""}{state.operationalStatus === "Bos" ? "Boş" : state.operationalStatus === "Arizali" ? "Arızalı" : state.operationalStatus === "Rezervli" || state.operationalStatus === "Dolu" ? "" : state.operationalStatus}</span></div>
+    {state.blockingUnit && state.blockingUnit.room_id !== room.room_id && <p className="room-status-housekeeping">{state.blockingUnit.code} birimi: {state.operationalStatus === "Arizali" ? "Arızalı" : state.operationalStatus === "Tadilat" ? "Tadilatta" : "Kirli"}</p>}
     {state.bookings.slice(0, 2).map(bookingSummary)}
     {state.bookings.length > 2 && <details className="room-status-more"><summary>{state.bookings.length - 2} rezervasyon daha</summary>{state.bookings.slice(2).map(bookingSummary)}</details>}
     {!state.bookings.length && <p className="room-status-empty">{day ? "Seçilen gün için rezervasyon veya konaklama yok." : "Aktif veya yaklaşan rezervasyon yok."}</p>}

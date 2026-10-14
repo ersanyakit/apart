@@ -891,7 +891,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                         {housekeeping && !state.current.length && (
                           <RoomStatusPicker
                             roomCode={room.code}
-                            status={room.status}
+                            status={state.operationalStatus}
                             canSetAdvanced={operator}
                             onPick={status=>changeRoomState(room,status)}
                           />

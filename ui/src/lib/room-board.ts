@@ -1,6 +1,8 @@
 import { bookingIntervals, occupancy, related, type APIRoom, type Booking } from "./api";
 
 export type RoomBoardState = {
+  operationalStatus: string;
+  blockingUnit?: APIRoom;
   current: Booking[];
   bookings: Booking[];
   upcoming: boolean;
@@ -22,10 +24,16 @@ export function roomBoardState(rooms: APIRoom[], bookings: Booking[], room: APIR
   const displayed = day ? relevant : current;
   const occupied = displayed.some(b => b.status === "checked_in");
   const reserved = relevant.some(b => b.status === "confirmed");
-  const warning = ["Kirli", "Arizali", "Tadilat"].includes(room.status);
+  // Match the server check-in scope: this unit, its ancestors and descendants.
+  // Sibling beds stay independent.
+  const blockingUnit = ["Arizali", "Tadilat", "Kirli"].map(status =>
+    rooms.find(unit => unit.branch_id === room.branch_id && ids.has(unit.room_id) && unit.status === status)
+  ).find(Boolean);
+  const operationalStatus = blockingUnit?.status ?? room.status;
+  const warning = !!blockingUnit;
   return {
-    current, bookings: relevant, upcoming,
-    label: occupied ? "Giriş yapıldı" : reserved ? (upcoming ? "Yaklaşan rezervasyon" : "Rezerve") : relevant.length ? "Çıkış yapıldı" : room.inactive ? "Pasif" : warning ? ({ Kirli: "Kirli", Arizali: "Arızalı", Tadilat: "Tadilatta" }[room.status] || room.status) : "Boş",
+    operationalStatus, blockingUnit, current, bookings: relevant, upcoming,
+    label: occupied ? "Giriş yapıldı" : reserved ? (upcoming ? "Yaklaşan rezervasyon" : "Rezerve") : relevant.length ? "Çıkış yapıldı" : room.inactive ? "Pasif" : warning ? ({ Kirli: "Kirli", Arizali: "Arızalı", Tadilat: "Tadilatta" }[operationalStatus] || operationalStatus) : "Boş",
     tone: occupied ? "occupied" : reserved ? "reserved" : relevant.length || room.inactive ? "neutral" : warning ? "warning" : "available",
   };
 }

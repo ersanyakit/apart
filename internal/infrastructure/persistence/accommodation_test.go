@@ -65,6 +65,78 @@ func TestAccommodation(t *testing.T) {
 	reserve := func(roomID uuid.UUID, count int, in, out time.Time) (booking.Booking, error) {
 		return service.SaveBooking(ctx, admin, booking.Booking{BranchID: branch.BranchID, RoomID: roomID, GuestName: "Misafir", GuestCount: count, CheckIn: in, CheckOut: out}, true)
 	}
+	t.Run("whole room cleaning clears nested beds before early check-in", func(t *testing.T) {
+		parent := unit("CLEAN-APART", "apartment", nil, 1)
+		selected := unit("301-CLEAN", "room", &parent.RoomID, 1)
+		child := unit("301-Y67873EA2-1-1", "bed", &selected.RoomID, 1)
+		second := unit("301-CLEAN-2", "bed", &selected.RoomID, 1)
+		sibling := unit("302-CLEAN", "room", &parent.RoomID, 1)
+		setState := func(id uuid.UUID, status string) {
+			t.Helper()
+			if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: id, Status: status, StatusReason: "Test temizlik ve bakım açıklaması"}); err != nil {
+				t.Fatal(err)
+			}
+		}
+		assertState := func(id uuid.UUID, status string) {
+			t.Helper()
+			r, err := repo.FindRoom(ctx, id)
+			if err != nil || r.Status != status {
+				t.Fatalf("unit %s: want %s, got %s (%v)", id, status, r.Status, err)
+			}
+		}
+		setState(child.RoomID, "Kirli")
+		setState(sibling.RoomID, "Kirli")
+		planned := now.Add(24 * time.Hour)
+		b, err := reserve(selected.RoomID, 2, planned, planned.Add(48*time.Hour))
+		if err != nil {
+			t.Fatal(err)
+		}
+		input := booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "check_in"}
+		if _, err := service.Transition(ctx, admin, input); !errors.Is(err, constants.ErrRoomDirty) {
+			t.Fatalf("dirty child must prevent early check-in: %v", err)
+		}
+		// Selecting Temiz on an already-clean parent must also clean its dirty bed.
+		setState(selected.RoomID, "Temiz")
+		assertState(child.RoomID, "Temiz")
+		assertState(second.RoomID, "Temiz")
+		assertState(parent.RoomID, "Temiz")
+		assertState(sibling.RoomID, "Kirli")
+		arrived, err := service.Transition(ctx, admin, input)
+		if err != nil || arrived.Status != booking.CheckedIn || arrived.ActualCheckIn == nil || !arrived.ActualCheckIn.Before(planned) || !arrived.CheckIn.Equal(planned) {
+			t.Fatalf("early check-in after room cleaning: %+v (%v)", arrived, err)
+		}
+		setState(selected.RoomID, "Kirli")
+		assertState(child.RoomID, "Kirli")
+		assertState(second.RoomID, "Kirli")
+		// A leaf cleaning action must not clean its parent or sibling bed.
+		setState(child.RoomID, "Temiz")
+		assertState(selected.RoomID, "Kirli")
+		assertState(second.RoomID, "Kirli")
+	})
+	t.Run("whole unit cleaning preserves maintenance closures", func(t *testing.T) {
+		parent := unit("MAINT-CLEAN", "apartment", nil, 1)
+		child := unit("MAINT-ROOM", "room", &parent.RoomID, 1)
+		bed := unit("MAINT-BED", "bed", &child.RoomID, 1)
+		for _, status := range []string{"Arizali", "Tadilat"} {
+			if err := repo.SaveOperationalState(ctx, child.RoomID, status, "Bakım kaydı korunmalıdır."); err != nil {
+				t.Fatal(err)
+			}
+			if err := repo.SaveOperationalState(ctx, bed.RoomID, "Kirli", ""); err != nil {
+				t.Fatal(err)
+			}
+			if err := repo.SaveOperationalState(ctx, parent.RoomID, "Temiz", ""); err != nil {
+				t.Fatal(err)
+			}
+			got, err := repo.FindRoom(ctx, child.RoomID)
+			if err != nil || got.Status != status || got.StatusReason != "Bakım kaydı korunmalıdır." {
+				t.Fatalf("maintenance closure was cleared: %+v %v", got, err)
+			}
+			cleaned, err := repo.FindRoom(ctx, bed.RoomID)
+			if err != nil || cleaned.Status != "Temiz" {
+				t.Fatalf("nested bed was not cleaned: %+v %v", cleaned, err)
+			}
+		}
+	})
 	t.Run("capacity and tree validation", func(t *testing.T) {
 		rooms, err := repo.ListRooms(ctx, branch.BranchID)
 		if err != nil {

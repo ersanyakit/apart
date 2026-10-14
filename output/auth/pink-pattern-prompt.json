@@ -1,0 +1,5 @@
+{
+  "tool": "built-in image_gen",
+  "prompt": "Recolor this existing repeating hotel-symbol wallpaper tile. Preserve the exact drawings, positions, sizes, spacing, blank edge margins and Day of the Tentacle prop style. ONLY change its color palette: flat very pale blush pink background #FFF3FB and all drawn motifs in soft rose-pink and fuchsia tints derived from #FF37C7 and #F50DB4. Remove cyan, blue, purple and mint from this BACKGROUND TILE, because it will sit behind a contrasting cyan/purple foreground illustration. Maintain low contrast light pastel motifs, subtle and readable, never saturated dominant pink or dark. Uniform #FFF3FB at ALL FOUR edges so seamless repeat has no borders. No new objects, people, faces, emojis or text. Square image.",
+  "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-e01301a9-2e1f-4c48-a8ab-c7d0a3a4291b.png"
+}

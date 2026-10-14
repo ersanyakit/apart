@@ -27,3 +27,6 @@
   .ctaLayout { padding: 0 4px; text-align: center; }
   .sectionArtwork { border-radius: 20px; }
 }
+/* Shared navigation accommodates all public pages on tablet widths. */
+.desktopNav a[aria-current="page"]{color:var(--ink)}
+@media (min-width:761px) and (max-width:1050px){.desktopNav{display:none}.menuButton{display:flex}}

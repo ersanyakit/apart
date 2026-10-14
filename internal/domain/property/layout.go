@@ -83,12 +83,19 @@ func Related(rooms []Room, id uuid.UUID) map[uuid.UUID]bool {
 		}
 		out[current] = true
 	}
-	descendants := map[uuid.UUID]bool{id: true}
+	for descendant := range Descendants(rooms, id) {
+		out[descendant] = true
+	}
+	return out
+}
+
+// Descendants includes the selected unit and its children, never ancestors or siblings.
+func Descendants(rooms []Room, id uuid.UUID) map[uuid.UUID]bool {
+	out := map[uuid.UUID]bool{id: true}
 	for changed := true; changed; {
 		changed = false
 		for _, r := range rooms {
-			if r.ParentID != nil && descendants[*r.ParentID] && !descendants[r.RoomID] {
-				descendants[r.RoomID] = true
+			if r.ParentID != nil && out[*r.ParentID] && !out[r.RoomID] {
 				out[r.RoomID] = true
 				changed = true
 			}

@@ -353,6 +353,22 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 				return constants.ErrStructureInUse
 			}
 		}
+		if status == "Temiz" || status == "Kirli" {
+			rooms, err := inventory(tx, row.BranchID)
+			if err != nil {
+				return err
+			}
+			ids := []uuid.UUID{}
+			for childID := range property.Descendants(rooms, id) {
+				ids = append(ids, childID)
+			}
+			// Cleaning the whole unit includes its beds, just as checkout does.
+			// A cleaning action must not reopen a child closed for maintenance.
+			return tx.Model(&models.Room{}).
+				Where("branch_id = ? AND room_id IN ?", row.BranchID, ids).
+				Where("room_id = ? OR status NOT IN ?", id, []string{"Arizali", "Tadilat"}).
+				Updates(map[string]any{"status": status, "status_reason": reason}).Error
+		}
 		return tx.Model(&models.Room{}).Where("room_id = ?", id).Updates(map[string]any{"status": status, "status_reason": reason}).Error
 	}))
 }

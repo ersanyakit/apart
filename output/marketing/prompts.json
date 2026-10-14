@@ -1,0 +1,20 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "name": "pricing",
+      "prompt": "Single landscape 1536x1024 editorial illustration for hotel management website. Day of the Tentacle 1993 adventure game cartoon style: wonky exaggerated perspective, hand-inked curved black contours, elongated prop silhouettes, flat cel colors, white highlights. Cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB with white and pale tints. Bright airy pastel backdrop, never dark. Clean restrained arrangement with generous margins. No characters, no emoji, no lettering, no readable numbers, no watermark. Not 3D render, not corporate vector. Hotel software pricing concept: a large crooked cyan calculator, an open white ledger with simple lavender lines, and a single mint hotel room key with a pink blank price tag. Pale lavender background. Just these three objects, fully visible, asymmetrical composition.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-6d7b379e-810e-4542-a56e-31cd69f071a4.png"
+    },
+    {
+      "name": "contact",
+      "prompt": "Single landscape 1536x1024 editorial illustration for hotel management website. Day of the Tentacle 1993 adventure game cartoon style: wonky exaggerated perspective, hand-inked curved black contours, elongated prop silhouettes, flat cel colors, white highlights. Cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB with white and pale tints. Bright airy pastel backdrop, never dark. Clean restrained arrangement with generous margins. No characters, no emoji, no lettering, no readable numbers, no watermark. Not 3D render, not corporate vector. Hotel contact concept: a whimsical mint vintage reception telephone with long curved handset, a large white open envelope containing a blank pink card, and a small cyan reception bell. Pale blush backdrop. Only these three objects, fully visible, no extra scenery.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-e15f9990-7541-4119-8b47-1e7086c794ab.png"
+    },
+    {
+      "name": "gallery",
+      "prompt": "Single landscape 1536x1024 editorial illustration for hotel management website. Day of the Tentacle 1993 adventure game cartoon style: wonky exaggerated perspective, hand-inked curved black contours, elongated prop silhouettes, flat cel colors, white highlights. Cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB with white and pale tints. Bright airy pastel backdrop, never dark. Clean restrained arrangement with generous margins. No characters, no emoji, no lettering, no readable numbers, no watermark. Not 3D render, not corporate vector. Hotel software gallery concept: one comically skewed white desktop monitor with a cyan frame showing a simple miniature white hotel with pink roof and mint windows, a lavender magnifying glass resting in front. Pale cyan backdrop. Two large objects, simple illustration, no fake software interface.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-37c29913-049f-4ea8-b55c-3f4de3f9a989.png"
+    }
+  ]
+}
