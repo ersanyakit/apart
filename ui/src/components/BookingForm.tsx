@@ -1,3 +1,4 @@
+import type { Guest } from "../types";
 import { BookingBlacklistCheck } from "./GuestAssessment";
 import React, { useState } from "react";
 import {
@@ -21,6 +22,7 @@ import {
   buttonStyle,
   secondaryStyle,
 } from "./FormKit";
+const genderOptions = [{ value: '', label: 'Belirtilmemiş' }, { value: 'female', label: 'Kadın' }, { value: 'male', label: 'Erkek' }, { value: 'unspecified', label: 'Belirtmek istemiyor' }];
 export const localDate = (iso: string) => {
   const d = new Date(iso);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
@@ -62,6 +64,7 @@ const endForNights = (
   return toLocalInputValue(d);
 };
 import {
+  InlineSelectField,
   StepperField,
   DateField,
   GuestNameField,
@@ -454,6 +457,7 @@ export function BookingForm({
                 )
               }
             />
+            <InlineSelectField label="Cinsiyet" value={g.gender || ''} onChange={v => setGuests(guests.map(item => item.id === g.id ? { ...item, gender: v as Guest['gender'] } : item))} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"
@@ -770,6 +774,7 @@ export function BookingGuestsForm({
               value={g.tcNo || ""}
               onChange={(v) => patch(i, { tcNo: v })}
             />
+            <InlineSelectField label="Cinsiyet" value={g.gender || ''} onChange={v => patch(i, { gender: v as Guest['gender'] })} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"

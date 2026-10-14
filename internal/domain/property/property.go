@@ -59,6 +59,7 @@ type Branch struct {
 	Assets   []media.Asset `json:"assets"`
 }
 type Guest struct {
+	Gender       string `json:"gender,omitempty"`
 	Relationship string `json:"relationship,omitempty"`
 	ID           string `json:"id"`
 	Name         string `json:"name"`
@@ -69,6 +70,7 @@ type Guest struct {
 	Nationality  string `json:"nationality,omitempty"`
 }
 type Room struct {
+	RentalMode string `json:"rental_mode"`
 	// NewBeds is a command-only addition saved atomically with the room, never a replacement of existing beds.
 	NewBeds            []accommodation.Bed    `json:"beds_to_add,omitempty"`
 	StatusReason       string                 `json:"status_reason"`
@@ -100,6 +102,10 @@ type Room struct {
 }
 
 func (r Room) Validate() error {
+	if r.RentalMode != "" && (r.RentalMode != "room" && r.RentalMode != "beds" || r.Kind != "room" && r.Kind != "dormitory") {
+		return apperrors.ErrPayload
+	}
+
 	if len(r.NewBeds) > 100 || (r.Kind == "bed" && len(r.NewBeds) > 0) {
 		return apperrors.ErrPayload
 	}

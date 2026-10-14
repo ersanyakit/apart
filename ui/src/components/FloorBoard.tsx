@@ -34,7 +34,7 @@ export function FloorBoard({
   onOpenBooking?: (booking: Booking) => void;
 }) {
   const floor = snapshot.floors.find((f) => f.floor_id === floorId)!;
-  const rooms = snapshot.rooms.filter((r) => r.floor_id === floorId);
+  const rooms = snapshot.rooms.filter((r) => r.floor_id === floorId && (onEdit || r.rentable !== false));
   const [editing, setEditing] = useState(false);
   const [positions, setPositions] = useState<Record<string, Position>>({});
   const [busy, setBusy] = useState(false);

@@ -2,10 +2,12 @@ package persistence_test
 
 import (
 	"context"
+	"errors"
 	"github.com/google/uuid"
 	"otel/constants"
 	"otel/internal/application"
 	"otel/internal/domain/accommodation"
+	"otel/internal/domain/booking"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/property"
 	"otel/internal/infrastructure/persistence"
@@ -13,6 +15,7 @@ import (
 	"otel/internal/testdb"
 	"otel/migrations"
 	"testing"
+	"time"
 )
 
 func TestRoomWithBedsAtomicSave(t *testing.T) {
@@ -72,6 +75,82 @@ func TestRoomWithBedsAtomicSave(t *testing.T) {
 	if len(beds) != 2 {
 		t.Fatal("partial beds survived rollback")
 	}
+	t.Run("exclusive rental modes and future bed additions", func(t *testing.T) {
+		current, err := repo.FindRoom(ctx, saved.RoomID)
+		if err != nil {
+			t.Fatal(err)
+		}
+		current.RentalMode = "beds"
+		current, err = catalog.SaveRoom(ctx, admin, current, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if current.Rentable || current.RentalMode != "beds" {
+			t.Fatal("room still for sale")
+		}
+		beds, _ := repo.ListBeds(ctx, branch)
+		for _, b := range beds {
+			for _, p := range b.Places {
+				if !p.Rentable {
+					t.Fatal("bed not for sale")
+				}
+			}
+		}
+		current.RentalMode = "room"
+		current, err = catalog.SaveRoom(ctx, admin, current, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !current.Rentable {
+			t.Fatal("room not for sale")
+		}
+		beds, _ = repo.ListBeds(ctx, branch)
+		for _, b := range beds {
+			for _, p := range b.Places {
+				if p.Rentable {
+					t.Fatal("room bed sold separately")
+				}
+			}
+		}
+		service := application.Beds{Catalog: &catalog, Repository: repo}
+		extra := bed("LATER")
+		extra.BranchID = branch
+		extra.RoomID = &current.RoomID
+		extra.Places[0].Rentable = true
+		added, err := service.Save(ctx, admin, extra, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if added.Places[0].Rentable {
+			t.Fatal("later bed bypassed room rental mode")
+		}
+		reservations := application.Accommodation{Catalog: &catalog, Bookings: repo}
+		_, err = reservations.SaveBooking(ctx, admin, booking.Booking{BranchID: branch, RoomID: current.RoomID, GuestName: "Mode guard", GuestCount: 1, CheckIn: time.Now().Add(time.Hour), CheckOut: time.Now().Add(24 * time.Hour)}, true)
+		if err != nil {
+			t.Fatal(err)
+		}
+		current.RentalMode = "beds"
+		if _, err = catalog.SaveRoom(ctx, admin, current, false); !errors.Is(err, constants.ErrStructureInUse) {
+			t.Fatalf("reservation guard: %v", err)
+		}
+		unchanged, _ := repo.FindRoom(ctx, current.RoomID)
+		if unchanged.RentalMode != "room" || !unchanged.Rentable {
+			t.Fatal("failed mode change was persisted")
+		}
+
+		empty := room
+		empty.Code = "EMPTY-BEDS"
+		empty.NewBeds = nil
+		empty.RentalMode = "beds"
+		if _, err := catalog.SaveRoom(ctx, admin, empty, true); err == nil {
+			t.Fatal("bed-only room without beds accepted")
+		}
+		db.Model(&models.Room{}).Where("branch_id = ? AND code = ?", branch, "EMPTY-BEDS").Count(&count)
+		if count != 0 {
+			t.Fatal("empty bed-only room not rolled back")
+		}
+	})
+
 	receptionist := admin
 	receptionist.Role = constants.UserRoleReception
 	if _, err := catalog.SaveRoom(ctx, receptionist, room, true); err == nil {

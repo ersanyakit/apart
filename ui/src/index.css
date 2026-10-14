@@ -845,4 +845,12 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 .app-toast-icon { display:grid; place-items:center; width:36px; height:36px; flex-shrink:0; border-radius:12px; color:var(--toast-accent); background:var(--toast-tint); }
 .app-toast p { flex:1; min-width:0; font-size:13px; font-weight:500; line-height:1.6; overflow-wrap:anywhere; color:var(--color-uni-ink); }
 .app-toast-close { flex-shrink:0; color:var(--color-uni-muted); }
+
+/* 3D geniş görünüm: tarayıcı tam ekranı değil, yalnızca uygulama
+   kromu (başlık + menüler) gizlenir; sahne kalan alana yayılır. */
+.app-shell:has(.property-wide) .desktop-app-header,
+.app-shell:has(.property-wide) .desktop-sidebar,
+.app-shell:has(.property-wide) .mobile-app-header,
+.app-shell:has(.property-wide) .mobile-tab-bar { display:none !important; }
+.app-shell:has(.property-wide) .property-stage { flex:1; min-height:0; }
 @media(max-width:639px) { .app-toast-stack { top:max(12px,env(safe-area-inset-top)); right:max(12px,env(safe-area-inset-right)); width:calc(100vw - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right))); } }

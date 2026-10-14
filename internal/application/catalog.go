@@ -262,12 +262,18 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 		if old.BranchID != item.BranchID {
 			return item, constants.ErrForbidden
 		}
+		if item.RentalMode == "" && (item.Kind == "room" || item.Kind == "dormitory") {
+			item.RentalMode = old.RentalMode
+		}
 		item.Status = old.Status
 		item.StatusReason = old.StatusReason
 		item.Name = old.Name
 		item.CheckIn = old.CheckIn
 		item.CheckOut = old.CheckOut
 		item.Guests = old.Guests
+	}
+	if item.RentalMode != "" {
+		item.Rentable = item.RentalMode == "room"
 	}
 	if err := item.Validate(); err != nil {
 		return item, err

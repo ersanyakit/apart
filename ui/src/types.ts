@@ -2,6 +2,7 @@ import type { MediaAsset, FeatureAssignment, LocalizedString } from './lib/api';
 export type RoomStatus = 'Rezervli' | 'Dolu' | 'Bos' | 'Temiz' | 'Kirli' | 'Arizali' | 'Tadilat';
 
 export interface Guest {
+  gender?: '' | 'female' | 'male' | 'unspecified';
   relationship?: string;
   /** Uyruk: ISO 3166-1 alpha-2 ülke kodu (örn. "TR"). */
   nationality?: string;

@@ -48,7 +48,10 @@ func (s *Beds) Save(ctx context.Context, u identity.User, b accommodation.Bed, c
 	if err := b.Validate(); err != nil {
 		return b, err
 	}
-	return b, s.Repository.SaveBeds(ctx, []accommodation.Bed{b}, create)
+	if err := s.Repository.SaveBeds(ctx, []accommodation.Bed{b}, create); err != nil {
+		return b, err
+	}
+	return s.Repository.FindBed(ctx, b.BedID)
 }
 func (s *Beds) Delete(ctx context.Context, u identity.User, id uuid.UUID) error {
 	if !u.IsManager() {

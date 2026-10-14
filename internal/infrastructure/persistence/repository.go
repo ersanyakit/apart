@@ -179,6 +179,18 @@ func (r *Repository) SaveRoom(ctx context.Context, item property.Room, create bo
 		if err := lockBranch(tx, item.BranchID); err != nil {
 			return err
 		}
+		if item.RentalMode != "" {
+			item.Rentable = item.RentalMode == "room"
+		}
+		if item.Kind == "bed" && item.ParentID != nil {
+			var parent models.Room
+			if err := tx.First(&parent, "room_id = ? AND branch_id = ?", *item.ParentID, item.BranchID).Error; err != nil {
+				return err
+			}
+			if parent.RentalMode != "" {
+				item.Rentable = parent.RentalMode == "beds"
+			}
+		}
 		if err := validateRoomStructure(tx, item, create); err != nil {
 			return err
 		}
@@ -219,6 +231,33 @@ func (r *Repository) SaveRoom(ctx context.Context, item property.Room, create bo
 			}
 			if err := repo.SaveBeds(ctx, item.NewBeds, true); err != nil {
 				return err
+			}
+		}
+		if item.RentalMode != "" {
+			var children []models.Room
+			if err := tx.Where("branch_id = ? AND parent_id = ? AND kind = 'bed'", item.BranchID, item.RoomID).Find(&children).Error; err != nil {
+				return err
+			}
+			active := 0
+			for _, child := range children {
+				if !child.Inactive {
+					active++
+				}
+				rentable := item.RentalMode == "beds"
+				if child.Rentable == rentable {
+					continue
+				}
+				updated := fromRoom(child)
+				updated.Rentable = rentable
+				if err := validateRoomStructure(tx, updated, false); err != nil {
+					return err
+				}
+				if err := tx.Model(&models.Room{}).Where("room_id = ?", child.RoomID).Update("rentable", rentable).Error; err != nil {
+					return err
+				}
+			}
+			if item.RentalMode == "beds" && active == 0 {
+				return constants.ErrBed
 			}
 		}
 		if create && item.Kind == "bed" {

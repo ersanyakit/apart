@@ -66,11 +66,13 @@ func (r *Repository) SaveBeds(ctx context.Context, beds []accommodation.Bed, cre
 			if err := lockBranch(tx, b.BranchID); err != nil {
 				return err
 			}
+			rentalMode := ""
 			if b.RoomID != nil {
 				var parent models.Room
 				if err := tx.First(&parent, "room_id = ? AND branch_id = ?", *b.RoomID, b.BranchID).Error; err != nil {
 					return err
 				}
+				rentalMode = parent.RentalMode
 				if parent.Kind == "bed" {
 					return constants.ErrHierarchy
 				}
@@ -129,6 +131,9 @@ func (r *Repository) SaveBeds(ctx context.Context, beds []accommodation.Bed, cre
 					}
 				}
 				unit.FloorID, unit.ParentID, unit.Code, unit.Capacity, unit.Rentable, unit.Inactive, unit.BedLevel, unit.BedGroup = b.FloorID, b.RoomID, p.Code, p.Capacity, p.Rentable, !p.IsActive, p.Level, b.BedID.String()
+				if rentalMode != "" {
+					unit.Rentable = rentalMode == "beds"
+				}
 				if err := unit.Validate(); err != nil {
 					return err
 				}

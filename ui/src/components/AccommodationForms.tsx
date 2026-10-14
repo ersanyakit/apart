@@ -57,6 +57,8 @@ export function UnitForm({
         }
       : blankRoom(snapshot),
   );
+  const [rentalMode, setRentalMode] = useState<"" | "room" | "beds">(room ? room.rental_mode || (room.rentable ? "room" : "beds") : "");
+  const supportsRentalMode = draft.kind === "room" || draft.kind === "dormitory";
   const [bedChoices, setBedChoices] = useState<RoomBedChoice[]>([]);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -70,7 +72,9 @@ export function UnitForm({
         setBusy(true);
         setError("");
         try {
-          const { room_id, effective_capacity, ...payload } = draft;
+          if (supportsRentalMode && !rentalMode) throw new Error("Odanın nasıl kiralanacağını seçin.");
+          if (supportsRentalMode && rentalMode === "beds" && !bedChoices.length && !snapshot.rooms.some(r => r.parent_id === draft.room_id && r.kind === "bed" && !r.inactive)) throw new Error("Yatakları ayrı kiralamak için en az bir yatak ekleyin.");
+          const { room_id, effective_capacity, ...payload } = { ...draft, rental_mode: supportsRentalMode ? rentalMode : "", rentable: supportsRentalMode ? rentalMode === "room" : draft.rentable };
           await command(
             room ? "room.update" : "room.create",
             room ? { ...payload, room_id, beds_to_add: draft.kind === "bed" ? [] : roomBedsPayload(bedChoices, draft.code, draft.branch_id) } : { ...payload, beds_to_add: roomBedsPayload(bedChoices, draft.code, draft.branch_id) },
@@ -176,19 +180,21 @@ export function UnitForm({
           ]}
         />
       )}
-      {draft.kind !== "bed" && <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy} />}
+      {draft.kind !== "bed" && <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy} rentalMode={supportsRentalMode ? rentalMode : ""} />}
       {draft.kind === "bed" && (
         <p className="text-xs text-brand-blue-700">
           Fiziksel yapı ve kapasite için Kat ve Oda Tanımları → Yataklar
           bölümünü kullanın.
         </p>
       )}
-      <Switch
-        label="Bu birim doğrudan kiralanabilir"
-        checked={draft.rentable}
-        disabled={draft.kind === "bed"}
-        onChange={(v) => patch({ rentable: v })}
-      />
+      {supportsRentalMode ? <div className="space-y-2">
+        <InlineSelectField label="Nasıl kiralanacak?" value={rentalMode} disabled={busy} onChange={v => setRentalMode(v as "room" | "beds")} options={[
+          { value: "", label: "Kiralama şeklini seçin" },
+          { value: "room", label: "Odanın tamamı kiralanacak" },
+          { value: "beds", label: "Yataklar ayrı ayrı kiralanacak" },
+        ]} />
+        <p className="text-sm text-uni-muted">{rentalMode === "room" ? "Satış listesinde yalnızca oda görünür. İçindeki yataklar ayrı satılmaz; 3 boyutlu görünümde korunur." : rentalMode === "beds" ? "Satış listesinde yataklar ayrı ayrı görünür. Odanın tamamı ayrıca satışa açılmaz." : "Oda veya yatak bazında satış yapmak istediğinizi seçin."}</p>
+      </div> : <Switch label="Bu birim doğrudan kiralanabilir" checked={draft.rentable} disabled={draft.kind === "bed"} onChange={v => patch({ rentable: v })} />}
       <p className="text-xs text-slate-400">
         Oda ve dairelerde kişi sayısı rezervasyonda belirlenir. Dairenin tamamı
         kiralandığında alt birimlerin aynı tarihleri kapanır. Tek tek kiralanan

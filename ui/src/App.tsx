@@ -294,6 +294,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const roomStates = new globalThis.Map(s.rooms.map(room => [room.room_id, roomBoardState(s.rooms, s.bookings, room, s.server_time, dateFilter)]));
   const visibleRooms = s.rooms.filter(
     (r) =>
+      r.rentable !== false &&
       (!floorId || r.floor_id === floorId) &&
       (!kind || r.kind === kind) &&
       `${r.code} ${r.type} ${unitKinds[r.kind]} ${(roomStates.get(r.room_id)?.bookings || []).map(b => [b.guest_name, ...(b.guests || []).map(g => g.name)].join(" ")).join(" ")}`
@@ -587,9 +588,9 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         )
       }
     >
-      <main ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label="Sayfa içeriği" className="flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6">
+      <main ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label="Sayfa içeriği" className={tab === "property3d" && !settingsEditorOpen ? "flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden" : "flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6"}>
         {settingsEditorOpen && <SettingsEditor icon={modal?.type === "folio" ? <NavigationIcon name="folio"/> : undefined} title={editorTitle} description={modal?.type === "documents" ? "Belge türünü seçin, metni kontrol edin ve çıktınızı oluşturun." : modal?.type === "folio" ? "Hizmetleri kalem kalem ekleyin; borç, tahsilat ve bakiyeyi takip edin." : undefined} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
-        <div hidden={settingsEditorOpen} className="app-page-content space-y-6">
+        <div hidden={settingsEditorOpen} className={tab === "property3d" && !settingsEditorOpen ? "app-page-content flex flex-1 min-h-0 min-w-0 overflow-hidden" : "app-page-content space-y-6"}>
         <AnimatePresence>
           {bookingTab && bookingTabId && (
             <motion.section

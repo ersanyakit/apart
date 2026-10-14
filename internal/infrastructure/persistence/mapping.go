@@ -110,14 +110,14 @@ func fromUser(v models.User) identity.User {
 	return out
 }
 func fromRoom(v models.Room) property.Room {
-	out := property.Room{StatusReason: v.StatusReason, Inactive: v.Inactive, BedLayout: v.BedLayout, FloorID: v.FloorID, ParentID: v.ParentID, Kind: v.Kind, Capacity: v.Capacity, Rentable: v.Rentable, BedGroup: v.BedGroup, BedLevel: v.BedLevel, Position: v.Position, RoomID: v.RoomID, BranchID: v.BranchID, Name: v.Name, Code: v.Code, Status: v.Status, Type: v.Type, Description: shared.LocalizedString(v.Description), Features: v.Features, InventoryIDs: v.InventoryIDs, CheckIn: v.CheckIn, CheckOut: v.CheckOut, Assets: fromAssets(v.Assets)}
+	out := property.Room{RentalMode: v.RentalMode, StatusReason: v.StatusReason, Inactive: v.Inactive, BedLayout: v.BedLayout, FloorID: v.FloorID, ParentID: v.ParentID, Kind: v.Kind, Capacity: v.Capacity, Rentable: v.Rentable, BedGroup: v.BedGroup, BedLevel: v.BedLevel, Position: v.Position, RoomID: v.RoomID, BranchID: v.BranchID, Name: v.Name, Code: v.Code, Status: v.Status, Type: v.Type, Description: shared.LocalizedString(v.Description), Features: v.Features, InventoryIDs: v.InventoryIDs, CheckIn: v.CheckIn, CheckOut: v.CheckOut, Assets: fromAssets(v.Assets)}
 	for _, g := range v.Guests {
 		out.Guests = append(out.Guests, property.Guest(g))
 	}
 	return out
 }
 func toRoom(v property.Room) models.Room {
-	out := models.Room{StatusReason: v.StatusReason, Inactive: v.Inactive, BedLayout: v.BedLayout, FloorID: v.FloorID, ParentID: v.ParentID, Kind: v.Kind, Capacity: v.Capacity, Rentable: v.Rentable, BedGroup: v.BedGroup, BedLevel: v.BedLevel, Position: v.Position, RoomID: v.RoomID, BranchID: v.BranchID, Name: v.Name, Code: v.Code, Status: v.Status, Type: v.Type, Description: utils.LocalizedString(v.Description), Features: v.Features, InventoryIDs: v.InventoryIDs, CheckIn: v.CheckIn, CheckOut: v.CheckOut, Assets: toAssets(v.Assets)}
+	out := models.Room{RentalMode: v.RentalMode, StatusReason: v.StatusReason, Inactive: v.Inactive, BedLayout: v.BedLayout, FloorID: v.FloorID, ParentID: v.ParentID, Kind: v.Kind, Capacity: v.Capacity, Rentable: v.Rentable, BedGroup: v.BedGroup, BedLevel: v.BedLevel, Position: v.Position, RoomID: v.RoomID, BranchID: v.BranchID, Name: v.Name, Code: v.Code, Status: v.Status, Type: v.Type, Description: utils.LocalizedString(v.Description), Features: v.Features, InventoryIDs: v.InventoryIDs, CheckIn: v.CheckIn, CheckOut: v.CheckOut, Assets: toAssets(v.Assets)}
 	for _, g := range v.Guests {
 		out.Guests = append(out.Guests, models.RoomGuest(g))
 	}

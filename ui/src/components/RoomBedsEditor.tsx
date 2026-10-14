@@ -12,8 +12,8 @@ export function roomBedsPayload(choices: RoomBedChoice[], code: string, branch: 
     return { ...bed, places: bed.places.map(p => ({ ...p, rentable: false })) };
   }));
 }
-export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled }: {
-  roomId?: string; branchId: string; value: RoomBedChoice[]; onChange: (value: RoomBedChoice[]) => void; disabled: boolean;
+export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, rentalMode = "" }: {
+  roomId?: string; branchId: string; value: RoomBedChoice[]; onChange: (value: RoomBedChoice[]) => void; disabled: boolean; rentalMode?: "" | "room" | "beds";
 }) {
   const [existing, setExisting] = useState<Bed[]>([]), [error, setError] = useState('');
   useEffect(() => {
@@ -41,6 +41,6 @@ export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled }: 
       {!value.length ? <InlineSelectField label="Yatak türü" value="" disabled={disabled} options={[{ value: '', label: 'Yatak türünü seçin' }, ...BED_PRESETS.map(p => ({ value: p.key, label: p.label }))]} onChange={preset => { if (preset) onChange([{ id: crypto.randomUUID(), preset, count: 1 }]); }} /> :
         <button type="button" disabled={disabled || count >= 100} className="uni-button uni-button-secondary rounded-full" onClick={() => onChange([...value, { id: crypto.randomUUID(), preset: 'single', count: 1 }])}><Plus size={18} />Başka yatak türü ekle</button>}
     </fieldset>
-    {!!count && <p className="text-xs text-uni-muted">{count} fiziksel yatak eklenecek. Bu yataklar odayla birlikte kiralanır; ayrı satış ayarı Yataklar bölümünden değiştirilebilir.</p>}
+    {!!count && <p className="text-xs text-uni-muted">{count} fiziksel yatak eklenecek. {rentalMode === "beds" ? "Yataklar ayrı ayrı satışa açılacak." : rentalMode === "room" ? "Yataklar yalnızca odayla birlikte kiralanacak." : "Satış ayarı seçtiğiniz kiralama şekline göre uygulanacak."}</p>}
   </section>;
 }

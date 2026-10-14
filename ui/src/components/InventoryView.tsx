@@ -490,6 +490,7 @@ function BedForm({
   const [b, setB] = useState(bed),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const parentRentalMode = s.rooms.find(r => r.room_id === b.room_id)?.rental_mode;
   const rememberedPlaces = useRef(new Map(bed.places.map(p => [p.level, p])));
   const [presetNotice, setPresetNotice] = useState("");
   const applyPreset = (preset: BedPreset) => {
@@ -722,8 +723,9 @@ function BedForm({
             />
             <Switch
               label="Ayrı rezerve edilebilir"
-              hint="Kapalıysa yalnızca üst birimle birlikte kiralanır."
-              checked={p.rentable}
+              hint={parentRentalMode ? "Odanın kiralama şekline göre belirlenir. Oda tanımından değiştirebilirsiniz." : "Kapalıysa yalnızca üst birimle birlikte kiralanır."}
+              disabled={!!parentRentalMode}
+              checked={parentRentalMode ? parentRentalMode === "beds" : p.rentable}
               onChange={(v) => changePlace(i, { rentable: v })}
             />
           </div>

@@ -76,6 +76,9 @@ func (b Booking) Validate() error {
 		return constants.ErrPayload
 	}
 	for _, g := range b.Guests {
+		if g.Gender != "" && g.Gender != "female" && g.Gender != "male" && g.Gender != "unspecified" {
+			return constants.ErrPayload
+		}
 		if strings.TrimSpace(g.Name) == "" || len(g.Name) > 200 || len(g.TCNo) > 64 || len(g.Phone) > 64 || len(g.Relationship) > 100 || len(strings.TrimSpace(g.Nationality)) > 2 || len(g.Address) > 2000 {
 			return constants.ErrGuestRequired
 		}

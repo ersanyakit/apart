@@ -143,3 +143,12 @@ test('initial stays screen shows real completed and reserved records when nobody
  assert.ok(!markup.includes('konaklama bulunmuyor'));
  assert.ok(!markup.includes('Taşı / Değiştir'));
 });
+
+test('whole-room sales hide non-rentable beds but historical bed stays remain reachable',()=>{
+ const rooms=[{room_id:'101',branch_id:'branch',code:'WHOLE-ROOM',kind:'room',rentable:true}, {room_id:'bed',branch_id:'branch',parent_id:'101',code:'PRIVATE-BED',kind:'bed',rentable:false}];
+ const props={rooms,floors:[],bookings:[],serverTime:'2026-10-14T11:00:00+03:00',onDetails(){}};
+ const render=bookings=>renderToStaticMarkup(withPreferences({'stays_show_empty':true},React.createElement(StaysScheduler,{...props,bookings})));
+ const empty=render([]); assert.ok(empty.includes('WHOLE-ROOM')); assert.ok(!empty.includes('PRIVATE-BED'));
+ const history=render([booking({room_id:'bed',status:'completed',actual_check_out:'2026-10-14T10:00:00+03:00'})]);
+ assert.ok(history.includes('PRIVATE-BED')); assert.ok(history.includes('Misafir'));
+});

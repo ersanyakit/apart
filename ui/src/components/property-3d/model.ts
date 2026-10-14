@@ -5,10 +5,12 @@ import { roomBoardState, type RoomBoardState } from '../../lib/room-board';
 
 export type SceneUnit = { unit: APIRoom; state: RoomBoardState };
 export type SceneBed = SceneUnit & {
+  blanketColor?: string; dirty?: boolean;
+  sleepers?: ('female' | 'male' | 'neutral')[];
   group: string; level: number; width: number; length: number; visualOnly?: boolean; label?: string;
 };
 export type SceneRoom = SceneUnit & {
-  floorId: string; beds: SceneBed[]; hasJacuzzi: boolean;
+  floorId: string; floorColor?: string; beds: SceneBed[]; hasJacuzzi: boolean;
   x: number; z: number; width: number; depth: number;
 };
 export type SceneFloor = {
@@ -23,6 +25,27 @@ export const STATUS_LABELS: Record<RoomBoardState['tone'], string> = {
 };
 const compare = (a: APIRoom, b: APIRoom) => a.code.localeCompare(b.code, 'tr', { numeric: true }) || a.room_id.localeCompare(b.room_id);
 const positive = (n: number, fallback: number) => Number.isFinite(n) && n > 0 ? n : fallback;
+
+/** Remove only empty strips between rooms, preserving room sizes and ordering.
+ * This is a display transform: API floor-plan coordinates are never modified. */
+function compactRoomGaps(rooms: SceneRoom[], axis: 'x' | 'z', size: 'width' | 'depth', maxGap: number) {
+  const spans = rooms.map(room => ({ start: room[axis] - room[size] / 2, end: room[axis] + room[size] / 2 }))
+    .sort((a, b) => a.start - b.start);
+  const gaps: { end: number; removed: number }[] = [];
+  let end = spans[0]?.end ?? 0;
+  for (const span of spans.slice(1)) {
+    if (span.start - end > maxGap) gaps.push({ end: span.start, removed: span.start - end - maxGap });
+    end = Math.max(end, span.end);
+  }
+  for (const room of rooms) {
+    const start = room[axis] - room[size] / 2;
+    room[axis] -= gaps.reduce((sum, gap) => sum + (start >= gap.end - 1e-8 ? gap.removed : 0), 0);
+  }
+  const min = Math.min(...rooms.map(r => r[axis] - r[size] / 2));
+  const max = Math.max(...rooms.map(r => r[axis] + r[size] / 2));
+  for (const room of rooms) room[axis] -= (min + max) / 2;
+  return max - min;
+}
 
 /** Uses only tenant-scoped API records. No demo rooms, guests or invented beds. */
 export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day = ''): SceneFloor[] {
@@ -64,7 +87,7 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
     }
     bedsByRoom.set(ownerId, [...(bedsByRoom.get(ownerId) || []), unit]);
   }
-  const rooms = renderRooms.map(unit => {
+  const rooms: SceneRoom[] = renderRooms.map(unit => {
     const floorId = [unit, ...ancestors(unit)].map(u => u.floor_id).find(id => id && validFloors.has(id)) || 'unassigned';
     const beds: SceneBed[] = (bedsByRoom.get(unit.room_id) || []).map(b => {
       const meta = metadata.get(b.room_id);
@@ -86,12 +109,36 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
         label: unit.bed_layout === 'double' ? 'Çift kişilik yatak' : `Tek kişilik yatak${count > 1 ? ` ${i + 1}` : ''}`,
       });
     }
+    // Room-level guests are distributed once, rather than repeated on every bed.
+    const textiles = ['#2563eb', '#ec4899', '#7c3aed', '#0891b2', '#16a34a', '#f97316', '#a855f7', '#0284c7'];
+    const roomSeed = Array.from(unit.code).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    beds.forEach((bed, index) => { bed.blanketColor = textiles[(roomSeed + index) % textiles.length]; });
+    const allocated = new Map<string, number>();
+    for (const bed of beds) {
+      bed.dirty = [bed.unit, ...ancestors(bed.unit)].some(unit => unit.status === 'Kirli');
+      if (bed.dirty) {
+        const inUse = bed.state.tone === 'occupied' || bed.state.tone === 'reserved';
+        bed.state = { ...bed.state, tone: inUse ? bed.state.tone : 'warning', label: inUse ? `${bed.state.label} · Temizlik gerekli` : 'Kirli · Temizlik gerekli' };
+      }
+      bed.sleepers = [];
+      for (const booking of bed.state.current.filter(b => b.status === 'checked_in')) {
+        const offset = allocated.get(booking.booking_id) || 0;
+        const count = Math.min(bed.width >= 1.4 ? 2 : 1, Math.max(0, booking.guest_count - offset));
+        for (let i = 0; i < count; i++) {
+          const gender = booking.guests?.[offset + i]?.gender;
+          bed.sleepers.push(gender === 'female' || gender === 'male' ? gender : 'neutral');
+        }
+        allocated.set(booking.booking_id, offset + count);
+      }
+    }
     return { unit, state: state.get(unit.room_id)!, floorId, beds, hasJacuzzi: unit.kind !== 'bed' && roomHasJacuzzi(unit, snapshot.feature_registry), x: 0, z: 0, width: 6, depth: 5 };
   });
   const definitions = floorDefs.map(f => ({ id: f.floor_id, label: localized(f.label) || f.code }));
   if (rooms.some(r => r.floorId === 'unassigned')) definitions.push({ id: 'unassigned', label: 'Kat atanmamış birimler' });
   return definitions.map(def => {
     const list = rooms.filter(r => r.floorId === def.id).sort((a, b) => compare(a.unit, b.unit));
+    const palette = ['#d9c6a5', '#c2d4cd', '#c4cedf', '#d8c5d4', '#d9d0b4', '#bcd3d8'];
+    list.forEach((room, index) => { room.floorColor = palette[index % palette.length]; });
     const positions = list.map(r => r.unit.position);
     const valid = positions.every(p => p && [p.x, p.y, p.width, p.height].every(Number.isFinite) && p.width > 0 && p.height > 0);
     const overlap = valid && positions.some((p, i) => positions.slice(i + 1).some(q => p.x < q.x + q.width && p.x + p.width > q.x && p.y < q.y + q.height && p.y + p.height > q.y));
@@ -108,17 +155,20 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
         room.x = (p.x - minX + p.width / 2 - width / 2) / scale;
         room.z = (p.y - minZ + p.height / 2 - depth / 2) / scale;
       });
-      width = width / scale + 0.6; depth = depth / scale + 0.6;
+      width = compactRoomGaps(list, 'x', 'width', 0.35) + 0.4;
+      depth = compactRoomGaps(list, 'z', 'depth', 0.2) + 0.4;
     } else if (list.length) {
       const cols = Math.ceil(Math.sqrt(list.length));
       const cellWidth = Math.max(6, ...list.map(r => Math.ceil(Math.sqrt(new Set(r.beds.map(b => b.group)).size)) * 2.4 + 1));
       const cellDepth = Math.max(5, ...list.map(r => Math.ceil(Math.sqrt(new Set(r.beds.map(b => b.group)).size)) * 3 + 1));
       const rows = Math.ceil(list.length / cols);
-      width = cols * (cellWidth + 0.5) + 0.5; depth = rows * (cellDepth + 1.2) + 0.5;
+      const columnGap = 0.18, rowGap = 0.2, padding = 0.2;
+      width = cols * cellWidth + (cols - 1) * columnGap + padding * 2;
+      depth = rows * cellDepth + (rows - 1) * rowGap + padding * 2;
       list.forEach((room, i) => {
         room.width = cellWidth; room.depth = cellDepth;
-        room.x = (i % cols) * (cellWidth + 0.5) + cellWidth / 2 - width / 2 + 0.5;
-        room.z = Math.floor(i / cols) * (cellDepth + 1.2) + cellDepth / 2 - depth / 2 + 0.5;
+        room.x = (i % cols) * (cellWidth + columnGap) + cellWidth / 2 - width / 2 + padding;
+        room.z = Math.floor(i / cols) * (cellDepth + rowGap) + cellDepth / 2 - depth / 2 + padding;
       });
     }
     const maxLevel = Math.max(1, ...list.flatMap(r => r.beds.map(b => b.level)));

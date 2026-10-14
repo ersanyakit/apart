@@ -62,8 +62,8 @@ export function StaysScheduler({ rooms, floors, bookings, serverTime, busy = fal
   const matchingIds = new Set(matching.filter(b => !needle ||
     `${b.guest_name} ${(b.guests || []).map(g => g.name).join(" ")}`.toLocaleLowerCase(locale).includes(needle)).map(b => b.booking_id));
   const candidateGroups = resourceGroups(rooms, floors).filter(g => !floorId || g.id === floorId)
-    .map(g => ({ ...g, rooms: g.rooms.filter(({ room }) => !needle || `${room.code} ${room.name}`.toLocaleLowerCase(locale).includes(needle) ||
-      allSegments.some(s => s.roomId === room.room_id && matchingIds.has(s.booking.booking_id) && s.start < end && s.end > start)) }))
+    .map(g => ({ ...g, rooms: g.rooms.filter(({ room }) => (room.rentable !== false || allSegments.some(s => s.roomId === room.room_id && s.start < end && s.end > start)) && (!needle || `${room.code} ${room.name}`.toLocaleLowerCase(locale).includes(needle) ||
+      allSegments.some(s => s.roomId === room.room_id && matchingIds.has(s.booking.booking_id) && s.start < end && s.end > start))) }))
     .filter(g => g.rooms.length);
   const candidateRoomIds = new Set(candidateGroups.flatMap(g => g.rooms.map(({ room }) => room.room_id)));
   const roomMatches = new Set(rooms.filter(r => `${r.code} ${r.name}`.toLocaleLowerCase(locale).includes(needle)).map(r => r.room_id));

@@ -78,6 +78,7 @@ export type Facility = {
   feature_assignments?: FeatureAssignment[];
 };
 export type APIRoom = {
+  rental_mode?: "" | "room" | "beds";
   status_reason?:string;
   inactive?: boolean;
   bed_layout?: string;

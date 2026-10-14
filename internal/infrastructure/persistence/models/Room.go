@@ -8,6 +8,7 @@ import (
 )
 
 type Room struct {
+	RentalMode   string `gorm:"not null;default:''"`
 	StatusReason string
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
 	Inactive     bool           `gorm:"not null;default:false"`
@@ -40,6 +41,7 @@ type Room struct {
 }
 
 type RoomGuest struct {
+	Gender       string `json:"gender,omitempty"`
 	Relationship string `json:"relationship,omitempty"`
 	ID           string `json:"id"`
 	Name         string `json:"name"`
