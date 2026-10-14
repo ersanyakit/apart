@@ -9,6 +9,7 @@ import (
 )
 
 type Query struct {
+	PageSize int        `json:"page_size"`
 	HotelID  uuid.UUID  `json:"hotel_id"`
 	BranchID uuid.UUID  `json:"branch_id"`
 	GuestID  uuid.UUID  `json:"guest_id"`

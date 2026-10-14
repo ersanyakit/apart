@@ -13,6 +13,7 @@ import (
 	"otel/constants"
 	"otel/internal/application"
 	"otel/internal/domain/guest"
+	"otel/internal/domain/reporting"
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/persistence/models"
 	"otel/internal/interfaces/httpapi"
@@ -50,6 +51,9 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	h := &httpapi.Handler{Auth: auth, Catalog: catalog, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: origin, SecureCookies: strings.HasPrefix(origin, "https://")}
 	app := h.App("", func(context.Context) error { return nil })
 	h.Guests = &application.Guests{Catalog: catalog, Repository: repo}
+	h.GuestAssessments = &application.GuestAssessments{Catalog: catalog, Repository: repo}
+	h.Folios = &application.Folios{Catalog: catalog, Repository: repo}
+	h.Reporting = &application.Reporting{Repository: repo}
 	defer app.Shutdown()
 	var cookie *http.Cookie
 	call := func(code, method string, payload any, origin string) (int, json.RawMessage) {
@@ -114,6 +118,26 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	if status, body := call(constants.CMD_AUTH_LOGIN, "POST", map[string]any{"username": "admin", "password": "integration-password"}, origin); status != 200 {
 		t.Fatalf("login %d %s", status, body)
 	}
+
+	t.Run("report commands and independent report preferences", func(t *testing.T) {
+		if status, body := call(constants.CMD_REPORT_CATALOG, "GET", map[string]any{}, ""); status != 200 || !bytes.Contains(body, []byte("finance.daily_revenue")) {
+			t.Fatalf("catalog %d %s", status, body)
+		}
+		filter := map[string]any{"hotel_id": hotelID, "branch_id": branchID, "key": "finance.daily_revenue", "start_date": "2026-10-01", "end_date": "2026-10-14", "currency": "TRY", "unit": "room", "group_by": "day"}
+		if status, body := call(constants.CMD_REPORT_GENERATE, "GET", filter, ""); status != 200 {
+			t.Fatalf("report %d %s", status, body)
+		}
+		filter["end_date"] = "2029-10-14"
+		if status, _ := call(constants.CMD_REPORT_GENERATE, "GET", filter, ""); status != 400 {
+			t.Fatalf("unbounded report: %d", status)
+		}
+		if status, body := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": map[string]any{"header.report.finance.daily_revenue": true, "header.report.occupancy.daily": false}}, origin); status != 200 {
+			t.Fatalf("report preferences %d %s", status, body)
+		}
+		if status, _ := call(constants.CMD_REPORT_RECORD, "POST", map[string]any{}, "https://foreign.invalid"); status != 403 {
+			t.Fatalf("report CSRF: %d", status)
+		}
+	})
 	t.Run("preferences belong only to the authenticated user", func(t *testing.T) {
 		otherID := uuid.New()
 		if err := db.Create(&models.User{UserID: otherID, HotelID: hotelID, UserName: "other", Password: string(hash), UserRole: constants.UserRoleReception}).Error; err != nil {
@@ -275,6 +299,15 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	status, body = call(constants.CMD_BOOKING_TRANSITION, "PUT", map[string]any{"branch_id": branchID, "booking_id": b.ID, "action": "move", "target_id": rooms[1].ID}, "")
 	if status != 200 {
 		t.Fatalf("move %d %s", status, body)
+	}
+
+	if status, _ := call(constants.CMD_BOOKING_TRANSITION, "PUT", map[string]any{"branch_id": branchID, "booking_id": b.ID, "action": "check_out"}, ""); status != 409 {
+		t.Fatalf("checkout bypassed folio %d", status)
+	}
+	status, body = call(constants.CMD_BOOKING_FOLIO, "GET", map[string]any{"branch_id": branchID, "booking_id": b.ID}, "")
+	var folio reporting.Folio
+	if e := json.Unmarshal(body, &folio); e != nil || status != 200 || len(folio.Token) != 64 {
+		t.Fatalf("folio %d %s", status, body)
 	}
 	if status, body := call(constants.CMD_INITIAL_SYNC, "GET", map[string]any{}, ""); status != 200 {
 		t.Fatalf("sync %d %s", status, body)

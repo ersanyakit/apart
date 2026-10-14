@@ -82,7 +82,7 @@ func TestAccommodation(t *testing.T) {
 		if err != nil {
 			t.Fatalf("apartment guest count must be flexible: %v", err)
 		}
-		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel"}); err != nil {
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel", Reason: "Misafir rezervasyonunu iptal etti."}); err != nil {
 			t.Fatal(err)
 		}
 	})
@@ -94,7 +94,7 @@ func TestAccommodation(t *testing.T) {
 		if _, err := reserve(bed1.RoomID, 1, start, end); !errors.Is(err, constants.ErrUnavailable) {
 			t.Fatalf("child conflict: %v", err)
 		}
-		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel"}); err != nil {
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel", Reason: "Misafir rezervasyonunu iptal etti."}); err != nil {
 			t.Fatal(err)
 		}
 	})
@@ -133,7 +133,7 @@ func TestAccommodation(t *testing.T) {
 			t.Fatalf("structure change: %v", err)
 		}
 		bed1.Capacity = 1
-		if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: room.RoomID, Status: "Tadilat"}); !errors.Is(err, constants.ErrStructureInUse) {
+		if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: room.RoomID, Status: "Tadilat", StatusReason: "Planlanan oda tadilatı"}); !errors.Is(err, constants.ErrStructureInUse) {
 			t.Fatalf("maintenance: %v", err)
 		}
 	})
@@ -189,7 +189,7 @@ func TestAccommodation(t *testing.T) {
 		if unchanged.Status != booking.Confirmed || unchanged.ActualCheckIn != nil {
 			t.Fatal("failed early check-in changed the booking")
 		}
-		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: blocker.BookingID, Action: "cancel"}); err != nil {
+		if _, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: blocker.BookingID, Action: "cancel", Reason: "Misafir rezervasyonunu iptal etti."}); err != nil {
 			t.Fatal(err)
 		}
 		arrived, err := service.Transition(ctx, admin, booking.Transition{BranchID: branch.BranchID, BookingID: upcoming.BookingID, Action: "check_in"})

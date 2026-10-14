@@ -13,7 +13,10 @@
     "bed.delete": "DELETE",
     "bed.list": "GET",
     "bed.update": "PUT",
+    "blacklist.list": "GET",
+    "blacklist.revoke": "POST",
     "booking.create": "POST",
+    "booking.folio": "GET",
     "booking.guests.update": "PUT",
     "booking.list": "GET",
     "booking.transition": "PUT",
@@ -43,7 +46,9 @@
     "floor.plan": "GET",
     "floor.plan.save": "PUT",
     "floor.update": "PUT",
+    "guest.assess": "POST",
     "guest.export": "GET",
+    "guest.reputation": "GET",
     "guest.search": "GET",
     "guest.stays": "GET",
     "hotel.create": "POST",
@@ -58,6 +63,11 @@
     "payment_channel.delete": "DELETE",
     "payment_channel.list": "GET",
     "payment_channel.update": "PUT",
+    "report.catalog": "GET",
+    "report.choices": "GET",
+    "report.generate": "GET",
+    "report.record": "POST",
+    "report.void": "POST",
     "room.availability": "GET",
     "room.bulk_create": "POST",
     "room.create": "POST",
@@ -65,6 +75,7 @@
     "room.delete_many": "DELETE",
     "room.exchange": "PUT",
     "room.filter": "GET",
+    "room.issue": "POST",
     "room.list": "GET",
     "room.state": "PUT",
     "room.update": "PUT",
@@ -81,6 +92,8 @@
   "errors": {
     "already_initialized": "İlk yönetici zaten oluşturulmuş.",
     "auth_failed": "Oturum işlemi tamamlanamadı.",
+    "balance_acknowledgement": "Açık borç, iade veya güvence bakiyesini inceleyip onaylayın.",
+    "blacklist_identity": "Kara listeye eklemek için misafirin kimlik/pasaport numarasını ve ülkesini rezervasyonda tamamlayın.",
     "booking_required": "Konaklama işlemleri rezervasyon kaydı üzerinden yapılmalıdır.",
     "branch_in_use": "Bu tesiste aktif veya yaklaşan konaklama bulunduğu için arşive kaldırılamaz.",
     "branch_required": "Şube bilgisi gereklidir.",
@@ -100,6 +113,7 @@
     "feature_in_use": "Bu değişiklik mevcut özellik atamalarını geçersiz kılar.",
     "feature_out_of_range": "Özellik değeri izin verilen aralığın dışında.",
     "floor_code_exists": "Bu kat kodu tesiste zaten kullanılıyor. Mevcut katı düzenleyin veya farklı bir kod girin.",
+    "folio_changed": "Folyo değişti. Güncel tutarları incelemek için folyoyu yeniden yükleyin.",
     "forbidden": "Bu işlem için yetkiniz yok.",
     "guest_rejoin": "Çıkış yapan misafirin yeniden gelişi için yeni konaklama kaydı açın.",
     "guest_required": "Rezervasyon ve konaklama için misafir adı gereklidir.",
@@ -165,6 +179,7 @@
     "not_found": "Kayıt bulunamadı.",
     "physical_bed_required": "Yatak türü, kapasitesi, konumu ve aktifliği Yataklar ekranından düzenlenmelidir.",
     "rate_limited": "Çok fazla istek gönderildi. Lütfen biraz bekleyin.",
+    "reason_required": "İşlemin gerekçesini en az 10, en fazla 2000 karakterle açıklayın.",
     "required_feature": "Zorunlu özellikler doldurulmalıdır.",
     "room_dirty": "Oda kirli olduğu için giriş yapılamaz. Önce oda durumunu Temiz olarak güncelleyin.",
     "seed_conflict": "Demo kullanıcı adı başka bir otele ait veya silinmiş; mevcut kayıt değiştirilmedi.",
@@ -245,6 +260,491 @@
     "MN",
     "PS",
     "KU"
+  ],
+  "report_record_kinds": [
+    {
+      "key": "receipt",
+      "name": "Tahsilat",
+      "money": true,
+      "hint": "Kapora dışında alınan ödeme. Rezervasyon ve ödeme yöntemini seçin."
+    },
+    {
+      "key": "refund",
+      "name": "İade",
+      "money": true,
+      "hint": "İade durumunu Tamamlandı veya Bekliyor olarak seçin."
+    },
+    {
+      "key": "income",
+      "name": "Ek hizmet / diğer gelir",
+      "money": true,
+      "hint": "Konaklama otomatik hesaplanır. Bu alana yalnızca ek gelir girin; tahsilat ayrı kaydedilir."
+    },
+    {
+      "key": "expense",
+      "name": "Gider",
+      "money": true,
+      "hint": "Dönemde oluşan gider. Ödeme ayrı kaydedilir. Birime bağlanırsa doğrudan maliyete eklenir."
+    },
+    {
+      "key": "payment",
+      "name": "Gider ödemesi",
+      "money": true,
+      "hint": "Borç/gider ödemesi; gider tahakkukunu tekrar oluşturmaz."
+    },
+    {
+      "key": "receivable",
+      "name": "Diğer alacak",
+      "money": true,
+      "hint": "Rezervasyon bakiyesi otomatik hesaplanır. Buraya yalnızca diğer açık hesapları girin."
+    },
+    {
+      "key": "payable",
+      "name": "Tedarikçi borcu",
+      "money": true,
+      "hint": "Tedarikçiye olan borcu kaydedin. Ödeme yaparken ilgili açık hesabı seçin; bakiye otomatik azalır."
+    },
+    {
+      "key": "cash_open",
+      "name": "Vardiya açılışı",
+      "money": true,
+      "hint": "Sorumlu personeli ve vardiya başında kasadaki nakdi girin. Sonraki ödemeleri bu vardiyaya bağlayabilirsiniz."
+    },
+    {
+      "key": "cash_close",
+      "name": "Vardiya kapanışı",
+      "money": true,
+      "hint": "Açık vardiyayı seçin ve kasada saydığınız gerçek nakdi girin."
+    },
+    {
+      "key": "task",
+      "name": "Görev / temizlik",
+      "money": false,
+      "hint": "Temizlik, oda kontrolü veya teknik bakım görevini seçin. Bitiş zamanı tamamlanma zamanıdır."
+    },
+    {
+      "key": "maintenance",
+      "name": "Arıza / bakım",
+      "money": true,
+      "hint": "Tutar bakım maliyetidir; finansal gider raporu için ayrıca gider kaydı oluşturun."
+    },
+    {
+      "key": "stock_in",
+      "name": "Stok girişi",
+      "money": true,
+      "hint": "Katalogdan ürünü ve ölçü birimini seçin. Giren miktarı, toplam maliyeti ve düşük stok uyarısı eşiğini yazın."
+    },
+    {
+      "key": "stock_out",
+      "name": "Stok tüketimi",
+      "money": true,
+      "hint": "Tüketilen ürünü seçin, miktarı ve toplam tüketim maliyetini girin."
+    },
+    {
+      "key": "damage",
+      "name": "Kayıp / hasar",
+      "money": true,
+      "hint": "Tutar onarım/değişim maliyeti, kategori hasar kaynağıdır. Tahsilat ayrıca damage kategorisiyle girilir."
+    },
+    {
+      "key": "complaint",
+      "name": "Şikâyet",
+      "money": false,
+      "hint": "Kategori sorun türü; bitiş çözüm zamanı; durum Açık veya Tamamlandı."
+    },
+    {
+      "key": "review",
+      "name": "Değerlendirme",
+      "money": false,
+      "hint": "Misafirin işletmeye verdiği 1–5 arası puanı ve değerlendirme platformunu kaydedin."
+    },
+    {
+      "key": "lead",
+      "name": "Satış talebi",
+      "money": false,
+      "hint": "Durum Açık, Teklif verildi, Onaylı veya Kaybedildi; not alanı kayıp nedenidir."
+    },
+    {
+      "key": "contract",
+      "name": "Uzun dönem kontrat",
+      "money": true,
+      "hint": "Başlangıç ve bitiş tarihleri, tutar dönem bedeli; vade ödeme tarihidir."
+    },
+    {
+      "key": "deposit_in",
+      "name": "Güvence depozitosu alındı",
+      "money": true,
+      "hint": "Rezervasyon kaporasından farklıdır; gelir olarak sayılmaz."
+    },
+    {
+      "key": "deposit_out",
+      "name": "Güvence depozitosu iadesi",
+      "money": true,
+      "hint": "İade edilen güvence tutarı; gelirden düşülmez."
+    },
+    {
+      "key": "common_area",
+      "name": "Ortak alan kullanımı",
+      "money": false,
+      "hint": "Kategori alan adı, miktar kişi veya kullanım adedi."
+    },
+    {
+      "key": "overtime",
+      "name": "Fazla mesai",
+      "money": false,
+      "hint": "Personeli seçin ve fazla çalıştığı saat sayısını girin."
+    },
+    {
+      "key": "competitor",
+      "name": "Rakip fiyat gözlemi",
+      "money": true,
+      "hint": "Taraf rakip tesis, kategori ürün türü; dış kaynaktan doğrulanmış gecelik fiyat."
+    },
+    {
+      "key": "booking_details",
+      "name": "Rezervasyon rapor bilgisi",
+      "money": true,
+      "hint": "Rezervasyonu, satış kaynağını, fiyatının para birimini ve kanal komisyonunu belirtin. Misafir gelmediyse durumunu seçin."
+    }
+  ],
+  "reports": [
+    {
+      "key": "apart.contracts",
+      "name": "Kontrat bitişleri",
+      "category": "Apart",
+      "description": "Seçilen dönemde sona erecek sözleşmeler.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.costs",
+      "name": "Daire giderleri",
+      "category": "Apart",
+      "description": "Daireye doğrudan atanmış giderler.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.deposits",
+      "name": "Güvence depozitoları",
+      "category": "Apart",
+      "description": "Alınan ve iade edilen güvence bakiyeleri.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.income",
+      "name": "Daire geliri",
+      "category": "Apart",
+      "description": "Daire bazında konaklama geliri.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.long_stays",
+      "name": "Uzun dönem konaklama",
+      "category": "Apart",
+      "description": "28 gece ve üzeri rezervasyonlar.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.maintenance",
+      "name": "Daire bakımı",
+      "category": "Apart",
+      "description": "Daire bazında bakım kayıtları.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.occupancy",
+      "name": "Daire doluluğu",
+      "category": "Apart",
+      "description": "Daire-gece kapasitesi ve doluluk.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.profitability",
+      "name": "Daire faaliyet sonucu",
+      "category": "Apart",
+      "description": "Doğrudan atanmış giderlerden sonraki sonuç.",
+      "unit": "apartment"
+    },
+    {
+      "key": "apart.rent",
+      "name": "Kira ve tahsilat",
+      "category": "Apart",
+      "description": "Kontrat bedeli, vade ve ödeme kayıtları.",
+      "unit": "apartment"
+    },
+    {
+      "key": "finance.daily_revenue",
+      "name": "Günlük gelir ve tahsilat",
+      "category": "Finans",
+      "description": "Konaklama tahakkuku, ek gelir, tahsilat ve iadeler ayrı gösterilir."
+    },
+    {
+      "key": "finance.income_expense",
+      "name": "Gelir–gider",
+      "category": "Finans",
+      "description": "Dönem geliri, faaliyet giderleri ve faaliyet sonucu."
+    },
+    {
+      "key": "finance.payment_methods",
+      "name": "Ödeme yöntemleri",
+      "category": "Finans",
+      "description": "Tahsilat ve iade kanalları."
+    },
+    {
+      "key": "finance.profitability",
+      "name": "Birim bazında faaliyet sonucu",
+      "category": "Finans",
+      "description": "Birim gelirleri ile doğrudan atanmış giderler; dağıtılmamış giderler ayrıca gösterilir."
+    },
+    {
+      "key": "finance.receivables",
+      "name": "Alacak ve borç",
+      "category": "Finans",
+      "description": "Rezervasyon bakiyeleri ve diğer açık hesapların vade analizi."
+    },
+    {
+      "key": "finance.refunds",
+      "name": "İptal ve iadeler",
+      "category": "Finans",
+      "description": "İptal edilen satışlar, gerçekleşen ve bekleyen iadeler."
+    },
+    {
+      "key": "guests.complaints",
+      "name": "Şikâyetler",
+      "category": "Misafir",
+      "description": "Sorun kategorileri, açık işler ve çözüm süreleri."
+    },
+    {
+      "key": "guests.profile",
+      "name": "Misafir profili",
+      "category": "Misafir",
+      "description": "Kimliği eşleştirilebilen misafirlerde yeni / tekrar ve ülke dağılımı."
+    },
+    {
+      "key": "guests.repeat",
+      "name": "Tekrar gelen misafirler",
+      "category": "Misafir",
+      "description": "Tekrar konaklama, konaklama geliri ve ziyaret aralığı."
+    },
+    {
+      "key": "guests.satisfaction",
+      "name": "Misafir memnuniyeti",
+      "category": "Misafir",
+      "description": "Kaydedilen değerlendirmelerin 5 üzerinden puanı."
+    },
+    {
+      "key": "hostel.bunks",
+      "name": "Ranza kapasitesi",
+      "category": "Hostel",
+      "description": "Alt / üst kat ve yatak gruplarının kapasitesi.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.common_areas",
+      "name": "Ortak alan kullanımı",
+      "category": "Hostel",
+      "description": "Kaydedilmiş ortak alan kullanımları.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.extras",
+      "name": "Ek hizmet gelirleri",
+      "category": "Hostel",
+      "description": "Dolap, çamaşırhane, kahvaltı ve diğer ek gelirler.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.groups",
+      "name": "Grup konaklama",
+      "category": "Hostel",
+      "description": "Grup koduyla eşleştirilmiş rezervasyonlar.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.moves",
+      "name": "Yatak ve oda değişimleri",
+      "category": "Hostel",
+      "description": "Rezervasyon yerleşim geçmişi.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.occupancy",
+      "name": "Yatak doluluğu",
+      "category": "Hostel",
+      "description": "Yatak-gece üzerinden doluluk.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.readiness",
+      "name": "Yatak hazırlığı",
+      "category": "Hostel",
+      "description": "Yatakların temizlik durumu ve hazırlık görevleri.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.revenue",
+      "name": "Yatak başına gelir",
+      "category": "Hostel",
+      "description": "Yatak bazında gece ve gelir.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.short_stays",
+      "name": "Kısa süreli konaklama",
+      "category": "Hostel",
+      "description": "1–7 gece rezervasyonlar.",
+      "unit": "bed"
+    },
+    {
+      "key": "hostel.types",
+      "name": "Yatakhane performansı",
+      "category": "Hostel",
+      "description": "Birim türü bazında satış ve kullanım.",
+      "unit": "bed"
+    },
+    {
+      "key": "management.dashboard",
+      "name": "Yönetim özeti",
+      "category": "Yönetim",
+      "description": "Gelir, tahsilat, kapasite ve operasyon göstergeleri."
+    },
+    {
+      "key": "management.properties",
+      "name": "Tesis karşılaştırması",
+      "category": "Yönetim",
+      "description": "Yetkili olduğunuz işletmenin tesislerini aynı dönemde karşılaştırın."
+    },
+    {
+      "key": "management.records",
+      "name": "İşlem kayıtları",
+      "category": "Yönetim",
+      "description": "Raporlara kaynak olan finans ve operasyon kayıtları."
+    },
+    {
+      "key": "occupancy.capacity",
+      "name": "Kapasite kullanımı",
+      "category": "Doluluk",
+      "description": "Mevcut fiziksel, satışa açık ve kapalı birimler."
+    },
+    {
+      "key": "occupancy.daily",
+      "name": "Günlük doluluk",
+      "category": "Doluluk",
+      "description": "Fiziksel kapasite ve satılabilir kapasite ayrı paydalarla."
+    },
+    {
+      "key": "occupancy.forecast",
+      "name": "Gelecek doluluk",
+      "category": "Doluluk",
+      "description": "Mevcut rezervasyonlara dayanan kapasite görünümü."
+    },
+    {
+      "key": "occupancy.history",
+      "name": "Geçmiş doluluk",
+      "category": "Doluluk",
+      "description": "Günlük, haftalık ve aylık karşılaştırma."
+    },
+    {
+      "key": "occupancy.performance",
+      "name": "Birim performansı",
+      "category": "Doluluk",
+      "description": "Oda, yatak veya daire başına gece, gelir ve doluluk."
+    },
+    {
+      "key": "operations.damage",
+      "name": "Kayıp ve hasar",
+      "category": "Operasyon",
+      "description": "Kaynak, maliyet ve kaydedilen hasar tahsilatları."
+    },
+    {
+      "key": "operations.housekeeping",
+      "name": "Temizlik",
+      "category": "Operasyon",
+      "description": "Birimlerin güncel temizlik durumu ve kayıtlı temizlik görevleri."
+    },
+    {
+      "key": "operations.inventory",
+      "name": "Stok ve tüketim",
+      "category": "Operasyon",
+      "description": "Ürün koduna göre giriş, tüketim, bakiye ve sipariş eşiği."
+    },
+    {
+      "key": "operations.maintenance",
+      "name": "Arıza ve bakım",
+      "category": "Operasyon",
+      "description": "Açık arızalar, çözüm süreleri ve bakım maliyetleri."
+    },
+    {
+      "key": "pricing.competitors",
+      "name": "Rakip fiyatları",
+      "category": "Gelir yönetimi",
+      "description": "Kaynağı belirtilerek girilmiş fiyat gözlemleri."
+    },
+    {
+      "key": "pricing.forecast",
+      "name": "Gelir tahmini",
+      "category": "Gelir yönetimi",
+      "description": "Kesinleşmiş rezervasyonların gelecekteki konaklama tutarı."
+    },
+    {
+      "key": "pricing.metrics",
+      "name": "ADR ve RevPAR",
+      "category": "Gelir yönetimi",
+      "description": "Aynı ürün türü için gelir / satılan gece ve gelir / satılabilir gece."
+    },
+    {
+      "key": "pricing.performance",
+      "name": "Fiyat performansı",
+      "category": "Gelir yönetimi",
+      "description": "Ürün ve gün türüne göre ortalama gecelik satış."
+    },
+    {
+      "key": "reservations.channels",
+      "name": "Rezervasyon kaynakları",
+      "category": "Rezervasyon",
+      "description": "Kanal geliri, iptal oranı ve komisyon sonrası satış."
+    },
+    {
+      "key": "reservations.conversion",
+      "name": "Satış dönüşümü",
+      "category": "Rezervasyon",
+      "description": "Talep, teklif, kazanılan ve kaybedilen satışlar."
+    },
+    {
+      "key": "reservations.future",
+      "name": "Giriş ve çıkış listesi",
+      "category": "Rezervasyon",
+      "description": "Seçilen dönemin planlanan giriş ve çıkışları."
+    },
+    {
+      "key": "reservations.length",
+      "name": "Konaklama süresi",
+      "category": "Rezervasyon",
+      "description": "Gece sayısı ve kısa / uzun konaklama dağılımı."
+    },
+    {
+      "key": "reservations.summary",
+      "name": "Rezervasyon özeti",
+      "category": "Rezervasyon",
+      "description": "Oluşturulma tarihine göre rezervasyon durumları."
+    },
+    {
+      "key": "staff.performance",
+      "name": "Personel performansı",
+      "category": "Personel",
+      "description": "Rezervasyon işlemleri, görevler ve fazla mesai."
+    },
+    {
+      "key": "staff.shifts",
+      "name": "Vardiya ve kasa",
+      "category": "Personel",
+      "description": "Açılış + nakit tahsilat − iade − ödeme ile sayılan kasa karşılaştırması."
+    },
+    {
+      "key": "staff.tasks",
+      "name": "Görev tamamlama",
+      "category": "Personel",
+      "description": "Tamamlanan, açık ve geciken görevler."
+    }
   ],
   "version": "1"
 }

@@ -29,6 +29,7 @@ import {
   Wind,
   History,
 } from "lucide-react";
+import { REPORTS, reportPageID } from "./reports/navigation";
 import { SidebarItem } from "./Sidebar";
 import { NavigationIcon } from "./NavigationIcon";
 import { MobileNav } from "./MobileNav";
@@ -114,9 +115,11 @@ export function OriginalShell({
         { id: "calendar", label: "Konaklama Takvimi", icon: <NavigationIcon name="calendar" /> },
         { id: "bookings", label: "Rezervasyon Listesi", icon: <NavigationIcon name="bookings" /> },
         { id: "stays", label: "Konaklayan Listesi", icon: <NavigationIcon name="stays" /> },
+        ...(["admin","management","reception"].includes(snapshot.user.role)?[{ id: "blacklist", label: "Ortak Kara Liste", icon: <NavigationIcon name="blacklist" /> }]:[]),
         { id: "guests", label: "Misafir Arama ve Geçmiş", icon: <NavigationIcon name="guests" /> },
       ],
     },
+    ...(manager ? [{ id: "reports", label: "Raporlamalar", icon: <NavigationIcon name="reports" />, subItems: REPORTS.map(r=>({id:reportPageID(r.key),label:r.name,icon:<NavigationIcon name={reportPageID(r.key)} />})) }] : []),
     ...(manager
       ? [
           {

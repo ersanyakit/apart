@@ -24,7 +24,7 @@ const actions: Record<string, string> = {
   assign: "Özellik atama",
 };
 const entities: Record<string, string> = {
-  bookings: "Rezervasyon", rooms: "Birim", branches: "Tesis", hotels: "Otel",
+  report_records: "Rapor işlem kaydı", bookings: "Rezervasyon", rooms: "Birim", branches: "Tesis", hotels: "Otel",
   users: "Personel", guest_profiles: "Misafir", beds: "Yatak", floors: "Kat",
   assets: "Medya", feature_categories: "Özellik kategorisi", feature_definitions: "Özellik",
   document_templates: "Belge şablonu", documents: "Belge",

@@ -11,7 +11,7 @@ import (
 // selection. Flat keys let independent changes merge atomically in PostgreSQL.
 type Preferences map[string]any
 
-var pageIDs = []string{"board", "calendar", "bookings", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
+var pageIDs = []string{"blacklist", "reports", "board", "calendar", "bookings", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
 var preferenceEnums = map[string][]string{
 	"theme":      {"blue", "pink", "green", "orange", "purple", "fuchsia"},
 	"background": {"white", "gray"}, "font_size": {"compact", "normal", "large", "xlarge"},
@@ -19,6 +19,7 @@ var preferenceEnums = map[string][]string{
 	"calendar_status": {"active", "all", "confirmed", "checked_in", "completed", "cancelled"},
 	"stays_status":    {"all", "confirmed", "checked_in", "completed"},
 }
+var reportHeader = regexp.MustCompile(`^header\.report\.[a-z_]{1,24}\.[a-z_]{1,40}$`)
 var countryCode = regexp.MustCompile(`^[A-Z]{2}$`)
 var currencyCode = regexp.MustCompile(`^[A-Z]{3}$`)
 
@@ -35,12 +36,12 @@ func (p Preferences) Validate() error {
 			continue
 		}
 		switch {
-		case key == "currency_auto" || key == "sidebar_open" || key == "stays_show_empty" || key == "board_plan":
+		case key == "reports_kpi_finance" || key == "reports_kpi_capacity" || key == "reports_kpi_operations" || key == "currency_auto" || key == "sidebar_open" || key == "stays_show_empty" || key == "board_plan":
 			if _, ok := value.(bool); !ok {
 				return constants.ErrPayload
 			}
 		case strings.HasPrefix(key, "header."):
-			if _, ok := value.(bool); !ok || !slices.Contains(pageIDs, strings.TrimPrefix(key, "header.")) {
+			if _, ok := value.(bool); !ok || (!slices.Contains(pageIDs, strings.TrimPrefix(key, "header.")) && !reportHeader.MatchString(key)) {
 				return constants.ErrPayload
 			}
 		case key == "stays_days" || key == "audit_page_size":

@@ -76,6 +76,6 @@ func (r *Repository) SearchGuests(ctx context.Context, q guest.Query) (guest.Sea
 	}
 	lastPrice += ` ORDER BY b2.check_in DESC LIMIT 1), 0)`
 	err := base.Select("gp.guest_id,gp.name,gp.national_id,gp.phone,gp.address,gp.nationality,"+lastPrice+" AS last_daily_price_minor", lastArgs...).
-		Order("gp.name,gp.guest_id").Limit(100).Offset((q.Page - 1) * 100).Scan(&out.Items).Error
+		Order("gp.name,gp.guest_id").Limit(guest.PageSize(q.PageSize)).Offset((q.Page - 1) * guest.PageSize(q.PageSize)).Scan(&out.Items).Error
 	return out, err
 }

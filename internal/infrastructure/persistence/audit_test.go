@@ -64,7 +64,7 @@ func TestAuditOperations(t *testing.T) {
 	b := newBooking(r1.RoomID)
 	transition := func(action string, target uuid.UUID) {
 		t.Helper()
-		if _, err := service.Transition(ctx, manager, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: action, TargetID: target}); err != nil {
+		if _, err := service.Transition(ctx, manager, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: action, TargetID: target, Reason: "Misafir rezervasyonu iptal etti."}); err != nil {
 			t.Fatal(err)
 		}
 		var logs []models.AuditLog

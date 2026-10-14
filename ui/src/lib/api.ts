@@ -78,6 +78,7 @@ export type Facility = {
   feature_assignments?: FeatureAssignment[];
 };
 export type APIRoom = {
+  status_reason?:string;
   inactive?: boolean;
   bed_layout?: string;
   floor_id: string | null;
@@ -217,6 +218,8 @@ export type Allocation = {
   end: string;
 };
 export type Booking = {
+  cancellation_reason?:string;
+  cancelled_at?:string;
   created_by_name?: string;
   checked_out_by_name?: string;
   checked_out_by_id?: string;

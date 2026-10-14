@@ -21,6 +21,7 @@ import (
 	"otel/internal/domain/media"
 	"otel/internal/domain/payment"
 	"otel/internal/domain/property"
+	"otel/internal/domain/reporting"
 	"strings"
 	"time"
 
@@ -36,21 +37,24 @@ import (
 const CookieName = "interactiveotel_session"
 
 type Handler struct {
-	Guests        *application.Guests
-	Reports       *application.Reports
-	Documents     *application.Documents
-	Staff         *application.Staff
-	Payments      *application.Payments
-	Audit         *application.Audit
-	Beds          *application.Beds
-	Accommodation *application.Accommodation
-	Features      *application.Features
-	Auth          *application.Auth
-	Catalog       *application.Catalog
-	Media         *application.Media
-	Origin        string
-	LocalOrigin   string // Optional exact localhost origin when a Quick Tunnel is active.
-	SecureCookies bool
+	Reporting        *application.Reporting
+	Folios           *application.Folios
+	GuestAssessments *application.GuestAssessments
+	Guests           *application.Guests
+	Reports          *application.Reports
+	Documents        *application.Documents
+	Staff            *application.Staff
+	Payments         *application.Payments
+	Audit            *application.Audit
+	Beds             *application.Beds
+	Accommodation    *application.Accommodation
+	Features         *application.Features
+	Auth             *application.Auth
+	Catalog          *application.Catalog
+	Media            *application.Media
+	Origin           string
+	LocalOrigin      string // Optional exact localhost origin when a Quick Tunnel is active.
+	SecureCookies    bool
 }
 type Response struct {
 	Version   string    `json:"version"`
@@ -211,6 +215,42 @@ func (h *Handler) command(c fiber.Ctx) error {
 	ctx = audit.WithActor(ctx, audit.Actor{UserID: u.UserID, RequestID: c.GetRespHeader("X-Request-ID"), Command: e.Code})
 	var result any
 	switch e.Code {
+	case constants.CMD_REPORT_CATALOG:
+		if !u.IsManager() {
+			return constants.ErrForbidden
+		}
+		result = fiber.Map{"reports": reporting.Definitions(), "record_kinds": reporting.Kinds}
+	case constants.CMD_REPORT_CHOICES:
+		var input struct {
+			HotelID  uuid.UUID `json:"hotel_id"`
+			BranchID uuid.UUID `json:"branch_id"`
+		}
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Reporting.Choices(ctx, u, input.HotelID, input.BranchID)
+	case constants.CMD_REPORT_GENERATE:
+		var input reporting.Filter
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Reporting.Generate(ctx, u, input)
+	case constants.CMD_REPORT_RECORD:
+		var input reporting.Record
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Reporting.Record(ctx, u, input)
+	case constants.CMD_REPORT_VOID:
+		var input struct {
+			HotelID uuid.UUID `json:"hotel_id"`
+			ID      uuid.UUID `json:"id"`
+			Reason  string    `json:"reason"`
+		}
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		err = h.Reporting.Void(ctx, u, input.HotelID, input.ID, input.Reason)
 	case constants.CMD_USER_PREFERENCES:
 		result = u.Preferences
 	case constants.CMD_USER_PREFERENCES_UPDATE:
@@ -221,6 +261,28 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Auth.UpdatePreferences(ctx, u, input.Preferences)
+	case constants.CMD_GUEST_ASSESS:
+		var input guest.AssessmentInput
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.GuestAssessments.Save(ctx, u, input)
+	case constants.CMD_GUEST_REPUTATION, constants.CMD_BLACKLIST_LIST:
+		var input guest.AssessmentQuery
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		if e.Code == constants.CMD_GUEST_REPUTATION {
+			result, err = h.GuestAssessments.Reputation(ctx, u, input)
+		} else {
+			result, err = h.GuestAssessments.List(ctx, u, input)
+		}
+	case constants.CMD_BLACKLIST_REVOKE:
+		var input guest.RevokeAssessment
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		err = h.GuestAssessments.Revoke(ctx, u, input)
 	case constants.CMD_GUEST_SEARCH:
 		var input guest.Query
 		if err = decode(e.Payload, &input); err != nil {
@@ -390,6 +452,12 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Catalog.SaveBranch(ctx, u, input, e.Code == constants.CMD_BRANCH_CREATE)
+	case constants.CMD_ROOM_ISSUE:
+		var input application.RoomIssueInput
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Reporting.Issue(ctx, u, h.Catalog, input)
 	case constants.CMD_ROOM_CREATE, constants.CMD_ROOM_UPDATE, constants.CMD_ROOM_STATE:
 		var input property.Room
 		if err = decode(e.Payload, &input); err != nil {
@@ -422,6 +490,10 @@ func (h *Handler) command(c fiber.Ctx) error {
 		}
 		if input.Action != "move" && input.Action != "swap" {
 			return constants.ErrBookingState
+		}
+		// Public checkout always requires the exact folio reviewed by the user.
+		if input.Action == "check_out" && len(input.FolioToken) != 64 {
+			return constants.ErrFolioChanged
 		}
 		result, err = h.Accommodation.Transition(ctx, u, input)
 	case constants.CMD_ROOM_BULK:
@@ -477,10 +549,23 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Accommodation.SaveBooking(ctx, u, input, e.Code == constants.CMD_BOOKING_CREATE)
+	case constants.CMD_BOOKING_FOLIO:
+		var input struct {
+			BranchID  uuid.UUID `json:"branch_id"`
+			BookingID uuid.UUID `json:"booking_id"`
+		}
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Folios.Get(ctx, u, input.BranchID, input.BookingID)
 	case constants.CMD_BOOKING_TRANSITION:
 		var input booking.Transition
 		if err = decode(e.Payload, &input); err != nil {
 			return err
+		}
+		// Public checkout always requires the exact folio reviewed by the user.
+		if input.Action == "check_out" && len(input.FolioToken) != 64 {
+			return constants.ErrFolioChanged
 		}
 		result, err = h.Accommodation.Transition(ctx, u, input)
 	case constants.CMD_ROOM_AVAILABILITY:

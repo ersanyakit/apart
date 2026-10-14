@@ -1,4 +1,5 @@
 "use client";
+import {InstallAppPanel} from "./PWA";
 import { PageHeader } from "./PageHeader";
 import { useUserPreferences } from "./UserPreferences";
 import React, { useId, useState } from "react";
@@ -256,6 +257,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </div>
       </section>
 
+      <InstallAppPanel/>
       <section aria-labelledby="account-heading" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
         <h3 id="account-heading" className="mb-5 text-base font-medium">Hesap</h3>
         <div className="flex items-center gap-3">

@@ -214,3 +214,57 @@ Menü → Konaklama Takvimi günlük/haftalık oda çizelgesini ve aylık çok g
 İşlem logları başarılı veri değişiklikleriyle aynı veritabanı işleminde yazılır. Misafir girişi/çıkışı, iptal, taşıma, takas, oturum açma/kapatma ve özellik atamaları ayrı adlarla görünür. Mevcut oluşturma/güncelleme/silme kayıtları korunur. Rezervasyonlarda önceki/sonraki durum, kişi sayısı, tarihler ve fiyat bulunur; parola, oturum anahtarı ve kimlik numarası log detaylarına kopyalanmaz. Başarısız işlemler başarı kaydı üretmez. Eski logların bulunmayan işlem detayları geriye dönük uydurulmaz.
 
 Login footer markası `constants/Brand.go` içindeki `BrandName` ve `BrandURL` değerlerinden `go generate ./constants` ile UI sözleşmesine aktarılır. Logo `ui/src/assets/brand/researchcave.svg` dosyasındadır.
+
+### Raporlamalar
+
+Sol menüde **Otel Operasyonu → Raporlamalar → Sistem Ayarları** sıralaması
+korunur. Raporlamalar grubundaki her rapor ayrı sayfadır; örneğin
+`/?tab=report.finance.daily_revenue` veya `/?tab=report.staff.shifts`.
+Sayfa başlığının daraltma tercihi `header.report.<kategori>.<rapor>` anahtarıyla
+kullanıcı hesabına kaydedilir. Yönetici ve işletme yönetimi rolleri erişebilir.
+
+- `internal/domain/reporting`: rapor sicili, ortak filtre/sonuç sözleşmesi ve
+  hesaplamalar. Yeni bir uygulama `Report` arayüzü ve `Register` ile eklenebilir.
+  `go run ./cmd/contracts` menü tanımlarını ve komut sözleşmesini UI'a üretir.
+- `internal/application/reporting.go`: rol/otel yetkisi ve doğrulama.
+- `internal/infrastructure/persistence/reporting.go`: aynı PostgreSQL okuma
+  anlık görüntüsünde tesis, rezervasyon, yerleşim ve rapor kayıtlarını yükler.
+- `report_records`: 019 migration ile oluşturulan, kullanıcı ve tarih bilgili
+  finans/operasyon defteri. `report.record` istemci UUID'si tekrar gönderildiğinde
+  ikinci tahsilat oluşturmaz. `report.void` gerekçeli iptal yapar; kayıt ve sistem
+  logu korunur. Aktif rezervasyon rapor bilgisi, vardiya ve açık hesap referansları
+  veritabanında tekilleştirilir.
+
+`report.catalog`, `report.generate`, `report.record`, `report.void` ortak
+`/action` API'sini kullanır. Tarihler İstanbul saat dilimindedir, bitiş günü
+rapora dahildir ve bir sorgu en fazla 366 günü kapsar. Sorgular tenant/tesis
+kapsamında çalışır; 50.000 rezervasyon veya 100.000 kaynak kaydı aşılırsa eksik
+sonuç döndürmek yerine hata verilir. CSV dışa aktarma seçilen raporun tüm
+satırlarını içerir ve elektronik tablo formüllerini etkisizleştirir.
+
+**Veri ve hesaplama kuralları:** Konaklama geliri gerçek giriş/çıkış varsa bu
+aralığın hizmet gecelerinden; gelecek satışlar mevcut rezervasyonlardan
+hesaplanır. Oda/yatak değişimi aynı geceyi çoğaltmaz. Para birimleri çevrilmez
+ve birleştirilmez. Eski rezervasyonlarda para birimi/kaynak saklanmadığından,
+rapor bilgisi girilene kadar TRY / Belirtilmemiş kullanılır. Eski kapora bakiye
+hesabından düşülür; tarihli tahsilat diye gösterilmez. Belge düzenlemek tek
+başına finansal işlem oluşturmaz.
+
+Ek gelir ve gider tahakkuku, tahsilat/ödeme/iade hareketlerinden ayrıdır.
+Tahsilatlara eski kaporayı tekrar girmeyin. Açık hesaplar aynı tesis, döviz ve
+referanstaki tahsilat/ödeme ile kapanır. Vardiya referansı açılış, kapanış ve
+nakit hareketlerini bağlar. Stok kodu giriş/tüketim hareketlerini bağlar.
+Güvence depozitosu gelir sayılmaz. Bakım/hasar maliyetinin finansal giderde de
+izlenmesi isteniyorsa gider kaydı ayrıca girilir. Birim bazlı sonuç yalnızca
+birime atanmış giderleri içerir; dağıtılmamış giderler ayrı gösterilir.
+
+Tarihsel kapasite değişiklikleri önceden tutulmadığı için kapasite paydası
+**mevcut fiziksel tanımlara** dayanır; geçmiş dolulukta bu sınırlama ekranda
+belirtilir. Satılan fiziksel yatak sayısı kişi kapasitesinden ayrıdır. Şikâyet,
+değerlendirme, bakım, görev, vardiya, stok, kontrat, rakip fiyatı ve güvence
+kayıtları ilgili ekrandaki **İşlem kaydı** ile girilir. Dış değerlendirme veya
+rakip fiyat platformlarına otomatik bağlantı kurulmaz; kaynak notuyla girilen
+veriler raporlanır. Faaliyet sonucu vergi/finansman sonrası muhasebe kârı değildir.
+
+Kontroller: `go test ./...` (PostgreSQL testleri için `TEST_DATABASE_URL`),
+`npm --prefix ui run lint`, `npm --prefix ui run test:reports`.

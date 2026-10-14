@@ -274,7 +274,7 @@ func (r *Repository) DeleteRoom(ctx context.Context, id uuid.UUID) error {
 	}
 	return r.DeleteRooms(ctx, row.BranchID, []uuid.UUID{id})
 }
-func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status string) error {
+func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status string, reason string) error {
 	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		var row models.Room
 		if err := tx.First(&row, "room_id = ?", id).Error; err != nil {
@@ -301,7 +301,7 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 				return constants.ErrStructureInUse
 			}
 		}
-		return tx.Model(&models.Room{}).Where("room_id = ?", id).Update("status", status).Error
+		return tx.Model(&models.Room{}).Where("room_id = ?", id).Updates(map[string]any{"status": status, "status_reason": reason}).Error
 	}))
 }
 func (r *Repository) SaveInventory(ctx context.Context, id uuid.UUID, items []property.InventoryItem) error {

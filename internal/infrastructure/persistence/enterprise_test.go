@@ -235,7 +235,7 @@ func TestEnterpriseWorkflows(t *testing.T) {
 		if _, err := guests.Update(ctx, manager, guest.Update{BranchID: branch.BranchID, BookingID: b.BookingID, Guests: b.Guests, GuestCount: 2}); err != nil {
 			t.Fatal(err)
 		}
-		if _, err := service.Transition(ctx, manager, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel"}); err != nil {
+		if _, err := service.Transition(ctx, manager, booking.Transition{BranchID: branch.BranchID, BookingID: b.BookingID, Action: "cancel", Reason: "Misafir rezervasyonunu iptal etti."}); err != nil {
 			t.Fatal(err)
 		}
 		found, err = guests.Search(ctx, manager, q)

@@ -1,3 +1,4 @@
+import { BookingBlacklistCheck } from "./GuestAssessment";
 import React, { useState } from "react";
 import {
   command,
@@ -466,6 +467,7 @@ export function BookingForm({
               }
             />
             </div>
+            <BookingBlacklistCheck nationalID={g.tcNo || ""} nationality={g.nationality || ""}/>
           </div>
         ))}
       </div>
@@ -775,6 +777,7 @@ export function BookingGuestsForm({
               onChange={(v) => patch(i, { nationality: v })}
             />
           </div>
+          <BookingBlacklistCheck nationalID={g.tcNo || ""} nationality={g.nationality || ""}/>
         </div>
       ))}
       <div className="flex gap-3">

@@ -9,13 +9,14 @@ import (
 	"otel/internal/domain/booking"
 	"otel/internal/domain/property"
 	"otel/internal/infrastructure/persistence/models"
+	"strings"
 	"time"
 )
 
 var _ booking.Repository = (*Repository)(nil)
 
 func fromBooking(v models.Booking) booking.Booking {
-	b := booking.Booking{BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, DailyPriceMinor: v.DailyPriceMinor, DepositMinor: v.DepositMinor, DepositChannel: v.DepositChannel, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
+	b := booking.Booking{CancellationReason: v.CancellationReason, CancelledAt: v.CancelledAt, BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, DailyPriceMinor: v.DailyPriceMinor, DepositMinor: v.DepositMinor, DepositChannel: v.DepositChannel, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
 	for _, g := range v.GuestDetails {
 		b.Guests = append(b.Guests, property.Guest(g))
 	}
@@ -25,7 +26,7 @@ func fromBooking(v models.Booking) booking.Booking {
 	return b
 }
 func toBooking(b booking.Booking) models.Booking {
-	v := models.Booking{BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, DailyPriceMinor: b.DailyPriceMinor, DepositMinor: b.DepositMinor, DepositChannel: b.DepositChannel, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
+	v := models.Booking{CancellationReason: b.CancellationReason, CancelledAt: b.CancelledAt, BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, DailyPriceMinor: b.DailyPriceMinor, DepositMinor: b.DepositMinor, DepositChannel: b.DepositChannel, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
 	for _, g := range b.Guests {
 		v.GuestDetails = append(v.GuestDetails, models.RoomGuest(g))
 	}
@@ -151,6 +152,8 @@ func (r *Repository) SaveBooking(ctx context.Context, b booking.Booking, create 
 		b.Status = booking.Confirmed
 		b.ActualCheckIn = nil
 		b.ActualCheckOut = nil
+		b.CancellationReason = ""
+		b.CancelledAt = nil
 		row := toBooking(b)
 		if create {
 			err = tx.Omit("Guests", "Allocations").Create(&row).Error
@@ -202,6 +205,7 @@ func updateCurrentStay(tx *gorm.DB, b, old booking.Booking) (booking.Booking, er
 		return b, constants.ErrBookingState
 	}
 	b.Status, b.ActualCheckIn, b.ActualCheckOut = old.Status, old.ActualCheckIn, old.ActualCheckOut
+	b.CancellationReason, b.CancelledAt = old.CancellationReason, old.CancelledAt
 	b.UserID, b.CreatedAt = old.UserID, old.CreatedAt
 	if err := persistBooking(tx, b); err != nil {
 		return b, err
@@ -320,6 +324,11 @@ func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transi
 			if b.Status != booking.Confirmed {
 				return constants.ErrBookingState
 			}
+			if len(strings.TrimSpace(input.Reason)) < 10 || len(input.Reason) > 2000 {
+				return constants.ErrReasonRequired
+			}
+			b.CancellationReason = strings.TrimSpace(input.Reason)
+			b.CancelledAt = &now
 			b.Status = booking.Cancelled
 		case "check_in":
 			if b.Status != booking.Confirmed {
@@ -349,6 +358,18 @@ func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transi
 		case "check_out":
 			if b.Status != booking.CheckedIn || b.ActualCheckIn == nil || !now.After(*b.ActualCheckIn) {
 				return constants.ErrBookingState
+			}
+			if input.FolioToken != "" {
+				folio, e := loadFolio(tx, input.BranchID, input.BookingID)
+				if e != nil {
+					return e
+				}
+				if folio.Token != input.FolioToken {
+					return constants.ErrFolioChanged
+				}
+				if folio.NeedsAcknowledgement && !input.AcceptBalance {
+					return constants.ErrBalanceAcknowledgement
+				}
 			}
 			b.Status = booking.Completed
 			b.ActualCheckOut = &now

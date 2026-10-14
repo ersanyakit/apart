@@ -8,6 +8,7 @@ const nextConfig = {
     : [],
   // Go development proxy keeps UI, API and the HMR socket on :3000.
   // The standalone :3002 command can still reach the same API.
+  async headers(){return [{source:"/sw.js",headers:[{key:"Content-Type",value:"application/javascript; charset=utf-8"},{key:"Cache-Control",value:"no-cache, no-store, must-revalidate"},{key:"Service-Worker-Allowed",value:"/"}]}]},
   async rewrites() {
     const api = process.env.API_INTERNAL_URL || "http://127.0.0.1:3000";
     return [

@@ -2,9 +2,12 @@
 import React, { createContext, useContext, useId } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { usePreference } from "./UserPreferences";
+import { reportForPage, type ReportPageID } from "./reports/navigation";
 import { NavigationIcon } from "./NavigationIcon";
 
 export const PAGE_HEADERS = {
+  blacklist: ["Ortak Kara Liste", "Tüm otellerin paylaştığı misafir kayıtlarını, gerekçeleri ve kayıt geçmişini inceleyin."],
+  reports: ["Raporlama", "İşletmenizin finansal, kapasite ve operasyon performansını takip edin."],
   board: ["Oda Durum Çizelgesi", "Birimlerin doluluk ve temizlik durumlarını takip edin."],
   calendar: ["Konaklama takvimi", "Odalar, konaklayanlar ve rezervasyonlar bir arada."],
   bookings: ["Rezervasyonlar", "Rezervasyonları, misafir bilgilerini ve işlem geçmişini yönetin."],
@@ -18,7 +21,7 @@ export const PAGE_HEADERS = {
   features: ["Olanak Tanımları", "Olanakları ve kategorileri tanımlayın, tesis kataloğunu düzenleyin."],
   appsettings: ["Ayarlar", "Çalışma alanını kendine göre düzenle. Tercihlerin hesabında saklanır."],
 } as const;
-export type PageID = keyof typeof PAGE_HEADERS;
+export type PageID = keyof typeof PAGE_HEADERS | ReportPageID;
 const HeaderContext = createContext<{ propertyName?: string; actions?: React.ReactNode }>({});
 export const PageHeaderProvider = HeaderContext.Provider;
 
@@ -29,7 +32,8 @@ export function PageHeader({ pageId, propertyName, actions, children, globalActi
   const inherited = useContext(HeaderContext);
   const [collapsed, setCollapsed] = usePreference<boolean>(`header.${pageId}`, false);
   const id = useId();
-  const [title, description] = PAGE_HEADERS[pageId];
+  const report = reportForPage(pageId);
+  const [title, description] = report ? [report.name, report.description] : PAGE_HEADERS[pageId as keyof typeof PAGE_HEADERS];
   return <header className="page-header" data-collapsed={collapsed} aria-labelledby={`${id}-title`}>
     <div className="page-header-top">
       <div className="page-header-heading">

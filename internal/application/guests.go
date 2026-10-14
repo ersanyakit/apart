@@ -41,7 +41,7 @@ func (s *Guests) validateQuery(ctx context.Context, u identity.User, q guest.Que
 	} else if !u.IsManager() {
 		return constants.ErrBranchRequired
 	}
-	if len(q.Search) > 200 || q.Page < 0 || q.Page > 100000 || (q.From != nil && q.To != nil && !q.To.After(*q.From)) {
+	if (q.PageSize != 0 && q.PageSize != 25 && q.PageSize != 50 && q.PageSize != 100) || len(q.Search) > 200 || q.Page < 0 || q.Page > 100000 || (q.From != nil && q.To != nil && !q.To.After(*q.From)) {
 		return constants.ErrPayload
 	}
 	return nil

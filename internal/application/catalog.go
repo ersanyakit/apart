@@ -9,6 +9,7 @@ import (
 	"otel/internal/domain/identity"
 	"otel/internal/domain/media"
 	"otel/internal/domain/property"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -250,6 +251,9 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 	if create {
 		item.RoomID = uuid.New()
 		item.ClearStay(item.Status)
+		if (item.Status == "Tadilat" || item.Status == "Arizali") && (len(strings.TrimSpace(item.StatusReason)) < 10 || len(item.StatusReason) > 2000) {
+			return item, constants.ErrReasonRequired
+		}
 	} else {
 		old, err := s.Room(ctx, u, item.RoomID)
 		if err != nil {
@@ -259,6 +263,7 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 			return item, constants.ErrForbidden
 		}
 		item.Status = old.Status
+		item.StatusReason = old.StatusReason
 		item.Name = old.Name
 		item.CheckIn = old.CheckIn
 		item.CheckOut = old.CheckOut
@@ -301,7 +306,10 @@ func (s *Catalog) SaveState(ctx context.Context, u identity.User, state property
 	default:
 		return room, constants.ErrBookingRequired
 	}
-	if err := s.Properties.SaveOperationalState(ctx, room.RoomID, state.Status); err != nil {
+	if (state.Status == "Tadilat" || state.Status == "Arizali") && (len(strings.TrimSpace(state.StatusReason)) < 10 || len(state.StatusReason) > 2000) {
+		return room, constants.ErrReasonRequired
+	}
+	if err := s.Properties.SaveOperationalState(ctx, room.RoomID, state.Status, strings.TrimSpace(state.StatusReason)); err != nil {
 		return room, err
 	}
 	return s.Properties.FindRoom(ctx, room.RoomID)

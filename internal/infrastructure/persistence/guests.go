@@ -187,7 +187,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	if export {
 		query = query.Limit(10000)
 	} else {
-		query = query.Limit(100).Offset((q.Page - 1) * 100)
+		query = query.Limit(guest.PageSize(q.PageSize)).Offset((q.Page - 1) * guest.PageSize(q.PageSize))
 	}
 	rows, err := query.Rows()
 	if err != nil {

@@ -171,3 +171,9 @@ var (
 	ErrStaff       = define("invalid_staff", "Personelin adı, soyadı, kullanıcı adı, e-posta ve şube seçimleri geçerli olmalıdır.", Validation)
 	ErrLastManager = define("last_manager", "Otelin son yöneticisi silinemez veya yetkisi düşürülemez.", Conflict)
 )
+
+var ErrReasonRequired = define("reason_required", "İşlemin gerekçesini en az 10, en fazla 2000 karakterle açıklayın.", Validation)
+var ErrFolioChanged = define("folio_changed", "Folyo değişti. Güncel tutarları incelemek için folyoyu yeniden yükleyin.", Conflict)
+var ErrBalanceAcknowledgement = define("balance_acknowledgement", "Açık borç, iade veya güvence bakiyesini inceleyip onaylayın.", Validation)
+
+var ErrBlacklistIdentity = define("blacklist_identity", "Kara listeye eklemek için misafirin kimlik/pasaport numarasını ve ülkesini rezervasyonda tamamlayın.", Validation)

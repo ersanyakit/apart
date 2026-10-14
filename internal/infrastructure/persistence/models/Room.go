@@ -8,17 +8,18 @@ import (
 )
 
 type Room struct {
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
-	Inactive  bool           `gorm:"not null;default:false"`
-	BedLayout string
-	FloorID   *uuid.UUID `gorm:"type:uuid;index"`
-	ParentID  *uuid.UUID `gorm:"type:uuid;index"`
-	Kind      string     `gorm:"not null;default:room"`
-	Capacity  int        `gorm:"not null;default:1"`
-	Rentable  bool       `gorm:"not null"`
-	BedGroup  string
-	BedLevel  int
-	Position  property.Position `gorm:"serializer:json;type:jsonb"`
+	StatusReason string
+	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
+	Inactive     bool           `gorm:"not null;default:false"`
+	BedLayout    string
+	FloorID      *uuid.UUID `gorm:"type:uuid;index"`
+	ParentID     *uuid.UUID `gorm:"type:uuid;index"`
+	Kind         string     `gorm:"not null;default:room"`
+	Capacity     int        `gorm:"not null;default:1"`
+	Rentable     bool       `gorm:"not null"`
+	BedGroup     string
+	BedLevel     int
+	Position     property.Position `gorm:"serializer:json;type:jsonb"`
 
 	RoomID       uuid.UUID             `gorm:"type:uuid;primaryKey;uniqueIndex:idx_room_branch,priority:1" json:"room_id"`
 	BranchID     uuid.UUID             `gorm:"type:uuid;not null;index;uniqueIndex:idx_room_branch,priority:2;uniqueIndex:idx_room_branch_code,priority:1" json:"branch_id"`

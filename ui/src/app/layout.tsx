@@ -1,3 +1,4 @@
+import {PWAProvider} from "../components/PWA";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ConfirmDialogHost } from "../components/ConfirmDialog";
@@ -16,6 +17,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "INTERACTIVEOTEL",
   description: "Otel, tesis ve oda yönetimi",
+  manifest:"/manifest.webmanifest",
+  appleWebApp:{capable:true,title:"INTERACTIVEOTEL",statusBarStyle:"default"},
+  icons:{apple:"/pwa/apple-touch-icon.png",icon:"/pwa/icon-192.png"},
 };
 export const viewport: Viewport = {
   width: "device-width",
@@ -34,7 +38,7 @@ export default function RootLayout({
       <body>
         <I18nProvider>
           <NotificationProvider>
-          {children}
+          <PWAProvider>{children}</PWAProvider>
           <ConfirmDialogHost />
           </NotificationProvider>
         </I18nProvider>

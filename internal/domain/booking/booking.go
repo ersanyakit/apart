@@ -27,28 +27,30 @@ type Allocation struct {
 	End          time.Time `json:"end"`
 }
 type Booking struct {
-	CreatedByName    string           `json:"created_by_name"`
-	CheckedOutByName string           `json:"checked_out_by_name"`
-	CheckedOutByID   *uuid.UUID       `json:"checked_out_by_id,omitempty"`
-	BookingID        uuid.UUID        `json:"booking_id"`
-	BranchID         uuid.UUID        `json:"branch_id"`
-	RoomID           uuid.UUID        `json:"room_id"`
-	UserID           uuid.UUID        `json:"user_id"`
-	GuestName        string           `json:"guest_name"`
-	GuestCount       int              `json:"guest_count"`
-	DailyPriceMinor  int64            `json:"daily_price_minor"`
-	DepositMinor     int64            `json:"deposit_minor"`
-	DepositChannel   string           `json:"deposit_channel"`
-	Guests           []property.Guest `json:"guests"`
-	Notes            string           `json:"notes"`
-	CheckIn          time.Time        `json:"check_in"`
-	CheckOut         time.Time        `json:"check_out"`
-	ActualCheckIn    *time.Time       `json:"actual_check_in"`
-	ActualCheckOut   *time.Time       `json:"actual_check_out"`
-	Status           string           `json:"status"`
-	Allocations      []Allocation     `json:"allocations"`
-	CreatedAt        time.Time        `json:"created_at"`
-	UpdatedAt        time.Time        `json:"updated_at"`
+	CancellationReason string           `json:"cancellation_reason"`
+	CancelledAt        *time.Time       `json:"cancelled_at"`
+	CreatedByName      string           `json:"created_by_name"`
+	CheckedOutByName   string           `json:"checked_out_by_name"`
+	CheckedOutByID     *uuid.UUID       `json:"checked_out_by_id,omitempty"`
+	BookingID          uuid.UUID        `json:"booking_id"`
+	BranchID           uuid.UUID        `json:"branch_id"`
+	RoomID             uuid.UUID        `json:"room_id"`
+	UserID             uuid.UUID        `json:"user_id"`
+	GuestName          string           `json:"guest_name"`
+	GuestCount         int              `json:"guest_count"`
+	DailyPriceMinor    int64            `json:"daily_price_minor"`
+	DepositMinor       int64            `json:"deposit_minor"`
+	DepositChannel     string           `json:"deposit_channel"`
+	Guests             []property.Guest `json:"guests"`
+	Notes              string           `json:"notes"`
+	CheckIn            time.Time        `json:"check_in"`
+	CheckOut           time.Time        `json:"check_out"`
+	ActualCheckIn      *time.Time       `json:"actual_check_in"`
+	ActualCheckOut     *time.Time       `json:"actual_check_out"`
+	Status             string           `json:"status"`
+	Allocations        []Allocation     `json:"allocations"`
+	CreatedAt          time.Time        `json:"created_at"`
+	UpdatedAt          time.Time        `json:"updated_at"`
 }
 
 func (b Booking) Validate() error {
@@ -90,6 +92,9 @@ type Query struct {
 	Status    string     `json:"status"`
 }
 type Transition struct {
+	Reason         string     `json:"reason"`
+	FolioToken     string     `json:"folio_token"`
+	AcceptBalance  bool       `json:"accept_balance"`
 	BookingID      uuid.UUID  `json:"booking_id"`
 	BranchID       uuid.UUID  `json:"branch_id"`
 	Action         string     `json:"action"`

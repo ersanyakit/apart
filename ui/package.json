@@ -15,7 +15,10 @@
     "test:stays": "node --test tests/stays-scheduler.test.cjs",
     "test:calendar": "node --test tests/hotel-calendar.test.cjs",
     "test:room-board": "node --test tests/room-board.test.cjs",
-    "test:audit": "node --test tests/audit-location.test.cjs"
+    "test:audit": "node --test tests/audit-location.test.cjs",
+    "test:reports": "node --test tests/reports.test.cjs",
+    "test:pwa": "node --test tests/pwa.test.cjs",
+    "test:guests": "node --test tests/guest-operations.test.cjs"
   },
   "dependencies": {
     "@tanstack/react-table": "^8.21.3",

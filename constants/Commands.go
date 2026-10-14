@@ -161,3 +161,41 @@ func init() {
 const CMD_TEMPLATE_DEFAULTS = "document.template.defaults"
 
 func init() { CommandMethods[CMD_TEMPLATE_DEFAULTS] = "GET" }
+
+const (
+	CMD_REPORT_CATALOG  = "report.catalog"
+	CMD_REPORT_GENERATE = "report.generate"
+	CMD_REPORT_RECORD   = "report.record"
+	CMD_REPORT_VOID     = "report.void"
+)
+
+func init() {
+	for k, v := range map[string]string{CMD_REPORT_CATALOG: "GET", CMD_REPORT_GENERATE: "GET", CMD_REPORT_RECORD: "POST", CMD_REPORT_VOID: "POST"} {
+		CommandMethods[k] = v
+	}
+}
+
+const CMD_REPORT_CHOICES = "report.choices"
+
+func init() { CommandMethods[CMD_REPORT_CHOICES] = "GET" }
+
+const (
+	CMD_GUEST_ASSESS     = "guest.assess"
+	CMD_GUEST_REPUTATION = "guest.reputation"
+	CMD_BLACKLIST_LIST   = "blacklist.list"
+	CMD_BLACKLIST_REVOKE = "blacklist.revoke"
+)
+
+func init() {
+	for k, v := range map[string]string{CMD_GUEST_ASSESS: "POST", CMD_GUEST_REPUTATION: "GET", CMD_BLACKLIST_LIST: "GET", CMD_BLACKLIST_REVOKE: "POST"} {
+		CommandMethods[k] = v
+	}
+}
+
+const CMD_BOOKING_FOLIO = "booking.folio"
+
+func init() { CommandMethods[CMD_BOOKING_FOLIO] = "GET" }
+
+const CMD_ROOM_ISSUE = "room.issue"
+
+func init() { CommandMethods[CMD_ROOM_ISSUE] = "POST" }

@@ -1,4 +1,6 @@
 "use client";
+import { CheckoutFolio } from "./components/CheckoutFolio";
+import { OperationReason,type ReasonOperation } from "./components/OperationReason";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -59,12 +61,15 @@ import { FloorBoard } from "./components/FloorBoard";
 import { confirmDialog } from "./components/ConfirmDialog";
 import { ContextMenu } from "./components/ContextMenu";
 import { StaffView } from "./components/StaffView";
+import { BlacklistView } from "./components/BlacklistView";
 import { GuestView } from "./components/GuestView";
 import {
   DocumentTemplates,
   BookingDocuments,
 } from "./components/DocumentsView";
 import { InventoryView } from "./components/InventoryView";
+import { REPORTS, reportPageID, reportForPage } from "./components/reports/navigation";
+import { ReportsView } from "./components/reports/ReportsView";
 import { AuditView } from "./components/AuditView";
 import { RoomStatusCard } from "./components/RoomStatusCard";
 import { RoomStatusPicker } from "./components/RoomStatusPicker";
@@ -106,12 +111,15 @@ type Modal =
   | { type: "bulk" }
   | { type: "history"; booking: Booking };
 const navigation = [
+  ...REPORTS.map(r=>({id:reportPageID(r.key),label:r.name,icon:Layers})),
+  { id: "reports", label: "Yönetim özeti", icon: Layers },
   { id: "board", label: "Oda Durum Çizelgesi", icon: LayoutGrid },
   { id: "calendar", label: "Konaklama Takvimi", icon: CalendarDays },
   { id: "bookings", label: "Rezervasyonlar", icon: CalendarDays },
   { id: "stays", label: "Konaklayan Listesi", icon: Users },
   { id: "units", label: "Kat ve Oda Tanımları", icon: DoorOpen },
   { id: "staff", label: "Personel Tanımları", icon: Users },
+  { id: "blacklist", label: "Ortak Kara Liste", icon: Users },
   { id: "guests", label: "Misafir Arama ve Geçmiş", icon: Search },
   { id: "templates", label: "Belge Şablonları", icon: Settings },
   { id: "logs", label: "Sistem Logları", icon: Layers },
@@ -149,6 +157,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const preferences = useUserPreferences();
   const [tab, setTab] = useState(() => NAV_TAB_IDS.has(initialTab) ? initialTab : "board"),
     [sidebar, setSidebar] = useState(true),
+    [checkout,setCheckout]=useState<Booking|null>(null),
+    [reasonOperation,setReasonOperation]=useState<ReasonOperation|null>(null),
     [modal, setModal] = useState<Modal | null>(() => startRegistration && snapshot ? { type: "facility", kind: "hotel", create: true } : null),
     [busy, setBusy] = useState(false),
     [search, setSearch] = useState(""),
@@ -296,15 +306,15 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       setModal(null);
       setSearch("");
     }, "Tesis seçildi.");
-  const transition = (b: Booking, action: string) =>
-    void run(async () => {
-      await command("booking.transition", {
-        branch_id: b.branch_id,
-        booking_id: b.booking_id,
-        action,
-      });
-      await refresh();
-    });
+  const transition = (b: Booking, action: string) => {
+    if(action==="check_out"){setModal(null);setCheckout(b);return}
+    if(action==="cancel"){setReasonOperation({kind:"cancel",booking:b});return}
+    void run(async () => { await command("booking.transition", {branch_id:b.branch_id,booking_id:b.booking_id,action});await refresh();});
+  };
+  const changeRoomState=(room:APIRoom,status:string)=>{
+    if(status==="Tadilat"||status==="Arizali"){setReasonOperation({kind:"state",room,status});return}
+    void run(async()=>{await command("room.state",{room_id:room.room_id,status});await refresh()});
+  };
   const remove = async (type: "room" | "floor", id: string) => {
     if (
       await confirmDialog(
@@ -443,6 +453,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               <dl className="room-status-dates">
                 <div><dt>Rezervasyonu alan</dt><dd>{modal.booking.created_by_name || "Bilgi kaydedilmemiş"}</dd></div>
                 <div><dt>Çıkışı gerçekleştiren</dt><dd>{modal.booking.status === "completed" ? modal.booking.checked_out_by_name || "Bilgi kaydedilmemiş" : "Henüz çıkış yapılmadı"}</dd></div>
+                {modal.booking.cancellation_reason&&<div><dt>İptal gerekçesi</dt><dd>{modal.booking.cancellation_reason}</dd></div>}
                 <div><dt>Planlanan giriş</dt><dd>{date(modal.booking.check_in)}</dd></div>
                 <div><dt>Planlanan çıkış</dt><dd>{date(modal.booking.check_out)}</dd></div>
                 {modal.booking.actual_check_in && <div><dt>Giriş yapıldı</dt><dd>{date(modal.booking.actual_check_in)}</dd></div>}
@@ -604,7 +615,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         </AnimatePresence>
         {["board", "bookings"].includes(tab) && (
           <>
-            <PageHeader pageId={tab === "board" ? "board" : "bookings"}>
+            <PageHeader pageId={tab === "board" ? "board" : "bookings"} actions={(housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>Arıza bildir</button>:undefined}>
             <div className="flex flex-wrap items-stretch gap-3">
               <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
                 <label className="block min-w-0 cursor-text">
@@ -764,7 +775,6 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                         busy={busy}
                         onOpenBooking={booking => setModal({ type: "history", booking })}
                         onTransition={operator ? async (booking, action) => {
-                          if (action === "check_out" && !(await confirmDialog(`${booking.guest_name} için çıkış yapılsın mı?`))) return;
                           transition(booking, action);
                         } : undefined}
                         onContextMenu={(e) => {
@@ -843,15 +853,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                             roomCode={room.code}
                             status={room.status}
                             canSetAdvanced={operator}
-                            onPick={(status) =>
-                              void run(async () => {
-                                await command("room.state", {
-                                  room_id: room.room_id,
-                                  status,
-                                });
-                                await refresh();
-                              })
-                            }
+                            onPick={status=>changeRoomState(room,status)}
                           />
                         )}
                       </RoomStatusCard>
@@ -882,12 +884,16 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           />
         )}
         {tab === "staff" && <StaffView key={s.hotel_id} snapshot={s} />}
-        {tab === "guests" && <GuestView snapshot={s} />}
+        {checkout&&<CheckoutFolio booking={checkout} onClose={()=>setCheckout(null)} onSaved={async()=>{await refresh();notify("Çıkış tamamlandı.")}}/>}
+        {reasonOperation&&<OperationReason operation={reasonOperation} onClose={()=>setReasonOperation(null)} onSaved={async()=>{await refresh();notify("İşlem gerekçesiyle kaydedildi.")}}/>}
+        {tab === "guests" && <GuestView key={`${s.hotel_id}-${s.branch_id}`} snapshot={s} />}
+        {tab === "blacklist" && <BlacklistView snapshot={s} onGuests={()=>activateTab("guests")} />}
         {tab === "templates" && <DocumentTemplates snapshot={s} />}
         {tab === "calendar" && <HotelCalendar key={s.branch_id} bookings={s.bookings} rooms={s.rooms}
           propertyName={s.branches.find(b => b.branch_id === s.branch_id)?.name || s.hotels.find(h => h.hotel_id === s.hotel_id)?.name || "Otel"}
           headerActions={pageActions}
           onOpenBooking={operator ? openBookingEdit : undefined} />}
+        {(tab === "reports" || reportForPage(tab)) && <ReportsView key={`${s.hotel_id}-${tab}`} snapshot={s} reportKey={reportForPage(tab)?.key ?? "management.dashboard"} />}
         {tab === "logs" && <AuditView hotelId={s.hotel_id} />}
         {tab === "stays" && (
           <StaysScheduler key={s.branch_id} rooms={s.rooms} floors={s.floors} bookings={s.bookings}
@@ -896,7 +902,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             onEdit={operator ? openBookingEdit : undefined}
             onMove={operator ? booking => setModal({ type: "move", booking }) : undefined}
             onCheckOut={operator ? async booking => {
-              if (await confirmDialog(`${booking.guest_name} için çıkış yapılsın mı?`)) transition(booking, "check_out");
+              transition(booking, "check_out");
             } : undefined} />
         )}
         {tab === "bookings" && (
@@ -964,6 +970,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                     >
                       {bookingStatuses[b.status]}
                     </span>
+                    {b.cancellation_reason&&<p className="mt-2 max-w-64 whitespace-pre-wrap text-xs text-slate-500">{b.cancellation_reason}</p>}
                   </td>
                   <td className="p-4 min-w-48 text-sm">
                     <dl className="space-y-2">
@@ -995,14 +1002,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                             <button
                               disabled={busy}
                               className={`uni-control ${secondaryStyle}`}
-                              onClick={async () => {
-                                if (
-                                  await confirmDialog(
-                                    `${b.guest_name} rezervasyonu iptal edilsin mi?`,
-                                  )
-                                )
-                                  transition(b, "cancel");
-                              }}
+                              onClick={() => transition(b,"cancel")}
                             >
                               İptal
                             </button>
@@ -1014,14 +1014,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                           <button
                             disabled={busy}
                             className={`uni-control ${secondaryStyle}`}
-                            onClick={async () => {
-                              if (
-                                await confirmDialog(
-                                  `${b.guest_name} için çıkış yapılsın mı?`,
-                                )
-                              )
-                                transition(b, "check_out");
-                            }}
+                            onClick={() => transition(b,"check_out")}
                           >
                             Çıkış
                           </button>
@@ -1237,21 +1230,9 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               } else if (type === "exchange" && operator && b && ["confirmed", "checked_in"].includes(b.status))
                 setModal({ type: "move", booking: b });
               else if (type === "checkout" && operator && b?.status === "checked_in")
-                void confirmDialog(
-                  `${b.guest_name} için çıkış yapılsın mı?`,
-                ).then((ok) => {
-                  if (ok) transition(b, "check_out");
-                });
+                transition(b,"check_out");
             }}
-            onStatusChange={(status) =>
-              void run(async () => {
-                await command("room.state", {
-                  room_id: contextMenu.room.room_id,
-                  status,
-                });
-                await refresh();
-              })
-            }
+            onStatusChange={status=>changeRoomState(contextMenu.room,status)}
             onPrint={(type) => {
               const b = contextMenu.booking;
               if (!b) {
@@ -1280,11 +1261,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               contextMenu.booking
                 ? () => {
                     const b = contextMenu.booking!;
-                    void confirmDialog(
-                      `${b.guest_name} rezervasyonu iptal edilsin mi?`,
-                    ).then((ok) => {
-                      if (ok) transition(b, "cancel");
-                    });
+                    transition(b, "cancel");
                   }
                 : undefined
             }

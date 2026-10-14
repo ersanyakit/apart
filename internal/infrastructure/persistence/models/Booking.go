@@ -7,16 +7,18 @@ import (
 )
 
 type Booking struct {
-	GuestName       string
-	GuestCount      int
-	DailyPriceMinor int64       `gorm:"not null;default:0" json:"daily_price_minor"`
-	DepositMinor    int64       `gorm:"not null;default:0" json:"deposit_minor"`
-	DepositChannel  string      `gorm:"not null;default:''" json:"deposit_channel"`
-	GuestDetails    []RoomGuest `gorm:"serializer:json;type:jsonb"`
-	Notes           string
-	ActualCheckIn   *time.Time
-	ActualCheckOut  *time.Time
-	Allocations     []BookingAllocation `gorm:"foreignKey:BookingID;references:BookingID;constraint:OnDelete:RESTRICT"`
+	CancellationReason string
+	CancelledAt        *time.Time
+	GuestName          string
+	GuestCount         int
+	DailyPriceMinor    int64       `gorm:"not null;default:0" json:"daily_price_minor"`
+	DepositMinor       int64       `gorm:"not null;default:0" json:"deposit_minor"`
+	DepositChannel     string      `gorm:"not null;default:''" json:"deposit_channel"`
+	GuestDetails       []RoomGuest `gorm:"serializer:json;type:jsonb"`
+	Notes              string
+	ActualCheckIn      *time.Time
+	ActualCheckOut     *time.Time
+	Allocations        []BookingAllocation `gorm:"foreignKey:BookingID;references:BookingID;constraint:OnDelete:RESTRICT"`
 
 	BookingID uuid.UUID `gorm:"type:uuid;primaryKey" json:"booking_id"`
 

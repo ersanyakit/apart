@@ -3,7 +3,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secondaryStyle } from "./FormKit";
 import { InlineSelectField } from "./fields";
 
-export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSizeChange }: {
+export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSizeChange, label = "Sistem logları sayfaları", noun = "işlem" }: {
+  label?: string;
+  noun?: string;
   page: number;
   pageSize: number;
   total: number;
@@ -16,18 +18,18 @@ export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSi
     .filter((n) => n >= 1 && n <= pages).sort((a, b) => a - b);
   const start = total ? (page - 1) * pageSize + 1 : 0;
   const end = Math.min(page * pageSize, total);
-  return <div className="flex flex-col gap-4 rounded-2xl bg-[#f9f9f9] p-4">
+  return <div className="flex flex-col gap-4 rounded-2xl bg-[var(--color-uni-surface)] p-4">
     <div className="flex flex-wrap items-center justify-between gap-3">
       <p className="text-sm text-slate-500" role="status" aria-live="polite">
-        {busy ? "Yükleniyor…" : `${total} işlemden ${start}–${end} arası · Sayfa ${page} / ${pages}`}
+        {busy ? "Yükleniyor…" : `${total} ${noun} · ${start}–${end} arası · Sayfa ${page} / ${pages}`}
       </p>
       <div className="w-full sm:w-44">
         <InlineSelectField label="Sayfa başına" value={String(pageSize)} disabled={busy}
           onChange={(v) => onPageSizeChange(Number(v))}
-          options={[25, 50, 100].map((n) => ({ value: String(n), label: `${n} işlem` }))} />
+          options={[25, 50, 100].map((n) => ({ value: String(n), label: `${n} ${noun}` }))} />
       </div>
     </div>
-    <nav aria-label="Sistem logları sayfaları" className="flex flex-wrap items-center justify-center gap-1 sm:justify-end sm:gap-2">
+    <nav aria-label={label} className="flex flex-wrap items-center justify-center gap-1 sm:justify-end sm:gap-2">
       <button type="button" className={`uni-control ${secondaryStyle} min-h-11 min-w-11 !rounded-full !px-2 sm:!px-4`}
         disabled={busy || page <= 1} onClick={() => onPageChange(page - 1)} aria-label="Önceki sayfa">
         <ChevronLeft size={18} aria-hidden="true" /><span className="hidden sm:inline">Önceki</span>

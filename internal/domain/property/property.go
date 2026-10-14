@@ -68,6 +68,7 @@ type Guest struct {
 	Nationality  string `json:"nationality,omitempty"`
 }
 type Room struct {
+	StatusReason       string                 `json:"status_reason"`
 	Inactive           bool                   `json:"inactive"`
 	BedLayout          string                 `json:"bed_layout"`
 	FloorID            *uuid.UUID             `json:"floor_id"`
@@ -157,6 +158,6 @@ type Repository interface {
 	SaveRoom(context.Context, Room, bool) error
 	DeleteRoom(context.Context, uuid.UUID) error
 	DeleteRooms(context.Context, uuid.UUID, []uuid.UUID) error
-	SaveOperationalState(context.Context, uuid.UUID, string) error
+	SaveOperationalState(context.Context, uuid.UUID, string, string) error
 	SaveInventory(context.Context, uuid.UUID, []InventoryItem) error
 }

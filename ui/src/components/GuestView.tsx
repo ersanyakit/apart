@@ -1,3 +1,5 @@
+import { Pagination } from "./Pagination";
+import { GuestAssessment, type AssessmentTarget } from "./GuestAssessment";
 import { PageHeader } from "./PageHeader";
 import React, { useEffect, useState } from "react";
 import {
@@ -46,6 +48,8 @@ export function GuestView({
     [sort, setSort] = useState("start"),
     [desc, setDesc] = useState(true),
     [page, setPage] = useState(1),
+    [pageSize, setPageSize] = useState(25),
+    [assessment,setAssessment] = useState<AssessmentTarget|null>(null),
     [rows, setRows] = useState<Stay[]>([]),
     [total, setTotal] = useState(0),
     [error, setError] = useState(""),
@@ -64,6 +68,7 @@ export function GuestView({
     sort,
     desc,
     page,
+    page_size:pageSize,
   };
   useEffect(() => {
     let active = true;
@@ -74,6 +79,7 @@ export function GuestView({
           if (active) {
             setRows(result.items);
             setTotal(result.total);
+            const last=Math.max(1,Math.ceil(result.total/pageSize));if(page>last)setPage(last);
             setError("");
           }
         })
@@ -99,6 +105,7 @@ export function GuestView({
     sort,
     desc,
     page,
+    pageSize,
   ]);
   const sortBy = (key: string) => {
     if (sort === key) setDesc((v) => !v);
@@ -177,6 +184,7 @@ export function GuestView({
         </Field>
       </div>
   );
+  if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>setAssessment(null)}/>;
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
@@ -203,7 +211,7 @@ export function GuestView({
           </button>
         </div>
       </div>
-      <div className="overflow-auto rounded-2xl border border-slate-200 bg-white">
+      <div className="overflow-auto rounded-3xl bg-[var(--color-uni-surface)]">
         <table className="w-full text-xs text-left">
           <thead className="bg-slate-50 text-slate-400">
             <tr>
@@ -220,7 +228,7 @@ export function GuestView({
                 </th>
               ))}
               <th>Birlikte kaldıkları</th>
-              <th className="p-4">Durum</th>
+              <th className="p-4">Durum</th><th className="p-4">Misafir değerlendirmesi</th>
             </tr>
           </thead>
           <tbody>
@@ -259,7 +267,7 @@ export function GuestView({
                     </button>
                   ))}
                 </td>
-                <td className="p-4">{bookingStatuses[r.status]}</td>
+                <td className="p-4">{bookingStatuses[r.status]}</td><td className="p-4"><button type="button" className={`${secondaryStyle} !rounded-full whitespace-nowrap`} onClick={()=>setAssessment(r)}>Puan / Kara liste</button></td>
               </tr>
             ))}
           </tbody>
@@ -270,22 +278,7 @@ export function GuestView({
           </p>
         )}
       </div>
-      <div className="flex justify-end gap-2">
-        <button
-          className={`uni-control ${secondaryStyle}`}
-          disabled={page === 1 || busy}
-          onClick={() => setPage((v) => v - 1)}
-        >
-          Önceki
-        </button>
-        <button
-          className={`uni-control ${secondaryStyle}`}
-          disabled={page * 100 >= total || busy}
-          onClick={() => setPage((v) => v + 1)}
-        >
-          Sonraki
-        </button>
-      </div>
+      <Pagination label="Misafir listesi sayfaları" noun="kayıt" page={page} pageSize={pageSize} total={total} busy={busy} onPageChange={setPage} onPageSizeChange={v=>{setPageSize(v);setPage(1)}}/>
       {selected && (
         <Drawer
           title="Misafir Konaklama Geçmişi"
