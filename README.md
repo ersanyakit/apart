@@ -268,3 +268,40 @@ veriler raporlanır. Faaliyet sonucu vergi/finansman sonrası muhasebe kârı de
 
 Kontroller: `go test ./...` (PostgreSQL testleri için `TEST_DATABASE_URL`),
 `npm --prefix ui run lint`, `npm --prefix ui run test:reports`.
+
+### Görsel belge şablonları, rapor belgeleri ve oda folyosu
+
+- Belge Şablonları ekranı Lexical tabanlı görsel editör kullanır. Başlık, kalın/italik/altı çizili metin, listeler, hizalama, tablo ve geri alma desteklenir. Otomatik bilgi alanları imlecin bulunduğu yere eklenir. Her dilin başlığı ve gövdesi ayrı tutulur.
+- Beş belge şablonuna yönetim raporu özeti, ayrıntılı işletme raporu ve vardiya teslim raporu eklenmiştir. Rapor ekranındaki **Belge hazırla** seçeneği mevcut filtrelerin gerçek verilerini doldurur. Yönetici açıklamalarını düzenleyebilir, HTML indirebilir veya tarayıcıdan PDF yazdırabilir. Düzenlenebilir rapor belgesi en fazla 1.000 tablo satırı içerir; kesilen satır sayısı açıkça gösterilir ve tam döküm CSV'de bulunur.
+- Sözleşme ve Dekontlar ana içerik alanındaki sayfa düzenleyicisinde açılır. Rezervasyon belgesinin önizlemesinden **Bu belgenin metnini düzenle** seçildiğinde yalnızca yeni oluşturulacak belgenin metni değişir; otelin şablonu ve daha önce oluşturulan belgeler değişmez.
+- `document_templates.format` eski kayıtlar için `plain`, yeni görsel şablonlar için `html` değerini taşır (migration 023). Belge snapshot'ı biçimi de saklar. Eski düz metinler HTML olarak yorumlanmaz. Sunucu yalnızca yazdırılabilir etiketleri, hizalamayı ve tablo hücre boyutlarını korur; komutlar, harici kaynaklar ve olay nitelikleri temizlenir. Misafir alanları HTML'e kaçış uygulanarak tek geçişte yerleştirilir.
+- Oda kartındaki **Folyo** veya rezervasyon ayrıntılarındaki **Oda folyosu / Hizmet ekle** üzerinden hizmet adı, kategori, adet, birim fiyat, para birimi ve açıklama girilebilir. `booking.folio.service` tutarı sunucuda hesaplar; `booking.folio.service.void` gerekçeli iptal yapar. Hizmet bir borç kalemidir, otomatik tahsilat oluşturmaz. Resepsiyonist yalnızca erişebildiği tesisin açık rezervasyonlarına işlem yapabilir. Kayıt kimliği tekrar gönderilirse aynı ücret ikinci kez eklenmez. Şube kilidi, hizmet/iptal ve çıkış işlemlerinin tutarlı bir folyo üzerinde çalışmasını sağlar. Migration 024 birim fiyatı rapor hareketine ekler.
+- Sistem logları teknik JSON yerine işlem özeti, oda/tesis, personel ve önce/sonra alanlarını gösterir. Yeni olaylarda iptal/tadilat gerekçeleri, kapora ve yetki değişiklikleri de güvenli alan listesine dahil edilir; eski kayıtlarda bulunmayan bilgiler uydurulmaz.
+
+Doğrulama: `npm run lint --prefix ui`, `npm run test:documents --prefix ui`, `npm run test:audit --prefix ui`, `npm run test:reports --prefix ui`, `npm run test:guests --prefix ui`. PostgreSQL entegrasyon testleri için `TEST_DATABASE_URL` ve `MIGRATION_TEST_DATABASE_URL` ile `go test ./...`; testler ayrı geçici şemalarda çalışır.
+
+
+Personel ve kira giderleri: Raporlamalar altında **Personel Maaşları** (`finance.payroll`), **Kira Giderleri** (`finance.rent_expenses`) ve **Gider Dağılımı** (`finance.expenses`) ayrı ekranlardır. Maaş kaydı personel seçimi, kira kaydı kiraya veren bilgisi gerektirir. Giderin kayıt tarihi rapor dönemini belirler; açıklamada ait olduğu ay belirtilebilir. Kayıtlar mevcut `expense` hareketlerini kullanır ve genel gelir–gider/faaliyet sonucuna bir kez dahil edilir. Ödeme hareketleri ayrıca tutulur; bu ekranlar otomatik bordro veya ödeme durumu hesabı yapmaz. Eski personel seçilmemiş maaş kayıtları kaybolmaz, ayrı toplamla gösterilir. Maaş/kira dışındaki elektrik-su-doğal gaz, temizlik, bakım, komisyon, vergi ve diğer giderler dağılım raporunda görünür.
+
+## Resepsiyon notları (Kanban)
+
+`?tab=kanban` ekranı Otel Operasyonu menüsünden ve üstteki bildirim düğmesinden açılır. Yönetici ve resepsiyon personeli yalnızca erişebildiği tesisin ortak notlarını görür. Yapılacak / Devam ediyor / Tamamlandı sütunları, acil öncelik, arama, sütun başına 25 kayıt ve daha fazla yükleme, arşivleme ve geri alma desteklenir. Kartlar sürüklenerek veya klavye/dokunmatik kullanımına uygun durum menüsüyle taşınır. Pano görünürken 30 saniyede bir ve pencereye dönüldüğünde yenilenir.
+
+`note.list` (GET) ve `note.save` (PUT) komutları `hotel_id` ve `branch_id` ister. Yeni kayıtta istemci UUID'si ve `version: 0`, güncellemede mevcut `version` gönderilir. Eşzamanlı değişiklikler `note_changed` (409) döndürür; aynı başarılı isteğin tekrarı ek kayıt oluşturmaz. Notun yazarı, son düzenleyen personel ve zamanları sunucuda atanır; değişiklikler sistem loguna yazılır. `20261014_025_reception_notes` migration'ı kalıcı tabloyu oluşturur. Arşivleme fiziksel silme yapmaz.
+
+Kontroller: `npm run test:kanban --prefix ui` ve PostgreSQL test ortamında `go test ./internal/infrastructure/persistence -run TestReceptionNotesSharedBoard`.
+
+## Üç boyutlu tesis görünümü
+
+Otel Operasyonu → **3 Boyutlu Görünüm** (`?tab=property3d`), seçili tesisin `system.initial_sync` ve `bed.list` verilerini kullanır. `ui/src/components/property-3d/` içindeki bileşenler Hostel3D referansının kesit kat, ahşap yatak/ranza ve kamera yaklaşımını dinamik veriye uyarlar. Örnek misafir veya oda verisi eklenmez. Three.js yalnızca bu ekran açıldığında yüklenir; harici model/texture/CDN isteği yapılmaz.
+
+- Kayıtlı ve çakışmayan kat planları korunur. Konumu eksik/çakışan birimler şematik olarak sıralanır; oda içi yatak yerleşimi otomatik yapılır. Bu görünüm mimari ölçüm veya plan düzenleyicisi değildir ve kayıtlı koordinatları değiştirmez.
+- Fiziksel yatak kimliği ve seviye bilgileri ranzaları gruplar. Çift kişilik yatak tek yatak yeridir; kişi kapasitesi ayrıca gösterilir. Kat atanmamış bağımsız yataklar da görünür. Fiziksel yatak tanımı olmayan odaların açıkça seçilmiş single/double/twin düzeni şematik olarak çizilir; bu görseller ayrı rezervasyon birimi oluşturmaz. Oda üzerinde etkinleştirilmiş jakuzi/hidromasajlı küvet özellikleri de modellenir. Ortak tesis jakuzisi odalara kopyalanmaz.
+- Doluluk, yaklaşan rezervasyon ve temizlik/bakım durumları ortak `roomBoardState` hesabından gelir. Filtreler, klavye ile oda/yatak seçimi ve yetkiye bağlı mevcut rezervasyon ekranlarına geçiş bulunur. Aktif ekran 60 saniyede bir, pencereye dönüldüğünde ve Yenile düğmesiyle güncellenir; kapanan ekranın istekleri iptal edilir.
+- `header.property3d`, `property3d_exploded` ve `property3d_walls` tercihleri kullanıcı hesabında saklanır. WebGL açılamadığında hata/yeniden deneme ve metinle birim seçimi kullanılabilir. Sahne değişiminde ve ekran kapanışında GPU kaynakları temizlenir.
+
+Fiziksel Yatak Tanımı ekranındaki tek kişilik baza, çift kişilik yatak ve 2/3/4 katlı ranza kısayolları düzenlenebilir alanları doldurur; kayıt ancak **Yatağı Kaydet** ile yapılır. Kod, oda/kat ataması ve korunan seviyelerin kimlikleri korunur.
+
+Kontroller: `npm run test:property-3d --prefix ui`, `npm run test:bed-presets --prefix ui`, `npm run lint --prefix ui`, `go test ./internal/domain/identity`.
+
+Oda oluşturma/düzenleme formunda **Odadaki yataklar** alanından tür ve adet seçilebilir. `room.create` / `room.update` isteğindeki isteğe bağlı `beds_to_add` mevcut fiziksel yataklara ekleme yapar; oda, yataklar ve yatak yerleri aynı veritabanı işlemi içinde kaydedilir. Kimlikler, tesis, oda ve kat bağlantıları sunucuda atanır. Yeni yatak yerleri varsayılan olarak odayla birlikte kiralanır. Mevcut yatakların kimlikleri veya rezervasyonları değiştirilmez.

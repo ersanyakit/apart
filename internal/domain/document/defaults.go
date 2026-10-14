@@ -55,11 +55,22 @@ Guests: {{guest_names}}
 Arrival: {{check_in}}
 Departure: {{check_out}}
 `
-	return []Template{
+	templates := []Template{
 		{HotelID: hotelID, Kind: "rental_contract", Title: shared.LocalizedString{constants.LanguageTR: "Turizm Amaçlı Kiralanan Konut Sözleşmesi"}, Body: shared.LocalizedString{constants.LanguageTR: rental}},
 		{HotelID: hotelID, Kind: "sale_contract", Title: shared.LocalizedString{constants.LanguageTR: "Konaklama Satış Sözleşmesi", constants.LanguageEN: "Accommodation Sales Agreement"}, Body: shared.LocalizedString{constants.LanguageTR: receiptTR + "\nSözleşme bedeli: {{amount}} {{currency}}\nHizmet kapsamı ve koşulları: [İşletme tarafından düzenlenecek]\n\nİşletme imzası:\nMüşteri imzası:\n", constants.LanguageEN: receiptEN + "\nContract amount: {{amount}} {{currency}}\nServices and terms: [To be completed by the property]\n\nProperty signature:\nCustomer signature:\n"}},
 		{HotelID: hotelID, Kind: "reservation_receipt", Title: shared.LocalizedString{constants.LanguageTR: "Rezervasyon Dekontu", constants.LanguageEN: "Reservation Confirmation"}, Body: shared.LocalizedString{constants.LanguageTR: receiptTR, constants.LanguageEN: receiptEN}},
 		{HotelID: hotelID, Kind: "sale_receipt", Title: shared.LocalizedString{constants.LanguageTR: "Satış / Tahsilat Dekontu", constants.LanguageEN: "Payment Receipt"}, Body: shared.LocalizedString{constants.LanguageTR: receiptTR + "\nTahsil edilen tutar: {{amount}} {{currency}}\nÖdeme yöntemi: {{payment_method}}\nÖdeme tarihi: {{paid_at}}\nReferans: {{payment_reference}}\n", constants.LanguageEN: receiptEN + "\nAmount received: {{amount}} {{currency}}\nPayment method: {{payment_method}}\nPayment date: {{paid_at}}\nReference: {{payment_reference}}\n"}},
 		{HotelID: hotelID, Kind: "cancellation_receipt", Title: shared.LocalizedString{constants.LanguageTR: "Rezervasyon İptal Belgesi", constants.LanguageEN: "Reservation Cancellation"}, Body: shared.LocalizedString{constants.LanguageTR: receiptTR + "\nRezervasyon iptal edilmiştir.\n", constants.LanguageEN: receiptEN + "\nThis reservation has been cancelled.\n"}},
 	}
+	templates = append(templates, ReportDefaults(hotelID)...)
+	for i := range templates {
+		if templates[i].Format == "" {
+			templates[i].Format = "html"
+			for lang, body := range templates[i].Body {
+				templates[i].Body[lang] = PlainHTML(body)
+			}
+		}
+	}
+	return templates
+
 }

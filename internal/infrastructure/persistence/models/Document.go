@@ -9,6 +9,7 @@ import (
 )
 
 type DocumentTemplate struct {
+	Format     string    `gorm:"not null;default:plain"`
 	TemplateID uuid.UUID `gorm:"type:uuid;primaryKey"`
 	HotelID    uuid.UUID `gorm:"type:uuid;not null;uniqueIndex:idx_hotel_template,priority:1"`
 	Kind       string    `gorm:"not null;uniqueIndex:idx_hotel_template,priority:2"`

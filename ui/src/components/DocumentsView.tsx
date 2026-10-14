@@ -1,5 +1,4 @@
-import { PageHeader } from "./PageHeader";
-import { useNotifications } from "./Toast";
+import { NavigationIcon } from "./NavigationIcon";
 import React, { useEffect, useState } from "react";
 import {
   command,
@@ -7,7 +6,6 @@ import {
   messageOf,
   type Snapshot,
   type Booking,
-  type LocalizedString,
 } from "../lib/api";
 import {
   ErrorMessage,
@@ -17,238 +15,27 @@ import {
 import {
   DateField,
   InlineSelectField,
-  LocalizedTextFields,
   MoneyField,
   TextField,
 } from "./fields";
 import { CURRENCIES } from "./Currency";
 import { confirmDialog } from "./ConfirmDialog";
 import { localDate } from "./BookingForm";
-export const documentKinds: Record<string, string> = {
-  rental_contract: "Kira Sözleşmesi",
-  sale_contract: "Satış Sözleşmesi",
-  reservation_receipt: "Rezervasyon Dekontu",
-  sale_receipt: "Satış / Tahsilat Dekontu",
-  cancellation_receipt: "İptal Belgesi",
-};
-type Template = {
-  template_id?: string;
-  hotel_id: string;
-  kind: string;
-  title: LocalizedString;
-  body: LocalizedString;
-};
-type Document = {
-  document_id: string;
-  kind: string;
-  language: string;
-  title: string;
-  body: string;
-  created_at: string;
-};
-const placeholders = [
-  "hotel_name",
-  "branch_name",
-  "room_code",
-  "guest_name",
-  "guest_names",
-  "id_numbers",
-  "phones",
-  "relationships",
-  "check_in",
-  "check_out",
-  "inventory",
-  "amount",
-  "currency",
-  "payment_method",
-  "payment_reference",
-  "paid_at",
-  "booking_id",
-];
-export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
-  const notify = useNotifications();
-  const [templates, setTemplates] = useState<Template[]>([]),
-    [defaults, setDefaults] = useState<Template[]>([]),
-    [kind, setKind] = useState("rental_contract"),
-    [draft, setDraft] = useState<Template>({
-      hotel_id: s.hotel_id,
-      kind: "rental_contract",
-      title: {},
-      body: {},
-    }),
-    [error, setError] = useState(""),
-    [busy, setBusy] = useState(false);
-  useEffect(() => {
-    let active = true;
-    Promise.all([
-      command<Template[]>("document.templates", { hotel_id: s.hotel_id }),
-      command<Template[]>("document.template.defaults"),
-    ])
-      .then(([rows, defs]) => {
-        if (active) {
-          setTemplates(rows);
-          setDefaults(defs);
-        }
-      })
-      .catch((e) => {
-        if (active) setError(messageOf(e));
-      });
-    return () => {
-      active = false;
-    };
-  }, [s.hotel_id]);
-  useEffect(() => {
-    setDraft(
-      templates.find((t) => t.kind === kind) || {
-        hotel_id: s.hotel_id,
-        kind,
-        title: {},
-        body: {},
-      },
-    );
-  }, [kind, templates, s.hotel_id]);
-  return (
-    <form
-      className="space-y-5"
-      onSubmit={async (e) => {
-        e.preventDefault();
-        setBusy(true);
-        setError("");
-        try {
-          const saved = await command<Template>(
-            "document.template.save",
-            draft,
-          );
-          setTemplates((rows) => [
-            ...rows.filter((t) => t.kind !== kind),
-            saved,
-          ]);
-          notify(
-            "Şablon kaydedildi. Daha önce oluşturulan belgeler değişmedi.",
-          );
-        } catch (e) {
-          setError(messageOf(e));
-        } finally {
-          setBusy(false);
-        }
-      }}
-    >
-      <ErrorMessage message={error} />
-      <PageHeader pageId="templates">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
-        <InlineSelectField
-          label="Belge türü"
-          value={kind}
-          onChange={setKind}
-          options={Object.entries(documentKinds).map(([value, label]) => ({
-            value,
-            label,
-          }))}
-        />
-        <div className="flex items-end">
-          <button
-            type="button"
-            className={`uni-control ${secondaryStyle} w-full`}
-            onClick={async () => {
-              const example = defaults.find((t) => t.kind === kind);
-              if (!example) return;
-              const fillable = (current: LocalizedString, sample?: LocalizedString) => {
-                const next = { ...current };
-                let overwrites = false;
-                for (const [lang, text] of Object.entries(sample || {})) {
-                  if (!text) continue;
-                  if ((next[lang] || "").trim()) {
-                    if (next[lang] !== text) overwrites = true;
-                    continue;
-                  }
-                  next[lang] = text;
-                }
-                return { next, overwrites };
-              };
-              const title = fillable(draft.title, example.title);
-              const body = fillable(draft.body, example.body);
-              if (
-                (title.overwrites || body.overwrites) &&
-                !(await confirmDialog(
-                  "Dolu alanlardaki metin örnek şablonla değiştirilsin mi?",
-                ))
-              )
-                return;
-              if (title.overwrites) {
-                for (const [lang, text] of Object.entries(example.title || {})) {
-                  if (text) title.next[lang] = text;
-                }
-              }
-              if (body.overwrites) {
-                for (const [lang, text] of Object.entries(example.body || {})) {
-                  if (text) body.next[lang] = text;
-                }
-              }
-              setDraft({ ...draft, title: title.next, body: body.next });
-            }}
-          >
-            Örnek Metni Yükle
-          </button>
-        </div>
-      </div>
-      </PageHeader>
-      <LocalizedTextFields
-        label="Belge başlığı"
-        hint="Her dil için ayrı başlık ekleyin."
-        values={draft.title}
-        onChange={(title) => setDraft({ ...draft, title })}
-      />
-      <LocalizedTextFields
-        label="Belge metni"
-        hint="Her dil için ayrı metin ekleyin."
-        values={draft.body}
-        onChange={(body) => setDraft({ ...draft, body })}
-        multiline
-        rows={12}
-        mono
-      />
-      <div className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3">
-        <p className="text-xs text-slate-500">
-          Konaklama bilgilerinden doldurulacak alanlar. İşletme unvanı, belge
-          numarası ve koşulları metinde düzenleyebilirsiniz.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {placeholders.map((p) => (
-            <button
-              type="button"
-              className="uni-control text-[10px] bg-white border rounded-lg px-2 py-1 font-mono"
-              key={p}
-              onClick={() => {
-                const target =
-                  draft.body.TR !== undefined
-                    ? "TR"
-                    : (Object.keys(draft.body)[0] ?? "TR");
-                setDraft({
-                  ...draft,
-                  body: {
-                    ...draft.body,
-                    [target]: (draft.body[target] || "") + `{{${p}}}`,
-                  },
-                });
-              }}
-            >{`{{${p}}}`}</button>
-          ))}
-        </div>
-      </div>
-      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
-        Şablonu Kaydet
-      </button>
-    </form>
-  );
-}
+export { documentKinds } from './document-editor/markup';
+export { TemplateSettings as DocumentTemplates } from './document-editor/TemplateSettings';
+import { documentKinds, plainHTML } from './document-editor/markup';
+import { DocumentEditor, DocumentPreview } from './document-editor/DocumentEditor';
+type Document = { document_id:string;kind:string;language:string;title:string;body:string;format?:string;created_at:string };
 export function BookingDocuments({
   snapshot: s,
   booking: b,
   initialKind = "reservation_receipt",
+  onFolio,
 }: {
   snapshot: Snapshot;
   booking: Booking;
   initialKind?: string;
+  onFolio?:()=>void;
 }) {
   const [kind, setKind] = useState(initialKind),
     [language, setLanguage] = useState("TR"),
@@ -257,6 +44,7 @@ export function BookingDocuments({
     [method, setMethod] = useState("cash"),
     [reference, setReference] = useState(""),
     [paidAt, setPaidAt] = useState(localDate(new Date().toISOString())),
+    [customBody,setCustomBody] = useState<string|null>(null),
     [preview, setPreview] = useState<Document | null>(null),
     [documents, setDocuments] = useState<Document[]>([]),
     [channels, setChannels] = useState<
@@ -294,6 +82,7 @@ export function BookingDocuments({
   useEffect(() => {
     void reload().catch((e) => setError(messageOf(e)));
   }, [b.booking_id]);
+  useEffect(() => { setPreview(null); setCustomBody(null); }, [kind,language,amountMinor,currency,method,reference,paidAt,b.booking_id]);
   const prepare = async (save: boolean) => {
     setBusy(true);
     setError("");
@@ -301,6 +90,7 @@ export function BookingDocuments({
       const d = await command<Document>(
         save ? "document.issue" : "document.preview",
         {
+          ...(save && customBody !== null ? {body_override:customBody} : {}),
           hotel_id: s.hotel_id,
           branch_id: b.branch_id,
           booking_id: b.booking_id,
@@ -314,6 +104,7 @@ export function BookingDocuments({
         },
       );
       setPreview(d);
+      setCustomBody(null);
       if (save) {
         await reload();
         await downloadCommand(
@@ -331,6 +122,7 @@ export function BookingDocuments({
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
+      {onFolio&&<button type="button" className={secondaryStyle} onClick={onFolio}><NavigationIcon name="folio" size={18}/>Oda folyosu / Hizmet ekle</button>}
       <p className="text-sm font-black">
         {b.guest_name} · {s.rooms.find((r) => r.room_id === b.room_id)?.code}
       </p>
@@ -341,6 +133,7 @@ export function BookingDocuments({
           onChange={(v) => {
             setKind(v);
             setPreview(null);
+            setCustomBody(null);
           }}
           options={Object.entries(documentKinds).map(([value, label]) => ({
             value,
@@ -353,6 +146,7 @@ export function BookingDocuments({
           onChange={(v) => {
             setLanguage(v);
             setPreview(null);
+            setCustomBody(null);
           }}
           options={s.languages.map((l) => ({ value: l, label: l }))}
         />
@@ -440,12 +234,11 @@ export function BookingDocuments({
         <article
           lang={language.toLowerCase()}
           dir={language === "AR" ? "rtl" : "ltr"}
-          className="uni-card rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm"
+          className="rounded-[20px] bg-[var(--color-uni-surface)] p-5"
         >
           <h3 className="font-uninav-book mb-4 text-xl leading-7 text-slate-900">{preview.title}</h3>
-          <pre className="font-sans text-sm whitespace-pre-wrap leading-7">
-            {preview.body}
-          </pre>
+          {customBody !== null ? <DocumentEditor value={customBody} onChange={setCustomBody} language={language} disabled={busy}/> : <DocumentPreview body={preview.body} format={preview.format} language={language}/>}
+          <div className="flex gap-3 mt-4"><button type="button" disabled={busy} className={secondaryStyle} onClick={() => setCustomBody(customBody===null ? (preview.format==='html'?preview.body:plainHTML(preview.body)) : null)}>{customBody===null?'Bu belgenin metnini düzenle':'Şablon metnine dön'}</button><p className="text-xs text-uni-muted self-center">Düzenleme yalnızca oluşturacağınız belgeye uygulanır.</p></div>
         </article>
       )}
       <h3 className="font-uninav-book text-xs font-bold uppercase tracking-wider text-slate-500">Kayıtlı belgeler</h3>

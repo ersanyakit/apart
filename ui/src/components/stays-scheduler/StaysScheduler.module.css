@@ -15,7 +15,7 @@
 .selectionInfo strong { font-size: 1rem; overflow-wrap: anywhere; }
 .selectionInfo span, .selectionInfo small { font-size: .8125rem; color: var(--color-uni-muted); }
 .selection .roundButton:not(:global(.uni-button-primary)) { background: var(--app-background); }
-.scroll { max-height: min(68dvh, 760px); overflow: auto; position: relative; isolation: isolate; border: 0; border-radius: 20px; background: var(--app-background); overscroll-behavior: contain; scrollbar-color: #c5c5c9 transparent; }
+.scroll { max-height: min(68dvh, 760px); overflow: auto; position: relative; isolation: isolate; border: 0; border-radius: 20px; background: var(--app-background); overscroll-behavior: contain; }
 .scroll:focus-visible { outline: 2px solid var(--control-ring); outline-offset: 3px; }
 .canvas { width: max(100%, calc(var(--resource-width) + var(--days) * var(--day-width))); }
 .header { display: flex; position: sticky; top: 0; z-index: 5; height: 84px; background: var(--color-uni-surface); box-shadow: 0 1px 0 var(--color-uni-border); }

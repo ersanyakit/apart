@@ -3,7 +3,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { secondaryStyle } from "./FormKit";
 import { InlineSelectField } from "./fields";
 
-export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSizeChange, label = "Sistem logları sayfaları", noun = "işlem" }: {
+export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSizeChange, label = "Sistem logları sayfaları", noun = "işlem", compact = false }: {
+  compact?: boolean;
   label?: string;
   noun?: string;
   page: number;
@@ -18,12 +19,12 @@ export function Pagination({ page, pageSize, total, busy, onPageChange, onPageSi
     .filter((n) => n >= 1 && n <= pages).sort((a, b) => a - b);
   const start = total ? (page - 1) * pageSize + 1 : 0;
   const end = Math.min(page * pageSize, total);
-  return <div className="flex flex-col gap-4 rounded-2xl bg-[var(--color-uni-surface)] p-4">
+  return <div className={compact?"flex flex-col gap-3 p-4 xl:flex-row xl:items-center xl:justify-between":"flex flex-col gap-4 rounded-2xl bg-[var(--color-uni-surface)] p-4"}>
     <div className="flex flex-wrap items-center justify-between gap-3">
       <p className="text-sm text-slate-500" role="status" aria-live="polite">
         {busy ? "Yükleniyor…" : `${total} ${noun} · ${start}–${end} arası · Sayfa ${page} / ${pages}`}
       </p>
-      <div className="w-full sm:w-44">
+      <div className={compact?"w-36":"w-full sm:w-44"}>
         <InlineSelectField label="Sayfa başına" value={String(pageSize)} disabled={busy}
           onChange={(v) => onPageSizeChange(Number(v))}
           options={[25, 50, 100].map((n) => ({ value: String(n), label: `${n} ${noun}` }))} />

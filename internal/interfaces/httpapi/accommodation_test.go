@@ -13,6 +13,7 @@ import (
 	"otel/constants"
 	"otel/internal/application"
 	"otel/internal/domain/guest"
+	"otel/internal/domain/notes"
 	"otel/internal/domain/reporting"
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/persistence/models"
@@ -50,6 +51,7 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	auth := &application.Auth{Properties: repo, Users: repo, Tokens: persistence.JWT{Secret: []byte("test-secret-only-at-least-thirty-two-bytes")}, Passwords: persistence.Bcrypt{}, TTL: time.Hour}
 	h := &httpapi.Handler{Auth: auth, Catalog: catalog, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: origin, SecureCookies: strings.HasPrefix(origin, "https://")}
 	app := h.App("", func(context.Context) error { return nil })
+	h.Notes = &application.Notes{Catalog: catalog, Repository: repo}
 	h.Guests = &application.Guests{Catalog: catalog, Repository: repo}
 	h.GuestAssessments = &application.GuestAssessments{Catalog: catalog, Repository: repo}
 	h.Folios = &application.Folios{Catalog: catalog, Repository: repo}
@@ -118,6 +120,33 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	if status, body := call(constants.CMD_AUTH_LOGIN, "POST", map[string]any{"username": "admin", "password": "integration-password"}, origin); status != 200 {
 		t.Fatalf("login %d %s", status, body)
 	}
+
+	t.Run("reception note commands", func(t *testing.T) {
+		in := notes.Input{ID: uuid.New(), HotelID: hotelID, BranchID: branchID, Title: "Vardiya teslim notu", Body: "204 geç çıkış", Status: "todo", Priority: "normal"}
+		status, body := call(constants.CMD_NOTE_SAVE, "PUT", in, origin)
+		if status != 200 {
+			t.Fatalf("note create %d %s", status, body)
+		}
+		var note notes.Note
+		if e := json.Unmarshal(body, &note); e != nil {
+			t.Fatal(e)
+		}
+		in.Version = note.Version
+		in.Status = "doing"
+		status, body = call(constants.CMD_NOTE_SAVE, "PUT", in, origin)
+		if status != 200 {
+			t.Fatalf("note move %d %s", status, body)
+		}
+		status, body = call(constants.CMD_NOTE_LIST, "GET", notes.Query{HotelID: hotelID, BranchID: branchID, Status: "doing"}, "")
+		if status != 200 || !bytes.Contains(body, []byte("Vardiya teslim notu")) {
+			t.Fatalf("note list %d %s", status, body)
+		}
+		in.Title = "Eski sürüm"
+		status, body = call(constants.CMD_NOTE_SAVE, "PUT", in, origin)
+		if status != 409 || !bytes.Contains(body, []byte("note_changed")) {
+			t.Fatalf("conflict %d %s", status, body)
+		}
+	})
 
 	t.Run("report commands and independent report preferences", func(t *testing.T) {
 		if status, body := call(constants.CMD_REPORT_CATALOG, "GET", map[string]any{}, ""); status != 200 || !bytes.Contains(body, []byte("finance.daily_revenue")) {
@@ -308,6 +337,21 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	var folio reporting.Folio
 	if e := json.Unmarshal(body, &folio); e != nil || status != 200 || len(folio.Token) != 64 {
 		t.Fatalf("folio %d %s", status, body)
+	}
+
+	serviceID := uuid.New()
+	status, body = call(constants.CMD_FOLIO_SERVICE, "POST", map[string]any{"id": serviceID, "branch_id": branchID, "booking_id": b.ID, "label": "Kahvaltı", "category": "food", "quantity": 2, "unit_price_minor": 25000, "currency": "TRY"}, "")
+	var charge reporting.Record
+	if e := json.Unmarshal(body, &charge); e != nil || status != 200 || charge.AmountMinor != 50000 {
+		t.Fatalf("folio service %d %s", status, body)
+	}
+	status, body = call(constants.CMD_BOOKING_TRANSITION, "PUT", map[string]any{"branch_id": branchID, "booking_id": b.ID, "action": "check_out", "folio_token": folio.Token, "accept_balance": true}, "")
+	if status != 409 {
+		t.Fatalf("stale folio checkout %d %s", status, body)
+	}
+	status, body = call(constants.CMD_FOLIO_SERVICE_VOID, "POST", map[string]any{"id": serviceID, "branch_id": branchID, "booking_id": b.ID, "reason": "Yanlış hizmet kalemi"}, "")
+	if status != 200 {
+		t.Fatalf("folio void %d %s", status, body)
 	}
 	if status, body := call(constants.CMD_INITIAL_SYNC, "GET", map[string]any{}, ""); status != 200 {
 		t.Fatalf("sync %d %s", status, body)

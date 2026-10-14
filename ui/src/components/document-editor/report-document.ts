@@ -1,0 +1,19 @@
+import {display,type ReportResult} from '../reports/model';
+import {escapeHTML,htmlTemplate,sanitizeMarkup,type Template} from './markup';
+export function reportDocument(template:Template,language:string,report:ReportResult,context:{title:string;hotel:string;branch:string;period:string;author:string}){
+ let remaining=1000;let omitted=0;
+ const metrics='<table><thead><tr><th>Gösterge</th><th>Değer</th><th>Açıklama</th></tr></thead><tbody>'+report.metrics.map(m=>`<tr><td>${escapeHTML(m.label)}</td><td>${escapeHTML(display(m.value,m.format,report.currency))}</td><td>${escapeHTML(m.note)}</td></tr>`).join('')+'</tbody></table>';
+ const tables=report.tables.map(t=>{const rows=t.rows.slice(0,remaining);remaining-=rows.length;omitted+=t.rows.length-rows.length;return `<h3>${escapeHTML(t.title)}</h3>`+(rows.length?`<table><thead><tr>${t.columns.map(c=>`<th>${escapeHTML(c.label)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${t.columns.map(c=>`<td>${escapeHTML(display(r[c.key],c.format,report.currency))}</td>`).join('')}</tr>`).join('')}</tbody></table>`:'<p>Bu bölümde gösterilecek kayıt yok.</p>')+(rows.length<t.rows.length?`<p>Bu bölümde ${t.rows.length} kaydın ${rows.length} tanesi belgeye alındı. Tam döküm rapor ekranındaki CSV dosyasındadır.</p>`:'')}).join('');
+ const values:Record<string,string>={report_title:escapeHTML(context.title),hotel_name:escapeHTML(context.hotel),branch_name:escapeHTML(context.branch),report_period:escapeHTML(context.period),currency:escapeHTML(report.currency),prepared_by:escapeHTML(context.author),generated_at:escapeHTML(display(report.generated_at,'datetime')),report_metrics:metrics,report_tables:tables,report_notes:report.notes.map(n=>`<p>${escapeHTML(n)}</p>`).join('')};
+ let source=htmlTemplate(template).body[language];if(!source)throw new Error('Bu dilde şablon metni tanımlanmamış.');
+ // Replace block placeholders without leaving tables nested inside paragraphs.
+ source=source.replace(/<p(?:\s[^>]*)?>\s*(\{\{(?:report_metrics|report_tables|report_notes)\}\})\s*<\/p>/g,'$1');
+ const unknown:string[]=[];const body=source.replace(/\{\{([a-z_]+)\}\}/g,(token,key)=>{if(!(key in values)){unknown.push(token);return token}return values[key]});
+ if(unknown.length||/\{\{|\}\}/.test(source.replace(/\{\{([a-z_]+)\}\}/g,'')))throw new Error('Şablonda tanınmayan bilgi alanları var. Şablon ayarlarından alanları kontrol edin.');
+ const textValues:Record<string,string>={report_title:context.title,hotel_name:context.hotel,branch_name:context.branch,report_period:context.period,currency:report.currency,prepared_by:context.author,generated_at:display(report.generated_at,'datetime'),report_metrics:'Göstergeler',report_tables:'Kayıtlar',report_notes:'Hesaplama açıklamaları'};
+ const title=(template.title[language]??context.title).replace(/\{\{([a-z_]+)\}\}/g,(_,key)=>textValues[key]??'');
+ return {title,body:sanitizeMarkup(body),omitted};
+}
+export function printableHTML(title:string,body:string,language='TR'){
+ return `<!doctype html><html lang="${language.toLowerCase().replace(/[^a-z]/g,'')}" dir="${language==='AR'?'rtl':'ltr'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>${escapeHTML(title)}</title><style>body{font:12pt/1.65 Arial,sans-serif;color:#1e293b;max-width:1100px;margin:32px auto;padding:0 20px}h1{font-size:22pt}h2{font-size:18pt}h3{font-size:14pt}table{width:100%;border-collapse:collapse;font-size:10pt}td,th{border:1px solid #ddd;padding:8px;text-align:start;overflow-wrap:anywhere}th{background:#f5f5f5}tr{break-inside:avoid}thead{display:table-header-group}p{margin:8px 0}blockquote{border-inline-start:3px solid #ccc;padding-inline-start:16px}@page{size:A4 landscape;margin:16mm}@media print{body{padding:0;margin:0;max-width:none}}</style></head><body><h1>${escapeHTML(title)}</h1>${sanitizeMarkup(body)}</body></html>`;
+}

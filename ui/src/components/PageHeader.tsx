@@ -6,6 +6,8 @@ import { reportForPage, type ReportPageID } from "./reports/navigation";
 import { NavigationIcon } from "./NavigationIcon";
 
 export const PAGE_HEADERS = {
+  property3d: ["3 Boyutlu Görünüm", "Tesisinizin katlarını, odalarını ve yataklarını üç boyutlu olarak inceleyin."],
+  kanban: ["Resepsiyon Notları", "Vardiya notlarını paylaşın, bekleyen işleri takip edin ve tamamlananları ekipçe görün."],
   blacklist: ["Ortak Kara Liste", "Tüm otellerin paylaştığı misafir kayıtlarını, gerekçeleri ve kayıt geçmişini inceleyin."],
   reports: ["Raporlama", "İşletmenizin finansal, kapasite ve operasyon performansını takip edin."],
   board: ["Oda Durum Çizelgesi", "Birimlerin doluluk ve temizlik durumlarını takip edin."],
@@ -15,7 +17,7 @@ export const PAGE_HEADERS = {
   units: ["Kat ve Oda Tanımları", "Kat, oda, yatak ve fiziksel yerleşim tanımlarını düzenleyin."],
   staff: ["Personel Tanımları", "Personel hesaplarını, şube erişimlerini ve yetkilerini yönetin."],
   guests: ["Misafir Arama ve Geçmiş", "Misafirleri bulun, konaklama geçmişlerini inceleyin."],
-  templates: ["Belge Şablonları", "Sözleşme ve belge şablonlarını işletmenize göre düzenleyin."],
+  templates: ["Belge Şablonları", "Belge ve rapor şablonlarını görsel editörle, dil bazında düzenleyin."],
   logs: ["Sistem Logları", "Kullanıcı işlemlerini ve kayıt değişikliklerini takip edin."],
   facility: ["Kurumsal Tesis Kartı", "Otel ve tesis bilgilerini, iletişim detaylarını ve medyayı yönetin."],
   features: ["Olanak Tanımları", "Olanakları ve kategorileri tanımlayın, tesis kataloğunu düzenleyin."],

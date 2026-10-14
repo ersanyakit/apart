@@ -48,11 +48,23 @@ func (s *GuestAssessments) Save(ctx context.Context, u identity.User, in guest.A
 	return s.Repository.SaveGuestAssessment(ctx, in, u.UserID, actorName(u))
 }
 func (s *GuestAssessments) Reputation(ctx context.Context, u identity.User, q guest.AssessmentQuery) (guest.Reputation, error) {
-	if e := s.scope(ctx, u, q.HotelID, q.BranchID); e != nil {
+	// Managers may read a customer's full hotel history without selecting a
+	// branch. Assessment creation still requires a specific authorized booking.
+	if q.BranchID == uuid.Nil {
+		if !u.IsManager() || q.HotelID == uuid.Nil || !u.CanAccessHotel(q.HotelID) {
+			return guest.Reputation{}, constants.ErrForbidden
+		}
+	} else if e := s.scope(ctx, u, q.HotelID, q.BranchID); e != nil {
 		return guest.Reputation{}, e
 	}
-	if q.GuestID == uuid.Nil {
+	if q.GuestID == uuid.Nil || q.Page < 0 || q.Page > 100000 || (q.PageSize != 0 && q.PageSize != 25 && q.PageSize != 50 && q.PageSize != 100) {
 		return guest.Reputation{}, constants.ErrPayload
+	}
+	if q.Page < 1 {
+		q.Page = 1
+	}
+	if q.PageSize == 0 {
+		q.PageSize = 50
 	}
 	return s.Repository.GuestReputation(ctx, q)
 }

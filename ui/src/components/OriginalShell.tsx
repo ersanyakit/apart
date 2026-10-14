@@ -102,6 +102,7 @@ export function OriginalShell({
       snapshot.feature_registry,
     );
   });
+  const canUseNotes = ["admin", "management", "reception"].includes(snapshot.user.role);
   const manager = ["admin", "management"].includes(snapshot.user.role);
   // Referans tasarım standardında açılır-kapanır gruplar (tree): operasyon + sistem
   // ayarları. Tipografi referans tokenlar, renk tonları projenin paleti.
@@ -112,8 +113,10 @@ export function OriginalShell({
       icon: <NavigationIcon name="operations" />,
       subItems: [
         { id: "board", label: "Oda Durum Çizelgesi", icon: <NavigationIcon name="board" /> },
+        { id: "property3d", label: "3 Boyutlu Görünüm", icon: <NavigationIcon name="property3d" /> },
         { id: "calendar", label: "Konaklama Takvimi", icon: <NavigationIcon name="calendar" /> },
         { id: "bookings", label: "Rezervasyon Listesi", icon: <NavigationIcon name="bookings" /> },
+        ...(canUseNotes ? [{ id: "kanban", label: "Resepsiyon Notları", icon: <NavigationIcon name="kanban" /> }] : []),
         { id: "stays", label: "Konaklayan Listesi", icon: <NavigationIcon name="stays" /> },
         ...(["admin","management","reception"].includes(snapshot.user.role)?[{ id: "blacklist", label: "Ortak Kara Liste", icon: <NavigationIcon name="blacklist" /> }]:[]),
         { id: "guests", label: "Misafir Arama ve Geçmiş", icon: <NavigationIcon name="guests" /> },
@@ -155,6 +158,7 @@ export function OriginalShell({
           <p className="truncate text-[12px] font-medium text-slate-500">{hotelConfig.name}</p>
           <p className="mt-0.5 truncate text-[17px] font-semibold tracking-tight text-slate-900">{TAB_LABELS[activeTab] ?? "Rezervasyon"}</p>
         </div>
+        {canUseNotes && <button type="button" className="nav-icon-button" aria-label="Bildirimler: resepsiyon notlarını aç" onClick={() => setActiveTab("kanban")}><NavigationIcon name="notifications"/></button>}
         <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-sm font-semibold text-brand-blue-500">
           {user.name.trim().split(/\s+/).slice(0, 2).map((name) => name[0]).join("")}
         </span>
@@ -258,9 +262,8 @@ export function OriginalShell({
         )}
 
         <div className="flex items-center px-4 md:px-5 gap-3 md:gap-4 shrink-0 ml-auto">
-          <button type="button" aria-label="Bildirimler" className="nav-icon-button text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50 relative">
+          <button type="button" aria-label="Bildirimler: resepsiyon notlarını aç" title="Resepsiyon notları" disabled={!canUseNotes} onClick={() => setActiveTab("kanban")} className="nav-icon-button text-slate-500 hover:text-brand-blue-600 hover:bg-brand-blue-50 relative">
             <NavigationIcon name="notifications" />
-            <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 border border-white rounded-full"></span>
           </button>
           <div className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 border-l border-slate-200 min-w-0">
             <div className="text-right hidden lg:block min-w-0">

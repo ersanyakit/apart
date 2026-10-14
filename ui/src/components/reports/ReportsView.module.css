@@ -18,3 +18,38 @@
 .chart {padding:0 24px 20px;height:180px;display:flex;align-items:end;gap:3px;overflow:hidden}
 .bar {flex:1;min-width:2px;background:var(--color-brand-blue-500);border-radius:6px 6px 0 0;opacity:.75}
 @media(max-width:640px){.cardHead{padding:18px 16px}.table td,.table th{padding:12px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:16px}.filters{grid-template-columns:minmax(0,1fr)}.metric strong{font-size:22px}}
+
+.customerPanel {min-width:0;overflow:hidden;border-radius:18px;background:var(--color-uni-surface)}
+.customerToolbar {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px}
+.customerToolbar h3 {font-size:15px;font-weight:535;margin:0;color:var(--color-uni-ink)}
+.customerCount {display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:4px 9px;border-radius:999px;background:var(--color-uni-hover);color:var(--color-uni-muted);font-size:12px;font-variant-numeric:tabular-nums}
+.customerScroller {overflow:auto;max-height:clamp(224px,calc(100dvh - 390px),560px);position:relative}
+.customerFooter {border-top:1px solid var(--color-uni-border);background:var(--color-uni-surface)}
+.customerTable {width:100%;min-width:850px;border-collapse:separate;border-spacing:0;table-layout:fixed;--customer-row-light:var(--color-uni-surface);--customer-row-dark:color-mix(in srgb,var(--color-uni-muted) 9%,var(--color-uni-surface));font-size:13px}
+.directoryTable {min-width:940px}
+.customerTable th {height:44px;padding:0 16px;font-size:12px;font-weight:535;color:var(--color-uni-muted);background:var(--color-uni-hover);border:0;border-bottom:1px solid var(--color-uni-border);border-right:1px solid var(--color-uni-border);white-space:nowrap;position:sticky;top:0;z-index:2}
+.customerTable td {height:56px;box-sizing:border-box;padding:8px 16px;vertical-align:middle;min-width:0;max-width:none;border:0;border-bottom:1px solid var(--color-uni-border);border-right:1px solid var(--color-uni-border);background:transparent;overflow:hidden}
+.customerTable th:last-child,.customerTable td:last-child {border-right:0}
+.customerTable tbody>tr:last-child>td {border-bottom:0}
+/* The data index owns the stripe, not the DOM position of expanded details. */
+.customerTable tr[data-tone=light] {--customer-row-background:var(--customer-row-light);background:var(--customer-row-background)}
+.customerTable tr[data-tone=dark] {--customer-row-background:var(--customer-row-dark);background:var(--customer-row-background)}
+.customerRow {cursor:pointer;transition:background-color var(--interaction-fast) ease}
+.customerTable .customerRow:hover,.customerTable .customerRow:focus-within {background:color-mix(in srgb,var(--color-brand-blue-500) 9%,var(--customer-row-background))}
+.customerTable .customerRow:active {background:color-mix(in srgb,var(--color-brand-blue-500) 17%,var(--customer-row-background))}
+.customerTable .customerExpanded td {height:auto;padding:24px;white-space:normal;background:var(--customer-row-background)}
+.customerTable .rowNumber {text-align:center;font-size:12px;font-weight:400;color:var(--color-uni-muted);font-variant-numeric:tabular-nums;padding:0 8px}
+.customerName {display:block;width:100%;min-height:40px;text-align:left;font-size:14px;font-weight:535;letter-spacing:-.15px;color:var(--color-uni-ink);border-radius:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.customerIdentifier {font-variant-numeric:tabular-nums;white-space:nowrap}
+.customerIdentifier>span,.customerAddress {display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.customerAddress {color:var(--color-uni-muted)}
+.country {display:flex;align-items:center;gap:9px;min-width:0;white-space:nowrap}
+.country>span:last-child {overflow:hidden;text-overflow:ellipsis}
+.countryFlag {display:block;flex-shrink:0;width:24px;height:24px;object-fit:contain;border-radius:50%}
+.customerTable .rowAction {padding:0 12px;color:var(--color-uni-muted)}
+.columnSort {display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;height:40px;text-align:left;font-size:inherit;font-weight:inherit;border-radius:6px;color:inherit}
+.columnSort svg {flex-shrink:0;opacity:.6}
+.customerTable th[aria-sort=ascending],.customerTable th[aria-sort=descending] {color:var(--color-uni-ink)}
+.customerTable th[aria-sort=ascending] svg,.customerTable th[aria-sort=descending] svg {opacity:1}
+@media(max-width:640px){.customerToolbar{padding:14px}.customerTable td{height:48px}.customerScroller{max-height:clamp(224px,calc(100dvh - 340px),480px)}}
+@media(prefers-reduced-motion:reduce){.customerRow{transition:none}}

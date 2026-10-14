@@ -17,6 +17,8 @@
     "blacklist.revoke": "POST",
     "booking.create": "POST",
     "booking.folio": "GET",
+    "booking.folio.service": "POST",
+    "booking.folio.service.void": "POST",
     "booking.guests.update": "PUT",
     "booking.list": "GET",
     "booking.transition": "PUT",
@@ -47,6 +49,7 @@
     "floor.plan.save": "PUT",
     "floor.update": "PUT",
     "guest.assess": "POST",
+    "guest.customers.export": "GET",
     "guest.export": "GET",
     "guest.reputation": "GET",
     "guest.search": "GET",
@@ -59,6 +62,8 @@
     "media.list": "GET",
     "media.update": "PUT",
     "media.upload": "POST",
+    "note.list": "GET",
+    "note.save": "PUT",
     "payment_channel.create": "POST",
     "payment_channel.delete": "DELETE",
     "payment_channel.list": "GET",
@@ -101,6 +106,7 @@
     "conflict": "Kayıt mevcut veya başka kayıtlar tarafından kullanılıyor.",
     "database_failed": "PostgreSQL bağlantısı veya sorgusu başarısız.",
     "database_url_required": "DATABASE_URL gereklidir; .env.example dosyasına bakın.",
+    "document_body_too_long": "Belge içeriği 64 KB sınırını aşıyor. Metni kısaltın.",
     "document_translation_missing": "Bu otel, belge türü ve dil için şablon tanımlayın.",
     "duplicate_feature": "Aynı özellik birden fazla kez atanamaz.",
     "duplicate_media": "Aynı medya birden fazla kez eklenemez.",
@@ -177,6 +183,7 @@
     "migration_unimplemented": "Migration Up/Down fonksiyonlarını uygulayın.",
     "node_required": "Next.js SSR için Node.js ve npm gereklidir.",
     "not_found": "Kayıt bulunamadı.",
+    "note_changed": "Bu not başka bir personel tarafından güncellendi. Son halini açıp tekrar deneyin; yazdığınız metin korunuyor.",
     "physical_bed_required": "Yatak türü, kapasitesi, konumu ve aktifliği Yataklar ekranından düzenlenmelidir.",
     "rate_limited": "Çok fazla istek gönderildi. Lütfen biraz bekleyin.",
     "reason_required": "İşlemin gerekçesini en az 10, en fazla 2000 karakterle açıklayın.",
@@ -478,6 +485,12 @@
       "description": "Konaklama tahakkuku, ek gelir, tahsilat ve iadeler ayrı gösterilir."
     },
     {
+      "key": "finance.expenses",
+      "name": "Gider Dağılımı",
+      "category": "Finans",
+      "description": "Maaş, kira, faturalar ve diğer işletme giderlerinin dökümü."
+    },
+    {
       "key": "finance.income_expense",
       "name": "Gelir–gider",
       "category": "Finans",
@@ -488,6 +501,12 @@
       "name": "Ödeme yöntemleri",
       "category": "Finans",
       "description": "Tahsilat ve iade kanalları."
+    },
+    {
+      "key": "finance.payroll",
+      "name": "Personel Maaşları",
+      "category": "Finans",
+      "description": "Personel ve dönem bazında kaydedilmiş maaş giderleri."
     },
     {
       "key": "finance.profitability",
@@ -506,6 +525,18 @@
       "name": "İptal ve iadeler",
       "category": "Finans",
       "description": "İptal edilen satışlar, gerçekleşen ve bekleyen iadeler."
+    },
+    {
+      "key": "finance.rent_expenses",
+      "name": "Kira Giderleri",
+      "category": "Finans",
+      "description": "İşletmenin ödediği kira bedellerinin dönem ve kiraya veren bazında gider takibi."
+    },
+    {
+      "key": "finance.utility_expenses",
+      "name": "Fatura Giderleri",
+      "category": "Finans",
+      "description": "Elektrik, su, internet ve doğal gaz giderlerinin tür, dönem ve tedarikçi bazında dökümü."
     },
     {
       "key": "guests.complaints",

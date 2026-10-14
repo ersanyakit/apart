@@ -18,17 +18,29 @@
     "test:audit": "node --test tests/audit-location.test.cjs",
     "test:reports": "node --test tests/reports.test.cjs",
     "test:pwa": "node --test tests/pwa.test.cjs",
-    "test:guests": "node --test tests/guest-operations.test.cjs"
+    "test:guests": "node --test tests/guest-operations.test.cjs",
+    "test:documents": "node --test tests/document-editor.test.cjs",
+    "test:kanban": "node --test tests/kanban.test.cjs",
+    "test:property-3d": "node --test tests/property-3d.test.cjs",
+    "test:bed-presets": "node --test tests/bed-presets.test.cjs"
   },
   "dependencies": {
+    "@lexical/history": "^0.39.0",
+    "@lexical/html": "^0.39.0",
+    "@lexical/list": "^0.39.0",
+    "@lexical/rich-text": "^0.39.0",
+    "@lexical/selection": "^0.39.0",
+    "@lexical/table": "^0.39.0",
     "@tanstack/react-table": "^8.21.3",
     "date-fns": "^4.1.0",
+    "lexical": "^0.39.0",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "next": "16.4.0",
     "playwright": "1.64.0",
     "react": "^19.0.1",
-    "react-dom": "^19.0.1"
+    "react-dom": "^19.0.1",
+    "three": "0.186.0"
   },
   "devDependencies": {
     "@playwright/test": "1.64.0",
@@ -38,6 +50,7 @@
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.14",
-    "typescript": "~5.8.2"
+    "typescript": "~5.8.2",
+    "@types/three": "0.186.0"
   }
 }

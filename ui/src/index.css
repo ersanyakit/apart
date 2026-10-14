@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @source "./components";
 
+/* Hide only native scrollbar chrome. Keep each container's overflow, native
+   wheel/touch behavior and programmatic scroll positions unchanged. */
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+
 /* Accent anchors: interface-main/apps/web/src/pages/Landing/components/cards.
    Neutral surfaces: interface-main/packages/ui/src/theme/color/colors.ts.
    Darker text shades are derived for legibility on white surfaces. */
@@ -767,6 +779,7 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 /* Settings editing uses the same inline, centered form layout as reservations. */
 .app-page-content:has(.settings-editor) > .app-page-header { display: none; }
 .settings-editor { width:100%; max-width:800px; min-width:0; margin-inline:auto; padding-bottom:24px; animation:settings-editor-enter 160ms ease-out; }
+.settings-editor-full-width { max-width:none; }
 .settings-editor-header { margin-bottom:24px; }
 .settings-editor-back { display:inline-flex; min-height:44px; align-items:center; gap:8px; border-radius:12px; padding:8px 12px; margin-left:-12px; margin-bottom:12px; font-size:13px; color:#64748b; }
 .settings-editor-back:hover { background:var(--color-uni-hover); }

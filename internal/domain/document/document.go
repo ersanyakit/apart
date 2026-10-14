@@ -10,6 +10,7 @@ import (
 )
 
 type Template struct {
+	Format     string                 `json:"format"`
 	TemplateID uuid.UUID              `json:"template_id"`
 	HotelID    uuid.UUID              `json:"hotel_id"`
 	Kind       string                 `json:"kind"`
@@ -22,15 +23,26 @@ func (t Template) Validate() error {
 		return constants.ErrHotelRequired
 	}
 	switch t.Kind {
-	case "rental_contract", "sale_contract", "reservation_receipt", "sale_receipt", "cancellation_receipt":
+	case "rental_contract", "sale_contract", "reservation_receipt", "sale_receipt", "cancellation_receipt", "report_summary", "report_detail", "report_handover":
 	default:
 		return constants.ErrDocumentKind
 	}
 	if err := t.Title.Validate(); err != nil {
 		return err
 	}
-	if err := t.Body.Validate(); err != nil {
-		return err
+	if t.Format != "" && t.Format != "plain" && t.Format != "html" {
+		return constants.ErrDocumentTemplate
+	}
+	for lang, text := range t.Body {
+		if !lang.IsValid() {
+			return constants.ErrLanguage
+		}
+		if len(text) > 64000 {
+			return constants.ErrDocumentLength
+		}
+		if t.Format == "html" && !HasText(SanitizeHTML(text)) {
+			return constants.ErrDocumentTemplate
+		}
 	}
 	if len(t.Title) == 0 || len(t.Body) == 0 {
 		return constants.ErrDocumentTemplate
@@ -44,6 +56,7 @@ func (t Template) Validate() error {
 }
 
 type Issue struct {
+	BodyOverride  *string            `json:"body_override"`
 	HotelID       uuid.UUID          `json:"hotel_id"`
 	BranchID      uuid.UUID          `json:"branch_id"`
 	BookingID     uuid.UUID          `json:"booking_id"`
@@ -56,6 +69,7 @@ type Issue struct {
 	PaidAt        *time.Time         `json:"paid_at"`
 }
 type Document struct {
+	Format        string             `json:"format"`
 	DocumentID    uuid.UUID          `json:"document_id"`
 	HotelID       uuid.UUID          `json:"hotel_id"`
 	BranchID      uuid.UUID          `json:"branch_id"`

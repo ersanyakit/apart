@@ -13,6 +13,8 @@ func TestPreferenceValidation(t *testing.T) {
 		{`{"theme":"blue","background":"gray","font_size":"large","locale":"zh-CN","header.stays":true}`, true},
 		{`{"currency":"EUR","money_format":"tr","default_country":"TR","currency_auto":false}`, true},
 		{`{"stays_days":14,"audit_page_size":50,"calendar_view":"week","sidebar_open":false}`, true},
+		{`{"header.property3d":true,"property3d_exploded":false,"property3d_walls":true}`, true},
+		{`{"property3d_walls":"false"}`, false},
 		{`{}`, false}, {`{"role":"admin"}`, false}, {`{"header.missing":true}`, false},
 		{`{"theme":null}`, false}, {`{"header.stays":"false"}`, false},
 		{`{"locale":"not-a-language"}`, false}, {`{"stays_days":9999}`, false},

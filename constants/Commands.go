@@ -135,6 +135,7 @@ const (
 	CMD_GUEST_SEARCH      = "guest.search"
 	CMD_GUEST_STAYS       = "guest.stays"
 	CMD_GUEST_EXPORT      = "guest.export"
+	CMD_CUSTOMER_EXPORT   = "guest.customers.export"
 	CMD_BOOKING_GUESTS    = "booking.guests.update"
 	CMD_TEMPLATE_LIST     = "document.templates"
 	CMD_TEMPLATE_SAVE     = "document.template.save"
@@ -153,7 +154,7 @@ const (
 )
 
 func init() {
-	for command, method := range map[string]string{CMD_GUEST_SEARCH: "GET", CMD_GUEST_STAYS: "GET", CMD_GUEST_EXPORT: "GET", CMD_BOOKING_GUESTS: "PUT", CMD_TEMPLATE_LIST: "GET", CMD_TEMPLATE_SAVE: "PUT", CMD_DOCUMENT_LIST: "GET", CMD_DOCUMENT_PREVIEW: "POST", CMD_DOCUMENT_ISSUE: "POST", CMD_DOCUMENT_DOWNLOAD: "GET", CMD_STAFF_LIST: "GET", CMD_STAFF_CREATE: "POST", CMD_STAFF_UPDATE: "PUT", CMD_STAFF_DELETE: "DELETE", CMD_PAYMENT_LIST: "GET", CMD_PAYMENT_CREATE: "POST", CMD_PAYMENT_UPDATE: "PUT", CMD_PAYMENT_DELETE: "DELETE"} {
+	for command, method := range map[string]string{CMD_CUSTOMER_EXPORT: "GET", CMD_GUEST_SEARCH: "GET", CMD_GUEST_STAYS: "GET", CMD_GUEST_EXPORT: "GET", CMD_BOOKING_GUESTS: "PUT", CMD_TEMPLATE_LIST: "GET", CMD_TEMPLATE_SAVE: "PUT", CMD_DOCUMENT_LIST: "GET", CMD_DOCUMENT_PREVIEW: "POST", CMD_DOCUMENT_ISSUE: "POST", CMD_DOCUMENT_DOWNLOAD: "GET", CMD_STAFF_LIST: "GET", CMD_STAFF_CREATE: "POST", CMD_STAFF_UPDATE: "PUT", CMD_STAFF_DELETE: "DELETE", CMD_PAYMENT_LIST: "GET", CMD_PAYMENT_CREATE: "POST", CMD_PAYMENT_UPDATE: "PUT", CMD_PAYMENT_DELETE: "DELETE"} {
 		CommandMethods[command] = method
 	}
 }
@@ -199,3 +200,18 @@ func init() { CommandMethods[CMD_BOOKING_FOLIO] = "GET" }
 const CMD_ROOM_ISSUE = "room.issue"
 
 func init() { CommandMethods[CMD_ROOM_ISSUE] = "POST" }
+
+const CMD_FOLIO_SERVICE = "booking.folio.service"
+const CMD_FOLIO_SERVICE_VOID = "booking.folio.service.void"
+
+func init() {
+	CommandMethods[CMD_FOLIO_SERVICE] = "POST"
+	CommandMethods[CMD_FOLIO_SERVICE_VOID] = "POST"
+}
+
+const (
+	CMD_NOTE_LIST = "note.list"
+	CMD_NOTE_SAVE = "note.save"
+)
+
+func init() { CommandMethods[CMD_NOTE_LIST] = "GET"; CommandMethods[CMD_NOTE_SAVE] = "PUT" }

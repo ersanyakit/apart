@@ -1,0 +1,39 @@
+.layout{display:flex;flex-direction:column;gap:20px;min-width:0}
+.filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,1fr);gap:12px;align-items:center;max-width:800px}
+.context{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--color-uni-muted)}
+.board{display:grid;grid-template-columns:repeat(3,minmax(280px,1fr));gap:18px;align-items:start;overflow-x:auto;padding:2px 2px 16px}
+.column{min-width:0;background:var(--color-uni-surface);border-radius:24px;min-height:320px;transition:background-color var(--interaction-fast)}
+.column[data-over=true]{background:color-mix(in srgb,var(--color-brand-blue-500) 12%,var(--color-uni-surface));outline:2px solid var(--color-brand-blue-500);outline-offset:-2px}
+.columnHeader{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:18px 16px 14px}
+.columnHeader p{font-size:11px;color:var(--color-uni-muted);margin-top:6px}
+.columnTitle{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:550}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--color-uni-muted)}
+.dot[data-status=doing]{background:var(--color-brand-blue-500)}
+.dot[data-status=done]{background:#16a375}
+.count{font-size:11px;font-weight:500;color:var(--color-uni-muted);background:var(--app-background);border-radius:999px;min-width:24px;padding:3px 7px;text-align:center}
+.cards{display:flex;flex-direction:column;gap:12px;padding:0 12px 14px}
+.card{min-width:0;border-radius:18px;background:var(--app-background);padding:14px;box-shadow:0 2px 8px rgb(0 0 0 / .025)}
+.card[draggable=true]{cursor:grab}.card[draggable=true]:active{cursor:grabbing}
+.cardMeta{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--color-uni-muted)}
+.urgent,.normal{border-radius:999px;padding:4px 9px;font-size:10px;font-weight:600}.urgent{background:#fff0ec;color:#b63f2c}.normal{background:var(--color-uni-surface);color:var(--color-uni-muted)}
+.noteOpen{display:block;width:100%;text-align:left;border-radius:10px;padding:12px 0;min-width:0}
+.noteOpen h4{font-size:14px;font-weight:550;line-height:1.5;color:var(--color-uni-ink);overflow-wrap:anywhere}
+.noteOpen p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.65;color:var(--color-uni-muted);white-space:pre-wrap;overflow-wrap:anywhere;margin-top:7px}
+.author{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;font-size:11px;color:var(--color-uni-muted);overflow-wrap:anywhere}
+.updated{font-size:10px;color:var(--color-uni-muted);margin-top:7px;line-height:1.5}
+.cardFooter{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-top:12px}
+.empty{padding:32px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;font-size:13px;color:var(--color-uni-muted)}
+.form{display:flex;flex-direction:column;gap:16px}.actions{display:flex;justify-content:flex-end;gap:10px}
+.bodyInput{width:100%;resize:vertical;background:transparent;border:0;outline:none;font:inherit;font-size:15px;line-height:1.6;margin-top:6px;color:var(--color-uni-ink);text-transform:none}
+@media(max-width:760px){.filters{grid-template-columns:1fr}.board{grid-template-columns:1fr;overflow:visible}.column{min-height:160px}}
+
+.modal{position:fixed;inset:0;margin:0;width:100%;height:100dvh;max-width:none;max-height:none;padding:16px;border:0;background:transparent;color:var(--color-uni-ink);overflow:hidden}
+.modal[open]{display:flex;align-items:center;justify-content:center}
+.modal::backdrop{background:transparent}
+.scrim{position:absolute;inset:0;background:rgb(15 23 42 / .4);backdrop-filter:blur(4px)}
+.modalPanel{position:relative;display:flex;flex-direction:column;width:100%;max-width:640px;max-height:calc(100dvh - 32px);overflow:hidden;border-radius:28px;background:var(--app-background);box-shadow:0 24px 80px rgb(0 0 0 / .18)}
+.modalHeader{display:flex;flex-shrink:0;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px 16px}
+.modalHeader h2{font-size:19px;font-weight:550;line-height:1.4;letter-spacing:-.02em}
+.modalBody{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 24px 24px}
+.modal .actions{flex-wrap:wrap}
+@media(max-width:640px){.modal{padding:12px}.modalPanel{max-height:calc(100dvh - 24px);border-radius:24px}.modalHeader{padding:16px}.modalBody{padding:0 16px max(16px,env(safe-area-inset-bottom))}.modalHeader h2{font-size:18px}}

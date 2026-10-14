@@ -3,6 +3,7 @@ package property
 import (
 	"context"
 	apperrors "otel/constants"
+	"otel/internal/domain/accommodation"
 	"otel/internal/domain/features"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/media"
@@ -68,6 +69,8 @@ type Guest struct {
 	Nationality  string `json:"nationality,omitempty"`
 }
 type Room struct {
+	// NewBeds is a command-only addition saved atomically with the room, never a replacement of existing beds.
+	NewBeds            []accommodation.Bed    `json:"beds_to_add,omitempty"`
 	StatusReason       string                 `json:"status_reason"`
 	Inactive           bool                   `json:"inactive"`
 	BedLayout          string                 `json:"bed_layout"`
@@ -97,6 +100,9 @@ type Room struct {
 }
 
 func (r Room) Validate() error {
+	if len(r.NewBeds) > 100 || (r.Kind == "bed" && len(r.NewBeds) > 0) {
+		return apperrors.ErrPayload
+	}
 	switch r.BedLayout {
 	case "", "single", "double", "twin", "mixed":
 	default:

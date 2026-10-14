@@ -8,6 +8,7 @@ import (
 	"otel/internal/domain/booking"
 	"otel/internal/domain/guest"
 	"otel/internal/domain/property"
+	"otel/internal/domain/reporting"
 	"otel/internal/infrastructure/persistence/models"
 	"strings"
 	"time"
@@ -150,7 +151,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 		base = base.Where("b.branch_id = ?", q.BranchID)
 	}
 	if q.GuestID != uuid.Nil {
-		base = base.Where("bg.guest_id = ?", q.GuestID)
+		base = base.Where("bg.guest_id IN (?)", customerProfileIDs(r.db.WithContext(ctx), q.HotelID, q.GuestID, q.Unique))
 	}
 	if q.Search != "" {
 		search := "%" + strings.NewReplacer("\\", "\\\\", "%", "\\%", "_", "\\_").Replace(q.Search) + "%"
@@ -223,13 +224,32 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	if err := r.db.WithContext(ctx).Where("booking_id IN ?", bookingList).Find(&bookings).Error; err != nil {
 		return out, err
 	}
+	// Batch-load the recorded currency and reuse the folio's agreed lodging calculation.
+	var priceRecords []reporting.Record
+	if err := r.db.WithContext(ctx).Where("hotel_id = ? AND booking_id IN ? AND kind = ? AND voided_at IS NULL", q.HotelID, bookingList, "booking_details").Find(&priceRecords).Error; err != nil {
+		return out, err
+	}
+	pricesByBooking := map[uuid.UUID][]reporting.Record{}
+	for _, record := range priceRecords {
+		if record.BookingID != nil {
+			pricesByBooking[*record.BookingID] = append(pricesByBooking[*record.BookingID], record)
+		}
+	}
+	lodgingByBooking := map[uuid.UUID]reporting.FolioLine{}
 	byBooking := map[uuid.UUID]models.Booking{}
 	for _, b := range bookings {
 		byBooking[b.BookingID] = b
+		folio := reporting.BuildFolio(fromBooking(b), "", pricesByBooking[b.BookingID])
+		lodgingByBooking[b.BookingID] = folio.Lines[0]
 	}
 	for i, row := range out.Items {
 		if b, ok := byBooking[row.BookingID]; ok {
+			price := lodgingByBooking[b.BookingID]
+			out.Items[i].Currency = price.Currency
+			out.Items[i].BookingNights = int64(price.Quantity)
+			out.Items[i].LodgingAmountMinor = price.AmountMinor
 			out.Items[i].BookingNotes = b.Notes
+			out.Items[i].CancellationReason = b.CancellationReason
 			for _, gd := range b.GuestDetails {
 				if gd.ID == row.GuestID.String() && strings.TrimSpace(gd.Note) != "" {
 					out.Items[i].GuestNote = gd.Note

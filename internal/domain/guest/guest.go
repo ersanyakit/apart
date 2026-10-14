@@ -9,6 +9,7 @@ import (
 )
 
 type Query struct {
+	Unique   bool       `json:"unique"`
 	PageSize int        `json:"page_size"`
 	HotelID  uuid.UUID  `json:"hotel_id"`
 	BranchID uuid.UUID  `json:"branch_id"`
@@ -42,8 +43,13 @@ type Stay struct {
 	Status      string    `json:"status"`
 	// Gecelik fiyat (kuruş). Kayıt sırasında girilmediyse 0 gelir.
 	DailyPriceMinor int64 `json:"daily_price_minor"`
+	// Anlaşılmış rezervasyon bedeli; tahsilat veya kişi başına tutar değildir.
+	Currency           string `json:"currency"`
+	BookingNights      int64  `json:"booking_nights"`
+	LodgingAmountMinor int64  `json:"lodging_amount_minor"`
 	// Rezervasyon notu (kayıt sırasında girildiyse).
-	BookingNotes string `json:"booking_notes"`
+	BookingNotes       string `json:"booking_notes"`
+	CancellationReason string `json:"cancellation_reason"`
 	// Kişiye özel not (misafir satırına yazıldıysa).
 	GuestNote  string      `json:"guest_note"`
 	Companions []Companion `json:"companions"`
@@ -76,6 +82,7 @@ type Update struct {
 }
 type Repository interface {
 	SearchGuests(context.Context, Query) (SearchPage, error)
+	ExportCustomers(context.Context, Query) (SearchPage, error)
 	GuestStays(context.Context, Query, bool) (Page, error)
 	UpdateBookingGuests(context.Context, Update) (booking.Booking, error)
 }

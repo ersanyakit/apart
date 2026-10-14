@@ -63,6 +63,7 @@ var currency = regexp.MustCompile(`^[A-Z]{3}$`)
 // Records are append-only operational facts. Corrections void the original;
 // their actor, creation time and void reason remain available for audit.
 type Record struct {
+	UnitPriceMinor  int64      `json:"unit_price_minor"`
 	ResponsibleID   *uuid.UUID `json:"responsible_id" gorm:"type:uuid"`
 	ResponsibleName string     `json:"responsible_name"`
 	ShiftCode       string     `json:"shift_code"`
@@ -137,6 +138,12 @@ func (r Record) Validate() error {
 		if v.Key == r.Kind {
 			k = i
 		}
+	}
+	if r.UnitPriceMinor < 0 || r.UnitPriceMinor > 1000000000 {
+		return constants.ErrPayload
+	}
+	if r.UnitPriceMinor > 0 && (r.Quantity < 1 || r.Quantity > 10000 || math.Trunc(r.Quantity) != r.Quantity || r.AmountMinor != int64(r.Quantity)*r.UnitPriceMinor) {
+		return constants.ErrPayload
 	}
 	if math.IsNaN(r.Quantity) || math.IsInf(r.Quantity, 0) || math.IsNaN(r.Threshold) || math.IsInf(r.Threshold, 0) {
 		return constants.ErrPayload

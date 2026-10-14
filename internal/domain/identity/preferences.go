@@ -11,7 +11,7 @@ import (
 // selection. Flat keys let independent changes merge atomically in PostgreSQL.
 type Preferences map[string]any
 
-var pageIDs = []string{"blacklist", "reports", "board", "calendar", "bookings", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
+var pageIDs = []string{"property3d", "kanban", "blacklist", "reports", "board", "calendar", "bookings", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
 var preferenceEnums = map[string][]string{
 	"theme":      {"blue", "pink", "green", "orange", "purple", "fuchsia"},
 	"background": {"white", "gray"}, "font_size": {"compact", "normal", "large", "xlarge"},
@@ -36,7 +36,7 @@ func (p Preferences) Validate() error {
 			continue
 		}
 		switch {
-		case key == "reports_kpi_finance" || key == "reports_kpi_capacity" || key == "reports_kpi_operations" || key == "currency_auto" || key == "sidebar_open" || key == "stays_show_empty" || key == "board_plan":
+		case key == "property3d_exploded" || key == "property3d_walls" || key == "reports_kpi_finance" || key == "reports_kpi_capacity" || key == "reports_kpi_operations" || key == "currency_auto" || key == "sidebar_open" || key == "stays_show_empty" || key == "board_plan":
 			if _, ok := value.(bool); !ok {
 				return constants.ErrPayload
 			}

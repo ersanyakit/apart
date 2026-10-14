@@ -79,10 +79,15 @@ func (r *Repository) GuestReputation(ctx context.Context, q guest.AssessmentQuer
 	out := guest.Reputation{Ratings: []guest.Assessment{}, Blacklist: []guest.Assessment{}}
 	db := r.db.WithContext(ctx)
 	var profile models.GuestProfile
-	if e := db.Where(`guest_id=? AND hotel_id=? AND EXISTS (SELECT 1 FROM booking_guests bg JOIN bookings b ON b.booking_id=bg.booking_id WHERE bg.guest_id=guest_profiles.guest_id AND bg.hotel_id=guest_profiles.hotel_id AND b.branch_id=?)`, q.GuestID, q.HotelID, q.BranchID).First(&profile).Error; e != nil {
+	profileQuery := db.Where("guest_id=? AND hotel_id=?", q.GuestID, q.HotelID)
+	if q.BranchID != uuid.Nil {
+		profileQuery = profileQuery.Where(`EXISTS (SELECT 1 FROM booking_guests bg JOIN bookings b ON b.booking_id=bg.booking_id WHERE bg.guest_id=guest_profiles.guest_id AND bg.hotel_id=guest_profiles.hotel_id AND b.branch_id=?)`, q.BranchID)
+	}
+	if e := profileQuery.First(&profile).Error; e != nil {
 		return out, translate(e)
 	}
-	base := db.Model(&guest.Assessment{}).Where("hotel_id=? AND guest_id=? AND kind='rating'", q.HotelID, q.GuestID)
+	ids := customerProfileIDs(db, q.HotelID, q.GuestID, q.Unique)
+	base := db.Model(&guest.Assessment{}).Where("hotel_id=? AND guest_id IN (?) AND kind='rating'", q.HotelID, ids)
 	var totals struct {
 		Average     float64
 		RatingCount int64
@@ -92,15 +97,21 @@ func (r *Repository) GuestReputation(ctx context.Context, q guest.AssessmentQuer
 	}
 	out.Average = totals.Average
 	out.RatingCount = totals.RatingCount
-	if e := db.Where("hotel_id=? AND guest_id=? AND kind='rating'", q.HotelID, q.GuestID).Order("updated_at DESC,id").Limit(50).Find(&out.Ratings).Error; e != nil {
+	if q.Page < 1 {
+		q.Page = 1
+	}
+	if q.PageSize == 0 {
+		q.PageSize = 50
+	}
+	if e := db.Where("hotel_id=? AND guest_id IN (?) AND kind='rating'", q.HotelID, ids).Order("updated_at DESC,id").Limit(guest.PageSize(q.PageSize)).Offset((q.Page - 1) * guest.PageSize(q.PageSize)).Find(&out.Ratings).Error; e != nil {
 		return out, e
 	}
 	key := guest.IdentityKey(profile.TCNo, profile.Nationality)
 	query := db.Where("kind='blacklist' AND revoked_at IS NULL")
 	if key != "" {
-		query = query.Where("identity_key=? OR (hotel_id=? AND guest_id=?)", key, q.HotelID, q.GuestID)
+		query = query.Where("identity_key=? OR (hotel_id=? AND guest_id IN (?))", key, q.HotelID, ids)
 	} else {
-		query = query.Where("hotel_id=? AND guest_id=?", q.HotelID, q.GuestID)
+		query = query.Where("hotel_id=? AND guest_id IN (?)", q.HotelID, ids)
 	}
 	return out, query.Order("created_at DESC,id").Find(&out.Blacklist).Error
 }

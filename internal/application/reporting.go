@@ -39,6 +39,12 @@ func (s *Reporting) Record(ctx context.Context, u identity.User, r reporting.Rec
 	if e := reportingAccess(u, r.HotelID); e != nil {
 		return r, e
 	}
+	if r.Kind == "expense" && r.Category == "payroll" && r.ResponsibleID == nil {
+		return r, constants.ErrPayload
+	}
+	if r.Kind == "expense" && r.Category == "rent" && strings.TrimSpace(r.Party) == "" {
+		return r, constants.ErrPayload
+	}
 	r.ActorID = u.UserID
 	r.ActorName = u.DisplayName
 	r.CreatedAt = time.Now().UTC()

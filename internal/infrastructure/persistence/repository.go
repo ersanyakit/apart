@@ -208,6 +208,19 @@ func (r *Repository) SaveRoom(ctx context.Context, item property.Room, create bo
 		if err := repo.Assign(ctx, features.Target{Scope: "room", ID: item.RoomID, BranchID: item.BranchID, HotelID: branch.HotelID}, item.FeatureAssignments); err != nil {
 			return err
 		}
+		if len(item.NewBeds) > 0 {
+			if item.Kind == "bed" || len(item.NewBeds) > 100 {
+				return constants.ErrPayload
+			}
+			for _, bed := range item.NewBeds {
+				if bed.BranchID != item.BranchID || bed.RoomID == nil || *bed.RoomID != item.RoomID || !sameID(bed.FloorID, item.FloorID) {
+					return constants.ErrForbidden
+				}
+			}
+			if err := repo.SaveBeds(ctx, item.NewBeds, true); err != nil {
+				return err
+			}
+		}
 		if create && item.Kind == "bed" {
 			return ensureLegacyBed(tx, item)
 		}

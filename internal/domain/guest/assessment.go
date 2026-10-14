@@ -65,6 +65,7 @@ func (in AssessmentInput) Validate() error {
 }
 
 type AssessmentQuery struct {
+	Unique         bool      `json:"unique"`
 	HotelID        uuid.UUID `json:"hotel_id"`
 	BranchID       uuid.UUID `json:"branch_id"`
 	GuestID        uuid.UUID `json:"guest_id"`

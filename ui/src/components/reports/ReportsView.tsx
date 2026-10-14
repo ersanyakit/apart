@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Download, Plus, RefreshCw, SlidersHorizontal } from 'lucide-react';
+import { FileText, Download, Plus, RefreshCw, SlidersHorizontal } from 'lucide-react';
 import { command, messageOf, type Snapshot } from '../../lib/api';
 import { PageHeader } from '../PageHeader';
 import { DateField, InlineSelectField, TextField, Switch, CURRENCIES } from '../fields';
@@ -8,14 +8,17 @@ import { ErrorMessage, buttonStyle, secondaryStyle } from '../FormKit';
 import { Pagination } from '../Pagination';
 import { usePreference } from '../UserPreferences';
 import { useNotifications } from '../Toast';
+import { ReportDocumentEditor } from '../document-editor/ReportDocumentEditor';
+import { CustomerList, type Customer } from './CustomerList';
 import { ReportCharts } from './ReportCharts';
 import { RecordEditor } from './RecordEditor';
 import { display, dayAt, shiftDay, reportCSV, type ReportResult, type ReportTable } from './model';
 import styles from './ReportsView.module.css';
 import { sourceOptions, paymentOptions } from './options';
 import { REPORTS, RECORD_KINDS, reportPageID } from './navigation';
-export function ReportsView({snapshot,reportKey}:{snapshot:Snapshot;reportKey:string}) {
+export function ReportsView({snapshot,reportKey,onOpenCustomer}:{snapshot:Snapshot;reportKey:string;onOpenCustomer:(customer:Customer)=>void}) {
  if(!['admin','management'].includes(snapshot.user.role)) return <p className="p-8 text-uni-muted">Raporlama yalnızca işletme yöneticilerine açıktır.</p>;
+ if(reportKey==='guests.customers') return <CustomerList snapshot={snapshot} onOpenCustomer={onOpenCustomer}/>;
  return <ReportsPanel snapshot={snapshot} reportKey={reportKey}/>;
 }
 function ReportsPanel({snapshot:s,reportKey:key}:{snapshot:Snapshot;reportKey:string}) {
@@ -23,9 +26,11 @@ function ReportsPanel({snapshot:s,reportKey:key}:{snapshot:Snapshot;reportKey:st
  const catalog=REPORTS,kinds=RECORD_KINDS;
  const [start,setStart]=useState(today.slice(0,8)+'01'),[end,setEnd]=useState(today),[branch,setBranch]=useState(s.branch_id);
  const [currency,setCurrency]=useState('TRY'),[unit,setUnit]=useState('room'),[group,setGroup]=useState('day'),[room,setRoom]=useState(''),[channel,setChannel]=useState(''),[type,setType]=useState('');
- const [data,setData]=useState<ReportResult|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(true),[revision,setRevision]=useState(0),[editor,setEditor]=useState(false),[customize,setCustomize]=useState(false);
+ const [data,setData]=useState<ReportResult|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(true),[revision,setRevision]=useState(0),[editor,setEditor]=useState(false),[customize,setCustomize]=useState(false),[documentEditor,setDocumentEditor]=useState(false);
  const [finance,setFinance]=usePreference<boolean>('reports_kpi_finance',true),[capacity,setCapacity]=usePreference<boolean>('reports_kpi_capacity',true),[operations,setOperations]=usePreference<boolean>('reports_kpi_operations',true);
  const current=catalog.find(x=>x.key===key);
+ const expensePage=['finance.expenses','finance.payroll','finance.rent_expenses','finance.utility_expenses'].includes(key);
+ const expenseCategory=key==='finance.payroll'?'payroll':key==='finance.rent_expenses'?'rent':key==='finance.utility_expenses'?'electricity':'other';
  const [voidId,setVoidId]=useState(''),[voidReason,setVoidReason]=useState(''),[voidBusy,setVoidBusy]=useState(false),[voidError,setVoidError]=useState('');
 
  useEffect(()=>{
@@ -38,12 +43,14 @@ function ReportsPanel({snapshot:s,reportKey:key}:{snapshot:Snapshot;reportKey:st
 
  const preset=(mode:string)=>{if(mode==='today'){setStart(today);setEnd(today)}else if(mode==='month'){setStart(today.slice(0,8)+'01');setEnd(today)}else{setStart(today);setEnd(shiftDay(today,Number(mode)-1))}};
  const download=()=>{if(!data)return;const url=URL.createObjectURL(new Blob([reportCSV(data)],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`${key}-${start}-${end}-${currency}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Rapor CSV olarak indirildi.')};
- if(editor) return <RecordEditor snapshot={s} kinds={kinds} currency={currency} initialKind={key.includes("maintenance")?"maintenance":key.includes("complaint")?"complaint":key.includes("satisfaction")?"review":key.includes("inventory")?"stock_in":key.includes("task")||key.includes("housekeeping")||key.includes("readiness")?"task":key.includes("expense")||key.includes("costs")?"expense":key.includes("contract")||key.includes("rent")?"contract":key.includes("deposit")?"deposit_in":key.includes("conversion")?"lead":key.includes("competitor")?"competitor":key.includes("damage")?"damage":key.includes("common_area")?"common_area":key.includes("channels")?"booking_details":"receipt"} onClose={()=>setEditor(false)} onSaved={()=>{setEditor(false);setRevision(v=>v+1);notify('Rapor kaydı kaydedildi.')}}/>;
+ if(documentEditor&&data) return <ReportDocumentEditor snapshot={s} report={data} name={current?.name??key} period={`${start} – ${end}`} branch={s.branches.find(b=>b.branch_id===branch)?.name??'Tüm tesisler'} onClose={()=>setDocumentEditor(false)}/>;
+ if(editor) return <RecordEditor snapshot={s} kinds={kinds} currency={currency} initialCategory={expensePage?expenseCategory:undefined} skipKindSelection={expensePage} initialKind={expensePage?"expense":key.includes("maintenance")?"maintenance":key.includes("complaint")?"complaint":key.includes("satisfaction")?"review":key.includes("inventory")?"stock_in":key.includes("task")||key.includes("housekeeping")||key.includes("readiness")?"task":key.includes("expense")||key.includes("costs")?"expense":key.includes("contract")||key.includes("rent")?"contract":key.includes("deposit")?"deposit_in":key.includes("conversion")?"lead":key.includes("competitor")?"competitor":key.includes("damage")?"damage":key.includes("common_area")?"common_area":key.includes("channels")?"booking_details":"receipt"} onClose={()=>setEditor(false)} onSaved={()=>{setEditor(false);setRevision(v=>v+1);notify('Rapor kaydı kaydedildi.')}}/>;
  return <div className={styles.layout}>
   <PageHeader pageId={reportPageID(key)} actions={<>
    <button type="button" className={secondaryStyle} onClick={()=>setCustomize(v=>!v)} aria-expanded={customize}><SlidersHorizontal size={17}/>Görünüm</button>
+   <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={()=>setDocumentEditor(true)}><FileText size={17}/>Belge hazırla</button>
    <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={download}><Download size={17}/>CSV indir</button>
-   <button type="button" className={buttonStyle} disabled={!kinds.length} onClick={()=>setEditor(true)}><Plus size={17}/>İşlem kaydı</button>
+   <button type="button" className={buttonStyle} disabled={!kinds.length} onClick={()=>setEditor(true)}><Plus size={17}/>{key==='finance.payroll'?'Maaş gideri ekle':key==='finance.rent_expenses'?'Kira gideri ekle':key==='finance.utility_expenses'?'Fatura gideri ekle':expensePage?'Gider ekle':'İşlem kaydı'}</button>
   </>}>
    <div className={styles.filters}>
     <InlineSelectField label="Tesis" value={branch} onChange={v=>{setBranch(v);setRoom('');setType('')}} options={[{value:'',label:'Tüm tesisler'},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/>
@@ -84,7 +91,7 @@ export function DataTable({table:t,currency,onVoid}:{table:ReportTable;currency:
  return <section className={styles.card} aria-label={t.title}>
   <div className={styles.cardHead}><h3>{t.title}</h3><span className="text-xs text-uni-muted">{t.rows.length} kayıt</span></div>
 
-  {rows.length?<div className={styles.scroller}><table className={styles.table}><thead><tr>{t.columns.map(c=><th scope="col" key={c.key}>{c.label}</th>)}{onVoid&&<th scope="col">İşlem</th>}</tr></thead><tbody>{rows.map((r,i)=><tr key={String(r.id??i)}>{t.columns.map(c=><td key={c.key} data-numeric={['money','number','percent'].includes(c.format??'')}>{display(r[c.key],c.format,currency)}</td>)}{onVoid&&<td><button type="button" className={secondaryStyle} onClick={()=>onVoid(String(r.id))}>İptal et</button></td>}</tr>)}</tbody></table></div>:<p className={styles.empty}>Bu filtrede kayıt bulunamadı. Tarih aralığını kontrol edin veya ilgili işlem kaydını ekleyin.</p>}
+  {rows.length?<div className={styles.scroller} tabIndex={0} role="region" aria-label={`${t.title}; yatay kaydırılabilir`}><table className={styles.table}><thead><tr>{t.columns.map(c=><th scope="col" key={c.key}>{c.label}</th>)}{onVoid&&<th scope="col">İşlem</th>}</tr></thead><tbody>{rows.map((r,i)=><tr key={String(r.id??i)}>{t.columns.map(c=><td key={c.key} data-numeric={['money','number','percent'].includes(c.format??'')}>{display(r[c.key],c.format,currency)}</td>)}{onVoid&&<td><button type="button" className={secondaryStyle} onClick={()=>onVoid(String(r.id))}>İptal et</button></td>}</tr>)}</tbody></table></div>:<p className={styles.empty}>Bu filtrede kayıt bulunamadı. Tarih aralığını kontrol edin veya ilgili işlem kaydını ekleyin.</p>}
   {t.rows.length>25&&<Pagination label={`${t.title} sayfaları`} page={page} pageSize={size} total={t.rows.length} busy={false} onPageChange={setPage} onPageSizeChange={v=>{setSize(v);setPage(1)}}/>}
  </section>;
 }

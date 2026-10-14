@@ -2,6 +2,7 @@ import { unitKinds } from "./api";
 
 type Location = { room_id: string; code: string; kind: string; branch_name: string; source: string };
 export type AuditDetails = {
+  reason?: string;
   before?: Record<string, unknown>;
   after?: Record<string, unknown>;
   before_location?: Location;

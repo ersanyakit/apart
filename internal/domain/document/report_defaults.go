@@ -1,0 +1,15 @@
+package document
+
+import (
+	"github.com/google/uuid"
+	"otel/constants"
+	"otel/internal/domain/shared"
+)
+
+func ReportDefaults(hotelID uuid.UUID) []Template {
+	return []Template{
+		{HotelID: hotelID, Kind: "report_summary", Format: "html", Title: shared.LocalizedString{constants.LanguageTR: "Yönetim Raporu Özeti", constants.LanguageEN: "Management Report Summary"}, Body: shared.LocalizedString{constants.LanguageTR: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}}</p><p>Dönem: {{report_period}} · {{currency}}</p><h3>Temel göstergeler</h3><p>{{report_metrics}}</p><h3>Yönetici değerlendirmesi</h3><p>Bu döneme ilişkin değerlendirmelerinizi buraya yazın.</p><h3>Alınacak kararlar</h3><ul><li>Yapılacak iş, sorumlu kişi ve hedef tarihi ekleyin.</li></ul><h3>Veri kapsamı</h3><p>{{report_notes}}</p><p>Hazırlayan: {{prepared_by}} · {{generated_at}}</p>`, constants.LanguageEN: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}}</p><p>{{report_period}} · {{currency}}</p><h3>Key indicators</h3><p>{{report_metrics}}</p><h3>Management comments</h3><p>Add your assessment and next actions here.</p><h3>Data scope</h3><p>{{report_notes}}</p><p>{{prepared_by}} · {{generated_at}}</p>`}},
+		{HotelID: hotelID, Kind: "report_detail", Format: "html", Title: shared.LocalizedString{constants.LanguageTR: "Ayrıntılı İşletme Raporu", constants.LanguageEN: "Detailed Property Report"}, Body: shared.LocalizedString{constants.LanguageTR: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}}</p><p>Dönem: {{report_period}} · {{currency}}</p><h3>Göstergeler</h3><p>{{report_metrics}}</p><h3>Ayrıntılı kayıtlar</h3><p>{{report_tables}}</p><h3>Açıklamalar</h3><p>Ek açıklamalarınızı buraya yazın.</p><h3>Hesaplama yöntemi ve veri kapsamı</h3><p>{{report_notes}}</p><p>Hazırlayan: {{prepared_by}} · {{generated_at}}</p>`, constants.LanguageEN: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}}</p><p>{{report_period}} · {{currency}}</p><h3>Indicators</h3><p>{{report_metrics}}</p><h3>Records</h3><p>{{report_tables}}</p><h3>Notes</h3><p>Add your comments here.</p><p>{{report_notes}}</p><p>{{prepared_by}} · {{generated_at}}</p>`}},
+		{HotelID: hotelID, Kind: "report_handover", Format: "html", Title: shared.LocalizedString{constants.LanguageTR: "Vardiya Teslim Raporu", constants.LanguageEN: "Shift Handover Report"}, Body: shared.LocalizedString{constants.LanguageTR: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}} · {{report_period}}</p><h3>Vardiya özeti</h3><p>{{report_metrics}}</p><h3>İşlem dökümü</h3><p>{{report_tables}}</p><h3>Sonraki vardiyaya aktarılacak işler</h3><ul><li>Bekleyen işlemleri ve sorumlu personeli yazın.</li></ul><p>Teslim eden: {{prepared_by}}</p><p>Teslim alan: …</p><p>İmza / tarih: …</p><h3>Veri kapsamı</h3><p>{{report_notes}}</p>`, constants.LanguageEN: `<h2>{{report_title}}</h2><p>{{hotel_name}} · {{branch_name}} · {{report_period}}</p><h3>Shift summary</h3><p>{{report_metrics}}</p><p>{{report_tables}}</p><h3>Pending work</h3><p>Add pending work and responsible staff.</p><p>Handed over by: {{prepared_by}}</p><p>Received by: …</p><p>{{report_notes}}</p>`}},
+	}
+}

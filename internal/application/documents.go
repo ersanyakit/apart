@@ -31,6 +31,17 @@ func (s *Documents) SaveTemplate(ctx context.Context, u identity.User, t documen
 	if err := t.Validate(); err != nil {
 		return t, err
 	}
+	if t.Format == "" {
+		t.Format = "plain"
+	}
+	if t.Format == "html" {
+		for lang, body := range t.Body {
+			t.Body[lang] = document.SanitizeHTML(body)
+		}
+	}
+	if err := document.ValidatePlaceholders(t); err != nil {
+		return t, err
+	}
 	return s.Repository.SaveTemplate(ctx, t)
 }
 func (s *Documents) List(ctx context.Context, u identity.User, q document.Query) ([]document.Document, error) {
@@ -76,6 +87,9 @@ func (s *Documents) Prepare(ctx context.Context, u identity.User, in document.Is
 			template = t
 			break
 		}
+	}
+	if strings.HasPrefix(in.Kind, "report_") {
+		return empty, constants.ErrDocumentKind
 	}
 	if template.TemplateID == uuid.Nil || template.Title[in.Language] == "" || template.Body[in.Language] == "" {
 		return empty, constants.ErrDocumentTranslation
@@ -137,24 +151,28 @@ func (s *Documents) Prepare(ctx context.Context, u identity.User, in document.Is
 		paidAt = in.PaidAt.In(zone).Format("02.01.2006 15:04")
 	}
 	values := map[string]string{"hotel_name": hotel.Name, "branch_name": branch.Name, "room_code": roomCode, "guest_name": b.GuestName, "guest_names": strings.Join(names, ", "), "id_numbers": strings.Join(identities, ", "), "phones": strings.Join(phones, ", "), "relationships": strings.Join(relations, ", "), "check_in": b.CheckIn.In(zone).Format("02.01.2006 15:04"), "check_out": b.CheckOut.In(zone).Format("02.01.2006 15:04"), "inventory": strings.Join(inventory, ", "), "amount": fmt.Sprintf("%d.%02d", in.AmountMinor/100, in.AmountMinor%100), "currency": in.Currency, "payment_method": in.PaymentMethod, "payment_reference": in.Reference, "paid_at": paidAt, "booking_id": b.BookingID.String()}
-	render := func(text string) (string, error) {
-		for key, value := range values {
-			text = strings.ReplaceAll(text, "{{"+key+"}}", value)
-		}
-		if strings.Contains(text, "{{") || strings.Contains(text, "}}") {
-			return "", constants.ErrDocumentPlaceholder
-		}
-		return text, nil
-	}
-	title, err := render(template.Title[in.Language])
+	title, err := document.Render(template.Title[in.Language], values, false)
 	if err != nil {
 		return empty, err
 	}
-	body, err := render(template.Body[in.Language])
+	body, err := document.Render(template.Body[in.Language], values, template.Format == "html")
 	if err != nil {
 		return empty, err
 	}
-	d := document.Document{DocumentID: uuid.New(), HotelID: in.HotelID, BranchID: in.BranchID, BookingID: b.BookingID, TemplateID: template.TemplateID, AuthorID: u.UserID, Kind: in.Kind, Language: in.Language, Title: title, Body: body, AmountMinor: in.AmountMinor, Currency: in.Currency, PaymentMethod: in.PaymentMethod, Reference: in.Reference, PaidAt: in.PaidAt, CreatedAt: time.Now().UTC()}
+	if template.Format == "html" {
+		body = document.SanitizeHTML(body)
+	}
+	if in.BodyOverride != nil {
+		if len(*in.BodyOverride) > 64000 {
+			return empty, constants.ErrDocumentLength
+		}
+		if !document.HasText(document.SanitizeHTML(*in.BodyOverride)) {
+			return empty, constants.ErrDocumentTemplate
+		}
+		body = document.SanitizeHTML(*in.BodyOverride)
+		template.Format = "html"
+	}
+	d := document.Document{Format: template.Format, DocumentID: uuid.New(), HotelID: in.HotelID, BranchID: in.BranchID, BookingID: b.BookingID, TemplateID: template.TemplateID, AuthorID: u.UserID, Kind: in.Kind, Language: in.Language, Title: title, Body: body, AmountMinor: in.AmountMinor, Currency: in.Currency, PaymentMethod: in.PaymentMethod, Reference: in.Reference, PaidAt: in.PaidAt, CreatedAt: time.Now().UTC()}
 	if save {
 		err = s.Repository.SaveDocument(ctx, d)
 	}
@@ -168,6 +186,17 @@ func (s *Documents) Download(ctx context.Context, u identity.User, id uuid.UUID)
 	if !canBook(u) || !u.CanAccessBranch(d.HotelID, d.BranchID) {
 		return File{}, constants.ErrForbidden
 	}
-	bytes, err := s.Exporter.PDF(ctx, d.Title, d.Body, string(d.Language))
+	var bytes []byte
+	if d.Format == "html" {
+		exporter, ok := s.Exporter.(interface {
+			PDFRich(context.Context, string, string, string) ([]byte, error)
+		})
+		if !ok {
+			return File{}, constants.ErrExport
+		}
+		bytes, err = exporter.PDFRich(ctx, d.Title, d.Body, string(d.Language))
+	} else {
+		bytes, err = s.Exporter.PDF(ctx, d.Title, d.Body, string(d.Language))
+	}
 	return File{Name: "belge-" + d.DocumentID.String() + ".pdf", MIME: "application/pdf", Data: bytes}, err
 }

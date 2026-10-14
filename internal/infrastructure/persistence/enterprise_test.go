@@ -208,7 +208,7 @@ func TestEnterpriseWorkflows(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		q := guest.Query{HotelID: user.HotelID, BranchID: branch.BranchID, Search: "Arama"}
+		q := guest.Query{HotelID: user.HotelID, BranchID: branch.BranchID, Search: "Arama", Unique: true}
 		history, err := guests.List(ctx, manager, q, false)
 		if err != nil || history.Total != 0 {
 			t.Fatalf("unstarted reservation must not become a stay: %+v %v", history, err)
@@ -291,6 +291,26 @@ func TestEnterpriseWorkflows(t *testing.T) {
 		prepared, err := docs.Prepare(ctx, manager, document.Issue{HotelID: user.HotelID, BranchID: branch.BranchID, BookingID: b.BookingID, Kind: "reservation_receipt", Language: constants.LanguageTR}, true)
 		if err != nil {
 			t.Fatal(err)
+		}
+		if prepared.Format != "html" {
+			t.Fatal("rich format was not kept")
+		}
+		override := `<h2>Özel koşullar</h2><p><strong>Misafir notu</strong></p><script>alert(1)</script><img src="https://bad">`
+		customized, err := docs.Prepare(ctx, manager, document.Issue{HotelID: user.HotelID, BranchID: branch.BranchID, BookingID: b.BookingID, Kind: "reservation_receipt", Language: constants.LanguageTR, BodyOverride: &override}, true)
+		if err != nil || customized.Format != "html" || !strings.Contains(customized.Body, "<strong>Misafir notu</strong>") || strings.Contains(customized.Body, "script") || strings.Contains(customized.Body, "img") {
+			t.Fatalf("custom document: %+v %v", customized, err)
+		}
+		plain := "Eski belge <strong>düz yazıdır</strong>"
+		legacy := prepared
+		legacy.DocumentID = uuid.New()
+		legacy.Format = ""
+		legacy.Body = plain
+		if err := repo.SaveDocument(ctx, legacy); err != nil {
+			t.Fatal(err)
+		}
+		legacySnapshot, err := repo.FindDocument(ctx, legacy.DocumentID)
+		if err != nil || legacySnapshot.Format != "" || legacySnapshot.Body != plain {
+			t.Fatal("legacy snapshot changed")
 		}
 		if !strings.Contains(prepared.Body, "Üçüncü Misafir") {
 			t.Fatal("document omitted guests")

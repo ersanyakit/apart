@@ -12,16 +12,18 @@ import (
 )
 
 type FolioLine struct {
-	ID          string    `json:"id"`
-	Label       string    `json:"label"`
-	Kind        string    `json:"kind"`
-	Currency    string    `json:"currency"`
-	AmountMinor int64     `json:"amount_minor"`
-	At          time.Time `json:"at"`
-	Actor       string    `json:"actor"`
-	Channel     string    `json:"channel"`
-	Status      string    `json:"status"`
-	Notes       string    `json:"notes"`
+	Quantity       float64   `json:"quantity"`
+	UnitPriceMinor int64     `json:"unit_price_minor"`
+	ID             string    `json:"id"`
+	Label          string    `json:"label"`
+	Kind           string    `json:"kind"`
+	Currency       string    `json:"currency"`
+	AmountMinor    int64     `json:"amount_minor"`
+	At             time.Time `json:"at"`
+	Actor          string    `json:"actor"`
+	Channel        string    `json:"channel"`
+	Status         string    `json:"status"`
+	Notes          string    `json:"notes"`
 }
 type FolioTotal struct {
 	Currency        string `json:"currency"`
@@ -43,6 +45,8 @@ type Folio struct {
 }
 type FolioRepository interface {
 	BookingFolio(context.Context, uuid.UUID, uuid.UUID) (Folio, error)
+	SaveFolioService(context.Context, FolioServiceInput, uuid.UUID, string) (Record, error)
+	VoidFolioService(context.Context, FolioServiceVoid, uuid.UUID) error
 }
 
 func BuildFolio(b booking.Booking, room string, records []Record) Folio {
@@ -81,7 +85,7 @@ func BuildFolio(b booking.Booking, room string, records []Record) Folio {
 	}
 	lodging := nights * b.DailyPriceMinor
 	total(currency).Charges = lodging
-	out.Lines = append(out.Lines, FolioLine{ID: "lodging", Label: "Anlaşılmış konaklama bedeli", Kind: "charge", Currency: currency, AmountMinor: lodging, At: b.CheckIn, Actor: b.CreatedByName, Status: "completed"})
+	out.Lines = append(out.Lines, FolioLine{Quantity: float64(nights), UnitPriceMinor: b.DailyPriceMinor, ID: "lodging", Label: "Anlaşılmış konaklama bedeli", Kind: "charge", Currency: currency, AmountMinor: lodging, At: b.CheckIn, Actor: b.CreatedByName, Status: "completed"})
 	if b.DepositMinor > 0 {
 		total(currency).Paid += b.DepositMinor
 		out.Lines = append(out.Lines, FolioLine{ID: "legacy-deposit", Label: "Rezervasyon kaporası", Kind: "receipt", Currency: currency, AmountMinor: b.DepositMinor, At: b.CreatedAt, Channel: b.DepositChannel, Status: "completed", Notes: "Rezervasyon kartındaki kapora; ayrıca tahsilat olarak tekrar kaydetmeyin."})
@@ -111,7 +115,7 @@ func BuildFolio(b booking.Booking, room string, records []Record) Folio {
 			include = false
 		}
 		if include {
-			out.Lines = append(out.Lines, FolioLine{ID: r.ID.String(), Label: r.Label, Kind: r.Kind, Currency: r.Currency, AmountMinor: r.AmountMinor, At: r.OccurredAt, Actor: r.ActorName, Channel: r.Channel, Status: r.Status, Notes: r.Notes})
+			out.Lines = append(out.Lines, FolioLine{Quantity: r.Quantity, UnitPriceMinor: r.UnitPriceMinor, ID: r.ID.String(), Label: r.Label, Kind: r.Kind, Currency: r.Currency, AmountMinor: r.AmountMinor, At: r.OccurredAt, Actor: r.ActorName, Channel: r.Channel, Status: r.Status, Notes: r.Notes})
 		}
 	}
 	for _, t := range totals {

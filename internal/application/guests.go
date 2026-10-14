@@ -55,3 +55,14 @@ func (s *Guests) Update(ctx context.Context, u identity.User, in guest.Update) (
 	}
 	return s.Repository.UpdateBookingGuests(ctx, in)
 }
+
+func (s *Guests) ExportCustomers(ctx context.Context, u identity.User, q guest.Query) (guest.SearchPage, error) {
+	if !u.IsManager() {
+		return guest.SearchPage{}, constants.ErrForbidden
+	}
+	if err := s.validateQuery(ctx, u, q); err != nil {
+		return guest.SearchPage{}, err
+	}
+	q.Unique = true
+	return s.Repository.ExportCustomers(ctx, q)
+}

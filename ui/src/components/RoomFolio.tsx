@@ -1,0 +1,11 @@
+"use client";
+import React,{useEffect,useState} from 'react';
+import {command,messageOf,type Booking} from '../lib/api';
+import {FolioDetails,type Folio} from './CheckoutFolio';
+import {FolioServices} from './FolioServices';
+import {ErrorMessage,secondaryStyle} from './FormKit';
+export function RoomFolio({booking,onDocuments}:{booking:Booking;onDocuments:()=>void}){
+ const [folio,setFolio]=useState<Folio|null>(null),[revision,setRevision]=useState(0),[error,setError]=useState(''),[loading,setLoading]=useState(true);
+ useEffect(()=>{let active=true;setLoading(true);setError('');command<Folio>('booking.folio',{branch_id:booking.branch_id,booking_id:booking.booking_id}).then(f=>{if(active)setFolio(f)}).catch(e=>{if(active)setError(messageOf(e))}).finally(()=>{if(active)setLoading(false)});return()=>{active=false}},[booking.booking_id,booking.branch_id,revision]);
+ return <div className="space-y-5"><ErrorMessage message={error}/><div className="flex flex-wrap gap-2"><button type="button" className={secondaryStyle} onClick={onDocuments}>Sözleşme ve Dekontlar</button><button type="button" className={secondaryStyle} disabled={loading} onClick={()=>setRevision(v=>v+1)}>Folyoyu yenile</button></div>{loading?<p role="status">Oda hesabı yükleniyor…</p>:folio&&<><FolioDetails folio={folio} onChanged={()=>setRevision(v=>v+1)}/><FolioServices compact booking={folio.booking} onSaved={()=>setRevision(v=>v+1)}/></>}</div>
+}

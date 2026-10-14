@@ -272,6 +272,17 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 	if err := item.Validate(); err != nil {
 		return item, err
 	}
+	for i := range item.NewBeds {
+		bed := &item.NewBeds[i]
+		bed.BedID = uuid.New()
+		bed.BranchID, bed.RoomID, bed.FloorID = item.BranchID, &item.RoomID, item.FloorID
+		for j := range bed.Places {
+			bed.Places[j].UnitID = uuid.New()
+		}
+		if err := bed.Validate(); err != nil {
+			return item, err
+		}
+	}
 	item.Assets, err = s.resolveAssets(ctx, b.HotelID, item.Assets)
 	if err != nil {
 		return item, err

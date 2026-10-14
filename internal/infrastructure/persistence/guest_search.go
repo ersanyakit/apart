@@ -2,15 +2,32 @@ package persistence
 
 import (
 	"context"
+	"database/sql"
+	"otel/constants"
 	"strings"
 	"unicode"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 	"otel/internal/domain/guest"
 )
 
 // Search profiles independently of whether a reservation has checked in.
 func (r *Repository) SearchGuests(ctx context.Context, q guest.Query) (guest.SearchPage, error) {
+	return r.searchGuests(ctx, q, false)
+}
+func (r *Repository) ExportCustomers(ctx context.Context, q guest.Query) (guest.SearchPage, error) {
+	var result guest.SearchPage
+	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		var err error
+		scoped := *r
+		scoped.db = tx
+		result, err = scoped.searchGuests(ctx, q, true)
+		return err
+	}, &sql.TxOptions{Isolation: sql.LevelRepeatableRead, ReadOnly: true})
+	return result, err
+}
+func (r *Repository) searchGuests(ctx context.Context, q guest.Query, export bool) (guest.SearchPage, error) {
 	if q.Page < 1 {
 		q.Page = 1
 	}
@@ -61,9 +78,20 @@ func (r *Repository) SearchGuests(ctx context.Context, q guest.Query) (guest.Sea
 		}
 		base = base.Where("("+profileSQL+" OR "+history+"))", args...)
 	}
+	if q.Unique {
+		// Never merge people by name or shared phone number. Prefer the latest
+		// profile for the same non-empty identity and country; unidentified
+		// customers remain distinct by guest_id. Deduplicate before pagination.
+		identity := "CASE WHEN btrim(gp.national_id) <> '' THEN 'identity:' || upper(btrim(gp.nationality)) || ':' || upper(btrim(gp.national_id)) ELSE 'guest:' || gp.guest_id::text END"
+		unique := base.Select("DISTINCT ON (" + identity + ") gp.*").Order(identity + ", gp.updated_at DESC, gp.guest_id")
+		base = r.db.WithContext(ctx).Table("(?) AS gp", unique)
+	}
 	out := guest.SearchPage{Items: []guest.Profile{}, Page: q.Page}
 	if err := base.Count(&out.Total).Error; err != nil {
 		return out, err
+	}
+	if export && out.Total > 10000 {
+		return out, constants.ErrExportLimit
 	}
 	// Son konaklamanın gecelik fiyatı (şube seçiliyse o şubedeki son kayıt).
 	lastPrice := `COALESCE((SELECT b2.daily_price_minor FROM booking_guests bg2
@@ -75,7 +103,35 @@ func (r *Repository) SearchGuests(ctx context.Context, q guest.Query) (guest.Sea
 		lastArgs = append(lastArgs, q.BranchID)
 	}
 	lastPrice += ` ORDER BY b2.check_in DESC LIMIT 1), 0)`
-	err := base.Select("gp.guest_id,gp.name,gp.national_id,gp.phone,gp.address,gp.nationality,"+lastPrice+" AS last_daily_price_minor", lastArgs...).
-		Order("gp.name,gp.guest_id").Limit(guest.PageSize(q.PageSize)).Offset((q.Page - 1) * guest.PageSize(q.PageSize)).Scan(&out.Items).Error
+	column := map[string]string{"name": "gp.name", "national_id": "gp.national_id", "phone": "gp.phone", "nationality": "gp.nationality", "address": "gp.address"}[q.Sort]
+	if column == "" {
+		column = "gp.name"
+	}
+	direction := " ASC"
+	if q.Desc {
+		direction = " DESC"
+	}
+	query := base.Select("gp.guest_id,gp.name,gp.national_id,gp.phone,gp.address,gp.nationality,"+lastPrice+" AS last_daily_price_minor", lastArgs...).Order(column + direction + ",gp.guest_id")
+	if export {
+		query = query.Limit(10000)
+	} else {
+		query = query.Limit(guest.PageSize(q.PageSize)).Offset((q.Page - 1) * guest.PageSize(q.PageSize))
+	}
+	err := query.Scan(&out.Items).Error
 	return out, err
+}
+
+// Match the same identity used by the customer directory, always within one
+// hotel. Anonymous namesakes remain separate. This is also used for history so
+// older profile cards do not disappear when the directory combines them.
+func customerProfileIDs(db *gorm.DB, hotel, id uuid.UUID, unique bool) *gorm.DB {
+	base := db.Table("guest_profiles candidate").Select("candidate.guest_id").Where("candidate.hotel_id = ?", hotel)
+	if !unique {
+		return base.Where("candidate.guest_id = ?", id)
+	}
+	return base.Where(`EXISTS (SELECT 1 FROM guest_profiles selected
+ WHERE selected.guest_id = ? AND selected.hotel_id = candidate.hotel_id AND selected.deleted_at IS NULL
+ AND (candidate.guest_id = selected.guest_id OR (btrim(selected.national_id) <> ''
+ AND upper(btrim(candidate.national_id)) = upper(btrim(selected.national_id))
+ AND upper(btrim(candidate.nationality)) = upper(btrim(selected.nationality)))))`, id)
 }

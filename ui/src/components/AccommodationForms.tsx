@@ -9,6 +9,7 @@ import {
   type Facility,
   localized,
 } from "../lib/api";
+import { RoomBedsEditor, roomBedsPayload, type RoomBedChoice } from "./RoomBedsEditor";
 import { MediaEditor } from "./MediaEditor";
 import { FeatureFields } from "./FeatureFields";
 import { ErrorMessage, buttonStyle } from "./FormKit";
@@ -56,6 +57,7 @@ export function UnitForm({
         }
       : blankRoom(snapshot),
   );
+  const [bedChoices, setBedChoices] = useState<RoomBedChoice[]>([]);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -71,7 +73,7 @@ export function UnitForm({
           const { room_id, effective_capacity, ...payload } = draft;
           await command(
             room ? "room.update" : "room.create",
-            room ? { ...payload, room_id } : payload,
+            room ? { ...payload, room_id, beds_to_add: draft.kind === "bed" ? [] : roomBedsPayload(bedChoices, draft.code, draft.branch_id) } : { ...payload, beds_to_add: roomBedsPayload(bedChoices, draft.code, draft.branch_id) },
           );
           await onSaved();
         } catch (e) {
@@ -174,6 +176,7 @@ export function UnitForm({
           ]}
         />
       )}
+      {draft.kind !== "bed" && <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy} />}
       {draft.kind === "bed" && (
         <p className="text-xs text-brand-blue-700">
           Fiziksel yapı ve kapasite için Kat ve Oda Tanımları → Yataklar

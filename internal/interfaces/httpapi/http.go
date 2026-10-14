@@ -19,6 +19,7 @@ import (
 	"otel/internal/domain/guest"
 	"otel/internal/domain/identity"
 	"otel/internal/domain/media"
+	"otel/internal/domain/notes"
 	"otel/internal/domain/payment"
 	"otel/internal/domain/property"
 	"otel/internal/domain/reporting"
@@ -37,6 +38,7 @@ import (
 const CookieName = "interactiveotel_session"
 
 type Handler struct {
+	Notes            *application.Notes
 	Reporting        *application.Reporting
 	Folios           *application.Folios
 	GuestAssessments *application.GuestAssessments
@@ -251,6 +253,18 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		err = h.Reporting.Void(ctx, u, input.HotelID, input.ID, input.Reason)
+	case constants.CMD_NOTE_LIST:
+		var input notes.Query
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Notes.List(ctx, u, input)
+	case constants.CMD_NOTE_SAVE:
+		var input notes.Input
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Notes.Save(ctx, u, input)
 	case constants.CMD_USER_PREFERENCES:
 		result = u.Preferences
 	case constants.CMD_USER_PREFERENCES_UPDATE:
@@ -289,6 +303,16 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Guests.Search(ctx, u, input)
+	case constants.CMD_CUSTOMER_EXPORT:
+		var input guest.Query
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		file, exportErr := h.Reports.ExportCustomers(ctx, u, input)
+		if exportErr != nil {
+			return exportErr
+		}
+		return h.file(c, file)
 	case constants.CMD_GUEST_STAYS, constants.CMD_GUEST_EXPORT:
 		var input guest.Query
 		if err = decode(e.Payload, &input); err != nil {
@@ -549,6 +573,18 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Accommodation.SaveBooking(ctx, u, input, e.Code == constants.CMD_BOOKING_CREATE)
+	case constants.CMD_FOLIO_SERVICE:
+		var input reporting.FolioServiceInput
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Folios.Service(ctx, u, input)
+	case constants.CMD_FOLIO_SERVICE_VOID:
+		var input reporting.FolioServiceVoid
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		err = h.Folios.VoidService(ctx, u, input)
 	case constants.CMD_BOOKING_FOLIO:
 		var input struct {
 			BranchID  uuid.UUID `json:"branch_id"`

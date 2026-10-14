@@ -175,6 +175,9 @@ func generate(f Filter, d Dataset) Result {
 	}
 	records := []Record{}
 	for _, r := range d.Records {
+		if r.VoidedAt != nil {
+			continue
+		}
 		if strings.HasPrefix(f.Key, "apart.") && r.RoomID != nil && rooms[*r.RoomID].Kind != "apartment" {
 			continue
 		}
@@ -197,6 +200,9 @@ func generate(f Filter, d Dataset) Result {
 			continue
 		}
 		records = append(records, r)
+	}
+	if slices.Contains([]string{"finance.expenses", "finance.payroll", "finance.rent_expenses", "finance.utility_expenses"}, f.Key) {
+		return expenseReport(f, d, records, a, z)
 	}
 	finance := map[string]Row{}
 	units := map[string]Row{}
@@ -414,6 +420,23 @@ func generate(f Filter, d Dataset) Result {
 	case "management.records":
 		addRecords()
 	case "finance.daily_revenue", "finance.income_expense":
+		if f.Key == "finance.income_expense" {
+			details := expenseReport(f, d, records, a, z)
+			out.Tables = append(out.Tables, details.Tables[0])
+			var payroll, rent float64
+			for _, r := range records {
+				if r.Kind == "expense" && in(r.OccurredAt, a, z) {
+					if r.Category == "payroll" {
+						payroll += money(r.AmountMinor)
+					}
+					if r.Category == "rent" {
+						rent += money(r.AmountMinor)
+					}
+				}
+			}
+			metric("payroll", "Personel maaşları", payroll, "money")
+			metric("rent", "Kira giderleri", rent, "money")
+		}
 		metric("extras", "Ek hizmet geliri", extra, "money")
 		metric("refunds", "Gerçekleşen iadeler", refunded, "money")
 		metric("net_cash", "Net tahsilat", received-refunded, "money")

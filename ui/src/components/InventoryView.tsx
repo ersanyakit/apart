@@ -1,7 +1,7 @@
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
-import React, { useEffect, useState } from "react";
-import { Layers, Plus, Pencil, Trash2, BedDouble, Map } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Layers, Plus, Pencil, Trash2, BedDouble, Map as MapIcon } from "lucide-react";
 import {
   command,
   messageOf,
@@ -19,30 +19,7 @@ import {
 import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
 import { FloorBoard } from "./FloorBoard";
-type Place = {
-  unit_id?: string;
-  code: string;
-  level: number;
-  position: string;
-  width_cm: number;
-  length_cm: number;
-  capacity: number;
-  is_active: boolean;
-  rentable: boolean;
-};
-type Bed = {
-  bed_id?: string;
-  branch_id: string;
-  room_id: string | null;
-  floor_id: string | null;
-  code: string;
-  type: string;
-  structure: string;
-  width_cm: number;
-  length_cm: number;
-  levels: number;
-  places: Place[];
-};
+import { BED_PRESETS, applyBedPreset, type Bed, type Place, type BedPreset } from "../lib/bed-presets";
 const bedTypes: Record<string, string> = {
   single: "Tek kişilik",
   double: "Çift kişilik",
@@ -258,7 +235,7 @@ export function InventoryView({
             disabled={!floor}
             onClick={() => setMode("plan")}
           >
-            <Map size={14} />
+            <MapIcon size={14} />
             Kat Planı
           </button>
         </div>
@@ -513,6 +490,14 @@ function BedForm({
   const [b, setB] = useState(bed),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const rememberedPlaces = useRef(new Map(bed.places.map(p => [p.level, p])));
+  const [presetNotice, setPresetNotice] = useState("");
+  const applyPreset = (preset: BedPreset) => {
+    for (const place of b.places) rememberedPlaces.current.set(place.level, place);
+    setB(applyBedPreset(b, preset, [...rememberedPlaces.current.values()]));
+    setPresetNotice(`${preset.label} alanlara uygulandı. Düzenleyip kaydedebilirsiniz.`);
+    setError("");
+  };
   const patch = (p: Partial<Bed>) => setB((v) => ({ ...v, ...p }));
   const changePlace = (i: number, p: Partial<Place>) =>
     patch({ places: b.places.map((v, n) => (i === n ? { ...v, ...p } : v)) });
@@ -558,6 +543,33 @@ function BedForm({
       }}
     >
       <ErrorMessage message={error} />
+      <section aria-label="Hazır yatak tanımları" className="space-y-3">
+        <div>
+          <h3 className="font-uninav-book text-base text-uni-ink">Hazır yatak tanımları</h3>
+          <p className="mt-1 text-sm text-uni-muted">
+            Bir seçenekle tür, ölçü, seviye ve kapasiteyi doldurun. Ölçüler başlangıç değerleridir; kaydetmeden önce düzenleyebilirsiniz.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {BED_PRESETS.map(preset => {
+            const Icon = preset.structure === "bunk" ? Layers : BedDouble;
+            return (
+              <button
+                key={preset.key}
+                type="button"
+                disabled={busy}
+                className="uni-button uni-button-secondary rounded-full"
+                title={`${preset.width_cm} × ${preset.length_cm} cm · ${preset.levels} seviye · ${preset.levels * preset.capacity} kişi`}
+                onClick={() => applyPreset(preset)}
+              >
+                <Icon size={18} aria-hidden="true" />
+                {preset.label}
+              </button>
+            );
+          })}
+        </div>
+        <p role="status" className="text-xs text-uni-muted">{presetNotice}</p>
+      </section>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <TextField
           label="Yatak kodu"

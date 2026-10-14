@@ -45,6 +45,7 @@ func define(code, message string, kind Kind) *Error {
 }
 
 var (
+	ErrNoteChanged            = define("note_changed", "Bu not başka bir personel tarafından güncellendi. Son halini açıp tekrar deneyin; yazdığınız metin korunuyor.", Conflict)
 	ErrNotFound               = define("not_found", "Kayıt bulunamadı.", NotFound)
 	ErrForbidden              = define("forbidden", "Bu işlem için yetkiniz yok.", Forbidden)
 	ErrUnauthorized           = define("unauthorized", "Oturum açmanız gerekiyor.", Unauthorized)
@@ -160,6 +161,7 @@ var (
 )
 
 var (
+	ErrDocumentLength      = define("document_body_too_long", "Belge içeriği 64 KB sınırını aşıyor. Metni kısaltın.", Validation)
 	ErrDocumentKind        = define("invalid_document_kind", "Geçersiz belge türü.", Validation)
 	ErrDocumentTemplate    = define("invalid_document_template", "Belge başlığı ve metni aynı dilde tanımlanmalıdır.", Validation)
 	ErrDocumentTranslation = define("document_translation_missing", "Bu otel, belge türü ve dil için şablon tanımlayın.", Validation)

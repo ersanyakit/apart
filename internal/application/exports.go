@@ -60,3 +60,30 @@ func (s *Reports) Export(ctx context.Context, u identity.User, q guest.Query) (F
 		return File{}, constants.ErrPayload
 	}
 }
+
+// Customer exports share the directory query, but never its page offset.
+func (s *Reports) ExportCustomers(ctx context.Context, u identity.User, q guest.Query) (File, error) {
+	if q.Format != "xlsx" && q.Format != "pdf" {
+		return File{}, constants.ErrPayload
+	}
+	page, err := s.Guests.ExportCustomers(ctx, u, q)
+	if err != nil {
+		return File{}, err
+	}
+	rows := [][]string{{"Ad soyad", "Kimlik / pasaport", "Telefon", "Uyruk", "Adres"}}
+	for _, r := range page.Items {
+		rows = append(rows, []string{r.Name, r.NationalID, r.Phone, r.Nationality, r.Address})
+	}
+	if q.Format == "xlsx" {
+		data, err := s.Exporter.Spreadsheet(ctx, "Müşteri Listesi", rows)
+		return File{Name: "musteri-listesi.xlsx", MIME: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Data: data}, err
+	}
+	renderer, ok := s.Exporter.(interface {
+		TablePDF(context.Context, string, [][]string) ([]byte, error)
+	})
+	if !ok {
+		return File{}, constants.ErrExport
+	}
+	data, err := renderer.TablePDF(ctx, "Müşteri Listesi", rows)
+	return File{Name: "musteri-listesi.pdf", MIME: "application/pdf", Data: data}, err
+}

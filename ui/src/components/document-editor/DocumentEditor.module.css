@@ -1,0 +1,12 @@
+.editor{border-radius:22px;background:var(--color-uni-surface);overflow:hidden;box-shadow:0 2px 12px #00000004}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:10px 12px;background:color-mix(in srgb,var(--color-uni-surface) 96%,#000);border-bottom:1px solid #00000008}
+.tool{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;border-radius:999px;font-size:12px;color:var(--color-uni-text,#334155);padding:8px;background:transparent}
+.tool[aria-pressed=true]{background:#2563eb18;color:#2563eb}.tool:focus-visible{outline:2px solid #2563eb;outline-offset:2px}.tool:disabled{opacity:.3}
+.separator{width:1px;height:20px;margin:0 4px;background:#00000010}.fields{min-width:190px;max-width:280px;flex:1;margin-left:auto}
+.body{padding:24px;min-height:340px;max-height:65vh;overflow:auto;outline:none;font-size:14px;line-height:1.75;overflow-wrap:anywhere;cursor:text}
+.body:focus{box-shadow:inset 0 0 0 2px #2563eb25;border-radius:12px}
+.body p,.preview p{margin:0 0 12px}.body h1,.preview h1{font-size:26px;font-weight:700;margin:18px 0 10px}.body h2,.preview h2{font-size:21px;font-weight:700;margin:16px 0 8px}.body h3,.preview h3{font-size:17px;font-weight:600;margin:14px 0 8px}.body ul,.preview ul{list-style:disc;padding-inline-start:24px}.body ol,.preview ol{list-style:decimal;padding-inline-start:24px}.body blockquote,.preview blockquote{border-inline-start:3px solid #94a3b8;padding-inline-start:16px;color:#64748b}.body table,.preview table{width:100%;border-collapse:collapse;margin:12px 0}.body th,.body td,.preview th,.preview td{border:1px solid #e2e8f0;padding:8px;vertical-align:top;min-width:60px}.body th,.preview th{font-weight:600;background:#f8fafc}.body strong,.body b,.preview strong,.preview b{font-weight:700}.body em,.body i,.preview em,.preview i{font-style:italic}
+.bold{font-weight:700}.italic{font-style:italic}.underline{text-decoration:underline}.strike{text-decoration:line-through}.underlineStrike{text-decoration:underline line-through}
+.footer{padding:10px 18px;display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#64748b;background:#00000002}
+.preview{font-size:14px;line-height:1.75;overflow-wrap:anywhere;overflow-x:auto}
+@media(max-width:640px){.body{padding:16px;min-height:280px}.toolbar{padding:8px}.fields{min-width:100%;max-width:none}.footer{flex-wrap:wrap}}

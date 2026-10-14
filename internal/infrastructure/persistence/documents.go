@@ -16,7 +16,7 @@ func (r *Repository) Templates(ctx context.Context, hotelID uuid.UUID) ([]docume
 	err := r.db.WithContext(ctx).Where("hotel_id = ?", hotelID).Order("kind").Find(&rows).Error
 	out := []document.Template{}
 	for _, row := range rows {
-		out = append(out, document.Template{TemplateID: row.TemplateID, HotelID: row.HotelID, Kind: row.Kind, Title: shared.LocalizedString(row.Title), Body: shared.LocalizedString(row.Body)})
+		out = append(out, document.Template{TemplateID: row.TemplateID, HotelID: row.HotelID, Kind: row.Kind, Format: row.Format, Title: shared.LocalizedString(row.Title), Body: shared.LocalizedString(row.Body)})
 	}
 	return out, translate(err)
 }
@@ -29,11 +29,11 @@ func (r *Repository) SaveTemplate(ctx context.Context, t document.Template) (doc
 		if err := tx.Where("hotel_id = ? AND kind = ?", t.HotelID, t.Kind).Find(&existing).Error; err != nil {
 			return err
 		}
-		row := models.DocumentTemplate{TemplateID: uuid.New(), HotelID: t.HotelID, Kind: t.Kind, Title: utils.LocalizedString(t.Title), Body: utils.LocalizedString(t.Body)}
+		row := models.DocumentTemplate{TemplateID: uuid.New(), HotelID: t.HotelID, Kind: t.Kind, Format: t.Format, Title: utils.LocalizedString(t.Title), Body: utils.LocalizedString(t.Body)}
 		if len(existing) > 0 {
 			row.TemplateID = existing[0].TemplateID
 			t.TemplateID = row.TemplateID
-			return tx.Model(&existing[0]).Select("Title", "Body").Updates(&row).Error
+			return tx.Model(&existing[0]).Select("Title", "Body", "Format").Updates(&row).Error
 		}
 		t.TemplateID = row.TemplateID
 		return tx.Create(&row).Error

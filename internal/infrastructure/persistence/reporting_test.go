@@ -102,4 +102,43 @@ func TestReportingIsolationIdempotencyAndAudit(t *testing.T) {
 	if count < 2 {
 		t.Fatal("creation/void audit missing")
 	}
+	t.Run("salary and rent expense entry requires accountable context", func(t *testing.T) {
+		salary := reporting.Record{ID: uuid.New(), HotelID: hotel, BranchID: branch, Kind: "expense", Category: "payroll", Label: "Ekim maaşı", AmountMinor: 50000, Currency: "TRY", Status: "completed", OccurredAt: at}
+		if _, e := service.Record(ctx, u, salary); e == nil {
+			t.Fatal("salary without staff accepted")
+		}
+		salary.ResponsibleID = &user
+		if _, e := service.Record(ctx, u, salary); e != nil {
+			t.Fatal(e)
+		}
+		rental := salary
+		rental.ID = uuid.New()
+		rental.Category = "rent"
+		rental.ResponsibleID = nil
+		if _, e := service.Record(ctx, u, rental); e == nil {
+			t.Fatal("rent without payee accepted")
+		}
+		rental.Party = "Mal sahibi"
+		if _, e := service.Record(ctx, u, rental); e != nil {
+			t.Fatal(e)
+		}
+		f.Key = "finance.expenses"
+		result, e := service.Generate(ctx, u, f)
+		if e != nil {
+			t.Fatal(e)
+		}
+		found := false
+		for _, m := range result.Metrics {
+			if m.Key == "expenses" {
+				found = true
+				if m.Value != 100000 {
+					t.Fatalf("expense sum %v", m.Value)
+				}
+			}
+		}
+		if !found {
+			t.Fatal("expense metric missing")
+		}
+	})
+
 }

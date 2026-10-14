@@ -1,10 +1,11 @@
 import { PageHeader } from "./PageHeader";
 import { usePreference } from "./UserPreferences";
 import React, { useEffect, useState } from "react";
-import { bookingStatuses, command, messageOf } from "../lib/api";
+import { command, messageOf } from "../lib/api";
 import { ErrorMessage, secondaryStyle } from "./FormKit";
 import { DateField, InlineSelectField } from "./fields";
 import { auditLocationSummary, type AuditDetails } from "../lib/audit-location";
+import { auditActions as actions, auditEntities as entities, auditChanges, auditSummary } from "../lib/audit-presentation";
 import { Pagination } from "./Pagination";
 type Entry = {
   id: string;
@@ -17,32 +18,6 @@ type Entry = {
   request_id: string;
   details?: AuditDetails;
 };
-const actions: Record<string, string> = {
-  create: "Oluşturma", update: "Güncelleme", delete: "Silme",
-  check_in: "Misafir girişi", check_out: "Misafir çıkışı", cancel: "Rezervasyon iptali",
-  move: "Oda değişikliği", swap: "Oda takası", login: "Oturum açma", logout: "Oturum kapatma",
-  assign: "Özellik atama",
-};
-const entities: Record<string, string> = {
-  report_records: "Rapor işlem kaydı", bookings: "Rezervasyon", rooms: "Birim", branches: "Tesis", hotels: "Otel",
-  users: "Personel", guest_profiles: "Misafir", beds: "Yatak", floors: "Kat",
-  assets: "Medya", feature_categories: "Özellik kategorisi", feature_definitions: "Özellik",
-  document_templates: "Belge şablonu", documents: "Belge",
-};
-function description(entry: Entry) {
-  const before = entry.details?.before;
-  const after = entry.details?.after;
-  const data = after ?? before;
-  const parts = [data?.guest_name ?? data?.name ?? data?.display_name ?? data?.code];
-  if (before?.status && after?.status && before.status !== after.status) {
-    parts.push(`${bookingStatuses[String(before.status)] ?? before.status} → ${bookingStatuses[String(after.status)] ?? after.status}`);
-  }
-  if (data?.check_in && data?.check_out) {
-    parts.push(`${new Date(String(data.check_in)).toLocaleDateString("tr-TR")} – ${new Date(String(data.check_out)).toLocaleDateString("tr-TR")}`);
-  }
-  if (data?.guest_count) parts.push(`${data.guest_count} kişi`);
-  return parts.filter(Boolean).join(" · ");
-}
 export function AuditView({ hotelId }: { hotelId: string }) {
   return <AuditLogList key={hotelId} hotelId={hotelId} />;
 }
@@ -128,9 +103,9 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
         </button>
       </div>
       </PageHeader>
-      <div className="overflow-auto rounded-2xl border border-slate-200 bg-white" aria-busy={busy}>
+      <div className="overflow-auto rounded-2xl bg-[var(--color-uni-surface)]" aria-busy={busy} tabIndex={0} role="region" aria-label="Sistem logları tablosu; yatay kaydırılabilir">
         <table className="w-full text-xs text-left">
-          <thead className="bg-slate-50 text-slate-400">
+          <thead className="bg-black/[0.025] text-slate-500">
             <tr>
               {[
                 "Tarih / saat",
@@ -149,29 +124,38 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
           <tbody>
             {!busy && rows.map((r) => {
               const location = auditLocationSummary(r.entity, r.details);
+              const changes = auditChanges(r);
               return (
               <tr key={r.id} className="border-t border-slate-100">
                 <td className="p-4 whitespace-nowrap">
                   {new Date(r.created_at).toLocaleString("tr-TR")}
                 </td>
-                <td>{r.actor_name}</td>
+                <td>{r.actor_name || "Sistem"}</td>
                 <td>
-                  {actions[r.action] || r.action}
+                  {actions[r.action] || "İşlem"}
                 </td>
-                <td>{entities[r.entity] || r.entity}</td>
+                <td>{entities[r.entity] || "Kayıt"}</td>
                 <td className="p-3 min-w-44">
                   <p className="font-semibold text-slate-900">{location.label}</p>
                   {location.branch && <p className="text-xs text-slate-500 mt-1">{location.branch}</p>}
                   {location.inferred && <p className="text-[10px] text-slate-400 mt-1">Oda bilgisi güncel kayıttan</p>}
                 </td>
                 <td className="max-w-sm p-3">
-                  <p>{description(r) || "—"}</p>
-                  <details className="mt-1 text-slate-500">
-                    <summary className="cursor-pointer">İşlem kaydı</summary>
-                    <p className="mt-2 break-all">{r.command || "Sistem / seed"} · {r.request_id}</p>
-                    <p className="mt-1 break-all font-mono text-[10px]">Kayıt kimliği: {r.entity_id}</p>
-                    {r.details && <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[10px]">{JSON.stringify(r.details, null, 2)}</pre>}
-                  </details>
+                  <p className="font-medium text-slate-800">{auditSummary(r)}</p>
+                  {r.details?.reason && <p className="mt-1 text-slate-600">Gerekçe: {r.details.reason}</p>}
+                  {changes.length > 0 ? <details className="mt-2 text-slate-500">
+                    <summary className="cursor-pointer py-1">{changes.length} bilgi · Ayrıntıları göster</summary>
+                    <dl className="mt-2 space-y-3 min-w-60">
+                      {changes.map(c => <div key={c.key} className="rounded-xl bg-black/[0.025] p-3">
+                        <dt className="text-xs font-semibold text-slate-700">{c.label}</dt>
+                        <dd className="mt-1 break-words">
+                          {r.action !== "create" && <p><span className="text-slate-400">Önce: </span>{c.before}</p>}
+                          {r.action !== "delete" && <p className="mt-1 text-slate-800"><span className="text-slate-500">{r.action === "create" ? "Değer: " : "Sonra: "}</span>{c.after}</p>}
+                          {r.action === "delete" && <p className="mt-1">Kayıt kaldırıldı.</p>}
+                        </dd>
+                      </div>)}
+                    </dl>
+                  </details> : <p className="mt-1 text-slate-400">Bu işlem için ek alan bilgisi kaydedilmemiş.</p>}
                 </td>
               </tr>
             ); })}
