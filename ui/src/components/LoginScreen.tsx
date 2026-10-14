@@ -6,7 +6,6 @@ import {
   ChevronRight,
   Search,
   Plus,
-  Hotel,
   ArrowLeft,
   User,
   ShieldCheck,
@@ -17,6 +16,7 @@ import {
 import { command, messageOf, contracts, type Selection } from "../lib/api";
 import { ErrorMessage } from "./FormKit";
 import brandLogo from "../assets/brand/researchcave.svg";
+import styles from "./LoginScreen.module.css";
 
 interface Hotel {
   id: string;
@@ -153,58 +153,35 @@ export const LoginScreen: React.FC<{
   );
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4 md:p-8 font-sans overflow-hidden relative">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-brand-blue-500/10 rounded-full blur-[120px]" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-red-500/5 rounded-full blur-[120px]" />
-      </div>
-
+    <div className={styles.page}>
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-4xl grid md:grid-cols-12 bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 overflow-hidden relative z-10 border border-white"
       >
-        {/* Left Side: Illustration / Branding */}
-        <div className="md:col-span-5 bg-brand-blue-600 p-8 md:p-12 flex flex-col justify-between text-white relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-slate-900/10 rounded-full -ml-32 -mb-32 blur-3xl opacity-50" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[linear-gradient(45deg,rgba(255,255,255,0.05)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.05)_50%,rgba(255,255,255,0.05)_75%,transparent_75%,transparent)] bg-[length:20px_20px] opacity-10" />
+        <aside className={`${styles.brandPanel} md:col-span-5`} aria-label="Otel yönetim sistemi">
+          <picture className={styles.artwork}>
+            <source media="(max-width: 767px)" srcSet="/images/auth/reception-small.avif" />
+            <img
+              src="/images/auth/reception.avif"
+              alt=""
+              width={960}
+              height={1440}
+              fetchPriority="high"
+            />
+          </picture>
+          <div className={styles.brandCopy}>
+            <h1>interaktif<br /><span>OTEL PROGRAMI</span></h1>
+            <p>Yeni nesil interaktif yönetim sistemi ile tüm operasyonlarınızı tek bir ekran üzerinden yönetin.</p>
           </div>
-
-          <div className="relative z-10">
-            <div className="w-16 h-16 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center mb-6 border border-white/30 shadow-2xl">
-              <Hotel className="w-8 h-8" />
+          <div className={styles.brandFooter}>
+            <div className={styles.security}>
+              <ShieldCheck size={20} aria-hidden="true" />
+              <span>Güvenli Oturum Yönetimi</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-black tracking-tighter leading-tight uppercase">
-              interaktif <br />{" "}
-              <span className="text-red-400">OTEL PROGRAMI</span>
-            </h1>
-            <p className="mt-4 text-white/70 text-sm font-medium leading-relaxed max-w-xs">
-              Yeni nesil interaktif yönetim sistemi ile tüm operasyonlarınızı
-              tek bir ekran üzerinden yönetin.
-            </p>
+            <span className={styles.version}>VER {contracts.application_version}</span>
           </div>
-
-          <div className="relative z-10 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-[11px] font-black uppercase tracking-widest text-white/40">
-                  GÜVENLİK
-                </p>
-                <p className="text-sm font-bold">Güvenli Oturum Yönetimi</p>
-              </div>
-            </div>
-            <div className="pt-8 flex items-baseline gap-1 text-white/30 font-black">
-              <span className="text-xs uppercase tracking-[0.2em]">VER</span>
-              <span className="text-lg">{contracts.application_version}</span>
-            </div>
-          </div>
-        </div>
+        </aside>
 
         {/* Right Side: Flow Content */}
         <div className="md:col-span-7 p-6 md:p-10 flex flex-col h-[600px] md:h-[650px]">

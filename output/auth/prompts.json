@@ -1,0 +1,16 @@
+{
+  "tool": "built-in image_gen",
+  "patternRefinement": "Remove all edge-cropped motifs, uniform #FCFCFF 40px border on all sides; lighten motifs 30 percent for subtle repeating wallpaper.",
+  "assets": [
+    {
+      "name": "hotel-pattern",
+      "prompt": "Use case: illustration-story. A small SEAMLESS REPEATING wallpaper TILE, square 1024x1024, for the body background of a hotel software login page. Day of the Tentacle 1993 hand-drawn cartoon prop design, bent perspectives, eccentric asymmetrical silhouettes, elegant thin hand inked contours. Sparse evenly spaced small hotel-sector objects: crooked room key with tag, reception bell, suitcase, single bed, booking calendar, door hanger, folded towel, tiny hotel facade. Each motif small, isolated, angled differently, generous empty space. NO people, NO characters, NO faces, NO hands, NO emoji, NO text, NO lettering, NO numbers. Palette ONLY extremely light tints of app cyan #2ABDFF, pink #FF37C7, mint #00C3A0 and violet #8251FB on perfectly uniform near-white background #FCFCFF. VERY LOW CONTRAST, subtle wallpaper behind content, no dark outlines or black. Colored outlines are light pastel. Keep outer 6% border uniformly #FCFCFF with no cut off motifs so repeated tile has no edge lines; distribute internal motifs to form a natural repeating pattern. No shadows or vignettes at edges. No 3D.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-a50705ec-90f8-4557-8248-a05797f6f4c3.png"
+    },
+    {
+      "name": "reception",
+      "prompt": "Use case: illustration-story. Portrait 1024x1536 editorial illustration for LEFT SIDE of a hotel management login card. Day of the Tentacle 1993 point-and-click adventure game style: confident hand-inked charcoal contours, comically skewed trapezoid furniture, curved crooked architecture, bold flat cel colors, quirky prop proportions. NO characters, NO people, NO animals, NO faces, NO hands, NO emoji, NO text, NO logos, NO lettering. A whimsical hotel reception still life: large skewed cyan reception counter, violet reception bell with pink button, an oversized mint room key with pink tag on desk, behind it a simple crooked arched hotel doorway with cyan glass and violet trim. One small white reservation ledger, no other clutter. Restrict palette to app cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, white and their shades, charcoal outlines. Bright and cheerful but HIGHER SATURATION AND STRONGER CONTRAST than a pale wallpaper, distinctive cyan/purple/pink object shapes. Upper 30% of canvas must be almost empty soft pale cyan wall #E6F7FF for headline overlay, no objects in upper 30%. Main artwork occupies middle/lower 60%. Lowest 10% quiet light cyan ground for small footer overlay. Composition readable in narrow tall column. No brown, yellow, gold or orange, no night scene, no photo or 3D render.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-acc1aada-1558-4173-88c3-6076d6e538fe.png"
+    }
+  ]
+}
