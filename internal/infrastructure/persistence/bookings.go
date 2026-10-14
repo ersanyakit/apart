@@ -32,7 +32,7 @@ func toBooking(b booking.Booking) models.Booking {
 	return v
 }
 func (r *Repository) ListBookings(ctx context.Context, q booking.Query) ([]booking.Booking, error) {
-	db := r.db.WithContext(ctx).Where("branch_id = ?", q.BranchID).Preload("Allocations", func(tx *gorm.DB) *gorm.DB { return tx.Order("start") }).Order("check_in DESC, booking_id")
+	db := r.db.WithContext(ctx).Where("branch_id = ?", q.BranchID).Preload("Allocations", func(tx *gorm.DB) *gorm.DB { return tx.Order("start") }).Order("created_at DESC NULLS LAST, booking_id DESC")
 	if q.BookingID != uuid.Nil {
 		db = db.Where("booking_id = ?", q.BookingID)
 	}

@@ -72,6 +72,7 @@ import { roomBoardState, roomMenuOperation, bookingCanCheckIn } from "./lib/room
 import { roomView } from "./lib/adapters";
 import { OriginalShell } from "./components/OriginalShell";
 import { FeatureRegistryView } from "./components/FeatureRegistryView";
+import { StaysScheduler } from "./components/stays-scheduler/StaysScheduler";
 import { AppSettingsView } from "./components/AppSettingsView";
 import { FontSizeProvider } from "./components/FontSize";
 import { ThemeProvider } from "./components/Theme";
@@ -603,7 +604,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
             </motion.section>
           )}
         </AnimatePresence>
-        {["board", "bookings", "stays"].includes(tab) && (
+        {["board", "bookings"].includes(tab) && (
           <>
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
               {[
@@ -888,7 +889,17 @@ export default function App({ initialData, initialTab = "board" }: { initialData
           headerActions={pageActions}
           onOpenBooking={operator ? openBookingEdit : undefined} />}
         {tab === "logs" && <AuditView hotelId={s.hotel_id} />}
-        {["bookings", "stays"].includes(tab) && (
+        {tab === "stays" && (
+          <StaysScheduler key={s.branch_id} rooms={s.rooms} floors={s.floors} bookings={s.bookings}
+            serverTime={s.server_time} busy={busy}
+            onDetails={booking => setModal({ type: "history", booking })}
+            onEdit={operator ? openBookingEdit : undefined}
+            onMove={operator ? booking => setModal({ type: "move", booking }) : undefined}
+            onCheckOut={operator ? async booking => {
+              if (await confirmDialog(`${booking.guest_name} için çıkış yapılsın mı?`)) transition(booking, "check_out");
+            } : undefined} />
+        )}
+        {tab === "bookings" && (
           <>
             <Table
               headings={[

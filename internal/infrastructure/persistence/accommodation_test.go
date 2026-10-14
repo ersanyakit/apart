@@ -341,3 +341,56 @@ func TestAccommodation(t *testing.T) {
 		}
 	})
 }
+
+func TestBookingsOrderedByCreationTime(t *testing.T) {
+	db := testdb.Open(t)
+	if err := migrations.Up(db); err != nil {
+		t.Fatal(err)
+	}
+	ctx := context.Background()
+	hotel := models.Hotel{HotelID: uuid.New(), FacilityInfo: models.FacilityInfo{Name: "Ordering"}}
+	branch := models.Branch{BranchID: uuid.New(), HotelID: hotel.HotelID, FacilityInfo: models.FacilityInfo{Name: "Main"}}
+	room := models.Room{RoomID: uuid.New(), BranchID: branch.BranchID, Code: "101", Kind: "room", Capacity: 2}
+	for _, row := range []any{&hotel, &branch, &room} {
+		if err := db.Create(row).Error; err != nil {
+			t.Fatal(err)
+		}
+	}
+	base := time.Date(2026, 10, 14, 10, 0, 0, 0, time.UTC)
+	ids := []uuid.UUID{
+		uuid.MustParse("00000000-0000-4000-8000-000000000001"),
+		uuid.MustParse("00000000-0000-4000-8000-000000000002"),
+		uuid.MustParse("00000000-0000-4000-8000-000000000003"),
+	}
+	// Older reservations may have later arrival dates or more recent edits.
+	// The last two share a creation timestamp and require a deterministic tie-break.
+	for _, i := range []int{2, 0, 1} {
+		created := base
+		if i > 0 {
+			created = base.Add(time.Hour)
+		}
+		arrival := base.Add(time.Duration(30-i) * 24 * time.Hour)
+		row := models.Booking{BookingID: ids[i], BranchID: branch.BranchID, RoomID: room.RoomID, GuestName: "Order test", GuestCount: 1, Status: booking.Confirmed, CheckIn: arrival, CheckOut: arrival.Add(24 * time.Hour), CreatedAt: created, UpdatedAt: base.Add(time.Duration(5-i) * time.Hour)}
+		if err := db.Omit("Guests", "Allocations").Create(&row).Error; err != nil {
+			t.Fatal(err)
+		}
+	}
+	repo := persistence.New(db)
+	for _, q := range []booking.Query{
+		{BranchID: branch.BranchID},
+		{BranchID: branch.BranchID, Status: booking.Confirmed, From: &base},
+	} {
+		rows, err := repo.ListBookings(ctx, q)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(rows) != 3 {
+			t.Fatalf("got %d bookings", len(rows))
+		}
+		for i, want := range []uuid.UUID{ids[2], ids[1], ids[0]} {
+			if rows[i].BookingID != want {
+				t.Fatalf("position %d: got %s, want %s", i, rows[i].BookingID, want)
+			}
+		}
+	}
+}
