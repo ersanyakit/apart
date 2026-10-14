@@ -1,3 +1,6 @@
+import { LOCALES } from "../lib/i18n/config";
+import { getMarketingTranslation } from "../lib/i18n/marketing-server";
+import { MarketingI18nProvider } from "../components/landing/MarketingI18n";
 import {PWAProvider} from "../components/PWA";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
@@ -28,19 +31,22 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { locale, dictionary } = await getMarketingTranslation();
   return (
-    <html lang="tr" className={inter.variable}>
+    <html lang={locale} dir={LOCALES[locale].direction} className={inter.variable}>
       <body>
-        <I18nProvider>
+        <I18nProvider initialLocale={locale}>
+          <MarketingI18nProvider initialDictionary={dictionary}>
           <NotificationProvider>
           <PWAProvider>{children}</PWAProvider>
           <ConfirmDialogHost />
           </NotificationProvider>
+        </MarketingI18nProvider>
         </I18nProvider>
       </body>
     </html>

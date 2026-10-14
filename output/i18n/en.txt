@@ -1,0 +1,391 @@
+0|(optional)
+1|01 / RESERVATIONS & STAYS
+2|02 / ROOM BOARD & 3D PROPERTY
+3|03 / GUEST RELATIONS
+4|04 / FINANCE & DOCUMENTS
+5|05 / TEAM & DAILY OPERATIONS
+6|Reservations for 1–7 nights.
+7|Reservations for 28 nights or more.
+8|3D property view
+9|Explore floors, rooms and bed layouts in 3D.
+10|14 different screens, including the 3D property view, amenities and reports. Captured from the real application with sample property and guest data. Enlarge any screen to explore the details.
+11|ADR and RevPAR
+12|Full name
+13|Full name: {name}\nEmail: {email}\nProperty: {property}\n\n{message}
+14|Search by name, ID or phone; access customer lists, contact details, nationality, past stays, accompanying guests, notes, reviews and ratings. A shared blacklist is available to authorized users.
+15|Search by name, ID or phone to access guest profiles and stay history.
+16|Have something
+17|Receivables and payables
+18|Capacity by upper/lower bunk and bed group.
+19|Footer navigation
+20|Security deposits received and refunded.
+21|Main navigation
+22|Aparthotel
+23|Pricing for aparthotels
+24|Adjust the interface, language and currency to suit the way you work.
+25|Interface and content language, currency and amount formatting. Color theme, background and font size preferences. Mobile layouts and an installable PWA experience.
+26|Faults and maintenance
+27|Revenue per sold night and per available night for the same product type.
+28|Less bustle.
+29|Open faults, resolution times and maintenance costs.
+30|A room key offered in front of an open hotel door
+31|Hotel staff answering questions with an open guidebook
+32|Compare counted cash with opening balance + cash receipts − refunds − payments.
+33|GETTING STARTED
+34|Explore bathroom fittings, room equipment and other amenities in the shared catalog. See the features and inventory available when defining rooms.
+35|Back to top ↑
+36|Documents & templates
+37|Much more than a room number.
+38|Separate tasks. One connected workspace.
+39|Can I manage multiple properties with one account?
+40|Operating result by unit
+41|Reservations and occupancy by unit
+42|Unit revenue and directly assigned expenses; unallocated expenses are shown separately.
+43|Unit performance
+44|Sales and usage by unit type.
+45|Current cleaning status and recorded housekeeping tasks for each unit.
+46|Track cleaning and stay status, guests, and arrival and departure dates in one view.
+47|Keep track of accompanying guests, nationality, guest notes and reviews.
+48|Write to us.
+49|This form opens a draft in your email app. You can send the message from there.
+50|How did today go?
+51|THE WHOLE STORY OF A HOTEL
+52|FOR THE NEXT GREAT STAY
+53|FOR THOSE WHO LOVE THE DETAILS
+54|Apartment maintenance
+55|Maintenance records by apartment.
+56|Accommodation revenue by apartment.
+57|Calendar and availability by apartment
+58|Apartment occupancy
+59|Apartment operating result
+60|Apartment revenue
+61|Apartment expenses
+62|Apartment and unit structure
+63|Capacity and occupancy in apartment-nights.
+64|Track apartments, stay durations and financial records together.
+65|Expenses assigned directly to an apartment.
+66|Receipt printer, calculator, payment tokens and document folder
+67|Explore the details
+68|Language & personal preferences
+69|Changing language…
+70|Choose language
+71|Could not load the language. Please try again.
+72|Locker, laundry, breakfast and other additional revenue.
+73|See occupied, reserved, clean and dirty units with guests and stay dates.
+74|Occupancy
+75|Report on occupancy, revenue, cash and business performance by period and property.
+76|Result after directly assigned expenses.
+77|Period revenue, operating expenses and operating result.
+78|A tidy workspace.
+79|Email
+80|Open email draft
+81|If your email app did not open, you can write directly to {email}.
+82|SCREENSHOTS
+83|Additional service revenue
+84|Screenshots | Interactiveotel
+85|Screenshots
+86|Screen categories
+87|Explore the screens
+88|Electricity, water, internet and gas expenses by type, period and supplier.
+89|Yes. The screens adapt to mobile devices. In supported browsers, you can add the app to your home screen. Current business data and operations require an internet connection.
+90|Utility expenses
+91|Finance
+92|Request pricing
+93|Price performance
+94|Pricing
+95|Pricing | Interactiveotel
+96|Physical and sellable capacity use separate denominators.
+97|Compare physical and sellable occupancy. View occupied and vacant unit-nights by date.
+98|PRICING
+99|Number of nights and distribution of short and long stays.
+100|Future occupancy
+101|Evaluate revenue separately from receipts, and physical capacity separately from sellable capacity. Understand your business through recorded data.
+102|Revenue forecast
+103|Revenue management
+104|Revenue, receipts, capacity and operational indicators.
+105|Income and expenses
+106|Record deposits, receipts and refunds with amounts and payment methods. Track reservation balances, outstanding receivables and payables, cash movements and payment-method reports in one panel.
+107|Past occupancy
+108|Expense breakdown
+109|Arrivals and departures
+110|Complete check-ins and check-outs. Track room status, team notes, documents and end-of-day reports.
+111|Sign in ↗
+112|Check-in, check-out and guest records
+113|Manage check-in, check-out, early arrival, room or bed changes, and cancellations.
+114|Arrival, departure and cleaning status
+115|Reservations linked by a group code.
+116|Group stays
+117|Group stays and hostel reports
+118|Hotel team working beside a task board and cleaning cart
+119|Task completion
+120|Images were captured from the Turkish interface.
+121|Close image
+122|Our current email and phone details will be published here.
+123|Current pricing information
+124|Vacation Rental
+125|Pricing for vacation rentals
+126|Daily occupancy
+127|Daily revenue and receipts
+128|Daily operations
+129|From daily operations to personal preferences.
+130|Daily, weekly and monthly comparisons.
+131|Manage the day's flow
+132|From the first reservation to the final room check. See where everything belongs in the application's own screens.
+133|Security deposits
+134|A CLEAR PLAN FOR EVERY APARTMENT
+135|EVERY BED HAS ITS PLACE
+136|Which businesses is it suitable for?
+137|Which room is occupied, and which is being prepared? See the whole property, from the room board and floors to 3D views and beds.
+138|Every great stay starts with a good plan.
+139|Every guest has a story. Prepare for their next arrival with contact details, previous visits and notes.
+140|Everything in its place.
+141|Everyone on the same page.
+142|Calculator, ledger and hotel key with a price tag
+143|Clear accounts. Organized paperwork.
+144|Hostel
+145|Pricing for hostels
+146|Interactiveotel home
+147|Information about Interactiveotel
+148|Contact information for pricing, product and usage questions about Interactiveotel.
+149|Channel revenue, cancellation rate and sales after commission.
+150|Kanban reception notes, staff records, role and branch access. Task, maintenance, housekeeping, stock, damage and overtime records; activity history and system logs.
+151|Capacity utilization
+152|Deposits, receipts and remaining balance
+153|Deposits, receipts, refunds, additional income, payments and expenses. Cash, transfers, cards and configured payment channels. Receivables, payables, security deposits, cash opening and closing, and shift records.
+154|Track deposits, receipts, refunds, income, expenses, receivables and payables by payment channel.
+155|From deposit to remaining balance, contract to receipt. Keep the financial and written side of each stay together.
+156|Floor and room setup
+157|Explore floors, rooms and bed layouts in a 3D plan. See units alongside their stay status.
+158|Property view showing floors, rooms and beds together
+159|Recorded review scores out of five.
+160|Recorded use of shared areas.
+161|Source, cost and recorded damage payments.
+162|Recorded price observations with their sources.
+163|Loss and damage
+164|Picture it for your own hotel.
+165|Future accommodation value of confirmed reservations.
+166|New and returning guests and country distribution where identities can be matched.
+167|Rent expenses
+168|Rent and receipts
+169|Rent, deposit and balance tracking
+170|Personal settings
+171|Personalization
+172|Review accommodation revenue, receipts and occupancy on one screen. Follow changes over time with charts.
+173|Track accommodation revenue separately from actual receipts. Examine movements with date, property and currency filters.
+174|Length of stay
+175|Accommodation accruals, additional revenue, receipts and refunds are shown separately.
+176|Stay calendar
+177|In-house guest list
+178|Contract value, due dates and payment records.
+179|Contract expiry
+180|Subject
+181|Access the businesses and branches assigned to your account from one panel. Staff access and permitted actions depend on their roles and branch permissions.
+182|Business property profile, multiple properties and branches, floor and unit setup, staff and document settings. Multilingual amenities such as air conditioning and hot tubs, linked to units.
+183|SMALL PROPERTY, ORGANIZED WORK
+184|Small details. A well-run hotel.
+185|Short stays
+186|Manage short stays, apartment preparation and payment records together.
+187|Breakdown of payroll, rent, utilities and other operating expenses.
+188|From your desktop to your pocket.
+189|Open menu
+190|Close menu
+191|Your message
+192|Current physical, sellable and closed units.
+193|Open the app with your existing account ↗
+194|Capacity view based on current reservations.
+195|Cartoon monitor showing a miniature hotel and a magnifying glass
+196|Guest
+197|Guest & customer records
+198|Guest satisfaction
+199|Guest profile
+200|Make room for your guests.
+201|Mobile navigation
+202|Mobile-friendly, installable web app
+203|Check availability, create a reservation and welcome your guest. Dates, room, price and guest details in one flow.
+204|How does it work?
+205|What shall we discuss?
+206|ROOM BY ROOM, EVERY DETAIL
+207|A NEW WAY TO RUN YOUR HOTEL
+208|Room & bed management
+209|Room status board
+210|Explore the room board, stay calendar, reservation and reception screens with real application screenshots.
+211|Room board, current and upcoming stays, cleaning status, floor view and 3D property. Define floors, rooms, apartments, beds and bunks, bed layouts and unit amenities.
+212|Room status and cleaning tracking
+213|Track room availability, guest arrivals and daily work in one panel.
+214|Room board and reservation calendar
+215|Get to know the app through its screens, from room board to reservation calendar.
+216|Build a detailed property structure for your room- and bed-based business.
+217|Define rooms, apartments, beds, bunks, floors and amenities to suit your business.
+218|Puzzle pieces connecting room, reservation and document management
+219|Nights, revenue and occupancy per room, bed or apartment.
+220|Pastel three-story hotel cutaway showing rooms and beds
+221|Amenities and room inventory
+222|Reservation status by creation date.
+223|Operations
+224|Shared-area usage
+225|Hotel
+226|Pricing for hotels
+227|Hotel · Aparthotel · Hostel
+228|Designed for hotel, aparthotel and hostel operations, with rooms, apartments, beds and bunks. Aparthotel reports cover long stays, rent and deposits; hostel reports cover bed occupancy, groups and shared areas.
+229|Hotel, aparthotel and hostel management.
+230|All the work of your hotel, aparthotel or hostel,
+231|Explore uses for hotels, aparthotels, guesthouses, vacation rentals and hostels. The options below are product use cases, not paid subscription plans.
+232|Explore Interactiveotel for your hotel, aparthotel, guesthouse, vacation rental or hostel. Contact us for pricing.
+233|Chart screen and report folder showing hotel occupancy and revenue
+234|Start managing your hotel
+235|Your hotel is ready.
+236|See your hotel from a new perspective.
+237|Plan prices and billing periods have not yet been published. Visit our contact page to learn about pricing, scope and terms of use.
+238|Guesthouse
+239|Pricing for guesthouses
+240|Staff
+241|Staff salaries
+242|Staff performance
+243|Define staff roles and branch access; review activity records and system logs.
+244|Recorded salary expenses by staff member and period.
+245|View planned arrivals and departures alongside actual stay details.
+246|LOOK BEHIND THE NUMBERS
+247|Competitor prices
+248|Bunk capacity
+249|Reporting
+250|Financial and operational records used as report sources.
+251|Where does report data come from?
+252|Reception & team
+253|Reception notes
+254|Organize reception notes on a Kanban board; keep tasks and reminders visible.
+255|Track reception notes, tasks and business records with your team. Let everyone focus on their work with the appropriate permissions.
+256|Reception telephone, open letter and hotel bell
+257|Two cartoon guests welcomed at reception with their luggage
+258|At reception, on the floors, in management.
+259|Bring daily work together, from reception to floor operations.
+260|Reservations
+261|Reservations & calendar
+262|Aging analysis of reservation balances and other open accounts.
+263|Reservation operations, tasks and overtime.
+264|Reservation sources
+265|Reservation list
+266|Reservation list, stay calendar, availability and date-range tracking. Guest, unit, price, deposit and notes in one record; check-in, check-out, cancellation and allocation changes.
+267|Create a reservation
+268|Illustration of a reservation calendar, hotel key and reception bell
+269|Reservation and guest history
+270|Reservation allocation history.
+271|Reservation summary
+272|From reservation to the final room check.
+273|From reservations, stays and the financial and operational transactions you record. Users enter competitor prices, stock, maintenance, complaints and similar records; report coverage depends on their accuracy.
+274|List reservations with status, guest and date information; access daily operations from here.
+275|See reservations across dates and units. Review the stay plan in the calendar.
+276|Add your reservation
+277|Sales conversion
+278|Contracts expiring in the selected period.
+279|Planned arrivals and departures for the selected period.
+280|Then your first guest.
+281|Issue categories, open cases and resolution times.
+282|Stock and consumption
+283|Contracts and receipts; edit document templates with rich text, tables and images. Multilingual content, preview and printing. Generated documents retain their content independently of later template changes.
+284|Can I edit contracts and receipts myself?
+285|Frequently asked questions
+286|View frequently asked questions ↗
+287|Now it's your turn.
+288|Receipts & business records
+289|Receipt and refund channels.
+290|Receipts, documents and business reports
+291|Receipts, deposits and documents
+292|See the distribution of card, bank transfer, cash and online receipts in a donut chart. Compare refunds and payments separately.
+293|Track by date, property and status in the calendar and reservation list.
+294|Enquiries, quotes, won and lost sales.
+295|Completed, open and overdue tasks.
+296|Familiar tasks.
+297|Prepare a new reservation by combining dates, an available unit, guest and price details.
+298|Choose dates and an available unit. Save guest details, price, deposit and necessary notes.
+299|Every part, right here.
+300|Returning guests
+301|Repeat stays, accommodation revenue and intervals between visits.
+302|Can I use it on my phone?
+303|Housekeeping
+304|Track cleaning, maintenance, stock, damage and shift records through operational reports.
+305|Property & system settings
+306|Property name
+307|Property comparison
+308|Steps for property setup, reservation and guest welcome
+309|Property management
+310|Define your property, floors, rooms and beds. Set up amenities, staff permissions and document templates.
+311|Track current stays and planned departures; access the related guest and reservation details.
+312|Tell us about your property and your needs.
+313|Set up your property
+314|Organize the floors and units of your property. Define rooms, apartments and beds to suit your business.
+315|Take the first step toward reviewing your property structure and the scope you need together.
+316|All features
+317|All
+318|FOR LONGER STAYS
+319|Application screens
+320|Explore application screens ↗
+321|Open app
+322|Long stays
+323|Long-stay reports
+324|Shifts change. Information stays.
+325|Shifts and cash
+326|Only sample data is shown.
+327|Keep upcoming, ongoing and completed work on the same board. Share information between shifts.
+328|What's happening tomorrow?
+329|Nights and revenue by bed.
+330|Revenue per bed
+331|Bed occupancy
+332|Bed readiness
+333|Bed and room changes
+334|Bed and bunk setup
+335|Occupancy measured in bed-nights.
+336|Dormitory performance
+337|Bed cleaning status and preparation tasks.
+338|Compare the properties you are authorized to manage over the same period.
+339|Manage the shared blacklist and related records with authorized roles.
+340|Switch between branches you are authorized to access
+341|With the appropriate permissions, edit document templates with text, tables and images in multiple languages. Preview the generated document and use the browser's print or save-as-PDF option.
+342|Management
+343|Management overview
+344|on your mind?
+345|welcome.
+346|to the final goodbye.
+347|in one spacious workspace.
+348|{reports} reports · {categories} categories
+349|Enlarge {title} screen
+350|{title}: real application screen with sample Mavi Avlu Hotel records
+351|Edit multilingual document templates; preview and print contracts and receipts or save them as PDF.
+352|More guests.
+353|Many properties. One panel.
+354|Payment methods
+355|How do I track payments?
+356|Take a look first.
+357|First, your property.
+358|Stock entries, consumption, balance and reorder threshold by product code.
+359|Average nightly sales by product and day type.
+360|Product overview
+361|Get to know the product.
+362|Explore the product
+363|Product suitability, pricing or usage questions. Simply share your property type, room or bed count and requirements.
+364|CONTACT
+365|So are your needs.
+366|Let's discuss your needs and answer your questions.
+367|Contact
+368|Our contact channels are being prepared.
+369|Contact | Interactiveotel
+370|Get in touch
+371|From the first reservation
+372|Cancelled sales, completed and pending refunds.
+373|Cancellations and refunds
+374|Whether you are setting up a new property or organizing daily work, let's look at your questions together.
+375|A good start begins with hello.
+376|What awaits you inside?
+377|Take a look inside
+378|Skip to content
+379|Every part of the job.
+380|Transaction records
+381|Leave the work to us.
+382|Track rent paid by the business by period and landlord.
+383|Your business is different.
+384|A unit and bed structure that fits your business
+385|Let's get to know your business. Let's clarify the details.
+386|Complaints
+387|Search languages
+388|Language name or code…
+389|No languages match your search.
+390|Have a question?

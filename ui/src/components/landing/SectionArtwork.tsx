@@ -1,3 +1,5 @@
+"use client";
+import { useMarketingI18n } from "./MarketingI18n";
 import styles from "./Landing.module.css";
 
 export function SectionArtwork({
@@ -9,13 +11,14 @@ export function SectionArtwork({
   alt: string;
   className?: string;
 }) {
+  const { m } = useMarketingI18n();
   return (
     <div className={`${styles.sectionArtwork} ${className}`}>
       <img
         src={`/images/landing/${name}.avif`}
         srcSet={`/images/landing/${name}-small.avif 640w, /images/landing/${name}.avif 1200w`}
         sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1400px) 42vw, 560px"
-        alt={alt}
+        alt={m(alt)}
         width={1200}
         height={800}
         loading="lazy"

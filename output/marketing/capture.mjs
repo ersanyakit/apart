@@ -1,3 +1,4 @@
+import { demoReport } from './report-fixtures.mjs';
 import { chromium } from '../../ui/node_modules/playwright/index.mjs';
 import fs from 'node:fs/promises';
 const facility={hotel_id:'demo-hotel',branch_id:'demo-branch',name:'Mavi Avlu Otel',description:{TR:'Örnek tesis'},address:'Örnek tesis',phone:'',email:'',tax_number:'',tax_office:'',logo_url:'',cover_url:'',assets:[],inventory:[],feature_assignments:[]};
@@ -18,16 +19,18 @@ if(code==='auth.properties')data=[{hotel_id:'demo-hotel',branch_id:'demo-branch'
 else if(code==='auth.people')data=[{user_id:'demo-user',name:'Demo Yönetici'}];
 else if(code==='system.initial_sync')data=snapshot;
 else if(code==='note.list') {const payload=body.payload||JSON.parse(url.searchParams.get('payload')||'{}');const status=payload.status||'todo';data={items:[{id:'note-'+status,hotel_id:'demo-hotel',branch_id:'demo-branch',title:{todo:'Akşam girişlerini hazırlayın',doing:'İkinci kat oda kontrolü',done:'Vardiya notları paylaşıldı'}[status]||'Günlük kontrol',body:'Örnek operasyon notu. Ekip ile güncel durumu paylaşın.',status,priority:'normal',archived:false,version:1,created_by:'demo-user',created_by_name:'Demo Yönetici',updated_by:'demo-user',updated_by_name:'Demo Yönetici',created_at:now.toISOString(),updated_at:now.toISOString()}],total:1,page:1};}
+else if(code==='report.generate')data=demoReport(body.payload||JSON.parse(url.searchParams.get('payload')||'{}'),now.toISOString());
 else if(code==='bed.list')data=[];
 else if(code?.endsWith('.list'))data={items:[],total:0,page:1};
 await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({data})});});
 await page.goto('http://localhost:3000/login',{waitUntil:'networkidle'});
 await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByRole('button',{name:/Demo Yönetici/}).click();await page.getByLabel('Şifre',{exact:true}).fill('demo-only');await page.getByRole('button',{name:/SİSTEME GİRİŞ YAP/i}).click();await page.waitForTimeout(1500); await page.addStyleTag({content:'nextjs-portal { display: none !important; }'});
 await fs.mkdir('output/marketing/screenshots',{recursive:true});await page.screenshot({path:'output/marketing/screenshots/board.png'});
-for(const [name,label] of [['calendar','Konaklama Takvimi'],['bookings','Rezervasyon Listesi'],['notes','Resepsiyon Notları'],['property','Kat ve Oda Tanımları'],['property-3d','3 Boyutlu Görünüm'],['stays','Konaklayan Listesi'],['amenities','Olanak Tanımları'],['settings','Ayarlar']]) {
+for(const [name,label] of [['calendar','Konaklama Takvimi'],['bookings','Rezervasyon Listesi'],['notes','Resepsiyon Notları'],['property','Kat ve Oda Tanımları'],['property-3d','3 Boyutlu Görünüm'],['stays','Konaklayan Listesi'],['amenities','Olanak Tanımları'],['settings','Ayarlar'],['report-dashboard','Yönetim özeti'],['report-revenue','Günlük gelir ve tahsilat'],['report-occupancy','Günlük doluluk'],['report-payments','Ödeme yöntemleri']]) {
  if(process.argv.length>2 && !process.argv.slice(2).includes(name))continue;
  await page.getByRole('button',{name:label,exact:true}).last().click();
  if(name==='property-3d'){await page.locator('canvas').waitFor({timeout:15000});await page.waitForTimeout(3500);if(await page.getByText('3 boyutlu görünüm açılamadı.',{exact:true}).count())throw new Error('WebGL failed');}
+ if(name.startsWith('report-')){await page.locator('[data-chart-kind]').first().waitFor();await page.getByRole('button',{name:label+': üst alanı daralt',exact:true}).click();}
  if(name==='amenities')await page.getByRole('button',{name:/Banyo ve Tuvalet/}).click();
  await page.waitForTimeout(900);await page.screenshot({path:'output/marketing/screenshots/'+name+'.png'});console.log('captured',name);
 }

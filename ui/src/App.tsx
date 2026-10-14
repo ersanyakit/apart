@@ -154,7 +154,7 @@ export default function App({ initialData, initialTab = "board" }: AppProps) {
   const [sessionStart, setSessionStart] = useState({ tab: initialTab, register: false });
   const onLogin = async (selection?: Selection, register = false) => {
     const data = await command<Snapshot>("system.initial_sync", selection || {});
-    setSessionStart({ tab: register ? "facility" : "board", register });
+    setSessionStart({ tab: register ? "facility" : initialTab, register });
     setSnapshot(normalize(data));
   };
   return <UserPreferencesProvider key={snapshot?.user.user_id || "guest"} userId={snapshot?.user.user_id} initial={snapshot?.user.preferences}>
@@ -213,13 +213,24 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   // Sekme ↔ URL eşitlemesi: yenileme/paylaşımda ekran korunur,
   // geri/ileri düğmeleri sekmeler arasında gezinir.
   const skipPush = React.useRef(false);
+  const authenticated = snapshot !== null;
   React.useEffect(() => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
+    if (!authenticated) {
+      if (url.pathname !== "/login" || url.searchParams.has("tab")) {
+        url.pathname = "/login";
+        url.searchParams.delete("tab");
+        window.history.replaceState(null, "", url);
+      }
+      return;
+    }
+    const enteringApp = url.pathname !== "/app";
+    url.pathname = "/app";
     if (NAV_TAB_IDS.has(tab)) {
-      if (url.searchParams.get("tab") === tab) return;
+      if (!enteringApp && url.searchParams.get("tab") === tab) return;
       url.searchParams.set("tab", tab);
-      if (skipPush.current) {
+      if (enteringApp || skipPush.current) {
         skipPush.current = false;
         window.history.replaceState(null, "", url);
       } else {
@@ -230,7 +241,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       url.searchParams.delete("tab");
       window.history.replaceState(null, "", url);
     }
-  }, [tab ]);
+  }, [tab, authenticated]);
   React.useEffect(() => {
     if (typeof window === "undefined") return;
     const onPopState = () => {

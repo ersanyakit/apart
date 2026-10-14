@@ -1,26 +1,15 @@
 import type { Metadata } from "next";
+import { getMarketingTranslation } from "../lib/i18n/marketing-server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Landing } from "../components/landing/Landing";
 
-export const metadata: Metadata = {
-  title: "INTERACTIVEOTEL | Otel Yönetim Sistemi",
-  description:
-    "Rezervasyondan check-out'a otelin tamamı tek panelde: oda durum çizelgesi, 3D tesis görünümü, misafir geçmişi, kapora takibi ve çok dilli belgeler.",
-  openGraph: {
-    title: "INTERACTIVEOTEL | Otel Yönetim Sistemi",
-    description:
-      "Rezervasyondan check-out'a otelin tamamı tek panelde: oda durum çizelgesi, 3D tesis görünümü, misafir geçmişi ve kapora takibi.",
-    type: "website",
-    locale: "tr_TR",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "INTERACTIVEOTEL | Otel Yönetim Sistemi",
-    description:
-      "Rezervasyondan check-out'a otelin tamamı tek panelde.",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { m, locale } = await getMarketingTranslation();
+  const title = `INTERACTIVEOTEL | ${m("Tesis yönetimi")}`;
+  const description = m("Oda durum çizelgesi, konaklama takvimi, rezervasyon ve resepsiyon ekranlarını gerçek uygulama görüntüleriyle keşfedin.");
+  return { title, description, openGraph: {title, description, type: "website", locale}, twitter: {card: "summary_large_image", title, description} };
+}
 
 export default async function LandingPage({
   searchParams,

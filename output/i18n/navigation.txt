@@ -1,0 +1,53 @@
+# locale|Sign in|Choose language|Search languages|Reporting|Occupancy
+ru|Войти ↗|Выберите язык|Поиск языка|Отчёты|Загрузка
+ne|लगइन गर्नुहोस् ↗|भाषा छान्नुहोस्|भाषा खोज्नुहोस्|प्रतिवेदन|कोठा भरिएको दर
+th|เข้าสู่ระบบ ↗|เลือกภาษา|ค้นหาภาษา|รายงาน|อัตราการเข้าพัก
+zh-CN|登录 ↗|选择语言|搜索语言|报表|入住率
+zh-TW|登入 ↗|選擇語言|搜尋語言|報表|入住率
+hi|लॉग इन करें ↗|भाषा चुनें|भाषा खोजें|रिपोर्ट|अधिभोग दर
+km|ចូលគណនី ↗|ជ្រើសរើសភាសា|ស្វែងរកភាសា|របាយការណ៍|អត្រាកាន់កាប់បន្ទប់
+si|පිවිසෙන්න ↗|භාෂාව තෝරන්න|භාෂා සොයන්න|වාර්තා|කාමර භාවිත අනුපාතය
+ ta|உள்நுழைக ↗|மொழியைத் தேர்ந்தெடுக்கவும்|மொழிகளைத் தேடவும்|அறிக்கைகள்|அறை நிரம்பிய விகிதம்
+ur|لاگ اِن کریں ↗|زبان منتخب کریں|زبان تلاش کریں|رپورٹس|کمروں کی اشغال کی شرح
+bn|লগ ইন করুন ↗|ভাষা বেছে নিন|ভাষা খুঁজুন|প্রতিবেদন|কক্ষ ব্যবহারের হার
+dz|ནང་འཛུལ་འབད། ↗|སྐད་ཡིག་གདམ་ཁ་རྐྱབས།|སྐད་ཡིག་འཚོལ།|སྙན་ཞུ།|ཁང་མིག་སྤྱོད་ཚད།
+es|Iniciar sesión ↗|Elegir idioma|Buscar idiomas|Informes|Ocupación
+it|Accedi ↗|Scegli la lingua|Cerca lingue|Report|Occupazione
+pt|Entrar ↗|Escolher idioma|Pesquisar idiomas|Relatórios|Ocupação
+nl|Inloggen ↗|Taal kiezen|Talen zoeken|Rapporten|Bezetting
+pl|Zaloguj się ↗|Wybierz język|Szukaj języków|Raporty|Obłożenie
+cs|Přihlásit se ↗|Vyberte jazyk|Hledat jazyky|Přehledy|Obsazenost
+hu|Bejelentkezés ↗|Nyelv kiválasztása|Nyelvek keresése|Jelentések|Kihasználtság
+ro|Autentificare ↗|Alegeți limba|Căutați limbi|Rapoarte|Grad de ocupare
+el|Σύνδεση ↗|Επιλέξτε γλώσσα|Αναζήτηση γλωσσών|Αναφορές|Πληρότητα
+uk|Увійти ↗|Виберіть мову|Пошук мов|Звіти|Завантаженість
+bg|Вход ↗|Изберете език|Търсене на езици|Отчети|Заетост
+sr|Пријавите се ↗|Изаберите језик|Претрага језика|Извештаји|Попуњеност
+hr|Prijava ↗|Odaberite jezik|Pretražite jezike|Izvještaji|Popunjenost
+sk|Prihlásiť sa ↗|Vyberte jazyk|Hľadať jazyky|Prehľady|Obsadenosť
+sl|Prijava ↗|Izberite jezik|Iskanje jezikov|Poročila|Zasedenost
+fi|Kirjaudu sisään ↗|Valitse kieli|Hae kieliä|Raportit|Käyttöaste
+sv|Logga in ↗|Välj språk|Sök språk|Rapporter|Beläggning
+da|Log ind ↗|Vælg sprog|Søg efter sprog|Rapporter|Belægning
+no|Logg inn ↗|Velg språk|Søk etter språk|Rapporter|Belegg
+ms|Log masuk ↗|Pilih bahasa|Cari bahasa|Laporan|Kadar penghunian
+id|Masuk ↗|Pilih bahasa|Cari bahasa|Laporan|Tingkat hunian
+vi|Đăng nhập ↗|Chọn ngôn ngữ|Tìm ngôn ngữ|Báo cáo|Công suất phòng
+ja|ログイン ↗|言語を選択|言語を検索|レポート|稼働率
+ko|로그인 ↗|언어 선택|언어 검색|보고서|객실 점유율
+fa|ورود ↗|انتخاب زبان|جستجوی زبان‌ها|گزارش‌ها|ضریب اشغال
+he|כניסה ↗|בחירת שפה|חיפוש שפות|דוחות|תפוסה
+sw|Ingia ↗|Chagua lugha|Tafuta lugha|Ripoti|Kiwango cha vyumba vilivyojazwa
+am|ይግቡ ↗|ቋንቋ ይምረጡ|ቋንቋ ይፈልጉ|ሪፖርቶች|የክፍል አጠቃቀም መጠን
+mr|लॉग इन करा ↗|भाषा निवडा|भाषा शोधा|अहवाल|खोल्यांच्या वापराचे प्रमाण
+pa|ਲਾਗ ਇਨ ਕਰੋ ↗|ਭਾਸ਼ਾ ਚੁਣੋ|ਭਾਸ਼ਾ ਲੱਭੋ|ਰਿਪੋਰਟਾਂ|ਕਮਰਿਆਂ ਦੀ ਵਰਤੋਂ ਦੀ ਦਰ
+te|లాగిన్ అవ్వండి ↗|భాషను ఎంచుకోండి|భాషలను వెతకండి|నివేదికలు|గదుల ఆక్యుపెన్సీ రేటు
+my|အကောင့်ဝင်ရန် ↗|ဘာသာစကား ရွေးရန်|ဘာသာစကား ရှာရန်|အစီရင်ခံစာများ|အခန်းအသုံးပြုမှုနှုန်း
+lo|ເຂົ້າລະບົບ ↗|ເລືອກພາສາ|ຄົ້ນຫາພາສາ|ລາຍງານ|ອັດຕາການເຂົ້າພັກ
+ka|შესვლა ↗|აირჩიეთ ენა|ენების ძიება|ანგარიშები|დატვირთულობა
+hy|Մուտք գործել ↗|Ընտրեք լեզուն|Որոնել լեզուներ|Հաշվետվություններ|Զբաղվածություն
+az|Daxil ol ↗|Dil seçin|Dil axtarın|Hesabatlar|Doluluq
+kk|Кіру ↗|Тілді таңдаңыз|Тілдерді іздеу|Есептер|Толымдылық
+uz|Kirish ↗|Tilni tanlang|Tillarni qidirish|Hisobotlar|Bandlik darajasi
+mn|Нэвтрэх ↗|Хэл сонгох|Хэл хайх|Тайлан|Өрөөний дүүргэлт
+ps|ننوتل ↗|ژبه وټاکئ|ژبه ولټوئ|راپورونه|د خونو د ډکېدو کچه

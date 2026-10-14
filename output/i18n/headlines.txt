@@ -1,0 +1,52 @@
+# locale | 28 | 352 | 140 | 94 | 85 | 367 | 321 | 234 | 383 | 365 | 390
+ru|Меньше суеты.|Больше гостей.|Всё на своих местах.|Цены|Скриншоты|Контакты|Открыть приложение|Начать управлять отелем|Ваш бизнес особенный.|И ваши потребности тоже.|Есть вопросы?
+ne|कम दौडधुप।|धेरै पाहुना।|सबै कुरा आफ्नै ठाउँमा।|मूल्य|स्क्रिनसटहरू|सम्पर्क|एप खोल्नुहोस्|आफ्नो होटल व्यवस्थापन सुरु गर्नुहोस्|तपाईंको व्यवसाय फरक छ।|तपाईंका आवश्यकता पनि।|केही प्रश्न छ?
+th|ลดความวุ่นวาย|ต้อนรับแขกได้มากขึ้น|ทุกอย่างเป็นระเบียบ|ราคา|ภาพหน้าจอ|ติดต่อ|เปิดแอป|เริ่มจัดการโรงแรมของคุณ|ธุรกิจของคุณไม่เหมือนใคร|ความต้องการของคุณก็เช่นกัน|มีคำถามไหม?
+zh-CN|少些忙乱。|多些宾客。|一切井然有序。|价格|屏幕截图|联系我们|打开应用|开始管理您的酒店|您的业务独具特色。|您的需求也一样。|有什么疑问？
+zh-TW|少些忙亂。|多些賓客。|一切井然有序。|價格|螢幕截圖|聯絡我們|開啟應用程式|開始管理您的旅館|您的事業獨具特色。|您的需求也一樣。|有什麼疑問？
+hi|कम भागदौड़।|ज़्यादा मेहमान।|हर चीज़ अपनी जगह।|कीमतें|स्क्रीनशॉट|संपर्क|ऐप खोलें|अपने होटल का प्रबंधन शुरू करें|आपका व्यवसाय अलग है।|आपकी ज़रूरतें भी।|कोई सवाल है?
+km|កាត់បន្ថយភាពមមាញឹក។|ទទួលភ្ញៀវកាន់តែច្រើន។|អ្វីៗមានរបៀបរៀបរយ។|តម្លៃ|រូបថតអេក្រង់|ទំនាក់ទំនង|បើកកម្មវិធី|ចាប់ផ្តើមគ្រប់គ្រងសណ្ឋាគាររបស់អ្នក|អាជីវកម្មរបស់អ្នកមានលក្ខណៈខុសគេ។|តម្រូវការរបស់អ្នកក៏ដូចគ្នា។|តើអ្នកមានសំណួរទេ?
+si|කාර්යබහුල බව අඩුවෙන්.|අමුත්තන් වැඩියෙන්.|සෑම දෙයක්ම නිසි තැන.|මිල ගණන්|තිර රූ|සම්බන්ධ වන්න|යෙදුම විවෘත කරන්න|ඔබේ හෝටලය කළමනාකරණය අරඹන්න|ඔබේ ව්‍යාපාරය වෙනස්.|ඔබේ අවශ්‍යතාත් එසේමයි.|ඔබට ප්‍රශ්නයක් තිබේද?
+ta|குறைவான பரபரப்பு.|அதிக விருந்தினர்கள்.|அனைத்தும் அதனதன் இடத்தில்.|விலைகள்|திரைப்பிடிப்புகள்|தொடர்பு|செயலியைத் திறக்கவும்|உங்கள் விடுதியை நிர்வகிக்கத் தொடங்குங்கள்|உங்கள் வணிகம் தனித்துவமானது.|உங்கள் தேவைகளும் அப்படியே.|கேள்வி உள்ளதா?
+ur|کم بھاگ دوڑ۔|زیادہ مہمان۔|ہر چیز اپنی جگہ۔|قیمتیں|اسکرین شاٹس|رابطہ|ایپ کھولیں|اپنے ہوٹل کا انتظام شروع کریں|آپ کا کاروبار مختلف ہے۔|آپ کی ضروریات بھی۔|کیا آپ کا کوئی سوال ہے؟
+bn|কম ছোটাছুটি।|আরও বেশি অতিথি।|সবকিছু নিজের জায়গায়।|মূল্য|স্ক্রিনশট|যোগাযোগ|অ্যাপ খুলুন|আপনার হোটেল পরিচালনা শুরু করুন|আপনার ব্যবসা আলাদা।|আপনার চাহিদাও তাই।|কোনো প্রশ্ন আছে?
+es|Menos ajetreo.|Más huéspedes.|Todo en su sitio.|Precios|Capturas de pantalla|Contacto|Abrir la aplicación|Empieza a gestionar tu hotel|Tu negocio es diferente.|Tus necesidades también.|¿Tienes alguna pregunta?
+it|Meno frenesia.|Più ospiti.|Ogni cosa al suo posto.|Prezzi|Schermate|Contatti|Apri l’app|Inizia a gestire il tuo hotel|La tua attività è diversa.|Anche le tue esigenze.|Hai una domanda?
+pt|Menos correria.|Mais hóspedes.|Tudo no seu lugar.|Preços|Capturas de ecrã|Contacto|Abrir a aplicação|Comece a gerir o seu hotel|O seu negócio é diferente.|As suas necessidades também.|Tem alguma pergunta?
+nl|Minder drukte.|Meer gasten.|Alles op zijn plek.|Prijzen|Schermafbeeldingen|Contact|App openen|Begin met het beheren van uw hotel|Uw bedrijf is anders.|Uw behoeften ook.|Heeft u een vraag?
+pl|Mniej pośpiechu.|Więcej gości.|Wszystko na swoim miejscu.|Ceny|Zrzuty ekranu|Kontakt|Otwórz aplikację|Zacznij zarządzać swoim hotelem|Twój obiekt jest inny.|Twoje potrzeby również.|Masz pytanie?
+cs|Méně shonu.|Více hostů.|Vše na svém místě.|Ceny|Snímky obrazovky|Kontakt|Otevřít aplikaci|Začněte spravovat svůj hotel|Vaše podnikání je jiné.|Vaše potřeby také.|Máte otázku?
+hu|Kevesebb kapkodás.|Több vendég.|Minden a helyén.|Árak|Képernyőképek|Kapcsolat|Alkalmazás megnyitása|Kezdje el szállodája kezelését|Az Ön vállalkozása más.|Az igényei is azok.|Kérdése van?
+ro|Mai puțină agitație.|Mai mulți oaspeți.|Totul la locul său.|Prețuri|Capturi de ecran|Contact|Deschide aplicația|Începe să-ți administrezi hotelul|Afacerea ta este diferită.|La fel și nevoile tale.|Ai o întrebare?
+el|Λιγότερη βιασύνη.|Περισσότεροι επισκέπτες.|Όλα στη θέση τους.|Τιμές|Στιγμιότυπα οθόνης|Επικοινωνία|Άνοιγμα εφαρμογής|Ξεκινήστε τη διαχείριση του ξενοδοχείου σας|Η επιχείρησή σας διαφέρει.|Το ίδιο και οι ανάγκες σας.|Έχετε κάποια ερώτηση;
+uk|Менше метушні.|Більше гостей.|Усе на своїх місцях.|Ціни|Знімки екрана|Контакти|Відкрити застосунок|Почніть керувати своїм готелем|Ваш бізнес особливий.|І ваші потреби також.|Маєте запитання?
+bg|По-малко суетене.|Повече гости.|Всичко на мястото си.|Цени|Екранни снимки|Контакти|Отвори приложението|Започнете да управлявате хотела си|Вашият бизнес е различен.|Нуждите ви също.|Имате въпрос?
+sr|Мање журбе.|Више гостију.|Све на свом месту.|Цене|Снимци екрана|Контакт|Отвори апликацију|Почните да управљате својим хотелом|Ваш посао је другачији.|И ваше потребе су.|Имате питање?
+hr|Manje žurbe.|Više gostiju.|Sve na svom mjestu.|Cijene|Snimke zaslona|Kontakt|Otvori aplikaciju|Počnite upravljati svojim hotelom|Vaše je poslovanje drugačije.|I vaše potrebe također.|Imate pitanje?
+sk|Menej zhonu.|Viac hostí.|Všetko na svojom mieste.|Ceny|Snímky obrazovky|Kontakt|Otvoriť aplikáciu|Začnite spravovať svoj hotel|Vaše podnikanie je iné.|Vaše potreby tiež.|Máte otázku?
+sl|Manj hitenja.|Več gostov.|Vse na svojem mestu.|Cene|Posnetki zaslona|Kontakt|Odpri aplikacijo|Začnite upravljati svoj hotel|Vaše poslovanje je drugačno.|Tudi vaše potrebe so.|Imate vprašanje?
+fi|Vähemmän kiirettä.|Enemmän vieraita.|Kaikki paikallaan.|Hinnat|Kuvakaappaukset|Yhteystiedot|Avaa sovellus|Aloita hotellisi hallinta|Yrityksesi on erilainen.|Samoin tarpeesi.|Onko sinulla kysyttävää?
+sv|Mindre stress.|Fler gäster.|Allt på sin plats.|Priser|Skärmbilder|Kontakt|Öppna appen|Börja hantera ditt hotell|Din verksamhet är annorlunda.|Dina behov också.|Har du en fråga?
+da|Mindre travlhed.|Flere gæster.|Alt på sin plads.|Priser|Skærmbilleder|Kontakt|Åbn appen|Begynd at administrere dit hotel|Din virksomhed er anderledes.|Det er dine behov også.|Har du et spørgsmål?
+no|Mindre stress.|Flere gjester.|Alt på sin plass.|Priser|Skjermbilder|Kontakt|Åpne appen|Begynn å administrere hotellet ditt|Virksomheten din er annerledes.|Det er behovene dine også.|Har du et spørsmål?
+ms|Kurang kesibukan.|Lebih ramai tetamu.|Semuanya teratur.|Harga|Tangkapan skrin|Hubungi kami|Buka aplikasi|Mula mengurus hotel anda|Perniagaan anda berbeza.|Keperluan anda juga.|Ada soalan?
+id|Lebih sedikit kesibukan.|Lebih banyak tamu.|Semua tertata rapi.|Harga|Tangkapan layar|Kontak|Buka aplikasi|Mulai kelola hotel Anda|Bisnis Anda berbeda.|Begitu juga kebutuhan Anda.|Ada pertanyaan?
+vi|Bớt tất bật.|Thêm khách lưu trú.|Mọi thứ đúng chỗ.|Bảng giá|Ảnh chụp màn hình|Liên hệ|Mở ứng dụng|Bắt đầu quản lý khách sạn của bạn|Cơ sở của bạn khác biệt.|Nhu cầu của bạn cũng vậy.|Bạn có câu hỏi?
+ja|慌ただしさを減らして。|もっと多くのお客様を。|すべてが、あるべき場所に。|料金|画面紹介|お問い合わせ|アプリを開く|ホテルの管理を始める|施設ごとに特徴があります。|必要な機能もそれぞれです。|ご質問はありますか？
+ko|분주함은 줄이고.|더 많은 투숙객을 맞이하세요.|모든 것이 제자리에.|요금|화면 둘러보기|문의|앱 열기|호텔 관리 시작하기|사업장마다 다릅니다.|필요한 것도 다르죠.|궁금한 점이 있으신가요?
+fa|دوندگی کمتر.|مهمانان بیشتر.|هر چیز سر جای خودش.|قیمت‌ها|تصاویر محیط برنامه|تماس با ما|باز کردن برنامه|مدیریت هتل خود را شروع کنید|کسب‌وکار شما متفاوت است.|نیازهای شما هم همین‌طور.|سؤالی دارید؟
+he|פחות התרוצצות.|יותר אורחים.|הכול במקומו.|מחירים|צילומי מסך|יצירת קשר|פתיחת היישום|התחילו לנהל את המלון שלכם|העסק שלכם שונה.|גם הצרכים שלכם.|יש לכם שאלה?
+sw|Pilika chache.|Wageni wengi zaidi.|Kila kitu mahali pake.|Bei|Picha za skrini|Wasiliana nasi|Fungua programu|Anza kusimamia hoteli yako|Biashara yako ni tofauti.|Mahitaji yako pia.|Una swali?
+am|ያነሰ መሯሯጥ።|ብዙ እንግዶች።|ሁሉም ነገር በቦታው።|ዋጋዎች|የማያ ገጽ ምስሎች|ያግኙን|መተግበሪያውን ይክፈቱ|ሆቴልዎን ማስተዳደር ይጀምሩ|የእርስዎ ንግድ የተለየ ነው።|ፍላጎቶችዎም እንዲሁ።|ጥያቄ አለዎት?
+mr|कमी धावपळ.|अधिक पाहुणे.|प्रत्येक गोष्ट जागच्या जागी.|किंमती|स्क्रीनशॉट|संपर्क|अ‍ॅप उघडा|तुमच्या हॉटेलचे व्यवस्थापन सुरू करा|तुमचा व्यवसाय वेगळा आहे.|तुमच्या गरजाही तशाच.|काही प्रश्न आहे का?
+pa|ਘੱਟ ਭੱਜ-ਦੌੜ।|ਵੱਧ ਮਹਿਮਾਨ।|ਹਰ ਚੀਜ਼ ਆਪਣੀ ਥਾਂ।|ਕੀਮਤਾਂ|ਸਕ੍ਰੀਨਸ਼ਾਟ|ਸੰਪਰਕ|ਐਪ ਖੋਲ੍ਹੋ|ਆਪਣੇ ਹੋਟਲ ਦਾ ਪ੍ਰਬੰਧਨ ਸ਼ੁਰੂ ਕਰੋ|ਤੁਹਾਡਾ ਕਾਰੋਬਾਰ ਵੱਖਰਾ ਹੈ।|ਤੁਹਾਡੀਆਂ ਲੋੜਾਂ ਵੀ।|ਕੋਈ ਸਵਾਲ ਹੈ?
+te|తక్కువ హడావిడి.|ఎక్కువ మంది అతిథులు.|ప్రతిదీ దాని స్థానంలో.|ధరలు|స్క్రీన్‌షాట్‌లు|సంప్రదించండి|యాప్ తెరవండి|మీ హోటల్ నిర్వహణను ప్రారంభించండి|మీ వ్యాపారం ప్రత్యేకమైనది.|మీ అవసరాలు కూడా.|ఏదైనా ప్రశ్న ఉందా?
+my|အလုပ်ရှုပ်တာ လျော့နည်းစေမယ်။|ဧည့်သည် ပိုများလာမယ်။|အရာရာ နေရာတကျရှိမယ်။|စျေးနှုန်းများ|မျက်နှာပြင်ပုံများ|ဆက်သွယ်ရန်|အက်ပ်ကို ဖွင့်ရန်|သင့်ဟိုတယ်ကို စတင်စီမံပါ|သင့်လုပ်ငန်းက ကွဲပြားပါတယ်။|သင့်လိုအပ်ချက်တွေလည်း အလားတူပါပဲ။|မေးခွန်းရှိပါသလား။
+lo|ຫຼຸດຄວາມວຸ່ນວາຍ.|ຕ້ອນຮັບແຂກຫຼາຍຂຶ້ນ.|ທຸກຢ່າງເປັນລະບຽບ.|ລາຄາ|ຮູບພາບໜ້າຈໍ|ຕິດຕໍ່|ເປີດແອັບ|ເລີ່ມຈັດການໂຮງແຮມຂອງທ່ານ|ທຸລະກິດຂອງທ່ານແຕກຕ່າງ.|ຄວາມຕ້ອງການຂອງທ່ານກໍເຊັ່ນກັນ.|ມີຄຳຖາມບໍ?
+ka|ნაკლები ფუსფუსი.|მეტი სტუმარი.|ყველაფერი თავის ადგილზე.|ფასები|ეკრანის სურათები|კონტაქტი|აპის გახსნა|დაიწყეთ თქვენი სასტუმროს მართვა|თქვენი ბიზნესი განსხვავებულია.|თქვენი საჭიროებებიც.|გაქვთ შეკითხვა?
+hy|Ավելի քիչ եռուզեռ։|Ավելի շատ հյուրեր։|Ամեն ինչ իր տեղում։|Գներ|Էկրանի պատկերներ|Կապ|Բացել հավելվածը|Սկսեք կառավարել ձեր հյուրանոցը|Ձեր բիզնեսը տարբերվում է։|Ձեր կարիքները նույնպես։|Հարց ունե՞ք։
+az|Daha az təlaş.|Daha çox qonaq.|Hər şey öz yerində.|Qiymətlər|Ekran görüntüləri|Əlaqə|Tətbiqi aç|Otelinizi idarə etməyə başlayın|Biznesiniz fərqlidir.|Ehtiyaclarınız da elə.|Sualınız var?
+kk|Қарбалас аз.|Қонақ көп.|Бәрі өз орнында.|Бағалар|Экран суреттері|Байланыс|Қолданбаны ашу|Қонақүйіңізді басқаруды бастаңыз|Сіздің бизнесіңіз ерекше.|Қажеттіліктеріңіз де сондай.|Сұрағыңыз бар ма?
+uz|Kamroq tashvish.|Ko‘proq mehmon.|Hammasi o‘z joyida.|Narxlar|Ekran tasvirlari|Aloqa|Ilovani ochish|Mehmonxonangizni boshqarishni boshlang|Biznesingiz o‘zgacha.|Ehtiyojlaringiz ham shunday.|Savolingiz bormi?
+mn|Бага бужигнаан.|Илүү олон зочин.|Бүх зүйл байрандаа.|Үнэ|Дэлгэцийн зураг|Холбоо барих|Апп нээх|Зочид буудлаа удирдаж эхлээрэй|Таны бизнес өөрийн онцлогтой.|Таны хэрэгцээ ч мөн адил.|Асуух зүйл байна уу?
+ps|لږه منډه ترړه.|ډېر مېلمانه.|هر څه په خپل ځای.|بیې|د پردې انځورونه|اړیکه|اپلېکېشن پرانیزئ|د خپل هوټل اداره پیل کړئ|ستاسو کاروبار بېل دی.|اړتیاوې مو هم همداسې دي.|پوښتنه لرئ؟

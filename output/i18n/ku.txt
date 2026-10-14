@@ -1,0 +1,391 @@
+0|(ne mecbûrî)
+1|01 / REZERVASYON Û MAYÎN
+2|02 / TABLOYA ODEYAN Û DÎTINA 3D
+3|03 / TÊKILIYÊN MÊVANAN
+4|04 / DARAYÎ Û BELGE
+5|05 / TÎM Û KARÊ ROJANE
+6|Rezervasyonên 1–7 şevan.
+7|Rezervasyonên 28 şevan an zêdetir.
+8|Dîtina 3D ya sazgehê
+9|Qat, ode û cihkirina nivînan di dîtina 3D de bibînin.
+10|14 ekranên cuda, di nav de dîtina 3D, îmkan û rapor. Wêne ji sepanê ya rastîn, bi daneyên nimûne yên sazgeh û mêvanan hatine girtin. Ji bo hûrgiliyan her ekranekê mezin bikin.
+11|ADR û RevPAR
+12|Nav û paşnav
+13|Nav û paşnav: {name}\nE-name: {email}\nSazgeh: {property}\n\n{message}
+14|Bi nav, nasname an telefonê bigerin; lîsteyên xerîdaran, agahiyên têkiliyê, netewetî, mayînên berê, hevalên rê, not û nirxandinan bibînin. Lîsteya reş a hevpar ji bo kesên destûrdar heye.
+15|Bi nav, nasname an telefonê profîl û dîroka mayîna mêvanan bibînin.
+16|Di hişê we de
+17|Deynên ku dê werin wergirtin û dayîn
+18|Kapasîte li gor nivîna jorîn/jêrîn û koma nivînan.
+19|Rêvegera jêrê rûpelê
+20|Temînatên hatine wergirtin û vegerandin.
+21|Rêvegera sereke
+22|Apart-otel
+23|Bihayên apart-otelan
+24|Navrû, ziman û pereyê li gor şêwaza xebata xwe saz bikin.
+25|Zimanê navrû û naverokê, pere û formata mîqdaran. Tercîhên reng, paşzemîn û mezinahiya nivîsê. Dîtinên mobîl û sepana webê ya ku tê sazkirin.
+26|Xerabûn û lênihêrîn
+27|Dahata her şeva firotî û her şeva berdest ji heman cureya hilberê.
+28|Telaş kêmtir.
+29|Xerabûnên vekirî, demên çareseriyê û lêçûnên lênihêrînê.
+30|Mifteya odeyê li ber deriyê vekirî yê otelê
+31|Karmendên otelê bi rêbereke vekirî bersiva pirsan didin
+32|Pereyê hejmartî bi balansa destpêkê + pereyên nakît ên wergirtî − vegerandin − dayînan re bidin ber hev.
+33|DESTPÊK
+34|Amûrên serşokê, odeyê û îmkanên din di kataloga hevpar de bibînin. Dema danasîna odeyan taybetmendî û envanterê kontrol bikin.
+35|Vegere jorê ↑
+36|Belge û şablon
+37|Ji hejmareke odeyê pir zêdetir.
+38|Karên cuda. Cihê xebatê yê hevpar.
+39|Ez dikarim bi hesabekê çend sazgehan birêve bibim?
+40|Encama xebatê li gor yekeyê
+41|Rezervasyon û dagirtin li gor yekeyê
+42|Dahata yekeyê û lêçûnên rasterast pê ve girêdayî; lêçûnên nehatine belavkirin cuda tên nîşandan.
+43|Performansa yekeyê
+44|Firotin û bikaranîn li gor cureya yekeyê.
+45|Rewşa paqijiyê ya niha û karên paqijiyê yên tomarkirî ji bo her yekeyê.
+46|Paqijî, rewşa mayînê, mêvan û dîrokên hatin û çûnê di yek dîtinê de bişopînin.
+47|Hevalên rê, netewetî, not û nirxandinên mêvanan bişopînin.
+48|Ji me re binivîsin.
+49|Ev form di sepana e-nameya we de pêşnivîsekê vedike. Hûn dikarin peyamê ji wir bişînin.
+50|Îro çawa derbas bû?
+51|ÇÎROKA OTELÊ BI TEMAMÎ
+52|JI BO MAYÎNA XWEŞ A DIN
+53|JI BO EVÎNDARÊN HÛRGILIYAN
+54|Lênihêrîna apartmanan
+55|Tomarên lênihêrînê li gor apartmanê.
+56|Dahata mayînê li gor apartmanê.
+57|Salname û berdestbûn li gor apartmanê
+58|Dagirtina apartmanan
+59|Encama xebata apartmanê
+60|Dahata apartmanê
+61|Lêçûnên apartmanê
+62|Avahiya apartman û yekeyan
+63|Kapasîte û dagirtin bi apartman-şevan.
+64|Apartman, dirêjahiya mayînê û tomarên darayî bi hev re bişopînin.
+65|Lêçûnên rasterast ji apartmanekê re hatine veqetandin.
+66|Çapkerê meqbûzan, hesabker, nîşaneyên dayînê û dosyaya belgeyan
+67|Hûrgiliyan bibînin
+68|Ziman û tercîhên kesane
+69|Ziman tê guhertin…
+70|Ziman hilbijêrin
+71|Ziman nehat barkirin. Dîsa biceribînin.
+72|Dahatên zêde ji dolab, cilşûştin, taştê û xizmetên din.
+73|Yekeyên dagirtî, rezervasyona wan heye, paqij û qirêj bi mêvan û dîrokên mayînê re bibînin.
+74|Dagirtin
+75|Dagirtin, dahat, kasa û performansa karê li gor dem û sazgehê rapor bikin.
+76|Encam piştî lêçûnên rasterast veqetandî.
+77|Dahat, lêçûnên xebatê û encama xebatê ya heyamê.
+78|Cihekî xebatê yê rêkûpêk.
+79|E-name
+80|Pêşnivîsa e-nameyê veke
+81|Heke sepana e-nameyê venebû, hûn dikarin rasterast ji {email} re binivîsin.
+82|WÊNEYÊN EKRANÊ
+83|Dahata xizmetên zêde
+84|Wêneyên ekranê | Interactiveotel
+85|Wêneyên ekranê
+86|Kategoriyên ekranan
+87|Ekranan bibînin
+88|Lêçûnên elektrîk, av, înternet û gazê li gor cure, dem û dabînkerê.
+89|Erê. Ekran li gor amûrên mobîl tên guncandin. Di gerokên piştgirîkirî de hûn dikarin sepanê li ekrana destpêkê zêde bikin. Daneyên nû û operasyonên karê girêdana înternetê dixwazin.
+90|Lêçûnên karûbarên bingehîn
+91|Darayî
+92|Bihayê bipirsin
+93|Performansa bihayê
+94|Biha
+95|Biha | Interactiveotel
+96|Kapasîteya fîzîkî û ya ku dikare bê firotin bi bingehên cuda tên hesabkirin.
+97|Dagirtina fîzîkî û ya firotinê bidin ber hev. Yeke-şevên dagirtî û vala li gor dîrokê bibînin.
+98|BIHA
+99|Hejmara şevan û belavbûna mayînên kurt û dirêj.
+100|Dagirtina pêşerojê
+101|Dahatê ji pereyên wergirtî, kapasîteya fîzîkî ji ya firotinê cuda binirxînin. Karê xwe bi daneyên tomarkirî fam bikin.
+102|Pêşbîniya dahatê
+103|Rêveberiya dahatê
+104|Dahat, pereyên wergirtî, kapasîte û nîşanderên xebatê.
+105|Dahat û lêçûn
+106|Pêşdayîn, pereyên wergirtî û vegerandinan bi mîqdar û awayê dayînê tomar bikin. Balansên rezervasyonê, deynên vekirî, tevgerên kasayê û raporên awayên dayînê di panelekê de bişopînin.
+107|Dagirtina borî
+108|Dabeşkirina lêçûnan
+109|Hatin û çûn
+110|Tomarkirina hatin û çûnê temam bikin. Rewşa odeyan, notên tîmê, belge û raporên dawiya rojê bişopînin.
+111|Têkeve ↗
+112|Tomarên hatin, çûn û mêvanan
+113|Hatin, çûn, hatina zû, guhertina ode an nivînê û betalkirinê birêve bibin.
+114|Rewşa hatin, çûn û paqijiyê
+115|Rezervasyonên bi koda komê girêdayî.
+116|Mayînên koman
+117|Mayînên koman û raporên hostelê
+118|Tîma otelê li kêleka tabloya karan û erebeya paqijiyê
+119|Temamkirina peywiran
+120|Wêne ji navrûya tirkî hatine girtin.
+121|Wêneyê bigire
+122|Agahiyên nû yên e-name û telefona me dê li vir bên weşandin.
+123|Agahiyên bihayê yên niha
+124|Apartmana kirêya rojane
+125|Bihayên apartmanên kirêya rojane
+126|Dagirtina rojane
+127|Dahat û pereyên wergirtî yên rojane
+128|Karên rojane
+129|Ji karên rojane heta tercîhên kesane.
+130|Berawirdkirinên rojane, heftane û mehane.
+131|Herikîna rojê birêve bibin
+132|Ji rezervasyona yekem heta kontrola dawî ya odeyê. Cihê her tiştî di ekranên sepanê de bibînin.
+133|Temînat
+134|PLANÊKE ZELAL JI BO HER APARTMANÊ
+135|HER NIVÎNEK CIHÊ XWE HEYE
+136|Ji bo kîjan karsaziyan guncaw e?
+137|Kîjan ode dagirtî ye, kîjan tê amadekirin? Sazgehê bi tevahî bibînin: tabloya odeyan, qat, dîtina 3D û nivîn.
+138|Her mayîna xweş bi planeke baş dest pê dike.
+139|Her mêvanek çîrokek heye. Bi agahiyên têkiliyê, serdanên berê û notan ji hatina din re amade bibin.
+140|Her tişt li cihê xwe.
+141|Hemû kes agahdar in.
+142|Hesabker, deftera hesabê û mifteya otelê bi etiketa bihayê
+143|Hesabên zelal. Belgeyên rêkûpêk.
+144|Hostel
+145|Bihayên hostelan
+146|Rûpela destpêkê ya Interactiveotel
+147|Agahî li ser Interactiveotel
+148|Agahiyên têkiliyê ji bo pirsên li ser biha, hilber û bikaranîna Interactiveotel.
+149|Dahata kanalê, rêjeya betalkirinê û firotin piştî komîsyonê.
+150|Notên resepsiyonê yên Kanban, tomarên karmendan, rol û destûrên şaxan. Peywir, lênihêrîn, paqijî, stok, zirar û demjimêrên zêde; dîroka çalakiyan û tomarên pergalê.
+151|Bikaranîna kapasîteyê
+152|Pêşdayîn, pereyên wergirtî û balansa mayî
+153|Pêşdayîn, pereyên wergirtî, vegerandin, dahata zêde, dayîn û lêçûn. Nakît, veguhastin, kart û kanalên sazkirî. Deyn, temînat, vekirin û girtina kasayê û tomarên nobetan.
+154|Pêşdayîn, pereyên wergirtî, vegerandin, dahat, lêçûn û deynan li gor kanala dayînê bişopînin.
+155|Ji pêşdayînê heta balansa mayî, ji peymanê heta meqbûzê. Aliyê darayî û belgeyên her mayînê bi hev re bihêlin.
+156|Sazkirina qat û odeyan
+157|Qat, ode û nivînan di plana 3D de bibînin. Yekeyan bi rewşa mayîna wan re kontrol bikin.
+158|Dîtina sazgehê bi qat, ode û nivînan re
+159|Nirxandinên tomarkirî ji pênc xalan.
+160|Bikaranîna tomarkirî ya qadên hevpar.
+161|Çavkanî, lêçûn û dayînên zirarê yên tomarkirî.
+162|Çavdêriyên bihayan ên tomarkirî bi çavkaniyên wan re.
+163|Windahî û zirar
+164|Ji bo otela xwe bifikirin.
+165|Nirxa mayîna pêşerojê ya rezervasyonên pejirandî.
+166|Mêvanên nû û vegeriyayî, belavbûna welatan dema ku nasname bên hevberkirin.
+167|Lêçûnên kirêyê
+168|Kirê û pereyên wergirtî
+169|Şopandina kirê, temînat û balansê
+170|Mîhengên kesane
+171|Kesanekirin
+172|Dahata mayînê, pereyên wergirtî û dagirtinê li yek ekranê kontrol bikin. Guhertinên bi demê re bi grafîkan bişopînin.
+173|Dahata mayînê ji pereyên bi rastî hatine wergirtin cuda bişopînin. Tevgeran bi fîltreyên dîrok, sazgeh û pereyê kontrol bikin.
+174|Dirêjahiya mayînê
+175|Dahatên mayînê yên hesabkirî, dahata zêde, pereyên wergirtî û vegerandin cuda tên nîşandan.
+176|Salnameya mayînê
+177|Lîsteya mêvanên niha dimînin
+178|Nirxa peymanê, demên dayînê û tomarên dayînan.
+179|Dawiya peymanê
+180|Mijar
+181|Karsazî û şaxên hesabê xwe ji yek panelê vekin. Destûr û kiryarên karmendan li gor rol û destûrên şaxan in.
+182|Profîla sazgehê, çend sazgeh û şax, qat û yeke, mîhengên karmend û belgeyan. Îmkanên pirzimanî wek klîma û hemama germ bi yekeyan ve girêdayî.
+183|SAZGEHEKE BIÇÛK, KAREKÎ RÊKÛPÊK
+184|Hûrgiliyên biçûk. Oteleke baş rêvebirî.
+185|Mayînên kurt
+186|Mayînên kurt, amadekirina apartmanan û tomarên dayînan bi hev re birêve bibin.
+187|Dabeşkirina meaş, kirê, karûbarên bingehîn û lêçûnên din ên xebatê.
+188|Ji maseya we heta bêrîka we.
+189|Menûyê veke
+190|Menûyê bigire
+191|Peyama we
+192|Yekeyên fîzîkî, ji bo firotinê û girtî yên niha.
+193|Bi hesabê xwe yê heyî veke ↗
+194|Dîtina kapasîteyê li gor rezervasyonên niha.
+195|Monîtoreke kartonî bi oteheke biçûk û mezinbînekê
+196|Mêvan
+197|Tomarên mêvan û xerîdaran
+198|Dilxweşiya mêvanan
+199|Profîla mêvanê
+200|Ji mêvanên xwe re cih vekin.
+201|Rêvegera mobîl
+202|Sepana webê ya guncaw ji bo mobîlê û sazbar
+203|Berdestbûnê kontrol bikin, rezervasyonê çêkin û mêvanê xwe pêşwazî bikin. Dîrok, ode, biha û agahiyên mêvanê di yek pêvajoyê de.
+204|Çawa dixebite?
+205|Em li ser çi biaxivin?
+206|ODE BI ODE, HER HÛRGILÎ
+207|ŞÊWAZEKE NÛ JI BO RÊVEBIRIYA OTELA WE
+208|Rêveberiya ode û nivînan
+209|Tabloya rewşa odeyan
+210|Tabloya odeyan, salnameya mayînê, rezervasyon û resepsiyonê bi wêneyên rastîn ên sepanê bibînin.
+211|Tabloya odeyan, mayînên niha û pêşerojê, rewşa paqijiyê, qat û dîtina 3D. Qat, ode, apartman, nivîn, nivînên duqatî, cihkirin û îmkanan nas bikin.
+212|Şopandina rewşa odeyan û paqijiyê
+213|Berdestbûna odeyan, hatina mêvanan û karê rojane di panelekê de bişopînin.
+214|Tabloya odeyan û salnameya rezervasyonê
+215|Sepanê bi ekranên wê nas bikin, ji tabloya odeyan heta salnameya rezervasyonê.
+216|Ji bo karsaziya xwe ya ode û nivînan avahiyeke bi hûrgilî çêkin.
+217|Ode, apartman, nivîn, nivînên duqatî, qat û îmkanan li gor karê xwe nas bikin.
+218|Parçeyên pazilê rêveberiya ode, rezervasyon û belgeyan bi hev ve girê didin
+219|Şev, dahat û dagirtin li gor ode, nivîn an apartmanê.
+220|Birîna oteleke sêqatî bi rengên pastel, ode û nivînan nîşan dide
+221|Îmkan û envantera odeyan
+222|Rewşa rezervasyonê li gor dîroka çêkirinê.
+223|Operasyon
+224|Bikaranîna qadên hevpar
+225|Otel
+226|Bihayên otelan
+227|Otel · Apart-otel · Hostel
+228|Ji bo otel, apart-otel û hostelan bi ode, apartman, nivîn û nivînên duqatî. Raporên apart-otelê mayînên dirêj, kirê û temînatê digirin; yên hostelê dagirtina nivînan, kom û qadên hevpar digirin.
+229|Rêveberiya otel, apart-otel û hostelan.
+230|Hemû karên otel, apart-otel an hostela we,
+231|Mînakên bikaranînê ji bo otel, apart-otel, pansiyon, apartmanên kirêya rojane û hostelan bibînin. Vebijêrkên jêr mînakên hilberê ne, ne pakêtên bi pere ne.
+232|Interactiveotel ji bo otel, apart-otel, pansiyon, apartmana kirêya rojane an hostela xwe bibînin. Ji bo bihayê têkilî daynin.
+233|Ekrana grafîk û dosyaya raporan ku dagirtin û dahata otelê nîşan dide
+234|Dest bi rêveberiya otela xwe bikin
+235|Otela we amade ye.
+236|Otela xwe ji aliyekî nû ve bibînin.
+237|Bihayên pakêtan û heyamên fatûreyê hê nehatine weşandin. Ji bo biha, qada xizmetê û şertên bikaranînê rûpela têkiliyê vekin.
+238|Pansiyon
+239|Bihayên pansiyonan
+240|Karmend
+241|Meaşên karmendan
+242|Performansa karmendan
+243|Rolên karmendan û destûrên şaxan diyar bikin; çalakî û tomarên pergalê kontrol bikin.
+244|Lêçûnên meaşê yên tomarkirî li gor karmend û heyamê.
+245|Hatin û çûnên plankirî bi hûrgiliyên mayîna rastîn re bibînin.
+246|LI PIŞT HEJMARAN BINÊRIN
+247|Bihayên hevrikan
+248|Kapasîteya nivînên duqatî
+249|Rapor
+250|Tomarên darayî û operasyonê yên wek çavkaniyên raporan tên bikaranîn.
+251|Daneyên raporan ji ku tên?
+252|Resepsiyon û tîm
+253|Notên resepsiyonê
+254|Notên resepsiyonê li tabloya Kanban rêk bikin; peywir û bîranînan berbiçav bihêlin.
+255|Notên resepsiyonê, peywir û tomarên karê bi tîmê re bişopînin. Her kes bi destûrên guncaw li karê xwe hûr bibe.
+256|Telefona resepsiyonê, nameyeke vekirî û zengila otelê
+257|Du mêvanên kartonî bi barên xwe li resepsiyonê tên pêşwazîkirin
+258|Li resepsiyonê, li qatan, di rêveberiyê de.
+259|Karê rojane ji resepsiyonê heta karên qatan bi hev re bikin.
+260|Rezervasyon
+261|Rezervasyon û salname
+262|Analîza temenê deynên rezervasyonan û hesabên vekirî yên din.
+263|Operasyonên rezervasyonê, peywir û demjimêrên zêde.
+264|Çavkaniyên rezervasyonê
+265|Lîsteya rezervasyonan
+266|Lîsteya rezervasyonan, salnameya mayînê, berdestbûn û heyam. Mêvan, yeke, biha, pêşdayîn û not di yek tomarê de; hatin, çûn, betalkirin û guhertina cihkirinê.
+267|Rezervasyon çêke
+268|Wêneya salnameya rezervasyonê, mifteya otelê û zengila resepsiyonê
+269|Dîroka rezervasyon û mêvanan
+270|Dîroka cihkirina rezervasyonan.
+271|Kurteya rezervasyonan
+272|Ji rezervasyonê heta kontrola dawî ya odeyê.
+273|Ji rezervasyon, mayîn û tevgerên darayî û operasyonê yên hûn tomar dikin. Bikarhêner biha, stok, lênihêrîn, gilî û tomarên din dikevin; firehiya raporan bi rastiya wan ve girêdayî ye.
+274|Rezervasyonan bi rewş, mêvan û dîrokê lîste bikin; ji vir karên rojane vekin.
+275|Rezervasyonan li ser dîrok û yekeyan bibînin. Plana mayînê di salnameyê de kontrol bikin.
+276|Rezervasyona xwe zêde bikin
+277|Veguhertina firotinê
+278|Peymanên ku di heyama hilbijartî de diqedin.
+279|Hatin û çûnên plankirî yên heyama hilbijartî.
+280|Paşê mêvanê we yê yekem.
+281|Kategoriyên pirsgirêkan, dozên vekirî û demên çareseriyê.
+282|Stok û xerckirin
+283|Peyman û meqbûz; şablonan bi nivîsa dewlemend, tablo û wêneyan biguherînin. Naveroka pirzimanî, pêşdîtin û çap. Belgeyên çêkirî naveroka xwe ji guhertinên paşerojê yên şablonê serbixwe diparêzin.
+284|Ez dikarim peyman û meqbûzan bixwe biguherînim?
+285|Pirsên pir tên pirsîn
+286|Pirsên pir tên pirsîn bibînin ↗
+287|Niha dor a we ye.
+288|Pereyên wergirtî û tomarên karê
+289|Kanalên wergirtin û vegerandina pereyan.
+290|Pereyên wergirtî, belge û raporên karê
+291|Pereyên wergirtî, pêşdayîn û belge
+292|Dabeşkirina wergirtinên kart, veguhastin, nakît û serhêl di grafîka xelekê de bibînin. Vegerandin û dayînan cuda bidin ber hev.
+293|Di salname û lîsteya rezervasyonê de li gor dîrok, sazgeh û rewşê bişopînin.
+294|Pirs, pêşniyar, firotinên bi destketî û windakirî.
+295|Peywirên temamkirî, vekirî û derengmayî.
+296|Karên nas.
+297|Bi dîrok, yekeya berdest, agahiyên mêvan û bihayê rezervasyoneke nû amade bikin.
+298|Dîrok û yekeya berdest hilbijêrin. Agahiyên mêvan, biha, pêşdayîn û notên pêwîst tomar bikin.
+299|Her beş, li vir.
+300|Mêvanên vegeriyayî
+301|Mayînên dubare, dahata mayînê û navberên serdanan.
+302|Ez dikarim li telefona xwe bi kar bînim?
+303|Paqijî
+304|Tomarên paqijî, lênihêrîn, stok, zirar û nobetan bi raporên operasyonê bişopînin.
+305|Mîhengên sazgeh û pergalê
+306|Navê sazgehê
+307|Berawirdkirina sazgehan
+308|Gavên sazkirina sazgehê, rezervasyon û pêşwazîkirina mêvanan
+309|Rêveberiya sazgehê
+310|Sazgeh, qat, ode û nivînên xwe nas bikin. Îmkan, destûrên karmendan û şablonên belgeyan saz bikin.
+311|Mayînên niha û çûnên plankirî bişopînin; hûrgiliyên mêvan û rezervasyonên girêdayî vekin.
+312|Li ser sazgeh û pêdiviyên xwe ji me re bibêjin.
+313|Sazgeha xwe amade bikin
+314|Qat û yekeyên sazgeha xwe rêk bikin. Ode, apartman û nivînan li gor karê xwe nas bikin.
+315|Gava yekem bavêjin da ku em avahiya sazgehê û firehiya pêwîst bi hev re binirxînin.
+316|Hemû taybetmendî
+317|Hemû
+318|JI BO MAYÎNÊN DIRÊJTIR
+319|Ekranên sepanê
+320|Ekranên sepanê bibînin ↗
+321|Sepanê veke
+322|Mayînên dirêj
+323|Raporên mayîna dirêj
+324|Nobet diguherin. Agahî dimîne.
+325|Nobet û kasa
+326|Tenê daneyên nimûne tên nîşandan.
+327|Karên pêşerojê, berdewam û temamkirî li heman tabloyê bihêlin. Agahiyan di nav nobetan de parve bikin.
+328|Sibê çi heye?
+329|Şev û dahat li gor nivînê.
+330|Dahata her nivînê
+331|Dagirtina nivînan
+332|Amadebûna nivînan
+333|Guhertina nivîn û odeyan
+334|Sazkirina nivîn û nivînên duqatî
+335|Dagirtin bi nivîn-şevan tê pîvan.
+336|Performansa odeya hevpar
+337|Rewşa paqijiya nivînan û peywirên amadekirinê.
+338|Sazgehên ku hûn destûra rêveberiya wan hene di heman heyamê de bidin ber hev.
+339|Bi rolên destûrdar lîsteya reş a hevpar û tomarên girêdayî birêve bibin.
+340|Di nav şaxên ku destûra we heye de derbas bibin
+341|Bi destûrên guncaw şablonên belgeyan bi nivîs, tablo û wêneyan bi çend zimanan biguherînin. Belgeyê pêşdîtin bikin û bi gerokê çap bikin an wek PDF tomar bikin.
+342|Rêveberî
+343|Dîtina giştî ya rêveberiyê
+344|pirsek heye?
+345|bi xêr hatin.
+346|heta silava dawî.
+347|di yek cihê xebatê yê fireh de.
+348|{reports} rapor · {categories} kategorî
+349|Ekrana {title} mezin bike
+350|{title}: ekrana rastîn a sepanê bi tomarên nimûne yên Otela Mavi Avlu
+351|Şablonên pirzimanî biguherînin; peyman û meqbûzan pêşdîtin û çap bikin an wek PDF tomar bikin.
+352|Mêvan zêdetir.
+353|Çend sazgeh. Yek panel.
+354|Awayên dayînê
+355|Ez dayînan çawa bişopînim?
+356|Pêşî binêrin.
+357|Pêşî sazgeha we.
+358|Têketin, xerckirin, balans û sînorê dîsa siparişkirinê li gor koda hilberê.
+359|Navînîya bihayê firotina her şevê li gor hilber û cureya rojê.
+360|Dîtina giştî ya hilberê
+361|Hilberê nas bikin.
+362|Hilberê bibînin
+363|Pirsên guncawbûn, biha an bikaranînê. Cureya sazgehê, hejmara ode an nivînan û daxwazên xwe parve bikin.
+364|TÊKILÎ
+365|Pêdiviyên we jî cuda ne.
+366|Em li ser pêdiviyên we biaxivin û bersiva pirsên we bidin.
+367|Têkilî
+368|Kanalên me yên têkiliyê tên amadekirin.
+369|Têkilî | Interactiveotel
+370|Têkilî daynin
+371|Ji rezervasyona yekem
+372|Firotinên betalkirî, vegerandinên temamkirî û li bendê.
+373|Betalkirin û vegerandin
+374|Sazgeheke nû saz bikin an karê rojane rêk bikin, em pirsên we bi hev re binirxînin.
+375|Destpêkeke baş bi silavekê dest pê dike.
+376|Li hundir çi li benda we ye?
+377|Li hundir binêrin
+378|Derbasî naverokê bibe
+379|Her beşa karê.
+380|Tomarên kiryaran
+381|Karê xwe ji me re bihêlin.
+382|Kirêya ku karsazî dide li gor dem û xwediyê malê bişopînin.
+383|Karsaziya we cuda ye.
+384|Avahiya yeke û nivînan li gor karsaziya we
+385|Em karsaziya we nas bikin. Hûrgiliyan zelal bikin.
+386|Gilî
+387|Li zimanan bigere
+388|Nav an koda zimanê…
+389|Zimanek li gor lêgerîna we nehat dîtin.
+390|Pirsek we heye?

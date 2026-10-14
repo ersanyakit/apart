@@ -15,8 +15,8 @@ type I18n = {
 
 const I18nContext = createContext<I18n | null>(null);
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [storedLocale, setLocaleState] = usePreference<Locale>("locale", DEFAULT_LOCALE);
+export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE }: { children: React.ReactNode; initialLocale?: Locale }) {
+  const [storedLocale, setLocaleState] = usePreference<Locale>("locale", initialLocale);
   const locale = resolveLocale(storedLocale);
   const setLocale = useCallback((value: string) => setLocaleState(resolveLocale(value)), [setLocaleState]);
 

@@ -1,0 +1,391 @@
+0|(facultatif)
+1|01 / RÉSERVATIONS & SÉJOURS
+2|02 / TABLEAU DES CHAMBRES & VUE 3D
+3|03 / RELATIONS CLIENTS
+4|04 / FINANCES & DOCUMENTS
+5|05 / ÉQUIPE & ACTIVITÉ QUOTIDIENNE
+6|Réservations de 1 à 7 nuits.
+7|Réservations de 28 nuits ou plus.
+8|Vue 3D de l’établissement
+9|Explorez les étages, les chambres et la disposition des lits en 3D.
+10|14 écrans différents, dont la vue 3D, les équipements et les rapports. Captures de l’application réelle avec des données fictives d’établissement et de clients. Agrandissez chaque écran pour en découvrir les détails.
+11|ADR et RevPAR
+12|Nom et prénom
+13|Nom : {name}\nE-mail : {email}\nÉtablissement : {property}\n\n{message}
+14|Recherchez par nom, pièce d’identité ou téléphone ; consultez les listes de clients, coordonnées, nationalités, séjours précédents, accompagnants, notes et évaluations. Une liste noire partagée est accessible aux personnes autorisées.
+15|Retrouvez les profils clients et l’historique des séjours par nom, pièce d’identité ou téléphone.
+16|Une question
+17|Créances et dettes
+18|Capacité par couchette supérieure ou inférieure et groupe de lits.
+19|Navigation de pied de page
+20|Dépôts de garantie reçus et remboursés.
+21|Navigation principale
+22|Appart’hôtel
+23|Tarifs pour les appart’hôtels
+24|Adaptez l’interface, la langue et la devise à votre façon de travailler.
+25|Langue de l’interface et du contenu, devise et format des montants. Thème, arrière-plan et taille du texte. Affichage mobile et application web installable.
+26|Pannes et maintenance
+27|Revenu par nuit vendue et par nuit disponible pour un même type de produit.
+28|Moins d’agitation.
+29|Pannes en cours, délais de résolution et coûts de maintenance.
+30|Une clé de chambre devant une porte d’hôtel ouverte
+31|Le personnel répond aux questions avec un guide ouvert
+32|Comparez les espèces comptées au solde initial + encaissements en espèces − remboursements − décaissements.
+33|PREMIERS PAS
+34|Explorez les équipements de salle de bains, de chambre et autres services du catalogue commun. Retrouvez les équipements et l’inventaire lors de la définition des chambres.
+35|Retour en haut ↑
+36|Documents & modèles
+37|Bien plus qu’un numéro de chambre.
+38|Des tâches différentes. Un espace de travail commun.
+39|Puis-je gérer plusieurs établissements avec un seul compte ?
+40|Résultat d’exploitation par unité
+41|Réservations et occupation par unité
+42|Revenus et dépenses directement affectées à chaque unité ; les dépenses non affectées sont présentées séparément.
+43|Performance par unité
+44|Ventes et utilisation par type d’unité.
+45|État de propreté actuel et tâches de ménage enregistrées pour chaque unité.
+46|Suivez la propreté, les séjours, les clients et les dates d’arrivée et de départ sur une même vue.
+47|Gardez une trace des accompagnants, nationalités, notes et avis des clients.
+48|Écrivez-nous.
+49|Ce formulaire ouvre un brouillon dans votre messagerie. Vous pourrez l’envoyer depuis celle-ci.
+50|Comment s’est passée la journée ?
+51|TOUTE L’HISTOIRE D’UN HÔTEL
+52|POUR LE PROCHAIN SÉJOUR RÉUSSI
+53|POUR LES AMATEURS DE DÉTAILS
+54|Maintenance des appartements
+55|Interventions de maintenance par appartement.
+56|Revenus d’hébergement par appartement.
+57|Calendrier et disponibilité par appartement
+58|Occupation des appartements
+59|Résultat d’exploitation par appartement
+60|Revenus des appartements
+61|Dépenses des appartements
+62|Structure des appartements et unités
+63|Capacité et occupation en nuitées-appartement.
+64|Suivez ensemble appartements, durées de séjour et finances.
+65|Dépenses directement affectées à un appartement.
+66|Imprimante à reçus, calculatrice, jetons de paiement et dossier de documents
+67|Découvrir les détails
+68|Langue & préférences personnelles
+69|Changement de langue…
+70|Choisir la langue
+71|Impossible de charger la langue. Veuillez réessayer.
+72|Revenus supplémentaires : casiers, blanchisserie, petit-déjeuner et autres services.
+73|Consultez les unités occupées, réservées, propres et sales avec les clients et dates de séjour.
+74|Occupation
+75|Analysez occupation, revenus, caisse et performance par période et établissement.
+76|Résultat après les dépenses directement affectées.
+77|Revenus, charges et résultat d’exploitation de la période.
+78|Un espace bien organisé.
+79|E-mail
+80|Ouvrir le brouillon d’e-mail
+81|Si votre messagerie ne s’est pas ouverte, écrivez directement à {email}.
+82|CAPTURES D’ÉCRAN
+83|Revenus des services supplémentaires
+84|Captures d’écran | Interactiveotel
+85|Captures d’écran
+86|Catégories d’écrans
+87|Explorer les écrans
+88|Dépenses d’électricité, d’eau, d’internet et de gaz par type, période et fournisseur.
+89|Oui. Les écrans s’adaptent aux appareils mobiles. Les navigateurs compatibles permettent d’ajouter l’application à l’écran d’accueil. Les données actualisées et les opérations nécessitent une connexion internet.
+90|Charges de services
+91|Finances
+92|Demander les tarifs
+93|Performance tarifaire
+94|Tarifs
+95|Tarifs | Interactiveotel
+96|Les capacités physique et commercialisable utilisent des bases de calcul distinctes.
+97|Comparez l’occupation physique et commercialisable. Consultez les nuitées-unités occupées et libres par date.
+98|TARIFS
+99|Nombre de nuits et répartition des séjours courts et longs.
+100|Occupation à venir
+101|Distinguez revenus et encaissements, capacité physique et capacité commercialisable. Comprenez votre activité à partir des données enregistrées.
+102|Prévisions de revenus
+103|Gestion des revenus
+104|Revenus, encaissements, capacité et indicateurs opérationnels.
+105|Recettes et dépenses
+106|Enregistrez acomptes, encaissements et remboursements avec leur montant et mode de paiement. Suivez soldes de réservation, créances et dettes ouvertes, mouvements de caisse et rapports par mode de paiement dans un même tableau.
+107|Occupation passée
+108|Répartition des dépenses
+109|Arrivées et départs
+110|Effectuez les arrivées et départs. Suivez l’état des chambres, les notes d’équipe, les documents et les rapports de fin de journée.
+111|Se connecter ↗
+112|Arrivées, départs et fiches clients
+113|Gérez arrivées, départs, arrivées anticipées, changements de chambre ou de lit et annulations.
+114|État des arrivées, départs et du ménage
+115|Réservations liées par un code de groupe.
+116|Séjours de groupe
+117|Séjours de groupe et rapports d’auberge
+118|L’équipe près d’un tableau de tâches et d’un chariot de ménage
+119|Réalisation des tâches
+120|Les captures proviennent de l’interface en turc.
+121|Fermer l’image
+122|Nos coordonnées e-mail et téléphoniques seront publiées ici.
+123|Informations tarifaires actuelles
+124|Location saisonnière
+125|Tarifs pour les locations saisonnières
+126|Occupation quotidienne
+127|Revenus et encaissements quotidiens
+128|Activité quotidienne
+129|Du quotidien aux préférences personnelles.
+130|Comparaisons quotidiennes, hebdomadaires et mensuelles.
+131|Organiser la journée
+132|De la première réservation au dernier contrôle de chambre. Découvrez chaque fonction dans les véritables écrans de l’application.
+133|Dépôts de garantie
+134|UN PLAN CLAIR POUR CHAQUE APPARTEMENT
+135|CHAQUE LIT A SA PLACE
+136|À quels établissements convient-il ?
+137|Quelle chambre est occupée ou en préparation ? Visualisez tout l’établissement : tableau des chambres, étages, vue 3D et lits.
+138|Tout séjour réussi commence par une bonne organisation.
+139|Chaque client a son histoire. Préparez sa prochaine arrivée grâce à ses coordonnées, ses visites précédentes et vos notes.
+140|Chaque chose à sa place.
+141|Tout le monde au même niveau d’information.
+142|Calculatrice, livre de comptes et clé d’hôtel avec une étiquette de prix
+143|Des comptes clairs. Des documents bien rangés.
+144|Auberge de jeunesse
+145|Tarifs pour les auberges de jeunesse
+146|Accueil Interactiveotel
+147|À propos d’Interactiveotel
+148|Coordonnées pour vos questions sur les tarifs, le produit et l’utilisation d’Interactiveotel.
+149|Revenus par canal, taux d’annulation et ventes après commission.
+150|Notes de réception Kanban, fiches du personnel, rôles et accès aux sites. Tâches, maintenance, ménage, stocks, dommages et heures supplémentaires ; historique des activités et journaux système.
+151|Utilisation de la capacité
+152|Acomptes, encaissements et solde restant
+153|Acomptes, encaissements, remboursements, revenus supplémentaires, paiements et dépenses. Espèces, virements, cartes et canaux configurés. Créances, dettes, dépôts de garantie, ouverture et clôture de caisse, relevés de service.
+154|Suivez acomptes, encaissements, remboursements, recettes, dépenses, créances et dettes par canal de paiement.
+155|De l’acompte au solde, du contrat au reçu. Rassemblez finances et documents de chaque séjour.
+156|Configurer étages et chambres
+157|Explorez étages, chambres et lits dans un plan 3D. Consultez les unités avec leur état d’occupation.
+158|Vue de l’établissement réunissant étages, chambres et lits
+159|Notes d’évaluation enregistrées sur cinq.
+160|Utilisation enregistrée des espaces communs.
+161|Origine, coût et paiements enregistrés pour les dommages.
+162|Observations tarifaires enregistrées avec leurs sources.
+163|Pertes et dommages
+164|Imaginez-le pour votre hôtel.
+165|Valeur future des séjours confirmés.
+166|Nouveaux clients, clients réguliers et répartition par pays lorsque les identités peuvent être rapprochées.
+167|Dépenses de loyer
+168|Loyers et encaissements
+169|Suivi des loyers, dépôts et soldes
+170|Réglages personnels
+171|Personnalisation
+172|Consultez revenus d’hébergement, encaissements et occupation sur un écran. Suivez leur évolution grâce aux graphiques.
+173|Suivez les revenus d’hébergement séparément des encaissements effectifs. Filtrez les mouvements par date, établissement et devise.
+174|Durée de séjour
+175|Montants d’hébergement dus, revenus supplémentaires, encaissements et remboursements sont présentés séparément.
+176|Calendrier des séjours
+177|Liste des clients présents
+178|Valeur du contrat, échéances et paiements enregistrés.
+179|Fin des contrats
+180|Objet
+181|Accédez aux établissements et sites associés à votre compte depuis un même tableau. Les accès et actions du personnel dépendent des rôles et autorisations par site.
+182|Profil de l’établissement, gestion multisite, étages et unités, paramètres du personnel et des documents. Équipements multilingues associés aux unités, comme la climatisation ou le bain à remous.
+183|PETIT ÉTABLISSEMENT, TRAVAIL ORGANISÉ
+184|De petits détails. Un hôtel bien géré.
+185|Courts séjours
+186|Gérez ensemble les courts séjours, la préparation des appartements et les paiements.
+187|Répartition des salaires, loyers, charges et autres dépenses d’exploitation.
+188|De votre bureau à votre poche.
+189|Ouvrir le menu
+190|Fermer le menu
+191|Votre message
+192|Unités physiques, commercialisables et fermées actuelles.
+193|Ouvrir avec votre compte existant ↗
+194|Vue de la capacité selon les réservations actuelles.
+195|Écran dessiné montrant un hôtel miniature et une loupe
+196|Client
+197|Fiches clients
+198|Satisfaction client
+199|Profil client
+200|Faites de la place à vos clients.
+201|Navigation mobile
+202|Application web mobile et installable
+203|Vérifiez la disponibilité, créez une réservation et accueillez votre client. Dates, chambre, prix et informations client dans un même parcours.
+204|Comment ça marche ?
+205|De quoi souhaitez-vous parler ?
+206|CHAQUE CHAMBRE, CHAQUE DÉTAIL
+207|UNE NOUVELLE FAÇON DE GÉRER VOTRE HÔTEL
+208|Gestion des chambres & lits
+209|Tableau des chambres
+210|Découvrez le tableau des chambres, le calendrier des séjours, les réservations et la réception grâce aux véritables captures de l’application.
+211|Tableau des chambres, séjours actuels et à venir, propreté, étages et vue 3D. Définissez étages, chambres, appartements, lits, lits superposés, dispositions et équipements.
+212|Suivi de l’état et du ménage des chambres
+213|Suivez disponibilités, arrivées et tâches quotidiennes dans un même tableau.
+214|Tableau des chambres et calendrier des réservations
+215|Découvrez l’application à travers ses écrans, du tableau des chambres au calendrier des réservations.
+216|Créez une structure détaillée adaptée à votre activité par chambre et par lit.
+217|Définissez chambres, appartements, lits, lits superposés, étages et équipements selon votre activité.
+218|Pièces de puzzle reliant la gestion des chambres, réservations et documents
+219|Nuitées, revenus et occupation par chambre, lit ou appartement.
+220|Coupe d’un hôtel de trois étages aux couleurs pastel montrant chambres et lits
+221|Équipements et inventaire des chambres
+222|État des réservations par date de création.
+223|Opérations
+224|Utilisation des espaces communs
+225|Hôtel
+226|Tarifs pour les hôtels
+227|Hôtel · Appart’hôtel · Auberge
+228|Conçu pour les hôtels, appart’hôtels et auberges, avec chambres, appartements, lits et lits superposés. Rapports d’appart’hôtel : longs séjours, loyers et dépôts ; rapports d’auberge : occupation des lits, groupes et espaces communs.
+229|Gestion d’hôtels, d’appart’hôtels et d’auberges.
+230|Toute l’activité de votre hôtel, appart’hôtel ou auberge,
+231|Découvrez les usages pour hôtels, appart’hôtels, pensions, locations saisonnières et auberges. Les options ci-dessous illustrent des utilisations du produit, et non des abonnements payants.
+232|Découvrez Interactiveotel pour votre hôtel, appart’hôtel, pension, location saisonnière ou auberge. Contactez-nous pour les tarifs.
+233|Écran de graphiques et dossier de rapports sur l’occupation et les revenus de l’hôtel
+234|Commencer à gérer votre hôtel
+235|Votre hôtel est prêt.
+236|Un nouveau regard sur votre hôtel.
+237|Les prix des offres et périodes de facturation ne sont pas encore publiés. Consultez notre page de contact pour connaître les tarifs, le périmètre et les conditions d’utilisation.
+238|Pension
+239|Tarifs pour les pensions
+240|Personnel
+241|Salaires du personnel
+242|Performance du personnel
+243|Définissez les rôles et accès aux sites ; consultez les activités et journaux système.
+244|Salaires enregistrés par employé et période.
+245|Consultez les arrivées et départs prévus avec les détails des séjours effectifs.
+246|AU-DELÀ DES CHIFFRES
+247|Prix des concurrents
+248|Capacité des lits superposés
+249|Rapports
+250|Données financières et opérationnelles servant de sources aux rapports.
+251|D’où proviennent les données des rapports ?
+252|Réception & équipe
+253|Notes de réception
+254|Organisez les notes de réception sur un tableau Kanban ; gardez tâches et rappels visibles.
+255|Suivez avec votre équipe les notes, tâches et données d’exploitation. Chacun travaille avec les autorisations adaptées.
+256|Téléphone de réception, lettre ouverte et sonnette d’hôtel
+257|Deux clients dessinés accueillis à la réception avec leurs bagages
+258|À la réception, dans les étages, à la direction.
+259|Réunissez les tâches quotidiennes, de la réception aux étages.
+260|Réservations
+261|Réservations & calendrier
+262|Analyse de l’ancienneté des soldes de réservation et autres comptes ouverts.
+263|Opérations de réservation, tâches et heures supplémentaires.
+264|Sources de réservation
+265|Liste des réservations
+266|Liste des réservations, calendrier, disponibilités et périodes. Client, unité, prix, acompte et notes dans une même fiche ; arrivées, départs, annulations et modifications d’affectation.
+267|Créer une réservation
+268|Illustration d’un calendrier de réservation, d’une clé et d’une sonnette de réception
+269|Historique des réservations et des clients
+270|Historique des affectations de réservation.
+271|Synthèse des réservations
+272|De la réservation au dernier contrôle de chambre.
+273|Des réservations, séjours et opérations financières et opérationnelles enregistrées. Prix des concurrents, stocks, maintenance, réclamations et autres données sont saisis par les utilisateurs ; la portée des rapports dépend de leur exactitude.
+274|Listez les réservations avec statut, client et dates ; accédez aux opérations quotidiennes depuis cette vue.
+275|Consultez les réservations par date et unité. Examinez le planning des séjours dans le calendrier.
+276|Ajouter votre réservation
+277|Conversion des ventes
+278|Contrats arrivant à échéance sur la période choisie.
+279|Arrivées et départs prévus sur la période choisie.
+280|Puis votre premier client.
+281|Catégories de problèmes, dossiers ouverts et délais de résolution.
+282|Stocks et consommation
+283|Contrats et reçus ; modifiez les modèles avec du texte enrichi, des tableaux et des images. Contenu multilingue, aperçu et impression. Les documents créés conservent leur contenu indépendamment des modifications ultérieures du modèle.
+284|Puis-je modifier moi-même les contrats et reçus ?
+285|Questions fréquentes
+286|Voir les questions fréquentes ↗
+287|À votre tour.
+288|Encaissements & données d’exploitation
+289|Canaux d’encaissement et de remboursement.
+290|Encaissements, documents et rapports d’exploitation
+291|Encaissements, acomptes et documents
+292|Visualisez la répartition des encaissements par carte, virement, espèces et en ligne dans un graphique en anneau. Comparez séparément remboursements et paiements.
+293|Suivez par date, établissement et statut dans le calendrier et la liste des réservations.
+294|Demandes, devis, ventes gagnées et perdues.
+295|Tâches terminées, ouvertes et en retard.
+296|Des tâches familières.
+297|Préparez une réservation en réunissant dates, unité disponible, client et prix.
+298|Choisissez les dates et une unité disponible. Enregistrez le client, le prix, l’acompte et les notes nécessaires.
+299|Chaque partie, juste ici.
+300|Clients réguliers
+301|Séjours répétés, revenus d’hébergement et intervalles entre visites.
+302|Puis-je l’utiliser sur mon téléphone ?
+303|Ménage
+304|Suivez ménage, maintenance, stocks, dommages et services dans les rapports opérationnels.
+305|Paramètres de l’établissement & du système
+306|Nom de l’établissement
+307|Comparaison des établissements
+308|Étapes de configuration, de réservation et d’accueil des clients
+309|Gestion de l’établissement
+310|Définissez établissement, étages, chambres et lits. Configurez équipements, autorisations et modèles de documents.
+311|Suivez les séjours en cours et départs prévus ; accédez aux détails des clients et réservations associés.
+312|Parlez-nous de votre établissement et de vos besoins.
+313|Configurer votre établissement
+314|Organisez étages et unités. Définissez chambres, appartements et lits selon votre activité.
+315|Faites le premier pas pour examiner ensemble la structure de votre établissement et le périmètre nécessaire.
+316|Toutes les fonctionnalités
+317|Tout
+318|POUR LES SÉJOURS PLUS LONGS
+319|Écrans de l’application
+320|Explorer les écrans de l’application ↗
+321|Ouvrir l’application
+322|Longs séjours
+323|Rapports sur les longs séjours
+324|Les équipes changent. L’information reste.
+325|Services et caisse
+326|Seules des données fictives sont affichées.
+327|Gardez les tâches à venir, en cours et terminées sur le même tableau. Transmettez les informations entre équipes.
+328|Que se passe-t-il demain ?
+329|Nuitées et revenus par lit.
+330|Revenu par lit
+331|Occupation des lits
+332|Disponibilité des lits préparés
+333|Changements de lit et de chambre
+334|Configurer lits et lits superposés
+335|Occupation mesurée en nuitées-lit.
+336|Performance des dortoirs
+337|Propreté des lits et tâches de préparation.
+338|Comparez sur une même période les établissements que vous êtes autorisé à gérer.
+339|Gérez la liste noire partagée et les fiches associées avec les rôles autorisés.
+340|Passer d’un site autorisé à l’autre
+341|Avec les autorisations adéquates, modifiez les modèles multilingues avec texte, tableaux et images. Prévisualisez le document et utilisez l’impression ou l’enregistrement PDF du navigateur.
+342|Gestion
+343|Vue d’ensemble de la gestion
+344|en tête ?
+345|bienvenue.
+346|jusqu’au dernier au revoir.
+347|dans un espace de travail aéré.
+348|{reports} rapports · {categories} catégories
+349|Agrandir l’écran {title}
+350|{title} : véritable écran de l’application avec des données fictives de l’hôtel Mavi Avlu
+351|Modifiez les modèles multilingues ; prévisualisez, imprimez ou enregistrez les contrats et reçus en PDF.
+352|Plus de clients.
+353|Plusieurs établissements. Un seul tableau.
+354|Modes de paiement
+355|Comment suivre les paiements ?
+356|Jetez d’abord un œil.
+357|D’abord, votre établissement.
+358|Entrées en stock, consommation, solde et seuil de réapprovisionnement par code produit.
+359|Prix moyen par nuit, par produit et type de jour.
+360|Présentation du produit
+361|Découvrez le produit.
+362|Explorer le produit
+363|Questions sur l’adéquation, les tarifs ou l’utilisation. Indiquez le type d’établissement, le nombre de chambres ou de lits et vos besoins.
+364|CONTACT
+365|Vos besoins aussi.
+366|Parlons de vos besoins et répondons à vos questions.
+367|Contact
+368|Nos canaux de contact sont en préparation.
+369|Contact | Interactiveotel
+370|Nous contacter
+371|De la première réservation
+372|Ventes annulées, remboursements effectués et en attente.
+373|Annulations et remboursements
+374|Que vous ouvriez un établissement ou organisiez le quotidien, examinons vos questions ensemble.
+375|Un bon départ commence par un bonjour.
+376|Qu’est-ce qui vous attend à l’intérieur ?
+377|Jeter un œil à l’intérieur
+378|Aller au contenu
+379|Chaque aspect du travail.
+380|Journal des opérations
+381|Confiez-nous le travail.
+382|Suivez les loyers payés par l’entreprise par période et propriétaire.
+383|Votre établissement est différent.
+384|Une structure d’unités et de lits adaptée à votre activité
+385|Faisons connaissance avec votre établissement. Précisons les détails.
+386|Réclamations
+387|Rechercher une langue
+388|Nom ou code de langue…
+389|Aucune langue ne correspond à votre recherche.
+390|Vous avez une question ?

@@ -19,5 +19,5 @@ for(const width of [1440,820,390,320]){
 await page.goto('http://localhost:3000/screenshots',{waitUntil:'networkidle'});
 await page.getByRole('button',{name:'Rezervasyon',exact:true}).click();assert.equal(await page.locator('article').count(),3);
 const opener=page.getByRole('button',{name:'Konaklama takvimi ekranını büyüt'});await opener.click();assert.equal(await page.locator('dialog').evaluate(d=>d.open),true);await page.keyboard.press('Escape');assert.equal(await page.locator('dialog').evaluate(d=>d.open),false);assert.equal(await opener.evaluate(el=>el===document.activeElement),true);
-await page.getByRole('button',{name:'Tümü',exact:true}).click();assert.equal(await page.locator('article').count(),10);
+await page.getByRole('button',{name:'Tümü',exact:true}).click();assert.equal(await page.locator('article').count(),14);
 assert.deepEqual(errors,[]);console.log('Gallery filters, modal, Escape, focus: OK');await browser.close();
