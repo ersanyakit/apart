@@ -18,11 +18,18 @@ import (
 	"otel/internal/interfaces/httpapi"
 	"otel/internal/testdb"
 	"otel/migrations"
+	"strings"
 	"testing"
 	"time"
 )
 
 func TestActionAuthenticationAndAccommodation(t *testing.T) {
+	for _, origin := range []string{"http://localhost:3000", "https://hotel-test.trycloudflare.com"} {
+		t.Run(origin, func(t *testing.T) { testActionAuthenticationAndAccommodation(t, origin) })
+	}
+}
+
+func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 	db := testdb.Open(t)
 	if err := migrations.Up(db); err != nil {
 		t.Fatal(err)
@@ -40,7 +47,7 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 	repo := persistence.New(db)
 	catalog := &application.Catalog{Properties: repo, Features: repo, Media: repo, Layout: repo, Bookings: repo}
 	auth := &application.Auth{Properties: repo, Users: repo, Tokens: persistence.JWT{Secret: []byte("test-secret-only-at-least-thirty-two-bytes")}, Passwords: persistence.Bcrypt{}, TTL: time.Hour}
-	h := &httpapi.Handler{Auth: auth, Catalog: catalog, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: "http://localhost:3000"}
+	h := &httpapi.Handler{Auth: auth, Catalog: catalog, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: origin, SecureCookies: strings.HasPrefix(origin, "https://")}
 	app := h.App("", func(context.Context) error { return nil })
 	h.Guests = &application.Guests{Catalog: catalog, Repository: repo}
 	defer app.Shutdown()
@@ -90,6 +97,9 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 					if !c.HttpOnly {
 						t.Fatal("session is not HttpOnly")
 					}
+					if c.Secure != h.SecureCookies || c.SameSite != http.SameSiteLaxMode || c.Domain != "" {
+						t.Fatalf("unexpected session cookie policy: %+v", c)
+					}
 				}
 			}
 		}
@@ -101,9 +111,91 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 	if status, _ := call(constants.CMD_INITIAL_SYNC, "GET", map[string]any{}, ""); status != 401 {
 		t.Fatalf("unauthenticated status %d", status)
 	}
-	if status, body := call(constants.CMD_AUTH_LOGIN, "POST", map[string]any{"username": "admin", "password": "integration-password"}, ""); status != 200 {
+	if status, body := call(constants.CMD_AUTH_LOGIN, "POST", map[string]any{"username": "admin", "password": "integration-password"}, origin); status != 200 {
 		t.Fatalf("login %d %s", status, body)
 	}
+	t.Run("preferences belong only to the authenticated user", func(t *testing.T) {
+		otherID := uuid.New()
+		if err := db.Create(&models.User{UserID: otherID, HotelID: hotelID, UserName: "other", Password: string(hash), UserRole: constants.UserRoleReception}).Error; err != nil {
+			t.Fatal(err)
+		}
+		for _, patch := range []map[string]any{{"theme": "purple", "header.calendar": true}, {"background": "gray", "locale": "en"}} {
+			if status, body := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": patch}, origin); status != 200 {
+				t.Fatalf("preferences update %d %s", status, body)
+			}
+		}
+		status, body := call(constants.CMD_USER_PREFERENCES, "GET", nil, "")
+		var preferences map[string]any
+		if err := json.Unmarshal(body, &preferences); err != nil {
+			t.Fatal(err)
+		}
+		if status != 200 || preferences["theme"] != "purple" || preferences["background"] != "gray" || preferences["header.calendar"] != true {
+			t.Fatalf("preferences were overwritten: %d %s", status, body)
+		}
+		// Fresh repository read stands in for the next session / another device.
+		again, err := repo.FindByID(context.Background(), userID)
+		if err != nil || again.Preferences["locale"] != "en" {
+			t.Fatalf("preferences were not persisted: %v", err)
+		}
+		// Two devices changing different fields must not overwrite one another.
+		updates := make(chan error, 2)
+		for key, value := range map[string]any{"font_size": "large", "calendar_view": "week"} {
+			go func() {
+				_, err := repo.UpdatePreferences(context.Background(), userID, map[string]any{key: value})
+				updates <- err
+			}()
+		}
+		for range 2 {
+			if err := <-updates; err != nil {
+				t.Fatal(err)
+			}
+		}
+		again, err = repo.FindByID(context.Background(), userID)
+		if err != nil || again.Preferences["font_size"] != "large" || again.Preferences["calendar_view"] != "week" {
+			t.Fatal("concurrent preference updates were lost")
+		}
+		for _, payload := range []any{
+			map[string]any{"user_id": otherID, "preferences": map[string]any{"theme": "pink"}},
+			map[string]any{"preferences": map[string]any{"role": "admin"}},
+			map[string]any{"preferences": map[string]any{"theme": "invalid"}},
+			map[string]any{"preferences": map[string]any{"header.calendar": "false"}},
+		} {
+			if status, _ := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", payload, origin); status != 400 {
+				t.Fatalf("invalid preference accepted: %d", status)
+			}
+		}
+		other, err := repo.FindByID(context.Background(), otherID)
+		if err != nil || len(other.Preferences) != 0 {
+			t.Fatalf("another user's settings changed: %v", err)
+		}
+		if status, _ := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": map[string]any{"theme": "pink"}}, "https://foreign.invalid"); status != 403 {
+			t.Fatalf("preferences bypassed CSRF: %d", status)
+		}
+		if h.SecureCookies {
+			h.LocalOrigin = "http://localhost:3000"
+			defer func() { h.LocalOrigin = "" }()
+			if status, _ := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": map[string]any{"sidebar_open": false}}, h.LocalOrigin); status != 200 {
+				t.Fatalf("localhost preferences blocked while tunnelling: %d", status)
+			}
+			body, _ := json.Marshal(constants.CommandEnvelope{Version: "1", Code: constants.CMD_AUTH_LOGIN, Payload: json.RawMessage(`{"username":"admin","password":"integration-password"}`)})
+			request := httptest.NewRequest("POST", "/action", bytes.NewReader(body))
+			request.Header.Set("Content-Type", "application/json")
+			request.Header.Set("Origin", h.LocalOrigin)
+			response, err := app.Test(request)
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer response.Body.Close()
+			if response.StatusCode != 200 {
+				t.Fatalf("localhost login: %d", response.StatusCode)
+			}
+			for _, cookie := range response.Cookies() {
+				if cookie.Name == httpapi.CookieName && cookie.Secure {
+					t.Fatal("localhost received an HTTPS-only cookie")
+				}
+			}
+		}
+	})
 	t.Run("custom category deletion command", func(t *testing.T) {
 		status, body := call(constants.CMD_CATEGORY_CREATE, "POST", map[string]any{"hotel_id": hotelID, "code": "CUSTOM_DELETE", "label": map[string]string{"TR": "Silinecek kategori"}}, "")
 		if status != 200 {
@@ -129,10 +221,13 @@ func TestActionAuthenticationAndAccommodation(t *testing.T) {
 	if status, _ := call(constants.CMD_FLOOR_CREATE, "POST", map[string]any{}, "https://foreign.invalid"); status != 403 {
 		t.Fatalf("CSRF status %d", status)
 	}
+	if status, _ := call(constants.CMD_FLOOR_CREATE, "POST", map[string]any{}, "https://other.trycloudflare.com"); status != 403 {
+		t.Fatalf("another tunnel must not be trusted: %d", status)
+	}
 	if status, _ := call(constants.CMD_FLOOR_CREATE, "PUT", map[string]any{}, ""); status != 405 {
 		t.Fatalf("method status %d", status)
 	}
-	status, body := call(constants.CMD_FLOOR_CREATE, "POST", map[string]any{"branch_id": branchID, "code": "3", "label": map[string]string{"TR": "Üçüncü Kat"}, "width": 2400, "height": 1600}, "")
+	status, body := call(constants.CMD_FLOOR_CREATE, "POST", map[string]any{"branch_id": branchID, "code": "3", "label": map[string]string{"TR": "Üçüncü Kat"}, "width": 2400, "height": 1600}, origin)
 	if status != 200 {
 		t.Fatalf("floor %d %s", status, body)
 	}

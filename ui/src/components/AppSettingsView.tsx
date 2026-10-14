@@ -1,4 +1,6 @@
 "use client";
+import { PageHeader } from "./PageHeader";
+import { useUserPreferences } from "./UserPreferences";
 import React, { useId, useState } from "react";
 import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, Banknote, Globe } from "lucide-react";
 import { confirmDialog } from "./ConfirmDialog";
@@ -44,6 +46,8 @@ function SectionHeading({ icon, title, description }: {
 }
 
 export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsViewProps) {
+  const preferences = useUserPreferences();
+  const saveLabel = preferences?.saveState === "saving" ? "Kaydediliyor…" : preferences?.saveState === "error" ? "Kaydedilemedi" : preferences?.saveState === "saved" ? "Hesabına kaydedildi" : "Hesap tercihlerin";
   const { locale, direction, setLocale, t } = useI18n();
   const { size, setSize } = useFontSize();
   const { theme, setTheme, background, setBackground } = useTheme();
@@ -55,12 +59,13 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
   const countryCurrencyLabel = CURRENCIES.find((o) => o.id === countryCurrency);
 
   return (
-    <div className="mx-auto w-full max-w-[720px] space-y-5 pb-8 font-sans text-uni-ink">
-      <header className="px-1 pb-2 pt-2">
-        <h2 className="text-[32px] font-medium leading-tight tracking-[-0.03em]">Ayarlar</h2>
-        <p className="mt-2 text-sm text-uni-muted">Çalışma alanını kendine göre düzenle.</p>
-      </header>
+    <div className="w-full space-y-5 pb-8 font-sans text-uni-ink">
+      <PageHeader pageId="appsettings" actions={<>
+        <span className="text-sm text-uni-muted" role="status">{saveLabel}</span>
+        {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>Yeniden dene</button>}
+      </>} />
 
+      <div className="mx-auto max-w-[720px] space-y-5">
       <section aria-label="Görünüm" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
         <SectionHeading icon={<Palette size={20} />} title="Tema rengi" description="Menüler, butonlar ve vurgular seçtiğin renge uyum sağlar." />
         <fieldset>
@@ -91,7 +96,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           <Check size={14} className="text-brand-blue-600" />
           <span>{currentTheme.label} tema etkin</span>
           <span aria-hidden="true" className="mx-1">·</span>
-          <span>Otomatik kaydedildi</span>
+          <span>{saveLabel}</span>
         </div>
 
         <div className="my-6 border-t border-uni-border" />
@@ -247,7 +252,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           <span aria-hidden="true" className="mx-1">·</span>
           <span>{currencyAuto ? "Varsayılan ülkeyi takip ediyor" : "Elle seçim etkin"}</span>
           <span aria-hidden="true" className="mx-1">·</span>
-          <span>Otomatik kaydedildi</span>
+          <span>{saveLabel}</span>
         </div>
       </section>
 
@@ -277,7 +282,8 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         >
           <LogOut size={16} /> Oturumu Kapat
         </button>
-        <p className="px-3 text-center text-xs leading-5 text-uni-muted">Tercihlerin bu cihazda saklanır ve tüm uygulamaya uygulanır.</p>
+        <p className="px-3 text-center text-xs leading-5 text-uni-muted">Tercihlerin kullanıcı hesabında saklanır; başka cihazlarda da hesabına giriş yaptığında uygulanır.</p>
+      </div>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { PageHeader } from "./PageHeader";
+import { usePreference } from "./UserPreferences";
 import React, { useEffect, useState } from "react";
 import { bookingStatuses, command, messageOf } from "../lib/api";
 import { ErrorMessage, secondaryStyle } from "./FormKit";
@@ -48,7 +50,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
   const [rows, setRows] = useState<Entry[]>([]),
     [total, setTotal] = useState(0),
     [page, setPage] = useState(1),
-    [pageSize, setPageSize] = useState(25),
+    [pageSize, setPageSize] = usePreference<number>("audit_page_size", 25),
     [from, setFrom] = useState(""),
     [to, setTo] = useState(""),
     [action, setAction] = useState(""),
@@ -87,6 +89,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
+      <PageHeader pageId="logs">
       <div className="flex flex-wrap gap-3 items-end">
         <div className="min-w-44 flex-1">
           <DateField
@@ -124,6 +127,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
           Yenile
         </button>
       </div>
+      </PageHeader>
       <div className="overflow-auto rounded-2xl border border-slate-200 bg-white" aria-busy={busy}>
         <table className="w-full text-xs text-left">
           <thead className="bg-slate-50 text-slate-400">

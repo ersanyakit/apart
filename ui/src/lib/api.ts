@@ -109,6 +109,7 @@ export type Snapshot = {
   bookings: Booking[];
   application: string;
   user: {
+	preferences?: Record<string, string | number | boolean>;
     user_id: string;
     hotel_id: string;
     username: string;
@@ -147,6 +148,7 @@ export async function command<T>(
   code: Command,
   payload: unknown = {},
   files?: File[],
+  signal?: AbortSignal,
 ): Promise<T> {
   const method = contracts.commands[code];
   let url = "/action";
@@ -176,6 +178,7 @@ export async function command<T>(
   let response: Response;
   try {
     response = await fetch(url, {
+      signal,
       method,
       headers,
       body,

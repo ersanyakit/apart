@@ -97,7 +97,7 @@ var (
 	ErrMigrationName          = define("invalid_migration_name", "Migration adı küçük harf, rakam ve alt çizgiden oluşmalıdır.", Validation)
 	ErrMigrationExists        = define("migration_exists", "Migration dosyası zaten var.", Conflict)
 	ErrMigrationUnimplemented = define("migration_unimplemented", "Migration Up/Down fonksiyonlarını uygulayın.", Internal)
-	ErrCLI                    = define("invalid_cli_command", "Bilinmeyen komut. migrate, migrate:status, migrate:rollback, migrate:reset, make:migration, admin:create veya db:seed [defaults|demo] kullanın.", Validation)
+	ErrCLI                    = define("invalid_cli_command", "Bilinmeyen komut. serve, tunnel, migrate, migrate:status, migrate:rollback, migrate:reset, make:migration, admin:create veya db:seed [defaults|demo] kullanın.", Validation)
 	ErrUI                     = define("ui_failed", "Next.js sunucusu başlatılamadı.", Internal)
 	ErrUIUnavailable          = define("ui_unavailable", "Arayüz hazırlanıyor. Lütfen kısa süre sonra yeniden deneyin.", Internal)
 	ErrNode                   = define("node_required", "Next.js SSR için Node.js ve npm gereklidir.", Internal)

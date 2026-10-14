@@ -100,6 +100,10 @@ func toBranch(v property.Branch) models.Branch {
 }
 func fromUser(v models.User) identity.User {
 	out := identity.User{UserID: v.UserID, HotelID: v.HotelID, UserName: v.UserName, DisplayName: v.DisplayName, FirstName: v.FirstName, LastName: v.LastName, Email: v.Email, PasswordHash: v.Password, Role: v.UserRole}
+	out.Preferences = v.Preferences
+	if out.Preferences == nil {
+		out.Preferences = identity.Preferences{}
+	}
 	for _, b := range v.BranchMemberships {
 		out.BranchIDs = append(out.BranchIDs, b.BranchID)
 	}

@@ -1,4 +1,5 @@
 .scheduler { min-width: 0; --resource-width: 224px; --day-width: 128px; }
+.scheduler > :global(.page-header) { margin-bottom:20px; }
 .filters { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; align-items: start; margin-bottom: 18px; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
 .navigation { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }

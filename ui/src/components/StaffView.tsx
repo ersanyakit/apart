@@ -1,3 +1,4 @@
+import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, User } from "lucide-react";
@@ -52,6 +53,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
     <div className="space-y-5">
       <div hidden={!!editing} className="space-y-5">
         <ErrorMessage message={error} />
+        <PageHeader pageId="staff" actions={
         <button
           className={`uni-control ${buttonStyle}`}
           onClick={() =>
@@ -70,6 +72,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
           <Plus size={14} />
           Personel Ekle
         </button>
+        } />
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {people.map((p) => (
             <article

@@ -1,5 +1,7 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect } from "react";
+
+import { usePreference } from "./UserPreferences";
 
 export type ThemeId = "blue" | "pink" | "green" | "orange" | "purple" | "fuchsia";
 
@@ -20,8 +22,6 @@ export const THEME_OPTIONS: ThemeOption[] = [
   { id: "fuchsia", label: "Fuşya", hint: "Unichain", color: "#F50DB4" },
 ];
 
-const STORAGE_KEY = "interactiveotel-theme";
-const BACKGROUND_STORAGE_KEY = "interactiveotel-background";
 
 export type BackgroundId = "white" | "gray";
 
@@ -51,23 +51,8 @@ export const useTheme = () => useContext(ThemeContext);
  * durumlar, tab çizgisi, rozetler — sayfa yenilemeden temayı alır.
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeId>("blue");
-  const [background, setBackgroundState] = useState<BackgroundId>("white");
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY) as ThemeId | null;
-      if (saved && THEME_OPTIONS.some((o) => o.id === saved)) {
-        setThemeState(saved);
-      }
-      const savedBg = localStorage.getItem(BACKGROUND_STORAGE_KEY) as BackgroundId | null;
-      if (savedBg && BACKGROUND_OPTIONS.some((o) => o.id === savedBg)) {
-        setBackgroundState(savedBg);
-      }
-    } catch {
-      /* depolama yoksa varsayılanda kal */
-    }
-  }, []);
+  const [theme, setTheme] = usePreference<ThemeId>("theme", "blue");
+  const [background, setBackground] = usePreference<BackgroundId>("background", "white");
 
   useEffect(() => {
     if (theme === "blue") {
@@ -84,24 +69,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.setAttribute("data-background", background);
     }
   }, [background]);
-
-  const setTheme = (next: ThemeId) => {
-    setThemeState(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      /* Tema depolama kapalıyken de bu oturumda çalışır. */
-    }
-  };
-
-  const setBackground = (next: BackgroundId) => {
-    setBackgroundState(next);
-    try {
-      localStorage.setItem(BACKGROUND_STORAGE_KEY, next);
-    } catch {
-      /* Depolama kapalıyken de bu oturumda çalışır. */
-    }
-  };
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, background, setBackground }}>

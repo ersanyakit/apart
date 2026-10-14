@@ -85,6 +85,50 @@ const React=require('react');
 const {renderToStaticMarkup}=require('react-dom/server');
 const {I18nProvider}=require(path.join(output,'components/I18n.js'));
 const {StaysScheduler}=require(path.join(output,'components/stays-scheduler/StaysScheduler.js'));
+const {UserPreferencesProvider}=require(path.join(output,'components/UserPreferences.js'));
+const {NotificationProvider}=require(path.join(output,'components/Toast.js'));
+const {PageHeader,PAGE_HEADERS}=require(path.join(output,'components/PageHeader.js'));
+const withPreferences=(initial,child)=>React.createElement(NotificationProvider,null,
+ React.createElement(UserPreferencesProvider,{userId:'test-user',initial},React.createElement(I18nProvider,null,child)));
+
+test('every sidebar page shares an accessible header with independently saved disclosure state',()=>{
+ for(const [pageId,[title]] of Object.entries(PAGE_HEADERS)) {
+  const render=initial=>renderToStaticMarkup(withPreferences(initial,React.createElement(PageHeader,{pageId,actions:React.createElement('button',null,'İşlem')})));
+  const expanded=render({});
+  const collapsed=render({[`header.${pageId}`]:true});
+  assert.equal((expanded.match(/<h2/g)||[]).length,1);
+  assert.ok(expanded.includes(title));
+  assert.ok(expanded.includes('aria-expanded="true"'));
+  assert.ok(collapsed.includes('aria-expanded="false"'));
+  assert.match(collapsed,/class="page-header-details" hidden=""/);
+  assert.ok(render({'header.unrelated':true}).includes('aria-expanded="true"'));
+  // A second user's empty preferences must not inherit the first user's collapse.
+  assert.ok(render({}).includes('aria-expanded="true"'));
+ }
+});
+
+test('stays search filters collapse with the header while grid controls remain visible',()=>{
+ const props={rooms:[],floors:[],bookings:[],serverTime:'2026-10-14T11:00:00+03:00',onDetails(){}};
+ const markup=renderToStaticMarkup(withPreferences({'header.stays':true},React.createElement(StaysScheduler,props)));
+ const headerEnd=markup.indexOf('</header>');
+ assert.ok(headerEnd>0);
+ assert.ok(markup.slice(0,headerEnd).includes('aria-expanded="false"'));
+ const header=markup.slice(0,headerEnd);
+ const hiddenStart=header.indexOf('class="page-header-details" hidden=""');
+ assert.ok(hiddenStart>0);
+ const grid=markup.slice(headerEnd);
+ for(const label of ['Birim veya misafir ara','>Tüm katlar<','Çizelge başlangıcı']) {
+  assert.ok(header.indexOf(label)>hiddenStart,label);
+  assert.ok(!grid.includes(label),label);
+ }
+ for(const label of ['Önceki dönem','Bugün','Görünen gün sayısı','Konaklama durumu','Boş birimleri göster']) {
+  assert.ok(grid.includes(label),label);
+ }
+ assert.ok(!grid.includes('hidden=""'));
+ const expanded=renderToStaticMarkup(withPreferences({'header.stays':false},React.createElement(StaysScheduler,props)));
+ assert.ok(expanded.includes('aria-expanded="true"'));
+ assert.ok(!expanded.includes('class="page-header-details" hidden=""'));
+});
 test('initial stays screen shows real completed and reserved records when nobody is checked in',()=>{
  const props={rooms:[{room_id:'101',branch_id:'branch',code:'101',name:'Oda',kind:'room',floor_id:'floor',parent_id:null,status:'Temiz'}],floors:[{floor_id:'floor',code:'1',label:{TR:'Birinci kat'},sort_order:1}],bookings:[
   booking({booking_id:'reserved',guest_name:'Beklenen Misafir',status:'confirmed'}),

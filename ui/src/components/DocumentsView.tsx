@@ -1,3 +1,4 @@
+import { PageHeader } from "./PageHeader";
 import { useNotifications } from "./Toast";
 import React, { useEffect, useState } from "react";
 import {
@@ -133,6 +134,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
       }}
     >
       <ErrorMessage message={error} />
+      <PageHeader pageId="templates">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
         <InlineSelectField
           label="Belge türü"
@@ -189,6 +191,7 @@ export function DocumentTemplates({ snapshot: s }: { snapshot: Snapshot }) {
           </button>
         </div>
       </div>
+      </PageHeader>
       <LocalizedTextFields
         label="Belge başlığı"
         hint="Her dil için ayrı başlık ekleyin."

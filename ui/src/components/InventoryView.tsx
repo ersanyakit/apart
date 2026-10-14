@@ -1,3 +1,4 @@
+import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useState } from "react";
 import { Layers, Plus, Pencil, Trash2, BedDouble, Map } from "lucide-react";
@@ -159,6 +160,7 @@ export function InventoryView({
     <div className="space-y-5">
       <div hidden={!!bed} className="space-y-5">
         <ErrorMessage message={error} />
+        <PageHeader pageId="units">
         <div className="flex gap-2 overflow-x-auto pb-2">
           <button
             className={`uni-control ${!floor ? buttonStyle : secondaryStyle}`}
@@ -260,6 +262,7 @@ export function InventoryView({
             Kat Planı
           </button>
         </div>
+        </PageHeader>
         {mode === "rooms" && (
           <>
             <div className="flex flex-wrap gap-2">

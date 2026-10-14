@@ -1,3 +1,4 @@
+import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import { CatalogFields } from "./CatalogFields";
 import React, { useState } from "react";
@@ -75,6 +76,7 @@ export function FeatureRegistryView({
     <div className="space-y-5">
       <div hidden={category || !!draft} className="space-y-5">
         <ErrorMessage message={error} />
+        <PageHeader pageId="features" actions={
         <div className="flex gap-2">
           <button
             className={`uni-control ${buttonStyle}`}
@@ -87,6 +89,7 @@ export function FeatureRegistryView({
             Kategori Ekle
           </button>
         </div>
+        } />
         {customCategories.length > 0 && (
           <section aria-label="Kendi kategorileriniz" className="space-y-3">
             <h3 className="text-base font-medium text-slate-900">Kendi kategorileriniz</h3>

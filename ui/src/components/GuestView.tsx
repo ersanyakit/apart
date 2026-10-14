@@ -1,3 +1,4 @@
+import { PageHeader } from "./PageHeader";
 import React, { useEffect, useState } from "react";
 import {
   command,
@@ -121,10 +122,7 @@ export function GuestView({
       setBusy(false);
     }
   };
-  return (
-    <div className="space-y-5">
-      <ErrorMessage message={error} />
-      {guestName && <h3 className="text-xl font-black">{guestName}</h3>}
+  const tools = (
       <div className="flex flex-wrap gap-3 items-end">
         {!guestId && (
           <Field label="Misafir arama">
@@ -178,6 +176,12 @@ export function GuestView({
           </select>
         </Field>
       </div>
+  );
+  return (
+    <div className="space-y-5">
+      <ErrorMessage message={error} />
+      {guestName && <h3 className="text-xl font-black">{guestName}</h3>}
+      {guestId ? tools : <PageHeader pageId="guests">{tools}</PageHeader>}
       <div className="flex justify-between items-center">
         <span className="text-xs text-slate-400">
           {total} kayıt · Sıralamak için sütun başlığına tıklayın

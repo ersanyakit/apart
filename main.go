@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log/slog"
 	"net"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/seeding"
 	"otel/internal/infrastructure/storage"
+	"otel/internal/infrastructure/tunnel"
 	"otel/internal/infrastructure/webui"
 	"otel/internal/interfaces/httpapi"
 	"otel/migrations"
@@ -39,6 +41,14 @@ func run() error {
 	command := "serve"
 	if len(os.Args) > 1 {
 		command = os.Args[1]
+	}
+	if command == "tunnel" {
+		if len(os.Args) != 2 {
+			return constants.ErrCLI
+		}
+		if err := tunnel.Check(); err != nil {
+			return err
+		}
 	}
 	if command == "make:migration" {
 		if len(os.Args) != 3 {
@@ -106,13 +116,16 @@ func run() error {
 			return err
 		}
 		return persistence.Bootstrap(ctx, db, os.Getenv("ADMIN_USERNAME"), os.Getenv("ADMIN_PASSWORD"), os.Getenv("HOTEL_NAME"))
-	case "serve":
+	case "serve", "tunnel":
 	default:
 		return constants.ErrCLI
 	}
 	cfg, err := config.Load()
 	if err != nil {
 		return err
+	}
+	if command == "tunnel" && !cfg.UIDev {
+		return errors.New("Quick Tunnel geliştirme içindir; kalıcı yayında APP_URL ve Cloudflare named tunnel kullanın (README)")
 	}
 	if err := migrations.Up(db); err != nil {
 		return err
@@ -125,6 +138,29 @@ func run() error {
 			return err
 		}
 	}
+	// Reserve the origin before exposing it: a busy port must never cause a
+	// tunnel to publish an unrelated process already listening there.
+	listener, err := net.Listen("tcp", cfg.Address)
+	if err != nil {
+		return constants.Wrap(constants.ErrServer, err)
+	}
+	defer listener.Close()
+	var tunnelDone <-chan error
+	if command == "tunnel" {
+		host, port, _ := net.SplitHostPort(cfg.Address)
+		if host == "" || host == "0.0.0.0" {
+			host = "127.0.0.1"
+		} else if host == "::" {
+			host = "::1"
+		}
+		process, err := tunnel.Start(ctx, "http://"+net.JoinHostPort(host, port))
+		if err != nil {
+			return err
+		}
+		defer process.Stop()
+		tunnelDone = process.Done
+		cfg.Origin, cfg.SecureCookies = process.URL, true
+	}
 	repo := persistence.New(db)
 	catalog := &application.Catalog{Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
 	auth := &application.Auth{Properties: repo, Users: repo, Tokens: persistence.JWT{Secret: []byte(cfg.JWTSecret)}, Passwords: persistence.Bcrypt{}, TTL: 8 * time.Hour}
@@ -132,15 +168,15 @@ func run() error {
 	guestService := &application.Guests{Catalog: catalog, Repository: repo}
 	renderer := exporter.Renderer{}
 	handler := &httpapi.Handler{Guests: guestService, Reports: &application.Reports{Guests: guestService, Exporter: renderer}, Documents: &application.Documents{Catalog: catalog, Repository: repo, Exporter: renderer}, Staff: &application.Staff{Catalog: catalog, Repository: repo, Users: repo, Passwords: persistence.Bcrypt{}}, Payments: &application.Payments{Repository: repo}, Audit: &application.Audit{Repository: repo}, Beds: &application.Beds{Catalog: catalog, Repository: repo}, Accommodation: &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}, Auth: auth, Catalog: catalog, Media: mediaService, Features: &application.Features{Repository: repo, Catalog: catalog}, Origin: cfg.Origin, SecureCookies: cfg.SecureCookies}
+	if command == "tunnel" {
+		_, port, _ := net.SplitHostPort(cfg.Address)
+		handler.LocalOrigin = "http://localhost:" + port
+	}
 	uiURL := cfg.UIURL
 	if cfg.SkipUI {
 		uiURL = ""
 	}
 	app := handler.App(uiURL, pool.PingContext)
-	listener, err := net.Listen("tcp", cfg.Address)
-	if err != nil {
-		return constants.Wrap(constants.ErrServer, err)
-	}
 	serverErrors := make(chan error, 1)
 	if cfg.UIDev && !cfg.SkipUI {
 		// net/http's reverse proxy carries Next's WebSocket upgrade and streaming
@@ -174,7 +210,7 @@ func run() error {
 	var uiDone <-chan error
 	if !cfg.SkipUI {
 		_, port, _ := net.SplitHostPort(cfg.Address)
-		process, err := webui.Start(ctx, cfg.UIAddress, "http://127.0.0.1:"+port, cfg.UIDev)
+		process, err := webui.Start(ctx, cfg.UIAddress, "http://127.0.0.1:"+port, cfg.Origin, cfg.UIDev)
 		if err != nil {
 			return err
 		}
@@ -188,5 +224,10 @@ func run() error {
 		return err
 	case err := <-uiDone:
 		return constants.Wrap(constants.ErrUI, err)
+	case err := <-tunnelDone:
+		if ctx.Err() != nil {
+			return nil
+		}
+		return fmt.Errorf("cloudflared tüneli kapandı (%v)", err)
 	}
 }

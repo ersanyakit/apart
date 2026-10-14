@@ -21,6 +21,33 @@ Go 1.26+, Node.js 20.9+ ve PostgreSQL gerekir.
 - İlk kez bu geliştirme akışına geçerken çalışan eski Go sürecini bir kez yeniden başlatın. Sonraki `.tsx` / CSS değişiklikleri otomatik görünür. Go kaynak değişiklikleri hâlâ Go sürecinin yeniden başlatılmasını gerektirir.
 - Ayrı frontend süreci isteyenler için `npm --prefix ui run dev:hot` (:3002) kullanılabilir; normal geliştirmede gerekli değildir.
 
+### Cloudflared ile dışarıdan erişim
+
+macOS'ta bir kez `brew install cloudflared` çalıştırın. Mevcut `go run .` sürecini durdurup proje kökünde başlatın:
+
+```sh
+go run . tunnel
+```
+
+Bu komut Go, Next.js ve Cloudflared'i birlikte çalıştırır. Terminaldeki `https://….trycloudflare.com` adresini açın; normal kullanıcı hesabınızla giriş yapın. API, medya, SSR ve geliştirme WebSocket'i aynı adresten geçer. Üretilen adres API kaynak denetimine ve Next.js `allowedDevOrigins` ayarına otomatik aktarılır; oturum çerezleri HTTPS/Secure olur. `.env` değiştirilmez. Tünel açıkken hem terminaldeki HTTPS adresi hem `http://localhost:PORT` kullanılabilir; bu iki adres dışında yazma isteklerine izin verilmez. Oturumlar adres bazında ayrıdır. `Ctrl+C` uygulamayı ve tüneli kapatır. Tünel süreci beklenmedik şekilde kapanırsa uygulama da kapanır.
+
+`PORT` ve `UI_PORT` mevcut ayarlardan alınır; Cloudflare hedefi **Go portudur** (varsayılan `http://127.0.0.1:3000`), Next.js portu değildir. Port doluysa tünel açılmaz. `BIND_HOST=127.0.0.1` kullanın. Yerel Cloudflare yapılandırmanız ve named tunnel kimlik bilgileriniz değiştirilmez.
+
+[Quick Tunnel](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/) geçici geliştirme/paylaşım içindir; adres her başlatmada değişir. `APP_ENV=development` gerektirir. Kalıcı alan adı için Cloudflare panelinde bir named tunnel ve Published application route oluşturun:
+
+- Hostname: kendi alan adınız (örnek `otel.example.com`).
+- Service: `http://127.0.0.1:3000` (özel `PORT` kullanıyorsanız onu yazın).
+- Uygulamanın `.env` dosyasında `APP_URL=https://otel.example.com` ayarlayın; üretim derlemesi için `APP_ENV=production` kullanın. `go run .` ile başlatın.
+- Cloudflare panelinden aldığınız token'ı ikinci terminalde `TUNNEL_TOKEN` ortam değişkenine alın ve `cloudflared tunnel --no-autoupdate run` çalıştırın. Token'ı repoya veya komut argümanına yazmayın. [Token ile çalıştırma](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#token).
+
+Named tunnel servis olarak ayrıca yönetilir; uygulamanın `Ctrl+C` ile kapatılması o servisi kapatmaz. Public hostname mevcut giriş ekranını internete açar; Cloudflare Access ile ek erişim kısıtlaması da tanımlanabilir.
+
+## Kullanıcı görünüm tercihleri
+
+Tüm sidebar sayfaları ortak `PageHeader` bileşenini kullanır: başlık, açıklama, araç çubuğu, alt ayırıcı ve sağdaki aç/kapat düğmesi. Daraltma durumu her sayfa için ayrı saklanır. Konaklayan Listesi'nde arama, kat seçimi ve başlangıç tarihi başlıkla birlikte daralır. Çizelgenin dönem gezinmesi, durum, gün sayısı ve boş birim kontrolleri görünür kalır.
+
+Tema, arka plan, yazı boyutu, dil, ülke/para biçimi, sidebar açıklığı, takvim/konaklayan görünüm seçenekleri ve log sayfa boyutu oturumdaki kullanıcının `users.preferences` JSONB alanında tutulur. `user.preferences` (GET) ve `user.preferences.update` (PATCH) yalnızca oturum sahibini hedefler; payload'dan kullanıcı kimliği alınmaz. Kısmi güncellemeler atomik birleşir. Başka kullanıcıların tercihlerinin devralınmaması için eski ortak localStorage anahtarları içe aktarılmaz. Kaydetme hatası ortak bildirimle gösterilir; Ayarlar ekranından yeniden denenebilir. Migration normal sunucu başlangıcında uygulanır.
+
 ## Konaklama yapısı
 
 - Otel → tesis/şube → katlar. Kat kodları tesis içinde benzersizdir; bodrum, asma kat vb. serbest kod ve sıralama ile tanımlanabilir.

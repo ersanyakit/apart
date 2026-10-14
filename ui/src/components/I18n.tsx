@@ -1,8 +1,10 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { DEFAULT_LOCALE, LOCALES, LOCALE_STORAGE_KEY, resolveLocale, type Locale } from "../lib/i18n/config";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
+import { DEFAULT_LOCALE, LOCALES, resolveLocale, type Locale } from "../lib/i18n/config";
 import { translate, type MessageKey } from "../lib/i18n/messages";
+
+import { usePreference } from "./UserPreferences";
 
 type I18n = {
   locale: Locale;
@@ -14,22 +16,9 @@ type I18n = {
 const I18nContext = createContext<I18n | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  // Use the same initial locale on server and client to avoid hydration mismatches.
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
-  const setLocale = useCallback((value: string) => {
-    const next = resolveLocale(value);
-    setLocaleState(next);
-    try { localStorage.setItem(LOCALE_STORAGE_KEY, next); } catch { /* Storage may be unavailable. */ }
-  }, []);
-
-  useEffect(() => {
-    try { setLocaleState(resolveLocale(localStorage.getItem(LOCALE_STORAGE_KEY))); } catch { /* Keep the default. */ }
-    const sync = (event: StorageEvent) => {
-      if (event.key === LOCALE_STORAGE_KEY || event.key === null) setLocaleState(resolveLocale(event.newValue));
-    };
-    window.addEventListener("storage", sync);
-    return () => window.removeEventListener("storage", sync);
-  }, []);
+  const [storedLocale, setLocaleState] = usePreference<Locale>("locale", DEFAULT_LOCALE);
+  const locale = resolveLocale(storedLocale);
+  const setLocale = useCallback((value: string) => setLocaleState(resolveLocale(value)), [setLocaleState]);
 
   const value = useMemo<I18n>(() => ({
     locale,

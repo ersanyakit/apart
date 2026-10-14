@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  // Trust only this run's public hostname, including a generated Quick Tunnel.
+  // API origin validation stays in Go; never allow *.trycloudflare.com here.
+  allowedDevOrigins: process.env.APP_URL
+    ? [new URL(process.env.APP_URL).hostname]
+    : [],
   // Go development proxy keeps UI, API and the HMR socket on :3000.
   // The standalone :3002 command can still reach the same API.
   async rewrites() {

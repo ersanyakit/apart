@@ -1,3 +1,4 @@
+import { usePreference } from "./UserPreferences";
 import { confirmDialog } from "./ConfirmDialog";
 import React, { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
@@ -70,7 +71,7 @@ export function OriginalShell({
   children,
 }: Props) {
   const reducedMotion = useReducedMotion();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = usePreference<boolean>("sidebar_open", true);
   const user = {
     name: snapshot.user.displayname || snapshot.user.username,
     role: snapshot.user.role,
@@ -129,11 +130,13 @@ export function OriginalShell({
               { id: "templates", label: "Belge Şablonları", icon: <NavigationIcon name="templates" /> },
               { id: "logs", label: "Sistem Logları", icon: <NavigationIcon name="logs" /> },
               { id: "features", label: "Olanak Tanımları", icon: <NavigationIcon name="features" /> },
-              { id: "appsettings", label: "Ayarlar", icon: <NavigationIcon name="appsettings" /> },
             ],
           },
         ]
       : []),
+    { id: "personal", label: "Kişisel", icon: <NavigationIcon name="appsettings" />, subItems: [
+      { id: "appsettings", label: "Ayarlar", icon: <NavigationIcon name="appsettings" /> },
+    ] },
   ];
   // Üst bardaki kapanabilir sekmelerin etiketleri (sidebar ağacından).
   const TAB_LABELS: Record<string, string> = { ...extraLabels };

@@ -1,7 +1,9 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 
 import { countryByCode, currencyForCountry, DEFAULT_COUNTRY } from "../lib/countries";
+
+import { usePreference, useUserPreferences } from "./UserPreferences";
 
 export type CurrencyId =
   | "TRY" | "USD" | "EUR" | "GBP"
@@ -76,10 +78,6 @@ export const MONEY_FORMATS: MoneyFormatOption[] = [
   { id: "en", label: "1,234.56", hint: "İngilizce" },
 ];
 
-const CURRENCY_KEY = "interactiveotel-currency";
-const FORMAT_KEY = "interactiveotel-money-format";
-const COUNTRY_KEY = "interactiveotel-default-country";
-const CURRENCY_EXPLICIT_KEY = "interactiveotel-currency-explicit";
 
 const CurrencyContext = createContext<{
   currency: CurrencyId;
@@ -163,118 +161,23 @@ export function sanitizeMoneyInput(raw: string, format: MoneyFormatId): string {
 }
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const [currency, setCurrencyState] = useState<CurrencyId>("TRY");
-  const [format, setFormatState] = useState<MoneyFormatId>("tr");
-  const [defaultCountry, setDefaultCountryState] = useState<string>(DEFAULT_COUNTRY);
-  // Elle para birimi seçimi (otomatik takibi kapatır).
-  const [explicit, setExplicit] = useState(false);
-  const explicitRef = React.useRef(false);
-  explicitRef.current = explicit;
-
-  useEffect(() => {
-    try {
-      const storedCountry = localStorage.getItem(COUNTRY_KEY);
-      const country = countryByCode(storedCountry)?.code ?? DEFAULT_COUNTRY;
-      const storedCurrency = localStorage.getItem(CURRENCY_KEY) as CurrencyId | null;
-      const validStored =
-        storedCurrency && CURRENCIES.some((o) => o.id === storedCurrency)
-          ? storedCurrency
-          : null;
-      const auto = currencyForCountry(country);
-      const wasExplicit =
-        localStorage.getItem(CURRENCY_EXPLICIT_KEY) === "1" ||
-        (validStored !== null &&
-          auto !== null &&
-          validStored !== (CURRENCIES.some((o) => o.id === auto) ? auto : null));
-      setDefaultCountryState(country);
-      if (validStored && wasExplicit) {
-        explicitRef.current = true;
-        setExplicit(true);
-        setCurrencyState(validStored);
-      } else if (validStored && !wasExplicit && auto === null) {
-        // Ülkenin eşleşen para birimi yoksa kayıtlı değeri koru.
-        setCurrencyState(validStored);
-      } else if (auto && CURRENCIES.some((o) => o.id === auto)) {
-        setCurrencyState(auto as CurrencyId);
-      }
-      const f = localStorage.getItem(FORMAT_KEY) as MoneyFormatId | null;
-      if (f && MONEY_FORMATS.some((o) => o.id === f)) setFormatState(f);
-    } catch {
-      /* depolama yoksa varsayılanlar */
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(CURRENCY_KEY, currency);
-      localStorage.setItem(CURRENCY_EXPLICIT_KEY, explicit ? "1" : "0");
-    } catch {
-      /* yoksay */
-    }
-  }, [currency, explicit]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(COUNTRY_KEY, defaultCountry);
-    } catch {
-      /* yoksay */
-    }
-  }, [defaultCountry]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(FORMAT_KEY, format);
-    } catch {
-      /* yoksay */
-    }
-  }, [format]);
-
-  const setCurrency = React.useCallback((c: CurrencyId) => {
-    explicitRef.current = true;
-    setExplicit(true);
-    setCurrencyState(c);
-  }, []);
-
-  const applyCountryCurrency = React.useCallback((countryCode: string) => {
-    const mapped = currencyForCountry(countryCode);
-    if (mapped && CURRENCIES.some((o) => o.id === mapped)) {
-      setCurrencyState(mapped as CurrencyId);
-    }
-  }, []);
-
-  const setDefaultCountry = React.useCallback(
-    (code: string) => {
-      const valid = countryByCode(code)?.code ?? DEFAULT_COUNTRY;
-      setDefaultCountryState(valid);
-      // Otomatik takipteyse para birimi ülkenin para birimine uyar.
-      if (!explicitRef.current) applyCountryCurrency(valid);
-    },
-    [applyCountryCurrency],
-  );
-
-  const resetCurrencyAuto = React.useCallback(() => {
-    explicitRef.current = false;
-    setExplicit(false);
-    setDefaultCountryState((country) => {
-      applyCountryCurrency(country);
-      return country;
-    });
-  }, [applyCountryCurrency]);
-
-  return (
-    <CurrencyContext.Provider
-      value={{
-        currency,
-        setCurrency,
-        format,
-        setFormat: setFormatState,
-        defaultCountry,
-        setDefaultCountry,
-        currencyAuto: !explicit,
-        resetCurrencyAuto,
-      }}
-    >
-      {children}
-    </CurrencyContext.Provider>
-  );
+  const preferences = useUserPreferences();
+  const [storedCurrency, setCurrencyState] = usePreference<CurrencyId>("currency", "TRY");
+  const [format, setFormat] = usePreference<MoneyFormatId>("money_format", "tr");
+  const [defaultCountry, setCountry] = usePreference<string>("default_country", DEFAULT_COUNTRY);
+  const [currencyAuto, setAuto] = usePreference<boolean>("currency_auto", true);
+  const mapped = currencyForCountry(defaultCountry);
+  const currency = currencyAuto && mapped && CURRENCIES.some(option => option.id === mapped) ? mapped as CurrencyId : storedCurrency;
+  const setCurrency = (next: CurrencyId) => {
+    if (preferences) preferences.update({ currency: next, currency_auto: false });
+    else { setCurrencyState(next); setAuto(false); }
+  };
+  const setDefaultCountry = (code: string) => {
+    const valid = countryByCode(code)?.code ?? DEFAULT_COUNTRY;
+    const nextCurrency = currencyForCountry(valid);
+    const next = currencyAuto && nextCurrency && CURRENCIES.some(option => option.id === nextCurrency) ? nextCurrency as CurrencyId : currency;
+    if (preferences) preferences.update({ default_country: valid, currency: next });
+    else { setCountry(valid); setCurrencyState(next); }
+  };
+  return <CurrencyContext.Provider value={{ currency, setCurrency, format, setFormat, defaultCountry, setDefaultCountry, currencyAuto, resetCurrencyAuto: () => setAuto(true) }}>{children}</CurrencyContext.Provider>;
 }

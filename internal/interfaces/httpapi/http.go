@@ -49,6 +49,7 @@ type Handler struct {
 	Catalog       *application.Catalog
 	Media         *application.Media
 	Origin        string
+	LocalOrigin   string // Optional exact localhost origin when a Quick Tunnel is active.
 	SecureCookies bool
 }
 type Response struct {
@@ -94,6 +95,10 @@ func (h *Handler) App(uiURL string, ready func(context.Context) error) *fiber.Ap
 	}
 	return app
 }
+func (h *Handler) secureCookie(c fiber.Ctx) bool {
+	return h.SecureCookies && !(h.LocalOrigin != "" && c.Get("Origin") == h.LocalOrigin)
+}
+
 func (h *Handler) decode(c fiber.Ctx) error {
 	c.Set("Cache-Control", "no-store")
 	var e constants.CommandEnvelope
@@ -121,7 +126,7 @@ func (h *Handler) decode(c fiber.Ctx) error {
 	}
 	if method != "GET" {
 		origin := c.Get("Origin")
-		if (origin != "" && origin != h.Origin) || c.Get("Sec-Fetch-Site") == "cross-site" {
+		if (origin != "" && origin != h.Origin && origin != h.LocalOrigin) || c.Get("Sec-Fetch-Site") == "cross-site" {
 			return constants.ErrOrigin
 		}
 		if origin == "" && c.Cookies(CookieName) != "" && c.Get("X-Requested-With") != "INTERACTIVEOTEL" {
@@ -196,7 +201,7 @@ func (h *Handler) command(c fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
-		c.Cookie(&fiber.Cookie{Name: CookieName, Value: result.Token, HTTPOnly: true, Secure: h.SecureCookies, SameSite: "Lax", Path: "/", Expires: result.ExpiresAt, MaxAge: int(time.Until(result.ExpiresAt).Seconds())})
+		c.Cookie(&fiber.Cookie{Name: CookieName, Value: result.Token, HTTPOnly: true, Secure: h.secureCookie(c), SameSite: "Lax", Path: "/", Expires: result.ExpiresAt, MaxAge: int(time.Until(result.ExpiresAt).Seconds())})
 		return h.success(c, result)
 	}
 	u, err := h.user(c)
@@ -206,6 +211,16 @@ func (h *Handler) command(c fiber.Ctx) error {
 	ctx = audit.WithActor(ctx, audit.Actor{UserID: u.UserID, RequestID: c.GetRespHeader("X-Request-ID"), Command: e.Code})
 	var result any
 	switch e.Code {
+	case constants.CMD_USER_PREFERENCES:
+		result = u.Preferences
+	case constants.CMD_USER_PREFERENCES_UPDATE:
+		var input struct {
+			Preferences identity.Preferences `json:"preferences"`
+		}
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Auth.UpdatePreferences(ctx, u, input.Preferences)
 	case constants.CMD_GUEST_SEARCH:
 		var input guest.Query
 		if err = decode(e.Payload, &input); err != nil {
@@ -339,7 +354,7 @@ func (h *Handler) command(c fiber.Ctx) error {
 	case constants.CMD_AUTH_LOGOUT:
 		err = h.Auth.Logout(ctx, u)
 		if err == nil {
-			c.Cookie(&fiber.Cookie{Name: CookieName, Value: "", HTTPOnly: true, Secure: h.SecureCookies, SameSite: "Lax", Path: "/", MaxAge: -1, Expires: time.Unix(1, 0)})
+			c.Cookie(&fiber.Cookie{Name: CookieName, Value: "", HTTPOnly: true, Secure: h.secureCookie(c), SameSite: "Lax", Path: "/", MaxAge: -1, Expires: time.Unix(1, 0)})
 		}
 	case constants.CMD_INITIAL_SYNC, constants.CMD_HOTEL_LIST, constants.CMD_BRANCH_LIST, constants.CMD_ROOM_LIST:
 		var input application.Selection
@@ -350,7 +365,7 @@ func (h *Handler) command(c fiber.Ctx) error {
 		snapshot, err = h.Catalog.InitialSync(ctx, u, input)
 		if err == nil && e.Code == constants.CMD_INITIAL_SYNC {
 			selection, _ := json.Marshal(application.Selection{HotelID: snapshot.HotelID, BranchID: snapshot.BranchID})
-			c.Cookie(&fiber.Cookie{Name: "interactiveotel_selection", Value: base64.RawURLEncoding.EncodeToString(selection), HTTPOnly: true, Secure: h.SecureCookies, SameSite: "Lax", Path: "/", MaxAge: 86400 * 30})
+			c.Cookie(&fiber.Cookie{Name: "interactiveotel_selection", Value: base64.RawURLEncoding.EncodeToString(selection), HTTPOnly: true, Secure: h.secureCookie(c), SameSite: "Lax", Path: "/", MaxAge: 86400 * 30})
 		}
 
 		switch e.Code {

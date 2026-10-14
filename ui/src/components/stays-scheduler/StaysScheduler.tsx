@@ -7,6 +7,8 @@ import { roomBoardState } from "../../lib/room-board";
 import { useI18n } from "../I18n";
 import { DateField, InlineSelectField, Switch, TextField } from "../fields";
 import { DAY, TIME_ZONE, dayOf, dayTime, layoutSegments, monthBands, resourceGroups, segmentsFor, shiftDay } from "./model";
+import { PageHeader } from "../PageHeader";
+import { usePreference } from "../UserPreferences";
 import styles from "./StaysScheduler.module.css";
 
 export type StaysSchedulerProps = {
@@ -26,17 +28,17 @@ export type StaysSchedulerProps = {
 export function StaysScheduler({ rooms, floors, bookings, serverTime, busy = false, onDetails, onEdit, onMove, onCheckOut }: StaysSchedulerProps) {
   const { locale } = useI18n();
   const [startDay, setStartDay] = useState(() => dayOf(serverTime));
-  const [daysCount, setDaysCount] = useState(7);
+  const [daysCount, setDaysCount] = usePreference<number>("stays_days", 7);
   const [query, setQuery] = useState("");
   const [floorId, setFloorId] = useState("");
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = usePreference<string>("stays_status", "all");
   const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [now, setNow] = useState(serverTime);
   const scroll = useRef<HTMLDivElement>(null);
   const timeline = useRef<HTMLDivElement>(null);
   const [trackWidth, setTrackWidth] = useState(7 * 128);
-  const [showEmpty, setShowEmpty] = useState(false);
+  const [showEmpty, setShowEmpty] = usePreference<boolean>("stays_show_empty", false);
   useEffect(() => {
     const element = timeline.current;
     if (!element) return;
@@ -82,6 +84,7 @@ export function StaysScheduler({ rooms, floors, bookings, serverTime, busy = fal
   const round = `uni-control ${styles.roundButton}`;
 
   return <section className={styles.scheduler} aria-label="Konaklayan birim ve tarih çizelgesi" aria-busy={busy}>
+    <PageHeader pageId="stays">
     <div className={styles.filters}>
       <TextField label="Birim veya misafir ara" value={query} onChange={setQuery} placeholder="İsim veya birim numarası" />
       <InlineSelectField label="Kat" value={floorId} onChange={setFloorId} options={[
@@ -90,6 +93,7 @@ export function StaysScheduler({ rooms, floors, bookings, serverTime, busy = fal
       ]} />
       <DateField label="Çizelge başlangıcı" value={startDay} withTime={false} onChange={v => { if (v && Number.isFinite(dayTime(v))) setStartDay(v); }} />
     </div>
+    </PageHeader>
     <div className={styles.toolbar}>
       <div className={styles.navigation}>
         <button type="button" className={`nav-icon-button ${styles.iconButton}`} aria-label="Önceki dönem" onClick={() => setStartDay(shiftDay(startDay, -daysCount))}><ChevronLeft size={20} /></button>

@@ -1,4 +1,6 @@
 "use client";
+import { PageHeader } from "../PageHeader";
+import { usePreference } from "../UserPreferences";
 import { useNotifications } from "../Toast";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -58,9 +60,9 @@ function StayDetails({ event, onClose, onOpenBooking }: { event: StayEvent; onCl
 /** Reusable hotel calendar; receives tenant-scoped data and owns no API/session state. */
 export function HotelCalendar({ bookings, rooms, propertyName, initialDate, headerActions, onOpenBooking }: HotelCalendarProps) {
   const [date,setDate] = useState(() => dayStart(initialDate ?? new Date()));
-  const [view,setView] = useState<CalendarView>("month");
+  const [view,setView] = usePreference<CalendarView>("calendar_view", "month");
   const [query,setQuery] = useState("");
-  const [status,setStatus] = useState("active");
+  const [status,setStatus] = usePreference<string>("calendar_status", "active");
   const [selected,setSelected] = useState<StayEvent | null>(null);
   const notify = useNotifications();
   const printable = useRef<HTMLDivElement>(null);
@@ -90,15 +92,15 @@ export function HotelCalendar({ bookings, rooms, propertyName, initialDate, head
   for(const e of visible) if(!timelineRooms.some(r => r.id===e.roomId)) timelineRooms.push({id:e.roomId,code:e.roomCode,name:"Arşiv birimi"});
   const ticks = view === "day" ? Array.from({length:24},(_,i) => String(i).padStart(2,"0")+":00") : Array.from({length:7},(_,i) => addDays(range.start,i).toLocaleDateString(locale,{weekday:"short",day:"numeric"}));
   return <section className="hc" aria-label="Otel konaklama takvimi">
-    <header className="hc-toolbar">
-      <div><p className="hc-eyebrow">{propertyName}</p><h2>Konaklama takvimi</h2><p className="hc-subtitle">Odalar, konaklayanlar ve rezervasyonlar bir arada.</p></div>
-      <div className="hc-actions">{headerActions}<button type="button" className="uni-button uni-button-secondary" disabled={!visible.length} onClick={exportCSV}><Download size={16}/>CSV</button><button type="button" className="uni-button uni-button-secondary" onClick={() => printable.current && printCalendar(printable.current,`${propertyName} · ${title}`)}><Printer size={16}/>Yazdır / PDF</button></div>
-    </header>
+    <PageHeader pageId="calendar" propertyName={propertyName} globalActions={headerActions} actions={<>
+<button type="button" className="uni-button uni-button-secondary" disabled={!visible.length} onClick={exportCSV}><Download size={16}/>CSV</button><button type="button" className="uni-button uni-button-secondary" onClick={() => printable.current && printCalendar(printable.current,`${propertyName} · ${title}`)}><Printer size={16}/>Yazdır / PDF</button>
+    </>}>
     <div className="hc-controls">
       <div className="hc-date-navigation"><button type="button" className="nav-icon-button" aria-label="Önceki dönem" onClick={() => setDate(shiftDate(date,view,-1))}><ChevronLeft size={20}/></button><button type="button" className="nav-icon-button" aria-label="Sonraki dönem" onClick={() => setDate(shiftDate(date,view,1))}><ChevronRight size={20}/></button><h3 aria-live="polite">{title}</h3><button type="button" className="uni-button uni-button-secondary" onClick={() => setDate(dayStart(new Date()))}>Bugün</button></div>
       <div className="hc-views" role="group" aria-label="Takvim görünümü">{([["day","Gün"],["week","Hafta"],["month","Ay"]] as const).map(([id,label]) => <button key={id} type="button" aria-pressed={view===id} onClick={() => setView(id)}>{label}</button>)}</div>
     </div>
     <div className="hc-filters"><label className="hc-search"><Search size={18}/><input aria-label="Takvimde misafir veya birim ara" placeholder="Misafir, telefon, kimlik veya birim ara…" value={query} onChange={e=>setQuery(e.target.value)}/></label><div className="hc-status-select"><UniSelect caption="Durum" ariaLabel="Takvim durum filtresi" icon={<CalendarDays size={18}/>} value={status} options={[{value:"active",label:"İptal dışındaki kayıtlar"},{value:"all",label:"Tüm durumlar"},...Object.entries(bookingStatuses).map(([value,label])=>({value,label}))]} onChange={setStatus}/></div><input className="uni-input hc-date-input" type="date" aria-label="Takvim tarihi" value={dayKey(date)} onChange={e=>{if(e.target.value) setDate(new Date(e.target.value+"T12:00:00"));}}/></div>
+    </PageHeader>
     <div ref={printable}>
       <div className="hc-summary"><span><strong>{unique.length}</strong> rezervasyon</span><span><strong>{unique.reduce((sum,b)=>sum+b.guest_count,0)}</strong> kayıtlı kişi</span><span className="hc-summary-hint">{title}</span></div>
       <div className="hc-scroll" tabIndex={0} aria-label="Takvim çizelgesi; dar ekranda yatay kaydırabilirsiniz">

@@ -25,30 +25,33 @@ const COMMAND_VERSION = "1"
 const APPLICATION_VERSION = "1.0.0"
 
 const (
-	CMD_AUTH_LOGIN       = "auth.login"
-	CMD_AUTH_LOGOUT      = "auth.logout"
-	CMD_HOTEL_LIST       = "hotel.list"
-	CMD_HOTEL_CREATE     = "hotel.create"
-	CMD_HOTEL_UPDATE     = "hotel.update"
-	CMD_BRANCH_LIST      = "branch.list"
-	CMD_BRANCH_CREATE    = "branch.create"
-	CMD_BRANCH_UPDATE    = "branch.update"
-	CMD_BRANCH_DELETE    = "branch.delete"
-	CMD_ROOM_LIST        = "room.list"
-	CMD_ROOM_CREATE      = "room.create"
-	CMD_ROOM_UPDATE      = "room.update"
-	CMD_ROOM_DELETE      = "room.delete"
-	CMD_ROOM_STATE       = "room.state"
-	CMD_ROOM_EXCHANGE    = "room.exchange"
-	CMD_MEDIA_LIST       = "media.list"
-	CMD_MEDIA_UPLOAD     = "media.upload"
-	CMD_MEDIA_UPDATE     = "media.update"
-	CMD_MEDIA_DELETE     = "media.delete"
-	CMD_INVENTORY_UPDATE = "inventory.update"
+	CMD_AUTH_LOGIN              = "auth.login"
+	CMD_AUTH_LOGOUT             = "auth.logout"
+	CMD_USER_PREFERENCES        = "user.preferences"
+	CMD_USER_PREFERENCES_UPDATE = "user.preferences.update"
+	CMD_HOTEL_LIST              = "hotel.list"
+	CMD_HOTEL_CREATE            = "hotel.create"
+	CMD_HOTEL_UPDATE            = "hotel.update"
+	CMD_BRANCH_LIST             = "branch.list"
+	CMD_BRANCH_CREATE           = "branch.create"
+	CMD_BRANCH_UPDATE           = "branch.update"
+	CMD_BRANCH_DELETE           = "branch.delete"
+	CMD_ROOM_LIST               = "room.list"
+	CMD_ROOM_CREATE             = "room.create"
+	CMD_ROOM_UPDATE             = "room.update"
+	CMD_ROOM_DELETE             = "room.delete"
+	CMD_ROOM_STATE              = "room.state"
+	CMD_ROOM_EXCHANGE           = "room.exchange"
+	CMD_MEDIA_LIST              = "media.list"
+	CMD_MEDIA_UPLOAD            = "media.upload"
+	CMD_MEDIA_UPDATE            = "media.update"
+	CMD_MEDIA_DELETE            = "media.delete"
+	CMD_INVENTORY_UPDATE        = "inventory.update"
 )
 
 // CommandMethods is the single whitelist for dispatch and HTTP method validation.
 var CommandMethods = map[string]string{
+	CMD_USER_PREFERENCES: "GET", CMD_USER_PREFERENCES_UPDATE: "PATCH",
 	CMD_AUTH_LOGIN: "POST", CMD_AUTH_LOGOUT: "POST",
 	CMD_INITIAL_SYNC: "GET", CMD_PAYMENT_METHODS: "GET", CMD_LINK_METADATA: "GET",
 	CMD_HOTEL_LIST: "GET", CMD_HOTEL_CREATE: "POST", CMD_HOTEL_UPDATE: "PUT",

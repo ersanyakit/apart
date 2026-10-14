@@ -9,6 +9,7 @@ import (
 )
 
 type User struct {
+	Preferences  Preferences        `json:"preferences"`
 	UserID       uuid.UUID          `json:"user_id"`
 	HotelID      uuid.UUID          `json:"hotel_id"`
 	UserName     string             `json:"username"`
@@ -56,6 +57,7 @@ type LoginPerson struct {
 }
 
 type Repository interface {
+	UpdatePreferences(context.Context, uuid.UUID, Preferences) (Preferences, error)
 	FindByID(context.Context, uuid.UUID) (User, error)
 	LoginPeople(context.Context, uuid.UUID) ([]LoginPerson, error)
 	FindByLogin(context.Context, string) (User, error)

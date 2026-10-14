@@ -75,6 +75,9 @@ import { FeatureRegistryView } from "./components/FeatureRegistryView";
 import { StaysScheduler } from "./components/stays-scheduler/StaysScheduler";
 import { AppSettingsView } from "./components/AppSettingsView";
 import { FontSizeProvider } from "./components/FontSize";
+import { I18nProvider } from "./components/I18n";
+import { PageHeader, PageHeaderProvider } from "./components/PageHeader";
+import { UserPreferencesProvider, useUserPreferences } from "./components/UserPreferences";
 import { ThemeProvider } from "./components/Theme";
 import { CurrencyProvider } from "./components/Currency";
 const date = (value: string) =>
@@ -128,14 +131,25 @@ function readTabFromUrl(): string | null {
     return null;
   }
 }
-export default function App({ initialData, initialTab = "board" }: { initialData: Snapshot | null; initialTab?: string }) {
+type AppProps = { initialData: Snapshot | null; initialTab?: string };
+export default function App({ initialData, initialTab = "board" }: AppProps) {
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(() => initialData ? normalize(initialData) : null);
+  const [sessionStart, setSessionStart] = useState({ tab: initialTab, register: false });
+  const onLogin = async (selection?: Selection, register = false) => {
+    const data = await command<Snapshot>("system.initial_sync", selection || {});
+    setSessionStart({ tab: register ? "facility" : "board", register });
+    setSnapshot(normalize(data));
+  };
+  return <UserPreferencesProvider key={snapshot?.user.user_id || "guest"} userId={snapshot?.user.user_id} initial={snapshot?.user.preferences}>
+    <I18nProvider><AppContent snapshot={snapshot} setSnapshot={setSnapshot} initialTab={sessionStart.tab} startRegistration={sessionStart.register} onLogin={onLogin} /></I18nProvider>
+  </UserPreferencesProvider>;
+}
+function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLogin }: { snapshot: Snapshot | null; setSnapshot: React.Dispatch<React.SetStateAction<Snapshot | null>>; initialTab: string; startRegistration: boolean; onLogin: (selection?: Selection, register?: boolean) => Promise<void> }) {
   const notify = useNotifications();
-  const [snapshot, setSnapshot] = useState<Snapshot | null>(
-      initialData ? normalize(initialData) : null,
-    ),
-    [tab, setTab] = useState(() => NAV_TAB_IDS.has(initialTab) ? initialTab : "board"),
+  const preferences = useUserPreferences();
+  const [tab, setTab] = useState(() => NAV_TAB_IDS.has(initialTab) ? initialTab : "board"),
     [sidebar, setSidebar] = useState(true),
-    [modal, setModal] = useState<Modal | null>(null),
+    [modal, setModal] = useState<Modal | null>(() => startRegistration && snapshot ? { type: "facility", kind: "hotel", create: true } : null),
     [busy, setBusy] = useState(false),
     [search, setSearch] = useState(""),
     [floorId, setFloorId] = useState(""),
@@ -228,18 +242,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
       <FontSizeProvider>
       <ThemeProvider>
       <CurrencyProvider>
-      <LoginScreen
-        onLogin={async (selection, register) => {
-          await refresh(selection);
-          setTab("board");
-          setBookingTab(null);
-          setOpenTabs(["board", "bookings", "stays"]);
-          if (register) {
-            activateTab("facility");
-            setModal({ type: "facility", kind: "hotel", create: true });
-          }
-        }}
-      />
+      <LoginScreen onLogin={onLogin} />
       </CurrencyProvider>
       </ThemeProvider>
       </FontSizeProvider>
@@ -269,17 +272,23 @@ export default function App({ initialData, initialTab = "board" }: { initialData
     capacityInUse = leafRooms.filter((r) => r.kind === "bed")
       .filter((r) => (dateFilter ? roomStates.get(r.room_id)!.bookings : roomStates.get(r.room_id)!.current).length > 0)
       .reduce((sum, r) => sum + r.capacity, 0);
-  const bookings = s.bookings.filter(
-    (b) =>
-      (tab !== "stays" || b.status === "checked_in") &&
-      (!bookingFilter || b.status === bookingFilter) &&
-      (!dateFilter ||
-        (b.check_in.slice(0, 10) <= dateFilter &&
-          b.check_out.slice(0, 10) >= dateFilter)) &&
-      `${b.guest_name} ${s.rooms.find((r) => r.room_id === b.room_id)?.code || ""}`
-        .toLocaleLowerCase("tr")
-        .includes(search.toLocaleLowerCase("tr")),
-  );
+  const bookings = s.bookings
+    .filter(
+      (b) =>
+        (tab !== "stays" || b.status === "checked_in") &&
+        (!bookingFilter || b.status === bookingFilter) &&
+        (!dateFilter ||
+          (b.check_in.slice(0, 10) <= dateFilter &&
+            b.check_out.slice(0, 10) >= dateFilter)) &&
+        `${b.guest_name} ${s.rooms.find((r) => r.room_id === b.room_id)?.code || ""}`
+          .toLocaleLowerCase("tr")
+          .includes(search.toLocaleLowerCase("tr")),
+    )
+    // En son eklenen en üstte (kayıt tarihi yoksa giriş tarihine düşer).
+    .sort((a, b) => {
+      const ts = (x: Booking) => Date.parse(x.created_at || x.check_in) || 0;
+      return ts(b) - ts(a);
+    });
   const changeBranch = (selection: Selection) =>
     void run(async () => {
       await refresh(selection);
@@ -329,6 +338,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
   };
   const handleLogout = () =>
     void run(async () => {
+      await preferences?.flush();
       await command("auth.logout");
       setSnapshot(null);
       setModal(null);
@@ -510,6 +520,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
     <FontSizeProvider>
     <ThemeProvider>
     <CurrencyProvider>
+    <PageHeaderProvider value={{ propertyName: branch?.name || hotel?.name, actions: ["board", "calendar", "bookings", "stays", "units", "facility", "features"].includes(tab) ? pageActions : undefined }}>
     <OriginalShell
       snapshot={s}
       activeTab={tab}
@@ -530,19 +541,6 @@ export default function App({ initialData, initialTab = "board" }: { initialData
       <main className="flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6">
         {settingsEditorOpen && <SettingsEditor title={editorTitle} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
         <div hidden={settingsEditorOpen} className="app-page-content space-y-6">
-        {!isBookingTab && tab !== "appsettings" && tab !== "calendar" && (
-        <div className="app-page-header flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="font-uninav-book text-[0.875rem] leading-5 text-slate-500">
-              {branch?.name || "TESİS"}
-            </p>
-            <h2 className="font-uninav-book mt-1 text-[2.25rem] leading-[2.5rem] tracking-[-0.01em] text-slate-900">
-              {title}
-            </h2>
-          </div>
-          {pageActions}
-        </div>
-        )}
         <AnimatePresence>
           {bookingTab && bookingTabId && (
             <motion.section
@@ -606,30 +604,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
         </AnimatePresence>
         {["board", "bookings"].includes(tab) && (
           <>
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
-              {[
-                { label: "TANIMLI BİRİM", value: s.rooms.length },
-                { label: "TANIMLI YATAK KAPASİTESİ", value: totalCapacity },
-                { label: "AYRILMIŞ YATAK KAPASİTESİ", value: capacityInUse },
-                {
-                  label: "AKTİF KONAKLAMA",
-                  value: s.bookings.filter((b) => b.status === "checked_in")
-                    .length,
-                },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="uni-card rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm"
-                >
-                  <span className="font-uninav-book text-xs font-medium uppercase tracking-wider text-slate-500">
-                    {stat.label}
-                  </span>
-                  <p className="font-uninav-book mt-3 text-3xl leading-none tracking-tight text-slate-900">
-                    {stat.value}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <PageHeader pageId={tab === "board" ? "board" : "bookings"}>
             <div className="flex flex-wrap items-stretch gap-3">
               <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
                 <label className="block min-w-0 cursor-text">
@@ -716,6 +691,31 @@ export default function App({ initialData, initialTab = "board" }: { initialData
                   />
                 </div>
               )}
+            </div>
+            </PageHeader>
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+              {[
+                { label: "TANIMLI BİRİM", value: s.rooms.length },
+                { label: "TANIMLI YATAK KAPASİTESİ", value: totalCapacity },
+                { label: "AYRILMIŞ YATAK KAPASİTESİ", value: capacityInUse },
+                {
+                  label: "AKTİF KONAKLAMA",
+                  value: s.bookings.filter((b) => b.status === "checked_in")
+                    .length,
+                },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="uni-card rounded-2xl border border-slate-200/70 bg-white p-5 shadow-sm"
+                >
+                  <span className="font-uninav-book text-xs font-medium uppercase tracking-wider text-slate-500">
+                    {stat.label}
+                  </span>
+                  <p className="font-uninav-book mt-3 text-3xl leading-none tracking-tight text-slate-900">
+                    {stat.value}
+                  </p>
+                </div>
+              ))}
             </div>
           </>
         )}
@@ -1051,6 +1051,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
         )}
         {tab === "facility" && (
           <>
+            <PageHeader pageId="facility" actions={
             <div className="flex gap-2">
               {s.user.role === "admin" && (
                 <button
@@ -1072,6 +1073,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
                 Tesis / Şube Ekle
               </button>
             </div>
+            } />
             <div className="grid md:grid-cols-2 gap-5">
               {[
                 { kind: "hotel" as const, data: hotel },
@@ -1295,6 +1297,7 @@ export default function App({ initialData, initialTab = "board" }: { initialData
         </>
       )}
     </OriginalShell>
+    </PageHeaderProvider>
     </CurrencyProvider>
     </ThemeProvider>
     </FontSizeProvider>

@@ -96,7 +96,7 @@ func run(ctx context.Context, name string, args ...string) error {
 	}
 	return nil
 }
-func Start(ctx context.Context, address, apiURL string, development bool) (*Process, error) {
+func Start(ctx context.Context, address, apiURL, publicURL string, development bool) (*Process, error) {
 	_, port, err := net.SplitHostPort(address)
 	if err != nil {
 		return nil, constants.Wrap(constants.ErrUI, err)
@@ -114,7 +114,7 @@ func Start(ctx context.Context, address, apiURL string, development bool) (*Proc
 	slog.Info("Next.js başlatılıyor", "mode", mode, "hot_reload", development)
 	cmd := exec.CommandContext(ctx, "node", "node_modules/next/dist/bin/next", mode, "--hostname", "127.0.0.1", "--port", port)
 	cmd.Dir = "ui"
-	cmd.Env = append(os.Environ(), "NODE_ENV="+nodeEnv, "NEXT_TELEMETRY_DISABLED=1", "API_INTERNAL_URL="+apiURL)
+	cmd.Env = append(os.Environ(), "NODE_ENV="+nodeEnv, "NEXT_TELEMETRY_DISABLED=1", "API_INTERNAL_URL="+apiURL, "APP_URL="+publicURL)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.Cancel = func() error { return cmd.Process.Signal(syscall.SIGTERM) }
