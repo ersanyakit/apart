@@ -1,0 +1,35 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "name": "hero",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Very wide landscape 3:2 composition for full bleed hero background. Dreamlike whimsical boutique hotel campus: asymmetrical white and pink hotel with arched windows occupies RIGHT third, curvy mint topiary and tiny travelling guests with suitcases on lower foreground, curved cyan pool at bottom, distant lilac buildings at far left. Top and LEFT middle 55 percent is almost empty pale pink sky with only a few wispy white clouds, deliberately clear for large black website headline. No lettering anywhere.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-7155a5f2-34f1-4088-8b1a-c69051255385.png"
+    },
+    {
+      "name": "reservations",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Landscape 3:2. A whimsical oversized paper reservation calendar as a physical desk object, cyan calendar with pink and lilac reservation strips, a curved reception bell and large sculptural hotel key. Close up still life from angled overhead, playful exaggerated proportions, light pink seamless backdrop. Calendar is blank without text or numbers. No buildings, no people.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-bad88845-419d-4112-9701-973e0e8bf086.png"
+    },
+    {
+      "name": "rooms",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Landscape 3:2. A playful cutaway dollhouse hotel with three offset floating floors, visible tidy beds, arched bathroom, tiny curved stairs, mint and cyan rooms with pink pillows. Architectural sectional perspective in blank very pale cyan space. Building fills composition, no sky or outdoor landscape. No people.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-22b750d7-3cfb-4c39-a25c-bd39a8e19352.png"
+    },
+    {
+      "name": "guests",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Landscape 3:2. Two eccentric friendly cartoon travelers with exaggerated Day of the Tentacle character proportions and white skin, a tall figure with a cyan suitcase and a short figure with pink backpack being welcomed by a receptionist behind a flowing mint reception desk. An archway and tiny lilac plant. Strong character driven close framing, white backdrop, no calendar.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-75ea4d0d-8dec-4218-9852-a4868e58708c.png"
+    },
+    {
+      "name": "finance",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Landscape 3:2. Surreal hotel bookkeeping still life: a curvy white receipt printer unspooling a looping pink paper ribbon, a lavender calculator, stacked cyan tokens and a mint folder with plain blank document sheets. High angled close view, very pale lilac background. Tokens have no symbols, documents no legible text, no people or buildings.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-d066aae9-c97c-483a-9ca4-0181cd3373cf.png"
+    },
+    {
+      "name": "team",
+      "prompt": "Use case: illustration-story. Create polished editorial artwork for a hotel management website. Day of the Tentacle 1993 adventure game style: wonky playful architectural perspective, confident hand inked curved contours, clever cartoon prop design, flat cel color, detailed but beautifully composed. NOT 3D render, NOT generic corporate vector, no text, no letters, no watermark. Strict palette ONLY white, light tints of cyan #2ABDFF, pink #FF37C7, mint #00C3A0, violet #8251FB, with sparse thin charcoal #131313 outlines. Bright daylight, very light backgrounds, no dark areas, no yellow/brown/beige. Landscape 3:2. Whimsical hotel operations room, two cheerful lanky cartoon staff characters with white skin coordinating at a huge mint task board with blank cyan and pink notes, curved cleaning trolley to one side, clock without numbers, violet office chair. Dynamic side-on composition, very pale mint backdrop, no hotel exterior or reception counter.",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a13bd0-eda9-7780-8cd2-315da1ff8397/exec-702d1c67-69b9-4b09-b910-198e09b1b288.png"
+    }
+  ]
+}
