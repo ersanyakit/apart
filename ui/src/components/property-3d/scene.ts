@@ -49,6 +49,8 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
   let bounds = new THREE.Box3(), center = new THREE.Vector3(), radius = 10;
   let layoutSignature = '';
   let hoverId: string | null = null;
+  let selectionAccent = '#2ABDFF';
+  let selectionTint = '#eefaff';
   const activePointers = new Set<number>();
   let down: { x: number; y: number; id: number; dragged: boolean } | null = null;
 
@@ -73,12 +75,16 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     const shell = new THREE.Group(); shell.name = active ? 'selection-glass-enclosure' : 'hover-glass-enclosure';
     shell.position.copy(center);
     const geometry = new THREE.BoxGeometry(size.x, size.y, size.z);
-    const glass = new THREE.Mesh(geometry, new THREE.MeshPhysicalMaterial({ color: '#d9f1ff', transmission: 0.75, roughness: 0.28, thickness: 0.35, ior: 1.45, transparent: true, opacity: active ? 0.35 : 0.14, depthWrite: false }));
+    const glass = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: selectionTint, transparent: true, opacity: active ? 0.72 : 0.52, depthWrite: false, toneMapped: false }));
+    glass.name = 'selection-theme-fill';
     shell.add(glass);
-    const border = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: '#5baee6', transparent: true, opacity: active ? 0.7 : 0.25 })); shell.add(border);
+    const border = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({ color: selectionAccent, toneMapped: false, transparent: true, opacity: active ? 0.9 : 0.65 })); shell.add(border);
+    const footprint = new THREE.Mesh(new THREE.PlaneGeometry(size.x, size.z), new THREE.MeshBasicMaterial({ color: selectionTint, toneMapped: false, transparent: true, opacity: 0.95, depthWrite: false, side: THREE.DoubleSide }));
+    footprint.rotation.x = -Math.PI / 2; footprint.position.y = -size.y / 2 + 0.015;
+    footprint.name = 'selection-theme-footprint'; shell.add(footprint);
     // Layered translucent footprint produces a soft halo without an external texture.
     for (let i = 0; i < 7; i++) {
-      const glow = new THREE.Mesh(new THREE.BoxGeometry(size.x + i * 0.055, 0.008, size.z + i * 0.055), new THREE.MeshBasicMaterial({ color: '#58b7f0', transparent: true, opacity: (active ? 0.055 : 0.025) * (1 - i / 8), depthWrite: false }));
+      const glow = new THREE.Mesh(new THREE.BoxGeometry(size.x + i * 0.055, 0.008, size.z + i * 0.055), new THREE.MeshBasicMaterial({ color: selectionAccent, transparent: true, opacity: (active ? 0.055 : 0.025) * (1 - i / 8), depthWrite: false }));
       glow.position.y = -size.y / 2 + 0.006 + i * 0.001; shell.add(glow);
     }
     scene.add(shell); return shell;
@@ -150,7 +156,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
   function pointerDown(e: PointerEvent) {
     activePointers.add(e.pointerId);
     if (activePointers.size > 1) { releasePress(); if (down) down.dragged = true; return; }
-    down = { x: e.clientX, y: e.clientY, id: e.pointerId, dragged: e.button !== 0 || panMode || e.shiftKey || e.ctrlKey || e.metaKey };
+    down = { x: e.clientX, y: e.clientY, id: e.pointerId, dragged: e.button !== 0 || e.shiftKey || e.ctrlKey || e.metaKey };
     if (!down.dragged) {
       const id = hit(e); const node = id ? nodes.get(id) : undefined;
       if (node) { hover(id); if (!motion?.matches) { pressed = node; node.scale.setScalar(0.98); } dirty = true; }
@@ -186,6 +192,8 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
   function update(floors: SceneFloor[], exploded: boolean, walls: boolean, accent = '#2ABDFF') {
     // Theme anchors come from the shared Theme options; halve sRGB channels for white-text contrast.
     const rgb = new THREE.Color(accent).getRGB(new THREE.Color(), THREE.SRGBColorSpace);
+    selectionAccent = accent;
+    selectionTint = `rgb(${Math.round((rgb.r * 0.08 + 0.92) * 255)}, ${Math.round((rgb.g * 0.08 + 0.92) * 255)}, ${Math.round((rgb.b * 0.08 + 0.92) * 255)})`;
     const bedLabelBackground = `rgb(${Math.round(rgb.r * 127.5)}, ${Math.round(rgb.g * 127.5)}, ${Math.round(rgb.b * 127.5)})`;
     releasePress(); clearHighlight(); disposeShell(hoverShell); hoverShell = null; animated = []; waterAnimations = []; scene.remove(world); resources.forEach(r => r.dispose()); resources = [];
     world = new THREE.Group(); scene.add(world); targets = []; nodes = new Map(); hover(null);
@@ -240,7 +248,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
       }
       return materials.get(key)!;
     }
-    function label(parent: THREE.Group, text: string, pos: number[], width: number, dark = false, background?: string, sign = false) {
+    function label(parent: THREE.Group, text: string, pos: number[], width: number, dark = false, background?: string, sign = false, unitId?: string) {
       const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = sign ? 144 : 96;
       const ctx = canvas.getContext('2d'); if (!ctx) return;
       const height = canvas.height;
@@ -277,18 +285,20 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
       }
       const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
       if (sign) {
-        const geometry = new THREE.PlaneGeometry(width, width * height / 512);
-        const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthTest: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
-        resources.push(texture, geometry, material);
-        const panel = new THREE.Mesh(geometry, material);
+        // Screen-facing upright LED: anchored at the floor, readable from every orbit angle.
+        const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false, depthWrite: false, toneMapped: false });
+        resources.push(texture, material);
+        const panel = new THREE.Sprite(material);
         panel.name = `floor-sign-${parent.name}`;
-        panel.rotation.x = -Math.PI / 2;
+        panel.center.set(0.5, 0); panel.renderOrder = 20;
+        panel.scale.set(width, width * height / 512, 1);
         panel.position.set(pos[0], pos[1], pos[2]); parent.add(panel);
         return;
       }
       const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: true, toneMapped: false });
       resources.push(texture, mat);
       const sprite = new THREE.Sprite(mat); sprite.position.set(pos[0], pos[1], pos[2]); sprite.scale.set(width, width * height / 512, 1); parent.add(sprite);
+      if (unitId) { sprite.userData.unitId = unitId; targets.push(sprite); }
     }
     function bedModel(parent: THREE.Group, beds: SceneBed[], x: number, z: number, scale: number) {
       const group = new THREE.Group(); group.position.set(x, 0, z); group.scale.setScalar(scale); parent.add(group);
@@ -346,7 +356,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
           animated.push({ node: chest, base: 0, phase: index + bed.level, amplitude: 0.012 });
         }
         box(unitGroup, [bed.width - 0.03, 0.025, 0.12], [0, y + 0.3, -bed.length * (occupied ? 0.17 : -0.05)], '#e1e7ee');
-        label(unitGroup, bed.label || bed.unit.code, [0, y + 0.43, bed.length / 2 + 0.08], Math.max(0.75, bed.width), true, bedLabelBackground);
+        label(unitGroup, bed.label || bed.unit.code, [0, y + 0.43, bed.length / 2 + 0.08], Math.max(0.75, bed.width), true, bedLabelBackground, false, bed.unit.room_id);
       }
       if (levels > 1) {
         const height = (levels - 1) * 1.35 + 0.5;
@@ -450,7 +460,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     for (const floor of floors) {
       const group = new THREE.Group(); group.name = floor.id; group.position.y = elevation; world.add(group);
       box(group, [floor.width, 0.2, floor.depth], [0, -0.1, 0], '#697888');
-      label(group, floor.label, [0, 0.012, floor.depth / 2 + 0.65], Math.min(3.4, floor.width * 0.7), true, accent, true);
+      label(group, floor.label, [0, 0.012, floor.depth / 2 + 0.85], Math.min(3.2, floor.width * 0.7), true, accent, true);
       floor.rooms.forEach(room => roomModel(group, room));
       elevation += floor.storyHeight + (exploded ? 3 : 0);
     }
@@ -469,6 +479,20 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
   }
   return {
     update, select,
+    focus(id: string) {
+      const node = nodes.get(id); if (!node) return;
+      releasePress(); node.updateWorldMatrix(true, true);
+      const box = new THREE.Box3().setFromObject(node);
+      if (box.isEmpty()) return;
+      const target = box.getCenter(new THREE.Vector3());
+      const halfAngle = THREE.MathUtils.degToRad(camera.fov / 2);
+      const limitingAngle = Math.min(halfAngle, Math.atan(Math.tan(halfAngle) * camera.aspect));
+      const distance = Math.max(2.5, box.getSize(new THREE.Vector3()).length() / 2 / Math.sin(limitingAngle) * 1.3);
+      const direction = camera.position.clone().sub(controls.target).normalize();
+      if (!direction.lengthSq()) direction.set(1, 0.95, 1.25).normalize();
+      controls.target.copy(target); camera.position.copy(target).addScaledVector(direction, distance);
+      controls.update(); select(id); dirty = true;
+    },
     setPanMode(enabled: boolean) {
       panMode = enabled; releasePress(); down = null; hover(null);
       controls.mouseButtons.LEFT = enabled ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE;

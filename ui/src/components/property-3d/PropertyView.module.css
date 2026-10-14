@@ -54,3 +54,6 @@
 .sceneSwitches { display:grid; gap:10px; padding:12px 8px 6px; max-width:170px; }
 
 .panelActions { display:flex; flex-wrap:wrap; gap:8px; }
+
+.reservationAction { position:sticky; top:-16px; z-index:2; display:grid; gap:7px; margin:-16px -16px 0; padding:16px; background:var(--color-uni-surface); border-radius:20px 20px 0 0; }
+.reservationAction small { color:var(--color-uni-muted); font-size:11px; line-height:1.5; }

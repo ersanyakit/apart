@@ -12,10 +12,11 @@ const ACTIONS = [
   ['pan-left', 'Kamerayı sola kaydır', ArrowLeft], ['pan-right', 'Kamerayı sağa kaydır', ArrowRight], ['pan-up', 'Kamerayı yukarı kaydır', ArrowUp], ['pan-down', 'Kamerayı aşağı kaydır', ArrowDown],
   ['left', 'Sola döndür', RotateCcw], ['right', 'Sağa döndür', RotateCw], ['in', 'Yakınlaştır', ZoomIn], ['out', 'Uzaklaştır', ZoomOut],
 ] as const;
-export function PropertyCanvas({ floors, exploded, walls, selectedId, onSelect, onHover, panelOpen, onTogglePanel, details, floorControls }: {
+export function PropertyCanvas({ floors, exploded, walls, selectedId, onSelect, onHover, panelOpen, onTogglePanel, details, floorControls, focusRequest }: {
   floors: SceneFloor[]; exploded: boolean; walls: boolean; selectedId: string | null;
   onSelect: (id: string | null) => void; onHover: (id: string | null) => void;
   panelOpen: boolean; onTogglePanel: () => void;
+  focusRequest?: { id: string; version: number };
   details: React.ReactNode; floorControls?: React.ReactNode;
 }) {
   const { theme } = useTheme();
@@ -48,6 +49,7 @@ export function PropertyCanvas({ floors, exploded, walls, selectedId, onSelect, 
     catch { engine.current?.dispose(); engine.current = null; setStatus('error'); }
   }, [floors, exploded, walls, accent]);
   useEffect(() => { engine.current?.select(selectedId); }, [selectedId]);
+  useEffect(() => { if (status === 'ready' && focusRequest) engine.current?.focus(focusRequest.id); }, [focusRequest, status]);
   useEffect(() => { engine.current?.setPanMode(panMode); }, [panMode]);
   function action(value: CameraAction) { if (status === 'ready') engine.current?.action(value); }
   const PanelIcon = panelOpen ? PanelRightClose : PanelRightOpen;

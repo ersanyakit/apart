@@ -176,6 +176,16 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
   });
 }
 
+function hasEmptyPhysicalBed(room: SceneRoom, bed: SceneBed): boolean {
+  // A whole-room reservation blocks sales, but must not hide every physical bunk.
+  // Keep its reservation state intact: visibility does not make it separately bookable.
+  return !bed.visualOnly && bed.unit.kind === 'bed' && !bed.unit.rentable &&
+    room.unit.rentable && room.unit.rental_mode === 'room' &&
+    (bed.sleepers?.length ?? 0) === 0 &&
+    bed.state.bookings.every(booking => booking.room_id !== bed.unit.room_id &&
+      !booking.allocations?.some(allocation => allocation.room_id === bed.unit.room_id));
+}
+
 export function visibleScene(floors: SceneFloor[], floorId: string, query: string, tone: string, onlyAvailableBeds = false): SceneFloor[] {
   const q = query.trim().toLocaleLowerCase('tr');
   return floors.filter(f => floorId === 'all' || f.id === floorId).map(floor => ({ ...floor, rooms: floor.rooms.filter(room => {
@@ -183,8 +193,25 @@ export function visibleScene(floors: SceneFloor[], floorId: string, query: strin
     const matchesText = !q || entries.some(({ unit, state }) => `${unit.code} ${unit.name} ${state.bookings.map(b => b.guest_name).join(' ')}`.toLocaleLowerCase('tr').includes(q));
     return matchesText && (tone === 'all' || entries.some(e => e.state.tone === tone));
   }).map(room => onlyAvailableBeds ? { ...room, beds: room.beds.filter(bed =>
-    bed.state.tone === 'available' && !bed.dirty && !bed.unit.inactive && !room.unit.inactive &&
+    (bed.state.tone === 'available' || hasEmptyPhysicalBed(room, bed)) && !bed.dirty && !bed.unit.inactive && !room.unit.inactive &&
     !['Kirli', 'Arizali', 'Tadilat'].includes(room.unit.status) &&
     !['Kirli', 'Arizali', 'Tadilat'].includes(bed.unit.status)
   ) } : room).filter(room => !onlyAvailableBeds || room.beds.length > 0) }));
+}
+
+
+/** Resolve a physical bed to the actual sellable unit, honoring whole-room sales. */
+export function sceneBookingTarget(snapshot: Snapshot, unitId: string): APIRoom | undefined {
+  const units = snapshot.rooms.filter(room => room.branch_id === snapshot.branch_id);
+  const byId = new Map(units.map(room => [room.room_id, room]));
+  const visited = new Set<string>();
+  let unit = byId.get(unitId), target: APIRoom | undefined;
+  while (unit) {
+    if (visited.has(unit.room_id)) return;
+    visited.add(unit.room_id);
+    if (unit.inactive || ['Arizali', 'Tadilat'].includes(unit.status)) return;
+    if (!target && unit.rentable) target = unit;
+    unit = unit.parent_id ? byId.get(unit.parent_id) : undefined;
+  }
+  return target; // Existing stays do not prevent creating a reservation for future dates.
 }

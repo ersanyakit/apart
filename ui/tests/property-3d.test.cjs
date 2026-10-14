@@ -10,7 +10,7 @@ process.env.NODE_PATH = path.join(ui, 'node_modules'); require('node:module').Mo
 require.extensions['.css'] = m => { m.exports = {}; };
 mkdirSync(path.join(out, 'components/property-3d'), { recursive: true });
 writeFileSync(path.join(out, 'components/property-3d/PropertyView.module.css'), '');
-const { buildPropertyScene, visibleScene } = require(path.join(out, 'components/property-3d/model.js'));
+const { buildPropertyScene, visibleScene, sceneBookingTarget } = require(path.join(out, 'components/property-3d/model.js'));
 const React = require('react'), { renderToStaticMarkup: render } = require('react-dom/server');
 const { PropertyView } = require(path.join(out, 'components/property-3d/PropertyView.js'));
 const { OriginalShell } = require(path.join(out, 'components/OriginalShell.js'));
@@ -114,9 +114,11 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     engine.update(floors, true, true); draw();
     assert.ok(renderer.scene.getObjectByName('jacuzzi-101'));
     const floorSign = renderer.scene.getObjectByName('floor-sign-f');
-    assert.ok(floorSign.isMesh, 'floor LED is a fixed surface, not a camera-facing sprite');
-    assert.equal(floorSign.rotation.x, -Math.PI / 2);
-    assert.equal(floorSign.position.y, 0.012);
+    assert.ok(floorSign.isSprite, 'floor LED stays readable from every camera angle');
+    assert.equal(floorSign.material.depthTest, false);
+    assert.equal(floorSign.center.y, 0);
+    assert.equal(floorSign.rotation.x, 0, 'LED panel stands upright');
+    assert.equal(floorSign.position.y, 0.012, 'panel bottom sits at floor level');
     const water = renderer.scene.getObjectByName('jacuzzi-water');
     assert.ok(water);
     const surface = water.geometry.attributes.position;
@@ -146,6 +148,14 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     const meshes = []; renderer.scene.traverse(object => { if (object.isMesh && object.userData.unitId) meshes.push(object); });
     const mattress = id => meshes.find(m => m.userData.unitId === id && m.scale.y === .16);
     const bedNode = mattress('b4').parent;
+    const bedCenter = new THREE.Box3().setFromObject(bedNode).getCenter(new THREE.Vector3());
+    const positionBeforeFocus = renderer.camera.position.clone();
+    engine.focus('b4'); draw();
+    assert.ok(controls.target.distanceTo(bedCenter) < 1e-8, 'list focus centers the selected bunk tier');
+    assert.ok(renderer.camera.position.distanceTo(positionBeforeFocus) > 0.1);
+    const focusPosition = renderer.camera.position.clone();
+    engine.focus('missing'); assert.ok(renderer.camera.position.equals(focusPosition));
+    engine.select(null);
     const event = { pointerId: 1, button: 0, clientX: 400, clientY: 300, pointerType: 'mouse' };
     listeners.get('pointerdown')(event); assert.equal(bedNode.scale.x, 0.98);
     listeners.get('pointerup')(event); assert.equal(bedNode.scale.x, 1); assert.deepEqual(selections, ['b4']);
@@ -165,7 +175,9 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     assert.equal(controls.mouseButtons.LEFT, THREE.MOUSE.PAN);
     assert.equal(controls.touches.ONE, THREE.TOUCH.PAN);
     listeners.get('pointerdown')(event); listeners.get('pointerup')(event);
-    assert.deepEqual(selections, ['b4'], 'pan mode must not select a bed');
+    assert.deepEqual(selections, ['b4', 'b4'], 'a short tap still selects in pan mode');
+    listeners.get('pointerdown')(event); listeners.get('pointermove')({ ...event, clientX: 430 }); listeners.get('pointerup')({ ...event, clientX: 430 });
+    assert.deepEqual(selections, ['b4', 'b4'], 'panning must not select a bed');
     engine.setPanMode(false);
     assert.equal(controls.mouseButtons.LEFT, THREE.MOUSE.ROTATE);
     assert.equal(controls.touches.TWO, THREE.TOUCH.DOLLY_PAN);
@@ -182,6 +194,9 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     engine.select('b4'); draw();
     const selection = renderer.scene.getObjectByName('selection-glass-enclosure');
     assert.ok(selection);
+    const tint = selection.getObjectByName('selection-theme-fill').material.color;
+    const tintRGB = tint.getRGB(new THREE.Color(), THREE.SRGBColorSpace);
+    assert.ok(tintRGB.r > 0.9 && tintRGB.g > 0.95 && tintRGB.b > 0.99, 'selection uses the light sidebar theme mix');
     const selectionResources = new Set();
     selection.traverse(o => { if (o.geometry) selectionResources.add(o.geometry); if (o.material) selectionResources.add(o.material); });
     let selectionDisposed = 0;
@@ -197,6 +212,15 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     assert.ok(renderer.scene.getObjectByName('dirty-fold-b4-2'));
     engine.update(floors, false, true); draw();
     assert.equal(renderer.scene.getObjectByName('dirty-fold-b1-0'), undefined);
+    engine.update(floors, false, true, '#FF37C7'); engine.select(null); draw();
+    listeners.get('pointermove')(event); draw();
+    const hoverFill = renderer.scene.getObjectByName('hover-glass-enclosure').getObjectByName('selection-theme-fill').material;
+    assert.equal(hoverFill.color.getHexString(), 'ffeffb');
+    assert.equal(hoverFill.toneMapped, false);
+    engine.select('b4'); draw();
+    const activeFill = renderer.scene.getObjectByName('selection-glass-enclosure').getObjectByName('selection-theme-fill').material;
+    assert.equal(activeFill.color.getHexString(), 'ffeffb');
+    assert.ok(activeFill.opacity > hoverFill.opacity);
     engine.dispose(); engine = null;
     assert.ok(renderer.disposed && renderer.lost && canvas.removed && controlsDisposed && observerDisconnected);
     assert.equal(listeners.size, 0); assert.equal(documentListeners.size, 0);
@@ -332,4 +356,50 @@ test('available-bed filter excludes occupied, reserved, dirty, maintenance and i
   assert.deepEqual(filtered.flatMap(f => f.rooms.flatMap(r => r.beds.map(b => b.unit.room_id))), ['free']);
   assert.equal(JSON.stringify(scene), before);
   assert.equal(visibleScene(scene, 'all', '', 'all').flatMap(f => f.rooms).length, 2);
+});
+
+
+test('3D booking targets permit future bookings for occupied units but block unavailable units', () => {
+  const wholeRoom = room('101', { rentable: true });
+  const physical = room('b1', { kind: 'bed', parent_id: '101', rentable: false });
+  assert.equal(sceneBookingTarget(snapshot([wholeRoom, physical]), 'b1').room_id, '101');
+  const separate = [{ ...wholeRoom, rentable: false }, { ...physical, rentable: true }];
+  assert.equal(sceneBookingTarget(snapshot(separate), 'b1').room_id, 'b1');
+  assert.equal(sceneBookingTarget(snapshot([wholeRoom, physical], { bookings: [booking('live')] }), 'b1').room_id, '101');
+  assert.equal(sceneBookingTarget(snapshot(separate.map(u => u.room_id === '101' ? { ...u, status: 'Tadilat' } : u)), 'b1'), undefined);
+  assert.equal(sceneBookingTarget(snapshot([{ ...wholeRoom, inactive: true }, physical]), 'b1'), undefined);
+  assert.equal(sceneBookingTarget(snapshot([room('foreign', { branch_id: 'other' })]), 'foreign'), undefined);
+});
+
+
+test('early checked-in guests appear immediately even when the planned reservation starts later', () => {
+  const units = [room('101'), room('b1', { kind: 'bed', parent_id: '101', capacity: 1, rentable: true })];
+  const early = booking('early', { room_id: 'b1', guest_count: 1, guests: [{ id: 'guest', name: 'Misafir', gender: 'male' }], check_in: '2026-10-15T10:00:00Z', check_out: '2026-10-18T10:00:00Z', actual_check_in: '2026-10-14T09:00:00Z' });
+  const source = snapshot(units, { bookings: [early] });
+  const bed = buildPropertyScene(source, [])[0].rooms[0].beds[0];
+  assert.equal(bed.state.tone, 'occupied');
+  assert.deepEqual(bed.sleepers, ['male']);
+  assert.equal(bed.state.current[0].booking_id, 'early');
+  assert.equal(sceneBookingTarget(source, 'b1').room_id, 'b1');
+  const scheduled = buildPropertyScene(snapshot(units, { bookings: [{ ...early, status: 'confirmed', actual_check_in: null }] }), [])[0].rooms[0].beds[0];
+  assert.deepEqual(scheduled.sleepers, []);
+});
+
+test('empty-bed filter keeps unoccupied physical bunks in a whole-room reservation without changing sales scope', () => {
+  const units = [room('101', { rental_mode: 'room', capacity: 20 }), ...Array.from({ length: 20 }, (_, i) => room(`b${String(i + 1).padStart(2, '0')}`, { kind: 'bed', parent_id: '101', rentable: false, capacity: 1, bed_group: `bunk-${Math.floor(i / 4)}`, bed_level: i % 4 + 1 }))];
+  const source = snapshot(units, { bookings: [booking('whole-room', { status: 'confirmed', guest_count: 1, actual_check_in: null })] });
+  const scene = buildPropertyScene(source, []), before = JSON.stringify(scene);
+  const beds = visibleScene(scene, 'all', '', 'all', true)[0].rooms[0].beds;
+  assert.equal(beds.length, 20);
+  assert.ok(beds.every(b => b.state.tone === 'reserved'));
+  assert.equal(sceneBookingTarget(source, 'b02').room_id, '101');
+  assert.equal(JSON.stringify(scene), before);
+  const occupied = buildPropertyScene({ ...source, bookings: [booking('whole-room', { guest_count: 1 })] }, []);
+  const empty = visibleScene(occupied, 'all', '', 'all', true)[0].rooms[0].beds;
+  assert.equal(empty.length, 19);
+  assert.ok(empty.every(b => b.sleepers.length === 0));
+  const direct = buildPropertyScene({ ...source, bookings: [...source.bookings, booking('direct', { room_id: 'b02', status: 'confirmed' })] }, []);
+  assert.equal(visibleScene(direct, 'all', '', 'all', true)[0].rooms[0].beds.length, 19);
+  const dirty = buildPropertyScene({ ...source, rooms: units.map(u => u.room_id === '101' ? { ...u, status: 'Kirli' } : u) }, []);
+  assert.equal(visibleScene(dirty, 'all', '', 'all', true)[0].rooms.length, 0);
 });

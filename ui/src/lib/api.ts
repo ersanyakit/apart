@@ -302,9 +302,14 @@ export function occupancy(
 /** Compare instants, never ISO strings: offsets and precision may differ. */
 export function bookingIntervals(booking: Booking, now: string) {
   const segments = booking.allocations?.length ? booking.allocations : [{ room_id: booking.room_id, start: booking.check_in, end: booking.check_out }];
+  const firstStart = Math.min(...segments.map(segment => Date.parse(segment.start)).filter(Number.isFinite));
   return segments.map(segment => {
     let start = Date.parse(segment.start), end = Date.parse(segment.end);
-    if (booking.actual_check_in) start = Math.max(start, Date.parse(booking.actual_check_in));
+    if (booking.actual_check_in) {
+      const actualStart = Date.parse(booking.actual_check_in);
+      // Early check-in occupies the first assigned unit immediately; later moves keep their own start.
+      start = start === firstStart ? actualStart : Math.max(start, actualStart);
+    }
     if (booking.actual_check_out) end = Math.min(end, Date.parse(booking.actual_check_out));
     // An overdue stay still occupies its last room until checkout is recorded.
     if (booking.status === "checked_in" && segment.room_id === booking.room_id && end === Date.parse(booking.check_out)) {
