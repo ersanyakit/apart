@@ -20,6 +20,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   const [loading, setLoading] = useState(true), [refreshing, setRefreshing] = useState(false), [refreshError, setRefreshError] = useState('');
   const [revision, setRevision] = useState(0);
   const [floorId, setFloorId] = useState('all'), [query, setQuery] = useState(''), [tone, setTone] = useState('all');
+  const [onlyAvailableBeds, setOnlyAvailableBeds] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null), [hoverId, setHoverId] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
   const select = (id: string | null) => { setSelectedId(id); if (id) setPanelOpen(true); };
@@ -57,7 +58,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   }, []);
   const floors = useMemo(() => buildPropertyScene(snapshot, beds), [snapshot, beds]);
   const effectiveFloor = floors.some(f => f.id === floorId) ? floorId : 'all';
-  const filtered = useMemo(() => visibleScene(floors, effectiveFloor, query, tone), [floors, effectiveFloor, query, tone]);
+  const filtered = useMemo(() => visibleScene(floors, effectiveFloor, query, tone, onlyAvailableBeds), [floors, effectiveFloor, query, tone, onlyAvailableBeds]);
   const rooms = filtered.flatMap(f => f.rooms);
   const units = new Map<string, SceneUnit>();
   for (const room of rooms) { units.set(room.unit.room_id, room); for (const bed of room.beds.filter(b => !b.visualOnly)) units.set(bed.unit.room_id, bed); }
@@ -66,14 +67,14 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   const hover = hoverId ? units.get(hoverId) : undefined;
   const places = [...units.values()].filter(u => u.unit.kind === 'bed');
   const bookings = selected?.state.bookings || [];
-  const clearFilters = () => { setFloorId('all'); setTone('all'); setQuery(''); };
+  const clearFilters = () => { setFloorId('all'); setTone('all'); setQuery(''); setOnlyAvailableBeds(false); };
   return <div className={styles.page}>
     {(bedError || refreshError) && <div className={styles.notice} role="alert"><p>{bedError ? `Fiziksel yatak ölçüleri alınamadı: ${bedError}. Birim kayıtları gösteriliyor.` : `Veriler yenilenemedi: ${refreshError}`}</p><button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => void refresh()}>Tekrar dene</button></div>}
     {rooms.length ? <div className={`${styles.workspace}${panelOpen ? '' : ` ${styles.detailsHidden}`}`}>
       <div className={styles.sceneColumn}>
         <PropertyCanvas floorControls={<nav className={styles.floorTabs} aria-label="3B kat görünümü">
       {[{ id: 'all', label: 'Tüm katlar' }, ...floors].map(floor => <button type="button" key={floor.id} aria-pressed={effectiveFloor === floor.id} className={`uni-button ${effectiveFloor === floor.id ? 'uni-button-primary' : 'uni-button-secondary'} rounded-full`} onClick={() => { setFloorId(floor.id); setSelectedId(null); }}>{floor.label}</button>)}
-      <div className={styles.sceneSwitches}><Switch label="Katları ayır" checked={exploded} onChange={setExploded} /><Switch label="Duvarlar" checked={walls} onChange={setWalls} /></div>
+      <div className={styles.sceneSwitches}><Switch label="Katları ayır" checked={exploded} onChange={setExploded} /><Switch label="Duvarlar" checked={walls} onChange={setWalls} /><Switch label="Yalnızca boş yatakları göster" checked={onlyAvailableBeds} onChange={value => { setOnlyAvailableBeds(value); setSelectedId(null); if (value) setTone('all'); }} /></div>
     </nav>} floors={filtered} exploded={exploded} walls={walls} selectedId={selected?.unit.room_id || null} onSelect={select} onHover={setHoverId} panelOpen={panelOpen} onTogglePanel={() => setPanelOpen(v => !v)} details={
         <aside className={styles.details} aria-label="Oda ve yatak bilgileri" aria-hidden={!panelOpen} inert={!panelOpen}>
         <div className={styles.panelActions}>

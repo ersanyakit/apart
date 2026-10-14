@@ -176,11 +176,15 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
   });
 }
 
-export function visibleScene(floors: SceneFloor[], floorId: string, query: string, tone: string): SceneFloor[] {
+export function visibleScene(floors: SceneFloor[], floorId: string, query: string, tone: string, onlyAvailableBeds = false): SceneFloor[] {
   const q = query.trim().toLocaleLowerCase('tr');
   return floors.filter(f => floorId === 'all' || f.id === floorId).map(floor => ({ ...floor, rooms: floor.rooms.filter(room => {
     const entries: SceneUnit[] = [room, ...room.beds];
     const matchesText = !q || entries.some(({ unit, state }) => `${unit.code} ${unit.name} ${state.bookings.map(b => b.guest_name).join(' ')}`.toLocaleLowerCase('tr').includes(q));
     return matchesText && (tone === 'all' || entries.some(e => e.state.tone === tone));
-  }) }));
+  }).map(room => onlyAvailableBeds ? { ...room, beds: room.beds.filter(bed =>
+    bed.state.tone === 'available' && !bed.dirty && !bed.unit.inactive && !room.unit.inactive &&
+    !['Kirli', 'Arizali', 'Tadilat'].includes(room.unit.status) &&
+    !['Kirli', 'Arizali', 'Tadilat'].includes(bed.unit.status)
+  ) } : room).filter(room => !onlyAvailableBeds || room.beds.length > 0) }));
 }

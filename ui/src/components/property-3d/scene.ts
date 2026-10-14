@@ -41,6 +41,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
   let hoverShell: THREE.Group | null = null;
   let pressed: THREE.Object3D | null = null;
   let animated: { node: THREE.Object3D; base: number; phase: number; amplitude: number }[] = [];
+  let waterAnimations: ((time: number) => void)[] = [];
   const motion = window.matchMedia?.('(prefers-reduced-motion: reduce)');
   let selectedId: string | null = null;
   let resources: Array<{ dispose(): void }> = [];
@@ -118,9 +119,10 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     frame = requestAnimationFrame(animate);
     if (document.hidden || !container.clientWidth || !container.clientHeight) return;
     const moved = controls.update();
-    if (animated.length && !motion?.matches) {
+    if ((animated.length || waterAnimations.length) && !motion?.matches) {
       const time = performance.now() / 1000;
       for (const item of animated) item.node.position.y = item.base + Math.sin(time * 2.2 + item.phase) * item.amplitude;
+      waterAnimations.forEach(animateWater => animateWater(time));
       dirty = true;
     }
     if (dirty || moved) {
@@ -185,7 +187,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     // Theme anchors come from the shared Theme options; halve sRGB channels for white-text contrast.
     const rgb = new THREE.Color(accent).getRGB(new THREE.Color(), THREE.SRGBColorSpace);
     const bedLabelBackground = `rgb(${Math.round(rgb.r * 127.5)}, ${Math.round(rgb.g * 127.5)}, ${Math.round(rgb.b * 127.5)})`;
-    releasePress(); clearHighlight(); disposeShell(hoverShell); hoverShell = null; animated = []; scene.remove(world); resources.forEach(r => r.dispose()); resources = [];
+    releasePress(); clearHighlight(); disposeShell(hoverShell); hoverShell = null; animated = []; waterAnimations = []; scene.remove(world); resources.forEach(r => r.dispose()); resources = [];
     world = new THREE.Group(); scene.add(world); targets = []; nodes = new Map(); hover(null);
     const boxGeometry = new THREE.BoxGeometry(1, 1, 1); resources.push(boxGeometry);
     const grain = new Uint8Array(64 * 64 * 4);
@@ -224,7 +226,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
           const stripe = x % 16 < 4 || y % 16 < 4;
           const edge = x < 2 || y < 2 || x > 61 || y > 61;
           const weave = (x + y) % 2 ? 0.97 : 1;
-          for (let c = 0; c < 3; c++) pixels[i + c] = (edge ? rgb[c] * 0.6 : stripe ? rgb[c] * 0.65 + 255 * 0.35 : rgb[c]) * weave;
+          for (let c = 0; c < 3; c++) pixels[i + c] = (edge ? rgb[c] * (color === '#ffffff' ? 0.94 : 0.6) : stripe ? rgb[c] * 0.65 + 255 * 0.35 : rgb[c]) * weave;
           if (dirty) {
             const stain = ((x - 18) ** 2 / 80 + (y - 23) ** 2 / 42 < 1) || ((x - 44) ** 2 / 30 + (y - 48) ** 2 / 65 < 1);
             for (let c = 0; c < 3; c++) pixels[i + c] = pixels[i + c] * (stain ? 0.48 : 0.78) + [83, 67, 43][c] * (stain ? 0.38 : 0.12);
@@ -241,18 +243,52 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     function label(parent: THREE.Group, text: string, pos: number[], width: number, dark = false, background?: string, sign = false) {
       const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = sign ? 144 : 96;
       const ctx = canvas.getContext('2d'); if (!ctx) return;
-      const height = canvas.height, inset = sign ? 12 : 0;
-      if (sign) { ctx.shadowColor = 'rgba(20, 24, 38, 0.18)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4; }
-      ctx.fillStyle = background || (dark ? '#344057' : '#ffffff');
-      ctx.beginPath(); ctx.roundRect(inset, inset, 512 - inset * 2, height - inset * 2, sign ? (height - inset * 2) / 2 : 22); ctx.fill();
-      ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-      ctx.fillStyle = dark ? '#ffffff' : '#27374d'; ctx.font = `${sign ? 535 : 600} 38px system-ui`;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 256, height / 2, sign ? 412 : 470);
+      const height = canvas.height;
+      if (sign) {
+        // Dark LED display with a recessed screen and theme-colored dot-matrix lettering.
+        ctx.shadowColor = 'rgba(0,0,0,0.3)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4;
+        ctx.fillStyle = '#303743'; ctx.beginPath(); ctx.roundRect(8, 8, 496, 128, 20); ctx.fill();
+        ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+        ctx.fillStyle = '#080e17'; ctx.beginPath(); ctx.roundRect(16, 16, 480, 112, 13); ctx.fill();
+        const mask = document.createElement('canvas'); mask.width = 120; mask.height = 26;
+        const ink = mask.getContext('2d');
+        if (ink) {
+          ink.fillStyle = '#ffffff'; ink.font = '700 20px monospace';
+          ink.textAlign = 'center'; ink.textBaseline = 'middle'; ink.fillText(text, 60, 13, 110);
+          const pixels = ink.getImageData(0, 0, 120, 26).data;
+          for (const lit of [false, true]) {
+            ctx.fillStyle = lit ? (background || accent) : '#17222e';
+            ctx.shadowColor = lit ? (background || accent) : 'transparent'; ctx.shadowBlur = lit ? 3 : 0;
+            ctx.beginPath();
+            for (let y = 0; y < 26; y++) for (let x = 0; x < 120; x++) {
+              if ((pixels[(y * 120 + x) * 4 + 3] > 90) !== lit) continue;
+              const px = 18 + x * 4, py = 22 + y * 4;
+              ctx.moveTo(px + 1.35, py); ctx.arc(px, py, 1.35, 0, Math.PI * 2);
+            }
+            ctx.fill();
+          }
+          ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0;
+        }
+      } else {
+        ctx.fillStyle = background || (dark ? '#344057' : '#ffffff');
+        ctx.beginPath(); ctx.roundRect(0, 0, 512, height, 22); ctx.fill();
+        ctx.fillStyle = dark ? '#ffffff' : '#27374d'; ctx.font = '600 38px system-ui';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, 256, height / 2, 470);
+      }
       const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;
+      if (sign) {
+        const geometry = new THREE.PlaneGeometry(width, width * height / 512);
+        const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthTest: true, depthWrite: false, toneMapped: false, side: THREE.DoubleSide });
+        resources.push(texture, geometry, material);
+        const panel = new THREE.Mesh(geometry, material);
+        panel.name = `floor-sign-${parent.name}`;
+        panel.rotation.x = -Math.PI / 2;
+        panel.position.set(pos[0], pos[1], pos[2]); parent.add(panel);
+        return;
+      }
       const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: true, toneMapped: false });
       resources.push(texture, mat);
       const sprite = new THREE.Sprite(mat); sprite.position.set(pos[0], pos[1], pos[2]); sprite.scale.set(width, width * height / 512, 1); parent.add(sprite);
-      if (sign) sprite.name = `floor-sign-${parent.name}`;
     }
     function bedModel(parent: THREE.Group, beds: SceneBed[], x: number, z: number, scale: number) {
       const group = new THREE.Group(); group.position.set(x, 0, z); group.scale.setScalar(scale); parent.add(group);
@@ -265,8 +301,8 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
         const unitGroup = new THREE.Group(); group.add(unitGroup); if (!bed.visualOnly) nodes.set(bed.unit.room_id, unitGroup);
         box(unitGroup, [bed.width + 0.09, 0.12, bed.length + 0.08], [0, y, 0], wood, bed.unit.room_id);
         box(unitGroup, [bed.width, 0.16, bed.length], [0, y + 0.13, 0], '#f7f5f0', bed.unit.room_id);
-        const blanketColor = bed.blanketColor || '#7c3aed';
-        const occupied = !!bed.sleepers?.length;
+        const occupied = bed.state.tone === 'occupied';
+        const blanketColor = occupied ? (bed.blanketColor || '#7c3aed') : '#ffffff';
         const quilt = box(unitGroup, [bed.width - 0.04, occupied ? 0.08 : 0.1, bed.length * (occupied ? 0.66 : 0.42)], [0, y + 0.25, bed.length * (occupied ? 0.14 : 0.27)], blanketColor, bed.unit.room_id);
         quilt.material = textile(blanketColor, bed.dirty); quilt.name = `blanket-${bed.unit.room_id}-${bed.level}`;
         if (bed.dirty) {
@@ -328,14 +364,38 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
       // Separate basin walls keep the water visible inside the tub.
       for (const x of [-1, 1]) box(tub, [0.18, 0.7, 2.18], [x, 0.5, 0], '#fafbfc', id);
       for (const z of [-1, 1]) box(tub, [1.85, 0.7, 0.18], [0, 0.5, z], '#fafbfc', id);
-      const water = box(tub, [1.8, 0.04, 1.8], [0, 0.64, 0], '#39c6dc', id, 0.86); water.name = 'jacuzzi-water'; animated.push({ node: water, base: 0.64, phase: 1, amplitude: 0.008 });
+      const waterGeometry = new THREE.PlaneGeometry(1.8, 1.8, 24, 24);
+      waterGeometry.rotateX(-Math.PI / 2);
+      const waterMaterial = new THREE.MeshPhysicalMaterial({ color: '#21bcd5', roughness: 0.2, metalness: 0.08, transmission: 0.35, thickness: 0.22, transparent: true, opacity: 0.92, side: THREE.DoubleSide });
+      resources.push(waterGeometry, waterMaterial);
+      const water = new THREE.Mesh(waterGeometry, waterMaterial);
+      water.name = 'jacuzzi-water'; water.position.y = 0.64; water.userData.unitId = id;
+      tub.add(water); targets.push(water);
+      const waveHeight = (x: number, z: number, time: number) =>
+        Math.sin(x * 7 + time * 2.6) * 0.028 + Math.cos(z * 8 - time * 2.1) * 0.021 + Math.sin((x + z) * 11 - time * 3) * 0.012;
+      const ripples: { mesh: THREE.Mesh; phase: number }[] = [];
+      const ringGeometry = new THREE.RingGeometry(0.075, 0.09, 24); ringGeometry.rotateX(-Math.PI / 2); resources.push(ringGeometry);
+      for (const [index, point] of [[-0.55, -0.5], [0.5, -0.45], [-0.45, 0.45], [0.5, 0.5]].entries()) {
+        const foamMaterial = new THREE.MeshBasicMaterial({ color: '#e1fbff', transparent: true, opacity: 0.75, depthWrite: false, side: THREE.DoubleSide }); resources.push(foamMaterial);
+        const mesh = new THREE.Mesh(ringGeometry, foamMaterial); mesh.name = 'jacuzzi-ripple';
+        mesh.position.set(point[0], 0.66, point[1]); tub.add(mesh); ripples.push({ mesh, phase: index * 0.23 });
+      }
+      const animateWater = (time: number) => {
+        const positions = waterGeometry.attributes.position;
+        for (let i = 0; i < positions.count; i++) positions.setY(i, waveHeight(positions.getX(i), positions.getZ(i), time));
+        positions.needsUpdate = true; waterGeometry.computeVertexNormals();
+        for (const { mesh, phase } of ripples) {
+          const cycle = (time * 0.55 + phase) % 1;
+          mesh.scale.setScalar(0.55 + cycle * 2.2);
+          mesh.position.y = 0.658 + waveHeight(mesh.position.x, mesh.position.z, time);
+          (mesh.material as THREE.MeshBasicMaterial).opacity = (1 - cycle) * 0.8;
+        }
+      };
+      animateWater(0); waterAnimations.push(animateWater);
       for (const x of [-0.7, 0.7]) box(tub, [0.38, 0.1, 0.24], [x, 0.9, -0.95], '#344057', id);
       box(tub, [0.08, 0.22, 0.18], [0, 0.95, -0.94], '#cbd6df', id);
       box(tub, [1.1, 0.2, 0.45], [0, 0.1, 1.4], '#62748a', id);
       box(tub, [1.1, 0.4, 0.3], [0, 0.2, 1.13], '#62748a', id);
-      for (const x of [-0.65, 0, 0.65]) for (const z of [-0.55, 0.4]) {
-        box(tub, [0.09, 0.018, 0.09], [x, 0.67, z], '#d6f8ff');
-      }
       label(tub, 'Jakuzi', [0, 0.45, 1.55], 1.4);
     }
     function roomModel(parent: THREE.Group, room: SceneRoom) {
@@ -390,7 +450,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
     for (const floor of floors) {
       const group = new THREE.Group(); group.name = floor.id; group.position.y = elevation; world.add(group);
       box(group, [floor.width, 0.2, floor.depth], [0, -0.1, 0], '#697888');
-      label(group, floor.label, [0, 0.38, floor.depth / 2 + 0.65], Math.min(3.4, floor.width * 0.7), true, bedLabelBackground, true);
+      label(group, floor.label, [0, 0.012, floor.depth / 2 + 0.65], Math.min(3.4, floor.width * 0.7), true, accent, true);
       floor.rooms.forEach(room => roomModel(group, room));
       elevation += floor.storyHeight + (exploded ? 3 : 0);
     }
@@ -432,7 +492,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
       camera.position.copy(controls.target).add(offset); controls.update(); dirty = true;
     },
     dispose() {
-      disposed = true; cancelAnimationFrame(frame); observer.disconnect(); controls.dispose(); releasePress(); clearHighlight(); disposeShell(hoverShell); animated = [];
+      disposed = true; cancelAnimationFrame(frame); observer.disconnect(); controls.dispose(); releasePress(); clearHighlight(); disposeShell(hoverShell); animated = []; waterAnimations = [];
       document.removeEventListener('visibilitychange', visibility);
       renderer.domElement.removeEventListener('pointerdown', pointerDown);
       renderer.domElement.removeEventListener('pointermove', pointerMove);

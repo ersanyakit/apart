@@ -101,7 +101,7 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     update() { return true; } addEventListener() {} dispose() { controlsDisposed = true; }
   }
   global.window = { devicePixelRatio: 1, matchMedia: () => motionPreference };
-  global.document = { hidden: false, addEventListener(k, fn) { documentListeners.set(k, fn); }, removeEventListener(k) { documentListeners.delete(k); }, createElement() { return { getContext() { return { beginPath() {}, roundRect() {}, fill() {}, fillText() {} }; } }; } };
+  global.document = { hidden: false, addEventListener(k, fn) { documentListeners.set(k, fn); }, removeEventListener(k) { documentListeners.delete(k); }, createElement() { return { getContext() { return { getImageData() { return { data: new Uint8ClampedArray(120 * 26 * 4) }; }, arc() {}, beginPath() {}, moveTo() {}, lineTo() {}, quadraticCurveTo() {}, closePath() {}, roundRect() {}, fill() {}, fillText() {} }; } }; } };
   global.ResizeObserver = class { observe() {} disconnect() { observerDisconnected = true; } };
   global.requestAnimationFrame = fn => { draw = fn; return 1; }; global.cancelAnimationFrame = () => {};
   Module._load = function(request, ...args) { if (request === 'three') return { ...THREE, WebGLRenderer: Renderer, Raycaster: class extends THREE.Raycaster { intersectObjects(objects) { const object = objects.find(o => o.userData.unitId === 'b4'); return object ? [{ object }] : []; } } }; if (request.includes('OrbitControls')) return { OrbitControls: Controls }; return originalLoad.call(this, request, ...args); };
@@ -113,7 +113,17 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     engine = createPropertyRenderer({ clientWidth: 1000, clientHeight: 650, appendChild() {}, style: {} }, { select(id) { selections.push(id); }, hover() {}, failure() { assert.fail('unexpected render error'); } });
     engine.update(floors, true, true); draw();
     assert.ok(renderer.scene.getObjectByName('jacuzzi-101'));
-    assert.ok(renderer.scene.getObjectByName('jacuzzi-water'));
+    const floorSign = renderer.scene.getObjectByName('floor-sign-f');
+    assert.ok(floorSign.isMesh, 'floor LED is a fixed surface, not a camera-facing sprite');
+    assert.equal(floorSign.rotation.x, -Math.PI / 2);
+    assert.equal(floorSign.position.y, 0.012);
+    const water = renderer.scene.getObjectByName('jacuzzi-water');
+    assert.ok(water);
+    const surface = water.geometry.attributes.position;
+    assert.ok(surface.count > 500);
+    const heights = Array.from({ length: surface.count }, (_, i) => surface.getY(i));
+    assert.ok(Math.max(...heights) - Math.min(...heights) > 0.07, 'water surface has actual waves');
+    assert.ok(renderer.scene.getObjectByName('jacuzzi-ripple'));
     const sleeper = renderer.scene.getObjectByName('sleeper-b1-0');
     assert.equal(sleeper.userData.gender, 'female');
     const chest = sleeper.getObjectByName('sleeper-chest');
@@ -123,7 +133,13 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     assert.equal(renderer.scene.getObjectByName('sleeper-b2-0'), undefined);
     assert.ok(renderer.shadowMap.enabled);
     const quilts = [1, 2, 3, 4].map(i => renderer.scene.getObjectByName(`blanket-b${i}-${i}`));
-    assert.equal(new Set(quilts.map(q => q.material.map)).size, 4, 'each tier has its own colored plaid textile');
+    assert.notEqual(quilts[0].material.map, quilts[1].material.map, 'occupied bed keeps its colored textile');
+    assert.ok(quilts.slice(1).every(q => q.material.map === quilts[1].material.map), 'empty beds share white linen');
+    const white = quilts[1].material.map.image.data;
+    for (let i = 0; i < white.length; i += 4) {
+      assert.equal(white[i], white[i + 1]); assert.equal(white[i], white[i + 2]);
+      assert.ok(white[i] >= 230, 'clean empty linen stays white including seams');
+    }
     assert.ok(quilts.every(q => q.material.map.isDataTexture));
     const glass = []; renderer.scene.traverse(o => { if (o.material?.isMeshPhysicalMaterial) glass.push(o); });
     assert.ok(glass.length >= 4, 'glazing and water use physical optical materials');
@@ -305,4 +321,15 @@ test('dirty rooms propagate unmade bedding without marking maintenance or neighb
   assert.equal(clean[0].rooms[0].beds[0].dirty, false);
   const bedDirty = buildPropertyScene(snapshot(units.map(u => u.room_id === 'b2' ? { ...u, status: 'Kirli' } : u)), []);
   assert.equal(bedDirty[0].rooms[1].beds[0].dirty, true);
+});
+
+
+test('available-bed filter excludes occupied, reserved, dirty, maintenance and inactive beds without mutating the scene', () => {
+  const units = [room('101'), ...['free', 'occupied', 'reserved', 'dirty', 'inactive'].map(id => room(id, { kind: 'bed', parent_id: '101', capacity: 1, status: id === 'dirty' ? 'Kirli' : 'Temiz', inactive: id === 'inactive' })), room('maintenance', { status: 'Arizali', bed_layout: 'single' })];
+  const scene = buildPropertyScene(snapshot(units, { bookings: [booking('live', { room_id: 'occupied', guest_count: 1 }), booking('next', { room_id: 'reserved', status: 'confirmed' })] }), []);
+  const before = JSON.stringify(scene);
+  const filtered = visibleScene(scene, 'all', '', 'all', true);
+  assert.deepEqual(filtered.flatMap(f => f.rooms.flatMap(r => r.beds.map(b => b.unit.room_id))), ['free']);
+  assert.equal(JSON.stringify(scene), before);
+  assert.equal(visibleScene(scene, 'all', '', 'all').flatMap(f => f.rooms).length, 2);
 });
