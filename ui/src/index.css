@@ -857,10 +857,8 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 
 /* Shared hotel/facility card follows the sidebar palette in every theme. */
 .property-switcher-card {
-  padding: 4px;
-  overflow: hidden;
-  border-radius: 20px;
-  background: var(--color-uni-surface);
+  padding: 0;
+  border: 0;
   transform: none !important;
   scale: 1 !important;
 }

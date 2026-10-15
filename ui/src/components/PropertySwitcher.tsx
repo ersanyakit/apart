@@ -9,7 +9,7 @@ export function PropertySwitcher({ snapshot, onSelection }: {
   onSelection: (selection: Selection) => void;
 }) {
   return <section aria-label="Otel ve tesis seçimi">
-    <FieldCard className="property-switcher-card">
+    <FieldCard className="sidebar-menu-group property-switcher-card">
       <UniSelect grouped variant="field" caption="Otel" ariaLabel="Otel seçimi"
         icon={<NavigationIcon name="facility" />} value={snapshot.hotel_id}
         options={snapshot.hotels.map(hotel => ({ value: hotel.hotel_id, label: hotel.name }))}

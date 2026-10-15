@@ -42,6 +42,19 @@ assert.equal(await switcher.locator('.property-switcher-card').evaluate(el=>getC
 await page.getByRole('heading',{name:'Oda Durum Çizelgesi',exact:true}).click();
 await fs.mkdir('output/property-switcher',{recursive:true});
 await page.screenshot({path:'output/property-switcher/desktop.png'});
+const card=switcher.locator('.property-switcher-card');
+const normalGroup=sidebar.locator('.sidebar-menu-group').nth(1);
+assert.equal(await card.evaluate(el=>getComputedStyle(el).borderRadius),await normalGroup.evaluate(el=>getComputedStyle(el).borderRadius));
+assert.equal(await card.evaluate(el=>getComputedStyle(el).padding),'0px');
+assert.equal(await card.evaluate(el=>getComputedStyle(el).overflow),'hidden');
+for (const [index,name] of ['Otel seçimi','Tesis seçimi'].entries()) {
+ const trigger=switcher.getByRole('button',{name,exact:true});
+ await trigger.hover();
+ const bounds=await trigger.boundingBox();const outer=await card.boundingBox();
+ assert.equal(bounds.x,outer.x);assert.equal(bounds.width,outer.width);
+ await page.screenshot({path:`output/property-switcher/hover-${index}.png`});
+}
+
 await page.setViewportSize({width:390,height:844});
 await page.getByRole('button',{name:'Menüyü aç'}).click();
 const dialog=page.getByRole('dialog');
