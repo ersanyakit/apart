@@ -4,8 +4,10 @@ from pathlib import Path
 import ctranslate2,sentencepiece
 root=Path(__file__).resolve().parents[2];dest=root/'ui/src/lib/i18n/marketing';stage=root/'output/i18n/revised';stage.mkdir(exist_ok=True)
 keys=json.loads((root/'output/i18n/source-index.json').read_text());en=json.loads((dest/'en.json').read_text())
-codes='tr:tur_Latn en:eng_Latn de:deu_Latn fr:fra_Latn ru:rus_Cyrl ar:arb_Arab ne:npi_Deva th:tha_Thai zh-CN:zho_Hans zh-TW:zho_Hant hi:hin_Deva km:khm_Khmr si:sin_Sinh ta:tam_Taml yue:yue_Hant ur:urd_Arab bn:ben_Beng dz:dzo_Tibt es:spa_Latn it:ita_Latn pt:por_Latn nl:nld_Latn pl:pol_Latn cs:ces_Latn hu:hun_Latn ro:ron_Latn el:ell_Grek uk:ukr_Cyrl bg:bul_Cyrl sr:srp_Cyrl hr:hrv_Latn sk:slk_Latn sl:slv_Latn fi:fin_Latn sv:swe_Latn da:dan_Latn no:nob_Latn ms:zsm_Latn id:ind_Latn vi:vie_Latn ja:jpn_Jpan ko:kor_Hang fa:pes_Arab he:heb_Hebr sw:swh_Latn am:amh_Ethi mr:mar_Deva pa:pan_Guru te:tel_Telu my:mya_Mymr lo:lao_Lao ka:kat_Geor hy:hye_Armn az:azj_Latn kk:kaz_Cyrl uz:uzn_Latn ky:kir_Cyrl mn:khk_Cyrl ps:pbt_Arab ku:kmr_Latn'
+codes='tr:tur_Latn en:eng_Latn de:deu_Latn fr:fra_Latn ru:rus_Cyrl ar:arb_Arab ne:npi_Deva th:tha_Thai zh-CN:zho_Hans zh-TW:zho_Hant hi:hin_Deva km:khm_Khmr si:sin_Sinh ta:tam_Taml yue:yue_Hant ur:urd_Arab bn:ben_Beng dz:dzo_Tibt es:spa_Latn it:ita_Latn pt:por_Latn nl:nld_Latn pl:pol_Latn cs:ces_Latn hu:hun_Latn ro:ron_Latn el:ell_Grek uk:ukr_Cyrl bg:bul_Cyrl sr:srp_Cyrl hr:hrv_Latn sk:slk_Latn sl:slv_Latn fi:fin_Latn sv:swe_Latn da:dan_Latn no:nob_Latn ms:zsm_Latn id:ind_Latn vi:vie_Latn ja:jpn_Jpan ko:kor_Hang fa:pes_Arab he:heb_Hebr sw:swh_Latn am:amh_Ethi mr:mar_Deva pa:pan_Guru te:tel_Telu my:mya_Mymr lo:lao_Laoo ka:kat_Geor hy:hye_Armn az:azj_Latn kk:kaz_Cyrl uz:uzn_Latn ky:kir_Cyrl mn:khk_Cyrl ps:pbt_Arab ku:kmr_Latn'
 code_map=dict(s.split(':') for s in codes.split())
+vocabulary=set(Path('/tmp/otel-localization-nllb/shared_vocabulary.txt').read_text().splitlines())
+assert set(code_map.values()) <= vocabulary, 'Unknown model language token'
 manual={'tr','en','de','fr','ar','ky','ku','yue'}
 priority=['ne','km','si','ta','dz','te']
 locales=sys.argv[1:] or priority+[c for c in code_map if c not in manual and c not in priority]

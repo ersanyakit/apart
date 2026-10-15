@@ -211,3 +211,39 @@ START sw
 PROGRESS sw 452 / 452
 PUBLISHED sw 391 seconds 47.2
 START am
+PROGRESS am 452 / 452
+PUBLISHED am 391 seconds 56.9
+START mr
+PROGRESS mr 452 / 452
+PUBLISHED mr 391 seconds 65.9
+START pa
+PROGRESS pa 452 / 452
+PUBLISHED pa 391 seconds 65.0
+START my
+PROGRESS my 452 / 452
+PUBLISHED my 391 seconds 82.2
+START lo
+PROGRESS lo 452 / 452
+REVIEW lo [(9, 'English copy'), (18, 'English copy'), (24, 'English copy'), (29, 'English copy'), (30, 'English copy'), (31, 'English copy'), (35, 'English copy'), (37, 'English copy'), (39, 'English copy'), (47, 'English copy'), (49, 'English copy'), (50, 'English copy'), (57, 'English copy'), (62, 'English copy'), (68, 'English copy'), (72, 'English copy'), (112, 'English copy'), (115, 'English copy'), (118, 'English copy'), (129, 'English copy'), (136, 'English copy'), (141, 'English copy'), (142, 'English copy'), (160, 'English copy'), (161, 'English copy'), (162, 'English copy'), (165, 'English copy'), (166, 'English copy'), (192, 'English copy'), (194, 'English copy'), (195, 'English copy'), (197, 'English copy'), (200, 'English copy'), (202, 'English copy'), (204, 'English copy'), (205, 'English copy'), (208, 'English copy'), (218, 'English copy'), (227, 'English copy'), (232, 'English copy'), (243, 'English copy'), (250, 'English copy'), (254, 'English copy'), (255, 'English copy'), (263, 'English copy'), (268, 'English copy'), (280, 'English copy'), (284, 'English copy'), (287, 'English copy'), (290, 'English copy'), (291, 'English copy'), (295, 'English copy'), (302, 'English copy'), (320, 'English copy'), (326, 'English copy'), (333, 'English copy'), (338, 'English copy'), (339, 'English copy'), (340, 'English copy'), (347, 'English copy'), (351, 'English copy'), (355, 'English copy'), (361, 'English copy'), (366, 'English copy'), (371, 'English copy'), (376, 'English copy'), (377, 'English copy'), (381, 'English copy'), (384, 'English copy'), (385, 'English copy'), (389, 'English copy')]
+START ka
+PROGRESS ka 452 / 452
+PUBLISHED ka 391 seconds 78.9
+START hy
+PROGRESS hy 452 / 452
+PUBLISHED hy 391 seconds 85.0
+START az
+PROGRESS az 452 / 452
+PUBLISHED az 391 seconds 78.1
+START kk
+PROGRESS kk 452 / 452
+PUBLISHED kk 391 seconds 61.1
+START uz
+PROGRESS uz 452 / 452
+PUBLISHED uz 391 seconds 71.7
+START mn
+PROGRESS mn 452 / 452
+PUBLISHED mn 391 seconds 79.3
+START ps
+PROGRESS ps 452 / 452
+PUBLISHED ps 391 seconds 138.8
+COMPLETE

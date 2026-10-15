@@ -8,6 +8,10 @@ for(const width of [1440,390,320]){
  await page.goto('http://localhost:3000',{waitUntil:'networkidle'});
  const trigger=page.getByRole('button',{name:'Dil seçin: Türkçe',exact:true});
  await trigger.click();
+ await page.locator('[class*=languageControl] img').first().evaluate(image => image.decode());
+ const flags = await page.locator('[class*=languageControl] img').evaluateAll(images => images.map(image => ({loaded:image.complete && image.naturalWidth > 0, radius:getComputedStyle(image).borderRadius, width:image.clientWidth,height:image.clientHeight})));
+ assert.ok(flags.length > 1);
+ for (const flag of flags) {assert.equal(flag.radius,'50%');assert.equal(flag.width,flag.height);}
  const box=page.getByRole('combobox');await box.fill('deutsch');
  await page.waitForTimeout(250);
  await page.screenshot({path:`output/i18n/language-menu-${width}.png`});

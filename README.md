@@ -1,6 +1,203 @@
-# apart — INTERACTIVEOTEL
+# INTERACTIVEOTEL
 
-PostgreSQL + GORM, Fiber v3 ve Next.js SSR ile otel, tesis, kat, daire, oda ve yatak yönetimi. İş komutlarının tamamı `/action` üzerinden çalışır; sözleşme sürümü `1`.
+**Az telaş. Her şey yerinde.**
+
+Otel, apart, pansiyon, günlük kiralık daire ve hostel işletmeleri için rezervasyon, konaklama, oda ve yatak yönetimi. Resepsiyonun günlük işleri, tesis tanımları, olanaklar, tahsilat takibi ve raporlar aynı uygulamada bir araya gelir.
+
+![INTERACTIVEOTEL — konaklama işletmeleri için yönetim platformu](docs/images/hero.png)
+
+[Özellikler](#özellikler) · [Ekran görüntüleri](#ekran-görüntüleri) · [Dil desteği](#dil-desteği-ve-tanıtım-sayfaları) · [Kurulum](#çalıştırma) · [API](#api) · [Doğrulama](#doğrulama)
+
+## Kimler için?
+
+| İşletme | Kullanım örneği |
+| --- | --- |
+| Otel | Oda bazında rezervasyon, temizlik durumu, giriş–çıkış ve günlük operasyon. |
+| Apart / apart otel | Daire, oda ve bağlı yatakları aynı tesis yapısında tanımlama. |
+| Pansiyon | Oda müsaitliği, misafir kayıtları ve resepsiyon işlerinin takibi. |
+| Günlük kiralık daire | Bağımsız daireleri tarih aralığına göre kiralama ve konaklamaları yönetme. |
+| Hostel | Yatakhane, tekil yatak ve ranza düzeni; oda veya yatak bazında satış. |
+
+Bunlar ürünün kullanım örnekleridir; ücretli paket tanımları değildir.
+
+## Özellikler
+
+| Alan | Neler yapılabilir? |
+| --- | --- |
+| Rezervasyon ve takvim | Müsaitlik kontrolü, yeni rezervasyon, tarih düzenleme, iptal ve birim bazında takvim takibi. |
+| Konaklama işlemleri | Giriş, erken giriş, çıkış, oda taşıma ve karşılıklı birim değişimi; planlanan ve gerçek hareket zamanlarının korunması. |
+| Oda durumları | Doluluk, yaklaşan rezervasyon, temizlik ve bakım durumlarını ortak çizelgede izleme. |
+| Tesis ve birimler | Otel → tesis/şube → kat → daire/oda → yatak yapısı; bağımsız kiralanabilir birimler ve fiziksel yatak envanteri. |
+| 3 boyutlu görünüm | Kat, oda ve yatak yerleşimlerini doluluk bilgileriyle inceleme; kat seçimi, duvar ve katları ayırma kontrolleri. |
+| Olanaklar ve envanter | Ortak katalogdan oda/tesis özellikleri, banyo ve oda donanımı, ürün adetleri ve envanter atamaları. |
+| Misafirler ve belgeler | Misafir geçmişi, rezervasyon bağlantıları, belge şablonları, oda folyosu ve yazdırılabilir çıktılar. |
+| Resepsiyon notları | Yapılacak, devam eden ve tamamlanan işler; öncelik, arşivleme ve vardiyalar arası ortak pano. |
+| Finans ve raporlar | Gelir ile tahsilatı ayrı izleme, doluluk, ödeme yöntemleri ve yönetim özeti; tarih/tesis/para birimi filtreleri ve grafikler. |
+| Personel ve yetkiler | Rol ve şube erişimleri; kullanıcıya özel tercihler ve işlem günlükleri. |
+| Kişiselleştirme | Tema, dil, para biçimi, yazı boyutu ve görünüm tercihlerini kullanıcı hesabında saklama. |
+
+## Ekran görüntüleri
+
+Aşağıdaki **14 görüntü gerçek uygulama arayüzünden**, kurgusal **Mavi Avlu Otel** kayıtlarıyla hazırlanmıştır. Görselleri büyütmek için üzerlerine tıklayın. Raporlardaki tutarlar ve misafirler örnek veridir.
+
+### Günlük operasyon
+
+<details open>
+<summary><strong>Oda durum çizelgesi</strong></summary>
+
+Birimlerin temizlik ve konaklama durumunu, misafirleri ve giriş–çıkış tarihlerini aynı görünümde takip edin.
+
+[![Oda durum çizelgesi — örnek Mavi Avlu Otel ekranı](docs/images/board.png)](docs/images/board.png)
+
+</details>
+
+<details>
+<summary><strong>Konaklayan listesi</strong></summary>
+
+Tesisinizdeki mevcut konaklamaları ve planlanan çıkışları takip edin; ilgili misafir ve rezervasyon bilgilerine ulaşın.
+
+[![Konaklayan listesi — örnek Mavi Avlu Otel ekranı](docs/images/stays.png)](docs/images/stays.png)
+
+</details>
+
+<details>
+<summary><strong>Resepsiyon notları</strong></summary>
+
+Yapılacak, devam eden ve tamamlanan işleri aynı panoda tutun. Vardiyalar arasında bilgiyi paylaşın.
+
+[![Resepsiyon notları — örnek Mavi Avlu Otel ekranı](docs/images/notes.png)](docs/images/notes.png)
+
+</details>
+
+### Rezervasyon ve takvim
+
+<details>
+<summary><strong>Konaklama takvimi</strong></summary>
+
+Rezervasyonların tarihlere ve birimlere dağılımını görün. Konaklama planını takvim üzerinden inceleyin.
+
+[![Konaklama takvimi — örnek Mavi Avlu Otel ekranı](docs/images/calendar.png)](docs/images/calendar.png)
+
+</details>
+
+<details>
+<summary><strong>Rezervasyon listesi</strong></summary>
+
+Rezervasyonları durum, misafir ve tarih bilgileriyle birlikte listeleyin; günlük işlemlerinize buradan ulaşın.
+
+[![Rezervasyon listesi — örnek Mavi Avlu Otel ekranı](docs/images/bookings.png)](docs/images/bookings.png)
+
+</details>
+
+<details>
+<summary><strong>Rezervasyon oluşturma</strong></summary>
+
+Tarih, uygun birim, misafir ve fiyat bilgilerini bir araya getirerek yeni rezervasyonunuzu hazırlayın.
+
+[![Rezervasyon oluşturma — örnek Mavi Avlu Otel ekranı](docs/images/new-booking.png)](docs/images/new-booking.png)
+
+</details>
+
+### Tesis, 3B görünüm ve olanaklar
+
+<details open>
+<summary><strong>3 boyutlu tesis görünümü</strong></summary>
+
+Katları, odaları ve yatak yerleşimlerini üç boyutlu planda inceleyin. Birimleri konaklama durumlarıyla birlikte görün.
+
+[![3 boyutlu tesis görünümü — örnek Mavi Avlu Otel ekranı](docs/images/property-3d.png)](docs/images/property-3d.png)
+
+</details>
+
+<details>
+<summary><strong>Kat ve oda tanımları</strong></summary>
+
+Tesisinizin katlarını ve birimlerini düzenleyin. Oda, daire ve yatak yapısını işletmenize göre tanımlayın.
+
+[![Kat ve oda tanımları — örnek Mavi Avlu Otel ekranı](docs/images/property.png)](docs/images/property.png)
+
+</details>
+
+<details>
+<summary><strong>Olanaklar ve oda envanteri</strong></summary>
+
+Banyo, oda donanımı ve diğer olanakları ortak katalogda inceleyin. Oda tanımlarında kullanılacak özellik ve envanter seçeneklerini görün.
+
+[![Olanaklar ve oda envanteri — örnek Mavi Avlu Otel ekranı](docs/images/amenities.png)](docs/images/amenities.png)
+
+</details>
+
+### Raporlama
+
+<details open>
+<summary><strong>Yönetim özeti</strong></summary>
+
+Konaklama geliri, tahsilat ve doluluk göstergelerini aynı ekranda değerlendirin. Dönem içindeki değişimleri grafiklerle izleyin.
+
+[![Yönetim özeti — örnek Mavi Avlu Otel ekranı](docs/images/report-dashboard.png)](docs/images/report-dashboard.png)
+
+</details>
+
+<details>
+<summary><strong>Günlük gelir ve tahsilat</strong></summary>
+
+Konaklama gelirini ve gerçekleşen tahsilatı ayrı takip edin. Tarih, tesis ve para birimi filtreleriyle dönem hareketlerini inceleyin.
+
+[![Günlük gelir ve tahsilat — örnek Mavi Avlu Otel ekranı](docs/images/report-revenue.png)](docs/images/report-revenue.png)
+
+</details>
+
+<details>
+<summary><strong>Günlük doluluk</strong></summary>
+
+Fiziksel kapasite ve satılabilir kapasite doluluğunu karşılaştırın. Dolu ve boş birim-geceleri tarih bazında görün.
+
+[![Günlük doluluk — örnek Mavi Avlu Otel ekranı](docs/images/report-occupancy.png)](docs/images/report-occupancy.png)
+
+</details>
+
+<details>
+<summary><strong>Ödeme yöntemleri</strong></summary>
+
+Tahsilatların kredi kartı, banka havalesi, nakit ve online ödeme dağılımını halka grafikle inceleyin. İade ve ödeme tutarlarını ayrı karşılaştırın.
+
+[![Ödeme yöntemleri — örnek Mavi Avlu Otel ekranı](docs/images/report-payments.png)](docs/images/report-payments.png)
+
+</details>
+
+### Kişiselleştirme
+
+<details>
+<summary><strong>Kişisel kullanım ayarları</strong></summary>
+
+Arayüz görünümünü, dil ve para birimi tercihlerini çalışma alışkanlıklarınıza göre düzenleyin.
+
+[![Kişisel kullanım ayarları — örnek Mavi Avlu Otel ekranı](docs/images/settings.png)](docs/images/settings.png)
+
+</details>
+
+## Dil desteği ve tanıtım sayfaları
+
+Ana sayfa, fiyatlar, ekran görüntüleri ve iletişim sayfalarında **60 dil** için yerel çeviri sözlükleri bulunur. Dil seçici arama, klavye kullanımı ve yerel SVG bayrakları destekler. Sağdan sola yazılan dillerde sayfa yönü de değişir; dil tercihi sayfa geçişlerinde korunur. Çeviriler çalışma anında Google Translate veya başka bir harici çeviri servisine gönderilmez.
+
+Tanıtım sayfalarının her dilde aynı kalan İngilizce yolları:
+
+| Yol | Sayfa |
+| --- | --- |
+| `/` | Ana sayfa ve ürün özellikleri |
+| `/pricing` | Fiyatlar ve işletme türlerine göre kullanım örnekleri |
+| `/screenshots` | Kategorili ekran görüntüleri ve büyütülebilir galeri |
+| `/contact` | İletişim |
+| `/login?tab=board` | Giriş ve oda durum çizelgesine yönlendirme |
+
+Çeviri kaynakları: [`ui/src/lib/i18n/marketing`](ui/src/lib/i18n/marketing). Bayraklar: [`ui/src/assets/flags`](ui/src/assets/flags). Bu kapsam tanıtım sayfaları içindir; uygulama içindeki ortak katalogların çeviri ve yedek dil davranışı aşağıda ayrıca açıklanır.
+
+## Teknoloji
+
+- **Backend:** Go, Fiber v3, GORM ve PostgreSQL.
+- **Arayüz:** Next.js App Router, React ve TypeScript; SSR ve geliştirmede Fast Refresh.
+- **3B görünüm:** Three.js; ilgili ekran açıldığında yüklenir.
+- **İletişim:** Aynı origin üzerinden sunulan arayüz ve `/action` API'si; sözleşme sürümü `1`.
 
 ## Çalıştırma
 

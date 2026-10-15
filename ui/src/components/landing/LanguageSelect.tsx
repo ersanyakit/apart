@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { Check, ChevronDown, Languages, Search, X } from 'lucide-react';
+import { Check, ChevronDown, Search, X } from 'lucide-react';
+import Image from 'next/image';
+import { marketingFlags } from '../../lib/i18n/marketing-flags';
 import { LOCALES, type Locale } from '../../lib/i18n/config';
-import { marketingLoaders } from '../../lib/i18n/marketing';
 import { useMarketingI18n } from './MarketingI18n';
 import styles from './Landing.module.css';
 
@@ -22,12 +23,11 @@ export function LanguageSelect() {
   const trigger = useRef<HTMLButtonElement>(null);
   const search = useRef<HTMLInputElement>(null);
   const id = useId();
-  const matches = useMemo(() => Object.entries(LOCALES).filter(([code]) => marketingLoaders[code as Locale]).map(([code, details]) => ({
+  const matches = useMemo(() => Object.entries(LOCALES).map(([code, details]) => ({
     code: code as Locale, ...details, name: languageName(locale, code),
     search: normalize(`${code} ${details.label} ${languageName(locale, code)} ${languageName('en', code)} ${languageName('tr', code)}`),
   })).filter(item => item.search.includes(normalize(query.trim()))), [locale, query]);
-  const enabled = matches.filter(item => marketingLoaders[item.code]);
-  const highlighted = enabled.some(item => item.code === active) ? active : enabled[0]?.code;
+  const highlighted = matches.some(item => item.code === active) ? active : matches[0]?.code;
 
   function close(restoreFocus = false) {
     setOpen(false);
@@ -59,7 +59,7 @@ export function LanguageSelect() {
       onClick={() => open ? close() : show()} onKeyDown={event => {
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); show(); }
       }}>
-      <Languages size={18} aria-hidden="true"/><span lang={locale}>{LOCALES[locale].label}</span>
+      <Image src={marketingFlags[locale]} width={24} height={24} alt="" className={styles.languageFlag} unoptimized/><span lang={locale}>{LOCALES[locale].label}</span>
       <ChevronDown size={14} aria-hidden="true" className={open ? styles.languageChevronOpen : undefined}/>
     </button>
     {open && <div className={styles.languagePanel}>
@@ -67,17 +67,17 @@ export function LanguageSelect() {
       <div className={styles.languageSearch}><Search size={17} aria-hidden="true"/><input ref={search} role="combobox" autoComplete="off" spellCheck={false}
         aria-label={m('Dil ara')} placeholder={m('Dil adı veya kodu…')} aria-expanded="true" aria-autocomplete="list" aria-controls={`${id}-list`} aria-activedescendant={highlighted ? `${id}-${highlighted}` : undefined}
         value={query} onChange={event => {setQuery(event.target.value); setActive(locale);}} onKeyDown={event => {
-          if (['ArrowDown','ArrowUp'].includes(event.key) && enabled.length) {
+          if (['ArrowDown','ArrowUp'].includes(event.key) && matches.length) {
             event.preventDefault();
-            const current = enabled.findIndex(item => item.code === highlighted);
-            setActive(enabled[(current + (event.key === 'ArrowDown' ? 1 : -1) + enabled.length) % enabled.length].code);
+            const current = matches.findIndex(item => item.code === highlighted);
+            setActive(matches[(current + (event.key === 'ArrowDown' ? 1 : -1) + matches.length) % matches.length].code);
           } else if (event.key === 'Enter' && highlighted) { event.preventDefault(); choose(highlighted); }
         }}/></div>
       <div id={`${id}-list`} className={styles.languageList} role="listbox" aria-label={m('Dil seçin')}>
         {matches.map(item => <button key={item.code} id={`${id}-${item.code}`} type="button" role="option" tabIndex={-1}
-          aria-selected={item.code === locale} disabled={!marketingLoaders[item.code]} data-highlighted={item.code === highlighted}
+          aria-selected={item.code === locale} data-highlighted={item.code === highlighted}
           className={`${styles.languageOption} uni-control`} onPointerDown={event => event.preventDefault()} onClick={() => choose(item.code)}>
-          <span className={styles.languageCode} aria-hidden="true">{item.code.split('-')[0].toUpperCase()}</span>
+          <span className={styles.languageCode} aria-hidden="true"><Image src={marketingFlags[item.code]} width={26} height={26} alt="" className={styles.languageFlag} unoptimized/></span>
           <span className={styles.languageNames}><span lang={item.code} dir={item.direction}>{item.label}</span><small>{item.name}</small></span>
           {item.code === locale && <Check size={17} aria-hidden="true"/>}
         </button>)}
