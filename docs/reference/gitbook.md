@@ -5,7 +5,8 @@ Bu sayfa kılavuzu yayınlayacak doküman yöneticisi içindir. Uygulamayı kull
 ## Hazır dosya yapısı
 
 - Depo kökündeki `gitbook-docs.yaml`, siteyi tanımlar ve Türkçe kılavuz alanını `docs/` dizinine bağlar. Dosya adının başında nokta yoktur.
-- `docs/.gitbook.yaml`, bu alanın açılış sayfasını ve içindekiler dosyasını belirler.
+- `docs/.gitbook.yaml`, Türkçe alanın açılış sayfasını ve içindekiler dosyasını belirler.
+- Diğer sekiz dil `docs/languages/` altındadır. Her sürümün kendi `.gitbook.yaml`, `README.md`, `SUMMARY.md` ve `images/` dosyaları bulunur.
 - `docs/README.md` kılavuzun açılış sayfasıdır.
 - `docs/SUMMARY.md` bölüm ve sayfa sırasını tanımlar.
 - `docs/images/` ekran görüntülerini barındırır.
@@ -31,3 +32,11 @@ Bu yapı için Project directory alanına `docs` yazmayın. Site dosyası depo k
 Yeni sayfayı ilgili konu klasörüne ekleyin ve `SUMMARY.md` içine bir kez bağlayın. Görselleri `images/` altında tutup göreli yollar kullanın. Böylece hem GitHub hem GitBook aynı dosyaları okuyabilir.
 
 Arayüzde bir düğme veya işlem değiştiğinde ilgili adımları ve ekran görüntüsünü birlikte güncelleyin. Git Sync açıkken README dosyalarını depodan yönetin. Kullanıcı kılavuzuna uygulamada bulunmayan özellikleri veya çalışmayan canlı demo adreslerini eklemeyin.
+
+## Çok dilli kılavuz
+
+Türkçe alanın mevcut `interactiveotel-user-guide-tr` anahtarı ve `guide` yolu korunur. İngilizce, Almanca, Basitleştirilmiş Çince, Tayvan için Geleneksel Çince, Japonca, Tayca, Nepalce ve Hintçe ayrı alanlardır. Yeni dil klasörlerindeki içindekiler dosyaları aynı 25 konuyu içerir.
+
+GitBook'un dil kodları listesinde Nepalce bulunmadığı için Nepalce alanında `content.language` belirtilmez. Alanın adı नेपाली, yolu `ne`, içeriği Nepalcedir. Çince sürümlerinde GitBook'un beklediği `zh` ve `zh-tw` kodları kullanılır.
+
+Ekran görüntülerinin dili Türkçedir; metinler çevrilmiştir. Görseller her dil alanının kendi `images/` klasöründe yer alır. Bir işlem değiştiğinde aynı sayfayı tüm dil sürümlerinde güncelleyin. Dil alanı anahtarlarını sonradan değiştirmeyin.

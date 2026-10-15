@@ -506,3 +506,9 @@ Kontroller: `npm run test:property-3d --prefix ui`, `npm run test:bed-presets --
 Oda oluşturma/düzenleme formunda **Odadaki yataklar** alanından tür ve adet seçilebilir. `room.create` / `room.update` isteğindeki isteğe bağlı `beds_to_add` mevcut fiziksel yataklara ekleme yapar; oda, yataklar ve yatak yerleri aynı veritabanı işlemi içinde kaydedilir. Kimlikler, tesis, oda ve kat bağlantıları sunucuda atanır. Yeni yatak yerleri varsayılan olarak odayla birlikte kiralanır. Mevcut yatakların kimlikleri veya rezervasyonları değiştirilmez.
 
 Oda/yatakhane formunda **Nasıl kiralanacak?** seçimi zorunludur: `room` odanın tamamını, `beds` bağlı yatak yerlerini satışa açar. `rental_mode` (migration 026) kayıtlıdır ve sonradan eklenen yataklara da uygulanır. Oda düzenleme mevcut yatakların satış ayarlarını atomik günceller; aktif/onaylı rezervasyonları etkileyen değişiklikler mevcut yapı korumasıyla reddedilir. Satış panosu ve kat planı ayrı satılmayan yatakları göstermez. Konaklayan çizelgesi gerçek geçmiş yatak konaklamalarını korur; envanter ve 3B görünüm fiziksel yatakları göstermeye devam eder. Eski kayıtların satış ayarları otomatik toplu değiştirilmez; oda formundan seçilip kaydedilir.
+
+## Kılavuz dilleri
+
+Kullanım kılavuzu Türkçe ile birlikte İngilizce, Almanca, Basitleştirilmiş Çince, Tayvan için Geleneksel Çince, Japonca, Tayca, Nepalce ve Hintçe olarak sunulur. Her çeviri 25 sayfa ve 15 görsel içerir. [Dil sürümlerini açın](docs/README.md#diğer-diller).
+
+Dil sürümlerinin sayfa, görsel, içindekiler ve bağlantı kontrolleri: `python3 scripts/validate-docs.py`.

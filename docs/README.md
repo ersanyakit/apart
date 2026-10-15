@@ -23,3 +23,14 @@ Menü ve düğme adları Türkçe arayüz üzerinden anlatılır. Hesabınızın
 Ekran görüntüleri kurgusal **Mavi Avlu Otel** verileriyle gerçek uygulama arayüzünden alınmıştır. Tutarlar, tarihler ve misafir adları örnektir. Görseldeki veriler yerine kendi ekranınızda görünen güncel durumu esas alın.
 
 Her konuda işlem sırası, kayıttan sonra kontrol edilecek sonuç ve ilgili diğer sayfalar bulunur. İngilizce dosya yolları GitBook bağlantılarında tutarlı adresler oluşturur; kılavuzun içeriği Türkçedir.
+
+## Diğer diller
+
+- [English](languages/en/README.md)
+- [Deutsch](languages/de/README.md)
+- [简体中文](languages/zh-cn/README.md)
+- [繁體中文（台灣）](languages/zh-tw/README.md)
+- [日本語](languages/ja/README.md)
+- [ภาษาไทย](languages/th/README.md)
+- [नेपाली](languages/ne/README.md)
+- [हिन्दी](languages/hi/README.md)

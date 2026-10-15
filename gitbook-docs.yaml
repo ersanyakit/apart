@@ -10,3 +10,58 @@ site:
       content:
         directory: ./docs
         language: tr
+    - type: space
+      key: interactiveotel-user-guide-en
+      title: English
+      path: en
+      content:
+        directory: ./docs/languages/en
+        language: en
+    - type: space
+      key: interactiveotel-user-guide-de
+      title: Deutsch
+      path: de
+      content:
+        directory: ./docs/languages/de
+        language: de
+    - type: space
+      key: interactiveotel-user-guide-zh-cn
+      title: 简体中文
+      path: zh-cn
+      content:
+        directory: ./docs/languages/zh-cn
+        language: zh
+    - type: space
+      key: interactiveotel-user-guide-zh-tw
+      title: 繁體中文（台灣）
+      path: zh-tw
+      content:
+        directory: ./docs/languages/zh-tw
+        language: zh-tw
+    - type: space
+      key: interactiveotel-user-guide-ja
+      title: 日本語
+      path: ja
+      content:
+        directory: ./docs/languages/ja
+        language: ja
+    - type: space
+      key: interactiveotel-user-guide-th
+      title: ภาษาไทย
+      path: th
+      content:
+        directory: ./docs/languages/th
+        language: th
+    - type: space
+      key: interactiveotel-user-guide-ne
+      title: नेपाली
+      path: ne
+      content:
+        directory: ./docs/languages/ne
+    - type: space
+      key: interactiveotel-user-guide-hi
+      title: हिन्दी
+      path: hi
+      content:
+        directory: ./docs/languages/hi
+        language: hi
