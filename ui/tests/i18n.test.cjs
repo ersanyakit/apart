@@ -16,7 +16,7 @@ execFileSync(process.execPath, [
 ], { cwd: ui, stdio: "pipe" });
 const countriesPath = path.join(output, "countries.js");
 const { getCountries, countryByCode, searchCountries, currencyForCountry } = require(countriesPath);
-const { LOCALES, resolveLocale } = require(path.join(output, "i18n/config.js"));
+const { LOCALES, resolveLocale, resolveRequestLocale } = require(path.join(output, "i18n/config.js"));
 const { messages, translate } = require(path.join(output, "i18n/messages.js"));
 const contracts = require("../src/lib/contracts.generated.json");
 
@@ -85,4 +85,19 @@ test("bundled country names remain available without Intl.DisplayNames", () => {
   } finally {
     Intl.DisplayNames = original;
   }
+});
+
+test("browser language selection respects preference order, quality and explicit choice", () => {
+  assert.equal(resolveRequestLocale(null, "de-DE,de;q=0.9,en;q=0.8"), "de");
+  assert.equal(resolveRequestLocale(null, "xx-ZZ,en-US;q=0.8,tr;q=0.5"), "en");
+  assert.equal(resolveRequestLocale(null, "fr;q=0.3,ar-SA;q=0.9"), "ar");
+  assert.equal(resolveRequestLocale(null, "zh-Hant-TW,zh;q=0.9"), "zh-TW");
+  assert.equal(resolveRequestLocale(null, "zh-SG"), "zh-CN");
+  assert.equal(resolveRequestLocale(null, "de;q=0,fr;q=bad,en;q=0.8"), "en");
+  assert.equal(resolveRequestLocale(null, "de;q=2,fr;q=-1,en;q=0.8"), "en");
+  assert.equal(resolveRequestLocale(null, "fr;q=0.8,de;q=0.8"), "fr");
+  assert.equal(resolveRequestLocale("tr", "en-US"), "tr");
+  assert.equal(resolveRequestLocale("invalid", "de-DE"), "de");
+  assert.equal(resolveRequestLocale(null, "*,xx-ZZ"), "tr");
+  assert.equal(resolveRequestLocale(null, null), "tr");
 });

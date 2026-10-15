@@ -246,7 +246,7 @@ export const DEFAULT_LOCALE: Locale = "tr";
 export const LOCALE_STORAGE_KEY = "interactiveotel.locale";
 
 /** Accept API language codes and regional browser locales; reject unknown values. */
-export function resolveLocale(value?: string | null): Locale {
+export function matchLocale(value?: string | null): Locale | undefined {
   const tag = (value ?? "").trim().replaceAll("_", "-").toLowerCase();
   const exact = (Object.keys(LOCALES) as Locale[]).find((locale) => locale.toLowerCase() === tag);
   if (exact) return exact;
@@ -254,5 +254,23 @@ export function resolveLocale(value?: string | null): Locale {
     return /(?:hant|tw|hk|mo)/.test(tag) ? "zh-TW" : "zh-CN";
   }
   const base = tag.split("-")[0];
-  return (Object.keys(LOCALES) as Locale[]).find((locale) => locale === base) ?? DEFAULT_LOCALE;
+  return (Object.keys(LOCALES) as Locale[]).find((locale) => locale === base);
+}
+
+export function resolveLocale(value?: string | null): Locale {
+  return matchLocale(value) ?? DEFAULT_LOCALE;
+}
+
+/** Explicit selection wins; otherwise negotiate the browser's ordered preferences. */
+export function resolveRequestLocale(saved?: string | null, acceptLanguage?: string | null): Locale {
+  const selected = matchLocale(saved);
+  if (selected) return selected;
+  const preferences = (acceptLanguage ?? '').split(',').map((entry) => {
+    const [tag, ...parameters] = entry.trim().split(';');
+    const quality = parameters.find(parameter => /^q\s*=/i.test(parameter.trim()));
+    const weight = quality === undefined ? 1 : Number(quality.split('=')[1]?.trim());
+    return { locale: matchLocale(tag), weight };
+  }).filter(item => item.locale && Number.isFinite(item.weight) && item.weight > 0 && item.weight <= 1)
+    .sort((a, b) => b.weight - a.weight);
+  return preferences[0]?.locale ?? DEFAULT_LOCALE;
 }

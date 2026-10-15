@@ -16,6 +16,8 @@ Tema, dil ve görünüm tercihleri oturumdaki kullanıcıya aittir. Kaydetme hat
 
 ## Tanıtım sayfalarında dil seçimi
 
+İlk ziyarette dil, tarayıcınızın dil tercihleri arasındaki desteklenen ilk dile göre otomatik seçilir. Daha önce menüden dil seçtiyseniz bu seçim korunur. Desteklenen bir tarayıcı dili bulunamazsa Türkçe açılır.
+
 Ana sayfa, fiyatlar, ekran görüntüleri ve iletişim sayfalarının dil menüsünde 60 dil bulunur. Menüyü açın, dil adı veya koduyla arayın ve dili seçin. Ok tuşları ve Enter ile seçim, Escape ile kapatma kullanılabilir. Bayrak simgesinin yanında dil adı da görünür.
 
 Tanıtım sayfalarının çeviri kapsamı uygulama içindeki tüm metinlerin aynı kapsamda çevrildiği anlamına gelmez. Ortak kataloglarda eksik dil etiketleri İngilizce gösterilebilir; belge şablonlarının her dildeki metni ayrıca hazırlanır.
