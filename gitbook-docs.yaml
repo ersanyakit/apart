@@ -1,0 +1,12 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: INTERACTIVEOTEL Kullanım Kılavuzu
+  structure:
+    - type: space
+      key: interactiveotel-user-guide-tr
+      title: Kullanım Kılavuzu
+      path: guide
+      default: true
+      content:
+        directory: ./docs
+        language: tr
