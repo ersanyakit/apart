@@ -3,7 +3,7 @@ import { sceneStatusColor } from "./model";
 import { STATUS_PALETTE, roomStatusKey } from "../../lib/status-palette";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BedDouble, Box, RefreshCw, X } from 'lucide-react';
+import { BedDouble, Box, Layers, RefreshCw, X } from 'lucide-react';
 import { command, messageOf, unitKinds, type APIRoom, type Booking, type Snapshot } from '../../lib/api';
 import type { Bed } from '../../lib/bed-presets';
 import { boardDate } from '../../lib/room-board';
@@ -12,6 +12,15 @@ import { usePreference } from '../UserPreferences';
 import { PropertyCanvas } from './PropertyCanvas';
 import { buildPropertyScene, visibleScene, sceneBookingTarget, STATUS_COLORS, STATUS_LABELS, type SceneUnit } from './model';
 import styles from './PropertyView.module.css';
+
+/** Numeric SVG floor icons share a fixed canvas and optical center. */
+function FloorMark({ number }: { number: number }) {
+  return <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" fill="currentColor">
+    <text x="14" y="14" textAnchor="middle" dominantBaseline="central"
+      fontFamily="Inter, Arial, sans-serif" fontWeight="600" fontSize={String(number).length > 2 ? "12" : String(number).length > 1 ? "16" : "20"}
+      style={{fontVariantNumeric:'tabular-nums'}}>{number}</text>
+  </svg>;
+}
 
 export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook, onDefinitions }: {
   snapshot: Snapshot;
@@ -62,9 +71,10 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   }
   useEffect(() => {
     const update = () => { if (document.visibilityState === 'visible') void refresh(); };
+    const initialRefresh = window.setTimeout(update, 0);
     const timer = window.setInterval(update, 60000);
     window.addEventListener('focus', update);
-    return () => { window.clearInterval(timer); window.removeEventListener('focus', update); };
+    return () => { window.clearTimeout(initialRefresh); window.clearInterval(timer); window.removeEventListener('focus', update); };
   }, []);
   const floors = useMemo(() => buildPropertyScene(snapshot, beds), [snapshot, beds]);
   const effectiveFloor = floors.some(f => f.id === floorId) ? floorId : 'all';
@@ -85,7 +95,15 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
     {rooms.length ? <div className={`${styles.workspace}${panelOpen ? '' : ` ${styles.detailsHidden}`}`}>
       <div className={styles.sceneColumn}>
         <PropertyCanvas floorControls={<nav className={styles.floorTabs} aria-label="3B kat görünümü">
-      {[{ id: 'all', label: 'Tüm katlar' }, ...floors].map(floor => <button type="button" key={floor.id} aria-pressed={effectiveFloor === floor.id} className={`uni-button ${effectiveFloor === floor.id ? 'uni-button-primary' : 'uni-button-secondary'} rounded-full`} onClick={() => { setFloorId(floor.id); setSelectedId(null); }}>{floor.label}</button>)}
+      <div className={styles.floorGrid}>
+        {[{ id: 'all', label: 'Tüm katlar' }, ...floors].map(floor => {
+          const number = floor.label.trim().match(/^(?:kat\s*)?(-?\d+)\.?(?:\s*kat)?$/i)?.[1];
+          return <button type="button" key={floor.id} aria-label={floor.label} title={floor.label} aria-pressed={effectiveFloor === floor.id}
+            className={`uni-button ${styles.floorButton}`} onClick={() => { setFloorId(floor.id); setSelectedId(null); }}>
+            {floor.id === 'all' ? <Layers size={23} aria-hidden="true"/> : number !== undefined ? <FloorMark number={Number(number)}/> : <Box size={23} aria-hidden="true"/>}
+          </button>;
+        })}
+      </div>
       <div className={styles.sceneSwitches} role="group" aria-label="3B görünüm seçenekleri">
         <Switch label="Katları ayır" checked={exploded} onChange={setExploded} />
         <Switch label="Duvarlar" checked={walls} onChange={setWalls} />

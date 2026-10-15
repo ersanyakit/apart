@@ -6,7 +6,7 @@ Tek kaynak: `ui/src/lib/status-palette.ts`. HTML kökündeki `--status-…` değ
 | --- | --- |
 | Giriş yapmış / dolu | Mavi |
 | Rezervasyon / yaklaşan rezervasyon | Amber |
-| Kirli / temizlik gerekli | Kahverengi |
+| Kirli / temizlik gerekli | Gül kurusu |
 | Temiz | Yeşil |
 | Boş | Gri |
 | Çıkış yapmış / tamamlanmış | Nötr gri |
@@ -15,7 +15,7 @@ Tek kaynak: `ui/src/lib/status-palette.ts`. HTML kökündeki `--status-…` değ
 | Tadilat | Mor |
 | Çıkış işlemi / bugünkü giriş-çıkış göstergesi | Pembe |
 
-Rezervasyon durumu ve oda bakım durumu farklı boyutlardır. Örneğin kirli odada yaklaşan rezervasyon varsa, rezervasyon amber; temizlik bilgisi kahverengi gösterilir. Renk tek bilgi taşıyıcısı değildir: durum metni daima görünür kalır.
+Rezervasyon durumu ve oda bakım durumu farklı boyutlardır. Örneğin kirli odada yaklaşan rezervasyon varsa, rezervasyon amber; temizlik bilgisi gül kurusu gösterilir. Renk tek bilgi taşıyıcısı değildir: durum metni daima görünür kalır.
 
 `roomStatusKey`, `bookingStatusKey` ve `boardStatusKey` ortak eşlemeleri sağlar. `statusStyle` inline stiller için; `statusVariables` CSS için; `STATUS_PALETTE` 3B göstergeler için kullanılır. Yeni bileşenlerde yerel durum renk haritası veya doğrudan tema rengi kullanılmamalıdır.
 

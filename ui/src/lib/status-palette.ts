@@ -3,7 +3,7 @@
 export const STATUS_PALETTE = {
  occupied: { accent:'#267cff', background:'#ecf1fc', text:'#23568b', label:'Giriş yapıldı' },
  reserved: { accent:'#ff8514', background:'#fbf2da', text:'#815219', label:'Rezervasyon' },
- dirty: { accent:'#a57643', background:'#f4ece3', text:'#77502c', label:'Kirli' },
+ dirty: { accent:'#ae5080', background:'#f8e9f1', text:'#84365f', label:'Kirli' },
  clean: { accent:'#20a477', background:'#eaf7f0', text:'#176b4d', label:'Temiz' },
  available: { accent:'#9a9eaa', background:'#f3f4f6', text:'#606571', label:'Boş' },
  completed: { accent:'#888391', background:'#f0f0f3', text:'#55515e', label:'Çıkış yapıldı' },

@@ -48,7 +48,7 @@
 @media(max-width:1100px) { .bedList { grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); } }
 @media(max-width:640px) { .filters { grid-template-columns:1fr; } .stage { border-radius:0; } .updated { margin-left:0; width:100%; } .summary { gap:12px; } .viewOptions { gap:18px; } .cameraControls { gap:0; padding:3px; } .cameraControls button { width:44px; min-width:44px; } .notice { flex-direction:column; align-items:start; } .details { top:auto; bottom:12px; left:12px; right:12px; width:auto; max-height:48%; } .detailsHidden .details { transform:translateY(16px); } }
 
-.floorTabs { position:absolute; top:12px; left:12px; z-index:6; display:flex; flex-direction:column; gap:6px; max-width:calc(100% - 132px); max-height:calc(100% - 120px); overflow:auto; padding:6px; border-radius:22px; background:rgba(255,255,255,.9); box-shadow:0 6px 24px #24354d12; backdrop-filter:blur(12px); }
+.floorTabs { width:292px; position:absolute; top:12px; left:12px; z-index:6; display:flex; flex-direction:column; gap:6px; max-width:calc(100% - 80px); padding:6px; border-radius:22px; background:rgba(255,255,255,.9); box-shadow:0 6px 24px #24354d12; backdrop-filter:blur(12px); }
 .floorTabs button { min-height:44px; justify-content:flex-start; }
 
 .sceneSwitches { display:grid; gap:6px; padding-top:6px; border-top:1px solid var(--color-uni-border); }
@@ -60,3 +60,16 @@
 
 .reservationAction { position:sticky; top:-16px; z-index:2; display:grid; gap:7px; margin:-16px -16px 0; padding:16px; background:var(--color-uni-surface); border-radius:20px 20px 0 0; }
 .reservationAction small { color:var(--color-uni-muted); font-size:11px; line-height:1.5; }
+
+.floorGrid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); justify-items:center; gap:6px; width:100%; min-width:0; padding:2px; }
+.floorTabs .floorButton { display:grid; place-items:center; justify-content:center; align-content:center; flex:0 0 44px; box-sizing:border-box; line-height:1; min-width:44px; width:44px; height:44px; min-height:44px; padding:0; border:1px solid transparent; border-radius:50%; background:var(--color-uni-surface); color:var(--color-uni-muted); text-align:center; }
+.floorButton strong { font-size:20px; line-height:24px; font-weight:600; }
+.floorButton small { font-size:10px; line-height:14px; }
+.floorButton > span { font-size:11px; line-height:15px; overflow-wrap:anywhere; }
+.floorTabs .floorButton[aria-pressed=true] { background:var(--color-brand-blue-100); color:var(--color-brand-blue-700); box-shadow:inset 0 0 0 1px var(--color-brand-blue-300); }
+@media(hover:hover) { .floorTabs .floorButton:hover { background:var(--color-brand-blue-50); } }
+.floorTabs .floorButton:focus-visible { outline:2px solid var(--color-brand-blue-500); outline-offset:-2px; }
+
+.floorButton > svg { display:block; width:28px; height:28px; flex-shrink:0; margin:0; }
+
+@media(max-width:360px) { .floorGrid { grid-template-columns:repeat(4,minmax(0,1fr)); } }

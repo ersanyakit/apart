@@ -1,3 +1,4 @@
+import { PhoneField } from "./fields/PhoneField";
 import React, { useState } from 'react';
 import { Plus, Trash2, User, CreditCard, Phone, MessageSquare, Search, History, X, Calendar, MapPin, Star, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -155,16 +156,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
               </div>
 
               <div className="lg:col-span-4 space-y-1.5 order-4 lg:order-3">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                  <Phone className="w-3 h-3" /> İLETİŞİM NO
-                </label>
-                <input
-                  type="text"
-                  value={guest.phone || ''}
-                  onChange={(e) => updateGuest(guest.id, 'phone', e.target.value)}
-                  placeholder="TELEFON NUMARASI"
-                  className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner"
-                />
+                <PhoneField label="Telefon" value={guest.phone || ''} defaultCountry={guest.nationality || 'TR'} onChange={value => updateGuest(guest.id, 'phone', value)} />
               </div>
 
               <div className="lg:col-span-12 space-y-1.5 order-5 lg:order-4 pt-4 border-t border-slate-50 mt-4">

@@ -13,7 +13,7 @@ export function FieldCard({
 }) {
   return (
     <div
-      className={`rounded-[20px] bg-[#f9f9f9] p-4 outline-none transition-all duration-150 ease-out hover:bg-[#efefef] focus-within:bg-[#efefef] focus-within:ring-2 focus-within:ring-neutral-300 active:scale-[0.99] ${className}`}
+      className={`field-card rounded-[20px] bg-[#f9f9f9] p-4 outline-none transition-all duration-150 ease-out hover:bg-[#efefef] focus-within:bg-[#efefef] focus-within:ring-2 focus-within:ring-neutral-300 active:scale-[0.99] ${className}`}
     >
       {children}
     </div>

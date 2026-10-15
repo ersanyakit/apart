@@ -28,16 +28,16 @@ export type PageID = keyof typeof PAGE_HEADERS | ReportPageID | ReportGroupPageI
 const HeaderContext = createContext<{ propertyName?: string; actions?: React.ReactNode }>({});
 export const PageHeaderProvider = HeaderContext.Provider;
 
-export function PageHeader({ pageId, propertyName, actions, children, globalActions }: {
+export function PageHeader({ pageId, propertyName, actions, children, globalActions, className = "" }: {
   pageId: PageID; propertyName?: string; actions?: React.ReactNode;
-  children?: React.ReactNode; globalActions?: React.ReactNode;
+  children?: React.ReactNode; globalActions?: React.ReactNode; className?: string;
 }) {
   const inherited = useContext(HeaderContext);
   const [collapsed, setCollapsed] = usePreference<boolean>(`header.${pageId}`, false);
   const id = useId();
   const report = reportForPage(pageId) ?? reportGroupForPage(pageId);
   const [title, description] = report ? [report.name, report.description] : PAGE_HEADERS[pageId as keyof typeof PAGE_HEADERS];
-  return <header className="page-header" data-collapsed={collapsed} aria-labelledby={`${id}-title`}>
+  return <header className={`page-header ${className}`} data-collapsed={collapsed} aria-labelledby={`${id}-title`}>
     <div className="page-header-top">
       <div className="page-header-heading">
         {!collapsed && (propertyName || inherited.propertyName) && <p className="page-header-eyebrow">{propertyName || inherited.propertyName}</p>}

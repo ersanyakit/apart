@@ -313,7 +313,8 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
         const unitGroup = new THREE.Group(); group.add(unitGroup); if (!bed.visualOnly) nodes.set(bed.unit.room_id, unitGroup);
         box(unitGroup, [bed.width + 0.09, 0.12, bed.length + 0.08], [0, y, 0], wood, bed.unit.room_id);
         box(unitGroup, [bed.width, 0.16, bed.length], [0, y + 0.13, 0], '#f7f5f0', bed.unit.room_id);
-        const occupied = bed.state.tone === 'occupied';
+        // Whole-room bookings reserve all beds, but only assigned sleepers occupy a mattress.
+        const occupied = (bed.sleepers?.length || 0) > 0;
         const blanketColor = occupied ? (bed.blanketColor || '#7c3aed') : '#ffffff';
         const quilt = box(unitGroup, [bed.width - 0.04, occupied ? 0.08 : 0.1, bed.length * (occupied ? 0.66 : 0.42)], [0, y + 0.25, bed.length * (occupied ? 0.14 : 0.27)], blanketColor, bed.unit.room_id);
         quilt.material = textile(blanketColor, bed.dirty); quilt.name = `blanket-${bed.unit.room_id}-${bed.level}`;

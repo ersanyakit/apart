@@ -212,6 +212,16 @@ test('scene rebuild and teardown release geometries, materials and textures; cam
     assert.ok(renderer.scene.getObjectByName('dirty-fold-b4-2'));
     engine.update(floors, false, true); draw();
     assert.equal(renderer.scene.getObjectByName('dirty-fold-b1-0'), undefined);
+    const wholeRoom = buildPropertyScene(snapshot(units, { bookings: [booking('room-stay', {guest_count:1})] }), []);
+    engine.update(wholeRoom, false, true); draw();
+    assert.ok(renderer.scene.getObjectByName('sleeper-b1-0'), 'whole-room arrival puts a block character in the first bed');
+    assert.equal(renderer.scene.getObjectByName('sleeper-b2-0'), undefined);
+    const occupiedQuilt = renderer.scene.getObjectByName('blanket-b1-1');
+    const emptyQuilt = renderer.scene.getObjectByName('blanket-b2-2');
+    assert.ok(occupiedQuilt.scale.z > emptyQuilt.scale.z, 'only the used bed has the occupied blanket layout');
+    const checkedOut = buildPropertyScene(snapshot(units, {bookings:[booking('room-stay', {guest_count:1,status:'completed',actual_check_out:now})]}), []);
+    engine.update(checkedOut, false, true); draw();
+    assert.equal(renderer.scene.getObjectByName('sleeper-b1-0'), undefined, 'checkout removes the character on the next scene update');
     engine.update(floors, false, true, '#FF37C7'); engine.select(null); draw();
     listeners.get('pointermove')(event); draw();
     const hoverFill = renderer.scene.getObjectByName('hover-glass-enclosure').getObjectByName('selection-theme-fill').material;

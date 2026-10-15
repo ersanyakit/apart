@@ -1,5 +1,5 @@
 import { statusStyle } from "../lib/status-palette";
-import React, { useMemo, useState } from 'react';
+import React, { useId, useMemo, useState } from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown, ArrowRightLeft, Eye, LogIn, LogOut, Pencil, X } from 'lucide-react';
 import { bookingStatuses, type APIRoom, type Booking } from '../lib/api';
 import { bookingCanCheckIn } from '../lib/room-board';
@@ -15,12 +15,17 @@ export type BookingsTableProps = {
   onContextMenu: (event: React.MouseEvent, booking: Booking) => void;
 };
 type SortKey = 'room' | 'guest' | 'status' | 'check_in' | 'check_out' | 'created_at' | 'created_by_name';
+function GuestIdentity({name}:{name:string}) {
+  const initials = name.trim().split(/\s+/).slice(0,2).map(part=>part[0]).join('').toLocaleUpperCase('tr');
+  return <><span className={styles.avatar} aria-hidden="true">{initials || '?'}</span><span>{name || 'Misafir'}</span></>;
+}
 function DateValue({value}:{value?:string|null}) {
   if(!value||!Number.isFinite(Date.parse(value)))return <span className={styles.muted}>Zaman kaydedilmemiş</span>;
   const date=new Date(value);
   return <time dateTime={value} className={styles.date}><span>{date.toLocaleDateString('tr-TR',{timeZone:'Europe/Istanbul',day:'2-digit',month:'short',year:'numeric'})}</span><small>{date.toLocaleTimeString('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</small></time>;
 }
 export function BookingsTable({bookings, rooms, serverTime, busy, canOperate, onDetails, onGuest, onEdit, onMove, onTransition, onContextMenu}: BookingsTableProps) {
+  const selectionGroup = useId();
   const [selectedId,setSelectedId]=useState<string|null>(null);
   const [sort,setSort]=useState<{key:SortKey;desc:boolean}>({key:'created_at',desc:true});
   const roomByID=useMemo(()=>new Map(rooms.map(room=>[room.room_id,room])),[rooms]);
@@ -59,10 +64,10 @@ export function BookingsTable({bookings, rooms, serverTime, busy, canOperate, on
           const entered=!!booking.actual_check_in||['checked_in','completed'].includes(booking.status);
           const departed=!!booking.actual_check_out||booking.status==='completed';
           const guests=booking.guests?.length?booking.guests:[{id:'',name:booking.guest_name}];
-          return <tr key={booking.booking_id} data-selected={selected?.booking_id===booking.booking_id} onClick={event=>{if(!(event.target as HTMLElement).closest('button,a'))setSelectedId(booking.booking_id)}} onDoubleClick={event=>{if(!(event.target as HTMLElement).closest('button,a'))onDetails(booking)}} onContextMenu={event=>{setSelectedId(booking.booking_id);onContextMenu(event,booking)}}>
-            <td className={styles.selectColumn}><button type="button" className={`uni-control ${styles.select}`} aria-label={`${booking.guest_name} rezervasyonunu seç`} aria-pressed={selected?.booking_id===booking.booking_id} onClick={()=>setSelectedId(booking.booking_id)}><span/></button></td>
+          return <tr key={booking.booking_id} data-selected={selected?.booking_id===booking.booking_id} onClick={event=>{if(!(event.target as HTMLElement).closest('button,a,input,label'))setSelectedId(booking.booking_id)}} onDoubleClick={event=>{if(!(event.target as HTMLElement).closest('button,a,input,label'))onDetails(booking)}} onContextMenu={event=>{setSelectedId(booking.booking_id);onContextMenu(event,booking)}}>
+            <td className={styles.selectColumn}><label className={styles.select}><input type="radio" name={selectionGroup} value={booking.booking_id} aria-label={`${booking.guest_name} rezervasyonunu seç`} checked={selected?.booking_id===booking.booking_id} onChange={()=>setSelectedId(booking.booking_id)}/></label></td>
             <td className={styles.roomColumn}><strong>{roomByID.get(booking.room_id)?.code||'—'}</strong><small>{booking.guest_count} kişi</small></td>
-            <td className={styles.guestColumn}><ul className={styles.guests}>{guests.map((guest,index)=><li key={guest.id||index}>{guest.id&&guest.id!=='00000000-0000-0000-0000-000000000000'?<button type="button" className="uni-control" onClick={()=>onGuest({id:guest.id,name:guest.name})} title={`${guest.name} · Konaklama geçmişi`}>{guest.name||'Misafir'}</button>:<span>{guest.name||'Misafir'}</span>}</li>)}</ul></td>
+            <td className={styles.guestColumn}><ul className={styles.guests}>{guests.map((guest,index)=><li key={guest.id||index}>{guest.id&&guest.id!=='00000000-0000-0000-0000-000000000000'?<button type="button" className="uni-control" onClick={()=>onGuest({id:guest.id,name:guest.name})} title={`${guest.name} · Konaklama geçmişi`}><GuestIdentity name={guest.name}/></button>:<span className={styles.guestIdentity}><GuestIdentity name={guest.name}/></span>}</li>)}</ul></td>
             <td><span className={styles.status} data-status={booking.status}><i/>{bookingStatuses[booking.status]}</span>{booking.cancellation_reason&&<p className={styles.reason} title={booking.cancellation_reason}>{booking.cancellation_reason}</p>}</td>
             <td><DateValue value={booking.check_in}/></td><td><DateValue value={booking.check_out}/></td>
             <td>{entered?<><DateValue value={booking.actual_check_in}/><span className={styles.person} title="Girişi gerçekleştiren"><span className="sr-only">Girişi gerçekleştiren: </span>{booking.checked_in_by_name||'Personel kaydedilmemiş'}</span></>:<span className={styles.muted}>Giriş yapılmadı</span>}</td>

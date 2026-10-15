@@ -35,12 +35,21 @@ await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByR
 
 const {default:assert}=await import('node:assert/strict');page.setDefaultTimeout(12000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.getByRole('button',{name:'Misafir Arama ve Geçmiş',exact:true}).last().click();
-const table=page.locator('.guest-history-table');await table.getByText('Aleksandra Maria Konstantinopoulou',{exact:true}).waitFor();
+const table=page.locator('.guest-history-table').first();await table.getByText('Aleksandra Maria Konstantinopoulou',{exact:true}).waitFor();
 assert.equal(await table.locator('tbody tr').count(),3);
 assert.equal(await table.locator('table').evaluate(el=>getComputedStyle(el).tableLayout),'fixed');
 const align=await table.evaluate(el=>{const headings=[...el.querySelectorAll('th')];return [...el.querySelectorAll('tbody tr')].every(row=>[...row.children].every((cell,index)=>Math.abs(cell.getBoundingClientRect().left-headings[index].getBoundingClientRect().left)<1 && getComputedStyle(cell).paddingLeft===getComputedStyle(headings[index]).paddingLeft));});assert.ok(align,'Headers and all cells align with matching padding');
 await fs.mkdir('output/guest-table',{recursive:true});await table.screenshot({path:'output/guest-table/desktop.png'});
 await table.locator('.guest-table-sort').filter({hasText:'Misafir'}).click();assert.equal(await table.locator('th').first().getAttribute('aria-sort'),'ascending');
+const search=page.getByRole('textbox',{name:'Misafir arama',exact:true});
+await search.fill('Deniz');
+await page.getByRole('button',{name:'Filtreleri temizle',exact:true}).click();
+assert.equal(await search.inputValue(),'');
+await page.getByRole('button',{name:'Yenile',exact:true}).click();
+await table.getByRole('button',{name:'Deniz Örnek konaklama geçmişi',exact:true}).click();
+await page.getByText('Misafire özel not',{exact:true}).first().waitFor();
+assert.equal(await page.locator('dialog[open]').count(),0,'History opens as tab, not dialog');
+await page.getByRole('button',{name:'Misafir Arama ve Geçmiş',exact:true}).last().click();
 await page.setViewportSize({width:390,height:844});await table.scrollIntoViewIfNeeded();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));assert.ok(await table.evaluate(el=>el.scrollWidth>el.clientWidth));await page.screenshot({path:'output/guest-table/mobile.png'});
 await table.evaluate(el=>{el.scrollLeft=el.scrollWidth;});await table.getByRole('button',{name:'Puan / Kara liste',exact:true}).first().waitFor();await page.screenshot({path:'output/guest-table/mobile-actions.png'});
 assert.deepEqual(errors,[]);console.log('PASS guest alignment, long names, sorting, mobile scrolling');await browser.close();

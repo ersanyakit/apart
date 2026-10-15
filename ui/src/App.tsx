@@ -1,4 +1,5 @@
 "use client";
+import { RoomStateEditor } from "./components/RoomStateEditor";
 import roomCardStyles from "./components/RoomStatusCard.module.css";
 import { bookingMatchesDay, bookingSearchText } from "./lib/booking-grid";
 import { BookingDetails } from "./components/BookingDetails";
@@ -361,7 +362,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   };
   const changeRoomState=(room:APIRoom,status:string)=>{
     if(status==="Temiz"){setCleaningRoom(room);return}
-    if(status==="Tadilat"||status==="Arizali"){setReasonOperation({kind:"state",room,status});return}
+    if(status==="Tadilat"||status==="Arizali"||status==="Kirli"){setReasonOperation({kind:"state",room,status});return}
     void run(async()=>{await command("room.state",{room_id:room.room_id,status});await refresh()});
   };
   const remove = async (type: "room" | "floor", id: string) => {
@@ -613,7 +614,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         </AnimatePresence>
         {["board", "bookings", "bookings-list"].includes(tab) && (
           <>
-            <PageHeader pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>Arıza bildir</button>:undefined}>
+            <PageHeader className={tab === "board" ? roomCardStyles.boardHeader : undefined} pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>Arıza bildir</button>:undefined}>
             <div className="flex flex-wrap items-stretch gap-3">
               <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
                 <label className="block min-w-0 cursor-text">
@@ -792,7 +793,9 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                             booking: active,
                           });
                         }}
-                        onDragStart={operator && !dateFilter && state.current.length === 1 ? setDragged : undefined}
+                        draggedRoomId={dragged}
+                        onDragEnd={()=>setDragged(null)}
+                        onDragStart={operator && !busy && !dateFilter && state.current.length === 1 && state.current[0].room_id === room.room_id ? setDragged : undefined}
                         onDrop={
                           operator && !dateFilter
                             ? async (target) => {
@@ -802,9 +805,12 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                                   setDragged(null);
                                   return;
                                 }
+                                setDragged(null);
                                 if (
                                   await confirmDialog(
-                                    "Seçilen konaklamanın birimi değiştirilsin mi?",
+                                    targetBooking
+                                      ? `${sourceBooking.guest_name} ile ${targetBooking.guest_name} konaklamalarının odaları değiştirilsin mi?`
+                                      : `${sourceBooking.guest_name}, ${s.rooms.find(room=>room.room_id===dragged)?.code || "kaynak"} odasından ${s.rooms.find(room=>room.room_id===target)?.code || "hedef"} odasına taşınsın mı?`,
                                   )
                                 )
                                   void run(async () => {
@@ -1067,14 +1073,6 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       )}
       {contextMenu && (
         <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setContextMenu(null)}
-            onContextMenu={(e) => {
-              e.preventDefault();
-              setContextMenu(null);
-            }}
-          />
           <ContextMenu
             saleLabel={menuOperation === "check_in" ? (Date.parse(contextMenu.booking!.check_in) > Date.parse(s.server_time) ? "Rezervasyona erken giriş yap" : "Rezervasyona giriş yap") : menuOperation === "receipt" ? "Satış belgeleri" : "Yeni konaklama başlat"}
             saleDisabled={!operator || (menuOperation === "create" && menuRoomOccupied)}
@@ -1082,8 +1080,12 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             canExchange={operator && !!contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status)}
             bookingHint={contextMenu.booking?.status === "confirmed" ? `Planlanan: ${date(contextMenu.booking.check_in)} – ${date(contextMenu.booking.check_out)}. Erken girişte oda müsaitliği kontrol edilir.` : undefined}
             onEditBooking={operator && contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status) ? () => openBookingEdit(contextMenu.booking!) : undefined}
-            x={contextMenu.x}
-            y={contextMenu.y}
+            canReserve={operator && contextMenu.room.rentable && !contextMenu.room.inactive}
+            allowedStatuses={operator ? ["Temiz","Kirli","Arizali","Tadilat"] : housekeeping ? ["Temiz","Kirli"] : ["technical","maintenance"].includes(s.user.role) ? ["Arizali","Tadilat"] : []}
+            operationalStatus={roomStates.get(contextMenu.room.room_id)?.operationalStatus || contextMenu.room.status}
+            guestName={contextMenu.booking?.guest_name}
+            hasBooking={!!contextMenu.booking}
+            onDetails={contextMenu.booking ? ()=>setModal({type:"history",booking:contextMenu.booking!}) : undefined}
             room={{
               ...roomView(contextMenu.room, s.feature_registry),
               status:
@@ -1119,7 +1121,13 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               else if (type === "checkout" && operator && b?.status === "checked_in")
                 transition(b,"check_out");
             }}
-            onStatusChange={status=>changeRoomState(contextMenu.room,status)}
+            renderStatus={onBusyChange=><RoomStateEditor
+              room={{...contextMenu.room,status:roomStates.get(contextMenu.room.room_id)?.operationalStatus || contextMenu.room.status}}
+              allowedStatuses={operator ? ["Temiz","Kirli","Arizali","Tadilat"] : housekeeping ? ["Temiz","Kirli"] : ["Arizali","Tadilat"]}
+              onBusyChange={onBusyChange}
+              onClose={()=>setContextMenu(null)}
+              onSaved={async()=>{await refresh();notify("Oda durumu ve açıklaması kaydedildi.")}}
+            />}
             onPrint={(type) => {
               const b = contextMenu.booking;
               if (!b) {
@@ -1139,22 +1147,17 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               });
             }}
             onGuests={
-              contextMenu.booking
+              operator && contextMenu.booking
                 ? () =>
                     setModal({ type: "guests", booking: contextMenu.booking! })
                 : undefined
             }
             onCancel={
-              contextMenu.booking
+              operator && contextMenu.booking?.status === "confirmed"
                 ? () => {
                     const b = contextMenu.booking!;
                     transition(b, "cancel");
                   }
-                : undefined
-            }
-            onDelete={
-              manager
-                ? () => void remove("room", contextMenu.room.room_id)
                 : undefined
             }
           />

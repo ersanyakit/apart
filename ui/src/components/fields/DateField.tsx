@@ -268,7 +268,7 @@ export function DateField({
   };
 
   return (
-    <div ref={rootRef} className={`rounded-[20px] bg-[#f9f9f9] p-4 transition-colors duration-150 ease-out ${open ? "" : "hover:bg-[#efefef]"}`}>
+    <div ref={rootRef} className={`date-field rounded-[20px] bg-[#f9f9f9] p-4 transition-colors duration-150 ease-out ${open ? "" : "hover:bg-[#efefef]"}`}>
       <button
         type="button"
         aria-label={`${label} seçin. Seçili: ${valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "yok"}`}

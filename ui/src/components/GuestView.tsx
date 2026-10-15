@@ -1,7 +1,7 @@
 import styles from "./GuestView.module.css";
 import type { CustomerStay } from "./reports/CustomerDetail";
 import { display } from "./reports/model";
-import { ArrowLeft, ArrowDown, ArrowUp, ArrowUpDown, Download, FileText, Star } from "lucide-react";
+import { ArrowLeft, ArrowDown, ArrowUp, ArrowUpDown, Download, FileText, Star, History, RefreshCw, X } from "lucide-react";
 import { TextField, DateField, InlineSelectField } from "./fields";
 import { useGuestHistoryNavigation } from "./GuestHistoryNavigation";
 import { NavigationIcon } from "./NavigationIcon";
@@ -156,7 +156,9 @@ export function GuestView({
       {guestId ? tools : <PageHeader pageId="guests">{tools}</PageHeader>}
       <div className={styles.toolbar}>
         <div><h3>{guestId ? "Konaklama kayıtları" : "Misafir kayıtları"}<span className={styles.count}>{total}</span></h3><p>Konaklama bilgileri, geçmiş ücretler ve misafir değerlendirmeleri</p></div>
-        <div className="flex gap-2">
+        <div className={`flex gap-2 ${styles.toolbarActions}`}>
+          <button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(value=>value+1)}><RefreshCw size={15} aria-hidden="true"/>Yenile</button>
+          {(search||from||to||status)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setSearch('');setFrom('');setTo('');setStatus('');setPage(1);}}><X size={15} aria-hidden="true"/>Filtreleri temizle</button>}
           <button
             className={`uni-control ${secondaryStyle}`}
             disabled={busy}
@@ -175,7 +177,7 @@ export function GuestView({
       </div>
       <div className={`guest-history-table ${styles.grid}`} aria-busy={busy} tabIndex={0} role="region" aria-label="Misafir konaklama tablosu; tüm sütunlar için yatay kaydırın">
         <table>
-          <colgroup>{[220,130,116,116,185,180,130,160].map((width,index)=><col key={index} style={{width}}/>)}</colgroup>
+          <colgroup>{[220,130,116,116,185,180,130,180].map((width,index)=><col key={index} style={{width}}/>)}</colgroup>
           <thead className="bg-slate-50 text-slate-400">
             <tr>
               {[
@@ -189,7 +191,7 @@ export function GuestView({
                 </th>
               ))}
               <th scope="col" className="guest-table-amount">Konaklama bedeli</th><th scope="col">Birlikte kaldıkları</th>
-              <th scope="col">Durum</th><th scope="col">Değerlendirme</th>
+              <th scope="col">Durum</th><th scope="col">İşlemler</th>
             </tr>
           </thead>
           <tbody>
@@ -231,7 +233,7 @@ export function GuestView({
                     </button>
                   ))}
                 </td>
-                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>Puan / Kara liste</button></td>
+                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><div className={styles.rowActions}>{openHistory && <button type="button" className="uni-control" aria-label={`${r.name} konaklama geçmişi`} onClick={()=>openHistory({id:r.guest_id,name:r.name})}><History size={15} aria-hidden="true"/>Konaklama geçmişi</button>}<button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>Puan / Kara liste</button></div></td>
               </tr>
             ))}
           </tbody>

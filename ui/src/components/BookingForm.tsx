@@ -1,3 +1,5 @@
+import { PhoneField } from "./fields/PhoneField";
+import { normalizeGuestPhones } from "../lib/phone";
 import type { Guest } from "../types";
 import { BookingBlacklistCheck } from "./GuestAssessment";
 import React, { useState } from "react";
@@ -232,7 +234,7 @@ export function BookingForm({
               room_id: room,
               guest_name: name,
               daily_price_minor: priceMinor,
-              guests,
+              guests: normalizeGuestPhones(guests, defaultCountry),
               notes,
             },
           );
@@ -431,10 +433,10 @@ export function BookingForm({
                 )
               }
             />
-            <TextField
+            <PhoneField
               label="Telefon"
               tone="white"
-              uppercase
+              defaultCountry={g.nationality || defaultCountry}
               value={g.phone || ""}
               onChange={(v) =>
                 setGuests(
@@ -697,7 +699,7 @@ export function BookingGuestsForm({
             booking_id: booking.booking_id,
             branch_id: booking.branch_id,
             guest_count: guests.length,
-            guests,
+            guests: normalizeGuestPhones(guests, defaultCountry),
           });
           await onSaved();
         } catch (e) {
@@ -760,10 +762,10 @@ export function BookingGuestsForm({
                 })
               }
             />
-            <TextField
+            <PhoneField
               label="Telefon"
               tone="white"
-              uppercase
+              defaultCountry={g.nationality || defaultCountry}
               value={g.phone || ""}
               onChange={(v) => patch(i, { phone: v })}
             />

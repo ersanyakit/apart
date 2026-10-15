@@ -1,314 +1,74 @@
-import React from "react";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  CheckCircle2,
-  Power,
-  LogOut,
-  Printer,
-  Repeat,
-  Trash2,
-  ChevronRight,
-  Circle,
-} from "lucide-react";
-import { Room, RoomStatus } from "../types";
+import React, { useEffect, useId, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ArrowRightLeft, CalendarPlus, ChevronRight, DoorOpen, FileText, LogIn, LogOut, Pencil, ReceiptText, UsersRound, X, Check, type LucideIcon } from 'lucide-react';
+import type { Room, RoomStatus } from '../types';
+import { STATUS_PALETTE, roomStatusKey } from '../lib/status-palette';
+import styles from './ContextMenu.module.css';
 
+type DocumentKind = 'sales' | 'reservation' | 'cancellation' | 'rental' | 'sale_contract';
 interface ContextMenuProps {
-  x: number;
-  y: number;
-  room: Room;
-  saleLabel: string;
-  saleDisabled: boolean;
-  canCheckOut: boolean;
-  canExchange: boolean;
-  bookingHint?: string;
-  onEditBooking?: () => void;
-  onClose: () => void;
-  onOperation: (type: "reserve" | "sale" | "checkout" | "exchange") => void;
-  onStatusChange: (status: RoomStatus) => void;
-  onCancel?: () => void;
-  onDelete?: () => void;
-  onGuests?: () => void;
-  onPrint: (
-    type: "sales" | "reservation" | "cancellation" | "rental" | "sale_contract",
-  ) => void;
+  room: Room; saleLabel: string; saleDisabled: boolean; canCheckOut: boolean; canExchange: boolean;
+  canReserve: boolean; allowedStatuses: RoomStatus[]; operationalStatus: string; guestName?: string;
+  bookingHint?: string; onEditBooking?: () => void; onDetails?: () => void;
+  onClose: () => void; onOperation: (type: 'reserve' | 'sale' | 'checkout' | 'exchange') => void;
+  renderStatus: (onBusyChange: (busy: boolean) => void) => React.ReactNode; onCancel?: () => void;
+  onGuests?: () => void; hasBooking: boolean; onPrint: (type: DocumentKind) => void;
 }
-
-export const ContextMenu: React.FC<ContextMenuProps> = ({
-  x,
-  y,
-  room,
-  saleLabel,
-  saleDisabled,
-  canCheckOut,
-  canExchange,
-  bookingHint,
-  onEditBooking,
-  onClose,
-  onOperation,
-  onStatusChange,
-  onPrint,
-  onCancel,
-  onDelete,
-  onGuests,
-}) => {
-  const [activeSubMenu, setActiveSubMenu] = React.useState<
-    "receipt" | "status" | null
-  >(null);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95, y: 5 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95, y: 5 }}
-      className="uni-card fixed z-50 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[220px] shadow-brand-blue-900/20 ring-1 ring-black/5"
-      style={{ top: y, left: x }}
-      onClick={(e) => e.stopPropagation()}
-      onContextMenu={(e) => e.preventDefault()}
-    >
-      <div className="px-4 py-2 border-b border-slate-50 bg-slate-50 mb-1">
-        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-          ODA İŞLEMLERİ
-        </p>
-        <p className="text-xs font-black text-brand-blue-700">
-          ODA #{room.number}
-        </p>
-        {bookingHint && <p className="mt-2 max-w-64 text-xs text-slate-500 normal-case tracking-normal">{bookingHint}</p>}
-      </div>
-
-      <ContextMenuItem
-        icon={<CheckCircle2 className="text-green-500" />}
-        label="Rezerve Et"
-        onClick={() => {
-          onOperation("reserve");
-          onClose();
-        }}
-        onMouseEnter={() => setActiveSubMenu(null)}
-      />
-      <ContextMenuItem
-        icon={<Power className="text-brand-blue-500" />}
-        label={saleLabel}
-        disabled={saleDisabled}
-        onClick={() => {
-          onOperation("sale");
-          onClose();
-        }}
-        onMouseEnter={() => setActiveSubMenu(null)}
-      />
-      <ContextMenuItem
-        icon={<LogOut className="text-red-500" />}
-        label="Çıkış İşlemleri"
-        disabled={!canCheckOut}
-        onClick={() => {
-          onOperation("checkout");
-          onClose();
-        }}
-        onMouseEnter={() => setActiveSubMenu(null)}
-      />
-
-      {onEditBooking && <ContextMenuItem icon={<CheckCircle2 />} label="Rezervasyon tarihlerini düzenle" onClick={() => { onEditBooking(); onClose(); }} />}
-
-      <div className="h-px bg-slate-100 my-1 mx-2" />
-
-      {/* Receipts Submenu Trigger */}
-      <div className="relative group/sub">
-        <ContextMenuItem
-          icon={<Printer className="text-slate-400" />}
-          label="Dekont İşlemleri"
-          onMouseEnter={() => setActiveSubMenu("receipt")}
-          hasSubMenu
-        />
-        <AnimatePresence>
-          {activeSubMenu === "receipt" && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              className="uni-card absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[180px] ring-1 ring-black/5"
-              onMouseLeave={() => setActiveSubMenu(null)}
-            >
-              <ContextMenuItem
-                icon={<Printer className="text-brand-blue-500" />}
-                label="Rezervasyon Dekontu"
-                onClick={() => {
-                  onPrint("reservation");
-                  onClose();
-                }}
-              />
-              <ContextMenuItem
-                icon={<Printer className="text-emerald-500" />}
-                label="Satış Dekontu"
-                onClick={() => {
-                  onPrint("sales");
-                  onClose();
-                }}
-              />
-              <ContextMenuItem
-                icon={<Printer className="text-red-500" />}
-                label="İptal Dekontu"
-                onClick={() => {
-                  onPrint("cancellation");
-                  onClose();
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className="h-px bg-slate-100 my-1 mx-2" />
-
-      {/* Status Submenu Trigger */}
-      <div className="relative group/sub">
-        <ContextMenuItem
-          icon={<Repeat className="text-slate-400" />}
-          label="Hızlı Durum Güncelle"
-          onMouseEnter={() => setActiveSubMenu("status")}
-          hasSubMenu
-        />
-        <AnimatePresence>
-          {activeSubMenu === "status" && (
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              className="uni-card absolute left-full top-0 ml-1 bg-white rounded-xl shadow-2xl border border-slate-200 py-2 min-w-[160px] ring-1 ring-black/5"
-              onMouseLeave={() => setActiveSubMenu(null)}
-            >
-              <ContextMenuItem
-                icon={
-                  <Circle className="fill-green-500 text-green-500 w-2 h-2" />
-                }
-                label="Temiz (T)"
-                onClick={() => {
-                  onStatusChange("Temiz");
-                  onClose();
-                }}
-              />
-              <ContextMenuItem
-                icon={
-                  <Circle className="fill-orange-500 text-orange-500 w-2 h-2" />
-                }
-                label="Kirli (K)"
-                onClick={() => {
-                  onStatusChange("Kirli");
-                  onClose();
-                }}
-              />
-              <ContextMenuItem
-                icon={
-                  <Circle className="fill-slate-900 text-slate-900 w-2 h-2" />
-                }
-                label="Arıza (A)"
-                onClick={() => {
-                  onStatusChange("Arizali");
-                  onClose();
-                }}
-              />
-              <ContextMenuItem
-                icon={
-                  <Circle className="fill-amber-600 text-amber-600 w-2 h-2" />
-                }
-                label="Bakım (M)"
-                onClick={() => {
-                  onStatusChange("Tadilat");
-                  onClose();
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className="h-px bg-slate-100 my-1 mx-2" />
-
-      <ContextMenuItem
-        icon={<Repeat className="text-slate-400" />}
-        label="Oda Değiştir"
-        disabled={!canExchange}
-        onClick={() => {
-          onOperation("exchange");
-          onClose();
-        }}
-        onMouseEnter={() => setActiveSubMenu(null)}
-      />
-      {room.status === "Rezervli" && (
-        <ContextMenuItem
-          icon={<Trash2 className="text-red-500" />}
-          label="Rezervasyonu İptal Et"
-          onClick={() => {
-            onCancel?.();
-            onClose();
-          }}
-          onMouseEnter={() => setActiveSubMenu(null)}
-        />
-      )}
-      {onGuests && (
-        <ContextMenuItem
-          icon={<Circle />}
-          label="Misafirleri Düzenle"
-          onClick={() => {
-            onGuests();
-            onClose();
-          }}
-        />
-      )}
-      <ContextMenuItem
-        icon={<Printer />}
-        label="Kira Sözleşmesi"
-        onClick={() => {
-          onPrint("rental");
-          onClose();
-        }}
-      />
-      <ContextMenuItem
-        icon={<Printer />}
-        label="Satış Sözleşmesi"
-        onClick={() => {
-          onPrint("sale_contract");
-          onClose();
-        }}
-      />
-      {onDelete && (
-        <ContextMenuItem
-          icon={<Trash2 className="text-red-400" />}
-          label="Kaydı Sil"
-          onClick={() => {
-            onDelete();
-            onClose();
-          }}
-        />
-      )}
-    </motion.div>
-  );
-};
-
-function ContextMenuItem({
-  icon,
-  label,
-  onClick,
-  onMouseEnter,
-  hasSubMenu,
-  disabled,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  onClick?: () => void;
-  onMouseEnter?: () => void;
-  hasSubMenu?: boolean;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      className="uni-control uni-menu-item rounded-xl w-full flex items-center px-3 py-2.5 text-xs font-bold text-slate-700 hover:bg-brand-blue-50 hover:text-brand-blue-700    active:bg-brand-blue-50  cursor-pointer"
-    >
-      <div className="w-5 flex items-center justify-center mr-3">
-        {icon}
-      </div>
-      <span className="flex-1 text-left">{label}</span>
-      {hasSubMenu && <ChevronRight className="w-3 h-3 text-slate-400" />}
-    </button>
-  );
+export function ContextMenu(props: ContextMenuProps) {
+  const { room, onClose } = props;
+  const dialog = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
+  const [tab, setTab] = useState<'operations' | 'status' | 'documents'>('operations');
+  const [busy, setBusy] = useState(false);
+  const condition = STATUS_PALETTE[roomStatusKey(props.operationalStatus)];
+  useEffect(() => {
+    const element = dialog.current!;
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    element.showModal(); document.body.style.overflow = 'hidden';
+    return () => { element.close(); document.body.style.overflow = overflow; if (!document.querySelector('dialog[open]')) previous?.focus({preventScroll:true}); };
+  }, []);
+  const act = (callback: () => void) => { dialog.current?.close(); onClose(); callback(); };
+  return createPortal(<dialog ref={dialog} className={styles.dialog} aria-labelledby={titleId}
+    onCancel={event=>{event.preventDefault();if(!busy&&!dialog.current?.querySelector('[aria-expanded="true"]'))onClose();}}
+    onClick={event=>{const r=event.currentTarget.getBoundingClientRect();if(!busy&&event.target===event.currentTarget&&(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom))onClose();}}>
+    <header className={styles.header}>
+      <span className={styles.roomIcon}><DoorOpen size={24} strokeWidth={1.8} aria-hidden="true"/></span>
+      <div className={styles.heading}><p>Oda işlemleri</p><h2 id={titleId}>Oda {room.number}</h2><span>{props.guestName || room.name || 'Aktif konaklama yok'}</span></div>
+      <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${styles.close}`} aria-label="Oda işlemlerini kapat" onClick={onClose}><X size={20}/></button>
+    </header>
+    <div className={styles.summary}><span style={{color:condition.text}}><i style={{background:condition.accent}}/>{condition.label}</span>{props.bookingHint && <p>{props.bookingHint}</p>}</div>
+    <nav className={styles.tabs} aria-label="Oda işlem bölümleri">
+      <button type="button" disabled={busy} aria-pressed={tab==='operations'} onClick={()=>setTab('operations')}>İşlemler</button>
+      {!!props.allowedStatuses.length && <button type="button" disabled={busy} aria-pressed={tab==='status'} onClick={()=>setTab('status')}>Oda durumu</button>}
+      {props.hasBooking && <button type="button" disabled={busy} aria-pressed={tab==='documents'} onClick={()=>setTab('documents')}>Belgeler</button>}
+    </nav>
+    <div className={styles.content}>
+      {tab==='operations' && <>
+        <section className={styles.group} aria-label="Konaklama işlemleri">
+          {props.onDetails && <Action icon={ReceiptText} label="Rezervasyon detayı" detail="Misafirler, folyo ve hizmetler" onClick={()=>act(props.onDetails!)}/>}
+          {props.canReserve && <Action icon={CalendarPlus} label="Rezerve Et" detail="Bu oda için yeni rezervasyon" onClick={()=>act(()=>props.onOperation('reserve'))}/>}
+          {!props.saleDisabled && <Action icon={props.canCheckOut?FileText:LogIn} label={props.saleLabel} onClick={()=>act(()=>props.onOperation('sale'))}/>}
+          {props.canCheckOut && <Action icon={LogOut} label="Çıkış İşlemleri" onClick={()=>act(()=>props.onOperation('checkout'))}/>}
+          {props.canExchange && <Action icon={ArrowRightLeft} label="Oda Değiştir" onClick={()=>act(()=>props.onOperation('exchange'))}/>}
+          {props.onEditBooking && <Action icon={Pencil} label="Rezervasyon tarihlerini düzenle" onClick={()=>act(props.onEditBooking!)}/>}
+          {props.onGuests && <Action icon={UsersRound} label="Misafirleri Düzenle" onClick={()=>act(props.onGuests!)}/>}
+        </section>
+        {props.onCancel && <section className={styles.group} aria-label="Diğer işlemler">
+          {props.onCancel && <Action icon={X} label="Rezervasyonu İptal Et" danger onClick={()=>act(props.onCancel!)}/>}
+        </section>}
+      </>}
+      {tab==='status' && props.renderStatus(setBusy)}
+      {tab==='documents' && <section className={styles.group} aria-label="Konaklama belgeleri">
+        {([['reservation','Rezervasyon Dekontu'],['sales','Satış Dekontu'],['cancellation','İptal Dekontu'],['rental','Kira Sözleşmesi'],['sale_contract','Satış Sözleşmesi']] as [DocumentKind,string][]).map(([kind,label])=><Action key={kind} icon={FileText} label={label} onClick={()=>act(()=>props.onPrint(kind))}/>)}
+      </section>}
+    </div>
+  </dialog>, document.body);
+}
+function Action({icon:Icon,label,detail,onClick,danger,selected,color}:{icon:LucideIcon;label:string;detail?:string;onClick:()=>void;danger?:boolean;selected?:boolean;color?:string}) {
+  return <button type="button" className={`uni-control ${styles.action}`} data-danger={danger||undefined} onClick={onClick} aria-current={selected?'true':undefined}>
+    <span className={styles.actionIcon} style={color?{color}:undefined}><Icon size={19} strokeWidth={1.8} aria-hidden="true"/></span>
+    <span className={styles.actionLabel}><strong>{label}</strong>{detail&&<small>{detail}</small>}</span>
+    {selected?<Check size={17} aria-label="Mevcut durum"/>:<ChevronRight size={15} className={styles.chevron} aria-hidden="true"/>}
+  </button>;
 }

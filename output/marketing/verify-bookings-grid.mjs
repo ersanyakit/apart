@@ -39,7 +39,7 @@ await page.getByRole('button',{name:'Ayrıntılı Rezervasyon Listesi',exact:tru
 const workspace=page.getByRole('region',{name:'Rezervasyon kayıtları',exact:true});const grid=workspace.getByRole('region',{name:/Rezervasyon tablosu/});
 const row=workspace.getByRole('row').filter({hasText:'Deniz Örnek'});await row.waitFor();assert.equal(await workspace.locator('table').evaluate(el=>getComputedStyle(el).tableLayout),'fixed');
 assert.ok(await workspace.getByRole('button',{name:'Rezervasyon detayı',exact:true}).isDisabled());
-await row.getByRole('button',{name:'Deniz Örnek rezervasyonunu seç',exact:true}).click();assert.ok(await workspace.getByRole('button',{name:'Rezervasyon detayı',exact:true}).isEnabled());
+await row.getByRole('radio',{name:'Deniz Örnek rezervasyonunu seç',exact:true}).click();assert.ok(await workspace.getByRole('button',{name:'Rezervasyon detayı',exact:true}).isEnabled());
 assert.ok((await row.textContent()).includes('Ali Demir'));assert.ok((await row.textContent()).includes('1.750'));assert.ok((await row.textContent()).includes('EUR / gece'));
 await fs.mkdir('output/bookings-grid',{recursive:true});await grid.evaluate(el=>{el.scrollTop=0;el.scrollLeft=0});await page.waitForTimeout(300);await page.screenshot({path:'output/bookings-grid/desktop.png'});
 const x=await row.locator('td').nth(2).evaluate(el=>el.getBoundingClientRect().left);await grid.evaluate(el=>{el.scrollLeft=650});const frozenX=await row.locator('td').nth(2).evaluate(el=>el.getBoundingClientRect().left);assert.ok(Math.abs(x-frozenX)<1,'Guest identity stays pinned while scrolling');await page.waitForTimeout(300);await grid.screenshot({path:'output/bookings-grid/personnel.png'});
