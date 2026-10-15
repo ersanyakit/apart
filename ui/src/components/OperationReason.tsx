@@ -2,7 +2,7 @@
 import React,{useRef,useState} from 'react';
 import { Wrench, CalendarX2 } from 'lucide-react';
 import {command,messageOf,type APIRoom,type Booking} from '../lib/api';
-import type { RoomStatus } from '../types';
+import type { RoomStatus } from '../lib/statuses.generated';
 import { RoomOperationDialog } from './RoomOperationDialog';
 import { RoomStateEditor } from './RoomStateEditor';
 import {TextAreaField,InlineSelectField} from './fields';

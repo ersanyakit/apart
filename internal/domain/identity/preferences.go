@@ -14,12 +14,12 @@ type Preferences map[string]any
 var pageIDs = []string{"property3d", "kanban", "blacklist", "reports", "board", "calendar", "bookings", "bookings-list", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
 var preferenceEnums = map[string][]string{
 	"bookings_view":   {"timeline", "list"},
-	"bookings_status": {"all", "confirmed", "checked_in", "completed"},
+	"bookings_status": {"all", string(constants.BookingConfirmed), string(constants.BookingCheckedIn), string(constants.BookingCompleted)},
 	"theme":           {"blue", "pink", "green", "orange", "purple", "fuchsia"},
 	"background":      {"white", "gray"}, "font_size": {"compact", "normal", "large", "xlarge"},
 	"money_format": {"tr", "en"}, "calendar_view": {"day", "week", "month"},
-	"calendar_status": {"active", "all", "confirmed", "checked_in", "completed", "cancelled"},
-	"stays_status":    {"all", "confirmed", "checked_in", "completed"},
+	"calendar_status": {"active", "all", string(constants.BookingConfirmed), string(constants.BookingCheckedIn), string(constants.BookingCompleted), string(constants.BookingCancelled)},
+	"stays_status":    {"all", string(constants.BookingConfirmed), string(constants.BookingCheckedIn), string(constants.BookingCompleted)},
 }
 var reportHeader = regexp.MustCompile(`^header\.report\.[a-z_]{1,24}\.[a-z_]{1,40}$`)
 var countryCode = regexp.MustCompile(`^[A-Z]{2}$`)

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Check, Sparkles, Wrench, PaintRoller } from 'lucide-react';
 import { command, messageOf, type APIRoom } from '../lib/api';
 import { STATUS_PALETTE, roomStatusKey } from '../lib/status-palette';
-import type { RoomStatus } from '../types';
+import type { RoomStatus } from '../lib/statuses.generated';
 import { InlineSelectField, TextAreaField } from './fields';
 import { ErrorMessage, buttonStyle, secondaryStyle } from './FormKit';
 import styles from './RoomOperationDialog.module.css';

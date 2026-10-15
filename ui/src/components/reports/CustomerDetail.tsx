@@ -100,7 +100,7 @@ export function CustomerHistoryTable({items,onAssess}:{items:CustomerStay[];onAs
  </table></div></div>;
 }
 export function CustomerStayRow({stay:r,expanded,onToggle,onAssess,rowId,tone='light'}:{tone?:'light'|'dark';stay:CustomerStay;expanded:boolean;rowId:string;onToggle:()=>void;onAssess:(target:AssessmentTarget)=>void}) {
- const planned=[BookingState.Confirmed,BookingState.Cancelled].includes(r.status);
+ const planned=[BookingState.Confirmed,BookingState.Cancelled].some(status=>status===r.status);
  const noteCount=[r.booking_notes,r.guest_note,r.cancellation_reason].filter(Boolean).length;
  return <>
   <tr className={styles.customerRow} data-tone={tone} onClick={onToggle}>
