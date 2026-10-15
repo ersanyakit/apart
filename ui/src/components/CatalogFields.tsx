@@ -27,11 +27,12 @@ export function catalogLabel(value: LocalizedString | undefined, locale: string)
   return value?.[locale.toUpperCase()] || value?.EN || value?.TR || "";
 }
 
-export function CatalogFields({ definitions, value = [], onChange, readOnly = false }: {
+export function CatalogFields({ definitions, value = [], onChange, readOnly = false, scope = "room" }: {
   definitions: FeatureDefinition[];
   value?: FeatureAssignment[];
   onChange?: (value: FeatureAssignment[]) => void;
   readOnly?: boolean;
+  scope?: "room" | "property";
 }) {
   const { locale } = useI18n();
   const id = useId();
@@ -41,7 +42,7 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   const label = (v?: LocalizedString) => catalogLabel(v, locale);
   const normalize = (v: string) => v.toLocaleLowerCase(locale).normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll("ı", "i");
   const search = normalize(query.trim());
-  const all = definitions.filter((d) => d.catalog_kind && (readOnly || d.scopes.includes("room")));
+  const all = definitions.filter((d) => d.catalog_kind && (readOnly || d.scopes.includes(scope)));
   const items = all.filter((d) => !search || normalize([
     d.code, ...Object.values(d.label), ...Object.values(d.category_label || {}),
     ...Object.values(d.group_label || {}),
@@ -55,9 +56,10 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   return (
     <section className="space-y-4" aria-label={tr ? "Standart olanak ve envanter kataloğu" : "Standard amenities and inventory catalog"}>
       <div>
-        <h3 className="font-uninav-book text-lg text-slate-900">{tr ? "Olanaklar ve oda envanteri" : "Amenities and room inventory"}</h3>
+        <h3 className="font-uninav-book text-lg text-slate-900">{scope === "property" ? (tr ? "Tesis olanakları ve envanteri" : "Property amenities and inventory") : (tr ? "Olanaklar ve oda envanteri" : "Amenities and room inventory")}</h3>
         <p className="mt-1 text-sm text-slate-500">{readOnly
           ? (tr ? "Tüm otellerin ortak kataloğu. Odaya ait ürün ve olanaklar oda formunda seçilir." : "Shared catalog for all hotels. Room items and amenities are selected in the room form.")
+          : scope === "property" ? (tr ? "Tesisin ortak alanlarında sunulan olanakları seçin. Fiziksel ürünlerde adedi belirtin." : "Select amenities available at the property. Enter quantities for physical items.")
           : (tr ? "Yalnızca bu odada bulunanları seçin. Fiziksel ürünlerde adedi belirtin." : "Select what is available in this room. Enter quantities for physical items.")}</p>
       </div>
       <TextField label={tr ? "Katalogda ara" : "Search catalog"} type="search" value={query} onChange={setQuery}
@@ -66,7 +68,7 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
       {categories.map((category, index) => {
         const rows = items.filter((d) => d.category === category);
         const expanded = !!search || opened.includes(category);
-        const selectedCount = all.filter((d) => d.category === category && assignments.has(d.code)).length;
+        const selectedCount = all.filter((d) => d.category === category && (d.catalog_kind === "amenity" ? assignments.get(d.code) === true : assignments.has(d.code))).length;
         const panelId = `${id}-category-${index}`;
         return <div key={category} className="overflow-hidden rounded-2xl bg-[#f9f9f9]">
           <button type="button" aria-expanded={expanded} aria-controls={panelId}
@@ -80,8 +82,36 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
           <div id={panelId} hidden={!expanded} className="space-y-4 px-4 pb-4">
             {expanded && Array.from(new Set(rows.map((d) => d.group_key))).map((group) => {
               const members = rows.filter((d) => d.group_key === group);
+              const groupMembers = all.filter((d) => d.category === category && d.group_key === group);
+              const groupName = label(members[0].group_label);
+              const allSelected = groupMembers.every((d) => d.catalog_kind === "amenity" ? assignments.get(d.code) === true : assignments.has(d.code));
+              const anySelected = groupMembers.some((d) => assignments.has(d.code));
+              const updateGroup = (select: boolean) => {
+                const codes = new Set(groupMembers.map((d) => d.code));
+                onChange?.([
+                  ...value.filter((a) => !codes.has(a.code)),
+                  ...(select ? groupMembers.map((d) => ({
+                    code: d.code,
+                    value: d.catalog_kind === "amenity" ? true : (assignments.get(d.code) ?? 1),
+                  })) : []),
+                ]);
+              };
               return <div key={group} className="space-y-2">
-                <h4 className="text-sm font-medium text-slate-600">{label(members[0].group_label)}</h4>
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                  <h4 className="text-sm font-medium text-slate-600">{groupName}</h4>
+                  {!readOnly && <div className="flex flex-wrap items-center gap-1">
+                    <button type="button" disabled={allSelected} onClick={() => updateGroup(true)}
+                      aria-label={`${groupName}: ${tr ? "Tümünü seç" : "Select all"}`}
+                      className="uni-control min-h-11 rounded-xl px-3 text-xs font-medium text-slate-700 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
+                      {tr ? "Tümünü seç" : "Select all"}
+                    </button>
+                    <button type="button" disabled={!anySelected} onClick={() => updateGroup(false)}
+                      aria-label={`${groupName}: ${tr ? "Seçimi temizle" : "Clear selection"}`}
+                      className="uni-control min-h-11 rounded-xl px-3 text-xs text-slate-500 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
+                      {tr ? "Seçimi temizle" : "Clear selection"}
+                    </button>
+                  </div>}
+                </div>
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   {members.map((d) => {
                     const current = assignments.get(d.code);

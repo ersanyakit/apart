@@ -1,0 +1,53 @@
+.page { max-width: 1040px; margin-inline: auto; }
+.company,.property { padding: 24px; border: 1px solid var(--color-uni-border); border-radius: 22px; background: var(--app-background); }
+.company { margin-block-start: 16px; background: var(--color-uni-surface); }
+.heading { display:flex; align-items:center; gap:14px; min-width:0; }
+.heading>div { flex:1; min-width:0; }
+.heading p { font-size:12px; color:var(--color-uni-muted); margin-bottom:4px; }
+.heading h3 { font-size:20px; font-weight:600; letter-spacing:-.025em; overflow-wrap:anywhere; }
+.icon { display:grid; place-items:center; width:46px; height:46px; flex-shrink:0; border-radius:15px; background:var(--color-brand-blue-50); color:var(--color-brand-blue-600); }
+.contact { display:flex; flex-wrap:wrap; gap:12px 24px; margin-top:20px; font-size:13px; color:var(--color-uni-muted); }
+.contact span { display:flex; align-items:center; gap:8px; overflow-wrap:anywhere; min-width:0; }
+.contact svg { flex-shrink:0; }
+.tax { margin-top:12px; font-size:12px; color:var(--color-uni-muted); }
+.relation { display:flex; align-items:center; gap:12px; margin-left:46px; height:56px; font-size:12px; color:var(--color-uni-muted); }
+.relation>span:first-child { height:100%; width:1px; background:var(--color-uni-border); }
+.property>.heading { margin-bottom:20px; }
+.details { margin-top:22px; border-top:1px solid var(--color-uni-border); padding-top:6px; }
+.details summary { display:flex; align-items:center; justify-content:space-between; min-height:44px; cursor:pointer; font-size:13px; list-style:none; border-radius:10px; }
+.details summary::-webkit-details-marker { display:none; }
+.details summary:focus-visible { outline:2px solid var(--color-brand-blue-500); outline-offset:3px; }
+.details summary:hover,.details summary:active { background:var(--color-uni-surface); }
+.details[open] summary svg { rotate:180deg; }
+.details>p { font-size:13px; line-height:1.7; color:var(--color-uni-muted); margin:10px 0 18px; white-space:pre-wrap; }
+.media { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin:12px 0 20px; }
+.media img,.media video { width:100%; aspect-ratio:3/2; object-fit:cover; border-radius:12px; }
+.footer { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:18px; padding-top:18px; border-top:1px solid var(--color-uni-border); }
+.footer>span,.empty,.newCompany p { font-size:13px; color:var(--color-uni-muted); }
+.newCompany { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:24px 4px; }
+@media(max-width:640px) { .company,.property { padding:18px; } .heading { flex-wrap:wrap; } .heading>button { margin-left:60px; } .heading h3 { font-size:18px; } .relation { margin-left:40px; } .contact { flex-direction:column; } .newCompany { align-items:flex-start; flex-direction:column; } }
+/* Keep the hierarchy compact without squeezing names between action buttons. */
+.company,.property { padding:20px; }
+.relation { height:36px; }
+.contact { margin-top:12px; }
+.property>.heading { margin-bottom:14px; }
+.details { margin-top:14px; }
+.footer { margin-top:8px; padding-top:12px; }
+.newCompany { padding:16px 4px; }
+.details>summary svg { box-sizing:content-box; padding:7px; border-radius:50%; background:var(--color-uni-surface); }
+@media(max-width:640px) {
+ .heading { display:grid; grid-template-columns:40px minmax(0,1fr); gap:10px; }
+ .heading>.icon { width:40px; height:40px; }
+ .heading>button { grid-column:2; justify-self:start; margin:0; }
+ .heading h3 { overflow-wrap:break-word; }
+ .company,.property { padding:16px; }
+ .footer { flex-wrap:wrap; }
+}
+
+.amenities { margin-top:18px; }
+.amenities h4 { font-size:13px; font-weight:600; margin-bottom:10px; }
+.amenities ul { display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0; }
+.amenities li { display:flex; align-items:center; gap:8px; max-width:100%; padding:8px 12px; border-radius:12px; background:var(--color-uni-surface); font-size:13px; overflow-wrap:anywhere; }
+.amenities svg { color:var(--color-brand-blue-600); }
+
+.quantity { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; min-width:28px; padding:2px 7px; border-radius:999px; background:var(--color-brand-blue-50); color:var(--color-brand-blue-600); font-size:11px; font-weight:600; font-variant-numeric:tabular-nums; }

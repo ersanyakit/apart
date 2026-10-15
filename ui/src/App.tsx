@@ -3,6 +3,7 @@ import {operationalRoomStatuses, housekeepingRoomStatuses, roomRequiresReason} f
 
 import { BookingStatus as BookingState, RoomStatus as RoomState } from './lib/statuses.generated';
 
+import { FacilityView } from "./components/FacilityView";
 import { RoomStateEditor } from "./components/RoomStateEditor";
 import roomCardStyles from "./components/RoomStatusCard.module.css";
 import { bookingMatchesDay, bookingSearchText } from "./lib/booking-grid";
@@ -142,8 +143,8 @@ const navigation = [
   { id: "blacklist", label: "Ortak Kara Liste", icon: Users },
   { id: "guests", label: "Misafir Arama ve Geçmiş", icon: Search },
   { id: "templates", label: "Belge Şablonları", icon: Settings },
-  { id: "logs", label: "Sistem Logları", icon: Layers },
-  { id: "facility", label: "Kurumsal Tesis Kartı", icon: Building2 },
+  { id: "logs", label: "İşlem Geçmişi", icon: Layers },
+  { id: "facility", label: "Şirket ve Oteller", icon: Building2 },
   { id: "features", label: "Olanak Tanımları", icon: Settings },
   { id: "appsettings", label: "Ayarlar", icon: Settings },
 ];
@@ -467,7 +468,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const settingsEditorOpen = !!modal && ["unit", "floor", "facility", "bulk"].includes(modal.type);
   const editorTitle = modal ? {
     unit: "Birim Tanımı", floor: "Kat Tanımı", booking: modal.type === "booking" && modal.sale ? "Yeni Konaklama" : "Rezervasyon", move: "Birim Değişikliği",
-    facility: "Tesis Bilgileri", bulk: "Toplu Birim Tanımı", history: "Rezervasyon Geçmişi",
+    facility: modal?.type === "facility" ? `${modal.kind === "hotel" ? "Şirket" : "Otel / Tesis"} ${modal.create ? "Ekle" : "Bilgileri"}` : "Tesis Bilgileri", bulk: "Toplu Birim Tanımı", history: "Rezervasyon Geçmişi",
     guests: "Konaklama Misafirleri", folio: "Oda Folyosu", documents: "Sözleşme ve Dekontlar",
   }[modal.type] : "";
   const editorContent = modal && (<>
@@ -516,7 +517,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       >
         <RefreshCw size={16} className={busy ? "animate-spin" : ""} />
       </button>
-      {operator && s.branch_id && (
+      {operator && s.branch_id && tab !== "facility" && (
         <button
           className={`uni-control ${buttonStyle}`}
           onClick={() => setModal({ type: "booking" })}
@@ -552,7 +553,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         )
       }
     >
-      <main ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label="Sayfa içeriği" className={tab === "property3d" && !settingsEditorOpen ? "flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden" : "flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6"}>
+      <main data-page={tab} ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label="Sayfa içeriği" className={tab === "property3d" && !settingsEditorOpen ? "flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden" : "flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6"}>
         {settingsEditorOpen && <SettingsEditor icon={modal?.type === "folio" ? <NavigationIcon name="folio"/> : undefined} title={editorTitle} description={modal?.type === "documents" ? "Belge türünü seçin, metni kontrol edin ve çıktınızı oluşturun." : modal?.type === "folio" ? "Hizmetleri kalem kalem ekleyin; borç, tahsilat ve bakiyeyi takip edin." : undefined} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
         <div hidden={settingsEditorOpen} className={tab === "property3d" && !settingsEditorOpen ? "app-page-content flex flex-1 min-h-0 min-w-0 overflow-hidden" : "app-page-content space-y-6"}>
         <AnimatePresence>
@@ -932,121 +933,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           onDetails={booking=>setModal({type:"history",booking})} onGuest={openGuestHistory} onEdit={openBookingEdit}
           onMove={booking=>setModal({type:"move",booking})} onTransition={transition}
           onContextMenu={(event,booking)=>{const room=s.rooms.find(room=>room.room_id===booking.room_id);if(!room)return;event.preventDefault();setContextMenu({x:Math.max(8,Math.min(event.clientX,window.innerWidth-430)),y:Math.max(8,Math.min(event.clientY,window.innerHeight-520)),room,booking});}}/>}
-        {tab === "facility" && (
-          <>
-            <PageHeader pageId="facility" actions={
-            <div className="flex gap-2">
-              {s.user.role === "admin" && (
-                <button
-                  className={`uni-control ${buttonStyle}`}
-                  onClick={() =>
-                    setModal({ type: "facility", kind: "hotel", create: true })
-                  }
-                >
-                  Otel Ekle
-                </button>
-              )}
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                disabled={!s.hotel_id}
-                onClick={() =>
-                  setModal({ type: "facility", kind: "branch", create: true })
-                }
-              >
-                Tesis / Şube Ekle
-              </button>
-            </div>
-            } />
-            <div className="grid md:grid-cols-2 gap-5">
-              {[
-                { kind: "hotel" as const, data: hotel },
-                { kind: "branch" as const, data: branch },
-              ].map(
-                ({ kind, data }) =>
-                  data && (
-                    <article
-                      key={kind}
-                      className="uni-card rounded-2xl border border-slate-200 bg-white p-6 space-y-4"
-                    >
-                      <span className="text-[10px] font-black text-brand-blue-600 uppercase">
-                        {kind === "hotel" ? "Otel" : "Tesis / Şube"}
-                      </span>
-                      <h3 className="text-xl font-black">{data.name}</h3>
-                      <p className="text-sm text-slate-500">{data.address}</p>
-                      <p className="text-sm text-slate-400">
-                        {localized(data.description)}
-                      </p>
-                      <div className="flex gap-2 overflow-x-auto">
-                        {(data.assets || []).map((a, i) =>
-                          a.kind === "image" ? (
-                            <img
-                              key={i}
-                              alt={localized(a.alt_text)}
-                              src={a.url}
-                              className="h-24 rounded-xl"
-                            />
-                          ) : (
-                            <video
-                              key={i}
-                              src={a.url}
-                              controls
-                              className="h-24 rounded-xl"
-                            />
-                          ),
-                        )}
-                      </div>
-                      <button
-                        className={`uni-control ${secondaryStyle}`}
-                        onClick={() => setModal({ type: "facility", kind })}
-                      >
-                        Bilgileri ve Medyayı Düzenle
-                      </button>
-                    </article>
-                  ),
-              )}
-            </div>
-            {s.branches.length > 0 && (
-              <div className="uni-card rounded-2xl border border-slate-200 bg-white p-6 space-y-3">
-                <h4 className="text-sm font-black uppercase tracking-wider text-slate-500">
-                  Tesisler · {s.branches.length}
-                </h4>
-                {s.branches.map((b) => (
-                  <div
-                    key={b.branch_id}
-                    className="flex items-center gap-3 rounded-xl bg-slate-50 px-4 py-3"
-                  >
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-bold text-slate-800">
-                        {b.name}
-                        {b.branch_id === s.branch_id && (
-                          <span className="ml-2 rounded-full bg-brand-blue-100 px-2 py-0.5 text-[10px] font-black uppercase text-brand-blue-700">
-                            Aktif
-                          </span>
-                        )}
-                      </p>
-                      <p className="truncate text-xs text-slate-400">{b.address}</p>
-                    </div>
-                    {manager && (
-                      <button
-                        type="button"
-                        aria-label={`${b.name} tesisini arşive kaldır`}
-                        title="Arşive kaldır"
-                        className="uni-control flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 outline-none transition-all duration-150 ease-out hover:bg-red-50 hover:text-red-500 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-neutral-400"
-                        onClick={() => b.branch_id && void removeBranch(b.branch_id, b.name)}
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <p className="text-[11px] leading-5 text-slate-400">
-                  Silinen tesis arşive kaldırılır; kayıtlar fiziksel olarak silinmez,
-                  geçmiş korunur. Aktif veya yaklaşan konaklaması olan tesis kaldırılamaz.
-                </p>
-              </div>
-            )}
-          </>
-        )}
+        {tab === "facility" && <FacilityView snapshot={s} onEdit={kind=>setModal({type:"facility",kind})} onCreate={kind=>setModal({type:"facility",kind,create:true})} onSelect={changeBranch} onArchive={(id,name)=>void removeBranch(id,name)}/>}
         {tab === "features" && (
           <FeatureRegistryView key={s.hotel_id} snapshot={s} onRefresh={refresh} />
         )}

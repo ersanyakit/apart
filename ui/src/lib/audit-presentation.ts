@@ -4,7 +4,7 @@ import { bookingStatuses, unitKinds } from './api';
 import type { AuditDetails } from './audit-location';
 export type AuditEntry = { action: string; entity: string; details?: AuditDetails };
 export const auditActions: Record<string,string> = { archive:'Arşive taşındı',restore:'Arşivden geri alındı',create:'Oluşturuldu',update:'Güncellendi',delete:'Silindi',check_in:'Misafir girişi yapıldı',check_out:'Misafir çıkışı yapıldı',cancel:'Rezervasyon iptal edildi',move:'Oda değiştirildi',swap:'Odalar takas edildi',login:'Oturum açıldı',logout:'Oturum kapatıldı',assign:'Özellik atandı' };
-export const auditEntities: Record<string,string> = {reception_notes:'Resepsiyon notu',report_records:'Rapor işlem kaydı',guest_assessments:'Misafir değerlendirmesi',bookings:'Rezervasyon',rooms:'Birim',branches:'Tesis',hotels:'Otel',users:'Personel',guest_profiles:'Misafir',beds:'Yatak',floors:'Kat',assets:'Medya',feature_categories:'Özellik kategorisi',feature_definitions:'Özellik',document_templates:'Belge şablonu',documents:'Belge'};
+export const auditEntities: Record<string,string> = {reception_notes:'Resepsiyon notu',report_records:'Rapor işlem kaydı',guest_assessments:'Misafir değerlendirmesi',bookings:'Rezervasyon',rooms:'Birim',branches:'Otel / Tesis',hotels:'Şirket',users:'Personel',guest_profiles:'Misafir',beds:'Yatak',floors:'Kat',assets:'Medya',feature_categories:'Özellik kategorisi',feature_definitions:'Özellik',document_templates:'Belge şablonu',documents:'Belge'};
 const fields: Record<string,string> = {body:'Not metni',archived:'Arşivde',guest_name:'Misafir',name:'Ad',display_name:'Görünen ad',code:'Birim / kayıt kodu',kind:'Tür',title:'Başlık',status:'Durum',guest_count:'Misafir sayısı',capacity:'Kapasite',rentable:'Satışa açık',inactive:'Pasif',role:'Yetki',user_role:'Yetki',daily_price_minor:'Gecelik fiyat',unit_price_minor:'Birim fiyat',amount_minor:'Tutar',deposit_minor:'Kapora',currency:'Para birimi',deposit_channel:'Kapora yöntemi',check_in:'Planlanan giriş',check_out:'Planlanan çıkış',actual_check_in:'Gerçek giriş',actual_check_out:'Gerçek çıkış',cancelled_at:'İptal zamanı',cancellation_reason:'İptal gerekçesi',status_reason:'Durum değişikliği gerekçesi',reason:'Açıklama / gerekçe',score:'Misafir puanı',revoked_at:'Kara listeden çıkarılma',revoke_reason:'Kara listeden çıkarma gerekçesi',hotel_name:'Kaydı ekleyen otel',actor_name:'İşlemi yapan',responsible_name:'Sorumlu personel',label:'İşlem açıklaması',notes:'Not',quantity:'Miktar',priority:'Öncelik',shift_code:'Vardiya',format:'Belge biçimi'};
 const labels: Record<string,string> = {...Object.fromEntries(contracts.report_record_kinds.map(k=>[k.key,k.name])),...bookingStatuses,todo:'Yapılacak',doing:'Devam ediyor',done:'Tamamlandı',...unitKinds,...roomStatuses,rating:'Puanlama',blacklist:'Kara liste',admin:'Sistem yöneticisi',management:'Yönetici',reception:'Resepsiyonist',housekeeping:'Kat hizmetleri',technical:'Teknik personel',cash:'Nakit',card:'Kart',credit_card:'Kredi kartı',bank_transfer:'Banka havalesi',plain:'Düz metin',html:'Biçimlendirilmiş belge',rental_contract:'Kira sözleşmesi',sale_contract:'Satış sözleşmesi',reservation_receipt:'Rezervasyon dekontu',sale_receipt:'Tahsilat dekontu',cancellation_receipt:'İptal belgesi',report_summary:'Rapor özeti',report_detail:'Ayrıntılı rapor',report_handover:'Vardiya teslim raporu',receipt:'Tahsilat',expense:'Gider',income:'Gelir',refund:'İade',task:'Görev',maintenance:'Arıza / bakım',open:'Açık',completed:'Tamamlandı',pending:'Bekliyor',low:'Düşük',normal:'Normal',high:'Yüksek',urgent:'Acil'};
 function value(key:string,v:unknown,currency:unknown): string {
@@ -32,4 +32,21 @@ export function auditSummary(entry:AuditEntry){
  const subject=[entry.entity==='reception_notes'?d.title:undefined,d.guest_name,d.name,d.display_name,d.label,d.code].find(v=>typeof v==='string'&&v.trim());
  const action=entry.entity==='report_records'&&entry.action==='delete'?'Kayıt iptal edildi':auditActions[entry.action]??'İşlem kaydedildi';
  return `${subject?`${subject} · `:''}${action}`;
+}
+
+/** Plain operational language; generic database actions stay in expanded detail. */
+export function auditHeadline(entry:AuditEntry) {
+ if(entry.entity==='report_records'&&entry.action==='delete')return 'İşlem kaydı iptal edildi';
+ const change=auditChanges(entry).find(c=>c.key==='status');
+ if(entry.entity==='rooms'&&change)return 'Oda durumu değiştirildi';
+ if(['check_in','check_out','cancel','move','swap','login','logout'].includes(entry.action))return auditActions[entry.action];
+ const entity=auditEntities[entry.entity]||'Kayıt';
+ const verbs:Record<string,string>={create:'eklendi',update:'bilgileri güncellendi',delete:'silindi',archive:'arşive kaldırıldı',restore:'arşivden geri alındı'};
+ return `${entity} ${verbs[entry.action]||'işlemi kaydedildi'}`;
+}
+
+export function auditSubject(entry:AuditEntry) {
+ const data=entry.details?.after??entry.details?.before??{};
+ const subject=[data.guest_name,data.name,data.display_name].find(v=>typeof v==='string'&&v.trim());
+ return typeof subject==='string'?subject:'';
 }

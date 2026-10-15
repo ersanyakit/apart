@@ -47,8 +47,8 @@ export function FeatureFields({
   );
   return (
     <>
-    {scope === "room" && <CatalogFields definitions={definitions} value={value} onChange={onChange} />}
-    {(items.length > 0 || !definitions.some((d) => d.catalog_kind)) && <section className="space-y-4">
+    <CatalogFields definitions={definitions} scope={scope} value={value} onChange={onChange} />
+    {(items.length > 0 || !definitions.some((d) => d.catalog_kind && d.scopes.includes(scope))) && <section className="space-y-4">
       <div className="min-w-0">
         <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">
           Olanaklar ve Özellikler

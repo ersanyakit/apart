@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Camera,
-  Upload,
+  GripVertical,
   Plus,
   Trash2,
   Library,
@@ -18,6 +18,7 @@ import {
   type MediaAsset,
 } from "../lib/api";
 
+import { MediaUpload } from "./MediaUpload";
 import { useI18n } from "./I18n";
 import { LocalizedTextFields } from "./fields";
 
@@ -35,6 +36,20 @@ export function MediaEditor({
   onBusy,
 }: Props) {
   const { locale } = useI18n();
+  const latest = useRef({ value, onChange });
+  useEffect(() => { latest.current = { value, onChange }; }, [value, onChange]);
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [announcement, setAnnouncement] = useState("");
+  const commit = (items: MediaAsset[]) => onChange(items.map((item, sort_order) => ({ ...item, sort_order })));
+  const move = (from: number, to: number) => {
+    if (from === to || busy) return;
+    const items = [...value];
+    const [item] = items.splice(from, 1);
+    items.splice(to, 0, item);
+    commit(items);
+    setAnnouncement(`Medya ${from + 1}, ${to + 1}. sıraya taşındı.`);
+  };
   const [url, setURL] = useState("");
   const [kind, setKind] = useState<"image" | "video">("image");
   const [busy, setBusy] = useState(false);
@@ -58,9 +73,9 @@ export function MediaEditor({
     }
   };
   const append = (items: MediaAsset[]) => {
-    if (value.length + items.length > 30)
+    if (latest.current.value.length + items.length > 30)
       throw new Error(contracts.errors.media_limit);
-    onChange([...value, ...items]);
+    latest.current.onChange([...latest.current.value, ...items].map((item, sort_order) => ({ ...item, sort_order })));
   };
   return (
     <section className="space-y-4">
@@ -78,35 +93,12 @@ export function MediaEditor({
           {error}
         </p>
       )}
+      <MediaUpload count={value.length} disabled={busy || !hotelId} onUpload={async files => {
+        setBusy(true); onBusy?.(true); setError("");
+        try { append(await command<MediaAsset[]>("media.upload", { hotel_id: hotelId }, files)); }
+        finally { setBusy(false); onBusy?.(false); }
+      }}/>
       <div className="flex flex-wrap gap-2">
-        <label
-          className={`inline-flex items-center gap-2 rounded-xl bg-brand-blue-600 px-4 py-3 text-xs font-bold text-white cursor-pointer ${busy || !hotelId ? "opacity-50 pointer-events-none" : ""}`}
-        >
-          <Upload size={15} />
-          {busy ? "Yükleniyor…" : "Dosya Yükle"}
-          <input
-            aria-label="Medya dosyalarını yükle"
-            type="file"
-            multiple
-            accept="image/jpeg,image/png,image/gif,image/webp,video/mp4,video/webm"
-            disabled={busy || !hotelId}
-            className="sr-only"
-            onChange={(e) => {
-              const files = Array.from(e.target.files || []);
-              e.target.value = "";
-              void action(async () => {
-                if (value.length + files.length > 30)
-                  throw new Error(contracts.errors.media_limit);
-                const items = await command<MediaAsset[]>(
-                  "media.upload",
-                  { hotel_id: hotelId },
-                  files,
-                );
-                append(items);
-              });
-            }}
-          />
-        </label>
         <button
           type="button"
           disabled={busy || !hotelId}
@@ -130,6 +122,7 @@ export function MediaEditor({
           Dosya yüklemek için önce oteli kaydedin.
         </p>
       )}
+      <details><summary className="min-h-11 cursor-pointer text-sm text-slate-500">Bağlantı ile ekle</summary>
       <div className="flex gap-2">
         <div className="relative">
           <select
@@ -190,11 +183,16 @@ export function MediaEditor({
           <Plus size={16} />
         </button>
       </div>
+      </details>
+      <p role="status" className="sr-only">{announcement}</p>
+      {!!value.length && <p className="text-xs text-slate-500">Sıralamak için kartın taşıma tutamacını sürükleyin veya ok düğmelerini kullanın.</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {value.map((asset, index) => (
             <article
               key={asset.media_id || `${index}-${asset.url}`}
-              className="overflow-hidden rounded-[20px] bg-[#f9f9f9]"
+              className={`overflow-hidden rounded-[20px] bg-[#f9f9f9] ${dropIndex === index ? "ring-2 ring-sky-400" : ""} ${dragIndex === index ? "opacity-50" : ""}`}
+              onDragOver={e => { if (dragIndex !== null && !busy) { e.preventDefault(); e.dataTransfer.dropEffect = "move"; setDropIndex(index); } }}
+              onDrop={e => { if (dragIndex !== null) { e.preventDefault(); move(dragIndex, index); setDragIndex(null); setDropIndex(null); } }}
             >
             <div className="aspect-video bg-slate-100 relative">
               {asset.kind === "video" ? (
@@ -221,6 +219,17 @@ export function MediaEditor({
               </span>
             </div>
             <div className="p-3 space-y-3">
+              <div className="flex items-center gap-2">
+                <button type="button" draggable={!busy} disabled={busy} aria-label={`${index + 1}. medyayı sürükleyerek sırala`}
+                  title="Sürükleyerek sırala; klavyede Alt + ok tuşlarını kullanın"
+                  className="uni-control nav-icon-button min-h-11 min-w-11 cursor-grab rounded-xl text-slate-500"
+                  onKeyDown={e => { if(e.altKey && (e.key === "ArrowLeft" || e.key === "ArrowRight")) { e.preventDefault(); move(index, Math.max(0, Math.min(value.length-1,index+(e.key === "ArrowLeft" ? -1 : 1)))); } }}
+                  onDragStart={e => { e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(index)); setDragIndex(index); }}
+                  onDragEnd={() => { setDragIndex(null); setDropIndex(null); }}><GripVertical size={18}/></button>
+                <span className="min-w-0 truncate text-xs text-slate-500">{asset.original_name || `${asset.kind === "image" ? "Görsel" : "Video"} ${index + 1}`}</span>
+              </div>
+              <details><summary className="min-h-11 cursor-pointer text-sm text-slate-600">Başlık ve açıklama</summary>
+              <fieldset disabled={busy} className="space-y-3">
               <LocalizedTextFields
                 compact
                 label="Başlık"
@@ -243,44 +252,32 @@ export function MediaEditor({
                 onChange={(alt_text) => update(index, { alt_text })}
                 placeholder="Erişilebilirlik metni"
               />
+              </fieldset></details>
               <div className="flex gap-2 justify-end">
                 <button
                   type="button"
-                  disabled={index === 0}
+                  disabled={busy || index === 0}
                   aria-label="Medyayı sola taşı"
-                  className="uni-control p-2 text-slate-400 disabled:opacity-30"
-                  onClick={() => {
-                    const items = [...value];
-                    [items[index - 1], items[index]] = [
-                      items[index],
-                      items[index - 1],
-                    ];
-                    onChange(items);
-                  }}
+                  className="uni-control nav-icon-button min-h-11 min-w-11 rounded-xl text-slate-400 disabled:opacity-30"
+                  onClick={() => move(index, index - 1)}
                 >
                   <ArrowLeft size={14} />
                 </button>
                 <button
                   type="button"
-                  disabled={index === value.length - 1}
+                  disabled={busy || index === value.length - 1}
                   aria-label="Medyayı sağa taşı"
-                  className="uni-control p-2 text-slate-400 disabled:opacity-30"
-                  onClick={() => {
-                    const items = [...value];
-                    [items[index + 1], items[index]] = [
-                      items[index],
-                      items[index + 1],
-                    ];
-                    onChange(items);
-                  }}
+                  className="uni-control nav-icon-button min-h-11 min-w-11 rounded-xl text-slate-400 disabled:opacity-30"
+                  onClick={() => move(index, index + 1)}
                 >
                   <ArrowRight size={14} />
                 </button>
                 <button
                   type="button"
                   aria-label="Medyayı galeriden çıkar"
-                  onClick={() => onChange(value.filter((_, i) => i !== index))}
-                  className="uni-control p-2 text-red-500"
+                  disabled={busy}
+                  onClick={() => commit(value.filter((_, i) => i !== index))}
+                  className="uni-control nav-icon-button min-h-11 min-w-11 rounded-xl text-red-500"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -289,11 +286,7 @@ export function MediaEditor({
           </article>
         ))}
       </div>
-      {value.length === 0 && (
-        <div className="rounded-2xl border-2 border-dashed border-slate-200 p-8 text-center text-xs text-slate-400">
-          Henüz medya eklenmedi. Birden fazla resim veya video ekleyebilirsiniz.
-        </div>
-      )}
+
       {library && (
         <div className="fixed inset-0 bg-slate-900/40 z-50 grid place-items-center p-6">
           <div
@@ -304,7 +297,7 @@ export function MediaEditor({
           >
             <div className="flex justify-between mb-4">
               <h3 className="font-black">MEDYA KÜTÜPHANESİ</h3>
-              <button className="uni-control"
+              <button className="uni-control nav-icon-button min-h-11 min-w-11 rounded-full"
                 type="button"
                 aria-label="Kütüphaneyi kapat"
                 onClick={() => setLibrary(null)}

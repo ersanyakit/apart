@@ -1,3 +1,7 @@
+import {PhoneField} from "./fields/PhoneField";
+import {parsePhone} from "../lib/phone";
+import {useCurrency} from "./Currency";
+import {SettingsSection} from "./SettingsSection";
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from "react";
 import {
@@ -331,6 +335,7 @@ export function FacilityForm({
   create?: boolean;
   onSaved: () => Promise<void>;
 }) {
+  const { defaultCountry } = useCurrency();
   const current =
     kind === "hotel"
       ? snapshot.hotels.find((h) => h.hotel_id === snapshot.hotel_id)
@@ -364,7 +369,9 @@ export function FacilityForm({
         setBusy(true);
         setError("");
         try {
-          const { inventory, feature_assignments, branch_id, ...base } = draft;
+          const phone = parsePhone(draft.phone, defaultCountry);
+          if (!phone.valid) throw new Error(phone.error);
+          const { inventory, feature_assignments, branch_id, ...base } = { ...draft, phone: phone.e164 };
           const payload =
             kind === "branch"
               ? {
@@ -383,6 +390,10 @@ export function FacilityForm({
       }}
     >
       <ErrorMessage message={error} />
+      <div className="rounded-2xl bg-uni-surface px-4 py-3 text-sm">
+        <p className="font-medium">{kind === "hotel" ? "Şirketin ticari bilgileri" : snapshot.hotels.find(h=>h.hotel_id===snapshot.hotel_id)?.name}</p>
+        <p className="mt-1 text-xs text-uni-muted">{kind === "hotel" ? "Örn. Meyman Turizm A.Ş. Otellerinizi bu şirketin altında oluşturabilirsiniz." : "Bu otele ait iletişim, adres ve tanıtım bilgilerini düzenleyin."}</p>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {(
           [
@@ -393,13 +404,16 @@ export function FacilityForm({
             "tax_number",
             "tax_office",
           ] as const
-        ).map((key, i) => (
+        ).map((key, i) => key === "phone" ? (
+          <PhoneField key={key} label="Telefon" value={draft.phone} defaultCountry={defaultCountry}
+            disabled={busy} onChange={phone=>setDraft(previous=>({...previous,phone}))}/>
+        ) : (
           <TextField
             key={key}
             label={
               [
-                "Ad",
-                "Adres",
+                kind === "hotel" ? "Şirket unvanı" : "Otel / tesis adı",
+                kind === "hotel" ? "Şirket adresi" : "Otel / tesis adresi",
                 "Telefon",
                 "E-posta",
                 "Vergi numarası",
@@ -414,6 +428,7 @@ export function FacilityForm({
           />
         ))}
       </div>
+      <SettingsSection title="Tanıtım ve açıklamalar" description="Farklı dillerde açıklama ekleyin.">
       <LocalizedTextFields
         label="Açıklama"
         hint="Her dil için ayrı açıklama ekleyin."
@@ -421,7 +436,9 @@ export function FacilityForm({
         onChange={(description) => setDraft({ ...draft, description })}
         multiline
       />
+      </SettingsSection>
       {kind === "branch" && (
+        <SettingsSection title="Otel olanakları" description="Havuz, otopark, kahvaltı ve diğer olanaklar.">
         <FeatureFields
           definitions={snapshot.feature_registry.definitions || []}
           scope="property"
@@ -430,15 +447,18 @@ export function FacilityForm({
             setDraft({ ...draft, feature_assignments })
           }
         />
+      </SettingsSection>
       )}
+      <SettingsSection title="Görseller ve videolar" description={`${draft.assets.length} medya dosyası`}>
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => setDraft({ ...draft, assets })}
         hotelId={create && kind === "hotel" ? undefined : snapshot.hotel_id}
         onBusy={setUploading}
       />
+      </SettingsSection>
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
-        Kaydet
+        {busy ? "Kaydediliyor…" : kind === "hotel" ? "Şirketi kaydet" : "Oteli kaydet"}
       </button>
     </form>
   );

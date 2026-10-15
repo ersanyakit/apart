@@ -28,3 +28,10 @@ test('audit details show readable changes and keep internal IDs and secrets out'
  const rows=auditChanges(entry);assert.equal(rows.length,3);assert.equal(rows.find(r=>r.key==='status').after,'İptal edildi');assert.match(rows.find(r=>r.key==='daily_price_minor').after,/120/);assert.match(rows.find(r=>r.key==='cancellation_reason').after,/Misafir tarih/);assert.ok(!JSON.stringify(rows).includes('secret'));assert.ok(!JSON.stringify(rows).includes('uuid'));assert.match(auditSummary(entry),/Ayşe/);
 });
 test('blacklist, missing historical context and report voids have plain language',()=>{assert.match(auditSummary({entity:'report_records',action:'delete'}),/iptal edildi/);assert.deepEqual(auditChanges({entity:'users',action:'login'}),[]);const changes=auditChanges({entity:'guest_assessments',action:'create',details:{after:{kind:'blacklist',reason:'Odaya zarar verdi',score:0}}});assert.equal(changes.find(r=>r.key==='kind').after,'Kara liste');assert.ok(!changes.some(r=>r.key==='score'))});
+
+test('manager headlines describe room changes and report cancellation accurately',()=>{
+ const {auditHeadline,auditSubject}=require(path.join(output,'lib/audit-presentation.js'));
+ assert.equal(auditHeadline({entity:'rooms',action:'update',details:{before:{status:'Kirli'},after:{status:'Temiz'}}}),'Oda durumu değiştirildi');
+ assert.equal(auditHeadline({entity:'report_records',action:'delete'}),'İşlem kaydı iptal edildi');
+ assert.equal(auditSubject({entity:'bookings',action:'check_in',details:{after:{guest_name:'Deniz Örnek'}}}),'Deniz Örnek');
+});

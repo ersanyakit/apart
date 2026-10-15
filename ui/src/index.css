@@ -991,3 +991,18 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 .booking-table-actors dl > div { border-left:2px solid var(--color-brand-blue-100); padding-left:9px; }
 .booking-table-actors dt { color:var(--color-uni-muted); font-size:11px; line-height:16px; }
 .booking-table-actors dd { margin-top:2px; color:var(--color-uni-ink); font-size:12px; line-height:18px; font-weight:500; overflow-wrap:anywhere; }
+
+/* Compact management pages: avoid stacking page, header and editor padding. */
+main[data-page="facility"], main[data-page="logs"] { padding-top:12px; }
+main[data-page="facility"] .page-header, main[data-page="logs"] .page-header { padding-top:8px; padding-bottom:14px; }
+main[data-page="facility"] .settings-editor { max-width:960px; }
+main[data-page="facility"] .settings-editor-header { margin-bottom:16px; }
+main[data-page="facility"] .settings-editor-back { margin-bottom:4px; }
+main[data-page="facility"] .settings-editor-header h2 { font-size:26px; }
+main[data-page="facility"] .settings-editor-header p { margin-top:6px; }
+main[data-page="facility"] .settings-editor-card { padding:0; }
+main[data-page="facility"] .settings-editor-card form { gap:12px; display:flex; flex-direction:column; }
+main[data-page="facility"] .settings-editor-card form>* { margin-top:0; margin-bottom:0; }
+main[data-page="facility"] .settings-editor-card .field-card { padding:10px 14px; border-radius:16px; }
+main[data-page="facility"] .settings-editor-card .field-card input { font-size:16px; line-height:28px; }
+main[data-page="facility"] .settings-editor-card form>button { align-self:flex-start; min-height:44px; }

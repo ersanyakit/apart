@@ -19,8 +19,8 @@ export const PAGE_HEADERS = {
   staff: ["Personel Tanımları", "Personel hesaplarını, şube erişimlerini ve yetkilerini yönetin."],
   guests: ["Misafir Arama ve Geçmiş", "Misafirleri bulun, konaklama geçmişlerini inceleyin."],
   templates: ["Belge Şablonları", "Belge ve rapor şablonlarını görsel editörle, dil bazında düzenleyin."],
-  logs: ["Sistem Logları", "Kullanıcı işlemlerini ve kayıt değişikliklerini takip edin."],
-  facility: ["Kurumsal Tesis Kartı", "Otel ve tesis bilgilerini, iletişim detaylarını ve medyayı yönetin."],
+  logs: ["İşlem Geçmişi", "Kim, hangi işlemi, ne zaman yaptı? Otelinizdeki değişiklikleri takip edin."],
+  facility: ["Şirket ve Oteller", "Şirket bilgilerinizi ve şirketinize bağlı otelleri tek yerden yönetin."],
   features: ["Olanak Tanımları", "Olanakları ve kategorileri tanımlayın, tesis kataloğunu düzenleyin."],
   appsettings: ["Ayarlar", "Çalışma alanını kendine göre düzenle. Tercihlerin hesabında saklanır."],
 } as const;

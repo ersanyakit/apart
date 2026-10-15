@@ -1,3 +1,5 @@
+import { RefreshCw, SlidersHorizontal, ChevronDown, UserRound } from "lucide-react";
+import styles from "./AuditView.module.css";
 import { PageHeader } from "./PageHeader";
 import { usePreference } from "./UserPreferences";
 import React, { useEffect, useState } from "react";
@@ -5,7 +7,7 @@ import { command, messageOf } from "../lib/api";
 import { ErrorMessage, secondaryStyle } from "./FormKit";
 import { DateField, InlineSelectField } from "./fields";
 import { auditLocationSummary, type AuditDetails } from "../lib/audit-location";
-import { auditActions as actions, auditEntities as entities, auditChanges, auditSummary } from "../lib/audit-presentation";
+import { auditActions as actions, auditEntities as entities, auditChanges, auditSummary, auditHeadline, auditSubject } from "../lib/audit-presentation";
 import { Pagination } from "./Pagination";
 type Entry = {
   id: string;
@@ -26,6 +28,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
     [total, setTotal] = useState(0),
     [page, setPage] = useState(1),
     [pageSize, setPageSize] = usePreference<number>("audit_page_size", 25),
+    [showDates, setShowDates] = useState(false),
     [from, setFrom] = useState(""),
     [to, setTo] = useState(""),
     [action, setAction] = useState(""),
@@ -41,8 +44,8 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
       page,
       page_size: pageSize,
       action,
-      ...(from ? { from: new Date(from).toISOString() } : {}),
-      ...(to ? { to: new Date(to).toISOString() } : {}),
+      ...(from ? { from: new Date(`${from}T00:00:00+03:00`).toISOString() } : {}),
+      ...(to ? { to: new Date(`${to}T23:59:59.999+03:00`).toISOString() } : {}),
     })
       .then((result) => {
         if (active) {
@@ -64,110 +67,41 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
-      <PageHeader pageId="logs">
-      <div className="flex flex-wrap gap-3 items-end">
-        <div className="min-w-44 flex-1">
-          <DateField
-            label="Başlangıç"
-            value={from}
-            onChange={(v) => {
-              setFrom(v);
-              setPage(1);
-            }}
-          />
-        </div>
-        <div className="min-w-44 flex-1">
-          <DateField
-            label="Bitiş"
-            value={to}
-            onChange={(v) => {
-              setTo(v);
-              setPage(1);
-            }}
-          />
-        </div>
-        <div className="min-w-52 flex-1">
-          <InlineSelectField
-            label="İşlem"
-            value={action}
-            onChange={(value) => { setAction(value); setPage(1); }}
-            options={[{ value: "", label: "Tüm işlemler" }, ...Object.entries(actions).map(([value, label]) => ({ value, label }))]}
-          />
-        </div>
-        <button
-          className={`uni-control ${secondaryStyle}`}
-          disabled={busy}
-          onClick={() => setRevision((v) => v + 1)}
-        >
-          Yenile
-        </button>
+      <PageHeader pageId="logs" actions={<button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={16}/>Yenile</button>}/>
+      <div className={styles.filters}>
+        <div className={styles.actionFilter}><InlineSelectField label="İşlem türü" value={action} onChange={value=>{setAction(value);setPage(1);}} options={[{value:"",label:"Tüm işlemler"},...Object.entries(actions).map(([value,label])=>({value,label}))]}/></div>
+        <button type="button" aria-expanded={showDates} className={`uni-control ${secondaryStyle}`} onClick={()=>setShowDates(v=>!v)}><SlidersHorizontal size={16}/>Tarih aralığı</button>
+        {(from||to||action)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setFrom('');setTo('');setAction('');setShowDates(false);setPage(1);}}>Filtreleri temizle</button>}
+        {showDates&&<div className={styles.dates}><DateField withTime={false} label="Başlangıç tarihi" value={from} onChange={v=>{setFrom(v);setPage(1);}}/><DateField withTime={false} label="Bitiş tarihi" value={to} onChange={v=>{setTo(v);setPage(1);}}/></div>}
       </div>
-      </PageHeader>
-      <div className="overflow-auto rounded-2xl bg-[var(--color-uni-surface)]" aria-busy={busy} tabIndex={0} role="region" aria-label="Sistem logları tablosu; yatay kaydırılabilir">
-        <table className="w-full text-xs text-left">
-          <thead className="bg-black/[0.025] text-slate-500">
-            <tr>
-              {[
-                "Tarih / saat",
-                "Kullanıcı",
-                "İşlem",
-                "Kayıt",
-                "Oda / Birim",
-                "İşlem detayı",
-              ].map((h) => (
-                <th className="p-4" key={h}>
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {!busy && rows.map((r) => {
-              const location = auditLocationSummary(r.entity, r.details);
-              const changes = auditChanges(r);
-              return (
-              <tr key={r.id} className="border-t border-slate-100">
-                <td className="p-4 whitespace-nowrap">
-                  {new Date(r.created_at).toLocaleString("tr-TR")}
-                </td>
-                <td>{r.actor_name || "Sistem"}</td>
-                <td>
-                  {actions[r.action] || "İşlem"}
-                </td>
-                <td>{entities[r.entity] || "Kayıt"}</td>
-                <td className="p-3 min-w-44">
-                  <p className="font-semibold text-slate-900">{location.label}</p>
-                  {location.branch && <p className="text-xs text-slate-500 mt-1">{location.branch}</p>}
-                  {location.inferred && <p className="text-[10px] text-slate-400 mt-1">Oda bilgisi güncel kayıttan</p>}
-                </td>
-                <td className="max-w-sm p-3">
-                  <p className="font-medium text-slate-800">{auditSummary(r)}</p>
-                  {r.details?.reason && <p className="mt-1 text-slate-600">Gerekçe: {r.details.reason}</p>}
-                  {changes.length > 0 ? <details className="mt-2 text-slate-500">
-                    <summary className="cursor-pointer py-1">{changes.length} bilgi · Ayrıntıları göster</summary>
-                    <dl className="mt-2 space-y-3 min-w-60">
-                      {changes.map(c => <div key={c.key} className="rounded-xl bg-black/[0.025] p-3">
-                        <dt className="text-xs font-semibold text-slate-700">{c.label}</dt>
-                        <dd className="mt-1 break-words">
-                          {r.action !== "create" && <p><span className="text-slate-400">Önce: </span>{c.before}</p>}
-                          {r.action !== "delete" && <p className="mt-1 text-slate-800"><span className="text-slate-500">{r.action === "create" ? "Değer: " : "Sonra: "}</span>{c.after}</p>}
-                          {r.action === "delete" && <p className="mt-1">Kayıt kaldırıldı.</p>}
-                        </dd>
-                      </div>)}
-                    </dl>
-                  </details> : <p className="mt-1 text-slate-400">Bu işlem için ek alan bilgisi kaydedilmemiş.</p>}
-                </td>
-              </tr>
-            ); })}
-          </tbody>
-        </table>
-        {(busy || !rows.length) && (
-          <p className="p-8 text-sm text-slate-400">
-            {busy ? "Yükleniyor…" : "Bu filtrede işlem kaydı bulunamadı."}
-          </p>
-        )}
-      </div>
-      <Pagination page={page} pageSize={pageSize} total={total} busy={busy}
+      <section className={styles.history} aria-label="İşlem geçmişi" aria-busy={busy}>
+       <div className={styles.listHeader}><span>Yapılan işlem</span><span>İşlemi yapan</span><span>Tarih / saat</span></div>
+       {!busy&&rows.map(r=>{
+        const location=auditLocationSummary(r.entity,r.details),changes=auditChanges(r);
+        const time=new Date(r.created_at);
+        const highlight=changes.find(c=>c.key==='status');
+        return <article className={styles.entry} key={r.id}>
+         <div className={styles.row}>
+          <div className={styles.operation}><span className={styles.category}>{entities[r.entity]||'İşlem kaydı'}</span><h3>{auditHeadline(r)}</h3>{auditSubject(r)&&<p>{auditSubject(r)}</p>}
+           <p>{location.label!=='—'&&<strong>{location.label}</strong>}{location.branch&&<span>{location.branch}</span>}</p>
+           {highlight&&<p className={styles.change}>{highlight.before!=='—'?<>{highlight.before} <span aria-label="şu duruma değişti">→</span></>:<span>Durum:</span>} {highlight.after}</p>}
+          </div>
+          <div className={styles.actor}><span className={styles.avatar}><UserRound size={16}/></span><span>{r.actor_name||'Sistem'}</span></div>
+          <time className={styles.time} dateTime={r.created_at}>{time.toLocaleDateString('tr-TR',{timeZone:'Europe/Istanbul',day:'numeric',month:'short',year:'numeric'})}<span>{time.toLocaleTimeString('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</span></time>
+         </div>
+         <details className={styles.details}><summary>İşlem ayrıntıları<ChevronDown size={15}/></summary>
+          <p>{auditSummary(r)}</p>
+          {r.details?.reason&&<p><strong>Gerekçe:</strong> {r.details.reason}</p>}
+          {location.inferred&&<p>Oda bilgisi güncel kayıttan alınmıştır.</p>}
+          {!!changes.length&&<dl className={styles.changes}>{changes.map(c=><div key={c.key}><dt>{c.label}</dt><dd>{r.action!=='create'&&<p><span>Önce</span>{c.before}</p>}{r.action!=='delete'&&<p><span>{r.action==='create'?'Bilgi':'Sonra'}</span>{c.after}</p>}</dd></div>)}</dl>}
+          {!changes.length&&<p>Bu işlem için ek alan bilgisi kaydedilmemiş.</p>}
+          <details className={styles.technical}><summary>Teknik kayıt bilgileri</summary><dl><dt>İşlem kodu</dt><dd>{r.command||'—'}</dd><dt>Kayıt kimliği</dt><dd>{r.entity_id}</dd><dt>İstek kimliği</dt><dd>{r.request_id||'—'}</dd></dl></details>
+         </details>
+        </article>;
+       })}
+       {(busy||!rows.length)&&<p className={styles.empty} role="status">{busy?'İşlem geçmişi yükleniyor…':'Seçilen filtrelere uygun işlem bulunamadı.'}</p>}
+      </section>
+      <Pagination label="İşlem geçmişi sayfaları" compact page={page} pageSize={pageSize} total={total} busy={busy}
         onPageChange={setPage} onPageSizeChange={(size) => { setPageSize(size); setPage(1); }} />
     </div>
   );

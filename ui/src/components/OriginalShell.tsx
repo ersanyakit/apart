@@ -134,11 +134,11 @@ export function OriginalShell({
             label: "Sistem Ayarları",
             icon: <NavigationIcon name="settings" />,
             subItems: [
-              { id: "facility", label: "Kurumsal Tesis Kartı", icon: <NavigationIcon name="facility" /> },
+              { id: "facility", label: "Şirket ve Oteller", icon: <NavigationIcon name="facility" /> },
               { id: "units", label: "Kat ve Oda Tanımları", icon: <NavigationIcon name="units" /> },
               { id: "staff", label: "Personel Tanımları", icon: <NavigationIcon name="staff" /> },
               { id: "templates", label: "Belge Şablonları", icon: <NavigationIcon name="templates" /> },
-              { id: "logs", label: "Sistem Logları", icon: <NavigationIcon name="logs" /> },
+              { id: "logs", label: "İşlem Geçmişi", icon: <NavigationIcon name="logs" /> },
               { id: "features", label: "Olanak Tanımları", icon: <NavigationIcon name="features" /> },
             ],
           },
