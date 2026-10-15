@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const dir = path.join(__dirname, '../src/lib/i18n/marketing');
 const source = JSON.parse(fs.readFileSync(path.join(dir, 'tr.json'), 'utf8'));
+const english = JSON.parse(fs.readFileSync(path.join(dir, 'en.json'), 'utf8'));
 const placeholders = value => [...value.matchAll(/\{\w+\}/g)].map(match => match[0]).sort();
 
 test('landing translations cover every supported application language', () => {
@@ -26,6 +27,10 @@ test('every published marketing dictionary covers every source and preserves int
     if (file !== 'tr.json') {
       const translated = keys.filter(key => dictionary[key] !== source[key]);
       assert.ok(translated.length > keys.length * 0.9, `${file}: source-language fallback detected`);
+    }
+    if (file !== 'en.json') {
+      const translated = keys.filter(key => dictionary[key] !== english[key]);
+      assert.ok(translated.length > keys.length * 0.8, `${file}: English dictionary copied instead of translated`);
     }
   }
 });

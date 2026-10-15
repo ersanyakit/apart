@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "locale": "si",
+    "index": 45,
+    "reason": [
+      "repetition"
+    ],
+    "source": "Current cleaning status and recorded housekeeping tasks for each unit.",
+    "translation": "සෑම එක් එක් එක් එක් සඳහා දැනට පිරිසිදු තත්ත්වය සහ වාර්තා කරන ලද නිවාස කටයුතු."
+  },
+  {
+    "locale": "si",
+    "index": 301,
+    "reason": [
+      "repetition"
+    ],
+    "source": "Repeat stays, accommodation revenue and intervals between visits.",
+    "translation": "ගනුදෙනුකරුවන්ගේ ගමනාන්තය, ගමනාගමනය ආදායම සහ සංචාර අතර කාලීන කාලය නැවත නැවත නැවත නැවත කරන්න."
+  },
+  {
+    "locale": "si.reviewed",
+    "index": 45,
+    "reason": [
+      "repetition"
+    ],
+    "source": "Current cleaning status and recorded housekeeping tasks for each unit.",
+    "translation": "සෑම එක් එක් එක් එක් සඳහා දැනට පිරිසිදු තත්ත්වය සහ වාර්තා කරන ලද නිවාස කටයුතු."
+  },
+  {
+    "locale": "si.reviewed",
+    "index": 301,
+    "reason": [
+      "repetition"
+    ],
+    "source": "Repeat stays, accommodation revenue and intervals between visits.",
+    "translation": "ගනුදෙනුකරුවන්ගේ ගමනාන්තය, ගමනාගමනය ආදායම සහ සංචාර අතර කාලීන කාලය නැවත නැවත නැවත නැවත කරන්න."
+  }
+]

@@ -17,5 +17,5 @@ for locale,values in edits.items():
  for index,value in values.items():data[keys[index]]=value
  for index,label in [(84,85),(95,94),(369,367)]:data[keys[index]]=data[keys[label]]+' | Interactiveotel'
  for index,label in [(82,85),(98,94),(364,367)]:data[keys[index]]=data[keys[label]]
- p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+ temp=p.with_suffix('.json.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n');temp.replace(p)
  print(locale,len(values))

@@ -7,21 +7,38 @@ const browser=await chromium.launch({args:['--no-sandbox','--no-zygote','--singl
 const context=await browser.newContext({viewport:{width:390,height:844}});
 const page=await context.newPage(); const errors=[];
 page.on('pageerror',error=>errors.push(error.message));
+page.setDefaultTimeout(30000);
 try {
+ await page.goto('http://localhost:3000',{waitUntil:'networkidle',timeout:90000});
  for(const locale of locales){
   const dictionary=JSON.parse(fs.readFileSync(`${dir}/${locale}.json`));
-  await context.addCookies([{name:'interactiveotel_locale',value:locale,url:'http://localhost:3000'}]);
-  await page.goto('http://localhost:3000',{waitUntil:'networkidle'});
-  assert.equal(await page.locator('html').getAttribute('lang'),locale);
-  await page.getByRole('heading',{level:1}).filter({hasText:dictionary['Az telaş.']}).waitFor();
-  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
-  assert.equal(overflow,false,`${locale}: mobile horizontal overflow`);
   await page.locator('button[aria-haspopup="listbox"]').click();
   assert.equal(await page.getByRole('option').count(),60,`${locale}: missing menu language`);
-  await page.getByRole('combobox').press('Escape');
+  await page.locator(`[role="option"][id$="-${locale}"]`).click();
+  await page.waitForFunction(code=>document.documentElement.lang===code,locale);
+  await page.waitForLoadState('networkidle');
+  await page.waitForFunction(title=>document.title===title,`INTERACTIVEOTEL | ${dictionary['Tesis yönetimi']}`);
+  assert.equal(await page.locator('html').getAttribute('lang'),locale);
+  assert.equal(await page.locator('html').getAttribute('dir'),['ar','ur','fa','he','ps'].includes(locale)?'rtl':'ltr');
+  await page.getByRole('heading',{level:1}).filter({hasText:dictionary['Az telaş.']}).waitFor();
+  for(const width of [390,320]){
+   await page.setViewportSize({width,height:844});
+   const issues=await page.evaluate(()=>{
+    const errors=[];
+    if(document.documentElement.scrollWidth>innerWidth+1)errors.push('page overflow');
+    for(const el of document.querySelectorAll('h1, [class*=heroContent] a')){
+     const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
+     if(r.left < -1 || r.right > innerWidth+1)errors.push('outside viewport: '+el.textContent);
+     if(el.scrollWidth>el.clientWidth+1)errors.push('clipped text: '+el.textContent);
+    }
+    return errors;
+   });
+   assert.deepEqual(issues,[],`${locale} ${width}px: layout`);
+  }
+  await page.setViewportSize({width:390,height:844});
   console.log('PASS',locale);
  }
- for(const locale of ['en','ru','ar','zh-CN','de','ne','te','dz','si','km','am']){
+ for(const locale of ['en','ru','ar','fa','he','ps','zh-CN','de','ne','te','dz','si','km','am']){
   const dictionary=JSON.parse(fs.readFileSync(`${dir}/${locale}.json`));
   await context.addCookies([{name:'interactiveotel_locale',value:locale,url:'http://localhost:3000'}]);
   for(const [path,key] of [['/pricing','Fiyatlar | Interactiveotel'],['/screenshots','Ekran Görüntüleri | Interactiveotel'],['/contact','İletişim | Interactiveotel']]){

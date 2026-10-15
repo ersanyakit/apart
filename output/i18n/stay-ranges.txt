@@ -1,0 +1,52 @@
+ru|Бронирования на 1–7 ночей.|Бронирования на 28 ночей и более.
+ne|१–७ रातका लागि आरक्षण।|२८ रात वा त्यसभन्दा लामो समयका लागि आरक्षण।
+th|การจองสำหรับ 1–7 คืน|การจองตั้งแต่ 28 คืนขึ้นไป
+zh-CN|预订1–7晚。|预订28晚或以上。
+zh-TW|預訂1–7晚。|預訂28晚或以上。
+hi|1–7 रातों की बुकिंग।|28 या अधिक रातों की बुकिंग।
+km|ការកក់សម្រាប់ 1–7 យប់។|ការកក់សម្រាប់ 28 យប់ ឬច្រើនជាងនេះ។
+si|රාත්‍රී 1–7 සඳහා වෙන්කිරීම්.|රාත්‍රී 28ක් හෝ ඊට වැඩි කාලයක් සඳහා වෙන්කිරීම්.
+ta|1–7 இரவுகளுக்கான முன்பதிவுகள்.|28 அல்லது அதற்கு மேற்பட்ட இரவுகளுக்கான முன்பதிவுகள்.
+ur|1–7 راتوں کی بکنگ۔|28 یا اس سے زیادہ راتوں کی بکنگ۔
+bn|1–7 রাতের বুকিং।|28 রাত বা তার বেশি সময়ের বুকিং।
+dz|ནུབ་མོ་ 1–7 གྱི་དོན་ལུ་སྔ་མ་ལས་མངགས་ནི།|ནུབ་མོ་ 28 ཡང་ན་དེ་ལས་མངམ་གྱི་དོན་ལུ་སྔ་མ་ལས་མངགས་ནི།
+es|Reservas de 1 a 7 noches.|Reservas de 28 noches o más.
+it|Prenotazioni da 1 a 7 notti.|Prenotazioni di almeno 28 notti.
+pt|Reservas de 1 a 7 noites.|Reservas de 28 noites ou mais.
+nl|Reserveringen voor 1–7 nachten.|Reserveringen voor 28 nachten of langer.
+pl|Rezerwacje na 1–7 nocy.|Rezerwacje na 28 nocy lub dłużej.
+cs|Rezervace na 1–7 nocí.|Rezervace na 28 a více nocí.
+hu|Foglalások 1–7 éjszakára.|Foglalások legalább 28 éjszakára.
+ro|Rezervări pentru 1–7 nopți.|Rezervări pentru cel puțin 28 de nopți.
+el|Κρατήσεις για 1–7 διανυκτερεύσεις.|Κρατήσεις για 28 ή περισσότερες διανυκτερεύσεις.
+uk|Бронювання на 1–7 ночей.|Бронювання на 28 ночей і більше.
+bg|Резервации за 1–7 нощувки.|Резервации за 28 или повече нощувки.
+sr|Резервације за 1–7 ноћења.|Резервације за 28 или више ноћења.
+hr|Rezervacije za 1–7 noćenja.|Rezervacije za 28 ili više noćenja.
+sk|Rezervácie na 1–7 nocí.|Rezervácie na 28 a viac nocí.
+sl|Rezervacije za 1–7 nočitev.|Rezervacije za 28 ali več nočitev.
+fi|Varaukset 1–7 yöksi.|Varaukset vähintään 28 yöksi.
+sv|Bokningar för 1–7 nätter.|Bokningar för minst 28 nätter.
+da|Reservationer for 1–7 nætter.|Reservationer for mindst 28 nætter.
+no|Bestillinger for 1–7 netter.|Bestillinger for minst 28 netter.
+ms|Tempahan untuk 1–7 malam.|Tempahan untuk 28 malam atau lebih.
+id|Reservasi untuk 1–7 malam.|Reservasi untuk 28 malam atau lebih.
+vi|Đặt phòng từ 1–7 đêm.|Đặt phòng từ 28 đêm trở lên.
+ja|1～7泊の予約。|28泊以上の予約。
+ko|1~7박 예약.|28박 이상 예약.
+fa|رزرو برای ۱ تا ۷ شب.|رزرو برای ۲۸ شب یا بیشتر.
+he|הזמנות ל־1–7 לילות.|הזמנות ל־28 לילות ומעלה.
+sw|Uhifadhi wa usiku 1–7.|Uhifadhi wa usiku 28 au zaidi.
+am|ከ1–7 ሌሊት የመቆያ ቦታ ማስያዣ።|ለ28 ሌሊት ወይም ከዚያ በላይ ቦታ ማስያዣ።
+mr|1–7 रात्रींसाठी आरक्षणे.|28 किंवा त्याहून अधिक रात्रींसाठी आरक्षणे.
+pa|1–7 ਰਾਤਾਂ ਲਈ ਬੁਕਿੰਗਾਂ।|28 ਜਾਂ ਵੱਧ ਰਾਤਾਂ ਲਈ ਬੁਕਿੰਗਾਂ।
+te|1–7 రాత్రుల కోసం బుకింగ్‌లు.|28 లేదా అంతకంటే ఎక్కువ రాత్రుల కోసం బుకింగ్‌లు.
+my|1–7 ညအတွက် ကြိုတင်မှာယူမှုများ။|28 ညနှင့်အထက် ကြိုတင်မှာယူမှုများ။
+lo|ການຈອງສຳລັບ 1–7 ຄືນ.|ການຈອງສຳລັບ 28 ຄືນຂຶ້ນໄປ.
+ka|ჯავშნები 1–7 ღამით.|ჯავშნები 28 ან მეტი ღამით.
+hy|Ամրագրումներ 1–7 գիշերով։|Ամրագրումներ 28 կամ ավելի գիշերով։
+az|1–7 gecəlik rezervasiyalar.|28 gecə və daha uzun rezervasiyalar.
+kk|1–7 түнге брондау.|28 түнге немесе одан ұзақ мерзімге брондау.
+uz|1–7 kechaga band qilish.|28 yoki undan ko‘p kechaga band qilish.
+mn|1–7 шөнийн захиалга.|28 болон түүнээс олон шөнийн захиалга.
+ps|د 1–7 شپو لپاره بکینګونه.|د 28 یا زیاتو شپو لپاره بکینګونه.

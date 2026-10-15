@@ -14,7 +14,7 @@ langs=[x.lower().replace('zh-cn','zh-CN').replace('zh-tw','zh-TW') for x in json
 langs=[c for c in (sys.argv[1:] or langs) if c not in ['dz','yue','ky','ku','te'] and not (root/f'ui/src/lib/i18n/marketing/{c}.json').exists()]
 out=root/'output/i18n/generated';out.mkdir(exist_ok=True)
 sp=sentencepiece.SentencePieceProcessor(model_file='/tmp/otel-localization-model/spm.128k.model')
-model=ctranslate2.Translator('/tmp/otel-localization-model',device='cpu',compute_type='int8',inter_threads=1,intra_threads=4)
+model=ctranslate2.Translator('/tmp/otel-localization-model',device='cpu',compute_type='int8',inter_threads=2,intra_threads=4)
 traditional=OpenCC('s2twp')
 # Clarify ambiguous short labels for a model without conversational context.
 clarify={
