@@ -22,28 +22,68 @@
   justify-content: space-between;
   padding: 28px 28px 20px;
   min-width: 0;
-  background: #e6f7ff;
+  background: var(--color-brand-blue-100);
   color: var(--color-uni-ink);
 }
-.artwork { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.artwork { position: absolute; inset: 0 0 -60px; z-index: -1; pointer-events: none; }
 .artwork img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .brandCopy h1 { margin: 0; font-size: 29px; font-weight: 750; letter-spacing: -1.3px; line-height: 1.12; }
-.brandCopy h1 span { color: #075985; font-size: 24px; letter-spacing: -.7px; }
-.brandCopy p { margin: 12px 0 0; max-width: 290px; font-size: 13px; line-height: 1.6; color: #075985; }
-.brandFooter { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-.security { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 14px; background: #ffffffed; color: #075985; font-size: 11px; font-weight: 600; }
-.version { padding: 0 4px; font-size: 9px; font-weight: 600; letter-spacing: 1px; color: #075985; }
+.brandCopy h1 span { color: var(--color-brand-blue-600); font-size: 24px; letter-spacing: -.7px; }
+.brandCopy p { margin: 12px 0 0; max-width: 290px; font-size: 13px; line-height: 1.6; color: var(--color-brand-blue-600); }
+.brandFooter { position: absolute; left: 28px; right: 28px; bottom: 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+.security { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 14px; background: #ffffffed; color: var(--color-brand-blue-600); font-size: 11px; font-weight: 600; }
+.version { padding: 6px 8px; border-radius: 8px; background: #ffffffed; font-size: 9px; font-weight: 600; letter-spacing: 1px; color: var(--color-brand-blue-600); }
 @media (max-width: 767px) {
   .page { padding: 16px; background-size: auto, 300px 300px; }
   .brandPanel { min-height: 230px; padding: 26px 22px; }
-  .artwork { left: 48%; }
+  .artwork { left: 48%; bottom: 0; }
   .artwork img { object-position: center 65%; }
   .brandCopy { max-width: 55%; }
   .brandCopy h1 { font-size: 25px; }
   .brandCopy h1 span { display: inline-block; font-size: 21px; }
   .brandCopy p { font-size: 11px; line-height: 1.5; }
-  .brandFooter { display: none; }
+  .brandFooter { left: 16px; right: 16px; bottom: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .page > div { transform: none !important; }
 }
+
+/* Use the shared centered press feedback without changing layout or darkening colors. */
+.page {
+  --control-ring: var(--color-brand-blue-500);
+  --control-halo: var(--color-brand-blue-100);
+}
+.page button:global(.uni-control):hover:not(:disabled):not([aria-disabled="true"]),
+.page button:global(.uni-control):active:not(:disabled):not([aria-disabled="true"]) { filter: none; }
+.page .selectionCard {
+  background: var(--color-uni-surface);
+  border: 1px solid var(--color-uni-border);
+  min-width: 0;
+}
+.page .selectionCard:hover:not(:disabled) {
+  background: var(--color-brand-blue-50);
+  border-color: var(--color-brand-blue-300);
+}
+.page .selectionCard:active:not(:disabled) {
+  background: var(--color-brand-blue-200);
+  border-color: var(--color-brand-blue-500);
+}
+.page button:global(.uni-button-primary):hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-accent) 90%, white);
+}
+.page button:global(.uni-button-primary):active:not(:disabled) {
+  background: color-mix(in srgb, var(--color-accent) 80%, white);
+}
+.page input:global(.uni-input):hover:not(:disabled),
+.page input:global(.uni-input):focus {
+  background: var(--color-brand-blue-50);
+}
+
+.inputLabel { display: flex; flex-direction: column; gap: 8px; min-width: 0; text-align: start; font-size: 14px; font-weight: 500; line-height: 20px; color: var(--color-uni-muted); }
+.inputField { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 16px; border: 1px solid var(--color-uni-border); border-radius: 16px; background: var(--color-uni-surface); transition: background-color var(--interaction-fast) ease, border-color var(--interaction-fast) ease; }
+.inputField:hover { background: var(--color-brand-blue-50); border-color: var(--color-brand-blue-300); }
+.inputField:focus-within { background: var(--color-brand-blue-50); border-color: var(--color-brand-blue-500); outline: 2px solid var(--color-brand-blue-100); outline-offset: 2px; }
+.inputIcon { display: flex; flex: 0 0 21px; align-items: center; justify-content: center; color: var(--color-brand-blue-500); pointer-events: none; }
+.page .input { display: block; width: 100%; min-width: 0; height: 54px; padding: 0; margin: 0; border: 0; border-radius: 0; outline: none; box-shadow: none; background: transparent; color: var(--color-uni-ink); font-family: inherit; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: normal; text-transform: none; }
+.input::placeholder { color: var(--color-uni-muted); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .inputField { transition: none; } }

@@ -8,7 +8,8 @@ import (
 )
 
 type Room struct {
-	RentalMode   string `gorm:"not null;default:''"`
+	LastCleaning *property.CleaningRecord `gorm:"serializer:json;type:jsonb"`
+	RentalMode   string                   `gorm:"not null;default:''"`
 	StatusReason string
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
 	Inactive     bool           `gorm:"not null;default:false"`

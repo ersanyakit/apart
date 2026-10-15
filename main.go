@@ -162,7 +162,7 @@ func run() error {
 		cfg.Origin, cfg.SecureCookies = process.URL, true
 	}
 	repo := persistence.New(db)
-	catalog := &application.Catalog{Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
+	catalog := &application.Catalog{Staff: repo, Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
 	auth := &application.Auth{Properties: repo, Users: repo, Tokens: persistence.JWT{Secret: []byte(cfg.JWTSecret)}, Passwords: persistence.Bcrypt{}, TTL: 8 * time.Hour}
 	mediaService := &application.Media{Repository: repo, Storage: storage.Local{Root: filepath.Join(cfg.DataDir, "media")}, Catalog: catalog}
 	guestService := &application.Guests{Catalog: catalog, Repository: repo}

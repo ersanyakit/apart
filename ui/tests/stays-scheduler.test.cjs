@@ -88,6 +88,7 @@ const {StaysScheduler}=require(path.join(output,'components/stays-scheduler/Stay
 const {UserPreferencesProvider}=require(path.join(output,'components/UserPreferences.js'));
 const {NotificationProvider}=require(path.join(output,'components/Toast.js'));
 const {PageHeader,PAGE_HEADERS}=require(path.join(output,'components/PageHeader.js'));
+const {reportGroupForPage}=require(path.join(output,'components/reports/navigation.js'));
 const withPreferences=(initial,child)=>React.createElement(NotificationProvider,null,
  React.createElement(UserPreferencesProvider,{userId:'test-user',initial},React.createElement(I18nProvider,null,child)));
 
@@ -97,7 +98,7 @@ test('every sidebar page shares an accessible header with independently saved di
   const expanded=render({});
   const collapsed=render({[`header.${pageId}`]:true});
   assert.equal((expanded.match(/<h2/g)||[]).length,1);
-  assert.ok(expanded.includes(title));
+  assert.ok(expanded.includes(reportGroupForPage(pageId)?.name || title));
   assert.ok(expanded.includes('aria-expanded="true"'));
   assert.ok(collapsed.includes('aria-expanded="false"'));
   assert.match(collapsed,/class="page-header-details" hidden=""/);

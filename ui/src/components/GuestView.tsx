@@ -1,5 +1,12 @@
+import styles from "./GuestView.module.css";
+import type { CustomerStay } from "./reports/CustomerDetail";
+import { display } from "./reports/model";
+import { ArrowLeft, ArrowDown, ArrowUp, ArrowUpDown, Download, FileText, Star } from "lucide-react";
+import { TextField, DateField, InlineSelectField } from "./fields";
+import { useGuestHistoryNavigation } from "./GuestHistoryNavigation";
+import { NavigationIcon } from "./NavigationIcon";
 import { Pagination } from "./Pagination";
-import { GuestAssessment, type AssessmentTarget } from "./GuestAssessment";
+import { GuestAssessment, CustomerComments, BlacklistNotice, type Reputation, type AssessmentTarget } from "./GuestAssessment";
 import { PageHeader } from "./PageHeader";
 import React, { useEffect, useState } from "react";
 import {
@@ -10,37 +17,41 @@ import {
   type Snapshot,
 } from "../lib/api";
 import {
-  Drawer,
   ErrorMessage,
-  Field,
-  inputStyle,
   secondaryStyle,
 } from "./FormKit";
-type Stay = {
-  guest_id: string;
-  name: string;
-  tc_no: string;
-  phone: string;
-  booking_id: string;
-  branch_id: string;
-  branch_name: string;
-  room_id: string;
-  room_code: string;
-  start: string;
-  end: string;
-  status: string;
-  companions: { guest_id: string; name: string }[];
-};
-const date = (v: string) => new Date(v).toLocaleString("tr-TR");
+type Stay = CustomerStay & { phone?: string };
+const date = (v: string) => new Date(v).toLocaleString("tr-TR", {timeZone:"Europe/Istanbul", dateStyle:"medium", timeStyle:"short"});
+function StayDate({value}:{value:string}) {
+  const parsed=new Date(value);
+  if(!Number.isFinite(parsed.getTime()))return <span className="guest-table-secondary">—</span>;
+  return <time dateTime={value} className="guest-table-date"><span>{parsed.toLocaleDateString('tr-TR',{timeZone:'Europe/Istanbul',day:'2-digit',month:'short',year:'numeric'})}</span><span className="guest-table-secondary">{parsed.toLocaleTimeString('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</span></time>;
+}
 export function GuestView({
   snapshot: s,
   guestId,
   guestName,
+  onBack,
 }: {
   snapshot: Snapshot;
   guestId?: string;
   guestName?: string;
+  onBack?: () => void;
 }) {
+  const [revision, setRevision] = useState(0);
+  const [ratingPage, setRatingPage] = useState(1), [ratingSize, setRatingSize] = useState(25);
+  const [reputation, setReputation] = useState<Reputation | null>(null);
+  const [ratingError, setRatingError] = useState(''), [ratingLoading, setRatingLoading] = useState(false);
+  useEffect(()=>{
+    if(!guestId)return;
+    let active=true;const controller=new AbortController();setReputation(null);setRatingLoading(true);setRatingError('');
+    command<Reputation>('guest.reputation',{hotel_id:s.hotel_id,branch_id:s.branch_id,guest_id:guestId,unique:true,page:ratingPage,page_size:ratingSize},undefined,controller.signal)
+      .then(value=>{if(active)setReputation(value)})
+      .catch(error=>{if(active&&!controller.signal.aborted)setRatingError(messageOf(error))})
+      .finally(()=>{if(active)setRatingLoading(false)});
+    return()=>{active=false;controller.abort()};
+  },[s.hotel_id,s.branch_id,guestId,ratingPage,ratingSize,revision]);
+  const openHistory = useGuestHistoryNavigation();
   const [search, setSearch] = useState(""),
     [from, setFrom] = useState(""),
     [to, setTo] = useState(""),
@@ -53,14 +64,11 @@ export function GuestView({
     [rows, setRows] = useState<Stay[]>([]),
     [total, setTotal] = useState(0),
     [error, setError] = useState(""),
-    [busy, setBusy] = useState(false),
-    [selected, setSelected] = useState<{ id: string; name: string } | null>(
-      null,
-    );
+    [busy, setBusy] = useState(false);
   const query = {
     hotel_id: s.hotel_id,
     branch_id: s.branch_id,
-    ...(guestId ? { guest_id: guestId } : {}),
+    ...(guestId ? { guest_id: guestId, unique: true } : {}),
     search,
     ...(from ? { from: new Date(from).toISOString() } : {}),
     ...(to ? { to: new Date(to).toISOString() } : {}),
@@ -106,6 +114,7 @@ export function GuestView({
     desc,
     page,
     pageSize,
+    revision,
   ]);
   const sortBy = (key: string) => {
     if (sort === key) setDesc((v) => !v);
@@ -129,90 +138,44 @@ export function GuestView({
       setBusy(false);
     }
   };
-  const tools = (
-      <div className="flex flex-wrap gap-3 items-end">
-        {!guestId && (
-          <Field label="Misafir arama">
-            <input
-              className={`uni-input ${inputStyle}`}
-              placeholder="Ad, kimlik veya telefon"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
-          </Field>
-        )}
-        <Field label="Başlangıç">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="datetime-local"
-            value={from}
-            onChange={(e) => {
-              setFrom(e.target.value);
-              setPage(1);
-            }}
-          />
-        </Field>
-        <Field label="Bitiş">
-          <input
-            className={`uni-input ${inputStyle}`}
-            type="datetime-local"
-            value={to}
-            onChange={(e) => {
-              setTo(e.target.value);
-              setPage(1);
-            }}
-          />
-        </Field>
-        <Field label="Kayıtlar">
-          <select
-            className={`uni-input ${inputStyle}`}
-            value={status}
-            onChange={(e) => {
-              setStatus(e.target.value);
-              setPage(1);
-            }}
-          >
-            <option value="">Tüm konaklamalar</option>
-            <option value="checked_in">Şu an konaklayanlar</option>
-            <option value="completed">Çıkış yapanlar</option>
-            <option value="confirmed">Planlanan rezervasyonlar</option>
-            <option value="cancelled">İptal edilenler</option>
-          </select>
-        </Field>
-      </div>
-  );
-  if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>setAssessment(null)}/>;
+  const tools = <div className="guest-history-filters">
+    {!guestId && <TextField label="Misafir arama" placeholder="Ad, kimlik veya telefon" value={search} onChange={value=>{setSearch(value);setPage(1);}}/>}
+    <DateField label="Başlangıç" value={from} onChange={value=>{setFrom(value);setPage(1);}}/>
+    <DateField label="Bitiş" value={to} onChange={value=>{setTo(value);setPage(1);}}/>
+    <InlineSelectField label="Kayıtlar" value={status} onChange={value=>{setStatus(value);setPage(1);}} options={[
+      {value:'',label:'Tüm konaklamalar'}, {value:'checked_in',label:'Şu an konaklayanlar'},
+      {value:'completed',label:'Çıkış yapanlar'}, {value:'confirmed',label:'Planlanan rezervasyonlar'}, {value:'cancelled',label:'İptal edilenler'},
+    ]}/>
+  </div>;
+  if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>{setAssessment(null);setRevision(value=>value+1);}}/>;
   return (
-    <div className="space-y-5">
+    <div className={`guest-history-page space-y-5 ${styles.page}`}>
       <ErrorMessage message={error} />
-      {guestName && <h3 className="text-xl font-black">{guestName}</h3>}
+      {guestId && onBack && <button type="button" className={`${secondaryStyle} !rounded-full`} onClick={onBack}><ArrowLeft size={16}/>Misafir listesine dön</button>}
+      {guestId && <header className="guest-history-heading"><span className="guest-history-avatar"><NavigationIcon name="guests" size={24}/></span><div><p>Misafir Konaklama Geçmişi</p><h2>{guestName || 'Misafir'}</h2><span>{total} konaklama kaydı · {s.branches.find(branch=>branch.branch_id===s.branch_id)?.name || 'Seçili tesis'}</span></div></header>}
       {guestId ? tools : <PageHeader pageId="guests">{tools}</PageHeader>}
-      <div className="flex justify-between items-center">
-        <span className="text-xs text-slate-400">
-          {total} kayıt · Sıralamak için sütun başlığına tıklayın
-        </span>
+      <div className={styles.toolbar}>
+        <div><h3>{guestId ? "Konaklama kayıtları" : "Misafir kayıtları"}<span className={styles.count}>{total}</span></h3><p>Konaklama bilgileri, geçmiş ücretler ve misafir değerlendirmeleri</p></div>
         <div className="flex gap-2">
           <button
             className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("xlsx")}
           >
-            Excel İndir
+            <Download size={15} aria-hidden="true"/> Excel İndir
           </button>
           <button
             className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("pdf")}
           >
-            PDF İndir
+            <FileText size={15} aria-hidden="true"/> PDF İndir
           </button>
         </div>
       </div>
-      <div className="overflow-auto rounded-3xl bg-[var(--color-uni-surface)]">
-        <table className="w-full text-xs text-left">
+      <div className={`guest-history-table ${styles.grid}`} aria-busy={busy} tabIndex={0} role="region" aria-label="Misafir konaklama tablosu; tüm sütunlar için yatay kaydırın">
+        <table>
+          <colgroup>{[220,130,116,116,185,180,130,160].map((width,index)=><col key={index} style={{width}}/>)}</colgroup>
           <thead className="bg-slate-50 text-slate-400">
             <tr>
               {[
@@ -221,14 +184,12 @@ export function GuestView({
                 ["start", "Giriş"],
                 ["end", "Çıkış"],
               ].map(([key, label]) => (
-                <th key={key} className="p-4">
-                  <button className="uni-control" onClick={() => sortBy(key)}>
-                    {label} {sort === key ? (desc ? "↓" : "↑") : "↕"}
-                  </button>
+                <th key={key} scope="col" aria-sort={sort===key?(desc?"descending":"ascending"):"none"}>
+                  <button type="button" className="uni-control guest-table-sort" onClick={() => sortBy(key)}><span>{label}</span>{sort===key?(desc?<ArrowDown size={14}/>:<ArrowUp size={14}/>):<ArrowUpDown size={14}/>}</button>
                 </th>
               ))}
-              <th>Birlikte kaldıkları</th>
-              <th className="p-4">Durum</th><th className="p-4">Misafir değerlendirmesi</th>
+              <th scope="col" className="guest-table-amount">Konaklama bedeli</th><th scope="col">Birlikte kaldıkları</th>
+              <th scope="col">Durum</th><th scope="col">Değerlendirme</th>
             </tr>
           </thead>
           <tbody>
@@ -239,35 +200,38 @@ export function GuestView({
               >
                 <td className="p-4">
                   <button
-                    className="uni-control  text-brand-blue-700 hover:underline"
+                    className="uni-control guest-table-person"
+                    aria-label={r.name}
                     onClick={() =>
-                      setSelected({ id: r.guest_id, name: r.name })
+                      openHistory?.({ id: r.guest_id, name: r.name })
                     }
                   >
-                    {r.name}
+                    <span className={styles.avatar} aria-hidden="true">{r.name.trim().split(/\s+/).map(part=>part[0]).slice(0,2).join('').toLocaleUpperCase('tr')}</span>
+                    <span className={styles.identity}><strong>{r.name}</strong><span className="guest-table-secondary">{r.phone || "Telefon kaydedilmemiş"}</span></span>
                   </button>
-                  <p className="text-[10px] text-slate-400 mt-1">{r.phone}</p>
                 </td>
                 <td>
-                  {r.room_code}
-                  <p className="text-[10px] text-slate-400">{r.branch_name}</p>
+                  <strong className="guest-table-room">{r.room_code}</strong>
+                  <p className="guest-table-secondary">{r.branch_name}</p>
                 </td>
-                <td className="p-3 whitespace-nowrap">{date(r.start)}</td>
-                <td className="p-3 whitespace-nowrap">{date(r.end)}</td>
+                <td><StayDate value={r.start}/></td>
+                <td><StayDate value={r.end}/></td>
+                <td className="guest-table-amount">{r.daily_price_minor>0?<><strong>{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="guest-table-secondary">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status==='cancelled'&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
                 <td>
+                  {!r.companions.length && <span className="guest-table-secondary">—</span>}
                   {r.companions.map((c) => (
                     <button
-                      className="uni-control block text-brand-blue-600 hover:underline py-1"
+                      className="uni-control guest-table-person guest-table-companion"
                       key={c.guest_id}
                       onClick={() =>
-                        setSelected({ id: c.guest_id, name: c.name })
+                        openHistory?.({ id: c.guest_id, name: c.name })
                       }
                     >
                       {c.name}
                     </button>
                   ))}
                 </td>
-                <td className="p-4">{bookingStatuses[r.status]}</td><td className="p-4"><button type="button" className={`${secondaryStyle} !rounded-full whitespace-nowrap`} onClick={()=>setAssessment(r)}>Puan / Kara liste</button></td>
+                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>Puan / Kara liste</button></td>
               </tr>
             ))}
           </tbody>
@@ -278,19 +242,28 @@ export function GuestView({
           </p>
         )}
       </div>
+      <p className="text-xs text-uni-muted">Bedel rezervasyonun tamamına aittir; oda değişikliği satırlarında tekrar görünebilir. Ek hizmetler ve tahsilatlar dahil değildir.</p>
       <Pagination label="Misafir listesi sayfaları" noun="kayıt" page={page} pageSize={pageSize} total={total} busy={busy} onPageChange={setPage} onPageSizeChange={v=>{setPageSize(v);setPage(1)}}/>
-      {selected && (
-        <Drawer
-          title="Misafir Konaklama Geçmişi"
-          onClose={() => setSelected(null)}
-        >
-          <GuestView
-            snapshot={s}
-            guestId={selected.id}
-            guestName={selected.name}
-          />
-        </Drawer>
-      )}
+      {guestId && <>
+        <section aria-label="Misafir ve rezervasyon notları" className="space-y-3 rounded-2xl border border-uni-border p-4">
+          <h3 className="font-semibold">Misafir ve rezervasyon notları</h3>
+          <p className="text-xs text-uni-muted">Listelenen konaklamaların notları. Önceki kayıtları görmek için konaklama sayfasını değiştirebilirsiniz.</p>
+          {rows.filter((row,index,all)=>all.findIndex(other=>other.booking_id===row.booking_id)===index).filter(row=>row.guest_note||row.booking_notes||row.cancellation_reason).map(row=><article key={row.booking_id} className="space-y-3 rounded-xl bg-uni-surface p-4">
+            <p className="text-xs text-uni-muted">{row.branch_name} · {row.room_code} · {date(row.start)}</p>
+            <dl className="grid gap-3 text-sm sm:grid-cols-2">{[['Misafire özel not',row.guest_note],['Rezervasyon notu',row.booking_notes],['İptal gerekçesi',row.cancellation_reason]].filter(([,text])=>text).map(([label,text])=><div key={label}><dt className="text-xs font-medium text-uni-muted">{label}</dt><dd className="mt-1 whitespace-pre-wrap break-words">{text}</dd></div>)}</dl>
+          </article>)}
+          {!busy&&!rows.some(row=>row.guest_note||row.booking_notes||row.cancellation_reason)&&<p className="text-sm text-uni-muted">Listelenen konaklamalara not eklenmemiş.</p>}
+        </section>
+        <section aria-label="Misafir yorumları ve puanları" className="space-y-4 rounded-2xl border border-uni-border p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold">Yorumlar ve puanlar</h3>{reputation&&<span className="rounded-full bg-brand-blue-50 px-3 py-2 text-xs text-brand-blue-700">{reputation.rating_count?`${reputation.average.toFixed(1)} / 5 · ${reputation.rating_count} değerlendirme`:'Henüz değerlendirilmedi'}</span>}</div>
+          <ErrorMessage message={ratingError}/>
+          {ratingError&&<button type="button" className={secondaryStyle} onClick={()=>setRevision(value=>value+1)}>Tekrar dene</button>}
+          {ratingLoading?<p role="status" className="text-sm text-uni-muted">Yorumlar yükleniyor…</p>:reputation&&<><CustomerComments data={reputation}/><BlacklistNotice items={reputation.blacklist}/></>}
+          <Pagination label="Misafir yorum sayfaları" noun="yorum" page={ratingPage} pageSize={ratingSize} total={reputation?.rating_count??0} busy={ratingLoading||!reputation} onPageChange={setRatingPage} onPageSizeChange={size=>{setRatingSize(size);setRatingPage(1);}}/>
+        </section>
+      </>}
+
+
     </div>
   );
 }

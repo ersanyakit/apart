@@ -14,6 +14,7 @@ import (
 	"otel/internal/infrastructure/persistence/models"
 	"otel/internal/testdb"
 	"otel/migrations"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -27,7 +28,7 @@ func TestAccommodation(t *testing.T) {
 	}
 	ctx := context.Background()
 	repo := persistence.New(db)
-	catalog := &application.Catalog{Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
+	catalog := &application.Catalog{Staff: repo, Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
 	service := &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo}
 	admin := identity.User{UserID: uuid.New(), Role: constants.UserRoleAdmin}
 	hotel := models.Hotel{HotelID: uuid.New(), FacilityInfo: models.FacilityInfo{Name: "Test"}}
@@ -65,6 +66,59 @@ func TestAccommodation(t *testing.T) {
 	reserve := func(roomID uuid.UUID, count int, in, out time.Time) (booking.Booking, error) {
 		return service.SaveBooking(ctx, admin, booking.Booking{BranchID: branch.BranchID, RoomID: roomID, GuestName: "Misafir", GuestCount: count, CheckIn: in, CheckOut: out}, true)
 	}
+	t.Run("cleaning records persist with server attribution and propagate only to cleaned units", func(t *testing.T) {
+		parent := unit("CLEAN-RECORD", "room", nil, 2)
+		child := unit("CLEAN-RECORD-BED", "bed", &parent.RoomID, 1)
+		closed := unit("CLEAN-RECORD-CLOSED", "bed", &parent.RoomID, 1)
+		if err := repo.SaveOperationalState(ctx, closed.RoomID, "Arizali", "Bakım devam ediyor."); err != nil {
+			t.Fatal(err)
+		}
+		for _, input := range []*property.CleaningRecord{{Cleaner: " "}, {Cleaner: "Temizlik", Note: strings.Repeat("x", 2001)}} {
+			if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: parent.RoomID, Status: "Temiz", LastCleaning: input}); !errors.Is(err, constants.ErrCleaningInvalid) {
+				t.Fatalf("invalid cleaning accepted: %v", err)
+			}
+		}
+		cleanerID := uuid.New()
+		if err := repo.SaveStaff(ctx, identity.Staff{UserID: cleanerID, HotelID: hotel.HotelID, Username: "cleaner-record", FirstName: "Ayşe", LastName: "Yılmaz", Role: constants.UserRoleHousekeeping, BranchIDs: []uuid.UUID{branch.BranchID}}, "test-hash", true); err != nil {
+			t.Fatal(err)
+		}
+		people, err := catalog.CleaningStaff(ctx, admin, parent.RoomID)
+		if err != nil || len(people) != 1 || people[0].UserID != cleanerID {
+			t.Fatalf("cleaners: %+v %v", people, err)
+		}
+		if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: parent.RoomID, Status: "Temiz", LastCleaning: &property.CleaningRecord{CleanerID: uuid.New()}}); !errors.Is(err, constants.ErrCleaningInvalid) {
+			t.Fatalf("unknown staff accepted: %v", err)
+		}
+		actor := admin
+		actor.DisplayName = "Resepsiyon görevlisi"
+		saved, err := catalog.SaveState(ctx, actor, property.Room{RoomID: parent.RoomID, Status: "Temiz", LastCleaning: &property.CleaningRecord{CleanerID: cleanerID, Cleaner: "Spoofed name", Note: "  Çarşaflar değiştirildi.  ", RecordedBy: uuid.New(), CompletedAt: time.Unix(0, 0)}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		c := saved.LastCleaning
+		if c == nil || c.CleanerID != cleanerID || c.Cleaner != "Ayşe Yılmaz" || c.Note != "Çarşaflar değiştirildi." || c.RecordedBy != actor.UserID || c.RecordedByName != actor.DisplayName || c.CompletedAt.Before(now) {
+			t.Fatalf("wrong cleaning metadata: %+v", c)
+		}
+		got, err := repo.FindRoom(ctx, child.RoomID)
+		if err != nil || got.LastCleaning == nil || got.LastCleaning.Cleaner != c.Cleaner {
+			t.Fatalf("child record missing: %+v %v", got, err)
+		}
+		blocked, err := repo.FindRoom(ctx, closed.RoomID)
+		if err != nil || blocked.LastCleaning != nil || blocked.Status != "Arizali" {
+			t.Fatalf("maintenance unit changed: %+v %v", blocked, err)
+		}
+		if _, err := catalog.SaveState(ctx, actor, property.Room{RoomID: parent.RoomID, Status: "Kirli"}); err != nil {
+			t.Fatal(err)
+		}
+		dirty, _ := repo.FindRoom(ctx, parent.RoomID)
+		if dirty.LastCleaning == nil || dirty.LastCleaning.Cleaner != c.Cleaner {
+			t.Fatal("last cleaning lost when marked dirty")
+		}
+		denied := identity.User{UserID: uuid.New(), HotelID: uuid.New(), Role: constants.UserRoleHousekeeping}
+		if _, err := catalog.SaveState(ctx, denied, property.Room{RoomID: parent.RoomID, Status: "Temiz", LastCleaning: c}); !errors.Is(err, constants.ErrForbidden) {
+			t.Fatalf("cross-tenant write accepted: %v", err)
+		}
+	})
 	t.Run("whole room cleaning clears nested beds before early check-in", func(t *testing.T) {
 		parent := unit("CLEAN-APART", "apartment", nil, 1)
 		selected := unit("301-CLEAN", "room", &parent.RoomID, 1)

@@ -1,3 +1,4 @@
+import { boardStatusKey, statusStyle, roomStatusKey, STATUS_PALETTE } from "../lib/status-palette";
 import React, { useState, useEffect, useRef } from "react";
 import {
   command,
@@ -155,22 +156,14 @@ export function FloorBoard({
             const p = positions[room.room_id] || room.position;
             const state = roomBoardState(snapshot.rooms, snapshot.bookings, room, snapshot.server_time, day);
             const occupied = state.bookings;
-            const color = state.tone === "occupied"
-              ? "bg-emerald-50 border-emerald-200 text-emerald-900"
-              : state.tone === "reserved"
-                ? "bg-brand-blue-50 border-brand-blue-200 text-brand-blue-900"
-                : ["Arizali", "Tadilat"].includes(room.status)
-                  ? "bg-slate-200 border-slate-400 text-slate-700"
-                  : room.status === "Kirli"
-                    ? "bg-orange-50 border-orange-200 text-orange-800"
-                    : "bg-emerald-50 border-emerald-200 text-emerald-900";
             return (
               <button
                 type="button"
                 key={room.room_id}
                 title={`${room.code} · ${state.label}${occupied.length ? ` · ${occupied.map(b => b.guest_name).join(", ")}` : ""}`}
-                className={`uni-control absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${color} ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
+                className={`uni-control absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
                 style={{
+                  ...statusStyle(boardStatusKey(state)),
                   left: `${(p.x / floor.width) * 100}%`,
                   top: `${(p.y / floor.height) * 100}%`,
                   width: `${(p.width / floor.width) * 100}%`,
@@ -206,6 +199,7 @@ export function FloorBoard({
                 <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0">
                   {state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
                 </span>
+                {["Kirli","Arizali","Tadilat"].includes(state.operationalStatus) && <span className="absolute right-1 top-1 h-2 w-2 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}} aria-label={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label} title={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}/>}
               </button>
             );
           })}

@@ -18,6 +18,19 @@ import { ErrorMessage } from "./FormKit";
 import brandLogo from "../assets/brand/researchcave.svg";
 import styles from "./LoginScreen.module.css";
 
+function LoginInput({ label, icon, ...props }: React.InputHTMLAttributes<HTMLInputElement> & {
+  label: string;
+  icon: React.ReactNode;
+}) {
+  return <label className={styles.inputLabel}>
+    <span>{label}</span>
+    <span className={styles.inputField}>
+      <span className={styles.inputIcon} aria-hidden="true">{icon}</span>
+      <input {...props} className={styles.input} />
+    </span>
+  </label>;
+}
+
 interface Hotel {
   id: string;
   name: string;
@@ -155,8 +168,8 @@ export const LoginScreen: React.FC<{
   return (
     <div className={styles.page}>
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         className="w-full max-w-4xl grid md:grid-cols-12 bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 overflow-hidden relative z-10 border border-white"
       >
         <aside className={`${styles.brandPanel} md:col-span-5`} aria-label="Otel yönetim sistemi">
@@ -236,20 +249,15 @@ export const LoginScreen: React.FC<{
               {step === "hotel" && (
                 <motion.div
                   key="step-hotel"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   className="flex flex-col h-full"
                 >
-                  <div className="relative mb-4">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                    <input
-                      type="text"
-                      placeholder="OTELİNİZİN ADI VEYA LOKASYONU..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="uni-input w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all uppercase tracking-widest placeholder:text-slate-400"
-                    />
+                  <div className="mb-4">
+                    <LoginInput label="Otel ara" icon={<Search size={21} strokeWidth={1.8} />}
+                      type="search" placeholder="Otel adı veya konum" value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)} />
                   </div>
 
                   <div className="flex-1 overflow-y-auto no-scrollbar space-y-3 pr-2">
@@ -262,10 +270,10 @@ export const LoginScreen: React.FC<{
                       <motion.button
                         key={hotel.id}
                         onClick={() => handleHotelSelect(hotel)}
-                        className="uni-control w-full flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-3xl hover:border-brand-blue-400    group shadow-sm    cursor-pointer"
+                        className={`${styles.selectionCard} uni-control w-full flex items-center gap-4 p-4 bg-white border border-slate-200 rounded-3xl hover:border-brand-blue-400    group shadow-sm    cursor-pointer`}
                       >
                         <div className="w-full flex items-center gap-4">
-                          <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-600 group-hover:text-white transition-all shadow-inner shrink-0 relative overflow-hidden">
+                          <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-100 group-hover:text-brand-blue-600 transition-all shadow-inner shrink-0 relative overflow-hidden">
                             {hotel.image ? (
                               <img
                                 src={hotel.image}
@@ -296,7 +304,7 @@ export const LoginScreen: React.FC<{
                               {hotel.location}
                             </p>
                           </div>
-                          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-brand-blue-600 group-hover:text-white transition-all duration-150 ease-out">
+                          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-300 group-hover:bg-brand-blue-100 group-hover:text-brand-blue-600 transition-all duration-150 ease-out">
                             <ChevronRight className="w-4 h-4" />
                           </div>
                         </div>
@@ -320,9 +328,9 @@ export const LoginScreen: React.FC<{
               {step === "user" && selectedHotel && (
                 <motion.div
                   key="step-user"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   className="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto pb-4"
                 >
                   {peopleLoading && (
@@ -334,9 +342,9 @@ export const LoginScreen: React.FC<{
                     <motion.button
                       key={person.user_id}
                       onClick={() => handleUserSelect(person)}
-                      className="uni-control flex flex-col items-center gap-4 p-6 bg-white border border-slate-200 rounded-[32px] hover:border-brand-blue-400    group shadow-sm    cursor-pointer"
+                      className={`${styles.selectionCard} uni-control flex flex-col items-center gap-4 p-6 bg-white border border-slate-200 rounded-[32px] hover:border-brand-blue-400    group shadow-sm    cursor-pointer`}
                     >
-                      <div className="w-16 h-16 bg-slate-100 rounded-[24px] flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-600 group-hover:text-white transition-all">
+                      <div className="w-16 h-16 bg-slate-100 rounded-[24px] flex items-center justify-center text-slate-400 group-hover:bg-brand-blue-100 group-hover:text-brand-blue-600 transition-all">
                         <User className="w-8 h-8" />
                       </div>
                       <span className="text-sm font-black text-slate-800 uppercase tracking-tight">
@@ -365,16 +373,11 @@ export const LoginScreen: React.FC<{
                       }}
                       className="col-span-full space-y-3 rounded-[24px] border border-slate-200 p-4"
                     >
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                        Kullanıcı adı veya e-posta
-                        <input
+                      <LoginInput label="Kullanıcı adı veya e-posta" icon={<User size={21} strokeWidth={1.8} />}
                           required
                           autoComplete="username"
                           value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                          className="uni-input mt-3 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 outline-none focus:border-neutral-400"
-                        />
-                      </label>
+                          onChange={(e) => setUsername(e.target.value)} />
                       <button className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer">
                         DEVAM ET
                       </button>
@@ -386,18 +389,18 @@ export const LoginScreen: React.FC<{
               {step === "password" && selectedUser && (
                 <motion.div
                   key="step-password"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="flex flex-col items-center pt-8"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center pt-4"
                 >
-                  <div className="w-24 h-24 bg-brand-blue-600 rounded-[32px] flex items-center justify-center text-white mb-6 shadow-2xl shadow-brand-blue-100 border-4 border-white">
+                  <div className="w-24 h-24 bg-brand-blue-100 rounded-[32px] flex items-center justify-center text-brand-blue-600 mb-6 shadow-2xl shadow-brand-blue-100 border-4 border-white">
                     <User className="w-12 h-12" />
                   </div>
                   <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">
                     {selectedUser.name}
                   </h3>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 mb-10">
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 mb-6">
                     {selectedUser.role ? `${selectedUser.role} / ` : ""}
                     {selectedHotel?.name}
                   </p>
@@ -406,20 +409,10 @@ export const LoginScreen: React.FC<{
                     onSubmit={handleLogin}
                     className="w-full max-w-sm space-y-4"
                   >
-                    <div className="relative group">
-                      <Key className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 group-focus-within:text-brand-blue-500 transition-all duration-150 ease-out" />
-                      <input
-                        autoFocus
-                        type="password"
-                        autoComplete="current-password"
-                        aria-label="Şifre"
-                        required
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="uni-input w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-lg font-black text-slate-800 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all placeholder:text-slate-200"
-                      />
-                    </div>
+                    <LoginInput label="Şifre" icon={<Key size={21} strokeWidth={1.8} />}
+                      autoFocus type="password" autoComplete="current-password" required
+                      placeholder="Şifrenizi girin" value={password}
+                      onChange={e => setPassword(e.target.value)} />
                     <motion.button
                       type="submit"
                       disabled={busy}
@@ -434,9 +427,9 @@ export const LoginScreen: React.FC<{
               {step === "register" && (
                 <motion.div
                   key="step-register"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   className="space-y-4 pt-2"
                 >
                   <form onSubmit={handleLogin} className="space-y-4">
@@ -444,27 +437,17 @@ export const LoginScreen: React.FC<{
                       Yeni otel kaydı için yönetici hesabınızla giriş yapın.
                       Ardından tesis bilgilerini doldurabilirsiniz.
                     </p>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                      Kullanıcı adı
-                      <input
+                    <LoginInput label="Kullanıcı adı" icon={<User size={21} strokeWidth={1.8} />}
                         required
                         autoComplete="username"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        className="uni-input mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
-                      />
-                    </label>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                      Şifre
-                      <input
+                        onChange={(e) => setUsername(e.target.value)} />
+                    <LoginInput label="Şifre" icon={<Key size={21} strokeWidth={1.8} />}
                         required
                         type="password"
                         autoComplete="current-password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="uni-input mt-2 w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700"
-                      />
-                    </label>
+                        onChange={(e) => setPassword(e.target.value)} />
                     <button
                       disabled={busy}
                       className="uni-control w-full py-4 uni-button-primary text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100"
@@ -478,7 +461,8 @@ export const LoginScreen: React.FC<{
           </div>
 
           {/* Footer Branding */}
-          <div className="pt-10 flex items-center justify-between border-t border-slate-100 mt-auto">
+          <div className="mt-auto border-t border-slate-100 pt-4">
+            <div className="flex items-center justify-between">
             <a href={contracts.brandURL} target="_blank" rel="noopener noreferrer" className="uni-control flex min-h-11 items-center gap-2 rounded-lg px-1">
               <img src={brandLogo.src} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
               <span className="text-xs font-semibold text-slate-500">
@@ -487,6 +471,7 @@ export const LoginScreen: React.FC<{
             </a>
             <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
               interaktifotel.com
+            </div>
             </div>
           </div>
         </div>

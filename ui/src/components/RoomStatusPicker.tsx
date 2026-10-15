@@ -1,15 +1,9 @@
+import { STATUS_PALETTE, roomStatusKey } from "../lib/status-palette";
+import { createPortal } from "react-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
 import { secondaryStyle } from "./FormKit";
-
-const STATUS_META: Record<string, { label: string; dot: string }> = {
-  Temiz: { label: "Temiz", dot: "bg-green-500" },
-  Kirli: { label: "Kirli", dot: "bg-orange-500" },
-  Bos: { label: "Boş", dot: "bg-slate-300" },
-  Arizali: { label: "Arızalı", dot: "bg-red-800" },
-  Tadilat: { label: "Tadilat", dot: "bg-yellow-600" },
-};
 
 const BASE_OPTIONS = ["Temiz", "Kirli"];
 const ADVANCED_OPTIONS = ["Bos", "Arizali", "Tadilat"];
@@ -38,7 +32,7 @@ export function RoomStatusPicker({
   const options = canSetAdvanced
     ? [...BASE_OPTIONS, ...ADVANCED_OPTIONS]
     : BASE_OPTIONS;
-  const current = STATUS_META[status] ?? { label: status, dot: "bg-slate-300" };
+  const current = STATUS_PALETTE[roomStatusKey(status)];
 
   const place = () => {
     const r = buttonRef.current?.getBoundingClientRect();
@@ -81,12 +75,12 @@ export function RoomStatusPicker({
         aria-label={`${roomCode} oda durumu: ${current.label}. Değiştirmek için açın.`}
         aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => { if (!open) place(); setOpen((v) => !v); }}
         className={`uni-control ${secondaryStyle} gap-2`}
       >
         <span
           aria-hidden="true"
-          className={`h-2.5 w-2.5 shrink-0 rounded-full ${current.dot}`}
+          className="h-2.5 w-2.5 shrink-0 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(status)].accent}}
         />
         <span className="truncate">{current.label}</span>
         <ChevronDown
@@ -97,7 +91,7 @@ export function RoomStatusPicker({
         />
       </button>
 
-      <AnimatePresence>
+      {typeof document !== "undefined" && createPortal(<AnimatePresence>
         {open && (
           <>
             <div
@@ -123,7 +117,7 @@ export function RoomStatusPicker({
               style={{ top: pos.top, left: pos.left, width: pos.width }}
             >
               {options.map((v) => {
-                const meta = STATUS_META[v];
+                const meta = STATUS_PALETTE[roomStatusKey(v)];
                 const isActive = v === status;
                 return (
                   <button
@@ -133,7 +127,7 @@ export function RoomStatusPicker({
                     aria-selected={isActive}
                     onClick={() => {
                       setOpen(false);
-                      if (v !== status) onPick(v);
+                      if (v !== status || v === "Temiz") onPick(v);
                     }}
                     className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-bold outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
                       isActive
@@ -143,7 +137,7 @@ export function RoomStatusPicker({
                   >
                     <span
                       aria-hidden="true"
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${meta.dot}`}
+                      className="h-2.5 w-2.5 shrink-0 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(v)].accent}}
                     />
                     <span className="flex-1">{meta.label}</span>
                     {isActive && (
@@ -160,7 +154,7 @@ export function RoomStatusPicker({
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>, document.body)}
     </>
   );
 }

@@ -482,6 +482,14 @@ func (h *Handler) command(c fiber.Ctx) error {
 			return err
 		}
 		result, err = h.Reporting.Issue(ctx, u, h.Catalog, input)
+	case constants.CMD_ROOM_CLEANERS:
+		var input struct {
+			RoomID uuid.UUID `json:"room_id"`
+		}
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Catalog.CleaningStaff(ctx, u, input.RoomID)
 	case constants.CMD_ROOM_CREATE, constants.CMD_ROOM_UPDATE, constants.CMD_ROOM_STATE:
 		var input property.Room
 		if err = decode(e.Payload, &input); err != nil {

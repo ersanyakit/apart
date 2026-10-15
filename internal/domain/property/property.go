@@ -9,6 +9,7 @@ import (
 	"otel/internal/domain/media"
 	"otel/internal/domain/shared"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -69,8 +70,17 @@ type Guest struct {
 	Note         string `json:"note,omitempty"`
 	Nationality  string `json:"nationality,omitempty"`
 }
+type CleaningRecord struct {
+	CleanerID      uuid.UUID `json:"cleaner_id"`
+	Cleaner        string    `json:"cleaner"`
+	Note           string    `json:"note"`
+	CompletedAt    time.Time `json:"completed_at"`
+	RecordedBy     uuid.UUID `json:"recorded_by"`
+	RecordedByName string    `json:"recorded_by_name"`
+}
 type Room struct {
-	RentalMode string `json:"rental_mode"`
+	LastCleaning *CleaningRecord `json:"last_cleaning,omitempty"`
+	RentalMode   string          `json:"rental_mode"`
 	// NewBeds is a command-only addition saved atomically with the room, never a replacement of existing beds.
 	NewBeds            []accommodation.Bed    `json:"beds_to_add,omitempty"`
 	StatusReason       string                 `json:"status_reason"`
@@ -170,6 +180,6 @@ type Repository interface {
 	SaveRoom(context.Context, Room, bool) error
 	DeleteRoom(context.Context, uuid.UUID) error
 	DeleteRooms(context.Context, uuid.UUID, []uuid.UUID) error
-	SaveOperationalState(context.Context, uuid.UUID, string, string) error
+	SaveOperationalState(context.Context, uuid.UUID, string, string, ...*CleaningRecord) error
 	SaveInventory(context.Context, uuid.UUID, []InventoryItem) error
 }

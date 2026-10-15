@@ -158,7 +158,7 @@ func auditColumns(tx *gorm.DB, pk string) []string {
 	if tx.Statement.Schema == nil {
 		return columns
 	}
-	for _, column := range []string{"hotel_id", "branch_id", "room_id", "kind", "name", "code", "display_name", "status", "guest_name", "guest_count", "daily_price_minor", "check_in", "check_out", "actual_check_in", "actual_check_out", "cancellation_reason", "cancelled_at", "status_reason", "deposit_minor", "deposit_channel", "capacity", "rentable", "inactive", "role", "user_role", "title", "format"} {
+	for _, column := range []string{"hotel_id", "branch_id", "room_id", "kind", "name", "code", "display_name", "status", "guest_name", "guest_count", "daily_price_minor", "check_in", "check_out", "actual_check_in", "actual_check_out", "cancellation_reason", "cancelled_at", "status_reason", "last_cleaning", "deposit_minor", "deposit_channel", "capacity", "rentable", "inactive", "role", "user_role", "title", "format"} {
 		if column != pk && tx.Statement.Schema.LookUpField(column) != nil {
 			columns = append(columns, column)
 		}

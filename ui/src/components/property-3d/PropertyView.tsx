@@ -1,4 +1,7 @@
 'use client';
+import { sceneStatusColor } from "./model";
+import { STATUS_PALETTE, roomStatusKey } from "../../lib/status-palette";
+
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BedDouble, Box, RefreshCw, X } from 'lucide-react';
 import { command, messageOf, unitKinds, type APIRoom, type Booking, type Snapshot } from '../../lib/api';
@@ -83,7 +86,11 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
       <div className={styles.sceneColumn}>
         <PropertyCanvas floorControls={<nav className={styles.floorTabs} aria-label="3B kat görünümü">
       {[{ id: 'all', label: 'Tüm katlar' }, ...floors].map(floor => <button type="button" key={floor.id} aria-pressed={effectiveFloor === floor.id} className={`uni-button ${effectiveFloor === floor.id ? 'uni-button-primary' : 'uni-button-secondary'} rounded-full`} onClick={() => { setFloorId(floor.id); setSelectedId(null); }}>{floor.label}</button>)}
-      <div className={styles.sceneSwitches}><Switch label="Katları ayır" checked={exploded} onChange={setExploded} /><Switch label="Duvarlar" checked={walls} onChange={setWalls} /><Switch label="Yalnızca boş yatakları göster" checked={onlyAvailableBeds} onChange={value => { setOnlyAvailableBeds(value); setSelectedId(null); if (value) setTone('all'); }} /></div>
+      <div className={styles.sceneSwitches} role="group" aria-label="3B görünüm seçenekleri">
+        <Switch label="Katları ayır" checked={exploded} onChange={setExploded} />
+        <Switch label="Duvarlar" checked={walls} onChange={setWalls} />
+        <Switch label="Yalnızca boş yatakları göster" checked={onlyAvailableBeds} onChange={value => { setOnlyAvailableBeds(value); setSelectedId(null); if (value) setTone('all'); }} />
+      </div>
     </nav>} floors={filtered} exploded={exploded} walls={walls} selectedId={selected?.unit.room_id || null} focusRequest={focusRequest} onSelect={select} onHover={setHoverId} panelOpen={panelOpen} onTogglePanel={() => setPanelOpen(v => !v)} details={
         <aside ref={detailsRef} className={styles.details} aria-label="Oda ve yatak bilgileri" aria-hidden={!panelOpen} inert={!panelOpen}>
         {selected && <div className={styles.reservationAction}>
@@ -96,7 +103,8 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
         <InlineSelectField label="Oda / birim seçimi" value={selectedRoom?.unit.room_id || ''} onChange={value => select(value || null)} options={[{ value: '', label: 'Bir birim seçin' }, ...rooms.map(r => ({ value: r.unit.room_id, label: `${r.unit.code} · ${r.state.label}` }))]} />
         {selected && selectedRoom ? <>
           <div className={styles.detailHeading}><div><p>{floors.find(f => f.id === selectedRoom.floorId)?.label}</p><h3>{selected.unit.code}</h3><span>{selected.unit.name || unitKinds[selected.unit.kind] || selected.unit.kind}</span></div><button type="button" className="nav-icon-button" aria-label="Birim seçimini temizle" onClick={() => select(null)}><X size={18} /></button></div>
-          <div className={styles.status}><i style={{ background: STATUS_COLORS[selected.state.tone] }} />{selected.state.label}</div>
+          <div className={styles.status}><i style={{ background: sceneStatusColor(selected.state) }} />{selected.state.label}</div>
+          {["Kirli","Arizali","Tadilat"].includes(selected.state.operationalStatus) && <div className={styles.status}><i style={{background:STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].accent}}/>{STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].label}</div>}
           {!!currentStays.length && <section className={styles.currentGuests} aria-label="Şu anda konaklayan misafirler"><h4 className={styles.subheading}>Konaklayan misafirler</h4>{currentStays.map(booking => <div className={styles.booking} key={booking.booking_id}>
             {(booking.guests?.length ? booking.guests : [{ id: booking.booking_id, name: booking.guest_name || 'Misafir' }]).map(guest => <strong key={guest.id}>{guest.name}</strong>)}
             <small>{boardDate(booking.actual_check_in || booking.check_in)} → {boardDate(booking.check_out)}</small>
@@ -106,7 +114,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
           <dl className={styles.facts}><div><dt>Kapasite</dt><dd>{selected.unit.effective_capacity || selected.unit.capacity} kişi</dd></div><div><dt>Satış durumu</dt><dd>{selected.unit.inactive ? 'Pasif' : selected.unit.rentable ? 'Ayrı rezerve edilebilir' : 'Üst birimle birlikte'}</dd></div>{selected.unit.kind === 'bed' && <div><dt>Ranza seviyesi</dt><dd>{selectedRoom.beds.find(b => b.unit.room_id === selected.unit.room_id)?.level || 1}</dd></div>}</dl>
           {selectedRoom.hasJacuzzi && <p className={styles.status}>Jakuzi mevcut</p>}
           {selected.unit.status_reason && <p className={styles.caption}>{selected.unit.status_reason}</p>}
-          {!!selectedRoom.beds.length && <section><h4 className={styles.subheading}>Yatak yerleri</h4><div className={styles.bedList}>{selectedRoom.beds.map(bed => <button type="button" key={bed.group + ":" + bed.level} aria-pressed={selectedId === bed.unit.room_id} className={styles.bedButton} onClick={() => activate(bed.unit.room_id)}><BedDouble size={18} style={{ color: STATUS_COLORS[bed.state.tone] }} aria-hidden="true" /><span><strong>{bed.label || bed.unit.code}</strong><small>{bed.visualOnly ? "Kayıtlı oda yatak düzeni" : `${bed.state.label} · ${bed.unit.capacity} kişi`}</small></span></button>)}</div></section>}
+          {!!selectedRoom.beds.length && <section><h4 className={styles.subheading}>Yatak yerleri</h4><div className={styles.bedList}>{selectedRoom.beds.map(bed => <button type="button" key={bed.group + ":" + bed.level} aria-pressed={selectedId === bed.unit.room_id} className={styles.bedButton} onClick={() => activate(bed.unit.room_id)}><BedDouble size={18} style={{ color: sceneStatusColor(bed.state) }} aria-hidden="true" /><span><strong>{bed.label || bed.unit.code}</strong><small>{bed.visualOnly ? "Kayıtlı oda yatak düzeni" : `${bed.state.label} · ${bed.unit.capacity} kişi`}</small></span></button>)}</div></section>}
           {selectedRoom.beds.length === 0 && <p className={styles.caption}>Bu birime fiziksel yatak tanımı eklenmemiş.</p>}
           <section><h4 className={styles.subheading}>Konaklama ve rezervasyonlar</h4>{bookings.length ? bookings.map(booking => <div className={styles.booking} key={booking.booking_id}><strong>{booking.guest_name || 'Misafir'}</strong><span>{booking.status === 'checked_in' ? 'Giriş yapıldı' : booking.status === 'confirmed' ? 'Onaylı rezervasyon' : 'Çıkış yapıldı'}</span><small>{boardDate(booking.check_in)} → {boardDate(booking.check_out)}</small>{onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>Rezervasyonu aç</button>}</div>) : <p className={styles.caption}>Aktif veya yaklaşan rezervasyon bulunmuyor.</p>}</section>
 
@@ -124,7 +132,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
       <span className={styles.updated}>{loading ? 'Yatak tanımları yükleniyor…' : `Son veri: ${boardDate(snapshot.server_time)}`}</span>
     </div>
 
-        <div className={styles.legend} aria-label="Durum renkleri">{Object.entries(STATUS_LABELS).map(([key, label]) => <span key={key}><i style={{ background: STATUS_COLORS[key as keyof typeof STATUS_COLORS] }} />{label}</span>)}</div>
+        <div className={styles.legend} aria-label="Durum renkleri">{(["occupied","reserved","available","dirty","fault","maintenance"] as const).map(key => <span key={key}><i style={{ background: STATUS_PALETTE[key].accent }} />{STATUS_PALETTE[key].label}</span>)}</div>
         <p className={styles.caption}>{hover ? `${hover.unit.code} · ${hover.state.label}` : 'Detaylar için bir odaya veya yatağa tıklayın.'}</p>
         <p className={styles.caption}>Şematik görünüm · {filtered.some(f => f.automatic) ? 'Yerleşimi olmayan veya çakışan birimler otomatik dizildi.' : 'Kat planı sırası korunarak odalar arasındaki boşluklar sıkılaştırıldı.'} Oda içindeki yataklar okunabilirlik için otomatik yerleştirilir.</p>
         </aside>} />

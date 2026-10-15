@@ -4,13 +4,12 @@ import { usePreference } from "../UserPreferences";
 import { useNotifications } from "../Toast";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { CalendarDays, ChevronLeft, ChevronRight, Download, Printer, Search, Users, X } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, Download, Printer, Search } from "lucide-react";
 import { bookingStatuses, type APIRoom, type Booking } from "../../lib/api";
 import { useI18n } from "../I18n";
 import { formatMoney, useCurrency } from "../Currency";
 import { UniSelect } from "../UniSelect";
-import { addDays, calendarCSV, dayKey, dayStart, guestNames, overlaps, shiftDate, stayEvents, timelineLayout, viewRange, weekLayout, weekStart, type CalendarView, type StayEvent } from "./model";
+import { addDays, calendarCSV, dayKey, dayStart, guestNameList, guestNames, overlaps, shiftDate, stayEvents, timelineLayout, viewRange, weekLayout, weekStart, type CalendarView, type StayEvent } from "./model";
 import { printCalendar } from "./print";
 
 export type HotelCalendarProps = {
@@ -23,47 +22,12 @@ export type HotelCalendarProps = {
   onOpenBooking?: (booking: Booking) => void;
 };
 
-function StayDetails({ event, onClose, onOpenBooking }: { event: StayEvent; onClose: () => void; onOpenBooking?: (booking: Booking) => void }) {
-  const dialog = useRef<HTMLDialogElement>(null);
-  const { currency, format } = useCurrency();
-  const { locale } = useI18n();
-  useEffect(() => {
-    const element = dialog.current!;
-    const overflow = document.body.style.overflow;
-    element.showModal();
-    document.body.style.overflow = "hidden";
-    return () => { element.close(); document.body.style.overflow = overflow; };
-  }, []);
-  const b = event.booking;
-  const date = (value: string) => new Date(value).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" });
-  return createPortal(<dialog ref={dialog} className="hc-dialog" aria-labelledby="stay-detail-title"
-    onCancel={e => { e.preventDefault(); onClose(); }} onClick={e => { if(e.target === e.currentTarget) onClose(); }}>
-    <section className="hc-detail">
-      <header className="hc-detail-header">
-        <div><p className="hc-eyebrow">{event.roomCode} · {bookingStatuses[b.status]}</p><h2 id="stay-detail-title">{b.guest_name}</h2></div>
-        <button type="button" autoFocus className="nav-icon-button" aria-label="Konaklama detayını kapat" onClick={onClose}><X size={20}/></button>
-      </header>
-      <dl className="hc-detail-grid">
-        <div><dt>Giriş</dt><dd>{date(b.actual_check_in || b.check_in)}</dd></div>
-        <div><dt>Çıkış</dt><dd>{date(b.actual_check_out || b.check_out)}</dd></div>
-        <div><dt>Konaklayan</dt><dd>{b.guest_count} kişi</dd></div>
-        <div><dt>Gecelik fiyat</dt><dd>{formatMoney(b.daily_price_minor, currency, format)}</dd></div>
-      </dl>
-      <h3>Konaklayan bilgileri</h3>
-      <ul className="hc-guests">{b.guests?.length ? b.guests.map((guest, index) => <li key={guest.id || index}><span><strong>{guest.name}</strong><small>{[guest.phone, guest.nationality, guest.relationship].filter(Boolean).join(" · ")}</small></span><Users size={16}/></li>) : <li>{b.guest_name}</li>}</ul>
-      {b.notes && <div className="hc-notes"><h3>Rezervasyon notu</h3><p>{b.notes}</p></div>}
-      {onOpenBooking && ["confirmed", "checked_in"].includes(b.status) && <button type="button" className="uni-button uni-button-primary" onClick={() => { onClose(); onOpenBooking(b); }}>Rezervasyonu aç</button>}
-    </section>
-  </dialog>,document.body);
-}
-
 /** Reusable hotel calendar; receives tenant-scoped data and owns no API/session state. */
 export function HotelCalendar({ bookings, rooms, propertyName, initialDate, headerActions, onOpenBooking }: HotelCalendarProps) {
   const [date,setDate] = useState(() => dayStart(initialDate ?? new Date()));
   const [view,setView] = usePreference<CalendarView>("calendar_view", "month");
   const [query,setQuery] = useState("");
   const [status,setStatus] = usePreference<string>("calendar_status", "active");
-  const [selected,setSelected] = useState<StayEvent | null>(null);
   const notify = useNotifications();
   const printable = useRef<HTMLDivElement>(null);
   const { locale } = useI18n();
@@ -82,7 +46,7 @@ export function HotelCalendar({ bookings, rooms, propertyName, initialDate, head
   const weeks: Date[] = [];
   for(let cursor=gridStart; cursor<gridEnd; cursor=addDays(cursor,7)) weeks.push(cursor);
   const eventTitle = (e: StayEvent) => `${e.roomCode} · ${guestNames(e.booking)} · ${bookingStatuses[e.booking.status]} · ${e.booking.guest_count} kişi · ${formatMoney(e.booking.daily_price_minor,currency,format)} / gece`;
-  const eventButton = (event: StayEvent, style?: React.CSSProperties, compact=false) => <button type="button" key={event.id} className={`hc-event hc-${event.booking.status}`} style={style} onClick={() => setSelected(event)} title={eventTitle(event)} aria-label={eventTitle(event)}><span className="hc-event-title"><b>{event.roomCode}</b> {event.booking.guest_name}</span>{!compact && <span className="hc-event-meta">{event.booking.guest_count} kişi · {formatMoney(event.booking.daily_price_minor,currency,format)}</span>}</button>;
+  const eventButton = (event: StayEvent, style?: React.CSSProperties, compact=false) => <button type="button" key={event.id} className={`hc-event hc-${event.booking.status}`} style={style} onClick={() => onOpenBooking?.(event.booking)} title={eventTitle(event)} aria-label={eventTitle(event)}><span className="hc-event-title"><b>{event.roomCode}</b></span><span className="hc-event-guests">{guestNameList(event.booking).map(name => <span key={name} title={name}>{name}</span>)}</span>{!compact && <span className="hc-event-meta">{event.booking.guest_count} kişi · {formatMoney(event.booking.daily_price_minor,currency,format)}</span>}</button>;
   const exportCSV = () => {
     const url=URL.createObjectURL(new Blob([calendarCSV(visible,bookingStatuses,currency)],{type:"text/csv;charset=utf-8"}));
     const link=document.createElement("a");link.href=url;link.download=`otel-takvimi-${view}-${dayKey(range.start)}.csv`;link.click();setTimeout(() => URL.revokeObjectURL(url),1000);
@@ -107,20 +71,32 @@ export function HotelCalendar({ bookings, rooms, propertyName, initialDate, head
         {view === "month" ? <div className="hc-month">
           <div className="hc-weekdays">{Array.from({length:7},(_,i)=><div key={i}>{addDays(gridStart,i).toLocaleDateString(locale,{weekday:"long"})}</div>)}</div>
           {weeks.map(start => {
-            const items=weekLayout(filtered,start);const lanes=Math.max(0,...items.map(i=>i.lane+1));
-            return <div key={dayKey(start)} className="hc-month-week" style={{minHeight:Math.max(138,48+lanes*30)}}>
+            const items=weekLayout(filtered,start);
+            return <div key={dayKey(start)} className="hc-month-week" style={{minHeight:138}}>
               <div className="hc-day-cells">{Array.from({length:7},(_,i)=>{const day=addDays(start,i);return <div key={i} className={`hc-day-cell ${day.getMonth()!==date.getMonth()?"hc-outside":""} ${dayKey(day)===dayKey(now)?"hc-today":""}`}><button type="button" aria-label={`${day.toLocaleDateString(locale)} günlük görünüm`} onClick={()=>{setDate(day);setView("day");}}>{day.getDate()}</button></div>;})}</div>
               <div className="hc-month-events">{items.map(({event,from,to,lane})=>eventButton(event,{gridColumn:`${from+1} / ${to+1}`,gridRow:lane+1},true))}</div>
             </div>;
           })}
         </div> : <div className={`hc-timeline hc-timeline-${view}`}>
           <div className="hc-timeline-heading"><div className="hc-room-heading">Birim</div><div className="hc-ticks" style={{gridTemplateColumns:`repeat(${ticks.length},1fr)`}}>{ticks.map(t=><span key={t}>{t}</span>)}</div></div>
-          {timelineRooms.map(room=>{const items=timelineLayout(visible.filter(e=>e.roomId===room.id),range.start,range.end);const lanes=Math.max(1,...items.map(i=>i.lane+1));return <div className="hc-timeline-row" key={room.id} style={{minHeight:lanes*62+12}}><div className="hc-room-label"><strong>{room.code}</strong><small>{room.name || "Birim"}</small></div><div className="hc-tracks" style={{backgroundSize:`${100/ticks.length}% 100%`}}>{items.map(({event,lane,left,width})=>eventButton(event,{position:"absolute",left:`${left}%`,width:`${width}%`,top:6+lane*62}))}{view==="day"&&now>=range.start&&now<range.end&&<div className="hc-now" style={{left:`${(+now-+range.start)/(+range.end-+range.start)*100}%`}}/>}</div></div>;})}
+          {timelineRooms.map(room => {
+            const items = timelineLayout(visible.filter(event => event.roomId === room.id), range.start, range.end);
+            return <div className="hc-timeline-row" key={room.id}>
+              <div className="hc-room-label"><strong>{room.code}</strong><small>{room.name || "Birim"}</small></div>
+              <div className="hc-tracks" style={{backgroundSize:`${100/ticks.length}% 100%`}}>
+                {items.map(({event, left, width}) => <div key={event.id} className="hc-timeline-entry">
+                  {eventButton(event)}
+                  <div className="hc-stay-period"><strong>Konaklama aralığı: </strong>{event.start.toLocaleString(locale,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})} – {event.end.toLocaleString(locale,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div>
+                  <div className="hc-duration-track" aria-hidden="true"><span className={`hc-duration-bar hc-${event.booking.status}`} style={{left:`${left}%`,width:`${width}%`}} /></div>
+                </div>)}
+                {view === "day" && now >= range.start && now < range.end && <div className="hc-now" style={{left:`${(+now-+range.start)/(+range.end-+range.start)*100}%`}} />}
+              </div>
+            </div>;
+          })}
         </div>}
       </div>
       {!visible.length && <p className="hc-empty">Bu dönem ve filtreler için konaklama kaydı bulunamadı.</p>}
       <footer className="hc-legend">{Object.entries(bookingStatuses).map(([id,label])=><span key={id}><i className={`hc-${id}`}/>{label}</span>)}<small>Konaklama detayları için bir kayda dokunun.</small></footer>
     </div>
-    {selected && <StayDetails event={selected} onClose={()=>setSelected(null)} onOpenBooking={onOpenBooking}/>}
   </section>;
 }

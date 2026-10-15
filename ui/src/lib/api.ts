@@ -80,6 +80,7 @@ export type Facility = {
 export type APIRoom = {
   rental_mode?: "" | "room" | "beds";
   status_reason?:string;
+  last_cleaning?: {cleaner_id:string;cleaner:string;note:string;completed_at:string;recorded_by:string;recorded_by_name:string};
   inactive?: boolean;
   bed_layout?: string;
   floor_id: string | null;
@@ -219,9 +220,16 @@ export type Allocation = {
   end: string;
 };
 export type Booking = {
+  source?: string;
+  external_property_id?: string;
+  external_reservation_id?: string;
   cancellation_reason?:string;
   cancelled_at?:string;
   created_by_name?: string;
+  checked_in_by_name?: string;
+  checked_in_by_id?: string;
+  cancelled_by_name?: string;
+  cancelled_by_id?: string;
   checked_out_by_name?: string;
   checked_out_by_id?: string;
   booking_id: string;
@@ -231,6 +239,7 @@ export type Booking = {
   guest_name: string;
   guest_count: number;
   daily_price_minor: number;
+  currency?: string;
   guests: import("../types").Guest[];
   notes: string;
   check_in: string;

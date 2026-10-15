@@ -1,3 +1,4 @@
+import { statusVariables } from "../lib/status-palette";
 import { LOCALES } from "../lib/i18n/config";
 import { getMarketingTranslation } from "../lib/i18n/marketing-server";
 import { MarketingI18nProvider } from "../components/landing/MarketingI18n";
@@ -38,7 +39,7 @@ export default async function RootLayout({
 }) {
   const { locale, dictionary } = await getMarketingTranslation();
   return (
-    <html lang={locale} dir={LOCALES[locale].direction} className={inter.variable}>
+    <html style={statusVariables as React.CSSProperties} lang={locale} dir={LOCALES[locale].direction} className={inter.variable}>
       <body>
         <I18nProvider initialLocale={locale}>
           <MarketingI18nProvider initialDictionary={dictionary}>

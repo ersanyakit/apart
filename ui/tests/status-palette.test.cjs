@@ -1,0 +1,9 @@
+const assert=require('node:assert/strict');const {test,after}=require('node:test');
+const {mkdtempSync,rmSync}=require('node:fs');const {execFileSync}=require('node:child_process');const path=require('node:path');
+const out=mkdtempSync(path.join(require('node:os').tmpdir(),'otel-status-'));after(()=>rmSync(out,{recursive:true,force:true}));
+execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--target','ES2022','--module','commonjs','--skipLibCheck','--outDir',out,'src/lib/status-palette.ts'],{cwd:path.resolve(__dirname,'..')});
+const {STATUS_PALETTE:p,roomStatusKey,bookingStatusKey,boardStatusKey,statusVariables}=require(path.join(out,'status-palette.js'));
+test('operational and reservation meanings have distinct accents',()=>{assert.equal(new Set(Object.values(p).map(x=>x.accent)).size,Object.keys(p).length);assert.notEqual(p.dirty.background,p.reserved.background);assert.notEqual(p.cancelled.background,p.departure.background);});
+test('room and reservation representations share one meaning',()=>{assert.equal(roomStatusKey('Dolu'),bookingStatusKey('checked_in'));assert.equal(roomStatusKey('Rezervli'),bookingStatusKey('confirmed'));assert.equal(boardStatusKey({tone:'warning',operationalStatus:'Kirli'}),'dirty');assert.equal(boardStatusKey({tone:'warning',operationalStatus:'Arizali'}),'fault');assert.equal(boardStatusKey({tone:'warning',operationalStatus:'Tadilat'}),'maintenance');});
+test('occupancy does not erase separate housekeeping status',()=>{assert.equal(boardStatusKey({tone:'reserved',operationalStatus:'Kirli'}),'reserved');assert.equal(roomStatusKey('Kirli'),'dirty');});
+test('CSS and WebGL consume identical source values',()=>{for(const [key,value] of Object.entries(p))for(const part of ['accent','background','text'])assert.equal(statusVariables[`--status-${key}-${part}`],value[part]);});

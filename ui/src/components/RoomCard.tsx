@@ -1,3 +1,4 @@
+import { statusStyle, roomStatusKey } from "../lib/status-palette";
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Room } from '../types';
@@ -14,16 +15,6 @@ interface RoomCardProps {
 
 export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelected, onDragStart, onDrop }) => {
   const reducedMotion = useReducedMotion();
-  const statusColors = {
-    'Rezervli': 'bg-accent text-accent-contrast',
-    'Dolu': 'bg-red-500 text-white',
-    'Bos': 'bg-slate-300 text-white',
-    'Temiz': 'bg-green-500 text-white',
-    'Kirli': 'bg-orange-500 text-white',
-    'Arizali': 'bg-red-800 text-white',
-    'Tadilat': 'bg-yellow-600 text-white',
-  };
-
   const statusIcons = {
     'Rezervli': 'R',
     'Dolu': 'D',
@@ -73,8 +64,8 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelec
 
            <div className={`
              absolute -top-2 -right-1 w-10 h-10 rounded-xl border-2 border-white flex items-center justify-center font-medium text-base z-10
-             ${statusColors[room.status as keyof typeof statusColors]}
-           `}>
+
+           `} style={statusStyle(roomStatusKey(room.status))}>
              {statusIcons[room.status as keyof typeof statusIcons]}
            </div>
 

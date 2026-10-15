@@ -7,6 +7,7 @@ import (
 	"otel/internal/application"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/identity"
+	"otel/internal/domain/reporting"
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/persistence/models"
 	"otel/internal/testdb"
@@ -50,10 +51,21 @@ func TestBookingActors(t *testing.T) {
 	if b.CreatedByName != creator.DisplayName || b.CheckedOutByName != "" {
 		t.Fatalf("creation attribution: %+v", b)
 	}
+	if b.Currency != "TRY" {
+		t.Fatalf("legacy currency: %s", b.Currency)
+	}
+	currencyRecord := reporting.Record{ID: uuid.New(), HotelID: hotel.HotelID, BranchID: branch.BranchID, BookingID: &b.BookingID, ActorID: creator.UserID, Kind: "booking_details", Currency: "EUR", OccurredAt: time.Now()}
+	if err := db.Create(&currencyRecord).Error; err != nil {
+		t.Fatal(err)
+	}
+
 	b.Notes = "Edited by another person"
 	b, err = service.SaveBooking(ctx, actor(departing), b, false)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if b.Currency != "EUR" {
+		t.Fatalf("recorded currency: %s", b.Currency)
 	}
 	if b.CreatedByName != creator.DisplayName {
 		t.Fatal("editor replaced creator")
@@ -63,6 +75,9 @@ func TestBookingActors(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+	}
+	if b.CheckedInByName != departing.DisplayName || b.CheckedInByID == nil || *b.CheckedInByID != departing.UserID {
+		t.Fatalf("checkin attribution: %+v", b)
 	}
 	if b.CheckedOutByName != departing.DisplayName || b.CheckedOutByID == nil || *b.CheckedOutByID != departing.UserID {
 		t.Fatalf("checkout attribution: %+v", b)
@@ -79,14 +94,25 @@ func TestBookingActors(t *testing.T) {
 	if err != nil || len(rows) != 1 {
 		t.Fatalf("list: %v", err)
 	}
-	if rows[0].CreatedByName != creator.DisplayName || rows[0].CheckedOutByName != departing.DisplayName {
+	if rows[0].CreatedByName != creator.DisplayName || rows[0].CheckedOutByName != departing.DisplayName || rows[0].CheckedInByName != departing.DisplayName {
 		t.Fatalf("historical attribution lost: %+v", rows[0])
 	}
 	// Historical records with no actor data stay unknown.
 	db.Model(&models.Booking{}).Where("booking_id = ?", b.BookingID).Update("user_id", uuid.Nil)
 	db.Where("entity_id = ?", b.BookingID).Delete(&models.AuditLog{})
 	rows, err = repo.ListBookings(ctx, booking.Query{BranchID: branch.BranchID})
-	if err != nil || rows[0].CreatedByName != "" || rows[0].CheckedOutByName != "" {
+	if err != nil || rows[0].CreatedByName != "" || rows[0].CheckedOutByName != "" || rows[0].CheckedInByName != "" {
 		t.Fatalf("invented attribution: %+v %v", rows, err)
+	}
+	cancelled, err := service.SaveBooking(ctx, actor(creator), booking.Booking{BranchID: branch.BranchID, RoomID: room.RoomID, GuestName: "Cancelled", GuestCount: 1, CheckIn: time.Now().Add(24 * time.Hour), CheckOut: time.Now().Add(48 * time.Hour)}, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cancelled, err = service.Transition(ctx, actor(creator), booking.Transition{BranchID: branch.BranchID, BookingID: cancelled.BookingID, Action: "cancel", Reason: "Misafirin isteği üzerine iptal"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cancelled.CancelledByName != creator.DisplayName || cancelled.CancelledByID == nil || *cancelled.CancelledByID != creator.UserID || cancelled.CheckedInByName != "" {
+		t.Fatalf("cancellation attribution: %+v", cancelled)
 	}
 }

@@ -9,11 +9,12 @@ const { renderToStaticMarkup } = require('react-dom/server');
 const ui = path.resolve(__dirname, '..');
 const output = mkdtempSync(path.join(tmpdir(), 'otel-room-board-'));
 after(() => rmSync(output, { recursive: true, force: true }));
-execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--target', 'ES2022', '--module', 'commonjs', '--moduleResolution', 'node', '--skipLibCheck', '--strict', '--esModuleInterop', '--resolveJsonModule', '--jsx', 'react-jsx', '--outDir', output, 'src/components/RoomStatusCard.tsx'], { cwd: ui, stdio: 'pipe' });
+execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--target', 'ES2022', '--module', 'commonjs', '--moduleResolution', 'node', '--skipLibCheck', '--strict', '--esModuleInterop', '--resolveJsonModule', '--jsx', 'react-jsx', '--outDir', output, 'src/components/RoomStatusCard.tsx','node_modules/next/types/global.d.ts'], { cwd: ui, stdio: 'pipe' });
 process.env.NODE_PATH = path.join(ui, 'node_modules');
 require('node:module').Module._initPaths();
 const { occupancy } = require(path.join(output, 'lib/api.js'));
 const { roomBoardState, roomMenuOperation, bookingCanCheckIn } = require(path.join(output, 'lib/room-board.js'));
+require('node:fs').copyFileSync(path.join(ui,'src/components/RoomStatusCard.module.css'),path.join(output,'components/RoomStatusCard.module.css'));require.extensions['.css']=(module)=>{module.exports={}};
 const { RoomStatusCard } = require(path.join(output, 'components/RoomStatusCard.js'));
 const room = { room_id:'r1', branch_id:'b1', code:'101', kind:'room', status:'Temiz' };
 const now = '2026-10-13T15:30:00Z';
@@ -69,7 +70,7 @@ test('current stay takes priority over a future reservation', () => {
 test('card renders guest, companions, reservation dates, price, real arrival and accessible actions', () => {
   const b=booking({status:'checked_in',actual_check_in:now});
   const markup=renderToStaticMarkup(React.createElement(RoomStatusCard,{room,state:roomBoardState([room],[b],room,now),now,busy:false,onOpenBooking(){},onTransition(){},onContextMenu(){}}));
-  for(const text of ['Deniz Test','Ece Test','2 kişi','Planlanan giriş','Planlanan çıkış','Giriş yapıldı','2026','Detaylar','Çıkış yap','101 işlemleri','/ gece']) assert.ok(markup.includes(text),text);
+  for(const text of ['Deniz Test','Ece Test','2 kişi','Gerçek giriş','Planlanan çıkış','Giriş yapıldı','2026','Detaylar','Çıkış yap','101 işlemleri','/ gece']) assert.ok(markup.includes(text),text);
   assert.ok(!markup.includes('max-w-[65px]'));
 });
 

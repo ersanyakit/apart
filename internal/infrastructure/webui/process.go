@@ -112,7 +112,12 @@ func Start(ctx context.Context, address, apiURL, publicURL string, development b
 		mode, nodeEnv = "dev", "development"
 	}
 	slog.Info("Next.js başlatılıyor", "mode", mode, "hot_reload", development)
-	cmd := exec.CommandContext(ctx, "node", "node_modules/next/dist/bin/next", mode, "--hostname", "127.0.0.1", "--port", port)
+	args := []string{"node_modules/next/dist/bin/next", mode, "--hostname", "127.0.0.1", "--port", port}
+	// Polling with webpack is a local fallback when macOS denies FSEvents.
+	if development && os.Getenv("NEXT_DEV_WEBPACK") == "true" {
+		args = append(args, "--webpack")
+	}
+	cmd := exec.CommandContext(ctx, "node", args...)
 	cmd.Dir = "ui"
 	cmd.Env = append(os.Environ(), "NODE_ENV="+nodeEnv, "NEXT_TELEMETRY_DISABLED=1", "API_INTERNAL_URL="+apiURL, "APP_URL="+publicURL)
 	cmd.Stdout = os.Stdout

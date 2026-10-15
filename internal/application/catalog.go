@@ -16,6 +16,7 @@ import (
 )
 
 type Catalog struct {
+	Staff      identity.StaffRepository
 	Properties property.Repository
 	Media      media.Repository
 	Features   features.Repository
@@ -267,6 +268,7 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 		}
 		item.Status = old.Status
 		item.StatusReason = old.StatusReason
+		item.LastCleaning = old.LastCleaning
 		item.Name = old.Name
 		item.CheckIn = old.CheckIn
 		item.CheckOut = old.CheckOut
@@ -292,6 +294,9 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 	item.Assets, err = s.resolveAssets(ctx, b.HotelID, item.Assets)
 	if err != nil {
 		return item, err
+	}
+	if create {
+		item.LastCleaning = nil
 	}
 	if err = s.Properties.SaveRoom(ctx, item, create); err != nil {
 		return item, err
@@ -326,7 +331,32 @@ func (s *Catalog) SaveState(ctx context.Context, u identity.User, state property
 	if (state.Status == "Tadilat" || state.Status == "Arizali") && (len(strings.TrimSpace(state.StatusReason)) < 10 || len(state.StatusReason) > 2000) {
 		return room, constants.ErrReasonRequired
 	}
-	if err := s.Properties.SaveOperationalState(ctx, room.RoomID, state.Status, strings.TrimSpace(state.StatusReason)); err != nil {
+	var cleaning *property.CleaningRecord
+	if state.Status == "Temiz" && state.LastCleaning != nil {
+		note := strings.TrimSpace(state.LastCleaning.Note)
+		if state.LastCleaning.CleanerID == uuid.Nil || len([]rune(note)) > 2000 {
+			return room, constants.ErrCleaningInvalid
+		}
+		people, err := s.CleaningStaff(ctx, u, room.RoomID)
+		if err != nil {
+			return room, err
+		}
+		var cleaner string
+		for _, person := range people {
+			if person.UserID == state.LastCleaning.CleanerID {
+				cleaner = person.Name
+				break
+			}
+		}
+		if cleaner == "" {
+			return room, constants.ErrCleaningInvalid
+		}
+		cleaning = &property.CleaningRecord{CleanerID: state.LastCleaning.CleanerID, Cleaner: cleaner, Note: note, CompletedAt: time.Now().UTC(), RecordedBy: u.UserID, RecordedByName: u.DisplayName}
+		if cleaning.RecordedByName == "" {
+			cleaning.RecordedByName = u.UserName
+		}
+	}
+	if err := s.Properties.SaveOperationalState(ctx, room.RoomID, state.Status, strings.TrimSpace(state.StatusReason), cleaning); err != nil {
 		return room, err
 	}
 	return s.Properties.FindRoom(ctx, room.RoomID)
@@ -339,4 +369,44 @@ func (s *Catalog) SaveInventory(ctx context.Context, u identity.User, id uuid.UU
 		return err
 	}
 	return s.Properties.SaveInventory(ctx, id, items)
+}
+
+type CleaningStaffOption struct {
+	UserID uuid.UUID          `json:"user_id"`
+	Name   string             `json:"name"`
+	Role   constants.UserRole `json:"role"`
+}
+
+func (s *Catalog) CleaningStaff(ctx context.Context, u identity.User, roomID uuid.UUID) ([]CleaningStaffOption, error) {
+	if !u.CanOperateRooms() || s.Staff == nil {
+		return nil, constants.ErrForbidden
+	}
+	room, err := s.Room(ctx, u, roomID)
+	if err != nil {
+		return nil, err
+	}
+	branch, err := s.Properties.FindBranch(ctx, room.BranchID)
+	if err != nil {
+		return nil, err
+	}
+	staff, err := s.Staff.ListStaff(ctx, branch.HotelID)
+	if err != nil {
+		return nil, err
+	}
+	out := []CleaningStaffOption{}
+	for _, person := range staff {
+		if !identity.StaffRole(person.Role) && person.Role != constants.UserRoleAdmin {
+			continue
+		}
+		member := identity.User{HotelID: person.HotelID, Role: person.Role, BranchIDs: person.BranchIDs}
+		if !member.CanAccessBranch(branch.HotelID, branch.BranchID) {
+			continue
+		}
+		name := strings.TrimSpace(person.FirstName + " " + person.LastName)
+		if name == "" {
+			name = person.Username
+		}
+		out = append(out, CleaningStaffOption{UserID: person.UserID, Name: name, Role: person.Role})
+	}
+	return out, nil
 }

@@ -13,6 +13,7 @@ export const PAGE_HEADERS = {
   board: ["Oda Durum Çizelgesi", "Birimlerin doluluk ve temizlik durumlarını takip edin."],
   calendar: ["Konaklama takvimi", "Odalar, konaklayanlar ve rezervasyonlar bir arada."],
   bookings: ["Rezervasyonlar", "Rezervasyonları, misafir bilgilerini ve işlem geçmişini yönetin."],
+  "bookings-list": ["Ayrıntılı Rezervasyon Listesi", "Misafirleri, işlem yapan personeli, giriş ve çıkış bilgilerini birlikte inceleyin."],
   stays: ["Konaklayan Listesi", "Konaklamaları birim ve tarih çizelgesinde takip edin."],
   units: ["Kat ve Oda Tanımları", "Kat, oda, yatak ve fiziksel yerleşim tanımlarını düzenleyin."],
   staff: ["Personel Tanımları", "Personel hesaplarını, şube erişimlerini ve yetkilerini yönetin."],

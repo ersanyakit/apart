@@ -2,6 +2,7 @@ const assert=require('node:assert/strict');const {test,after}=require('node:test
 const ui=path.resolve(__dirname,'..'),out=mkdtempSync(path.join(os.tmpdir(),'otel-guests-'));after(()=>rmSync(out,{recursive:true,force:true}));
 execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--target','ES2022','--module','commonjs','--moduleResolution','node','--skipLibCheck','--strict','--esModuleInterop','--resolveJsonModule','--jsx','react-jsx','--outDir',out,'src/components/GuestView.tsx','src/components/BlacklistView.tsx','src/components/CheckoutFolio.tsx','node_modules/next/types/global.d.ts'],{cwd:ui,stdio:'pipe'});
 process.env.NODE_PATH=path.join(ui,'node_modules');require('node:module').Module._initPaths();const React=require('react'),{renderToStaticMarkup:render}=require('react-dom/server');const {NotificationProvider}=require(path.join(out,'components/Toast.js'));const wrap=c=>React.createElement(NotificationProvider,null,c);
+require('node:fs').copyFileSync(path.join(ui,'src/components/GuestView.module.css'),path.join(out,'components/GuestView.module.css'));require.extensions['.css']=(module)=>{module.exports={}};
 const {GuestView}=require(path.join(out,'components/GuestView.js')),{BlacklistView}=require(path.join(out,'components/BlacklistView.js')),{GuestAssessment}=require(path.join(out,'components/GuestAssessment.js')),{FolioDetails}=require(path.join(out,'components/CheckoutFolio.js'));
 const snapshot={hotel_id:'h',branch_id:'b',user:{role:'reception'}};
 test('reception can open shared blacklist and rate guests; housekeeping cannot open blacklist',()=>{const markup=render(wrap(React.createElement(BlacklistView,{snapshot,onGuests(){}})));assert.match(markup,/Ortak Kara Liste/);assert.match(markup,/Kara liste sayfaları/);assert.match(markup,/role="switch"/);assert.ok(!markup.includes('type="checkbox"'));const denied=render(React.createElement(BlacklistView,{snapshot:{...snapshot,user:{role:'housekeeping'}},onGuests(){}}));assert.ok(!denied.includes('Kara liste sayfaları'));const form=render(wrap(React.createElement(GuestAssessment,{snapshot,target:{name:'Test',guest_id:'g',branch_id:'b',booking_id:'k'},onClose(){}})));for(let n=1;n<=5;n++)assert.ok(form.includes(`aria-label="${n} puan"`));assert.ok(form.includes('Kara listeye ekle'))});
@@ -13,4 +14,14 @@ test('folio defaults to a compact summary, keeps important balances visible and 
  const hidden=markup.indexOf('hidden=""');assert.ok(hidden>0);const summary=markup.slice(0,hidden),details=markup.slice(hidden);
  for(const label of ['Toplam ücret','Alınan ödeme / kapora','Misafirin kalan borcu','Bekleyen iade','Eldeki güvence depozitosu','Detayları göster'])assert.ok(summary.includes(label),label);
  assert.ok(summary.includes('aria-expanded="false"'));assert.ok(summary.includes('lucide-receipt-text'));assert.ok(!summary.includes('Kahvaltı'));assert.ok(details.includes('Kahvaltı'));assert.ok(details.includes('İki kişi'));
+});
+
+test('shared guest comments show score, author, hotel, note and dates',()=>{
+ const {CustomerComments}=require(path.join(out,'components/GuestAssessment.js'));
+ const html=render(React.createElement(CustomerComments,{data:{ratings:[{id:'r',actor_name:'Ayşe Yılmaz',hotel_name:'Mavi Avlu',score:4,reason:'Odayı düzenli bıraktı.',created_at:'2026-10-15T09:00:00Z',updated_at:'2026-10-16T09:00:00Z'}],blacklist:[],average:4,rating_count:1}}));
+ for(const value of ['Ayşe Yılmaz','Mavi Avlu','4 / 5','Odayı düzenli bıraktı.','Güncellendi:'])assert.ok(html.includes(value),value);
+});
+test('empty guest comments disclose that no assessment was recorded',()=>{
+ const {CustomerComments}=require(path.join(out,'components/GuestAssessment.js'));
+ assert.ok(render(React.createElement(CustomerComments,{data:{ratings:[],blacklist:[],average:0,rating_count:0}})).includes('henüz yorum veya puan kaydedilmemiş'));
 });

@@ -1,3 +1,4 @@
+import { STATUS_PALETTE, boardStatusKey } from "../../lib/status-palette";
 import { localized, type APIRoom, type Snapshot } from '../../lib/api';
 import { roomHasJacuzzi } from './room-fixtures';
 import type { Bed } from '../../lib/bed-presets';
@@ -18,7 +19,7 @@ export type SceneFloor = {
   width: number; depth: number; storyHeight: number;
 };
 export const STATUS_COLORS: Record<RoomBoardState['tone'], string> = {
-  occupied: '#369276', reserved: '#6686d5', available: '#8eabc1', warning: '#dc9b46', neutral: '#9c9da5',
+  occupied: STATUS_PALETTE.occupied.accent, reserved: STATUS_PALETTE.reserved.accent, available: STATUS_PALETTE.available.accent, warning: STATUS_PALETTE.dirty.accent, neutral: STATUS_PALETTE.completed.accent,
 };
 export const STATUS_LABELS: Record<RoomBoardState['tone'], string> = {
   occupied: 'Konaklayan var', reserved: 'Rezervasyon var', available: 'Boş', warning: 'Temizlik / bakım', neutral: 'Pasif / diğer',
@@ -215,3 +216,5 @@ export function sceneBookingTarget(snapshot: Snapshot, unitId: string): APIRoom 
   }
   return target; // Existing stays do not prevent creating a reservation for future dates.
 }
+
+export const sceneStatusColor = (state: RoomBoardState) => STATUS_PALETTE[boardStatusKey(state)].accent;

@@ -45,3 +45,8 @@
 * [Sorun giderme](reference/troubleshooting.md)
 * [Terimler sözlüğü](reference/glossary.md)
 * [GitBook bağlantısı — doküman yöneticisi](reference/gitbook.md)
+
+## Geliştirici başvurusu
+
+* [Rezervasyon kanalı altyapısı](development/channel-foundation.md)
+* [Ortak durum renkleri](development/status-colors.md)

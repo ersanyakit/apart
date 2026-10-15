@@ -51,7 +51,10 @@
 .floorTabs { position:absolute; top:12px; left:12px; z-index:6; display:flex; flex-direction:column; gap:6px; max-width:calc(100% - 132px); max-height:calc(100% - 120px); overflow:auto; padding:6px; border-radius:22px; background:rgba(255,255,255,.9); box-shadow:0 6px 24px #24354d12; backdrop-filter:blur(12px); }
 .floorTabs button { min-height:44px; justify-content:flex-start; }
 
-.sceneSwitches { display:grid; gap:10px; padding:12px 8px 6px; max-width:170px; }
+.sceneSwitches { display:grid; gap:6px; padding-top:6px; border-top:1px solid var(--color-uni-border); }
+.sceneSwitches button { width:100%; min-height:48px; padding:10px 14px; border-radius:999px; background:var(--color-uni-hover); white-space:normal; text-align:start; line-height:1.4; }
+.sceneSwitches button[aria-checked=true] { background:var(--color-brand-blue-50); }
+.sceneSwitches button:focus-visible { outline:2px solid var(--color-brand-blue-500); outline-offset:-2px; box-shadow:none; }
 
 .panelActions { display:flex; flex-wrap:wrap; gap:8px; }
 

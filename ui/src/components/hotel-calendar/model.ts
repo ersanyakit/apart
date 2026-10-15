@@ -57,7 +57,8 @@ export function timelineLayout(events: StayEvent[], start: Date, end: Date) {
     return { event, lane, left: (from-+start)/(+end-+start)*100, width: (to-from)/(+end-+start)*100 };
   });
 }
-export const guestNames = (booking: Booking) => [...new Set([booking.guest_name, ...(booking.guests ?? []).map(guest => guest.name)].filter(Boolean))].join(", ");
+export const guestNameList = (booking: Booking) => [...new Set([booking.guest_name, ...(booking.guests ?? []).map(guest => guest.name)].map(name => name?.trim()).filter((name): name is string => !!name))];
+export const guestNames = (booking: Booking) => guestNameList(booking).join(", ");
 export function csvCell(value: unknown) {
   let text = String(value ?? "");
   if (/^[\s]*[=+@-]/.test(text) || /^[\t\r]/.test(text)) text = "'"+text;

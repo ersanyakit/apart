@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"otel/constants"
 	"otel/internal/domain/features"
@@ -326,7 +327,7 @@ func (r *Repository) DeleteRoom(ctx context.Context, id uuid.UUID) error {
 	}
 	return r.DeleteRooms(ctx, row.BranchID, []uuid.UUID{id})
 }
-func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status string, reason string) error {
+func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status string, reason string, cleaning ...*property.CleaningRecord) error {
 	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		var row models.Room
 		if err := tx.First(&row, "room_id = ?", id).Error; err != nil {
@@ -353,6 +354,14 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 				return constants.ErrStructureInUse
 			}
 		}
+		updates := map[string]any{"status": status, "status_reason": reason}
+		if status == "Temiz" && len(cleaning) > 0 && cleaning[0] != nil {
+			encoded, err := json.Marshal(cleaning[0])
+			if err != nil {
+				return err
+			}
+			updates["last_cleaning"] = string(encoded)
+		}
 		if status == "Temiz" || status == "Kirli" {
 			rooms, err := inventory(tx, row.BranchID)
 			if err != nil {
@@ -367,9 +376,9 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 			return tx.Model(&models.Room{}).
 				Where("branch_id = ? AND room_id IN ?", row.BranchID, ids).
 				Where("room_id = ? OR status NOT IN ?", id, []string{"Arizali", "Tadilat"}).
-				Updates(map[string]any{"status": status, "status_reason": reason}).Error
+				Updates(updates).Error
 		}
-		return tx.Model(&models.Room{}).Where("room_id = ?", id).Updates(map[string]any{"status": status, "status_reason": reason}).Error
+		return tx.Model(&models.Room{}).Where("room_id = ?", id).Updates(updates).Error
 	}))
 }
 func (r *Repository) SaveInventory(ctx context.Context, id uuid.UUID, items []property.InventoryItem) error {

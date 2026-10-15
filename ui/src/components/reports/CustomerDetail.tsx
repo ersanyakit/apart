@@ -7,7 +7,7 @@ import {NavigationIcon} from '../NavigationIcon';
 import {ErrorMessage, secondaryStyle, buttonStyle} from '../FormKit';
 import {InlineSelectField} from '../fields';
 import {Pagination} from '../Pagination';
-import {GuestAssessment, BlacklistNotice, assessmentDate, type Reputation, type AssessmentTarget} from '../GuestAssessment';
+import {CustomerComments, GuestAssessment, BlacklistNotice, assessmentDate, type Reputation, type AssessmentTarget} from '../GuestAssessment';
 import type {Customer} from './CustomerList';
 import styles from './ReportsView.module.css';
 import {customerCountry} from './customer-format';
@@ -67,10 +67,7 @@ export function CustomerIdentity({customer}:{customer:Customer}) {
  const fields=[['Ad soyad',customer.name],['Kimlik / pasaport',customer.national_id],['Telefon',customer.phone],['Uyruk',customerCountry(customer.nationality).label],['Adres',customer.address]];
  return <section aria-label="Müşteri bilgileri" className="rounded-3xl bg-[var(--color-uni-surface)] p-5"><h3 className="mb-4 font-semibold">Müşteri bilgileri</h3><dl className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{fields.map(([label,value])=><div key={label} className={label==='Adres'?'sm:col-span-2':''}><dt className="text-xs text-uni-muted">{label}</dt><dd className="mt-1 break-words text-sm font-medium">{label==='Uyruk'?<span className={styles.country}><img src={customerCountry(customer.nationality).flagSrc} alt="" aria-hidden="true" width={24} height={24} className={styles.countryFlag}/>{value}</span>:value||'Belirtilmemiş'}</dd></div>)}</dl></section>;
 }
-export function CustomerComments({data}:{data:Reputation}) {
- if(!data.ratings.length)return <p className={styles.empty}>Bu müşteri için henüz yorum veya puan kaydedilmemiş.</p>;
- return <div className="space-y-3">{data.ratings.map(r=><article key={r.id} className="rounded-3xl bg-[var(--color-uni-surface)] p-5"><div className="flex flex-wrap justify-between gap-2"><p className="font-medium text-sm">{r.actor_name||'Personel'} · {r.hotel_name}</p><span className="flex items-center gap-1 text-sm"><Star size={16} aria-hidden="true"/>{r.score} / 5</span></div><p className="mt-3 whitespace-pre-wrap break-words text-sm leading-6">{r.reason}</p><p className="mt-3 text-xs text-uni-muted">{assessmentDate(r.created_at)}{r.updated_at!==r.created_at?` · Güncellendi: ${assessmentDate(r.updated_at)}`:''}</p></article>)}</div>;
-}
+
 function CustomerHistory({snapshot:s,customer,revision,onAssess}:{snapshot:Snapshot;customer:Customer;revision:number;onAssess:(target:AssessmentTarget)=>void}) {
  const [page,setPage]=useState(1),[size,setSize]=useState(25),[status,setStatus]=useState(''),[branch,setBranch]=useState('');
  const [data,setData]=useState<StayPage|null>(null),[busy,setBusy]=useState(true),[error,setError]=useState('');
@@ -123,3 +120,5 @@ export function CustomerStayRow({stay:r,expanded,onToggle,onAssess,rowId,tone='l
   </td></tr>}
  </>;
 }
+
+export { CustomerComments } from "../GuestAssessment";

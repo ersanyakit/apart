@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Info, Search } from "lucide-react";
 import { command, messageOf } from "../../lib/api";
 import { FieldCard, FieldCaption } from "./FieldCard";
-import { GuestHistoryModal } from "../GuestHistoryModal";
+import { useGuestHistoryNavigation } from "../GuestHistoryNavigation";
 import { countryFlag } from "../../lib/countries";
 
 export type PastGuest = {
@@ -68,10 +68,7 @@ export function GuestNameField({
   const listId = useId();
   const [error, setError] = useState("");
   const reducedMotion = useReducedMotion();
-  const [historyGuest, setHistoryGuest] = useState<{
-    id: string;
-    name: string;
-  } | null>(null);
+  const openHistory = useGuestHistoryNavigation();
   // Seçili kayıt: listeden seçimde atanır, elle yazınca düşer.
   // Bilgi butonu detayı bununla açar.
   const [selectedId, setSelectedId] = useState<string | null>(guestId ?? null);
@@ -214,14 +211,13 @@ export function GuestNameField({
                   ? "Geçmiş ve notlar"
                   : "Detay için önce listeden bir kayıt seçin"
               }
-              aria-haspopup="dialog"
-              disabled={disabled || !selectedId || !!historyGuest}
+              disabled={disabled || !selectedId || !openHistory}
               onClick={(event) => {
                 event.stopPropagation();
-                if (!selectedId || historyGuest) return;
-                // Detay modalı tek katman açılır: arama listesi kapatılır.
+                if (!selectedId || !openHistory) return;
+                // Geçmiş sekmesine geçerken arama listesini kapat.
                 setOpen(false);
-                setHistoryGuest({ id: selectedId, name: value });
+                openHistory({ id: selectedId, name: value });
               }}
               className={`${searchCircleClass} disabled:opacity-40 disabled:pointer-events-none`}
             >
@@ -320,15 +316,7 @@ export function GuestNameField({
           </motion.div>
         )}
       </AnimatePresence>
-      {historyGuest && (
-        <GuestHistoryModal
-          hotelId={hotelId}
-          branchId={branchId}
-          guestId={historyGuest.id}
-          guestName={historyGuest.name}
-          onClose={() => setHistoryGuest(null)}
-        />
-      )}
+
     </FieldCard>
   );
 }

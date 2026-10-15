@@ -12,6 +12,7 @@
     "test:e2e": "playwright test",
     "test:i18n": "node --test tests/i18n.test.cjs tests/marketing-i18n.test.cjs",
     "test:navigation": "node --test tests/navigation.test.cjs",
+    "test:bookings": "node --test tests/booking-arrival.test.cjs",
     "test:stays": "node --test tests/stays-scheduler.test.cjs",
     "test:calendar": "node --test tests/hotel-calendar.test.cjs",
     "test:room-board": "node --test tests/room-board.test.cjs",
@@ -22,7 +23,8 @@
     "test:documents": "node --test tests/document-editor.test.cjs",
     "test:kanban": "node --test tests/kanban.test.cjs",
     "test:property-3d": "node --test tests/property-3d.test.cjs",
-    "test:bed-presets": "node --test tests/bed-presets.test.cjs"
+    "test:bed-presets": "node --test tests/bed-presets.test.cjs",
+    "test:status": "node --test tests/status-palette.test.cjs"
   },
   "dependencies": {
     "@lexical/history": "^0.39.0",

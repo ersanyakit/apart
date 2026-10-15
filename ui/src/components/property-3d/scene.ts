@@ -1,3 +1,5 @@
+import { sceneStatusColor } from "./model";
+import { STATUS_PALETTE } from "../../lib/status-palette";
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { STATUS_COLORS, type SceneFloor, type SceneRoom, type SceneBed } from './model';
@@ -326,7 +328,8 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
         box(unitGroup, [bed.width + 0.08, 0.48, 0.075], [0, y + 0.18, -bed.length / 2], wood, bed.unit.room_id);
         box(unitGroup, [bed.width + 0.08, 0.2, 0.065], [0, y + 0.04, bed.length / 2], wood, bed.unit.room_id);
         // Operational status stays separate from the textile palette.
-        box(unitGroup, [bed.width * 0.65, 0.035, 0.04], [0, y + 0.16, bed.length / 2 + 0.05], STATUS_COLORS[bed.dirty ? 'warning' : bed.state.tone], bed.unit.room_id);
+        box(unitGroup, [bed.width * 0.65, 0.035, 0.04], [0, y + 0.16, bed.length / 2 + 0.05], sceneStatusColor(bed.state), bed.unit.room_id);
+        if (bed.dirty) box(unitGroup, [0.07, 0.035, 0.04], [bed.width * 0.4, y + 0.16, bed.length / 2 + 0.05], STATUS_PALETTE.dirty.accent, bed.unit.room_id);
         const pillows = bed.width >= 1.4 ? 2 : 1;
         for (let i = 0; i < pillows; i++) {
           const pillow = box(unitGroup, [bed.width / pillows * 0.72, 0.12, 0.36], [(i - (pillows - 1) / 2) * bed.width / pillows, y + 0.27, -bed.length * 0.33], bed.dirty ? '#c8bd9f' : '#ffffff', bed.unit.room_id);
@@ -420,7 +423,7 @@ export function createPropertyRenderer(container: HTMLDivElement, callbacks: Cal
         const x = -w / 2 + (col - (row % 2) * 0.4) * w / 4;
         box(group, [0.009, 0.003, d / plankRows - 0.02], [x, 0.102, -d / 2 + (row + 0.5) * d / plankRows], '#a7a59a');
       }
-      box(group, [w - 0.12, 0.025, 0.10], [0, 0.115, d / 2 - 0.1], STATUS_COLORS[room.state.tone]);
+      box(group, [w - 0.12, 0.025, 0.10], [0, 0.115, d / 2 - 0.1], sceneStatusColor(room.state));
       if (walls) {
         box(group, [w, 1.05, 0.08], [0, 0.6, -d / 2], '#c1cddd', undefined, 0.4);
         box(group, [0.08, 1.05, d], [-w / 2, 0.6, 0], '#c1cddd', undefined, 0.32);

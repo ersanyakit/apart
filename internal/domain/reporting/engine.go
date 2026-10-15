@@ -687,9 +687,16 @@ func generate(f Filter, d Dataset) Result {
 			if r.Inactive || !roomMatches(r.RoomID) || (f.Key == "hostel.readiness" && r.Kind != "bed") {
 				continue
 			}
-			rows = append(rows, Row{"unit": r.Code, "kind": r.Kind, "status": r.Status})
+			row := Row{"unit": r.Code, "kind": r.Kind, "status": r.Status}
+			if r.LastCleaning != nil {
+				row["cleaner_id"] = r.LastCleaning.CleanerID.String()
+				row["cleaner"] = r.LastCleaning.Cleaner
+				row["cleaned_at"] = r.LastCleaning.CompletedAt
+				row["cleaning_note"] = r.LastCleaning.Note
+			}
+			rows = append(rows, row)
 		}
-		out.Tables = append(out.Tables, table("readiness", "Güncel birim durumu", columns("unit", "Birim", "", "kind", "Tür", "", "status", "Durum", ""), rows))
+		out.Tables = append(out.Tables, table("readiness", "Güncel birim durumu", columns("unit", "Birim", "", "kind", "Tür", "", "status", "Durum", "", "cleaner", "Son temizliği yapan", "", "cleaned_at", "Son temizlik", "datetime", "cleaning_note", "Temizlik notu", ""), rows))
 		addRecords("task")
 	case "operations.maintenance", "apart.maintenance":
 		addRecords("maintenance")

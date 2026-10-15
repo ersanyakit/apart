@@ -179,3 +179,8 @@ var ErrFolioChanged = define("folio_changed", "Folyo değişti. Güncel tutarlar
 var ErrBalanceAcknowledgement = define("balance_acknowledgement", "Açık borç, iade veya güvence bakiyesini inceleyip onaylayın.", Validation)
 
 var ErrBlacklistIdentity = define("blacklist_identity", "Kara listeye eklemek için misafirin kimlik/pasaport numarasını ve ülkesini rezervasyonda tamamlayın.", Validation)
+
+var ErrCleaningInvalid = define("cleaning_invalid", "Temizliği yapan personeli bu tesisin personel listesinden seçin. Not en fazla 2000 karakter olabilir.", Validation)
+
+var ErrExternalBookingIdentity = define("external_booking_identity", "Kanal bağlantısı olan rezervasyonun kaynak ve dış kimlik bilgileri değiştirilemez.", Conflict)
+var ErrExternalBookingExists = define("external_booking_exists", "Bu kanal rezervasyonu tesiste zaten kayıtlı. Mevcut rezervasyonu güncelleyin.", Conflict)

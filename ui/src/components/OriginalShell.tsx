@@ -1,3 +1,4 @@
+import { STATUS_PALETTE } from "../lib/status-palette";
 import { usePreference } from "./UserPreferences";
 import { confirmDialog } from "./ConfirmDialog";
 import React, { useState } from "react";
@@ -116,6 +117,7 @@ export function OriginalShell({
         { id: "property3d", label: "3 Boyutlu Görünüm", icon: <NavigationIcon name="property3d" /> },
         { id: "calendar", label: "Konaklama Takvimi", icon: <NavigationIcon name="calendar" /> },
         { id: "bookings", label: "Rezervasyon Listesi", icon: <NavigationIcon name="bookings" /> },
+        { id: "bookings-list", label: "Ayrıntılı Rezervasyon Listesi", icon: <NavigationIcon name="bookings-list" /> },
         ...(canUseNotes ? [{ id: "kanban", label: "Resepsiyon Notları", icon: <NavigationIcon name="kanban" /> }] : []),
         { id: "stays", label: "Konaklayan Listesi", icon: <NavigationIcon name="stays" /> },
         ...(["admin","management","reception"].includes(snapshot.user.role)?[{ id: "blacklist", label: "Ortak Kara Liste", icon: <NavigationIcon name="blacklist" /> }]:[]),
@@ -353,31 +355,31 @@ export function OriginalShell({
           <footer className="hidden lg:flex bg-white border-t border-slate-200 px-6 py-2 items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm overflow-x-auto no-scrollbar">
             <div className="flex items-center gap-6 min-w-max">
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-red-500 shadow-sm shadow-red-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.occupied.accent}}></div>{" "}
                 DOLU: {rooms.filter((r) => r.status === "Dolu").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-brand-blue-500 shadow-sm shadow-blue-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.reserved.accent}}></div>{" "}
                 REZERV: {rooms.filter((r) => r.status === "Rezervli").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-green-500 shadow-sm shadow-green-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.clean.accent}}></div>{" "}
                 TEMİZ: {rooms.filter((r) => r.status === "Temiz").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-orange-500 shadow-sm shadow-orange-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.dirty.accent}}></div>{" "}
                 KİRLİ: {rooms.filter((r) => r.status === "Kirli").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-slate-400 shadow-sm shadow-slate-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.available.accent}}></div>{" "}
                 BOŞ: {rooms.filter((r) => r.status === "Bos").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-slate-900 shadow-sm shadow-slate-500"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.fault.accent}}></div>{" "}
                 ARIZALI: {rooms.filter((r) => r.status === "Arizali").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full bg-amber-600 shadow-sm shadow-amber-200"></div>{" "}
+                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.maintenance.accent}}></div>{" "}
                 TADİLAT: {rooms.filter((r) => r.status === "Tadilat").length}
               </div>
             </div>

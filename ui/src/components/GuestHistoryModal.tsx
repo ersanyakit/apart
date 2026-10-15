@@ -1,3 +1,4 @@
+import { bookingStatusKey, statusStyle as semanticStatusStyle } from "../lib/status-palette";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, useReducedMotion } from "motion/react";
@@ -34,13 +35,6 @@ export interface GuestProfileDetail {
   address: string;
   nationality: string;
 }
-
-const statusStyle: Record<string, string> = {
-  checked_in: "bg-green-50 text-green-700 ring-green-200",
-  completed: "bg-slate-100 text-slate-600 ring-slate-200",
-  confirmed: "bg-brand-blue-50 text-brand-blue-700 ring-brand-blue-200",
-  cancelled: "bg-red-50 text-red-600 ring-red-200",
-};
 
 const dayFmt = (v: string) => {
   const d = new Date(v);
@@ -340,10 +334,8 @@ export function GuestHistoryModal({
                           </span>
                         </p>
                         <span
-                          className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold ring-1 ${
-                            statusStyle[s.status] ??
-                            "bg-slate-100 text-slate-600 ring-slate-200"
-                          }`}
+                          className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold"
+                          style={semanticStatusStyle(bookingStatusKey(s.status))}
                         >
                           {bookingStatuses[s.status] ?? s.status}
                         </span>

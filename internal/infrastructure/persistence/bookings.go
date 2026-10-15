@@ -16,7 +16,7 @@ import (
 var _ booking.Repository = (*Repository)(nil)
 
 func fromBooking(v models.Booking) booking.Booking {
-	b := booking.Booking{CancellationReason: v.CancellationReason, CancelledAt: v.CancelledAt, BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, DailyPriceMinor: v.DailyPriceMinor, DepositMinor: v.DepositMinor, DepositChannel: v.DepositChannel, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
+	b := booking.Booking{Source: v.Source, ExternalPropertyID: v.ExternalPropertyID, ExternalReservationID: v.ExternalReservationID, CancellationReason: v.CancellationReason, CancelledAt: v.CancelledAt, BookingID: v.BookingID, BranchID: v.BranchID, RoomID: v.RoomID, UserID: v.UserID, GuestName: v.GuestName, GuestCount: v.GuestCount, DailyPriceMinor: v.DailyPriceMinor, DepositMinor: v.DepositMinor, DepositChannel: v.DepositChannel, Notes: v.Notes, CheckIn: v.CheckIn, CheckOut: v.CheckOut, ActualCheckIn: v.ActualCheckIn, ActualCheckOut: v.ActualCheckOut, Status: v.Status, CreatedAt: v.CreatedAt, UpdatedAt: v.UpdatedAt, Guests: []property.Guest{}, Allocations: []booking.Allocation{}}
 	for _, g := range v.GuestDetails {
 		b.Guests = append(b.Guests, property.Guest(g))
 	}
@@ -26,7 +26,7 @@ func fromBooking(v models.Booking) booking.Booking {
 	return b
 }
 func toBooking(b booking.Booking) models.Booking {
-	v := models.Booking{CancellationReason: b.CancellationReason, CancelledAt: b.CancelledAt, BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, DailyPriceMinor: b.DailyPriceMinor, DepositMinor: b.DepositMinor, DepositChannel: b.DepositChannel, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
+	v := models.Booking{Source: b.Source, ExternalPropertyID: b.ExternalPropertyID, ExternalReservationID: b.ExternalReservationID, CancellationReason: b.CancellationReason, CancelledAt: b.CancelledAt, BookingID: b.BookingID, BranchID: b.BranchID, RoomID: b.RoomID, UserID: b.UserID, GuestName: b.GuestName, GuestCount: b.GuestCount, DailyPriceMinor: b.DailyPriceMinor, DepositMinor: b.DepositMinor, DepositChannel: b.DepositChannel, Notes: b.Notes, CheckIn: b.CheckIn, CheckOut: b.CheckOut, ActualCheckIn: b.ActualCheckIn, ActualCheckOut: b.ActualCheckOut, Status: b.Status, CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt}
 	for _, g := range b.Guests {
 		v.GuestDetails = append(v.GuestDetails, models.RoomGuest(g))
 	}
@@ -42,6 +42,15 @@ func (r *Repository) ListBookings(ctx context.Context, q booking.Query) ([]booki
 	}
 	if q.To != nil {
 		db = db.Where("check_in < ?", *q.To)
+	}
+	if q.Source != "" {
+		db = db.Where("source = ?", q.Source)
+	}
+	if q.ExternalPropertyID != "" {
+		db = db.Where("external_property_id = ?", q.ExternalPropertyID)
+	}
+	if q.ExternalReservationID != "" {
+		db = db.Where("external_reservation_id = ?", q.ExternalReservationID)
 	}
 	if q.Status != "" {
 		db = db.Where("status = ?", q.Status)
@@ -122,14 +131,31 @@ func allocation(b booking.Booking, roomID uuid.UUID, start, end time.Time) model
 	return models.BookingAllocation{AllocationID: uuid.New(), BookingID: b.BookingID, BranchID: b.BranchID, RoomID: roomID, Start: start, End: end}
 }
 func (r *Repository) SaveBooking(ctx context.Context, b booking.Booking, create bool) (booking.Booking, error) {
+	if create {
+		if err := b.ResolveOrigin(nil); err != nil {
+			return b, err
+		}
+	}
 	var out booking.Booking
 	err := r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		if err := lockBranch(tx, b.BranchID); err != nil {
 			return err
 		}
+		if create && b.ExternalReservationID != "" {
+			var count int64
+			if err := tx.Model(&models.Booking{}).Where("branch_id = ? AND source = ? AND external_property_id = ? AND external_reservation_id = ?", b.BranchID, b.Source, b.ExternalPropertyID, b.ExternalReservationID).Count(&count).Error; err != nil {
+				return err
+			}
+			if count > 0 {
+				return constants.ErrExternalBookingExists
+			}
+		}
 		if !create {
 			old, err := loadBooking(tx, b.BranchID, b.BookingID)
 			if err != nil {
+				return err
+			}
+			if err := b.ResolveOrigin(&old); err != nil {
 				return err
 			}
 			if old.Status == booking.CheckedIn {
@@ -438,16 +464,29 @@ func enrichBookingActors(tx *gorm.DB, items []booking.Booking) error {
 		ids[i] = items[i].BookingID
 	}
 	type actorRow struct {
+		Currency         string
 		BookingID        uuid.UUID
 		CreatedByName    string
+		CheckedInByName  string
+		CheckedInByID    *uuid.UUID
+		CancelledByName  string
+		CancelledByID    *uuid.UUID
 		CheckedOutByName string
 		CheckedOutByID   *uuid.UUID
 	}
 	var rows []actorRow
 	err := tx.Raw(`SELECT b.booking_id,
+        COALESCE((SELECT NULLIF(r.currency, '') FROM report_records r
+          WHERE r.booking_id = b.booking_id AND r.hotel_id = p.hotel_id AND r.branch_id = b.branch_id
+            AND r.kind = 'booking_details' AND r.voided_at IS NULL
+          ORDER BY r.occurred_at DESC, r.created_at DESC, r.id DESC LIMIT 1), 'TRY') AS currency,
 		COALESCE(NULLIF(TRIM(creator.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', creator.first_name, creator.last_name)), ''), creator.user_name, '') AS created_by_name,
 		COALESCE(NULLIF(TRIM(departure.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', departure.first_name, departure.last_name)), ''), departure.user_name, '') AS checked_out_by_name,
-		checkout.actor_id AS checked_out_by_id
+		checkout.actor_id AS checked_out_by_id,
+        COALESCE(NULLIF(TRIM(arrival.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', arrival.first_name, arrival.last_name)), ''), arrival.user_name, '') AS checked_in_by_name,
+        checkin.actor_id AS checked_in_by_id,
+        COALESCE(NULLIF(TRIM(canceller.display_name), ''), NULLIF(TRIM(CONCAT_WS(' ', canceller.first_name, canceller.last_name)), ''), canceller.user_name, '') AS cancelled_by_name,
+        cancellation.actor_id AS cancelled_by_id
 		FROM bookings b JOIN branches p ON p.branch_id = b.branch_id
 		LEFT JOIN users creator ON creator.user_id = b.user_id
 		LEFT JOIN (
@@ -456,7 +495,19 @@ func enrichBookingActors(tx *gorm.DB, items []booking.Booking) error {
 			ORDER BY entity_id, hotel_id, created_at DESC, id DESC
 		) checkout ON checkout.entity_id = b.booking_id AND checkout.hotel_id = p.hotel_id AND b.status = 'completed'
 		LEFT JOIN users departure ON departure.user_id = checkout.actor_id
-		WHERE b.booking_id IN ?`, ids, ids).Scan(&rows).Error
+		LEFT JOIN (
+            SELECT DISTINCT ON (entity_id, hotel_id) entity_id, hotel_id, actor_id
+            FROM audit_logs WHERE entity = 'bookings' AND action = 'check_in' AND entity_id IN ?
+            ORDER BY entity_id, hotel_id, created_at DESC, id DESC
+        ) checkin ON checkin.entity_id = b.booking_id AND checkin.hotel_id = p.hotel_id AND b.status IN ('checked_in', 'completed')
+        LEFT JOIN users arrival ON arrival.user_id = checkin.actor_id
+        LEFT JOIN (
+            SELECT DISTINCT ON (entity_id, hotel_id) entity_id, hotel_id, actor_id
+            FROM audit_logs WHERE entity = 'bookings' AND action = 'cancel' AND entity_id IN ?
+            ORDER BY entity_id, hotel_id, created_at DESC, id DESC
+        ) cancellation ON cancellation.entity_id = b.booking_id AND cancellation.hotel_id = p.hotel_id AND b.status = 'cancelled'
+        LEFT JOIN users canceller ON canceller.user_id = cancellation.actor_id
+        WHERE b.booking_id IN ?`, ids, ids, ids, ids).Scan(&rows).Error
 	if err != nil {
 		return err
 	}
@@ -466,6 +517,9 @@ func enrichBookingActors(tx *gorm.DB, items []booking.Booking) error {
 	}
 	for i := range items {
 		a := actors[items[i].BookingID]
+		items[i].Currency = a.Currency
+		items[i].CheckedInByName, items[i].CheckedInByID = a.CheckedInByName, a.CheckedInByID
+		items[i].CancelledByName, items[i].CancelledByID = a.CancelledByName, a.CancelledByID
 		items[i].CreatedByName, items[i].CheckedOutByName, items[i].CheckedOutByID = a.CreatedByName, a.CheckedOutByName, a.CheckedOutByID
 	}
 	return nil

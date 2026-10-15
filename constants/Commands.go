@@ -41,6 +41,7 @@ const (
 	CMD_ROOM_UPDATE             = "room.update"
 	CMD_ROOM_DELETE             = "room.delete"
 	CMD_ROOM_STATE              = "room.state"
+	CMD_ROOM_CLEANERS           = "room.cleaners"
 	CMD_ROOM_EXCHANGE           = "room.exchange"
 	CMD_MEDIA_LIST              = "media.list"
 	CMD_MEDIA_UPLOAD            = "media.upload"
@@ -57,7 +58,7 @@ var CommandMethods = map[string]string{
 	CMD_HOTEL_LIST: "GET", CMD_HOTEL_CREATE: "POST", CMD_HOTEL_UPDATE: "PUT",
 	CMD_BRANCH_LIST: "GET", CMD_BRANCH_CREATE: "POST", CMD_BRANCH_UPDATE: "PUT", CMD_BRANCH_DELETE: "DELETE",
 	CMD_ROOM_LIST: "GET", CMD_ROOM_CREATE: "POST", CMD_ROOM_UPDATE: "PUT", CMD_ROOM_DELETE: "DELETE",
-	CMD_ROOM_STATE: "PUT", CMD_ROOM_EXCHANGE: "PUT",
+	CMD_ROOM_CLEANERS: "GET", CMD_ROOM_STATE: "PUT", CMD_ROOM_EXCHANGE: "PUT",
 	CMD_MEDIA_LIST: "GET", CMD_MEDIA_UPLOAD: "POST", CMD_MEDIA_UPDATE: "PUT", CMD_MEDIA_DELETE: "DELETE",
 	CMD_INVENTORY_UPDATE: "PUT",
 }

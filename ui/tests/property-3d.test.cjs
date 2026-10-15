@@ -68,7 +68,7 @@ test('page dedicates content to the scene with no page header and keeps controls
   const s = snapshot([room('101')]);
   const html = render(React.createElement(PropertyView, { snapshot: s }));
   for (const text of ['Oda / birim seçimi', 'Şematik görünüm', 'Üstten görünüm', 'Yakınlaştır', 'Katları ayır']) assert.ok(html.includes(text), text);
-  assert.equal((html.match(/<h2/g) || []).length, 0); assert.ok(html.includes('role="switch"')); assert.ok(!html.includes('type="checkbox"'));
+  assert.equal((html.match(/<h2/g) || []).length, 0); assert.ok(html.includes('aria-label="3B görünüm seçenekleri"'));assert.ok(html.includes('aria-pressed="true"'));assert.equal((html.match(/role="switch"/g) || []).length,3); assert.ok(!html.includes('type="checkbox"'));
   const collapsed = render(React.createElement(NotificationProvider, null, React.createElement(UserPreferencesProvider, { initial: { 'header.property3d': true } }, React.createElement(PropertyView, { snapshot: s }))));
   assert.ok(!collapsed.includes('page-header-details')); assert.ok(collapsed.includes('inert=""')); assert.ok(collapsed.includes('3 boyutlu kamera kontrolleri'));
   const empty = render(React.createElement(PropertyView, { snapshot: snapshot([]) }));
