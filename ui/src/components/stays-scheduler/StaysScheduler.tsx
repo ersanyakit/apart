@@ -1,4 +1,6 @@
 "use client";
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
+
 
 import { STATUS_PALETTE, boardStatusKey, statusStyle } from "../../lib/status-palette";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -64,7 +66,7 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
   const start = dayTime(startDay), end = start + daysCount * DAY;
   const days = Array.from({ length: daysCount }, (_, i) => shiftDay(startDay, i));
   const needle = query.trim().toLocaleLowerCase(locale);
-  const matching = bookings.filter(b => b.status !== "cancelled" && (reservations || status === "all" || b.status === status));
+  const matching = bookings.filter(b => b.status !== BookingState.Cancelled && (reservations || status === "all" || b.status === status));
   const allSegments = useMemo(() => segmentsFor(bookings, now), [bookings, now]);
   const matchingIds = new Set(matching.filter(b => !needle ||
     `${b.guest_name} ${(b.guests || []).map(g => g.name).join(" ")}`.toLocaleLowerCase(locale).includes(needle)).map(b => b.booking_id));
@@ -118,23 +120,23 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
     </div>
     <div className={styles.toolbar}>
       {!reservations && <div className={styles.navigation} role="group" aria-label="Konaklama durumu">
-        {[['all', 'Tüm kayıtlar'], ['checked_in', 'Konaklayanlar'], ['confirmed', 'Rezervasyonlar'], ['completed', 'Çıkış yapılanlar']].map(([value, label]) =>
+        {[['all', 'Tüm kayıtlar'], [BookingState.CheckedIn, 'Konaklayanlar'], [BookingState.Confirmed, 'Rezervasyonlar'], [BookingState.Completed, 'Çıkış yapılanlar']].map(([value, label]) =>
           <button type="button" key={value} className={round} aria-pressed={status === value} onClick={() => setStatus(value)}>{label}</button>)}
       </div>}
-      {reservations && <div className={styles.legend}>{[["checked_in", "Konaklayan"], ["confirmed", "Rezervasyon"], ["completed", "Çıkış yapıldı"]].map(([value, label]) => <span key={value} data-status={value}><i />{label}<b>{unique.filter(b => b.status === value).length}</b></span>)}<span data-status="turnover"><i />Bugün giriş / çıkış<b>{unique.filter(b => ["confirmed", "checked_in"].includes(b.status) && [b.actual_check_in || b.check_in, b.check_out].some(value => Number.isFinite(Date.parse(value)) && dayOf(value) === today)).length}</b></span></div>}
+      {reservations && <div className={styles.legend}>{[[BookingState.CheckedIn, "Konaklayan"], [BookingState.Confirmed, "Rezervasyon"], [BookingState.Completed, "Çıkış yapıldı"]].map(([value, label]) => <span key={value} data-status={value}><i />{label}<b>{unique.filter(b => b.status === value).length}</b></span>)}<span data-status="turnover"><i />Bugün giriş / çıkış<b>{unique.filter(b => [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===b.status) && [b.actual_check_in || b.check_in, b.check_out].some(value => Number.isFinite(Date.parse(value)) && dayOf(value) === today)).length}</b></span></div>}
       <div className={styles.navigation}><Switch label="Boş birimleri göster" checked={showEmpty} onChange={setShowEmpty} /><p className={styles.summary} role="status">{unique.length} konaklama · {unique.reduce((n, b) => n + b.guest_count, 0)} kişi · {visibleRoomIds.size} birim</p></div>
     </div>
     {selected && <div className={styles.selection} aria-label={`${selected.guest_name} konaklama işlemleri`}>
       <div className={styles.selectionInfo}>
         <strong>{selected.guest_name}</strong>
         <span>{selected.guest_count} kişi · {bookingStatuses[selected.status]} · {date(selected.actual_check_in || selected.check_in)} – {date(selected.actual_check_out || selected.check_out)}</span>
-        <small>Rezervasyonu alan: {selected.created_by_name || "Bilgi kaydedilmemiş"}{selected.status === "completed" && ` · Çıkışı gerçekleştiren: ${selected.checked_out_by_name || "Bilgi kaydedilmemiş"}`}</small>
+        <small>Rezervasyonu alan: {selected.created_by_name || "Bilgi kaydedilmemiş"}{selected.status === BookingState.Completed && ` · Çıkışı gerçekleştiren: ${selected.checked_out_by_name || "Bilgi kaydedilmemiş"}`}</small>
       </div>
       <div className={styles.navigation}>
         <button type="button" className={round} onClick={() => onDetails(selected)}><Info size={16} /> Detay</button>
-        {onEdit && selected.status !== "completed" && <button type="button" className={round} disabled={busy} onClick={() => onEdit(selected)}><Pencil size={16} /> Düzenle</button>}
-        {onMove && selected.status !== "completed" && <button type="button" className={round} disabled={busy} onClick={() => onMove(selected)}><ArrowRightLeft size={16} /> Taşı / Değiştir</button>}
-        {onCheckOut && selected.status === "checked_in" && <button type="button" className={`uni-button uni-button-primary ${styles.roundButton}`} style={statusStyle("departure")} disabled={busy} onClick={() => onCheckOut(selected)}><LogOut size={16} /> Çıkış</button>}
+        {onEdit && selected.status !== BookingState.Completed && <button type="button" className={round} disabled={busy} onClick={() => onEdit(selected)}><Pencil size={16} /> Düzenle</button>}
+        {onMove && selected.status !== BookingState.Completed && <button type="button" className={round} disabled={busy} onClick={() => onMove(selected)}><ArrowRightLeft size={16} /> Taşı / Değiştir</button>}
+        {onCheckOut && selected.status === BookingState.CheckedIn && <button type="button" className={`uni-button uni-button-primary ${styles.roundButton}`} style={statusStyle("departure")} disabled={busy} onClick={() => onCheckOut(selected)}><LogOut size={16} /> Çıkış</button>}
         <button type="button" className={`nav-icon-button ${styles.iconButton}`} aria-label="Konaklama seçimini kapat" onClick={() => setSelectedId(null)}><X size={18} /></button>
       </div>
     </div>}
@@ -178,8 +180,8 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
                 {nowPosition >= 0 && nowPosition < 100 && <div className={styles.now} style={{ left: `${nowPosition}%` }} aria-hidden="true" />}
                 {items.map(({ segment, lane, left, width, cardLeft, cardWidth, continuesBefore, continuesAfter }) => {
                   const b = segment.booking;
-                  const turnover = ["confirmed", "checked_in"].includes(b.status) && [b.actual_check_in || b.check_in, b.check_out].some(value => Number.isFinite(Date.parse(value)) && dayOf(value) === today);
-                  const overdue = b.status === "checked_in" && Date.parse(b.check_out) < Date.parse(now);
+                  const turnover = [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===b.status) && [b.actual_check_in || b.check_in, b.check_out].some(value => Number.isFinite(Date.parse(value)) && dayOf(value) === today);
+                  const overdue = b.status === BookingState.CheckedIn && Date.parse(b.check_out) < Date.parse(now);
                   const description = `${room.code} · ${b.guest_name} · ${b.guest_count} kişi · ${bookingStatuses[b.status]} · ${date(segment.start, { dateStyle: "medium", timeStyle: "short" })} – ${date(segment.end, { dateStyle: "medium", timeStyle: "short" })}${overdue ? " · Çıkış tarihi geçti" : ""}`;
                   return <button type="button" key={segment.id} className={`uni-control ${styles.event}`} data-status={b.status} data-turnover={turnover} data-overdue={overdue} data-before={continuesBefore} data-after={continuesAfter}
                     aria-label={description} aria-pressed={selectedId === b.booking_id} title={description}
@@ -187,7 +189,7 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
                     {reservations ? <div className={styles.guestNames}>{(b.guests?.length ? b.guests.map(g => g.name) : [b.guest_name]).slice(0, 4).map((name, i) => <strong key={i}>{name}</strong>)}{(b.guests?.length || 0) > 4 && <small>+{b.guests!.length - 4} misafir</small>}</div> : <strong>{b.guest_name}</strong>}
                     <span><Users size={12} aria-hidden="true" />{b.guest_count} kişi · {overdue ? "Çıkış tarihi geçti" : bookingStatuses[b.status]}</span>
                     <small>{date(segment.start, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} – {date(segment.end, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</small>
-                    {reservations && <small>{b.status === "checked_in" ? `Giriş: ${b.checked_in_by_name || "Personel kaydedilmemiş"}` : b.status === "completed" ? `Çıkış: ${b.checked_out_by_name || "Personel kaydedilmemiş"}` : `Alan: ${b.created_by_name || "Personel kaydedilmemiş"}`}</small>}
+                    {reservations && <small>{b.status === BookingState.CheckedIn ? `Giriş: ${b.checked_in_by_name || "Personel kaydedilmemiş"}` : b.status === BookingState.Completed ? `Çıkış: ${b.checked_out_by_name || "Personel kaydedilmemiş"}` : `Alan: ${b.created_by_name || "Personel kaydedilmemiş"}`}</small>}
                     <i className={styles.duration} aria-hidden="true" style={{ left: `${(left - cardLeft) / cardWidth * 100}%`, width: `${width / cardWidth * 100}%` }} />
                   </button>;
                 })}

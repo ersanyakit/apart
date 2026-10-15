@@ -1,3 +1,5 @@
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
+import { RoomStatus as RoomState } from '../../lib/statuses.generated';
 import { STATUS_PALETTE, boardStatusKey } from "../../lib/status-palette";
 import { localized, type APIRoom, type Snapshot } from '../../lib/api';
 import { roomHasJacuzzi } from './room-fixtures';
@@ -116,13 +118,13 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
     beds.forEach((bed, index) => { bed.blanketColor = textiles[(roomSeed + index) % textiles.length]; });
     const allocated = new Map<string, number>();
     for (const bed of beds) {
-      bed.dirty = [bed.unit, ...ancestors(bed.unit)].some(unit => unit.status === 'Kirli');
+      bed.dirty = [bed.unit, ...ancestors(bed.unit)].some(unit => unit.status === RoomState.Dirty);
       if (bed.dirty) {
         const inUse = bed.state.tone === 'occupied' || bed.state.tone === 'reserved';
         bed.state = { ...bed.state, tone: inUse ? bed.state.tone : 'warning', label: inUse ? `${bed.state.label} · Temizlik gerekli` : 'Kirli · Temizlik gerekli' };
       }
       bed.sleepers = [];
-      for (const booking of bed.state.current.filter(b => b.status === 'checked_in')) {
+      for (const booking of bed.state.current.filter(b => b.status === BookingState.CheckedIn)) {
         const offset = allocated.get(booking.booking_id) || 0;
         const count = Math.min(bed.width >= 1.4 ? 2 : 1, Math.max(0, booking.guest_count - offset));
         for (let i = 0; i < count; i++) {
@@ -195,8 +197,8 @@ export function visibleScene(floors: SceneFloor[], floorId: string, query: strin
     return matchesText && (tone === 'all' || entries.some(e => e.state.tone === tone));
   }).map(room => onlyAvailableBeds ? { ...room, beds: room.beds.filter(bed =>
     (bed.state.tone === 'available' || hasEmptyPhysicalBed(room, bed)) && !bed.dirty && !bed.unit.inactive && !room.unit.inactive &&
-    !['Kirli', 'Arizali', 'Tadilat'].includes(room.unit.status) &&
-    !['Kirli', 'Arizali', 'Tadilat'].includes(bed.unit.status)
+    ![RoomState.Dirty, RoomState.OutOfOrder, RoomState.Maintenance].some(status=>status===room.unit.status) &&
+    ![RoomState.Dirty, RoomState.OutOfOrder, RoomState.Maintenance].some(status=>status===bed.unit.status)
   ) } : room).filter(room => !onlyAvailableBeds || room.beds.length > 0) }));
 }
 
@@ -210,7 +212,7 @@ export function sceneBookingTarget(snapshot: Snapshot, unitId: string): APIRoom 
   while (unit) {
     if (visited.has(unit.room_id)) return;
     visited.add(unit.room_id);
-    if (unit.inactive || ['Arizali', 'Tadilat'].includes(unit.status)) return;
+    if (unit.inactive || [RoomState.OutOfOrder, RoomState.Maintenance].some(status=>status===unit?.status)) return;
     if (!target && unit.rentable) target = unit;
     unit = unit.parent_id ? byId.get(unit.parent_id) : undefined;
   }

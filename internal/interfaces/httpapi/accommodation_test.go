@@ -160,7 +160,7 @@ func testActionAuthenticationAndAccommodation(t *testing.T, origin string) {
 		if status, _ := call(constants.CMD_REPORT_GENERATE, "GET", filter, ""); status != 400 {
 			t.Fatalf("unbounded report: %d", status)
 		}
-		if status, body := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": map[string]any{"header.report.finance.daily_revenue": true, "header.report.occupancy.daily": false}}, origin); status != 200 {
+		if status, body := call(constants.CMD_USER_PREFERENCES_UPDATE, "PATCH", map[string]any{"preferences": map[string]any{"header.report.finance.daily_revenue": true, "header.report.occupancy.daily": false, "header.report-group.finance": true, "header.logs": false, "audit_page_size": 50}}, origin); status != 200 {
 			t.Fatalf("report preferences %d %s", status, body)
 		}
 		if status, _ := call(constants.CMD_REPORT_RECORD, "POST", map[string]any{}, "https://foreign.invalid"); status != 403 {

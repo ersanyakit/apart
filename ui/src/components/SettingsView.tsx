@@ -1,3 +1,4 @@
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -69,7 +70,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [newRoom, setNewRoom] = useState<Partial<Room>>({
     number: '',
     type: '1+1',
-    status: 'Temiz',
+    status: RoomState.Clean,
     features: [],
     inventoryIds: [],
     imageUrls: [],
@@ -125,7 +126,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
     setIsAdding(false);
     setEditingRoomId(null);
-    setNewRoom({ number: '', type: '1+1', status: 'Temiz', features: [], inventoryIds: [], imageUrls: [], description: '' });
+    setNewRoom({ number: '', type: '1+1', status: RoomState.Clean, features: [], inventoryIds: [], imageUrls: [], description: '' });
   };
 
   const handleAddInventory = (e: React.FormEvent) => {
@@ -218,7 +219,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       onClick={() => {
                         setIsAdding(false);
                         setEditingRoomId(null);
-                        setNewRoom({ number: '', type: '1+1', status: 'Temiz', features: [], inventoryIds: [], imageUrls: [] });
+                        setNewRoom({ number: '', type: '1+1', status: RoomState.Clean, features: [], inventoryIds: [], imageUrls: [] });
                       }}
                       className="uni-control p-2 text-slate-400 hover:bg-slate-50 rounded-xl"
                     >
@@ -249,14 +250,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         <div className="space-y-2">
                           <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">DURUM</label>
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            {(['Bos', 'Temiz', 'Kirli', 'Arizali'] as RoomStatus[]).map(s => (
+                            {([RoomState.Vacant, RoomState.Clean, RoomState.Dirty, RoomState.OutOfOrder] as RoomStatus[]).map(s => (
                               <button
                                 key={s}
                                 type="button"
                                 onClick={() => setNewRoom(prev => ({ ...prev, status: s }))}
                                 className={`uni-control py-2 rounded-lg text-[9px]    border ${
                                   newRoom.status === s
-                                    ? (s === 'Bos' || s === 'Temiz' ? 'bg-emerald-600 border-emerald-600 text-white ' : 'bg-rose-600 border-rose-600 text-white ')
+                                    ? (s === RoomState.Vacant || s === RoomState.Clean ? 'bg-emerald-600 border-emerald-600 text-white ' : 'bg-rose-600 border-rose-600 text-white ')
                                     : 'text-slate-400 border-slate-200 hover:border-slate-300'
                                 }`}
                               >

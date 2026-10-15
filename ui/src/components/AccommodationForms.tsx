@@ -1,3 +1,4 @@
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from "react";
 import {
   command,
@@ -28,7 +29,7 @@ const blankRoom = (s: Snapshot): APIRoom => ({
   position: { x: 20, y: 20, width: 140, height: 100 },
   code: "",
   name: "",
-  status: "Temiz",
+  status: RoomState.Clean,
   type: "",
   description: {},
   assets: [],

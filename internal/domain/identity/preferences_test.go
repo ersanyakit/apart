@@ -2,6 +2,7 @@ package identity
 
 import (
 	"encoding/json"
+	"otel/constants"
 	"testing"
 )
 
@@ -30,6 +31,24 @@ func TestPreferenceValidation(t *testing.T) {
 		}
 		if err := p.Validate(); (err == nil) != tc.valid {
 			t.Fatalf("%s: %v", tc.json, err)
+		}
+	}
+}
+
+func TestReportGroupAndLogPreferences(t *testing.T) {
+	for _, group := range constants.ReportGroups() {
+		// A retried report-header preference and a later log change can share a patch.
+		p := Preferences{"header.report-group." + group.Key: true, "header.logs": false, "audit_page_size": float64(50)}
+		if err := p.Validate(); err != nil {
+			t.Fatalf("%s: %v", group.Key, err)
+		}
+	}
+	for _, p := range []Preferences{
+		{"header.report-group.unknown": true}, {"header.report-group.finance": "true"},
+		{"audit_page_size": float64(999)}, {"header.logs": "false"},
+	} {
+		if p.Validate() == nil {
+			t.Fatalf("accepted invalid preferences: %v", p)
 		}
 	}
 }

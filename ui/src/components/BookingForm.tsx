@@ -1,3 +1,4 @@
+import { BookingStatus as BookingState } from '../lib/statuses.generated';
 import { PhoneField } from "./fields/PhoneField";
 import { normalizeGuestPhones } from "../lib/phone";
 import type { Guest } from "../types";
@@ -121,7 +122,7 @@ export function BookingForm({
   onSaved: () => Promise<void>;
 }) {
   const { t } = useI18n();
-  const checkedIn = booking?.status === "checked_in";
+  const checkedIn = booking?.status === BookingState.CheckedIn;
   const [room, setRoom] = useState(booking?.room_id || roomId || "");
   const [name, setName] = useState(booking?.guest_name || "");
   const [count, setCount] = useState(booking?.guest_count || 1);
@@ -646,7 +647,7 @@ export function MoveBookingForm({
                 (b) =>
                   b.booking_id !== booking.booking_id &&
                   b.status === booking.status &&
-                  (b.status === "checked_in" ||
+                  (b.status === BookingState.CheckedIn ||
                     b.check_in === booking.check_in),
               )
               .map((b) => (

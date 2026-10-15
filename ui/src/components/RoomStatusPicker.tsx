@@ -1,3 +1,6 @@
+import {housekeepingRoomStatuses} from "../lib/statuses";
+import {RoomStatusDefinitions} from "../lib/statuses.generated";
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { STATUS_PALETTE, roomStatusKey } from "../lib/status-palette";
 import { createPortal } from "react-dom";
 import React, { useEffect, useRef, useState } from "react";
@@ -5,8 +8,8 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
 import { secondaryStyle } from "./FormKit";
 
-const BASE_OPTIONS = ["Temiz", "Kirli"];
-const ADVANCED_OPTIONS = ["Bos", "Arizali", "Tadilat"];
+const BASE_OPTIONS = housekeepingRoomStatuses;
+const ADVANCED_OPTIONS = RoomStatusDefinitions.filter(d=>!d.housekeeping).map(d=>d.value);
 
 /**
  * Oda durum düğmesi: mevcut durum (nokta + etiket), basınca
@@ -127,7 +130,7 @@ export function RoomStatusPicker({
                     aria-selected={isActive}
                     onClick={() => {
                       setOpen(false);
-                      if (v !== status || v === "Temiz") onPick(v);
+                      if (v !== status || v === RoomState.Clean) onPick(v);
                     }}
                     className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left text-xs font-bold outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
                       isActive

@@ -1,6 +1,32 @@
 {
   "application": "INTERACTIVEOTEL",
   "application_version": "1.0.0",
+  "booking_statuses": [
+    {
+      "key": "Confirmed",
+      "value": "confirmed",
+      "label": "Rezervasyon",
+      "semantic": "reserved"
+    },
+    {
+      "key": "CheckedIn",
+      "value": "checked_in",
+      "label": "Konaklıyor",
+      "semantic": "occupied"
+    },
+    {
+      "key": "Completed",
+      "value": "completed",
+      "label": "Çıkış yapıldı",
+      "semantic": "completed"
+    },
+    {
+      "key": "Cancelled",
+      "value": "cancelled",
+      "label": "İptal edildi",
+      "semantic": "cancelled"
+    }
+  ],
   "brandName": "researchcave",
   "brandURL": "https://researchcave.com",
   "commands": {
@@ -271,6 +297,58 @@
     "MN",
     "PS",
     "KU"
+  ],
+  "report_groups": [
+    {
+      "key": "management",
+      "name": "Yönetim",
+      "description": "İşletmenizin genel durumunu, performansını ve önemli göstergelerini inceleyin."
+    },
+    {
+      "key": "finance",
+      "name": "Finans",
+      "description": "Tahsilatları, ödemeleri, bakiyeleri ve finansal hareketleri takip edin."
+    },
+    {
+      "key": "occupancy",
+      "name": "Doluluk",
+      "description": "Oda ve yatak kullanımını, müsaitliği ve doluluk eğilimlerini inceleyin."
+    },
+    {
+      "key": "reservations",
+      "name": "Rezervasyon",
+      "description": "Rezervasyon akışını, giriş ve çıkışları, iptalleri takip edin."
+    },
+    {
+      "key": "pricing",
+      "name": "Gelir yönetimi",
+      "description": "Gelir performansını ve fiyatlandırma göstergelerini karşılaştırın."
+    },
+    {
+      "key": "guests",
+      "name": "Misafir",
+      "description": "Müşterilerinizi, misafir profilini ve konaklama geçmişini inceleyin."
+    },
+    {
+      "key": "staff",
+      "name": "Personel",
+      "description": "Personel faaliyetlerini ve ekip performansını takip edin."
+    },
+    {
+      "key": "operations",
+      "name": "Operasyon",
+      "description": "Temizlik, bakım ve günlük operasyon kayıtlarını inceleyin."
+    },
+    {
+      "key": "apart",
+      "name": "Apart",
+      "description": "Apart işletmenizin konaklama ve tahsilat durumunu takip edin."
+    },
+    {
+      "key": "hostel",
+      "name": "Hostel",
+      "description": "Hostelinizin yatak kullanımını ve konaklama performansını inceleyin."
+    }
   ],
   "report_record_kinds": [
     {
@@ -779,6 +857,58 @@
       "name": "Görev tamamlama",
       "category": "Personel",
       "description": "Tamamlanan, açık ve geciken görevler."
+    }
+  ],
+  "room_statuses": [
+    {
+      "key": "Vacant",
+      "value": "Bos",
+      "label": "Boş",
+      "semantic": "available",
+      "blocksReservation": false,
+      "blocksCheckIn": false,
+      "requiresReason": false,
+      "housekeeping": false
+    },
+    {
+      "key": "Clean",
+      "value": "Temiz",
+      "label": "Temiz",
+      "semantic": "clean",
+      "blocksReservation": false,
+      "blocksCheckIn": false,
+      "requiresReason": false,
+      "housekeeping": true
+    },
+    {
+      "key": "Dirty",
+      "value": "Kirli",
+      "label": "Kirli",
+      "semantic": "dirty",
+      "blocksReservation": false,
+      "blocksCheckIn": true,
+      "requiresReason": false,
+      "housekeeping": true
+    },
+    {
+      "key": "OutOfOrder",
+      "value": "Arizali",
+      "label": "Arızalı",
+      "semantic": "fault",
+      "blocksReservation": true,
+      "blocksCheckIn": true,
+      "requiresReason": true,
+      "housekeeping": false
+    },
+    {
+      "key": "Maintenance",
+      "value": "Tadilat",
+      "label": "Tadilatta",
+      "semantic": "maintenance",
+      "blocksReservation": true,
+      "blocksCheckIn": true,
+      "requiresReason": true,
+      "housekeeping": false
     }
   ],
   "version": "1"

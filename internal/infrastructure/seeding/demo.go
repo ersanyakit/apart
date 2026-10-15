@@ -67,7 +67,7 @@ func demo(ctx context.Context, tx *gorm.DB, options Options) error {
 		}
 	}
 	room := func(code, kind string, floor int, parent *uuid.UUID, capacity int) (models.Room, error) {
-		row := models.Room{RoomID: uuid.New(), BranchID: branch.BranchID, FloorID: &floors[floor-1].FloorID, ParentID: parent, Code: code, Kind: kind, Capacity: capacity, Rentable: true, Status: "Temiz", Position: property.Position{X: 20, Y: 20, Width: 140, Height: 100}}
+		row := models.Room{RoomID: uuid.New(), BranchID: branch.BranchID, FloorID: &floors[floor-1].FloorID, ParentID: parent, Code: code, Kind: kind, Capacity: capacity, Rentable: true, Status: constants.RoomClean, Position: property.Position{X: 20, Y: 20, Width: 140, Height: 100}}
 		defaults := row
 		row = models.Room{}
 		err := tx.Unscoped().Where("branch_id = ? AND code = ?", branch.BranchID, code).Attrs(defaults).FirstOrCreate(&row).Error

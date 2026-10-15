@@ -114,7 +114,7 @@ func (r *Repository) SaveBeds(ctx context.Context, beds []accommodation.Bed, cre
 			retained := map[uuid.UUID]bool{}
 			for i, p := range b.Places {
 				old, exists := previous[p.UnitID]
-				unit := property.Room{RoomID: p.UnitID, BranchID: b.BranchID, Kind: "bed", Status: "Temiz", Position: property.Position{X: float64(20 + (i%8)*160), Y: float64(20 + (i/8)*120), Width: 140, Height: 100}}
+				unit := property.Room{RoomID: p.UnitID, BranchID: b.BranchID, Kind: "bed", Status: constants.RoomClean, Position: property.Position{X: float64(20 + (i%8)*160), Y: float64(20 + (i/8)*120), Width: 140, Height: 100}}
 				if exists {
 					var u models.Room
 					if err := tx.First(&u, "room_id = ?", old.UnitID).Error; err != nil {

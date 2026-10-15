@@ -160,7 +160,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 	if q.Status != "" {
 		base = base.Where("b.status = ?", q.Status)
 	} else {
-		base = base.Where("b.actual_check_in IS NOT NULL AND b.status IN ?", []string{booking.CheckedIn, booking.Completed})
+		base = base.Where("b.actual_check_in IS NOT NULL AND b.status IN ?", []constants.BookingStatus{booking.CheckedIn, booking.Completed})
 	}
 	if q.From != nil {
 		base = base.Where(end+" > ?", q.From)
@@ -297,7 +297,7 @@ func (r *Repository) GuestStays(ctx context.Context, q guest.Query, export bool)
 		RoomID    uuid.UUID
 		Start     time.Time
 		End       time.Time
-		Status    string
+		Status    constants.BookingStatus
 	}
 	var companions []companionStay
 	candidate := r.db.WithContext(ctx).Table("booking_guests bg").

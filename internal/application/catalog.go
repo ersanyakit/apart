@@ -252,7 +252,7 @@ func (s *Catalog) SaveRoom(ctx context.Context, u identity.User, item property.R
 	if create {
 		item.RoomID = uuid.New()
 		item.ClearStay(item.Status)
-		if (item.Status == "Tadilat" || item.Status == "Arizali") && (len(strings.TrimSpace(item.StatusReason)) < 10 || len(item.StatusReason) > 2000) {
+		if item.Status.RequiresReason() && (len(strings.TrimSpace(item.StatusReason)) < 10 || len(item.StatusReason) > 2000) {
 			return item, constants.ErrReasonRequired
 		}
 	} else {
@@ -320,19 +320,17 @@ func (s *Catalog) SaveState(ctx context.Context, u identity.User, state property
 	if err != nil {
 		return room, err
 	}
-	if u.Role == constants.UserRoleHousekeeping && state.Status != "Temiz" && state.Status != "Kirli" {
+	if u.Role == constants.UserRoleHousekeeping && !state.Status.IsHousekeeping() {
 		return room, constants.ErrForbidden
 	}
-	switch state.Status {
-	case "Bos", "Temiz", "Kirli", "Arizali", "Tadilat":
-	default:
-		return room, constants.ErrBookingRequired
+	if !state.Status.Valid() {
+		return room, constants.ErrRoomStatus
 	}
-	if (state.Status == "Tadilat" || state.Status == "Arizali") && (len(strings.TrimSpace(state.StatusReason)) < 10 || len(state.StatusReason) > 2000) {
+	if state.Status.RequiresReason() && (len(strings.TrimSpace(state.StatusReason)) < 10 || len(state.StatusReason) > 2000) {
 		return room, constants.ErrReasonRequired
 	}
 	var cleaning *property.CleaningRecord
-	if state.Status == "Temiz" && state.LastCleaning != nil {
+	if state.Status == constants.RoomClean && state.LastCleaning != nil {
 		note := strings.TrimSpace(state.LastCleaning.Note)
 		if state.LastCleaning.CleanerID == uuid.Nil || len([]rune(note)) > 2000 {
 			return room, constants.ErrCleaningInvalid

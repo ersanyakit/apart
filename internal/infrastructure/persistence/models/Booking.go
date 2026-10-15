@@ -1,6 +1,7 @@
 package models
 
 import (
+	"otel/constants"
 	"time"
 
 	"github.com/google/uuid"
@@ -34,7 +35,7 @@ type Booking struct {
 	CheckIn  time.Time `json:"check_in"`
 	CheckOut time.Time `json:"check_out"`
 
-	Status string `json:"status"` // pending, confirmed, cancelled, completed
+	Status constants.BookingStatus `json:"status"`
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`

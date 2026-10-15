@@ -1,4 +1,6 @@
 "use client";
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
+
 import { PageHeader } from "../PageHeader";
 import { usePreference } from "../UserPreferences";
 import { useNotifications } from "../Toast";
@@ -39,7 +41,7 @@ export function HotelCalendar({ bookings, rooms, propertyName, initialDate, head
   const gridEnd = view === "month" ? addDays(weekStart(addDays(range.end,-1)),7) : range.end;
   const allEvents = useMemo(() => stayEvents(bookings,rooms,now),[bookings,rooms,now]);
   const search = query.trim().toLocaleLowerCase(locale);
-  const filtered = allEvents.filter(e => (status === "all" || (status === "active" ? e.booking.status !== "cancelled" : e.booking.status === status)) && (!search || `${e.roomCode} ${guestNames(e.booking)} ${e.booking.guests?.map(g => `${g.phone || ""} ${g.tcNo || ""}`).join(" ")}`.toLocaleLowerCase(locale).includes(search)));
+  const filtered = allEvents.filter(e => (status === "all" || (status === "active" ? e.booking.status !== BookingState.Cancelled : e.booking.status === status)) && (!search || `${e.roomCode} ${guestNames(e.booking)} ${e.booking.guests?.map(g => `${g.phone || ""} ${g.tcNo || ""}`).join(" ")}`.toLocaleLowerCase(locale).includes(search)));
   const visible = filtered.filter(e => overlaps(e,range.start,range.end));
   const unique = [...new Map(visible.map(e => [e.booking.booking_id,e.booking])).values()];
   const title = view === "month" ? date.toLocaleDateString(locale,{month:"long",year:"numeric"}) : view === "day" ? date.toLocaleDateString(locale,{day:"numeric",month:"long",year:"numeric"}) : `${range.start.toLocaleDateString(locale,{day:"numeric",month:"short"})} – ${addDays(range.end,-1).toLocaleDateString(locale,{day:"numeric",month:"short",year:"numeric"})}`;

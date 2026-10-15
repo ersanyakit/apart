@@ -1,3 +1,6 @@
+import { BookingStatus as BookingState } from './statuses.generated';
+import type { BookingStatus, RoomStatus } from "./statuses.generated";
+export { bookingStatuses } from "./statuses";
 import contracts from "./contracts.generated.json";
 export { contracts };
 export type Language = string;
@@ -246,7 +249,7 @@ export type Booking = {
   check_out: string;
   actual_check_in?: string | null;
   actual_check_out?: string | null;
-  status: "confirmed" | "checked_in" | "completed" | "cancelled";
+  status: BookingStatus;
   allocations: Allocation[];
   created_at?: string;
   updated_at?: string;
@@ -257,12 +260,6 @@ export const unitKinds: Record<string, string> = {
   room: "Oda",
   dormitory: "Koğuş",
   bed: "Yatak",
-};
-export const bookingStatuses: Record<string, string> = {
-  confirmed: "Rezervasyon",
-  checked_in: "Konaklıyor",
-  completed: "Çıkış yapıldı",
-  cancelled: "İptal edildi",
 };
 export function related(rooms: APIRoom[], id: string): Set<string> {
   const out = new Set([id]);
@@ -301,11 +298,11 @@ export function occupancy(
   return bookings.filter(
     (b) =>
       b.branch_id === room.branch_id &&
-      ["confirmed", "checked_in"].includes(b.status) &&
+      [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===b.status) &&
       bookingIntervals(b, now).some(
         (a) => ids.has(a.roomId) && a.start <= instant && a.end > instant,
       ),
-  ).sort((a, b) => Number(b.status === "checked_in") - Number(a.status === "checked_in") || Date.parse(a.check_in) - Date.parse(b.check_in));
+  ).sort((a, b) => Number(b.status === BookingState.CheckedIn) - Number(a.status === BookingState.CheckedIn) || Date.parse(a.check_in) - Date.parse(b.check_in));
 }
 
 /** Compare instants, never ISO strings: offsets and precision may differ. */
@@ -321,7 +318,7 @@ export function bookingIntervals(booking: Booking, now: string) {
     }
     if (booking.actual_check_out) end = Math.min(end, Date.parse(booking.actual_check_out));
     // An overdue stay still occupies its last room until checkout is recorded.
-    if (booking.status === "checked_in" && segment.room_id === booking.room_id && end === Date.parse(booking.check_out)) {
+    if (booking.status === BookingState.CheckedIn && segment.room_id === booking.room_id && end === Date.parse(booking.check_out)) {
       end = Math.max(end, Date.parse(now) + 1);
     }
     return { roomId: segment.room_id, start, end };

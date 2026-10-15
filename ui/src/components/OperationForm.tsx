@@ -1,3 +1,4 @@
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -163,7 +164,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
       const statusMap: Record<string, RoomStatus> = {
         reserve: "Rezervli",
         sale: "Dolu",
-        checkout: "Temiz",
+        checkout: RoomState.Clean,
         exchange: room.status,
       };
 

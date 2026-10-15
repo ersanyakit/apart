@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"otel/constants"
 	"otel/internal/domain/property"
 	"otel/utils"
 )
@@ -27,7 +28,7 @@ type Room struct {
 	BranchID     uuid.UUID             `gorm:"type:uuid;not null;index;uniqueIndex:idx_room_branch,priority:2;uniqueIndex:idx_room_branch_code,priority:1" json:"branch_id"`
 	Name         string                `json:"name"`
 	Code         string                `gorm:"not null;uniqueIndex:idx_room_branch_code,priority:2" json:"code"`
-	Status       string                `json:"status"`
+	Status       constants.RoomStatus  `json:"status"`
 	Type         string                `json:"type"`
 	Description  utils.LocalizedString `json:"description"`
 	Features     []string              `gorm:"serializer:json" json:"features"`

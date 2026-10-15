@@ -64,7 +64,7 @@ func (r *Repository) SaveFolioService(ctx context.Context, in reporting.FolioSer
 			out = old
 			return nil
 		}
-		if b.Status != "confirmed" && b.Status != "checked_in" {
+		if b.Status != constants.BookingConfirmed && b.Status != constants.BookingCheckedIn {
 			return constants.ErrBookingState
 		}
 		var branch models.Branch
@@ -92,7 +92,7 @@ func (r *Repository) VoidFolioService(ctx context.Context, in reporting.FolioSer
 		if e != nil {
 			return e
 		}
-		if b.Status != "confirmed" && b.Status != "checked_in" {
+		if b.Status != constants.BookingConfirmed && b.Status != constants.BookingCheckedIn {
 			return constants.ErrBookingState
 		}
 		var item reporting.Record

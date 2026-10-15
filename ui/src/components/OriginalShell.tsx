@@ -1,3 +1,5 @@
+import { BookingStatus as BookingState } from '../lib/statuses.generated';
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { STATUS_PALETTE } from "../lib/status-palette";
 import { usePreference } from "./UserPreferences";
 import { confirmDialog } from "./ConfirmDialog";
@@ -93,7 +95,7 @@ export function OriginalShell({
         ...(b
           ? {
               name: b.guest_name,
-              status: b.status === "checked_in" ? "Dolu" : "Rezervli",
+              status: b.status === BookingState.CheckedIn ? "Dolu" : "Rezervli",
               check_in: b.check_in,
               check_out: b.check_out,
               guests: b.guests,
@@ -364,23 +366,23 @@ export function OriginalShell({
               </div>
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.clean.accent}}></div>{" "}
-                TEMİZ: {rooms.filter((r) => r.status === "Temiz").length}
+                TEMİZ: {rooms.filter((r) => r.status === RoomState.Clean).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.dirty.accent}}></div>{" "}
-                KİRLİ: {rooms.filter((r) => r.status === "Kirli").length}
+                KİRLİ: {rooms.filter((r) => r.status === RoomState.Dirty).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.available.accent}}></div>{" "}
-                BOŞ: {rooms.filter((r) => r.status === "Bos").length}
+                BOŞ: {rooms.filter((r) => r.status === RoomState.Vacant).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.fault.accent}}></div>{" "}
-                ARIZALI: {rooms.filter((r) => r.status === "Arizali").length}
+                ARIZALI: {rooms.filter((r) => r.status === RoomState.OutOfOrder).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.maintenance.accent}}></div>{" "}
-                TADİLAT: {rooms.filter((r) => r.status === "Tadilat").length}
+                TADİLAT: {rooms.filter((r) => r.status === RoomState.Maintenance).length}
               </div>
             </div>
             <div className="italic text-slate-400 ml-6 shrink-0">

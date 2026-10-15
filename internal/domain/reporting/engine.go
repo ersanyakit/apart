@@ -322,7 +322,7 @@ func generate(f Filter, d Dataset) Result {
 			continue
 		}
 		physical++
-		available := r.Rentable && !r.Inactive && r.Status != "Arizali" && r.Status != "Tadilat"
+		available := r.Rentable && !r.Inactive && !r.Status.BlocksReservation()
 		parent := r.ParentID
 		seen := map[uuid.UUID]bool{}
 		for parent != nil && !seen[*parent] {
@@ -331,7 +331,7 @@ func generate(f Filter, d Dataset) Result {
 			if !ok {
 				break
 			}
-			if p.Inactive || p.Status == "Arizali" || p.Status == "Tadilat" {
+			if p.Inactive || p.Status.BlocksReservation() {
 				available = false
 			}
 			parent = p.ParentID
@@ -525,7 +525,7 @@ func generate(f Filter, d Dataset) Result {
 			}
 			ch, _ := meta(b)
 			m := metadata[b.BookingID]
-			key := b.Status
+			key := string(b.Status)
 			switch f.Key {
 			case "reservations.channels":
 				key = ch

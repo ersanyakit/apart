@@ -43,7 +43,7 @@ func (p Preferences) Validate() error {
 				return constants.ErrPayload
 			}
 		case strings.HasPrefix(key, "header."):
-			if _, ok := value.(bool); !ok || (!slices.Contains(pageIDs, strings.TrimPrefix(key, "header.")) && !reportHeader.MatchString(key)) {
+			if _, ok := value.(bool); !ok || (!slices.Contains(pageIDs, strings.TrimPrefix(key, "header.")) && !reportHeader.MatchString(key) && !isReportGroupHeader(key)) {
 				return constants.ErrPayload
 			}
 		case key == "bookings_days" || key == "stays_days" || key == "audit_page_size":
@@ -77,4 +77,13 @@ func (p Preferences) Validate() error {
 		}
 	}
 	return nil
+}
+
+func isReportGroupHeader(key string) bool {
+	for _, group := range constants.ReportGroups() {
+		if key == "header.report-group."+group.Key {
+			return true
+		}
+	}
+	return false
 }

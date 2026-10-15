@@ -100,7 +100,7 @@ type Room struct {
 	BranchID           uuid.UUID              `json:"branch_id"`
 	Name               string                 `json:"name"`
 	Code               string                 `json:"code"`
-	Status             string                 `json:"status"`
+	Status             apperrors.RoomStatus   `json:"status"`
 	Type               string                 `json:"type"`
 	Description        shared.LocalizedString `json:"description"`
 	Assets             []media.Asset          `json:"assets"`
@@ -151,14 +151,12 @@ func (r Room) Validate() error {
 	if len(r.Code) > 32 {
 		return apperrors.ErrRoomCode
 	}
-	switch r.Status {
-	case "Bos", "Temiz", "Kirli", "Arizali", "Tadilat":
-	default:
+	if !r.Status.Valid() {
 		return apperrors.ErrRoomStatus
 	}
 	return r.Description.Validate()
 }
-func (r *Room) ClearStay(status string) {
+func (r *Room) ClearStay(status apperrors.RoomStatus) {
 	r.Status = status
 	r.Name = ""
 	r.CheckIn = ""
@@ -180,6 +178,6 @@ type Repository interface {
 	SaveRoom(context.Context, Room, bool) error
 	DeleteRoom(context.Context, uuid.UUID) error
 	DeleteRooms(context.Context, uuid.UUID, []uuid.UUID) error
-	SaveOperationalState(context.Context, uuid.UUID, string, string, ...*CleaningRecord) error
+	SaveOperationalState(context.Context, uuid.UUID, apperrors.RoomStatus, string, ...*CleaningRecord) error
 	SaveInventory(context.Context, uuid.UUID, []InventoryItem) error
 }

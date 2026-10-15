@@ -1,4 +1,6 @@
 "use client";
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
+
 import React, {useEffect, useState} from 'react';
 import {CalendarDays, ChevronDown, ChevronUp, MessageSquare, RefreshCw, ShieldAlert, Star} from 'lucide-react';
 import {command, messageOf, bookingStatuses, type Snapshot} from '../../lib/api';
@@ -82,7 +84,7 @@ function CustomerHistory({snapshot:s,customer,revision,onAssess}:{snapshot:Snaps
  return <section aria-label="Müşteri konaklama geçmişi" className="space-y-4">
   <div className={styles.filters}>
    <InlineSelectField label="Konaklamanın tesisi" value={branch} onChange={v=>{setBranch(v);setPage(1)}} options={[{value:'',label:'Tüm tesisler'},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/>
-   <InlineSelectField label="Kayıt türü" value={status} onChange={v=>{setStatus(v);setPage(1)}} options={[{value:'',label:'Gerçekleşen tüm konaklamalar'},{value:'checked_in',label:'Şu an konaklayan'},{value:'completed',label:'Çıkış yapmış'},{value:'confirmed',label:'Planlanan rezervasyonlar'},{value:'cancelled',label:'İptal edilen rezervasyonlar'}]}/>
+   <InlineSelectField label="Kayıt türü" value={status} onChange={v=>{setStatus(v);setPage(1)}} options={[{value:'',label:'Gerçekleşen tüm konaklamalar'},{value:BookingState.CheckedIn,label:'Şu an konaklayan'},{value:BookingState.Completed,label:'Çıkış yapmış'},{value:BookingState.Confirmed,label:'Planlanan rezervasyonlar'},{value:BookingState.Cancelled,label:'İptal edilen rezervasyonlar'}]}/>
   </div>
   <p className="text-xs text-uni-muted">En yeni kayıt önce gösterilir. Oda değişiklikleri ayrı hareketler olarak listelenir. Konaklama bedeli rezervasyonun tamamına aittir; aynı rezervasyonun hareketlerinde tekrar görünür. Ek hizmetler ve tahsilatlar dahil değildir.</p>
   <ErrorMessage message={error}/>
@@ -98,15 +100,15 @@ export function CustomerHistoryTable({items,onAssess}:{items:CustomerStay[];onAs
  </table></div></div>;
 }
 export function CustomerStayRow({stay:r,expanded,onToggle,onAssess,rowId,tone='light'}:{tone?:'light'|'dark';stay:CustomerStay;expanded:boolean;rowId:string;onToggle:()=>void;onAssess:(target:AssessmentTarget)=>void}) {
- const planned=['confirmed','cancelled'].includes(r.status);
+ const planned=[BookingState.Confirmed,BookingState.Cancelled].includes(r.status);
  const noteCount=[r.booking_notes,r.guest_note,r.cancellation_reason].filter(Boolean).length;
  return <>
   <tr className={styles.customerRow} data-tone={tone} onClick={onToggle}>
    <td><strong className="font-semibold">{r.room_code}</strong><p className="mt-1 text-xs text-uni-muted">{r.branch_name}</p></td>
    <td className="whitespace-nowrap"><time dateTime={r.start}>{date(r.start)}</time>{planned&&<p className="mt-1 text-xs text-uni-muted">Planlanan</p>}</td>
-   <td className="whitespace-nowrap"><time dateTime={r.end}>{date(r.end)}</time>{(planned||r.status==='checked_in')&&<p className="mt-1 text-xs text-uni-muted">Planlanan</p>}</td>
+   <td className="whitespace-nowrap"><time dateTime={r.end}>{date(r.end)}</time>{(planned||r.status===BookingState.CheckedIn)&&<p className="mt-1 text-xs text-uni-muted">Planlanan</p>}</td>
    <td><span className="whitespace-nowrap text-xs font-medium">{bookingStatuses[r.status]||r.status}</span></td>
-   <td className="tabular-nums whitespace-nowrap">{r.daily_price_minor>0?<><strong className="font-semibold">{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="mt-1 whitespace-normal text-xs text-uni-muted">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status==='cancelled'&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
+   <td className="tabular-nums whitespace-nowrap">{r.daily_price_minor>0?<><strong className="font-semibold">{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="mt-1 whitespace-normal text-xs text-uni-muted">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status===BookingState.Cancelled&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
    <td><button type="button" className={secondaryStyle} aria-expanded={expanded} aria-controls={`stay-${rowId}`} onClick={e=>{e.stopPropagation();onToggle()}}>{expanded?<ChevronUp size={16}/>:<ChevronDown size={16}/>} {noteCount?`${noteCount} not`:'Detay'}</button></td>
    <td><button type="button" className={`${secondaryStyle} whitespace-nowrap`} onClick={e=>{e.stopPropagation();onAssess({guest_id:r.guest_id,name:r.name,branch_id:r.branch_id,booking_id:r.booking_id})}}><MessageSquare size={16}/>Yorum / puan ekle</button></td>
   </tr>

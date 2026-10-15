@@ -1,3 +1,4 @@
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { boardStatusKey, statusStyle, roomStatusKey, STATUS_PALETTE } from "../lib/status-palette";
 import React, { useState, useEffect, useRef } from "react";
 import {
@@ -199,7 +200,7 @@ export function FloorBoard({
                 <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0">
                   {state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
                 </span>
-                {["Kirli","Arizali","Tadilat"].includes(state.operationalStatus) && <span className="absolute right-1 top-1 h-2 w-2 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}} aria-label={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label} title={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}/>}
+                {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===state.operationalStatus) && <span className="absolute right-1 top-1 h-2 w-2 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}} aria-label={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label} title={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}/>}
               </button>
             );
           })}

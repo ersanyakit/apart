@@ -1,3 +1,4 @@
+import { BookingStatus as BookingState } from '../lib/statuses.generated';
 import styles from "./GuestView.module.css";
 import type { CustomerStay } from "./reports/CustomerDetail";
 import { display } from "./reports/model";
@@ -143,8 +144,8 @@ export function GuestView({
     <DateField label="Başlangıç" value={from} onChange={value=>{setFrom(value);setPage(1);}}/>
     <DateField label="Bitiş" value={to} onChange={value=>{setTo(value);setPage(1);}}/>
     <InlineSelectField label="Kayıtlar" value={status} onChange={value=>{setStatus(value);setPage(1);}} options={[
-      {value:'',label:'Tüm konaklamalar'}, {value:'checked_in',label:'Şu an konaklayanlar'},
-      {value:'completed',label:'Çıkış yapanlar'}, {value:'confirmed',label:'Planlanan rezervasyonlar'}, {value:'cancelled',label:'İptal edilenler'},
+      {value:'',label:'Tüm konaklamalar'}, {value:BookingState.CheckedIn,label:'Şu an konaklayanlar'},
+      {value:BookingState.Completed,label:'Çıkış yapanlar'}, {value:BookingState.Confirmed,label:'Planlanan rezervasyonlar'}, {value:BookingState.Cancelled,label:'İptal edilenler'},
     ]}/>
   </div>;
   if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>{setAssessment(null);setRevision(value=>value+1);}}/>;
@@ -218,7 +219,7 @@ export function GuestView({
                 </td>
                 <td><StayDate value={r.start}/></td>
                 <td><StayDate value={r.end}/></td>
-                <td className="guest-table-amount">{r.daily_price_minor>0?<><strong>{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="guest-table-secondary">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status==='cancelled'&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
+                <td className="guest-table-amount">{r.daily_price_minor>0?<><strong>{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="guest-table-secondary">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status===BookingState.Cancelled&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
                 <td>
                   {!r.companions.length && <span className="guest-table-secondary">—</span>}
                   {r.companions.map((c) => (

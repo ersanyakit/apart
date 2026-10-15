@@ -1,4 +1,8 @@
 'use client';
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
+
+import { RoomStatus as RoomState } from '../../lib/statuses.generated';
+
 import { sceneStatusColor } from "./model";
 import { STATUS_PALETTE, roomStatusKey } from "../../lib/status-palette";
 
@@ -87,7 +91,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   const hover = hoverId ? units.get(hoverId) : undefined;
   const places = [...units.values()].filter(u => u.unit.kind === 'bed');
   const bookings = selected?.state.bookings || [];
-  const currentStays = selected?.state.current.filter(booking => booking.status === 'checked_in') || [];
+  const currentStays = selected?.state.current.filter(booking => booking.status === BookingState.CheckedIn) || [];
   const bookableUnit = selectedId ? sceneBookingTarget(snapshot, selectedId) : undefined;
   const clearFilters = () => { setFloorId('all'); setTone('all'); setQuery(''); setOnlyAvailableBeds(false); };
   return <div className={styles.page}>
@@ -122,7 +126,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
         {selected && selectedRoom ? <>
           <div className={styles.detailHeading}><div><p>{floors.find(f => f.id === selectedRoom.floorId)?.label}</p><h3>{selected.unit.code}</h3><span>{selected.unit.name || unitKinds[selected.unit.kind] || selected.unit.kind}</span></div><button type="button" className="nav-icon-button" aria-label="Birim seçimini temizle" onClick={() => select(null)}><X size={18} /></button></div>
           <div className={styles.status}><i style={{ background: sceneStatusColor(selected.state) }} />{selected.state.label}</div>
-          {["Kirli","Arizali","Tadilat"].includes(selected.state.operationalStatus) && <div className={styles.status}><i style={{background:STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].accent}}/>{STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].label}</div>}
+          {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===selected.state.operationalStatus) && <div className={styles.status}><i style={{background:STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].accent}}/>{STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].label}</div>}
           {!!currentStays.length && <section className={styles.currentGuests} aria-label="Şu anda konaklayan misafirler"><h4 className={styles.subheading}>Konaklayan misafirler</h4>{currentStays.map(booking => <div className={styles.booking} key={booking.booking_id}>
             {(booking.guests?.length ? booking.guests : [{ id: booking.booking_id, name: booking.guest_name || 'Misafir' }]).map(guest => <strong key={guest.id}>{guest.name}</strong>)}
             <small>{boardDate(booking.actual_check_in || booking.check_in)} → {boardDate(booking.check_out)}</small>
@@ -134,7 +138,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
           {selected.unit.status_reason && <p className={styles.caption}>{selected.unit.status_reason}</p>}
           {!!selectedRoom.beds.length && <section><h4 className={styles.subheading}>Yatak yerleri</h4><div className={styles.bedList}>{selectedRoom.beds.map(bed => <button type="button" key={bed.group + ":" + bed.level} aria-pressed={selectedId === bed.unit.room_id} className={styles.bedButton} onClick={() => activate(bed.unit.room_id)}><BedDouble size={18} style={{ color: sceneStatusColor(bed.state) }} aria-hidden="true" /><span><strong>{bed.label || bed.unit.code}</strong><small>{bed.visualOnly ? "Kayıtlı oda yatak düzeni" : `${bed.state.label} · ${bed.unit.capacity} kişi`}</small></span></button>)}</div></section>}
           {selectedRoom.beds.length === 0 && <p className={styles.caption}>Bu birime fiziksel yatak tanımı eklenmemiş.</p>}
-          <section><h4 className={styles.subheading}>Konaklama ve rezervasyonlar</h4>{bookings.length ? bookings.map(booking => <div className={styles.booking} key={booking.booking_id}><strong>{booking.guest_name || 'Misafir'}</strong><span>{booking.status === 'checked_in' ? 'Giriş yapıldı' : booking.status === 'confirmed' ? 'Onaylı rezervasyon' : 'Çıkış yapıldı'}</span><small>{boardDate(booking.check_in)} → {boardDate(booking.check_out)}</small>{onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>Rezervasyonu aç</button>}</div>) : <p className={styles.caption}>Aktif veya yaklaşan rezervasyon bulunmuyor.</p>}</section>
+          <section><h4 className={styles.subheading}>Konaklama ve rezervasyonlar</h4>{bookings.length ? bookings.map(booking => <div className={styles.booking} key={booking.booking_id}><strong>{booking.guest_name || 'Misafir'}</strong><span>{booking.status === BookingState.CheckedIn ? 'Giriş yapıldı' : booking.status === BookingState.Confirmed ? 'Onaylı rezervasyon' : 'Çıkış yapıldı'}</span><small>{boardDate(booking.check_in)} → {boardDate(booking.check_out)}</small>{onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>Rezervasyonu aç</button>}</div>) : <p className={styles.caption}>Aktif veya yaklaşan rezervasyon bulunmuyor.</p>}</section>
 
         </> : <div className={styles.emptyDetail}><Box size={32} strokeWidth={1.4} /><p>Bir oda veya yatak seçin.</p><span>Kapasite, durum ve rezervasyon bilgileri burada görünür.</span></div>}
         <div className={styles.panelActions}>

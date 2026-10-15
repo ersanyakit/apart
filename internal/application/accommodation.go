@@ -181,7 +181,7 @@ func (s *Accommodation) Bulk(ctx context.Context, u identity.User, input propert
 	}
 	out := make([]property.Room, 0, input.Count)
 	for i := 0; i < input.Count; i++ {
-		r := property.Room{RoomID: uuid.New(), BranchID: input.BranchID, FloorID: input.FloorID, ParentID: input.ParentID, Kind: input.Kind, Code: fmt.Sprintf("%s-%03d", input.Prefix, i+1), Capacity: input.Capacity, Rentable: input.Rentable, Status: "Temiz", Position: property.Position{X: float64(20 + i%columns*160), Y: float64(20 + i/columns*120), Width: 140, Height: 100}}
+		r := property.Room{RoomID: uuid.New(), BranchID: input.BranchID, FloorID: input.FloorID, ParentID: input.ParentID, Kind: input.Kind, Code: fmt.Sprintf("%s-%03d", input.Prefix, i+1), Capacity: input.Capacity, Rentable: input.Rentable, Status: constants.RoomClean, Position: property.Position{X: float64(20 + i%columns*160), Y: float64(20 + i/columns*120), Width: 140, Height: 100}}
 		if r.Kind == "bed" {
 			r.BedLevel = i%input.Levels + 1
 			if input.Levels > 1 {

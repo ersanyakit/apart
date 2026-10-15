@@ -327,7 +327,7 @@ func (r *Repository) DeleteRoom(ctx context.Context, id uuid.UUID) error {
 	}
 	return r.DeleteRooms(ctx, row.BranchID, []uuid.UUID{id})
 }
-func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status string, reason string, cleaning ...*property.CleaningRecord) error {
+func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, status constants.RoomStatus, reason string, cleaning ...*property.CleaningRecord) error {
 	return translate(r.db.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		var row models.Room
 		if err := tx.First(&row, "room_id = ?", id).Error; err != nil {
@@ -336,7 +336,7 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 		if err := lockBranch(tx, row.BranchID); err != nil {
 			return err
 		}
-		if status == "Arizali" || status == "Tadilat" {
+		if status.BlocksReservation() {
 			rooms, err := inventory(tx, row.BranchID)
 			if err != nil {
 				return err
@@ -355,14 +355,14 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 			}
 		}
 		updates := map[string]any{"status": status, "status_reason": reason}
-		if status == "Temiz" && len(cleaning) > 0 && cleaning[0] != nil {
+		if status == constants.RoomClean && len(cleaning) > 0 && cleaning[0] != nil {
 			encoded, err := json.Marshal(cleaning[0])
 			if err != nil {
 				return err
 			}
 			updates["last_cleaning"] = string(encoded)
 		}
-		if status == "Temiz" || status == "Kirli" {
+		if status.IsHousekeeping() {
 			rooms, err := inventory(tx, row.BranchID)
 			if err != nil {
 				return err
@@ -375,7 +375,7 @@ func (r *Repository) SaveOperationalState(ctx context.Context, id uuid.UUID, sta
 			// A cleaning action must not reopen a child closed for maintenance.
 			return tx.Model(&models.Room{}).
 				Where("branch_id = ? AND room_id IN ?", row.BranchID, ids).
-				Where("room_id = ? OR status NOT IN ?", id, []string{"Arizali", "Tadilat"}).
+				Where("room_id = ? OR status NOT IN ?", id, constants.ReservationBlockingRoomStatuses()).
 				Updates(updates).Error
 		}
 		return tx.Model(&models.Room{}).Where("room_id = ?", id).Updates(updates).Error

@@ -1,4 +1,8 @@
 "use client";
+import {operationalRoomStatuses, housekeepingRoomStatuses, roomRequiresReason} from "./lib/statuses";
+
+import { BookingStatus as BookingState, RoomStatus as RoomState } from './lib/statuses.generated';
+
 import { RoomStateEditor } from "./components/RoomStateEditor";
 import roomCardStyles from "./components/RoomStatusCard.module.css";
 import { bookingMatchesDay, bookingSearchText } from "./lib/booking-grid";
@@ -337,7 +341,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const matchingBookings = s.bookings
     .filter(
       (b) =>
-        (tab !== "stays" || b.status === "checked_in") &&
+        (tab !== "stays" || b.status === BookingState.CheckedIn) &&
         (!bookingFilter || b.status === bookingFilter) &&
         bookingSearchText(b,s.rooms.find(room=>room.room_id===b.room_id)?.code||'')
           .includes(search.toLocaleLowerCase("tr")),
@@ -361,8 +365,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
     void run(async () => { await command("booking.transition", {branch_id:b.branch_id,booking_id:b.booking_id,action});await refresh();});
   };
   const changeRoomState=(room:APIRoom,status:string)=>{
-    if(status==="Temiz"){setCleaningRoom(room);return}
-    if(status==="Tadilat"||status==="Arizali"||status==="Kirli"){setReasonOperation({kind:"state",room,status});return}
+    if(status===RoomState.Clean){setCleaningRoom(room);return}
+    if(roomRequiresReason(status)||status===RoomState.Dirty){setReasonOperation({kind:"state",room,status});return}
     void run(async()=>{await command("room.state",{room_id:room.room_id,status});await refresh()});
   };
   const remove = async (type: "room" | "floor", id: string) => {
@@ -710,7 +714,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                 { label: "AYRILMIŞ YATAK KAPASİTESİ", value: capacityInUse },
                 {
                   label: "AKTİF KONAKLAMA",
-                  value: s.bookings.filter((b) => b.status === "checked_in")
+                  value: s.bookings.filter((b) => b.status === BookingState.CheckedIn)
                     .length,
                 },
               ].map((stat) => (
@@ -763,7 +767,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                 {visibleRooms.map((room) => {
                   const state = roomStates.get(room.room_id)!;
                   const active = state.bookings[0];
-                  const checkedInNow = state.current.filter(booking => booking.status === "checked_in");
+                  const checkedInNow = state.current.filter(booking => booking.status === BookingState.CheckedIn);
                   const folioBooking = checkedInNow.length === 1 ? checkedInNow[0] : undefined;
                   return (
                     <div id={"unit-" + room.room_id} key={room.room_id}>
@@ -924,7 +928,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               transition(booking, "check_out");
             } : undefined} />
         )}
-        {["bookings", "bookings-list"].includes(tab) && <ReservationsWorkspace list={tab === "bookings-list"} onOpenList={()=>activateTab("bookings-list")} timelineBookings={matchingBookings} floors={s.floors} anchorDay={dateFilter} cancelledOnly={bookingFilter === "cancelled"} bookings={bookings} rooms={s.rooms} serverTime={s.server_time} busy={busy} canOperate={operator}
+        {["bookings", "bookings-list"].includes(tab) && <ReservationsWorkspace list={tab === "bookings-list"} onOpenList={()=>activateTab("bookings-list")} timelineBookings={matchingBookings} floors={s.floors} anchorDay={dateFilter} cancelledOnly={bookingFilter === BookingState.Cancelled} bookings={bookings} rooms={s.rooms} serverTime={s.server_time} busy={busy} canOperate={operator}
           onDetails={booking=>setModal({type:"history",booking})} onGuest={openGuestHistory} onEdit={openBookingEdit}
           onMove={booking=>setModal({type:"move",booking})} onTransition={transition}
           onContextMenu={(event,booking)=>{const room=s.rooms.find(room=>room.room_id===booking.room_id);if(!room)return;event.preventDefault();setContextMenu({x:Math.max(8,Math.min(event.clientX,window.innerWidth-430)),y:Math.max(8,Math.min(event.clientY,window.innerHeight-520)),room,booking});}}/>}
@@ -1076,12 +1080,12 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           <ContextMenu
             saleLabel={menuOperation === "check_in" ? (Date.parse(contextMenu.booking!.check_in) > Date.parse(s.server_time) ? "Rezervasyona erken giriş yap" : "Rezervasyona giriş yap") : menuOperation === "receipt" ? "Satış belgeleri" : "Yeni konaklama başlat"}
             saleDisabled={!operator || (menuOperation === "create" && menuRoomOccupied)}
-            canCheckOut={operator && contextMenu.booking?.status === "checked_in"}
-            canExchange={operator && !!contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status)}
-            bookingHint={contextMenu.booking?.status === "confirmed" ? `Planlanan: ${date(contextMenu.booking.check_in)} – ${date(contextMenu.booking.check_out)}. Erken girişte oda müsaitliği kontrol edilir.` : undefined}
-            onEditBooking={operator && contextMenu.booking && ["confirmed", "checked_in"].includes(contextMenu.booking.status) ? () => openBookingEdit(contextMenu.booking!) : undefined}
+            canCheckOut={operator && contextMenu.booking?.status === BookingState.CheckedIn}
+            canExchange={operator && !!contextMenu.booking && [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===contextMenu.booking?.status)}
+            bookingHint={contextMenu.booking?.status === BookingState.Confirmed ? `Planlanan: ${date(contextMenu.booking.check_in)} – ${date(contextMenu.booking.check_out)}. Erken girişte oda müsaitliği kontrol edilir.` : undefined}
+            onEditBooking={operator && contextMenu.booking && [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===contextMenu.booking?.status) ? () => openBookingEdit(contextMenu.booking!) : undefined}
             canReserve={operator && contextMenu.room.rentable && !contextMenu.room.inactive}
-            allowedStatuses={operator ? ["Temiz","Kirli","Arizali","Tadilat"] : housekeeping ? ["Temiz","Kirli"] : ["technical","maintenance"].includes(s.user.role) ? ["Arizali","Tadilat"] : []}
+            allowedStatuses={operator ? operationalRoomStatuses : housekeeping ? housekeepingRoomStatuses : ["technical","maintenance"].includes(s.user.role) ? [RoomState.OutOfOrder,RoomState.Maintenance] : []}
             operationalStatus={roomStates.get(contextMenu.room.room_id)?.operationalStatus || contextMenu.room.status}
             guestName={contextMenu.booking?.guest_name}
             hasBooking={!!contextMenu.booking}
@@ -1089,9 +1093,9 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             room={{
               ...roomView(contextMenu.room, s.feature_registry),
               status:
-                contextMenu.booking?.status === "confirmed"
+                contextMenu.booking?.status === BookingState.Confirmed
                   ? "Rezervli"
-                  : contextMenu.booking?.status === "checked_in"
+                  : contextMenu.booking?.status === BookingState.CheckedIn
                     ? "Dolu"
                     : (contextMenu.room.status as import("./types").RoomStatus),
             }}
@@ -1116,14 +1120,14 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                     roomId: contextMenu.room.room_id,
                     sale: true,
                   });
-              } else if (type === "exchange" && operator && b && ["confirmed", "checked_in"].includes(b.status))
+              } else if (type === "exchange" && operator && b && [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===b.status))
                 setModal({ type: "move", booking: b });
-              else if (type === "checkout" && operator && b?.status === "checked_in")
+              else if (type === "checkout" && operator && b?.status === BookingState.CheckedIn)
                 transition(b,"check_out");
             }}
             renderStatus={onBusyChange=><RoomStateEditor
               room={{...contextMenu.room,status:roomStates.get(contextMenu.room.room_id)?.operationalStatus || contextMenu.room.status}}
-              allowedStatuses={operator ? ["Temiz","Kirli","Arizali","Tadilat"] : housekeeping ? ["Temiz","Kirli"] : ["Arizali","Tadilat"]}
+              allowedStatuses={operator ? operationalRoomStatuses : housekeeping ? housekeepingRoomStatuses : [RoomState.OutOfOrder,RoomState.Maintenance]}
               onBusyChange={onBusyChange}
               onClose={()=>setContextMenu(null)}
               onSaved={async()=>{await refresh();notify("Oda durumu ve açıklaması kaydedildi.")}}
@@ -1153,7 +1157,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                 : undefined
             }
             onCancel={
-              operator && contextMenu.booking?.status === "confirmed"
+              operator && contextMenu.booking?.status === BookingState.Confirmed
                 ? () => {
                     const b = contextMenu.booking!;
                     transition(b, "cancel");

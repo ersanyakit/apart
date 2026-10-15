@@ -1,3 +1,4 @@
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
 import type { APIRoom, Booking } from "../../lib/api";
 
 export type CalendarView = "day" | "week" | "month";
@@ -25,7 +26,7 @@ export function stayEvents(bookings: Booking[], rooms: APIRoom[], now = new Date
       if (booking.actual_check_in) start = new Date(Math.max(+start, +new Date(booking.actual_check_in)));
       if (booking.actual_check_out) end = new Date(Math.min(+end, +new Date(booking.actual_check_out)));
       // A guest who has not checked out still occupies the current room today.
-      if (booking.status === "checked_in" && segment.room_id === booking.room_id && +end === +new Date(booking.check_out) && end < now) end = new Date(+now+60000);
+      if (booking.status === BookingState.CheckedIn && segment.room_id === booking.room_id && +end === +new Date(booking.check_out) && end < now) end = new Date(+now+60000);
       if (!Number.isFinite(+start) || !Number.isFinite(+end) || end <= start) return [];
       return [{ id: segment.allocation_id, booking, roomId: segment.room_id, roomCode: codes.get(segment.room_id) ?? "Arşiv birimi", start, end }];
     });

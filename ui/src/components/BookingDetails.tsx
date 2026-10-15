@@ -1,4 +1,6 @@
 "use client";
+import { BookingStatus as BookingState } from '../lib/statuses.generated';
+
 import { statusStyle } from "../lib/status-palette";
 import { bookingSourceLabel } from "../lib/booking-origin";
 import React, { useEffect, useRef, useState } from 'react';
@@ -23,8 +25,8 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
   const dialog = useRef<HTMLDialogElement>(null);
   const [tab, setTab] = useState<BookingDetailTab>(initialTab);
   const canOperate = ['admin', 'management', 'reception'].includes(snapshot.user.role);
-  const editable = canOperate && ['confirmed', 'checked_in'].includes(b.status);
-  const earlyArrival = b.status === 'confirmed' && Date.parse(b.check_in) > Date.parse(snapshot.server_time);
+  const editable = canOperate && [BookingState.Confirmed, BookingState.CheckedIn].some(status=>status===b.status);
+  const earlyArrival = b.status === BookingState.Confirmed && Date.parse(b.check_in) > Date.parse(snapshot.server_time);
   const room = snapshot.rooms.find(room => room.room_id === b.room_id);
   useEffect(() => {
     const element = dialog.current!;
@@ -66,10 +68,10 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
       </div>}
     </div>
     {editable && <footer className="booking-detail-actions">
-      {onTransition && b.status==='confirmed' && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onTransition(b,'cancel')}>Rezervasyonu iptal et</button>}
+      {onTransition && b.status===BookingState.Confirmed && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onTransition(b,'cancel')}>Rezervasyonu iptal et</button>}
       {onEdit && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onEdit(b)}><Pencil size={16}/>Rezervasyonu düzenle</button>}
       {onMove && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onMove(b)}><ArrowRightLeft size={16}/>Birim değiştir</button>}
-      {onTransition && <button type="button" className="uni-button uni-button-primary rounded-full" style={statusStyle(b.status==="checked_in"?"departure":"occupied")} onClick={()=>onTransition(b,b.status==='checked_in'?'check_out':'check_in')}>{b.status==='checked_in'?<LogOut size={16}/>:<LogIn size={16}/>} {b.status==='checked_in'?'Çıkış yap':earlyArrival?'Erken giriş yap':'Giriş yap'}</button>}
+      {onTransition && <button type="button" className="uni-button uni-button-primary rounded-full" style={statusStyle(b.status===BookingState.CheckedIn?"departure":"occupied")} onClick={()=>onTransition(b,b.status===BookingState.CheckedIn?'check_out':'check_in')}>{b.status===BookingState.CheckedIn?<LogOut size={16}/>:<LogIn size={16}/>} {b.status===BookingState.CheckedIn?'Çıkış yap':earlyArrival?'Erken giriş yap':'Giriş yap'}</button>}
     </footer>}
   </dialog>,document.body);
 }

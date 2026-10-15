@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	Confirmed = "confirmed"
-	CheckedIn = "checked_in"
-	Completed = "completed"
-	Cancelled = "cancelled"
+	Confirmed = constants.BookingConfirmed
+	CheckedIn = constants.BookingCheckedIn
+	Completed = constants.BookingCompleted
+	Cancelled = constants.BookingCancelled
 )
 
 type Allocation struct {
@@ -27,38 +27,38 @@ type Allocation struct {
 	End          time.Time `json:"end"`
 }
 type Booking struct {
-	Source                string           `json:"source"`
-	ExternalPropertyID    string           `json:"external_property_id"`
-	ExternalReservationID string           `json:"external_reservation_id"`
-	Currency              string           `json:"currency"`
-	CancellationReason    string           `json:"cancellation_reason"`
-	CancelledAt           *time.Time       `json:"cancelled_at"`
-	CreatedByName         string           `json:"created_by_name"`
-	CheckedInByName       string           `json:"checked_in_by_name"`
-	CheckedInByID         *uuid.UUID       `json:"checked_in_by_id,omitempty"`
-	CancelledByName       string           `json:"cancelled_by_name"`
-	CancelledByID         *uuid.UUID       `json:"cancelled_by_id,omitempty"`
-	CheckedOutByName      string           `json:"checked_out_by_name"`
-	CheckedOutByID        *uuid.UUID       `json:"checked_out_by_id,omitempty"`
-	BookingID             uuid.UUID        `json:"booking_id"`
-	BranchID              uuid.UUID        `json:"branch_id"`
-	RoomID                uuid.UUID        `json:"room_id"`
-	UserID                uuid.UUID        `json:"user_id"`
-	GuestName             string           `json:"guest_name"`
-	GuestCount            int              `json:"guest_count"`
-	DailyPriceMinor       int64            `json:"daily_price_minor"`
-	DepositMinor          int64            `json:"deposit_minor"`
-	DepositChannel        string           `json:"deposit_channel"`
-	Guests                []property.Guest `json:"guests"`
-	Notes                 string           `json:"notes"`
-	CheckIn               time.Time        `json:"check_in"`
-	CheckOut              time.Time        `json:"check_out"`
-	ActualCheckIn         *time.Time       `json:"actual_check_in"`
-	ActualCheckOut        *time.Time       `json:"actual_check_out"`
-	Status                string           `json:"status"`
-	Allocations           []Allocation     `json:"allocations"`
-	CreatedAt             time.Time        `json:"created_at"`
-	UpdatedAt             time.Time        `json:"updated_at"`
+	Source                string                  `json:"source"`
+	ExternalPropertyID    string                  `json:"external_property_id"`
+	ExternalReservationID string                  `json:"external_reservation_id"`
+	Currency              string                  `json:"currency"`
+	CancellationReason    string                  `json:"cancellation_reason"`
+	CancelledAt           *time.Time              `json:"cancelled_at"`
+	CreatedByName         string                  `json:"created_by_name"`
+	CheckedInByName       string                  `json:"checked_in_by_name"`
+	CheckedInByID         *uuid.UUID              `json:"checked_in_by_id,omitempty"`
+	CancelledByName       string                  `json:"cancelled_by_name"`
+	CancelledByID         *uuid.UUID              `json:"cancelled_by_id,omitempty"`
+	CheckedOutByName      string                  `json:"checked_out_by_name"`
+	CheckedOutByID        *uuid.UUID              `json:"checked_out_by_id,omitempty"`
+	BookingID             uuid.UUID               `json:"booking_id"`
+	BranchID              uuid.UUID               `json:"branch_id"`
+	RoomID                uuid.UUID               `json:"room_id"`
+	UserID                uuid.UUID               `json:"user_id"`
+	GuestName             string                  `json:"guest_name"`
+	GuestCount            int                     `json:"guest_count"`
+	DailyPriceMinor       int64                   `json:"daily_price_minor"`
+	DepositMinor          int64                   `json:"deposit_minor"`
+	DepositChannel        string                  `json:"deposit_channel"`
+	Guests                []property.Guest        `json:"guests"`
+	Notes                 string                  `json:"notes"`
+	CheckIn               time.Time               `json:"check_in"`
+	CheckOut              time.Time               `json:"check_out"`
+	ActualCheckIn         *time.Time              `json:"actual_check_in"`
+	ActualCheckOut        *time.Time              `json:"actual_check_out"`
+	Status                constants.BookingStatus `json:"status"`
+	Allocations           []Allocation            `json:"allocations"`
+	CreatedAt             time.Time               `json:"created_at"`
+	UpdatedAt             time.Time               `json:"updated_at"`
 }
 
 func (b Booking) Validate() error {
@@ -99,14 +99,14 @@ func (b Booking) Validate() error {
 func Overlaps(a, b, c, d time.Time) bool { return a.Before(d) && c.Before(b) }
 
 type Query struct {
-	Source                string     `json:"source"`
-	ExternalPropertyID    string     `json:"external_property_id"`
-	ExternalReservationID string     `json:"external_reservation_id"`
-	BookingID             uuid.UUID  `json:"booking_id"`
-	BranchID              uuid.UUID  `json:"branch_id"`
-	From                  *time.Time `json:"from"`
-	To                    *time.Time `json:"to"`
-	Status                string     `json:"status"`
+	Source                string                  `json:"source"`
+	ExternalPropertyID    string                  `json:"external_property_id"`
+	ExternalReservationID string                  `json:"external_reservation_id"`
+	BookingID             uuid.UUID               `json:"booking_id"`
+	BranchID              uuid.UUID               `json:"branch_id"`
+	From                  *time.Time              `json:"from"`
+	To                    *time.Time              `json:"to"`
+	Status                constants.BookingStatus `json:"status"`
 }
 type Transition struct {
 	Reason         string     `json:"reason"`
@@ -157,14 +157,14 @@ func ValidateAvailability(rooms []property.Room, branchID, roomID uuid.UUID, cou
 		if !related[r.RoomID] {
 			continue
 		}
-		if checkIn && r.Status == "Kirli" {
+		if checkIn && r.Status.BlocksCheckIn() && !r.Status.BlocksReservation() {
 			return &constants.Error{
 				Code:    constants.ErrRoomDirty.Code,
 				Message: fmt.Sprintf("%s birimi kirli olduğu için giriş yapılamaz. Önce oda durumunu Temiz olarak güncelleyin.", r.Code),
 				Kind:    constants.Conflict,
 			}
 		}
-		if blocked[r.RoomID] || r.Status == "Arizali" || r.Status == "Tadilat" {
+		if blocked[r.RoomID] || r.Status.BlocksReservation() {
 			return constants.ErrUnavailable
 		}
 	}

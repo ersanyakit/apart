@@ -1,3 +1,4 @@
+import { BookingStatus as BookingState } from '../../lib/statuses.generated';
 import { bookingIntervals, type APIRoom, type Booking, type Floor } from "../../lib/api";
 
 export const DAY = 86_400_000;
@@ -11,7 +12,7 @@ export const dayTime = (day: string) => Date.parse(`${day}T00:00:00+03:00`);
 export const shiftDay = (day: string, count: number) => dayOf(new Date(dayTime(day) + count * DAY).toISOString());
 export type Segment = { id: string; booking: Booking; roomId: string; start: number; end: number };
 export function segmentsFor(bookings: Booking[], now: string): Segment[] {
-  return bookings.filter(b => b.status !== "cancelled").flatMap(b =>
+  return bookings.filter(b => b.status !== BookingState.Cancelled).flatMap(b =>
     bookingIntervals(b, now).map((s, i) => ({ ...s, id: `${b.booking_id}:${i}`, booking: b })),
   );
 }

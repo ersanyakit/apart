@@ -77,7 +77,7 @@ func inventory(tx *gorm.DB, branchID uuid.UUID) ([]property.Room, error) {
 	return out, nil
 }
 func blockedRooms(tx *gorm.DB, branchID uuid.UUID, start, end time.Time, exclude []uuid.UUID) (map[uuid.UUID]bool, error) {
-	q := tx.Table("booking_allocations a").Joins("JOIN bookings b ON b.booking_id = a.booking_id").Where(`a.branch_id = ? AND b.status IN ? AND ((a.start < ? AND a."end" > ?) OR (b.status = ? AND b.check_out <= ? AND b.room_id = a.room_id))`, branchID, []string{booking.Confirmed, booking.CheckedIn}, end, start, booking.CheckedIn, time.Now().UTC())
+	q := tx.Table("booking_allocations a").Joins("JOIN bookings b ON b.booking_id = a.booking_id").Where(`a.branch_id = ? AND b.status IN ? AND ((a.start < ? AND a."end" > ?) OR (b.status = ? AND b.check_out <= ? AND b.room_id = a.room_id))`, branchID, []constants.BookingStatus{booking.Confirmed, booking.CheckedIn}, end, start, booking.CheckedIn, time.Now().UTC())
 	if len(exclude) > 0 {
 		q = q.Where("b.booking_id NOT IN ?", exclude)
 	}
@@ -308,7 +308,7 @@ func markDirty(tx *gorm.DB, branchID, roomID uuid.UUID) error {
 	for id := range property.Descendants(rooms, roomID) {
 		ids = append(ids, id)
 	}
-	return tx.Model(&models.Room{}).Where("room_id IN ?", ids).Update("status", "Kirli").Error
+	return tx.Model(&models.Room{}).Where("room_id IN ?", ids).Update("status", constants.RoomDirty).Error
 }
 func (r *Repository) TransitionBooking(ctx context.Context, input booking.Transition) (booking.Booking, error) {
 	ctx = audit.WithAction(ctx, "bookings", input.Action)

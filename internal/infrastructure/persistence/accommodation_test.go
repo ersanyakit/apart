@@ -125,13 +125,13 @@ func TestAccommodation(t *testing.T) {
 		child := unit("301-Y67873EA2-1-1", "bed", &selected.RoomID, 1)
 		second := unit("301-CLEAN-2", "bed", &selected.RoomID, 1)
 		sibling := unit("302-CLEAN", "room", &parent.RoomID, 1)
-		setState := func(id uuid.UUID, status string) {
+		setState := func(id uuid.UUID, status constants.RoomStatus) {
 			t.Helper()
 			if _, err := catalog.SaveState(ctx, admin, property.Room{RoomID: id, Status: status, StatusReason: "Test temizlik ve bakım açıklaması"}); err != nil {
 				t.Fatal(err)
 			}
 		}
-		assertState := func(id uuid.UUID, status string) {
+		assertState := func(id uuid.UUID, status constants.RoomStatus) {
 			t.Helper()
 			r, err := repo.FindRoom(ctx, id)
 			if err != nil || r.Status != status {
@@ -171,7 +171,7 @@ func TestAccommodation(t *testing.T) {
 		parent := unit("MAINT-CLEAN", "apartment", nil, 1)
 		child := unit("MAINT-ROOM", "room", &parent.RoomID, 1)
 		bed := unit("MAINT-BED", "bed", &child.RoomID, 1)
-		for _, status := range []string{"Arizali", "Tadilat"} {
+		for _, status := range []constants.RoomStatus{constants.RoomOutOfOrder, constants.RoomMaintenance} {
 			if err := repo.SaveOperationalState(ctx, child.RoomID, status, "Bakım kaydı korunmalıdır."); err != nil {
 				t.Fatal(err)
 			}

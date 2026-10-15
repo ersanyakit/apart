@@ -2,6 +2,7 @@ package reporting
 
 import (
 	"github.com/google/uuid"
+	"otel/constants"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/property"
 	"slices"
@@ -156,7 +157,7 @@ func managementMetrics(out *Result, f Filter, d Dataset, bookings []booking.Book
 		}
 	}
 	for _, r := range rooms {
-		if !r.Inactive && r.Status == "Kirli" && r.Kind != "bed" {
+		if !r.Inactive && r.Status == constants.RoomDirty && r.Kind != "bed" {
 			dirty++
 		}
 	}

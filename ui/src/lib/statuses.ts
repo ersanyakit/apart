@@ -1,0 +1,11 @@
+import { RoomStatus, RoomStatusDefinitions, BookingStatusDefinitions } from './statuses.generated';
+export { RoomStatus, BookingStatus } from './statuses.generated';
+export const roomStatuses: Record<string,string> = Object.fromEntries(RoomStatusDefinitions.map(d=>[d.value,d.label]));
+export const bookingStatuses: Record<string,string> = Object.fromEntries(BookingStatusDefinitions.map(d=>[d.value,d.label]));
+export const roomStatusDefinition = (status:string) => RoomStatusDefinitions.find(d=>d.value===status);
+export const roomBlocksReservation = (status:string) => roomStatusDefinition(status)?.blocksReservation ?? true;
+export const roomBlocksCheckIn = (status:string) => roomStatusDefinition(status)?.blocksCheckIn ?? true;
+export const roomRequiresReason = (status:string) => roomStatusDefinition(status)?.requiresReason ?? false;
+export const roomIsHousekeeping = (status:string) => roomStatusDefinition(status)?.housekeeping ?? false;
+export const operationalRoomStatuses = RoomStatusDefinitions.filter(d=>d.value!==RoomStatus.Vacant).map(d=>d.value);
+export const housekeepingRoomStatuses = RoomStatusDefinitions.filter(d=>d.housekeeping).map(d=>d.value);

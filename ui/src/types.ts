@@ -1,5 +1,5 @@
 import type { MediaAsset, FeatureAssignment, LocalizedString } from './lib/api';
-export type RoomStatus = 'Rezervli' | 'Dolu' | 'Bos' | 'Temiz' | 'Kirli' | 'Arizali' | 'Tadilat';
+export type RoomStatus = import('./lib/statuses.generated').RoomStatus | 'Rezervli' | 'Dolu';
 
 export interface Guest {
   gender?: '' | 'female' | 'male' | 'unspecified';

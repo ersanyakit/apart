@@ -39,7 +39,7 @@ func (s *Reports) Export(ctx context.Context, u identity.User, q guest.Query) (F
 		for _, c := range r.Companions {
 			names = append(names, c.Name)
 		}
-		rows = append(rows, []string{r.Name, r.TCNo, r.Phone, r.BranchName, r.RoomCode, r.Start.In(zone).Format("02.01.2006 15:04"), r.End.In(zone).Format("02.01.2006 15:04"), r.Status, strings.Join(names, ", ")})
+		rows = append(rows, []string{r.Name, r.TCNo, r.Phone, r.BranchName, r.RoomCode, r.Start.In(zone).Format("02.01.2006 15:04"), r.End.In(zone).Format("02.01.2006 15:04"), string(r.Status), strings.Join(names, ", ")})
 	}
 	switch q.Format {
 	case "xlsx":

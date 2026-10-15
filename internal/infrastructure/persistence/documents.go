@@ -70,7 +70,7 @@ func (r *Repository) SaveDocument(ctx context.Context, d document.Document) erro
 		if err := tx.First(&b, "booking_id = ? AND branch_id = ?", d.BookingID, d.BranchID).Error; err != nil {
 			return err
 		}
-		if (d.Kind == "cancellation_receipt" && b.Status != "cancelled") || (d.Kind != "cancellation_receipt" && b.Status == "cancelled") {
+		if (d.Kind == "cancellation_receipt" && b.Status != constants.BookingCancelled) || (d.Kind != "cancellation_receipt" && b.Status == constants.BookingCancelled) {
 			return constants.ErrBookingState
 		}
 		return tx.Create(&models.Document{DocumentID: d.DocumentID, HotelID: d.HotelID, BranchID: d.BranchID, BookingID: d.BookingID, TemplateID: d.TemplateID, Snapshot: d, CreatedAt: d.CreatedAt}).Error

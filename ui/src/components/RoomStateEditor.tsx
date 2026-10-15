@@ -1,3 +1,5 @@
+import {roomRequiresReason} from "../lib/statuses";
+import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useEffect, useState } from 'react';
 import { Check, Sparkles, Wrench, PaintRoller } from 'lucide-react';
 import { command, messageOf, type APIRoom } from '../lib/api';
@@ -17,7 +19,7 @@ export function RoomStateEditor({room, allowedStatuses, initialStatus, onSaved, 
   const [people,setPeople]=useState<{user_id:string;name:string}[]>([]);
   const [loading,setLoading]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState('');
   const note=drafts[selected] || '';
-  const clean=selected==='Temiz', required=selected==='Arizali'||selected==='Tadilat';
+  const clean=selected===RoomState.Clean, required=roomRequiresReason(selected);
   const palette=STATUS_PALETTE[roomStatusKey(selected)];
   useEffect(()=>{
     if(!clean)return;
@@ -40,12 +42,12 @@ export function RoomStateEditor({room, allowedStatuses, initialStatus, onSaved, 
     <div className={styles.context}><strong>Oda {room.code}</strong><span>Mevcut durum: {STATUS_PALETTE[roomStatusKey(room.status)].label}</span></div>
     <fieldset disabled={busy}>
       <div className={styles.masters} role="group" aria-label="Yeni oda durumu">
-        {allowedStatuses.map(status=>{const color=STATUS_PALETTE[roomStatusKey(status)],Icon=status==='Temiz'?Check:status==='Kirli'?Sparkles:status==='Tadilat'?PaintRoller:Wrench;return <button key={status} type="button" aria-pressed={selected===status} style={{'--state-accent':color.accent,'--state-background':color.background,'--state-text':color.text} as React.CSSProperties} onClick={()=>{setSelected(status);setError('');}}><Icon size={19} strokeWidth={1.8} aria-hidden="true"/>{color.label}</button>})}
+        {allowedStatuses.map(status=>{const color=STATUS_PALETTE[roomStatusKey(status)],Icon=status===RoomState.Clean?Check:status===RoomState.Dirty?Sparkles:status===RoomState.Maintenance?PaintRoller:Wrench;return <button key={status} type="button" aria-pressed={selected===status} style={{'--state-accent':color.accent,'--state-background':color.background,'--state-text':color.text} as React.CSSProperties} onClick={()=>{setSelected(status);setError('');}}><Icon size={19} strokeWidth={1.8} aria-hidden="true"/>{color.label}</button>})}
       </div>
       {!selected ? <p className={styles.description}>Detaylarını girmek için yeni oda durumunu seçin. Değişiklik yalnızca kaydettiğinizde uygulanır.</p> : <section className={styles.detail} aria-label={`${palette.label} detayları`}>
-        <div><h3>{clean?'Temizlik kaydı':`${palette.label} · Durum açıklaması`}</h3><p>{clean?'Temizliği yapan personeli seçin ve varsa temizlik notunu ekleyin.':selected==='Kirli'?'Temizlik ekibine iletmek istediğiniz bilgileri yazabilirsiniz.':selected==='Tadilat'?'Yapılacak tadilatı ve oda kullanımıyla ilgili bilgileri açıklayın.':'Arızayı, etkilediği alanı ve gerekli müdahaleyi açıklayın.'}</p></div>
+        <div><h3>{clean?'Temizlik kaydı':`${palette.label} · Durum açıklaması`}</h3><p>{clean?'Temizliği yapan personeli seçin ve varsa temizlik notunu ekleyin.':selected===RoomState.Dirty?'Temizlik ekibine iletmek istediğiniz bilgileri yazabilirsiniz.':selected===RoomState.Maintenance?'Yapılacak tadilatı ve oda kullanımıyla ilgili bilgileri açıklayın.':'Arızayı, etkilediği alanı ve gerekli müdahaleyi açıklayın.'}</p></div>
         {clean&&<><InlineSelectField label="Temizliği yapan personel" value={cleaner} onChange={setCleaner} options={[{value:'',label:loading?'Personel yükleniyor…':'Personel seçin'},...people.map(p=>({value:p.user_id,label:p.name}))]}/>{!loading&&!people.length&&!error&&<p className={styles.description}>Bu tesise atanmış personel bulunamadı.</p>}</>}
-        <TextAreaField label={clean?'Temizlik notu (isteğe bağlı)':required?'Açıklama (zorunlu)':'Açıklama (isteğe bağlı)'} value={note} onChange={value=>setDrafts(previous=>({...previous,[selected]:value}))} placeholder={selected==='Kirli'?'Örn. Banyo ve havluların kontrol edilmesi gerekiyor.':'İşlemle ilgili bilgileri yazın.'}/>
+        <TextAreaField label={clean?'Temizlik notu (isteğe bağlı)':required?'Açıklama (zorunlu)':'Açıklama (isteğe bağlı)'} value={note} onChange={value=>setDrafts(previous=>({...previous,[selected]:value}))} placeholder={selected===RoomState.Dirty?'Örn. Banyo ve havluların kontrol edilmesi gerekiyor.':'İşlemle ilgili bilgileri yazın.'}/>
         <p className={styles.counter}>{note.length} / 2000{required?' · En az 10 karakter':''}</p>
       </section>}
       <ErrorMessage message={error}/>
