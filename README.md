@@ -6,7 +6,7 @@ Otel, apart, pansiyon, günlük kiralık daire ve hostel işletmeleri için reze
 
 ![INTERACTIVEOTEL — konaklama işletmeleri için yönetim platformu](docs/images/hero.png)
 
-[Özellikler](#özellikler) · [Ekran görüntüleri](#ekran-görüntüleri) · [Dil desteği](#dil-desteği-ve-tanıtım-sayfaları) · [Kurulum](#çalıştırma) · [API](#api) · [Doğrulama](#doğrulama)
+[Kullanım kılavuzu](docs/README.md) · [Özellikler](#özellikler) · [Ekran görüntüleri](#ekran-görüntüleri) · [Dil desteği](#dil-desteği-ve-tanıtım-sayfaları) · [Kurulum](#çalıştırma) · [API](#api) · [Doğrulama](#doğrulama)
 
 ## Kimler için?
 
