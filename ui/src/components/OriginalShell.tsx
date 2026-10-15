@@ -33,7 +33,7 @@ import { REPORTS, REPORT_GROUPS, reportPageID, reportSidebarPage } from "./repor
 import { SidebarItem } from "./Sidebar";
 import { NavigationIcon } from "./NavigationIcon";
 import { MobileNav } from "./MobileNav";
-import { UniSelect } from "./UniSelect";
+import { PropertySwitcher } from "./PropertySwitcher";
 import { ReservationCalendar } from "./Calendar";
 import { facilityView, roomView } from "../lib/adapters";
 import {
@@ -294,36 +294,8 @@ export function OriginalShell({
           className="desktop-sidebar hidden lg:flex min-h-0 border-0 flex-col z-20 shrink-0"
         >
           {isSidebarOpen && (
-            <div className="px-3 pb-2 pt-3 space-y-2">
-              <UniSelect
-                variant="field"
-                caption="Otel"
-                ariaLabel="Otel seçimi"
-                icon={<NavigationIcon name="facility" />}
-                value={snapshot.hotel_id}
-                options={snapshot.hotels.map((h) => ({
-                  value: h.hotel_id,
-                  label: h.name,
-                }))}
-                onChange={(hotel_id) => onSelection({ hotel_id })}
-              />
-              <UniSelect
-                variant="field"
-                caption="Tesis"
-                ariaLabel="Tesis seçimi"
-                icon={<NavigationIcon name="map" />}
-                value={snapshot.branch_id}
-                options={snapshot.branches.map((b) => ({
-                  value: b.branch_id ?? "",
-                  label: b.name,
-                }))}
-                onChange={(branch_id) =>
-                  onSelection({
-                    hotel_id: snapshot.hotel_id,
-                    branch_id,
-                  })
-                }
-              />
+            <div className="px-3 pb-2 pt-3">
+              <PropertySwitcher snapshot={snapshot} onSelection={onSelection} />
             </div>
           )}
           <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-3 py-3">

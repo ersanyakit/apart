@@ -17,6 +17,8 @@ interface UniSelectProps {
   onChange: (value: string) => void;
   ariaLabel: string;
   variant?: "compact" | "field";
+  /** Compact row inside a shared FieldCard. */
+  grouped?: boolean;
 }
 
 /**
@@ -36,6 +38,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
   onChange,
   ariaLabel,
   variant = "compact",
+  grouped = false,
 }) => {
   const reducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -44,7 +47,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
   const listId = useId();
   const selected = options.find((o) => o.value === value);
   const isField = variant === "field";
-  const Container = isField ? FieldCard : "div";
+  const Container = isField && !grouped ? FieldCard : "div";
 
   useEffect(() => {
     if (!open) return;
@@ -84,7 +87,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
       const next = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1 : (index + (event.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
       items[next]?.focus();
     }}>
-      <Container className={isField ? "bg-white" : undefined}>
+      <Container className={isField && !grouped ? "bg-white" : undefined}>
       <button
         ref={triggerRef}
         type="button"
@@ -93,7 +96,9 @@ export const UniSelect: React.FC<UniSelectProps> = ({
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => setOpen((v) => !v)}
-        className={isField
+        className={grouped
+          ? "uni-control sidebar-menu-row flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-brand-blue-500"
+          : isField
           ? "flex min-h-16 w-full cursor-pointer items-center justify-between gap-3 rounded-xl text-left outline-none transition-all duration-150 ease-out active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-neutral-400"
           : `uni-control
           uni-select-trigger w-full flex items-center gap-2 min-h-11 px-3 py-2 rounded-xl
@@ -102,14 +107,14 @@ export const UniSelect: React.FC<UniSelectProps> = ({
           ${open ? "border-slate-300 bg-white" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/60 active:bg-slate-50/60"}
         `}
       >
-        {!isField && <span className="w-8 h-8 rounded-lg bg-brand-blue-50 text-brand-blue-600 flex items-center justify-center shrink-0">
+        {(!isField || grouped) && <span className={`w-8 h-8 ${grouped ? "rounded-full text-brand-blue-500" : "rounded-lg text-brand-blue-600"} bg-brand-blue-50 flex items-center justify-center shrink-0`}>
           {icon}
         </span>}
         <span className="flex-1 min-w-0 text-left">
           {isField ? <FieldCaption>{caption}</FieldCaption> : <span className="font-uninav-book block text-[10px] leading-3 tracking-[0.08em] uppercase text-slate-500">
             {caption}
           </span>}
-          <span title={selected?.label} className={isField ? "font-uninav-book mt-1 block truncate text-[1.25rem] leading-8 text-slate-900" : "uni-nav-sub-active block truncate text-slate-800 mt-0.5"}>
+          <span title={selected?.label} className={grouped ? "font-uninav-book block truncate text-sm font-medium leading-5 text-slate-900" : isField ? "font-uninav-book mt-1 block truncate text-[1.25rem] leading-8 text-slate-900" : "uni-nav-sub-active block truncate text-slate-800 mt-0.5"}>
             {selected?.label ?? "—"}
           </span>
         </span>

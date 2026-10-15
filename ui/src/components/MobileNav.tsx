@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronRight, LogOut, Menu } from "lucide-react";
 import { BottomSheet } from "./BottomSheet";
 import { NavigationIcon } from "./NavigationIcon";
-import { UniSelect } from "./UniSelect";
+import { PropertySwitcher } from "./PropertySwitcher";
 import { confirmDialog } from "./ConfirmDialog";
 import type { Snapshot, Selection } from "../lib/api";
 import type { MenuItem } from "../types";
@@ -74,18 +74,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
         </div>
         <section aria-label="Aktif işletme" className="mb-6">
           <h3 className="mobile-menu-heading">İşletme</h3>
-          <div className="space-y-3">
-            <UniSelect variant="field" caption="Otel" ariaLabel="Otel seçimi"
-              icon={<NavigationIcon name="facility" size={18} />}
-              value={snapshot.hotel_id}
-              options={snapshot.hotels.map((hotel) => ({ value: hotel.hotel_id, label: hotel.name }))}
-              onChange={(hotel_id) => onSelection({ hotel_id })} />
-            <UniSelect key={snapshot.hotel_id} variant="field" caption="Tesis" ariaLabel="Tesis seçimi"
-              icon={<NavigationIcon name="units" size={18} />}
-              value={snapshot.branch_id}
-              options={snapshot.branches.map((branch) => ({ value: branch.branch_id ?? "", label: branch.name }))}
-              onChange={(branch_id) => onSelection({ hotel_id: snapshot.hotel_id, branch_id })} />
-          </div>
+          <PropertySwitcher snapshot={snapshot} onSelection={onSelection} />
         </section>
         {groups.map((group) => (
           <section key={group.id} aria-label={group.label} className="mb-6">

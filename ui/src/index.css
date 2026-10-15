@@ -854,3 +854,40 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 .app-shell:has(.property-wide) .mobile-tab-bar { display:none !important; }
 .app-shell:has(.property-wide) .property-stage { flex:1; min-height:0; }
 @media(max-width:639px) { .app-toast-stack { top:max(12px,env(safe-area-inset-top)); right:max(12px,env(safe-area-inset-right)); width:calc(100vw - max(12px,env(safe-area-inset-left)) - max(12px,env(safe-area-inset-right))); } }
+
+/* Shared hotel/facility card follows the sidebar palette in every theme. */
+.property-switcher-card {
+  padding: 4px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--color-uni-surface);
+  transform: none !important;
+  scale: 1 !important;
+}
+.property-switcher-card:hover,
+.property-switcher-card:focus-within {
+  background: var(--color-uni-surface);
+  box-shadow: none;
+}
+.property-switcher-card [aria-haspopup="listbox"][aria-expanded="true"],
+.property-switcher-card [role="option"][aria-selected="true"] {
+  background: var(--color-brand-blue-100);
+  color: var(--color-brand-blue-700);
+}
+.property-switcher-card [role="option"]:hover {
+  background: var(--color-uni-hover);
+}
+.property-switcher-card [role="option"]:active,
+.property-switcher-card [role="option"][aria-selected="true"]:hover {
+  background: var(--color-brand-blue-200);
+}
+.property-switcher-card [role="listbox"] {
+  margin: 0 12px 8px;
+  padding-top: 8px;
+  border-color: var(--color-uni-border);
+}
+
+.property-switcher-card button:focus-visible {
+  outline: 2px solid var(--color-brand-blue-500);
+  outline-offset: -3px;
+}
