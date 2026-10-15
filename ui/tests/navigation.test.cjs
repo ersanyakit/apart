@@ -14,7 +14,7 @@ execFileSync(process.execPath, [
   require.resolve("typescript/bin/tsc"), "--target", "ES2022", "--module", "commonjs",
   "--moduleResolution", "node", "--skipLibCheck", "--strict", "--esModuleInterop",
   "--resolveJsonModule", "--jsx", "react-jsx", "--outDir", output,
-  "src/components/Sidebar.tsx", "src/components/MobileNav.tsx",
+  "src/components/Sidebar.tsx", "src/components/MobileNav.tsx", "src/components/reports/navigation.ts",
 ], { cwd: ui, stdio: "pipe" });
 process.env.NODE_PATH = path.join(ui, "node_modules");
 require("node:module").Module._initPaths();
@@ -70,4 +70,32 @@ test("mobile navigation has a single menu trigger and marks the active tab", () 
   }));
   assert.equal((restricted.match(/<button/g) ?? []).length, 2);
   assert.ok(!restricted.includes("Rezervasyon"));
+});
+
+const { REPORTS, REPORT_GROUPS, reportPageID, reportForPage, reportSidebarPage } = require(path.join(output, "components/reports/navigation.js"));
+test("report categories retain every report exactly once and preserve deep links", () => {
+  const grouped = REPORT_GROUPS.flatMap(group => group.reports);
+  assert.equal(REPORT_GROUPS.length, 10);
+  assert.equal(new Set(grouped.map(report => report.key)).size, REPORTS.length);
+  assert.equal(grouped.length, REPORTS.length);
+  for (const group of REPORT_GROUPS) {
+    assert.ok(group.reports.length > 0);
+    assert.equal(reportSidebarPage(group.id), group.id);
+    for (const report of group.reports) {
+      assert.equal(reportForPage(reportPageID(report.key)), report);
+      assert.equal(reportSidebarPage(reportPageID(report.key)), group.id);
+    }
+  }
+  assert.equal(reportSidebarPage("reports"), "report-group.management");
+  assert.equal(reportSidebarPage("board"), "board");
+});
+test("report sidebar exposes category destinations without individual report rows", () => {
+  const item = { id: "reports", label: "Raporlar", subItems: REPORT_GROUPS.map(group => ({ id: group.id, label: group.name })) };
+  for (const isOpen of [true, false]) {
+    const markup = renderToStaticMarkup(React.createElement(SidebarItem, { item, isOpen,
+      activeTab: reportSidebarPage("report.finance.daily_revenue"), onSelect() {} }));
+    assert.equal((markup.match(/<button/g) ?? []).length, REPORT_GROUPS.length);
+    for (const group of REPORT_GROUPS) assert.ok(markup.includes(group.name));
+    for (const report of REPORTS) assert.ok(!markup.includes(`>${report.name}<`));
+  }
 });

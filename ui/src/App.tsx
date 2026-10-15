@@ -70,7 +70,8 @@ import {
   BookingDocuments,
 } from "./components/DocumentsView";
 import { InventoryView } from "./components/InventoryView";
-import { REPORTS, reportPageID, reportForPage } from "./components/reports/navigation";
+import { REPORTS, REPORT_GROUPS, reportPageID, reportForPage, reportGroupForPage } from "./components/reports/navigation";
+import { ReportGroupView } from "./components/reports/ReportGroupView";
 import { ReportsView } from "./components/reports/ReportsView";
 import { CustomerDetail } from "./components/reports/CustomerDetail";
 import type { Customer } from "./components/reports/CustomerList";
@@ -120,6 +121,7 @@ type Modal =
 const navigation = [
   { id: "property3d", label: "3 Boyutlu Görünüm", icon: Building2 },
   { id: "kanban", label: "Resepsiyon Notları", icon: Layers },
+  ...REPORT_GROUPS.map(group=>({id:group.id,label:group.name,icon:Layers})),
   ...REPORTS.map(r=>({id:reportPageID(r.key),label:r.name,icon:Layers})),
   { id: "reports", label: "Yönetim özeti", icon: Layers },
   { id: "board", label: "Oda Durum Çizelgesi", icon: LayoutGrid },
@@ -297,6 +299,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
     manager = ["admin", "management"].includes(s.user.role),
     operator = manager || s.user.role === "reception",
     housekeeping = operator || s.user.role === "housekeeping";
+  const activeReportGroup = reportGroupForPage(tab);
   const branch = s.branches.find((b) => b.branch_id === s.branch_id),
     hotel = s.hotels.find((h) => h.hotel_id === s.hotel_id),
     atISO = dateFilter
@@ -944,6 +947,14 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           propertyName={s.branches.find(b => b.branch_id === s.branch_id)?.name || s.hotels.find(h => h.hotel_id === s.hotel_id)?.name || "Otel"}
           headerActions={pageActions}
           onOpenBooking={operator ? openBookingEdit : undefined} />}
+        {activeReportGroup?.id === tab && (manager
+          ? <ReportGroupView group={activeReportGroup} onSelect={activateTab} />
+          : <p>Raporlama yalnızca işletme yöneticilerine açıktır.</p>)}
+        {manager && (reportForPage(tab) || tab === "reports") && activeReportGroup && <button
+          type="button" className="uni-control inline-flex min-h-11 items-center gap-2 rounded-full border border-uni-border bg-uni-surface px-4 text-sm font-medium"
+          onClick={() => activateTab(activeReportGroup.id)}>
+          <span aria-hidden="true">←</span> {activeReportGroup.name} raporlarına dön
+        </button>}
         {openTabs.includes("report.guests.customers") && <div hidden={tab !== "report.guests.customers"}>
           <ReportsView key={`${customerScope}-customers`} snapshot={s} reportKey="guests.customers" onOpenCustomer={openCustomer}/>
         </div>}

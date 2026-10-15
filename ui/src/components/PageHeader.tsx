@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useId } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { usePreference } from "./UserPreferences";
-import { reportForPage, type ReportPageID } from "./reports/navigation";
+import { reportForPage, reportGroupForPage, type ReportPageID, type ReportGroupPageID } from "./reports/navigation";
 import { NavigationIcon } from "./NavigationIcon";
 
 export const PAGE_HEADERS = {
@@ -23,7 +23,7 @@ export const PAGE_HEADERS = {
   features: ["Olanak Tanımları", "Olanakları ve kategorileri tanımlayın, tesis kataloğunu düzenleyin."],
   appsettings: ["Ayarlar", "Çalışma alanını kendine göre düzenle. Tercihlerin hesabında saklanır."],
 } as const;
-export type PageID = keyof typeof PAGE_HEADERS | ReportPageID;
+export type PageID = keyof typeof PAGE_HEADERS | ReportPageID | ReportGroupPageID;
 const HeaderContext = createContext<{ propertyName?: string; actions?: React.ReactNode }>({});
 export const PageHeaderProvider = HeaderContext.Provider;
 
@@ -34,7 +34,7 @@ export function PageHeader({ pageId, propertyName, actions, children, globalActi
   const inherited = useContext(HeaderContext);
   const [collapsed, setCollapsed] = usePreference<boolean>(`header.${pageId}`, false);
   const id = useId();
-  const report = reportForPage(pageId);
+  const report = reportForPage(pageId) ?? reportGroupForPage(pageId);
   const [title, description] = report ? [report.name, report.description] : PAGE_HEADERS[pageId as keyof typeof PAGE_HEADERS];
   return <header className="page-header" data-collapsed={collapsed} aria-labelledby={`${id}-title`}>
     <div className="page-header-top">

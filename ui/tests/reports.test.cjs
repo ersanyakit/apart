@@ -15,7 +15,7 @@ mkdirSync(path.join(output,'assets/flags'),{recursive:true});
 for(const file of readdirSync(path.join(ui,'src/assets/flags')))if(/^[a-z]{2}\.svg$/.test(file))copyFileSync(path.join(ui,'src/assets/flags',file),path.join(output,'assets/flags',file));
 require.extensions['.svg']=(module,filename)=>{module.exports={src:'/flags/'+path.basename(filename)}};
 const React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
-const {REPORTS,reportPageID,reportForPage}=require(path.join(output,'components/reports/navigation.js'));
+const {REPORTS,REPORT_GROUPS,reportPageID,reportForPage,reportSidebarPage}=require(path.join(output,'components/reports/navigation.js'));
 const {SidebarItem}=require(path.join(output,'components/Sidebar.js'));
 const {PageHeader}=require(path.join(output,'components/PageHeader.js'));
 const {UserPreferencesProvider}=require(path.join(output,'components/UserPreferences.js'));
@@ -23,11 +23,11 @@ const {NotificationProvider}=require(path.join(output,'components/Toast.js'));
 const wrap=child=>React.createElement(NotificationProvider,null,child);
 const {ReportsView,DataTable}=require(path.join(output,'components/reports/ReportsView.js'));
 const {csvCell,reportCSV,shiftDay,dayAt}=require(path.join(output,'components/reports/model.js'));
-test('every report has its own sidebar destination, header and independent collapse preference',()=>{
+test('every report retains its category destination, header and independent collapse preference',()=>{
  assert.ok(REPORTS.length>=50);assert.equal(new Set(REPORTS.map(r=>r.key)).size,REPORTS.length);
- const group={id:'reports',label:'Raporlamalar',subItems:REPORTS.map(r=>({id:reportPageID(r.key),label:r.name}))};
+ const group={id:'reports',label:'Raporlar',subItems:REPORT_GROUPS.map(r=>({id:r.id,label:r.name}))};
  for(const report of REPORTS){const id=reportPageID(report.key);assert.equal(reportForPage(id).name,report.name);
-  const menu=renderToStaticMarkup(React.createElement(SidebarItem,{item:group,isOpen:true,activeTab:id,onSelect(){}}));assert.equal((menu.match(/aria-current="page"/g)||[]).length,1);assert.ok(menu.includes(report.name));
+  const menu=renderToStaticMarkup(React.createElement(SidebarItem,{item:group,isOpen:true,activeTab:reportSidebarPage(id),onSelect(){}}));assert.equal((menu.match(/aria-current="page"/g)||[]).length,1);assert.ok(menu.includes(report.category));
   const render=prefs=>renderToStaticMarkup(wrap(React.createElement(UserPreferencesProvider,{initial:prefs},React.createElement(PageHeader,{pageId:id}))));
   const expanded=render({});assert.ok(expanded.includes(report.name));assert.equal((expanded.match(/<h2 /g)||[]).length,1);
   const collapsed=render({[`header.${id}`]:true});assert.match(collapsed,/class="page-header-details" hidden=""/);

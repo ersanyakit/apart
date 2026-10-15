@@ -29,7 +29,7 @@ import {
   Wind,
   History,
 } from "lucide-react";
-import { REPORTS, reportPageID } from "./reports/navigation";
+import { REPORTS, REPORT_GROUPS, reportPageID, reportSidebarPage } from "./reports/navigation";
 import { SidebarItem } from "./Sidebar";
 import { NavigationIcon } from "./NavigationIcon";
 import { MobileNav } from "./MobileNav";
@@ -122,7 +122,7 @@ export function OriginalShell({
         { id: "guests", label: "Misafir Arama ve Geçmiş", icon: <NavigationIcon name="guests" /> },
       ],
     },
-    ...(manager ? [{ id: "reports", label: "Raporlamalar", icon: <NavigationIcon name="reports" />, subItems: REPORTS.map(r=>({id:reportPageID(r.key),label:r.name,icon:<NavigationIcon name={reportPageID(r.key)} />})) }] : []),
+    ...(manager ? [{ id: "reports", label: "Raporlar", icon: <NavigationIcon name="reports" />, subItems: REPORT_GROUPS.map(group=>({id:group.id,label:group.name,icon:<NavigationIcon name={group.id} />})) }] : []),
     ...(manager
       ? [
           {
@@ -145,7 +145,7 @@ export function OriginalShell({
     ] },
   ];
   // Üst bardaki kapanabilir sekmelerin etiketleri (sidebar ağacından).
-  const TAB_LABELS: Record<string, string> = { ...extraLabels };
+  const TAB_LABELS: Record<string, string> = { ...Object.fromEntries(REPORTS.map(report => [reportPageID(report.key), report.name])), ...extraLabels };
   for (const group of SIDEBAR_ITEMS) {
     for (const sub of group.subItems ?? []) {
       TAB_LABELS[sub.id] ??= sub.label;
@@ -332,7 +332,7 @@ export function OriginalShell({
                 key={item.id}
                 item={item}
                 isOpen={isSidebarOpen}
-                activeTab={activeTab}
+                activeTab={reportSidebarPage(activeTab)}
                 onSelect={setActiveTab}
               />
             ))}
@@ -485,7 +485,7 @@ export function OriginalShell({
       <MobileNav
         snapshot={snapshot}
         groups={SIDEBAR_ITEMS}
-        activeTab={activeTab}
+        activeTab={reportSidebarPage(activeTab)}
         onSelect={setActiveTab}
         onSelection={onSelection}
         onLogout={onLogout}

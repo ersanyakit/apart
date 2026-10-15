@@ -28,6 +28,7 @@ await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByR
 await fs.mkdir('output/marketing/screenshots',{recursive:true});await page.screenshot({path:'output/marketing/screenshots/board.png'});
 for(const [name,label] of [['calendar','Konaklama Takvimi'],['bookings','Rezervasyon Listesi'],['notes','Resepsiyon Notları'],['property','Kat ve Oda Tanımları'],['property-3d','3 Boyutlu Görünüm'],['stays','Konaklayan Listesi'],['amenities','Olanak Tanımları'],['settings','Ayarlar'],['report-dashboard','Yönetim özeti'],['report-revenue','Günlük gelir ve tahsilat'],['report-occupancy','Günlük doluluk'],['report-payments','Ödeme yöntemleri']]) {
  if(process.argv.length>2 && !process.argv.slice(2).includes(name))continue;
+ if(name.startsWith('report-')) { const category = name === 'report-dashboard' ? 'Yönetim' : name === 'report-occupancy' ? 'Doluluk' : 'Finans'; await page.getByRole('button',{name:category,exact:true}).last().click(); }
  await page.getByRole('button',{name:label,exact:true}).last().click();
  if(name==='property-3d'){await page.locator('canvas').waitFor({timeout:15000});await page.waitForTimeout(3500);if(await page.getByText('3 boyutlu görünüm açılamadı.',{exact:true}).count())throw new Error('WebGL failed');}
  if(name.startsWith('report-')){await page.locator('[data-chart-kind]').first().waitFor();await page.getByRole('button',{name:label+': üst alanı daralt',exact:true}).click();}
