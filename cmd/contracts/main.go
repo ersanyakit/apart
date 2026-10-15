@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"otel/constants"
+	"otel/internal/domain/accommodation"
 	"otel/internal/domain/reporting"
 	"path/filepath"
 )
@@ -14,7 +15,7 @@ func main() {
 	for code, message := range constants.ErrorMessages {
 		messages[code] = message
 	}
-	value := map[string]any{"room_statuses": constants.RoomStatusDefinitions(), "booking_statuses": constants.BookingStatusDefinitions(), "report_groups": constants.ReportGroups(), "application": constants.APPLICATION_NAME, "brandName": constants.BrandName, "brandURL": constants.BrandURL, "version": constants.COMMAND_VERSION, "application_version": constants.APPLICATION_VERSION, "commands": constants.CommandMethods, "reports": reporting.Definitions(), "report_record_kinds": reporting.Kinds, "languages": constants.SupportedLanguages(), "errors": messages}
+	value := map[string]any{"floor_presets": constants.FloorPresets(), "bed_presets": accommodation.BedPresets(), "bed_types": accommodation.BedTypeLabels(), "room_statuses": constants.RoomStatusDefinitions(), "booking_statuses": constants.BookingStatusDefinitions(), "report_groups": constants.ReportGroups(), "application": constants.APPLICATION_NAME, "brandName": constants.BrandName, "brandURL": constants.BrandURL, "version": constants.COMMAND_VERSION, "application_version": constants.APPLICATION_VERSION, "commands": constants.CommandMethods, "reports": reporting.Definitions(), "report_record_kinds": reporting.Kinds, "languages": constants.SupportedLanguages(), "errors": messages}
 	data, err := json.MarshalIndent(value, "", "  ")
 	if err != nil {
 		panic(err)

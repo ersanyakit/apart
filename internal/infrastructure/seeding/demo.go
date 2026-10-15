@@ -59,7 +59,7 @@ func demo(ctx context.Context, tx *gorm.DB, options Options) error {
 	}
 	floors := make([]models.Floor, 3)
 	for i := range floors {
-		floors[i] = models.Floor{FloorID: uuid.New(), BranchID: branch.BranchID, Code: fmt.Sprint(i + 1), Label: utils.LocalizedString{constants.LanguageTR: fmt.Sprintf("%d. Kat", i+1), constants.LanguageEN: fmt.Sprintf("Floor %d", i+1)}, SortOrder: i + 1, Width: 2400, Height: 1600}
+		floors[i] = models.Floor{FloorID: uuid.New(), BranchID: branch.BranchID, Code: fmt.Sprint(i + 1), Label: utils.LocalizedString{constants.LanguageTR: fmt.Sprintf("%d. Kat", i+1), constants.LanguageEN: fmt.Sprintf("Floor %d", i+1)}, SortOrder: float64(i + 1), Width: 2400, Height: 1600}
 		defaults := floors[i]
 		floors[i] = models.Floor{}
 		if err := tx.Unscoped().Where("branch_id = ? AND code = ?", branch.BranchID, defaults.Code).Attrs(defaults).FirstOrCreate(&floors[i]).Error; err != nil {

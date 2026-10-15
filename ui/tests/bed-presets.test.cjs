@@ -6,20 +6,22 @@ const path = require('node:path');
 const os = require('node:os');
 const out = mkdtempSync(path.join(os.tmpdir(), 'otel-bed-presets-'));
 after(() => rmSync(out, { recursive: true, force: true }));
-execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--target', 'ES2022', '--module', 'commonjs', '--skipLibCheck', '--strict', '--outDir', out, 'src/lib/bed-presets.ts'], { cwd: path.resolve(__dirname, '..') });
+execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--target', 'ES2022', '--module', 'commonjs', '--skipLibCheck', '--strict', '--esModuleInterop', '--resolveJsonModule', '--outDir', out, 'src/lib/bed-presets.ts'], { cwd: path.resolve(__dirname, '..') });
 const { BED_PRESETS, applyBedPreset } = require(path.join(out, 'bed-presets.js'));
 const empty = { branch_id: 'branch', room_id: 'room', floor_id: 'floor', code: '', type: 'single', structure: 'standard', width_cm: 90, length_cm: 200, levels: 1, places: [] };
 
-test('double beds are one sleeping surface for two; bunks have one person per level', () => {
+test('every preset preserves individual surface capacities and widths; twin creates two physical beds', () => {
+  assert.equal(BED_PRESETS.length, 29);
   for (const preset of BED_PRESETS) {
-    const result = applyBedPreset(empty, preset);
-    assert.equal(result.places.length, preset.levels);
-    assert.equal(result.places.reduce((sum, place) => sum + place.capacity, 0), preset.key === 'double' ? 2 : preset.levels);
-    assert.ok(result.places.every(p => p.width_cm === result.width_cm && p.length_cm === result.length_cm));
-    assert.ok(result.places.every(p => p.code === '' && p.is_active && p.rentable));
-    assert.deepEqual(result.places.map(p => p.position), preset.levels === 1 ? ['single'] : ['lower', ...Array(preset.levels - 2).fill('middle'), 'upper']);
+    if (preset.physical_count > 1) { assert.equal(preset.bed_places, 2); assert.equal(preset.capacity,2); assert.throws(()=>applyBedPreset(empty,preset),/Twin/); continue; }
+    const result=applyBedPreset(empty,preset);
+    assert.equal(result.places.length,preset.bed_places);
+    assert.equal(result.places.reduce((sum,p)=>sum+p.capacity,0),preset.capacity);
+    assert.deepEqual(result.places.map(p=>p.capacity),preset.place_capacities);
+    assert.deepEqual(result.places.map(p=>p.width_cm),preset.place_widths);
+    assert.ok(result.places.every(p=>p.code===''&&p.is_active&&p.rentable));
   }
-  assert.deepEqual(empty.places, []);
+  assert.deepEqual(empty.places,[]);
 });
 
 test('preset changes preserve assignments, unit identities, custom codes and availability flags by level', () => {

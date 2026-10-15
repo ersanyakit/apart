@@ -96,7 +96,7 @@ import { FeatureRegistryView } from "./components/FeatureRegistryView";
 import { StaysScheduler } from "./components/stays-scheduler/StaysScheduler";
 import { AppSettingsView } from "./components/AppSettingsView";
 import { FontSizeProvider } from "./components/FontSize";
-import { I18nProvider } from "./components/I18n";
+import { I18nProvider, useI18n } from "./components/I18n";
 import { PageHeader, PageHeaderProvider } from "./components/PageHeader";
 import { UserPreferencesProvider, useUserPreferences } from "./components/UserPreferences";
 import { ThemeProvider } from "./components/Theme";
@@ -174,6 +174,7 @@ export default function App({ initialData, initialTab = "board" }: AppProps) {
   </UserPreferencesProvider>;
 }
 function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLogin }: { snapshot: Snapshot | null; setSnapshot: React.Dispatch<React.SetStateAction<Snapshot | null>>; initialTab: string; startRegistration: boolean; onLogin: (selection?: Selection, register?: boolean) => Promise<void> }) {
+  const {locale}=useI18n();
   const notify = useNotifications();
   const preferences = useUserPreferences();
   const [tab, setTab] = useState(() => NAV_TAB_IDS.has(initialTab) ? initialTab : "board"),
@@ -478,6 +479,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             <FloorForm
               branchId={s.branch_id}
               floor={modal.floor}
+              floors={s.floors}
               onSaved={saved}
             />
           ) : modal.type === "booking" ? (
@@ -517,7 +519,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       >
         <RefreshCw size={16} className={busy ? "animate-spin" : ""} />
       </button>
-      {operator && s.branch_id && tab !== "facility" && (
+      {operator && s.branch_id && !["facility", "units"].includes(tab) && (
         <button
           className={`uni-control ${buttonStyle}`}
           onClick={() => setModal({ type: "booking" })}
@@ -660,7 +662,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                         { value: "", label: "Tüm katlar" },
                         ...s.floors.map((f) => ({
                           value: f.floor_id,
-                          label: localized(f.label) || f.code,
+                          label: localized(f.label,locale.toUpperCase()) || f.code,
                         })),
                       ]}
                     />

@@ -1,3 +1,4 @@
+import contracts from "./contracts.generated.json";
 export type Place = {
   unit_id?: string;
   code: string;
@@ -22,17 +23,15 @@ export type Bed = {
   levels: number;
   places: Place[];
 };
-export const BED_PRESETS = [
-  { key: "single", label: "Tek kişilik baza", type: "single", structure: "standard", width_cm: 90, length_cm: 200, levels: 1, capacity: 1 },
-  { key: "double", label: "Çift kişilik yatak", type: "double", structure: "standard", width_cm: 160, length_cm: 200, levels: 1, capacity: 2 },
-  { key: "bunk2", label: "2 katlı ranza", type: "bunk_bed", structure: "bunk", width_cm: 90, length_cm: 200, levels: 2, capacity: 1 },
-  { key: "bunk3", label: "3 katlı ranza", type: "bunk_bed", structure: "bunk", width_cm: 90, length_cm: 200, levels: 3, capacity: 1 },
-  { key: "bunk4", label: "4 katlı ranza", type: "bunk_bed", structure: "bunk", width_cm: 90, length_cm: 200, levels: 4, capacity: 1 },
-] as const;
-
+export const BED_PRESETS = contracts.bed_presets;
 export type BedPreset = (typeof BED_PRESETS)[number];
+export function matchBedPreset(bed: Bed) {
+  return BED_PRESETS.find(p => p.physical_count === 1 && p.type === bed.type && p.structure === bed.structure && p.levels === bed.levels &&
+    p.place_capacities.every((capacity,i) => bed.places.find(place=>place.level===i+1)?.capacity === capacity));
+}
 
 export function applyBedPreset(bed: Bed, preset: BedPreset, remembered: readonly Place[] = []): Bed {
+  if (preset.physical_count !== 1) throw new Error("Twin düzeni oda formundan iki ayrı fiziksel yatak olarak eklenir.");
   return {
     ...bed,
     type: preset.type,
@@ -51,9 +50,9 @@ export function applyBedPreset(bed: Bed, preset: BedPreset, remembered: readonly
         code: existing?.code || (bed.code ? `${bed.code}-${level}` : ""),
         level,
         position: preset.levels === 1 ? "single" : i === 0 ? "lower" : level === preset.levels ? "upper" : "middle",
-        width_cm: preset.width_cm,
+        width_cm: preset.place_widths[i],
         length_cm: preset.length_cm,
-        capacity: preset.capacity,
+        capacity: preset.place_capacities[i],
         is_active: existing?.is_active ?? true,
         rentable: existing?.rentable ?? true,
       };

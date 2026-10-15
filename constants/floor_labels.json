@@ -1,0 +1,422 @@
+{
+  "TR": {
+    "standard": "{n}. Kat",
+    "basement": "{n}. Bodrum",
+    "ground": "Zemin Kat",
+    "mezzanine": "Asma Kat",
+    "roof": "Çatı Katı"
+  },
+  "EN": {
+    "standard": "Floor {n}",
+    "basement": "Basement {n}",
+    "ground": "Ground Floor",
+    "mezzanine": "Mezzanine",
+    "roof": "Roof Floor"
+  },
+  "DE": {
+    "standard": "{n}. Obergeschoss",
+    "basement": "{n}. Untergeschoss",
+    "ground": "Erdgeschoss",
+    "mezzanine": "Zwischengeschoss",
+    "roof": "Dachgeschoss"
+  },
+  "FR": {
+    "standard": "Étage {n}",
+    "basement": "Sous-sol {n}",
+    "ground": "Rez-de-chaussée",
+    "mezzanine": "Mezzanine",
+    "roof": "Étage sous les toits"
+  },
+  "RU": {
+    "standard": "Этаж {n}",
+    "basement": "Подземный этаж {n}",
+    "ground": "Наземный этаж",
+    "mezzanine": "Антресоль",
+    "roof": "Мансардный этаж"
+  },
+  "AR": {
+    "standard": "الطابق {n}",
+    "basement": "القبو {n}",
+    "ground": "الطابق الأرضي",
+    "mezzanine": "الميزانين",
+    "roof": "طابق السطح"
+  },
+  "NE": {
+    "standard": "तल्ला {n}",
+    "basement": "भूमिगत तल्ला {n}",
+    "ground": "भुइँतल्ला",
+    "mezzanine": "मध्यतल्ला",
+    "roof": "छानाको तल्ला"
+  },
+  "TH": {
+    "standard": "ชั้น {n}",
+    "basement": "ชั้นใต้ดิน {n}",
+    "ground": "ชั้นระดับพื้นดิน",
+    "mezzanine": "ชั้นลอย",
+    "roof": "ชั้นดาดฟ้า"
+  },
+  "ZH-CN": {
+    "standard": "{n}层",
+    "basement": "地下{n}层",
+    "ground": "地面层",
+    "mezzanine": "夹层",
+    "roof": "屋顶层"
+  },
+  "ZH-TW": {
+    "standard": "{n}樓",
+    "basement": "地下{n}樓",
+    "ground": "地面層",
+    "mezzanine": "夾層",
+    "roof": "屋頂層"
+  },
+  "HI": {
+    "standard": "मंज़िल {n}",
+    "basement": "तहखाना {n}",
+    "ground": "भूतल",
+    "mezzanine": "मध्य तल",
+    "roof": "छत का तल"
+  },
+  "KM": {
+    "standard": "ជាន់ទី {n}",
+    "basement": "ជាន់ក្រោមដីទី {n}",
+    "ground": "ជាន់ផ្ទាល់ដី",
+    "mezzanine": "ជាន់ឡៅតឿ",
+    "roof": "ជាន់ដំបូល"
+  },
+  "SI": {
+    "standard": "මහල {n}",
+    "basement": "භූගත මහල {n}",
+    "ground": "බිම් මහල",
+    "mezzanine": "අතරමැදි මහල",
+    "roof": "වහල මහල"
+  },
+  "TA": {
+    "standard": "தளம் {n}",
+    "basement": "நிலத்தடி தளம் {n}",
+    "ground": "தரைத் தளம்",
+    "mezzanine": "இடைத் தளம்",
+    "roof": "கூரைத் தளம்"
+  },
+  "YUE": {
+    "standard": "{n}樓",
+    "basement": "地庫{n}樓",
+    "ground": "地下",
+    "mezzanine": "閣樓",
+    "roof": "天台層"
+  },
+  "UR": {
+    "standard": "منزل {n}",
+    "basement": "تہہ خانہ {n}",
+    "ground": "زمینی منزل",
+    "mezzanine": "درمیانی منزل",
+    "roof": "چھت کی منزل"
+  },
+  "BN": {
+    "standard": "তলা {n}",
+    "basement": "ভূগর্ভস্থ তলা {n}",
+    "ground": "ভূতল",
+    "mezzanine": "মধ্যবর্তী তলা",
+    "roof": "ছাদের তলা"
+  },
+  "DZ": {
+    "standard": "ཐོག་ {n}",
+    "basement": "ས་འོག་ཐོག་ {n}",
+    "ground": "ས་ཐོག",
+    "mezzanine": "བར་ཐོག",
+    "roof": "ཁང་ཐོག"
+  },
+  "ES": {
+    "standard": "Planta {n}",
+    "basement": "Sótano {n}",
+    "ground": "Planta baja",
+    "mezzanine": "Entreplanta",
+    "roof": "Planta de cubierta"
+  },
+  "IT": {
+    "standard": "Piano {n}",
+    "basement": "Piano interrato {n}",
+    "ground": "Piano terra",
+    "mezzanine": "Piano ammezzato",
+    "roof": "Piano sottotetto"
+  },
+  "PT": {
+    "standard": "Andar {n}",
+    "basement": "Subsolo {n}",
+    "ground": "Rés do chão",
+    "mezzanine": "Mezanino",
+    "roof": "Cobertura"
+  },
+  "NL": {
+    "standard": "Verdieping {n}",
+    "basement": "Kelderverdieping {n}",
+    "ground": "Begane grond",
+    "mezzanine": "Tussenverdieping",
+    "roof": "Dakverdieping"
+  },
+  "PL": {
+    "standard": "Piętro {n}",
+    "basement": "Poziom podziemny {n}",
+    "ground": "Parter",
+    "mezzanine": "Antresola",
+    "roof": "Poddasze"
+  },
+  "CS": {
+    "standard": "Podlaží {n}",
+    "basement": "Podzemní podlaží {n}",
+    "ground": "Přízemí",
+    "mezzanine": "Mezipatro",
+    "roof": "Podkroví"
+  },
+  "HU": {
+    "standard": "{n}. emelet",
+    "basement": "{n}. pinceszint",
+    "ground": "Földszint",
+    "mezzanine": "Félemelet",
+    "roof": "Tetőtér"
+  },
+  "RO": {
+    "standard": "Etajul {n}",
+    "basement": "Subsolul {n}",
+    "ground": "Parter",
+    "mezzanine": "Mezanin",
+    "roof": "Mansardă"
+  },
+  "EL": {
+    "standard": "Όροφος {n}",
+    "basement": "Υπόγειο {n}",
+    "ground": "Ισόγειο",
+    "mezzanine": "Ημιώροφος",
+    "roof": "Όροφος στέγης"
+  },
+  "UK": {
+    "standard": "Поверх {n}",
+    "basement": "Підземний поверх {n}",
+    "ground": "Наземний поверх",
+    "mezzanine": "Антресоль",
+    "roof": "Мансардний поверх"
+  },
+  "BG": {
+    "standard": "Етаж {n}",
+    "basement": "Подземен етаж {n}",
+    "ground": "Партер",
+    "mezzanine": "Мецанин",
+    "roof": "Тавански етаж"
+  },
+  "SR": {
+    "standard": "Спрат {n}",
+    "basement": "Подземни ниво {n}",
+    "ground": "Приземље",
+    "mezzanine": "Међуспрат",
+    "roof": "Поткровље"
+  },
+  "HR": {
+    "standard": "Kat {n}",
+    "basement": "Podzemna etaža {n}",
+    "ground": "Prizemlje",
+    "mezzanine": "Polukat",
+    "roof": "Potkrovlje"
+  },
+  "SK": {
+    "standard": "Podlažie {n}",
+    "basement": "Podzemné podlažie {n}",
+    "ground": "Prízemie",
+    "mezzanine": "Medziposchodie",
+    "roof": "Podkrovie"
+  },
+  "SL": {
+    "standard": "Nadstropje {n}",
+    "basement": "Kletna etaža {n}",
+    "ground": "Pritličje",
+    "mezzanine": "Medetaža",
+    "roof": "Podstrešje"
+  },
+  "FI": {
+    "standard": "Kerros {n}",
+    "basement": "Kellarikerros {n}",
+    "ground": "Maantasokerros",
+    "mezzanine": "Välikerros",
+    "roof": "Ullakkokerros"
+  },
+  "SV": {
+    "standard": "Våning {n}",
+    "basement": "Källarplan {n}",
+    "ground": "Bottenvåning",
+    "mezzanine": "Mellanvåning",
+    "roof": "Vindsvåning"
+  },
+  "DA": {
+    "standard": "Etage {n}",
+    "basement": "Kælderetage {n}",
+    "ground": "Stueetage",
+    "mezzanine": "Mellemetage",
+    "roof": "Tagetage"
+  },
+  "NO": {
+    "standard": "Etasje {n}",
+    "basement": "Kjelleretasje {n}",
+    "ground": "Bakkeplan",
+    "mezzanine": "Mellometasje",
+    "roof": "Loftsetasje"
+  },
+  "MS": {
+    "standard": "Tingkat {n}",
+    "basement": "Aras bawah tanah {n}",
+    "ground": "Aras bawah",
+    "mezzanine": "Mezanin",
+    "roof": "Aras bumbung"
+  },
+  "ID": {
+    "standard": "Lantai {n}",
+    "basement": "Lantai bawah tanah {n}",
+    "ground": "Lantai dasar",
+    "mezzanine": "Mezanin",
+    "roof": "Lantai atap"
+  },
+  "VI": {
+    "standard": "Tầng {n}",
+    "basement": "Tầng hầm {n}",
+    "ground": "Tầng trệt",
+    "mezzanine": "Tầng lửng",
+    "roof": "Tầng mái"
+  },
+  "JA": {
+    "standard": "{n}階",
+    "basement": "地下{n}階",
+    "ground": "地上階",
+    "mezzanine": "中二階",
+    "roof": "屋上階"
+  },
+  "KO": {
+    "standard": "{n}층",
+    "basement": "지하 {n}층",
+    "ground": "지상층",
+    "mezzanine": "중간층",
+    "roof": "옥상층"
+  },
+  "FA": {
+    "standard": "طبقه {n}",
+    "basement": "زیرزمین {n}",
+    "ground": "همکف",
+    "mezzanine": "نیم‌طبقه",
+    "roof": "طبقه پشت‌بام"
+  },
+  "HE": {
+    "standard": "קומה {n}",
+    "basement": "קומת מרתף {n}",
+    "ground": "קומת קרקע",
+    "mezzanine": "קומת ביניים",
+    "roof": "קומת גג"
+  },
+  "SW": {
+    "standard": "Ghorofa {n}",
+    "basement": "Ghorofa ya chini ya ardhi {n}",
+    "ground": "Ghorofa ya chini",
+    "mezzanine": "Ghorofa ya kati",
+    "roof": "Ghorofa ya paa"
+  },
+  "AM": {
+    "standard": "ፎቅ {n}",
+    "basement": "የመሬት ውስጥ ፎቅ {n}",
+    "ground": "የመሬት ወለል",
+    "mezzanine": "መካከለኛ ፎቅ",
+    "roof": "የጣሪያ ፎቅ"
+  },
+  "MR": {
+    "standard": "मजला {n}",
+    "basement": "तळघर {n}",
+    "ground": "तळमजला",
+    "mezzanine": "मधला मजला",
+    "roof": "छतावरील मजला"
+  },
+  "PA": {
+    "standard": "ਮੰਜ਼ਿਲ {n}",
+    "basement": "ਤਹਿਖ਼ਾਨਾ {n}",
+    "ground": "ਜ਼ਮੀਨੀ ਮੰਜ਼ਿਲ",
+    "mezzanine": "ਵਿਚਕਾਰਲੀ ਮੰਜ਼ਿਲ",
+    "roof": "ਛੱਤ ਵਾਲੀ ਮੰਜ਼ਿਲ"
+  },
+  "TE": {
+    "standard": "అంతస్తు {n}",
+    "basement": "భూగర్భ అంతస్తు {n}",
+    "ground": "నేల అంతస్తు",
+    "mezzanine": "మధ్య అంతస్తు",
+    "roof": "పైకప్పు అంతస్తు"
+  },
+  "MY": {
+    "standard": "အထပ် {n}",
+    "basement": "မြေအောက်ထပ် {n}",
+    "ground": "မြေညီထပ်",
+    "mezzanine": "ထပ်ခိုး",
+    "roof": "ခေါင်မိုးထပ်"
+  },
+  "LO": {
+    "standard": "ຊັ້ນ {n}",
+    "basement": "ຊັ້ນໃຕ້ດິນ {n}",
+    "ground": "ຊັ້ນລຸ່ມ",
+    "mezzanine": "ຊັ້ນລອຍ",
+    "roof": "ຊັ້ນດາດຟ້າ"
+  },
+  "KA": {
+    "standard": "სართული {n}",
+    "basement": "მიწისქვეშა სართული {n}",
+    "ground": "მიწისპირა სართული",
+    "mezzanine": "ანტრესოლი",
+    "roof": "მანსარდის სართული"
+  },
+  "HY": {
+    "standard": "Հարկ {n}",
+    "basement": "Ստորգետնյա հարկ {n}",
+    "ground": "Գետնահարկ",
+    "mezzanine": "Միջնահարկ",
+    "roof": "Ձեղնահարկ"
+  },
+  "AZ": {
+    "standard": "{n}-ci mərtəbə",
+    "basement": "{n}-ci zirzəmi",
+    "ground": "Zəmin mərtəbə",
+    "mezzanine": "Ara mərtəbə",
+    "roof": "Çardaq mərtəbəsi"
+  },
+  "KK": {
+    "standard": "{n}-қабат",
+    "basement": "{n}-жерасты қабаты",
+    "ground": "Жер деңгейіндегі қабат",
+    "mezzanine": "Аралық қабат",
+    "roof": "Шатыр қабаты"
+  },
+  "UZ": {
+    "standard": "{n}-qavat",
+    "basement": "{n}-yerto‘la qavati",
+    "ground": "Yer sathidagi qavat",
+    "mezzanine": "Oraliq qavat",
+    "roof": "Chordoqli qavat"
+  },
+  "KY": {
+    "standard": "{n}-кабат",
+    "basement": "{n}-жер төлө кабаты",
+    "ground": "Жер деңгээлиндеги кабат",
+    "mezzanine": "Аралык кабат",
+    "roof": "Чатыр кабаты"
+  },
+  "MN": {
+    "standard": "{n}-р давхар",
+    "basement": "Зоорийн {n}-р давхар",
+    "ground": "Газрын түвшний давхар",
+    "mezzanine": "Завсрын давхар",
+    "roof": "Дээврийн давхар"
+  },
+  "PS": {
+    "standard": "پوړ {n}",
+    "basement": "د ځمکې لاندې پوړ {n}",
+    "ground": "ځمکنی پوړ",
+    "mezzanine": "منځنی پوړ",
+    "roof": "د بام پوړ"
+  },
+  "KU": {
+    "standard": "Qata {n}",
+    "basement": "Qata binerdê {n}",
+    "ground": "Qata erdê",
+    "mezzanine": "Nîvqat",
+    "roof": "Qata banî"
+  }
+}

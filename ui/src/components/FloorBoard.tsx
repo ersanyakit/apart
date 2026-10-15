@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { boardStatusKey, statusStyle, roomStatusKey, STATUS_PALETTE } from "../lib/status-palette";
 import React, { useState, useEffect, useRef } from "react";
@@ -35,6 +36,7 @@ export function FloorBoard({
   day?: string;
   onOpenBooking?: (booking: Booking) => void;
 }) {
+  const {locale}=useI18n();
   const floor = snapshot.floors.find((f) => f.floor_id === floorId)!;
   const rooms = snapshot.rooms.filter((r) => r.floor_id === floorId && (onEdit || r.rentable !== false));
   const [editing, setEditing] = useState(false);
@@ -58,7 +60,7 @@ export function FloorBoard({
       <ErrorMessage message={error} />
       <div className="flex justify-between items-center">
         <p className="text-xs text-slate-500">
-          {localized(floor.label) || floor.code} · {rooms.length} birim ·{" "}
+          {localized(floor.label,locale.toUpperCase()) || floor.code} · {rooms.length} birim ·{" "}
           {floor.width} × {floor.height}
         </p>
         {canManage && (

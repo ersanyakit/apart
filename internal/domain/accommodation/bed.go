@@ -78,9 +78,7 @@ func (b Bed) Validate() error {
 	if b.BranchID == uuid.Nil || strings.TrimSpace(b.Code) == "" || len(b.Code) > 32 {
 		return constants.ErrBed
 	}
-	switch b.Type {
-	case Single, Double, Queen, King, Bunk, Loft, Capsule, Sofa, Futon, Murphy, Rollaway, Crib, Daybed:
-	default:
+	if !validBedType(b.Type) {
 		return constants.ErrBedType
 	}
 	switch b.Structure {

@@ -1,0 +1,602 @@
+[
+  {
+    "key": "single",
+    "label": "Tek kişilik yatak",
+    "name_en": "Single Bed",
+    "type": "single",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "double",
+    "label": "Çift kişilik yatak",
+    "name_en": "Double Bed",
+    "type": "double",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      140
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "bunk2",
+    "label": "2 katlı ranza",
+    "name_en": "Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 2,
+    "physical_count": 1,
+    "place_capacities": [
+      1,
+      1
+    ],
+    "place_widths": [
+      90,
+      90
+    ],
+    "capacity": 2,
+    "bed_places": 2
+  },
+  {
+    "key": "bunk3",
+    "label": "3 katlı ranza",
+    "name_en": "Triple Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 3,
+    "physical_count": 1,
+    "place_capacities": [
+      1,
+      1,
+      1
+    ],
+    "place_widths": [
+      90,
+      90,
+      90
+    ],
+    "capacity": 3,
+    "bed_places": 3
+  },
+  {
+    "key": "bunk4",
+    "label": "4 katlı ranza",
+    "name_en": "Quadruple Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 4,
+    "physical_count": 1,
+    "place_capacities": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "place_widths": [
+      90,
+      90,
+      90,
+      90
+    ],
+    "capacity": 4,
+    "bed_places": 4
+  },
+  {
+    "key": "twin_beds",
+    "label": "İki ayrı tek kişilik yatak",
+    "name_en": "Twin Beds",
+    "type": "single",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 2,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 2,
+    "bed_places": 2
+  },
+  {
+    "key": "queen_bed",
+    "label": "Queen yatak",
+    "name_en": "Queen Bed",
+    "type": "queen",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 160,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      160
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "king_bed",
+    "label": "King yatak",
+    "name_en": "King Bed",
+    "type": "king",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 180,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      180
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "super_king_bed",
+    "label": "Süper King yatak",
+    "name_en": "Super King Bed",
+    "type": "super_king",
+    "category": "standard",
+    "structure": "standard",
+    "width_cm": 200,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      200
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "double_over_single_bunk",
+    "label": "Altı çift kişilik, üstü tek kişilik ranza",
+    "name_en": "Double-Over-Single Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 2,
+    "physical_count": 1,
+    "place_capacities": [
+      2,
+      1
+    ],
+    "place_widths": [
+      140,
+      90
+    ],
+    "capacity": 3,
+    "bed_places": 2
+  },
+  {
+    "key": "single_over_double_bunk",
+    "label": "Altı tek kişilik, üstü çift kişilik ranza",
+    "name_en": "Single-Over-Double Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 2,
+    "physical_count": 1,
+    "place_capacities": [
+      1,
+      2
+    ],
+    "place_widths": [
+      90,
+      140
+    ],
+    "capacity": 3,
+    "bed_places": 2
+  },
+  {
+    "key": "double_over_double_bunk",
+    "label": "Altı ve üstü çift kişilik ranza",
+    "name_en": "Double-Over-Double Bunk Bed",
+    "type": "bunk_bed",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 2,
+    "physical_count": 1,
+    "place_capacities": [
+      2,
+      2
+    ],
+    "place_widths": [
+      140,
+      140
+    ],
+    "capacity": 4,
+    "bed_places": 2
+  },
+  {
+    "key": "l_shaped_bunk_bed",
+    "label": "L tipi ranza",
+    "name_en": "L-Shaped Bunk Bed",
+    "type": "l_shaped_bunk",
+    "category": "bunk",
+    "structure": "bunk",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 2,
+    "physical_count": 1,
+    "place_capacities": [
+      1,
+      1
+    ],
+    "place_widths": [
+      90,
+      90
+    ],
+    "capacity": 2,
+    "bed_places": 2
+  },
+  {
+    "key": "extra_single_bed",
+    "label": "Tek kişilik ilave yatak",
+    "name_en": "Extra Single Bed",
+    "type": "rollaway_bed",
+    "category": "extra",
+    "structure": "folding",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "extra_double_bed",
+    "label": "Çift kişilik ilave yatak",
+    "name_en": "Extra Double Bed",
+    "type": "rollaway_bed",
+    "category": "extra",
+    "structure": "folding",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      140
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "sofa_bed_single",
+    "label": "Tek kişilik açılır kanepe",
+    "name_en": "Single Sofa Bed",
+    "type": "sofa_bed",
+    "category": "sofa_bed",
+    "structure": "sofa",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "sofa_bed_double",
+    "label": "Çift kişilik açılır kanepe",
+    "name_en": "Double Sofa Bed",
+    "type": "sofa_bed",
+    "category": "sofa_bed",
+    "structure": "sofa",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      140
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "sofa_bed_triple",
+    "label": "Üç kişilik açılır kanepe",
+    "name_en": "Triple Sofa Bed",
+    "type": "sofa_bed",
+    "category": "sofa_bed",
+    "structure": "sofa",
+    "width_cm": 200,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      3
+    ],
+    "place_widths": [
+      200
+    ],
+    "capacity": 3,
+    "bed_places": 1
+  },
+  {
+    "key": "trundle_bed",
+    "label": "Çekmeceli ilave yatak",
+    "name_en": "Trundle Bed",
+    "type": "trundle_bed",
+    "category": "extra",
+    "structure": "standard",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "folding_bed",
+    "label": "Katlanır yatak",
+    "name_en": "Folding Bed",
+    "type": "folding_bed",
+    "category": "extra",
+    "structure": "folding",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "baby_crib",
+    "label": "Bebek yatağı",
+    "name_en": "Baby Crib",
+    "type": "crib",
+    "category": "baby",
+    "structure": "standard",
+    "width_cm": 60,
+    "length_cm": 120,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      60
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "loft_bed",
+    "label": "Yükseltilmiş yatak",
+    "name_en": "Loft Bed",
+    "type": "loft_bed",
+    "category": "special",
+    "structure": "loft",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "capsule_bed",
+    "label": "Kapsül yatak",
+    "name_en": "Capsule Bed",
+    "type": "capsule_bed",
+    "category": "special",
+    "structure": "capsule",
+    "width_cm": 100,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      100
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "futon",
+    "label": "Futon / yer yatağı",
+    "name_en": "Futon",
+    "type": "futon",
+    "category": "special",
+    "structure": "standard",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "futon_double",
+    "label": "Çift kişilik futon",
+    "name_en": "Double Futon",
+    "type": "futon",
+    "category": "special",
+    "structure": "standard",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      140
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "murphy_bed",
+    "label": "Duvara katlanan yatak",
+    "name_en": "Murphy Bed",
+    "type": "murphy_bed",
+    "category": "special",
+    "structure": "folding",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "murphy_double",
+    "label": "Çift kişilik duvara katlanan yatak",
+    "name_en": "Double Murphy Bed",
+    "type": "murphy_bed",
+    "category": "special",
+    "structure": "folding",
+    "width_cm": 140,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      2
+    ],
+    "place_widths": [
+      140
+    ],
+    "capacity": 2,
+    "bed_places": 1
+  },
+  {
+    "key": "daybed",
+    "label": "Divan yatak",
+    "name_en": "Daybed",
+    "type": "daybed",
+    "category": "special",
+    "structure": "standard",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  },
+  {
+    "key": "portable_bed",
+    "label": "Taşınabilir ek yatak",
+    "name_en": "Rollaway Bed",
+    "type": "portable_bed",
+    "category": "extra",
+    "structure": "folding",
+    "width_cm": 90,
+    "length_cm": 200,
+    "levels": 1,
+    "physical_count": 1,
+    "place_capacities": [
+      1
+    ],
+    "place_widths": [
+      90
+    ],
+    "capacity": 1,
+    "bed_places": 1
+  }
+]

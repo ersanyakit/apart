@@ -51,7 +51,7 @@ function compactRoomGaps(rooms: SceneRoom[], axis: 'x' | 'z', size: 'width' | 'd
 }
 
 /** Uses only tenant-scoped API records. No demo rooms, guests or invented beds. */
-export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day = ''): SceneFloor[] {
+export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day = '', language = 'TR'): SceneFloor[] {
   const units = snapshot.rooms.filter(r => r.branch_id === snapshot.branch_id).sort(compare);
   const byId = new Map(units.map(r => [r.room_id, r]));
   const children = new Map<string, APIRoom[]>();
@@ -136,7 +136,7 @@ export function buildPropertyScene(snapshot: Snapshot, physicalBeds: Bed[], day 
     }
     return { unit, state: state.get(unit.room_id)!, floorId, beds, hasJacuzzi: unit.kind !== 'bed' && roomHasJacuzzi(unit, snapshot.feature_registry), x: 0, z: 0, width: 6, depth: 5 };
   });
-  const definitions = floorDefs.map(f => ({ id: f.floor_id, label: localized(f.label) || f.code }));
+  const definitions = floorDefs.map(f => ({ id: f.floor_id, label: localized(f.label,language.toUpperCase()) || f.code }));
   if (rooms.some(r => r.floorId === 'unassigned')) definitions.push({ id: 'unassigned', label: 'Kat atanmamış birimler' });
   return definitions.map(def => {
     const list = rooms.filter(r => r.floorId === def.id).sort((a, b) => compare(a.unit, b.unit));

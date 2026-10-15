@@ -51,12 +51,12 @@ func TestFloorCodeReuseAfterDeletion(t *testing.T) {
 	if second.FloorID == first.FloorID {
 		t.Fatal("new floor must not reuse the historical identity")
 	}
-	second.SortOrder = 2
+	second.SortOrder = 0.5
 	if _, err := service.SaveFloor(ctx, admin, second, false); err != nil {
 		t.Fatal(err)
 	}
 	visible, err := repo.ListFloors(ctx, branch.BranchID)
-	if err != nil || len(visible) != 1 || visible[0].FloorID != second.FloorID {
+	if err != nil || len(visible) != 1 || visible[0].FloorID != second.FloorID || visible[0].SortOrder != 0.5 {
 		t.Fatalf("visible floors: %v, %v", visible, err)
 	}
 	var historical models.Floor

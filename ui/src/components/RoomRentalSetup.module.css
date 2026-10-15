@@ -1,0 +1,29 @@
+.setup { display:grid; gap:24px; }
+.modes { min-width:0; }
+.modes legend { font-size:16px; font-weight:600; margin-bottom:6px; }
+.modes>p,.hint { color:var(--color-uni-muted); font-size:13px; line-height:1.6; }
+.options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:14px; }
+.option { display:flex; align-items:flex-start; gap:10px; padding:16px; border:1px solid var(--color-uni-border); border-radius:18px; cursor:pointer; background:var(--app-background); }
+.option[data-selected=true] { border-color:var(--color-brand-blue-600); background:var(--color-brand-blue-50); }
+.option:hover { background:var(--color-uni-surface); }
+.option:active { background:var(--color-brand-blue-50); }
+.option:focus-within { outline:2px solid var(--color-brand-blue-600); outline-offset:2px; }
+.option input { margin-top:3px; accent-color:var(--color-brand-blue-600); width:16px; height:16px; flex-shrink:0; }
+.option svg { color:var(--color-brand-blue-600); flex-shrink:0; }
+.option strong,.preset strong { display:block; font-size:14px; font-weight:600; }
+.option small,.preset small { display:block; font-size:12px; line-height:1.6; color:var(--color-uni-muted); margin-top:5px; }
+.presets { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:8px; }
+.preset { display:flex; align-items:center; gap:12px; padding:14px; min-height:76px; border:1px solid var(--color-uni-border); border-radius:16px; text-align:start; background:var(--app-background); }
+.preset>span { flex:1; }
+.preset>svg { color:var(--color-brand-blue-600); flex-shrink:0; }
+.preset:hover { background:var(--color-uni-surface); }
+.preset:disabled { opacity:.45; }
+.preset:focus-visible { outline:2px solid var(--color-brand-blue-600); outline-offset:2px; }
+.summary { padding:14px 16px; border-radius:16px; background:var(--color-brand-blue-50); color:var(--color-brand-blue-600); font-size:13px; line-height:1.6; }
+.row { display:flex; align-items:center; flex-wrap:wrap; gap:12px; padding:12px; border-radius:16px; background:var(--color-uni-surface); }
+.row>span { flex:1; min-width:130px; font-size:14px; }
+.row small { display:block; color:var(--color-uni-muted); font-size:12px; }
+.counter { display:flex; align-items:center; gap:8px; }
+.counter button { width:44px; height:44px; display:grid; place-items:center; border-radius:50%; background:var(--app-background); }
+.counter output { min-width:24px; text-align:center; font-variant-numeric:tabular-nums; }
+@media(max-width:640px) { .options { grid-template-columns:1fr; } .presets { grid-template-columns:1fr; } }

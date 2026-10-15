@@ -14,12 +14,15 @@ type Floor struct {
 	BranchID  uuid.UUID              `json:"branch_id"`
 	Code      string                 `json:"code"`
 	Label     shared.LocalizedString `json:"label"`
-	SortOrder int                    `json:"sort_order"`
+	SortOrder float64                `json:"sort_order"`
 	Width     int                    `json:"width"`
 	Height    int                    `json:"height"`
 }
 
 func (f Floor) Validate() error {
+	if math.IsNaN(f.SortOrder) || math.IsInf(f.SortOrder, 0) {
+		return constants.ErrFloor
+	}
 	if f.BranchID == uuid.Nil || strings.TrimSpace(f.Code) == "" || len(f.Code) > 32 || f.Width < 400 || f.Width > 10000 || f.Height < 300 || f.Height > 10000 {
 		return constants.ErrFloor
 	}

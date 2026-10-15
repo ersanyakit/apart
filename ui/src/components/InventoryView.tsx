@@ -1,9 +1,14 @@
+import { FloorList } from "./FloorList";
+import { useI18n } from "./I18n";
+import { UnitsToolbar } from "./UnitsToolbar";
+import { BedPresetPicker } from "./BedPresetPicker";
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useRef, useState } from "react";
 import { Layers, Plus, Pencil, Trash2, BedDouble, Map as MapIcon } from "lucide-react";
 import {
   command,
+  contracts,
   messageOf,
   localized,
   unitKinds,
@@ -19,22 +24,8 @@ import {
 import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
 import { FloorBoard } from "./FloorBoard";
-import { BED_PRESETS, applyBedPreset, type Bed, type Place, type BedPreset } from "../lib/bed-presets";
-const bedTypes: Record<string, string> = {
-  single: "Tek kişilik",
-  double: "Çift kişilik",
-  queen: "Queen",
-  king: "King",
-  bunk_bed: "Ranza",
-  loft_bed: "Yükseltilmiş",
-  capsule_bed: "Kapsül",
-  sofa_bed: "Açılır kanepe",
-  futon: "Futon",
-  murphy_bed: "Duvara katlanan",
-  rollaway_bed: "Taşınabilir ek yatak",
-  crib: "Bebek yatağı",
-  daybed: "Divan",
-};
+import { BED_PRESETS, matchBedPreset, applyBedPreset, type Bed, type Place, type BedPreset } from "../lib/bed-presets";
+const bedTypes: Record<string, string> = contracts.bed_types;
 const structures: Record<string, string> = {
   standard: "Standart",
   bunk: "Ranza",
@@ -58,6 +49,7 @@ export function InventoryView({
   onBulk: () => void;
   onBook: (room: APIRoom) => void;
 }) {
+  const {locale}=useI18n();
   const [floor, setFloor] = useState(""),
     [selected, setSelected] = useState<string[]>([]),
     [beds, setBeds] = useState<Bed[]>([]),
@@ -84,7 +76,7 @@ export function InventoryView({
     setSelected([]);
     setParent(null);
   }, [s.branch_id]);
-  const rooms = s.rooms.filter((r) => !floor || r.floor_id === floor);
+  const rooms = s.rooms.filter((r) => r.kind !== "bed" && (!floor || r.floor_id === floor));
   const currentFloor = s.floors.find((f) => f.floor_id === floor);
   const work = async (fn: () => Promise<unknown>) => {
     setBusy(true);
@@ -137,134 +129,23 @@ export function InventoryView({
     <div className="space-y-5">
       <div hidden={!!bed} className="space-y-5">
         <ErrorMessage message={error} />
-        <PageHeader pageId="units">
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          <button
-            className={`uni-control ${!floor ? buttonStyle : secondaryStyle}`}
-            onClick={() => {
-              setFloor("");
-              setSelected([]);
-            }}
-          >
-            Tüm katlar
-          </button>
-          {s.floors.map((f) => (
-            <button
-              key={f.floor_id}
-              className={`uni-control ${floor === f.floor_id ? buttonStyle : secondaryStyle}`}
-              onClick={() => {
-                setFloor(f.floor_id);
-                setSelected([]);
-              }}
-            >
-              <Layers size={14} />
-              {localized(f.label) || f.code}
-              <span className="opacity-60">
-                {
-                  s.rooms.filter(
-                    (r) => r.floor_id === f.floor_id && r.kind !== "bed",
-                  ).length
-                }
-              </span>
-            </button>
-          ))}
-          <button className={`uni-control ${secondaryStyle}`} onClick={() => onFloor()}>
-            <Plus size={14} />
-            Kat Ekle
-          </button>
-        </div>
-        <div className="flex flex-wrap justify-between gap-3 items-center">
-          <div>
-            <h3 className="text-lg font-black">
-              {currentFloor
-                ? localized(currentFloor.label) || currentFloor.code
-                : "Tüm kat ve odalar"}
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Kat, oda, yatak ve fiziksel yerleşim tanımları
-            </p>
-          </div>
-          {currentFloor && (
-            <div className="flex gap-2">
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                onClick={() => onFloor(currentFloor)}
-              >
-                <Pencil size={13} />
-                Katı Düzenle
-              </button>
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                disabled={busy}
-                onClick={async () => {
-                  if (
-                    await confirmDialog(
-                      "Kat silinsin mi? İçindeki birimleri önce silmelisiniz.",
-                    )
-                  )
-                    await work(() =>
-                      command("floor.delete", { id: currentFloor.floor_id }),
-                    );
-                }}
-              >
-                <Trash2 size={13} />
-                Katı Sil
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            className={`uni-control ${mode === "rooms" ? buttonStyle : secondaryStyle}`}
-            onClick={() => setMode("rooms")}
-          >
-            Odalar ve Birimler
-          </button>
-          <button
-            className={`uni-control ${mode === "beds" ? buttonStyle : secondaryStyle}`}
-            onClick={() => {
-              setMode("beds");
-              setParent(null);
-            }}
-          >
-            <BedDouble size={14} />
-            Yataklar
-          </button>
-          <button
-            className={`uni-control ${mode === "plan" ? buttonStyle : secondaryStyle}`}
-            disabled={!floor}
-            onClick={() => setMode("plan")}
-          >
-            <MapIcon size={14} />
-            Kat Planı
-          </button>
-        </div>
-        </PageHeader>
+        <PageHeader pageId="units"/>
+        <UnitsToolbar floors={s.floors} floor={floor} mode={mode} busy={busy}
+          onFloorChange={id=>{setFloor(id);setSelected([]);setParent(null);if(!id&&mode==='plan')setMode('rooms');}}
+          onModeChange={next=>{setMode(next);setParent(null);setSelected([]);}}
+          onAdd={()=>onUnit()} onAddBed={newBed} onBulk={onBulk} onCreateFloor={()=>onFloor()}/>
+        {mode==='floors'&&<FloorList floors={s.floors} rooms={s.rooms} busy={busy} onEdit={onFloor}
+          onRooms={f=>{setFloor(f.floor_id);setMode('rooms');setSelected([]);setParent(null);}}
+          onDelete={f=>void (async()=>{
+            const name=localized(f.label,locale.toUpperCase())||f.code;
+            if(await confirmDialog(`${name} (${f.code}) silinsin mi? Bu katta kayıtlı birim bulunmuyor.`))
+              await work(async()=>{await command('floor.delete',{id:f.floor_id});if(floor===f.floor_id){setFloor('');setParent(null);}});
+          })()}/>}
         {mode === "rooms" && (
           <>
-            <div className="flex flex-wrap gap-2">
-              <button className={`uni-control ${buttonStyle}`} onClick={() => onUnit()}>
-                <Plus size={14} />
-                Oda / Birim Ekle
-              </button>
-              <button className={`uni-control ${secondaryStyle}`} onClick={onBulk}>
-                Toplu Oda / Yatak Ekle
-              </button>
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                disabled={!selected.length || busy}
-                onClick={() => remove(selected)}
-              >
-                <Trash2 size={14} />
-                Seçilenleri Sil ({selected.length})
-              </button>
-              <button
-                className={`uni-control ${secondaryStyle}`}
-                disabled={!rooms.length || busy}
-                onClick={() => remove(rooms.map((r) => r.room_id))}
-              >
-                Bu Görünümdeki Tümünü Sil
-              </button>
+            <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-uni-muted">
+              <span>{rooms.length} oda / birim · Yatak ayrıntıları için “Yataklar” görünümünü kullanın.</span>
+              {!!selected.length&&<button className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>remove(selected)}><Trash2 size={14}/>Seçilenleri Sil ({selected.length})</button>}
             </div>
             <div className="rounded-2xl border border-slate-200 overflow-auto bg-white">
               <table className="w-full text-left text-xs">
@@ -290,7 +171,7 @@ export function InventoryView({
                       "Kat",
                       "Üst birim",
                       "Tür",
-                      "Kişi sınırı",
+                      "Kiralama şekli",
                       "Durum",
                       "İşlemler",
                     ].map((h) => (
@@ -327,7 +208,7 @@ export function InventoryView({
                           "—"}
                       </td>
                       <td>{unitKinds[r.kind]}</td>
-                      <td>{r.kind === "bed" ? r.capacity : "Yok"}</td>
+                      <td>{r.kind === "bed" ? `${r.capacity} kişilik yatak yeri` : r.rental_mode === "beds" ? "Yataklar ayrı ayrı" : r.rentable ? "Tamamı kiralanır" : "Ayrı kiralanmaz"}</td>
                       <td>{r.status}</td>
                       <td className="p-3">
                         <div className="flex gap-2">
@@ -372,7 +253,7 @@ export function InventoryView({
         )}
         {mode === "beds" && (
           <>
-            <div className="flex gap-3 items-end">
+            <div className="flex flex-wrap gap-3 items-end">
               <div className="min-w-44 flex-1">
                 <InlineSelectField
                   label="Oda"
@@ -386,10 +267,7 @@ export function InventoryView({
                   ]}
                 />
               </div>
-              <button className={`uni-control ${buttonStyle}`} onClick={newBed}>
-                <Plus size={14} />
-                Fiziksel Yatak Ekle
-              </button>
+
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               {beds
@@ -408,7 +286,7 @@ export function InventoryView({
                       <BedDouble className="text-brand-blue-500" size={20} />
                     </div>
                     <p className="text-xs text-slate-500">
-                      {bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}
+                      {matchBedPreset(b)?.label || bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}
                       seviye · {b.width_cm || "—"} × {b.length_cm || "—"} cm
                     </p>
                     <p className="text-xs font-bold">
@@ -417,12 +295,14 @@ export function InventoryView({
                         .reduce((n, p) => n + p.capacity, 0)}{" "}
                       kişi · {b.places.length} yatak yeri
                     </p>
+                    <details><summary className="min-h-11 cursor-pointer text-xs text-uni-muted">Yatak yerleri ({b.places.length})</summary>
                     {b.places.map((p) => (
                       <p key={p.unit_id} className="text-xs text-slate-400">
                         {p.code} · Seviye {p.level} · {p.capacity} kişi ·{" "}
                         {p.is_active ? "Aktif" : "Pasif"}
                       </p>
                     ))}
+                    </details>
                     <div className="flex gap-2">
                       <button
                         className={`uni-control ${secondaryStyle}`}
@@ -487,6 +367,7 @@ function BedForm({
   snapshot: Snapshot;
   onSaved: () => Promise<void>;
 }) {
+  const {locale}=useI18n();
   const [b, setB] = useState(bed),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -551,24 +432,7 @@ function BedForm({
             Bir seçenekle tür, ölçü, seviye ve kapasiteyi doldurun. Ölçüler başlangıç değerleridir; kaydetmeden önce düzenleyebilirsiniz.
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {BED_PRESETS.map(preset => {
-            const Icon = preset.structure === "bunk" ? Layers : BedDouble;
-            return (
-              <button
-                key={preset.key}
-                type="button"
-                disabled={busy}
-                className="uni-button uni-button-secondary rounded-full"
-                title={`${preset.width_cm} × ${preset.length_cm} cm · ${preset.levels} seviye · ${preset.levels * preset.capacity} kişi`}
-                onClick={() => applyPreset(preset)}
-              >
-                <Icon size={18} aria-hidden="true" />
-                {preset.label}
-              </button>
-            );
-          })}
-        </div>
+        <BedPresetPicker disabled={busy} onSelect={applyPreset}/>
         <p role="status" className="text-xs text-uni-muted">{presetNotice}</p>
       </section>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -617,7 +481,7 @@ function BedForm({
             { value: "", label: "Kat atanmamış" },
             ...s.floors.map((f) => ({
               value: f.floor_id,
-              label: localized(f.label) || f.code,
+              label: localized(f.label,locale.toUpperCase()) || f.code,
             })),
           ]}
         />

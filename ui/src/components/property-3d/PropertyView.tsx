@@ -30,6 +30,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   snapshot: Snapshot;
   onOpenBooking?: (booking: Booking) => void; onBook?: (room: APIRoom) => void; onDefinitions?: () => void;
 }) {
+  const [language] = usePreference<string>("locale", "tr");
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   useEffect(() => { setSnapshot(initialSnapshot); }, [initialSnapshot]);
   const [beds, setBeds] = useState<Bed[]>([]), [bedError, setBedError] = useState('');
@@ -80,7 +81,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
     window.addEventListener('focus', update);
     return () => { window.clearTimeout(initialRefresh); window.clearInterval(timer); window.removeEventListener('focus', update); };
   }, []);
-  const floors = useMemo(() => buildPropertyScene(snapshot, beds), [snapshot, beds]);
+  const floors = useMemo(() => buildPropertyScene(snapshot, beds, '', language), [snapshot, beds, language]);
   const effectiveFloor = floors.some(f => f.id === floorId) ? floorId : 'all';
   const filtered = useMemo(() => visibleScene(floors, effectiveFloor, query, tone, onlyAvailableBeds), [floors, effectiveFloor, query, tone, onlyAvailableBeds]);
   const rooms = filtered.flatMap(f => f.rooms);

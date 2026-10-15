@@ -12,6 +12,7 @@ export function TextField({
   required,
   disabled,
   type = "text",
+  step,
   autoComplete,
   minLength,
   maxLength,
@@ -25,6 +26,7 @@ export function TextField({
   required?: boolean;
   disabled?: boolean;
   type?: string;
+  step?: string | number;
   autoComplete?: string;
   minLength?: number;
   maxLength?: number;
@@ -41,6 +43,7 @@ export function TextField({
         <FieldCaption>{label}</FieldCaption>
         <input
           type={type}
+          step={step}
           required={required}
           disabled={disabled}
           aria-label={label}

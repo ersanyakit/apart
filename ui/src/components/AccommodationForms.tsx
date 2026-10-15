@@ -1,3 +1,5 @@
+import {useI18n} from "./I18n";
+import {FloorPresetPicker} from "./FloorPresetPicker";
 import {PhoneField} from "./fields/PhoneField";
 import {parsePhone} from "../lib/phone";
 import {useCurrency} from "./Currency";
@@ -14,6 +16,7 @@ import {
   type Facility,
   localized,
 } from "../lib/api";
+import { RoomRentalSetup } from "./RoomRentalSetup";
 import { RoomBedsEditor, roomBedsPayload, type RoomBedChoice } from "./RoomBedsEditor";
 import { MediaEditor } from "./MediaEditor";
 import { FeatureFields } from "./FeatureFields";
@@ -53,6 +56,7 @@ export function UnitForm({
   room?: APIRoom;
   onSaved: () => Promise<void>;
 }) {
+  const {locale}=useI18n();
   const [draft, setDraft] = useState<APIRoom>(
     room
       ? {
@@ -127,28 +131,13 @@ export function UnitForm({
             { value: "", label: "Kat atanmamış" },
             ...snapshot.floors.map((f) => ({
               value: f.floor_id,
-              label: localized(f.label) || f.code,
+              label: localized(f.label,locale.toUpperCase()) || f.code,
             })),
           ]}
         />
-        <InlineSelectField
-          label="Üst birim"
-          value={draft.parent_id || ""}
-          disabled={draft.kind === "bed"}
-          onChange={(v) => patch({ parent_id: v || null })}
-          options={[
-            { value: "", label: "Bağımsız birim" },
-            ...snapshot.rooms
-              .filter((r) => r.room_id !== draft.room_id && r.kind !== "bed")
-              .map((r) => ({
-                value: r.room_id,
-                label: `${r.code} · ${unitKinds[r.kind]}`,
-              })),
-          ]}
-        />
         <TextField
-          label="Oda tipi / düzeni"
-          placeholder="2+1, stüdyo, aile…"
+          label="Oda tipi"
+          placeholder="Standart, aile, süit…"
           value={draft.type}
           onChange={(v) => patch({ type: v })}
         />
@@ -171,40 +160,29 @@ export function UnitForm({
           </>
         )}
       </div>
-      {draft.kind !== "bed" && (
+      {supportsRentalMode ? <RoomRentalSetup mode={rentalMode} onModeChange={setRentalMode}
+        beds={bedChoices} onBedsChange={setBedChoices} roomId={room?.room_id} branchId={snapshot.branch_id} disabled={busy}/>
+        : draft.kind !== "bed" ? <>
+          <Switch label="Bu birim doğrudan kiralanabilir" checked={draft.rentable} disabled={busy} onChange={v=>patch({rentable:v})}/>
+          <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy}/>
+        </> : <p className="text-sm text-uni-muted">Fiziksel yapı ve kapasiteyi Yataklar bölümünden düzenleyebilirsiniz.</p>}
+      <SettingsSection title="Yerleşim ve gelişmiş ayarlar" description="Üst birim ve kat planındaki konum.">
+        <div className="grid gap-4">
         <InlineSelectField
-          label="Oda yatak düzeni"
-          value={draft.bed_layout || ""}
-          onChange={(v) => patch({ bed_layout: v })}
+          label="Üst birim"
+          value={draft.parent_id || ""}
+          disabled={draft.kind === "bed"}
+          onChange={(v) => patch({ parent_id: v || null })}
           options={[
-            { value: "", label: "Belirtilmemiş" },
-            { value: "single", label: "Tek yatak" },
-            { value: "double", label: "Çift kişilik yatak" },
-            { value: "twin", label: "Twin · Ayrı tek kişilik yataklar" },
-            { value: "mixed", label: "Karma düzen" },
+            { value: "", label: "Bağımsız birim" },
+            ...snapshot.rooms
+              .filter((r) => r.room_id !== draft.room_id && r.kind !== "bed")
+              .map((r) => ({
+                value: r.room_id,
+                label: `${r.code} · ${unitKinds[r.kind]}`,
+              })),
           ]}
         />
-      )}
-      {draft.kind !== "bed" && <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy} rentalMode={supportsRentalMode ? rentalMode : ""} />}
-      {draft.kind === "bed" && (
-        <p className="text-xs text-brand-blue-700">
-          Fiziksel yapı ve kapasite için Kat ve Oda Tanımları → Yataklar
-          bölümünü kullanın.
-        </p>
-      )}
-      {supportsRentalMode ? <div className="space-y-2">
-        <InlineSelectField label="Nasıl kiralanacak?" value={rentalMode} disabled={busy} onChange={v => setRentalMode(v as "room" | "beds")} options={[
-          { value: "", label: "Kiralama şeklini seçin" },
-          { value: "room", label: "Odanın tamamı kiralanacak" },
-          { value: "beds", label: "Yataklar ayrı ayrı kiralanacak" },
-        ]} />
-        <p className="text-sm text-uni-muted">{rentalMode === "room" ? "Satış listesinde yalnızca oda görünür. İçindeki yataklar ayrı satılmaz; 3 boyutlu görünümde korunur." : rentalMode === "beds" ? "Satış listesinde yataklar ayrı ayrı görünür. Odanın tamamı ayrıca satışa açılmaz." : "Oda veya yatak bazında satış yapmak istediğinizi seçin."}</p>
-      </div> : <Switch label="Bu birim doğrudan kiralanabilir" checked={draft.rentable} disabled={draft.kind === "bed"} onChange={v => patch({ rentable: v })} />}
-      <p className="text-xs text-slate-400">
-        Oda ve dairelerde kişi sayısı rezervasyonda belirlenir. Dairenin tamamı
-        kiralandığında alt birimlerin aynı tarihleri kapanır. Tek tek kiralanan
-        yataklar ayrıca tanımlanır.
-      </p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {(["x", "y", "width", "height"] as const).map((key, i) => (
           <TextField
@@ -223,6 +201,9 @@ export function UnitForm({
           />
         ))}
       </div>
+        </div>
+      </SettingsSection>
+      <SettingsSection title="Açıklamalar" description="İsteğe bağlı, farklı dillerde oda açıklaması.">
       <LocalizedTextFields
         label="Açıklama"
         hint="Her dil için ayrı açıklama ekleyin."
@@ -230,18 +211,23 @@ export function UnitForm({
         onChange={(description) => patch({ description })}
         multiline
       />
+      </SettingsSection>
+      <SettingsSection title="Oda olanakları" description="Odada bulunan olanakları ve envanteri seçin.">
       <FeatureFields
         definitions={snapshot.feature_registry.definitions || []}
         scope="room"
         value={draft.feature_assignments}
         onChange={(feature_assignments) => patch({ feature_assignments })}
       />
+      </SettingsSection>
+      <SettingsSection title="Görseller ve videolar" description={`${draft.assets.length} medya dosyası`}>
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => patch({ assets })}
         hotelId={snapshot.hotel_id}
         onBusy={setUploading}
       />
+      </SettingsSection>
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
         {busy ? "Kaydediliyor…" : "Birimi Kaydet"}
       </button>
@@ -251,12 +237,15 @@ export function UnitForm({
 export function FloorForm({
   branchId,
   floor,
+  floors = [],
   onSaved,
 }: {
   branchId: string;
   floor?: Floor;
+  floors?: Floor[];
   onSaved: () => Promise<void>;
 }) {
+  const {locale}=useI18n();
   const [draft, setDraft] = useState<Floor>(
     floor || {
       floor_id: "",
@@ -268,6 +257,7 @@ export function FloorForm({
       height: 1600,
     },
   );
+  const [preset, setPreset] = useState(floor ? "custom" : "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   return (
@@ -278,6 +268,7 @@ export function FloorForm({
         setBusy(true);
         setError("");
         try {
+          if (!preset) throw new Error("Hazır bir kat seçin veya elle giriş seçeneğini kullanın.");
           const { floor_id, ...payload } = draft;
           await command(
             floor ? "floor.update" : "floor.create",
@@ -292,6 +283,12 @@ export function FloorForm({
       }}
     >
       <ErrorMessage message={error} />
+      <FloorPresetPicker value={preset} floors={floors.filter(f=>f.floor_id!==draft.floor_id)} disabled={busy} onChange={(id,values)=>{setPreset(id);if(values)setDraft(previous=>({...previous,...values}));}}/>
+      {preset && preset !== "custom" && <div className="rounded-2xl bg-uni-surface p-4 text-sm text-uni-muted" role="status">
+        {localized(draft.label,locale.toUpperCase())} · Kod: {draft.code} · Sıra: {draft.sort_order}
+        <p className="mt-1 text-xs">Kat adı desteklenen tüm dillerde otomatik hazırlandı. Farklı ad veya kod için “Özel kat / Elle gir” seçin.</p>
+      </div>}
+      {preset === "custom" && <div className="grid gap-4">
       <TextField
         label="Kat kodu"
         required
@@ -302,22 +299,18 @@ export function FloorForm({
       />
       <LocalizedTextFields
         label="Kat adı"
-        hint="Her dil için ayrı ad ekleyin."
+        hint="Özel kat adını girin. İhtiyaç duyduğunuz dillerde karşılık ekleyebilirsiniz."
         values={draft.label || {}}
         onChange={(label) => setDraft({ ...draft, label })}
       />
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {(["sort_order", "width", "height"] as const).map((key, i) => (
-          <TextField
-            key={key}
-            label={["Sıralama", "Plan genişliği", "Plan yüksekliği"][i]}
-            type="number"
-            required
-            value={String(draft[key])}
-            onChange={(v) => setDraft({ ...draft, [key]: Number(v) })}
-          />
-        ))}
-      </div>
+      <TextField label="Sıralama" type="number" step="any" value={String(draft.sort_order)} onChange={v=>setDraft({...draft,sort_order:Number(v)})}/>
+      </div>}
+      <SettingsSection title="Kat planı ölçüleri" description="İsteğe bağlı, çizim alanının boyutları.">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <TextField label="Plan genişliği" type="number" required value={String(draft.width)} onChange={v=>setDraft({...draft,width:Number(v)})}/>
+          <TextField label="Plan yüksekliği" type="number" required value={String(draft.height)} onChange={v=>setDraft({...draft,height:Number(v)})}/>
+        </div>
+      </SettingsSection>
       <button disabled={busy} className={`uni-control ${buttonStyle}`}>
         Katı Kaydet
       </button>
@@ -470,6 +463,7 @@ export function BulkUnitForm({
   snapshot: Snapshot;
   onSaved: () => Promise<void>;
 }) {
+  const {locale}=useI18n();
   const [floor, setFloor] = useState(snapshot.floors[0]?.floor_id || "");
   const [parent, setParent] = useState("");
   const [kind, setKind] = useState("bed");
@@ -520,7 +514,7 @@ export function BulkUnitForm({
             { value: "", label: "Atanmamış" },
             ...snapshot.floors.map((f) => ({
               value: f.floor_id,
-              label: localized(f.label) || f.code,
+              label: localized(f.label,locale.toUpperCase()) || f.code,
             })),
           ]}
         />

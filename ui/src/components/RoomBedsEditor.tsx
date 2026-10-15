@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { BedDouble, Plus, Trash2 } from 'lucide-react';
+import { BedDouble, Plus, Minus, Trash2 } from 'lucide-react';
 import { command, messageOf } from '../lib/api';
-import { BED_PRESETS, applyBedPreset, type Bed } from '../lib/bed-presets';
-import { InlineSelectField, TextField } from './fields';
+import { BED_PRESETS, applyBedPreset, matchBedPreset, type Bed } from '../lib/bed-presets';
+import { BedPresetPicker } from './BedPresetPicker';
+import styles from './RoomRentalSetup.module.css';
 export type RoomBedChoice = { id: string; preset: string; count: number };
 export function roomBedsPayload(choices: RoomBedChoice[], code: string, branch: string): Bed[] {
-  return choices.flatMap(choice => Array.from({ length: choice.count }, (_, i) => {
+  return choices.flatMap(choice => Array.from({ length: choice.count * (BED_PRESETS.find(p => p.key === choice.preset)?.physical_count || 1) }, (_, i) => {
     const preset = BED_PRESETS.find(p => p.key === choice.preset)!;
     const bedCode = `${code.slice(0,12)}-Y${choice.id.slice(0,8)}-${i+1}`.toUpperCase();
-    const bed = applyBedPreset({ branch_id: branch, room_id: null, floor_id: null, code: bedCode, type: 'single', structure: 'standard', width_cm: 90, length_cm: 200, levels: 1, places: [] }, preset);
+    const bed = applyBedPreset({ branch_id: branch, room_id: null, floor_id: null, code: bedCode, type: 'single', structure: 'standard', width_cm: 90, length_cm: 200, levels: 1, places: [] }, preset.physical_count === 2 ? BED_PRESETS.find(p=>p.key==='single')! : preset);
     return { ...bed, places: bed.places.map(p => ({ ...p, rentable: false })) };
   }));
 }
@@ -24,23 +25,36 @@ export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, re
       .catch(e => { if (!controller.signal.aborted) setError(messageOf(e)); });
     return () => controller.abort();
   }, [roomId, branchId]);
-  const count = value.reduce((sum, v) => sum + v.count, 0);
+  const count = value.reduce((sum, v) => sum + v.count * BED_PRESETS.find(p=>p.key===v.preset)!.physical_count, 0);
   return <section className="space-y-3" aria-label="Odadaki yataklar">
     <h3 className="flex items-center gap-2 text-base font-uninav-book"><BedDouble size={20} />Odadaki yataklar</h3>
     <p className="text-sm text-uni-muted">Yatak türünü ve adedini seçin. Odayla birlikte kaydedilir ve 3 boyutlu görünümde gösterilir.</p>
     {error && <p role="alert" className="text-sm text-red-600">Mevcut yataklar alınamadı: {error}</p>}
-    {existing.length > 0 && <div className="rounded-2xl bg-uni-surface p-4 space-y-2"><p className="text-xs text-uni-muted">Kayıtlı yataklar · ayrıntıları Yataklar bölümünden düzenleyebilirsiniz.</p>{existing.map(b => <p key={b.bed_id} className="text-sm">{b.code} · {BED_PRESETS.find(p => p.type === b.type && p.levels === b.levels)?.label || b.type} · {b.width_cm} × {b.length_cm} cm</p>)}</div>}
+    {existing.length > 0 && <div className="rounded-2xl bg-uni-surface p-4 space-y-2"><p className="text-xs text-uni-muted">Kayıtlı yataklar · ayrıntıları Yataklar bölümünden düzenleyebilirsiniz.</p>{existing.map(b => <p key={b.bed_id} className="text-sm">{b.code} · {matchBedPreset(b)?.label || b.type} · {b.width_cm} × {b.length_cm} cm</p>)}</div>}
     <fieldset disabled={disabled} className="space-y-3">
-      {value.map(choice => <div key={choice.id} className="flex items-start gap-3">
-        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_120px] flex-1 gap-3">
-          <InlineSelectField label="Yatak türü" value={choice.preset} disabled={disabled} options={BED_PRESETS.map(p => ({ value: p.key, label: p.label }))} onChange={preset => onChange(value.map(v => v.id === choice.id ? { ...v, preset } : v))} />
-          <TextField label="Adet" type="number" value={String(choice.count)} onChange={raw => { const n = Number(raw); if (Number.isInteger(n) && n >= 1 && n <= 100 && count - choice.count + n <= 100) onChange(value.map(v => v.id === choice.id ? { ...v, count: n } : v)); }} />
-        </div>
-        <button type="button" className="nav-icon-button" aria-label="Eklenen yatak türünü kaldır" onClick={() => onChange(value.filter(v => v.id !== choice.id))}><Trash2 size={18} /></button>
-      </div>)}
-      {!value.length ? <InlineSelectField label="Yatak türü" value="" disabled={disabled} options={[{ value: '', label: 'Yatak türünü seçin' }, ...BED_PRESETS.map(p => ({ value: p.key, label: p.label }))]} onChange={preset => { if (preset) onChange([{ id: crypto.randomUUID(), preset, count: 1 }]); }} /> :
-        <button type="button" disabled={disabled || count >= 100} className="uni-button uni-button-secondary rounded-full" onClick={() => onChange([...value, { id: crypto.randomUUID(), preset: 'single', count: 1 }])}><Plus size={18} />Başka yatak türü ekle</button>}
+      <BedPresetPicker adding disabled={disabled || count >= 100} onSelect={preset => {
+        if (count + preset.physical_count > 100) return;
+        const found = value.find(v => v.preset === preset.key);
+        onChange(found ? value.map(v => v.id === found.id ? { ...v, count:v.count+1 } : v) : [...value,{id:crypto.randomUUID(),preset:preset.key,count:1}]);
+      }}/>
+      {value.map(choice => {
+        const preset = BED_PRESETS.find(p => p.key === choice.preset)!;
+        return <div key={choice.id} className={styles.row}>
+          <span>{preset.label}<small>{choice.count * preset.bed_places} yatak yeri · {choice.count * preset.capacity} kişi</small></span>
+          <div className={styles.counter}>
+            <button type="button" className="uni-control nav-icon-button" disabled={disabled || choice.count<=1} aria-label={`${preset.label} azalt`} onClick={()=>onChange(value.map(v=>v.id===choice.id?{...v,count:v.count-1}:v))}><Minus size={16}/></button>
+            <output aria-label={`${preset.label} adedi`}>{choice.count}</output>
+            <button type="button" className="uni-control nav-icon-button" disabled={disabled || count+ preset.physical_count>100} aria-label={`${preset.label} artır`} onClick={()=>onChange(value.map(v=>v.id===choice.id?{...v,count:v.count+1}:v))}><Plus size={16}/></button>
+            <button type="button" disabled={disabled} className="uni-control nav-icon-button" aria-label={`${preset.label} kaldır`} onClick={()=>onChange(value.filter(v=>v.id!==choice.id))}><Trash2 size={16}/></button>
+          </div>
+        </div>;
+      })}
     </fieldset>
-    {!!count && <p className="text-xs text-uni-muted">{count} fiziksel yatak eklenecek. {rentalMode === "beds" ? "Yataklar ayrı ayrı satışa açılacak." : rentalMode === "room" ? "Yataklar yalnızca odayla birlikte kiralanacak." : "Satış ayarı seçtiğiniz kiralama şekline göre uygulanacak."}</p>}
+    {(count>0 || existing.length>0) && <div className={styles.summary} role="status" aria-label="Yatak düzeni özeti">
+      {existing.length+count} fiziksel yatak · {existing.reduce((n,b)=>n+b.places.filter(p=>p.is_active).length,0)+value.reduce((n,v)=>n+v.count*BED_PRESETS.find(p=>p.key===v.preset)!.bed_places,0)} yatak yeri · {existing.reduce((n,b)=>n+b.places.filter(p=>p.is_active).reduce((sum,p)=>sum+p.capacity,0),0)+value.reduce((n,v)=>{const p=BED_PRESETS.find(p=>p.key===v.preset)!;return n+v.count*p.capacity;},0)} kişilik yatak kapasitesi.
+      <br/>{rentalMode==='beds'?'Her yatak yeri ayrı rezervasyon alabilir. Ranzanın her katı ayrı bir yatak yeridir.':rentalMode==='room'?'Tüm yataklar aynı oda rezervasyonuna dahildir.':'Satışa açılma şekli için kiralama tercihini seçin.'}
+      {(value.some(v=>BED_PRESETS.find(p=>p.key===v.preset)!.place_capacities.some(c=>c>1))||existing.some(b=>b.places.some(p=>p.capacity>1)))&&<p>Birden çok kişilik tek yatak yüzeyi, bağımsız rezervasyonlara bölünmez.</p>}
+    </div>}
+
   </section>;
 }

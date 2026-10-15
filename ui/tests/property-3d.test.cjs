@@ -1,13 +1,17 @@
 const assert = require('node:assert/strict');
 const { test, after } = require('node:test');
 const { execFileSync } = require('node:child_process');
-const { mkdtempSync, rmSync, mkdirSync, writeFileSync } = require('node:fs');
+const { mkdtempSync, rmSync, mkdirSync, writeFileSync, readdirSync } = require('node:fs');
 const path = require('node:path'), os = require('node:os');
 const ui = path.resolve(__dirname, '..'), out = mkdtempSync(path.join(os.tmpdir(), 'otel-property-3d-'));
 after(() => rmSync(out, { recursive: true, force: true }));
 execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--target', 'ES2022', '--module', 'commonjs', '--moduleResolution', 'node', '--strict', '--skipLibCheck', '--esModuleInterop', '--resolveJsonModule', '--jsx', 'react-jsx', '--outDir', out, 'src/components/property-3d/PropertyView.tsx', 'src/components/AccommodationForms.tsx', 'src/components/RoomBedsEditor.tsx', 'src/components/OriginalShell.tsx', 'node_modules/next/types/global.d.ts'], { cwd: ui, stdio: 'pipe' });
 process.env.NODE_PATH = path.join(ui, 'node_modules'); require('node:module').Module._initPaths();
 require.extensions['.css'] = m => { m.exports = {}; };
+require.extensions['.svg'] = (m, filename) => { m.exports = { src: filename }; };
+for (const file of readdirSync(path.join(ui, 'src'), { recursive: true }).filter(file => file.endsWith('.css') || file.endsWith('.svg'))) {
+  const target = path.join(out, file); mkdirSync(path.dirname(target), { recursive: true }); writeFileSync(target, '');
+}
 mkdirSync(path.join(out, 'components/property-3d'), { recursive: true });
 writeFileSync(path.join(out, 'components/property-3d/PropertyView.module.css'), '');
 const { buildPropertyScene, visibleScene, sceneBookingTarget } = require(path.join(out, 'components/property-3d/model.js'));
@@ -266,7 +270,7 @@ test('room bed selection produces distinct persistent structures, not a count-on
   assert.equal(new Set(beds.flatMap(b => b.places.map(p => p.code))).size, 6);
   assert.ok(beds.flatMap(b => b.places).every(p => p.is_active && !p.rentable));
   const html = render(React.createElement(RoomBedsEditor, { branchId: 'b', value: choices, onChange() {}, disabled: false }));
-  for (const text of ['Yatak türü', 'Adet', 'Çift kişilik yatak', '4 katlı ranza']) assert.ok(html.includes(text), text);
+  for (const text of ['yatak yeri', 'kişilik yatak kapasitesi', 'Çift kişilik yatak', '4 katlı ranza']) assert.ok(html.includes(text), text);
 });
 
 test('room form asks for whole-room or per-bed rental explicitly', () => {
@@ -274,8 +278,8 @@ test('room form asks for whole-room or per-bed rental explicitly', () => {
   const wrap = child => React.createElement(NotificationProvider, null, React.createElement(I18nProvider, null, child));
   const { UnitForm } = require(path.join(out, 'components/AccommodationForms.js'));
   const html = render(wrap(React.createElement(UnitForm, { snapshot: snapshot([]), onSaved() {} })));
-  assert.ok(html.includes('Nasıl kiralanacak?')); assert.ok(html.includes('Kiralama şeklini seçin'));
-  for (const [mode, label] of [['room', 'Odanın tamamı kiralanacak'], ['beds', 'Yataklar ayrı ayrı kiralanacak']]) {
+  assert.ok(html.includes('Bu oda nasıl kiralanacak?')); assert.ok(html.includes('type="radio"'));
+  for (const [mode, label] of [['room', 'Odanın tamamı'], ['beds', 'Yataklar ayrı ayrı']]) {
     const html = render(wrap(React.createElement(UnitForm, { snapshot: snapshot([]), room: room('101', { rental_mode: mode }), onSaved() {} })));
     assert.ok(html.includes(label)); assert.ok(!html.includes('Bu birim doğrudan kiralanabilir'));
   }
