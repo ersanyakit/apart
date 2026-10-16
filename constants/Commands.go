@@ -16,6 +16,7 @@ type TCommandTypes int
 
 const (
 	//SYSTEM
+	CMD_SETUP_COMPLETE  = "setup.complete"
 	CMD_INITIAL_SYNC    = "system.initial_sync"
 	CMD_PAYMENT_METHODS = "system.payment_methods"
 	CMD_LINK_METADATA   = "system.link_metadata"
@@ -52,6 +53,7 @@ const (
 
 // CommandMethods is the single whitelist for dispatch and HTTP method validation.
 var CommandMethods = map[string]string{
+	CMD_SETUP_COMPLETE:   "POST",
 	CMD_USER_PREFERENCES: "GET", CMD_USER_PREFERENCES_UPDATE: "PATCH",
 	CMD_AUTH_LOGIN: "POST", CMD_AUTH_LOGOUT: "POST",
 	CMD_INITIAL_SYNC: "GET", CMD_PAYMENT_METHODS: "GET", CMD_LINK_METADATA: "GET",

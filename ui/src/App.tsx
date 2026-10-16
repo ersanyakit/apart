@@ -1,4 +1,5 @@
 "use client";
+import { SetupWizard } from "./components/SetupWizard";
 import {operationalRoomStatuses, housekeepingRoomStatuses, roomRequiresReason} from "./lib/statuses";
 
 import { BookingStatus as BookingState, RoomStatus as RoomState } from './lib/statuses.generated';
@@ -144,6 +145,7 @@ const navigation = [
   { id: "guests", label: "Misafir Arama ve Geçmiş", icon: Search },
   { id: "templates", label: "Belge Şablonları", icon: Settings },
   { id: "logs", label: "İşlem Geçmişi", icon: Layers },
+  { id: "setup", label: "Kurulum Sihirbazı", icon: Settings },
   { id: "facility", label: "Şirket ve Oteller", icon: Building2 },
   { id: "features", label: "Olanak Tanımları", icon: Settings },
   { id: "appsettings", label: "Ayarlar", icon: Settings },
@@ -277,9 +279,9 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const refresh = async (selection?: Selection) => {
     const data = await command<Snapshot>(
       "system.initial_sync",
-      selection || {
-        hotel_id: snapshot?.hotel_id,
-        branch_id: snapshot?.branch_id,
+      {
+        hotel_id: selection ? selection.hotel_id : snapshot?.hotel_id,
+        branch_id: selection ? selection.branch_id : snapshot?.branch_id,
       },
     );
     setSnapshot(normalize(data));
@@ -873,6 +875,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             )}
           </>
         )}
+        {tab === "setup" && manager && <SetupWizard snapshot={s} onComplete={async selection=>{await refresh(selection);setFloorId('');activateTab('board');}}/>}
         {tab === "units" && (
           <InventoryView
             key={s.branch_id}

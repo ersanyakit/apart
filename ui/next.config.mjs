@@ -1,6 +1,23 @@
+import { fileURLToPath } from "node:url";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  // Next.js 16 defaults to Turbopack. Empty object silences the
+  // "webpack config and no turbopack config" error and keeps Turbopack
+  // as the default bundler. The custom webpack() below only applies
+  // when explicitly running with --webpack (NEXT_DEV_WEBPACK=true).
+  turbopack: {},
+  webpack(config, { dev, isServer }) {
+    if (dev && !isServer) {
+      config.module.rules.push({
+        test: /[\/]next[\/]dist[\/]compiled[\/]mini-css-extract-plugin[\/]hmr[\/]hotModuleReplacement\.js$/,
+        enforce: "pre",
+        use: [{ loader: fileURLToPath(new URL("./scripts/css-hmr-guard.cjs", import.meta.url)) }],
+      });
+    }
+    return config;
+  },
   // Trust only this run's public hostname, including a generated Quick Tunnel.
   // API origin validation stays in Go; never allow *.trycloudflare.com here.
   allowedDevOrigins: process.env.APP_URL

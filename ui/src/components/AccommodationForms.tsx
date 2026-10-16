@@ -1,3 +1,6 @@
+import { FloorDefinitionFields } from "./FloorDefinitionFields";
+import { UnitSleepingFields } from "./UnitSleepingFields";
+import { FacilityDetailsFields } from "./FacilityDetailsFields";
 import {useI18n} from "./I18n";
 import {FloorPresetPicker} from "./FloorPresetPicker";
 import {PhoneField} from "./fields/PhoneField";
@@ -160,12 +163,8 @@ export function UnitForm({
           </>
         )}
       </div>
-      {supportsRentalMode ? <RoomRentalSetup mode={rentalMode} onModeChange={setRentalMode}
-        beds={bedChoices} onBedsChange={setBedChoices} roomId={room?.room_id} branchId={snapshot.branch_id} disabled={busy}/>
-        : draft.kind !== "bed" ? <>
-          <Switch label="Bu birim doğrudan kiralanabilir" checked={draft.rentable} disabled={busy} onChange={v=>patch({rentable:v})}/>
-          <RoomBedsEditor roomId={room?.room_id} branchId={snapshot.branch_id} value={bedChoices} onChange={setBedChoices} disabled={busy}/>
-        </> : <p className="text-sm text-uni-muted">Fiziksel yapı ve kapasiteyi Yataklar bölümünden düzenleyebilirsiniz.</p>}
+      <UnitSleepingFields kind={draft.kind} rentable={draft.rentable} onRentableChange={rentable=>patch({rentable})}
+        mode={rentalMode} onModeChange={setRentalMode} beds={bedChoices} onBedsChange={setBedChoices} roomId={room?.room_id} branchId={snapshot.branch_id} disabled={busy}/>
       <SettingsSection title="Yerleşim ve gelişmiş ayarlar" description="Üst birim ve kat planındaki konum.">
         <div className="grid gap-4">
         <InlineSelectField
@@ -283,34 +282,7 @@ export function FloorForm({
       }}
     >
       <ErrorMessage message={error} />
-      <FloorPresetPicker value={preset} floors={floors.filter(f=>f.floor_id!==draft.floor_id)} disabled={busy} onChange={(id,values)=>{setPreset(id);if(values)setDraft(previous=>({...previous,...values}));}}/>
-      {preset && preset !== "custom" && <div className="rounded-2xl bg-uni-surface p-4 text-sm text-uni-muted" role="status">
-        {localized(draft.label,locale.toUpperCase())} · Kod: {draft.code} · Sıra: {draft.sort_order}
-        <p className="mt-1 text-xs">Kat adı desteklenen tüm dillerde otomatik hazırlandı. Farklı ad veya kod için “Özel kat / Elle gir” seçin.</p>
-      </div>}
-      {preset === "custom" && <div className="grid gap-4">
-      <TextField
-        label="Kat kodu"
-        required
-        autoComplete="off"
-        uppercase
-        value={draft.code}
-        onChange={(v) => setDraft({ ...draft, code: v })}
-      />
-      <LocalizedTextFields
-        label="Kat adı"
-        hint="Özel kat adını girin. İhtiyaç duyduğunuz dillerde karşılık ekleyebilirsiniz."
-        values={draft.label || {}}
-        onChange={(label) => setDraft({ ...draft, label })}
-      />
-      <TextField label="Sıralama" type="number" step="any" value={String(draft.sort_order)} onChange={v=>setDraft({...draft,sort_order:Number(v)})}/>
-      </div>}
-      <SettingsSection title="Kat planı ölçüleri" description="İsteğe bağlı, çizim alanının boyutları.">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <TextField label="Plan genişliği" type="number" required value={String(draft.width)} onChange={v=>setDraft({...draft,width:Number(v)})}/>
-          <TextField label="Plan yüksekliği" type="number" required value={String(draft.height)} onChange={v=>setDraft({...draft,height:Number(v)})}/>
-        </div>
-      </SettingsSection>
+      <FloorDefinitionFields draft={draft} setDraft={setDraft} preset={preset} setPreset={setPreset} floors={floors} busy={busy}/>
       <button disabled={busy} className={`uni-control ${buttonStyle}`}>
         Katı Kaydet
       </button>
@@ -387,40 +359,7 @@ export function FacilityForm({
         <p className="font-medium">{kind === "hotel" ? "Şirketin ticari bilgileri" : snapshot.hotels.find(h=>h.hotel_id===snapshot.hotel_id)?.name}</p>
         <p className="mt-1 text-xs text-uni-muted">{kind === "hotel" ? "Örn. Meyman Turizm A.Ş. Otellerinizi bu şirketin altında oluşturabilirsiniz." : "Bu otele ait iletişim, adres ve tanıtım bilgilerini düzenleyin."}</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {(
-          [
-            "name",
-            "address",
-            "phone",
-            "email",
-            "tax_number",
-            "tax_office",
-          ] as const
-        ).map((key, i) => key === "phone" ? (
-          <PhoneField key={key} label="Telefon" value={draft.phone} defaultCountry={defaultCountry}
-            disabled={busy} onChange={phone=>setDraft(previous=>({...previous,phone}))}/>
-        ) : (
-          <TextField
-            key={key}
-            label={
-              [
-                kind === "hotel" ? "Şirket unvanı" : "Otel / tesis adı",
-                kind === "hotel" ? "Şirket adresi" : "Otel / tesis adresi",
-                "Telefon",
-                "E-posta",
-                "Vergi numarası",
-                "Vergi dairesi",
-              ][i]
-            }
-            required={key === "name"}
-            type={key === "email" ? "email" : "text"}
-            autoComplete="off"
-            value={draft[key]}
-            onChange={(v) => setDraft({ ...draft, [key]: v })}
-          />
-        ))}
-      </div>
+      <FacilityDetailsFields kind={kind} value={draft} onChange={setDraft} busy={busy}/>
       <SettingsSection title="Tanıtım ve açıklamalar" description="Farklı dillerde açıklama ekleyin.">
       <LocalizedTextFields
         label="Açıklama"

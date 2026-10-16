@@ -3,14 +3,14 @@ import { DoorClosed, BedSingle } from 'lucide-react';
 import { RoomBedsEditor, type RoomBedChoice } from './RoomBedsEditor';
 import styles from './RoomRentalSetup.module.css';
 
-export function RoomRentalSetup({ mode, onModeChange, beds, onBedsChange, roomId, branchId, disabled }: {
+export function RoomRentalSetup({ mode, onModeChange, beds, onBedsChange, roomId, branchId, disabled, showModeSelection = true, compact = false }: {
   mode: '' | 'room' | 'beds'; onModeChange: (mode: 'room' | 'beds') => void;
   beds: RoomBedChoice[]; onBedsChange: (beds: RoomBedChoice[]) => void;
-  roomId?: string; branchId: string; disabled: boolean;
+  roomId?: string; branchId: string; disabled: boolean; showModeSelection?: boolean; compact?: boolean;
 }) {
   const id = useId();
   return <section className={styles.setup} aria-label="Kiralama ve yatak düzeni">
-    <fieldset disabled={disabled} className={styles.modes}>
+    {showModeSelection && <fieldset disabled={disabled} className={styles.modes}>
       <legend>Bu oda nasıl kiralanacak?</legend>
       <p>Misafirlerin odayı birlikte mi, ayrı rezervasyonlarla mı kullanacağını seçin.</p>
       <div className={styles.options}>
@@ -20,7 +20,7 @@ export function RoomRentalSetup({ mode, onModeChange, beds, onBedsChange, roomId
             <option.Icon size={22}/><span><strong>{option.title}</strong><small>{option.description}</small></span>
           </label>)}
       </div>
-    </fieldset>
-    <RoomBedsEditor roomId={roomId} branchId={branchId} value={beds} onChange={onBedsChange} disabled={disabled} rentalMode={mode}/>
+    </fieldset>}
+    <RoomBedsEditor compact={compact} roomId={roomId} branchId={branchId} value={beds} onChange={onBedsChange} disabled={disabled} rentalMode={mode}/>
   </section>;
 }

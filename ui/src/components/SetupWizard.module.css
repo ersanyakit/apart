@@ -1,0 +1,25 @@
+.page { max-width:920px; margin-inline:auto; }
+.header { display:flex; align-items:center; gap:12px; margin:12px 0 24px; }
+.header svg { color:var(--color-brand-blue-600); }
+.header h2 { font-size:24px; font-weight:600; letter-spacing:-.03em; }
+.header p { font-size:13px; color:var(--color-uni-muted); margin-top:4px; }
+.steps { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+.steps button { display:flex; align-items:center; gap:6px; padding:10px; min-height:44px; border-radius:12px; font-size:12px; color:var(--color-uni-muted); }
+.steps button[aria-current=step] { color:var(--color-brand-blue-600); background:var(--color-brand-blue-50); }
+.card { border:1px solid var(--color-uni-border); border-radius:22px; padding:24px; background:var(--app-background); }
+.card h3 { font-size:18px; font-weight:600; margin-bottom:6px; }
+.intro { color:var(--color-uni-muted); font-size:13px; line-height:1.7; margin-bottom:20px; }
+.body { display:grid; gap:18px; min-width:0; }
+.body > * { min-width:0; }
+.profiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.profiles button { min-height:72px; text-align:start; border:1px solid var(--color-uni-border); border-radius:14px; padding:12px; font-size:13px; }
+.profiles button[aria-pressed=true] { border-color:var(--color-brand-blue-600); background:var(--color-brand-blue-50); }
+.profiles small { display:block; margin-top:5px; color:var(--color-uni-muted); font-size:11px; line-height:1.5; }
+.note { border-radius:14px; background:var(--color-uni-surface); padding:12px 16px; font-size:13px; line-height:1.7; color:var(--color-uni-muted); }
+.footer { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; padding-top:20px; margin-top:20px; border-top:1px solid var(--color-uni-border); }
+.footer small { color:var(--color-uni-muted); font-size:12px; }
+.row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+.metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.metrics div { padding:16px; border-radius:16px; background:var(--color-uni-surface); font-size:12px; }
+.metrics strong { display:block; font-size:24px; font-weight:600; }
+@media(max-width:640px) { .card { padding:16px; } .profiles { grid-template-columns:repeat(2,minmax(0,1fr)); } .steps { gap:2px; } .steps button { padding:8px; } }

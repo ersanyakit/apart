@@ -134,6 +134,7 @@ export function OriginalShell({
             label: "Sistem Ayarları",
             icon: <NavigationIcon name="settings" />,
             subItems: [
+              { id: "setup", label: "Kurulum Sihirbazı", icon: <NavigationIcon name="setup" /> },
               { id: "facility", label: "Şirket ve Oteller", icon: <NavigationIcon name="facility" /> },
               { id: "units", label: "Kat ve Oda Tanımları", icon: <NavigationIcon name="units" /> },
               { id: "staff", label: "Personel Tanımları", icon: <NavigationIcon name="staff" /> },

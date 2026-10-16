@@ -52,6 +52,7 @@ export function StepperField({
   value,
   min = 1,
   max = 100000,
+  stepSize = 1,
   onChange,
   sub,
   disabled,
@@ -60,11 +61,12 @@ export function StepperField({
   value: number;
   min?: number;
   max?: number;
+  stepSize?: number;
   onChange: (value: number) => void;
   sub?: string;
   disabled?: boolean;
 }) {
-  const clamp = (v: number) => Math.min(max, Math.max(min, Math.floor(v) || min));
+  const clamp = (v: number) => Math.min(max, Math.max(min, (stepSize === 1 ? Math.floor(v) : Number(v.toFixed(6)))));
   // Basılı-tut tekrarı bayat değerle çalışmasın diye güncel değer ref'te tutulur.
   const valueRef = React.useRef(value);
   valueRef.current = value;
@@ -93,16 +95,16 @@ export function StepperField({
     setDraft(null);
     if (c !== valueRef.current) onChange(c);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [draft, min, max, onChange]);
+  }, [draft, min, max, stepSize, onChange]);
   const step = React.useCallback(
     (delta: number) => {
       setDraft(null);
       onChange(clamp(valueRef.current + delta));
     },
-    [min, max, onChange],
+    [min, max, stepSize, onChange],
   );
-  const holdUp = useHoldStep(() => step(1), disabled || value >= max);
-  const holdDown = useHoldStep(() => step(-1), disabled || value <= min);
+  const holdUp = useHoldStep(() => step(stepSize), disabled || value >= max);
+  const holdDown = useHoldStep(() => step(-stepSize), disabled || value <= min);
 
   return (
     <FieldCard>
@@ -120,6 +122,7 @@ export function StepperField({
           <input
             ref={inputRef}
             type="number"
+            step={stepSize === 1 ? 1 : "any"}
             min={min}
             max={max}
             required

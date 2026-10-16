@@ -11,7 +11,7 @@ import (
 // selection. Flat keys let independent changes merge atomically in PostgreSQL.
 type Preferences map[string]any
 
-var pageIDs = []string{"property3d", "kanban", "blacklist", "reports", "board", "calendar", "bookings", "bookings-list", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
+var pageIDs = []string{"setup", "property3d", "kanban", "blacklist", "reports", "board", "calendar", "bookings", "bookings-list", "stays", "units", "staff", "guests", "templates", "logs", "facility", "features", "appsettings"}
 var preferenceEnums = map[string][]string{
 	"bookings_view":   {"timeline", "list"},
 	"bookings_status": {"all", string(constants.BookingConfirmed), string(constants.BookingCheckedIn), string(constants.BookingCompleted)},

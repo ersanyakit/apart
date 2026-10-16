@@ -114,8 +114,12 @@ func Start(ctx context.Context, address, apiURL, publicURL string, development b
 	slog.Info("Next.js başlatılıyor", "mode", mode, "hot_reload", development)
 	args := []string{"node_modules/next/dist/bin/next", mode, "--hostname", "127.0.0.1", "--port", port}
 	// Polling with webpack is a local fallback when macOS denies FSEvents.
+	// Next.js 16 requires an explicit bundler flag when a webpack config
+	// exists, otherwise it exits with "webpack config and no turbopack config".
 	if development && os.Getenv("NEXT_DEV_WEBPACK") == "true" {
 		args = append(args, "--webpack")
+	} else if development {
+		args = append(args, "--turbopack")
 	}
 	cmd := exec.CommandContext(ctx, "node", args...)
 	cmd.Dir = "ui"

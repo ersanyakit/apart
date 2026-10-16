@@ -4,17 +4,10 @@ import { command, messageOf } from '../lib/api';
 import { BED_PRESETS, applyBedPreset, matchBedPreset, type Bed } from '../lib/bed-presets';
 import { BedPresetPicker } from './BedPresetPicker';
 import styles from './RoomRentalSetup.module.css';
-export type RoomBedChoice = { id: string; preset: string; count: number };
-export function roomBedsPayload(choices: RoomBedChoice[], code: string, branch: string): Bed[] {
-  return choices.flatMap(choice => Array.from({ length: choice.count * (BED_PRESETS.find(p => p.key === choice.preset)?.physical_count || 1) }, (_, i) => {
-    const preset = BED_PRESETS.find(p => p.key === choice.preset)!;
-    const bedCode = `${code.slice(0,12)}-Y${choice.id.slice(0,8)}-${i+1}`.toUpperCase();
-    const bed = applyBedPreset({ branch_id: branch, room_id: null, floor_id: null, code: bedCode, type: 'single', structure: 'standard', width_cm: 90, length_cm: 200, levels: 1, places: [] }, preset.physical_count === 2 ? BED_PRESETS.find(p=>p.key==='single')! : preset);
-    return { ...bed, places: bed.places.map(p => ({ ...p, rentable: false })) };
-  }));
-}
-export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, rentalMode = "" }: {
-  roomId?: string; branchId: string; value: RoomBedChoice[]; onChange: (value: RoomBedChoice[]) => void; disabled: boolean; rentalMode?: "" | "room" | "beds";
+export {roomBedsPayload,type RoomBedChoice} from '../lib/room-beds';
+import type {RoomBedChoice} from '../lib/room-beds';
+export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, rentalMode = "", compact = false }: {
+  roomId?: string; branchId: string; value: RoomBedChoice[]; onChange: (value: RoomBedChoice[]) => void; disabled: boolean; rentalMode?: "" | "room" | "beds"; compact?: boolean;
 }) {
   const [existing, setExisting] = useState<Bed[]>([]), [error, setError] = useState('');
   useEffect(() => {
@@ -31,8 +24,8 @@ export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, re
     <p className="text-sm text-uni-muted">Yatak türünü ve adedini seçin. Odayla birlikte kaydedilir ve 3 boyutlu görünümde gösterilir.</p>
     {error && <p role="alert" className="text-sm text-red-600">Mevcut yataklar alınamadı: {error}</p>}
     {existing.length > 0 && <div className="rounded-2xl bg-uni-surface p-4 space-y-2"><p className="text-xs text-uni-muted">Kayıtlı yataklar · ayrıntıları Yataklar bölümünden düzenleyebilirsiniz.</p>{existing.map(b => <p key={b.bed_id} className="text-sm">{b.code} · {matchBedPreset(b)?.label || b.type} · {b.width_cm} × {b.length_cm} cm</p>)}</div>}
-    <fieldset disabled={disabled} className="space-y-3">
-      <BedPresetPicker adding disabled={disabled || count >= 100} onSelect={preset => {
+    <fieldset disabled={disabled} className="min-w-0 space-y-3">
+      <BedPresetPicker compact={compact} adding disabled={disabled || count >= 100} onSelect={preset => {
         if (count + preset.physical_count > 100) return;
         const found = value.find(v => v.preset === preset.key);
         onChange(found ? value.map(v => v.id === found.id ? { ...v, count:v.count+1 } : v) : [...value,{id:crypto.randomUUID(),preset:preset.key,count:1}]);

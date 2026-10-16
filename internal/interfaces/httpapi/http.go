@@ -38,6 +38,7 @@ import (
 const CookieName = "interactiveotel_session"
 
 type Handler struct {
+	Setup            application.SetupExecutor
 	Notes            *application.Notes
 	Reporting        *application.Reporting
 	Folios           *application.Folios
@@ -102,7 +103,85 @@ func (h *Handler) App(uiURL string, ready func(context.Context) error) *fiber.Ap
 	return app
 }
 func (h *Handler) secureCookie(c fiber.Ctx) bool {
-	return h.SecureCookies && !(h.LocalOrigin != "" && c.Get("Origin") == h.LocalOrigin)
+	return h.SecureCookies && !(h.LocalOrigin != "" && sameOrigin(c.Get("Origin"), h.LocalOrigin))
+}
+
+// sameOrigin reports whether two origin strings refer to the same site,
+// treating loopback aliases (localhost, 127.0.0.1, ::1) as equivalent.
+// This keeps CSRF protection strict while allowing the app to be opened
+// via either http://localhost:PORT or http://127.0.0.1:PORT.
+func sameOrigin(a, b string) bool {
+	if a == b {
+		return true
+	}
+	ua, errA := parseOrigin(a)
+	ub, errB := parseOrigin(b)
+	if errA != nil || errB != nil {
+		return false
+	}
+	if ua.scheme != ub.scheme || ua.port != ub.port {
+		return false
+	}
+	return normalizeLoopback(ua.host) == normalizeLoopback(ub.host)
+}
+
+type parsedOrigin struct {
+	scheme, host, port string
+}
+
+func parseOrigin(raw string) (parsedOrigin, error) {
+	// net/url is already imported transitively; avoid a new import by
+	// parsing the small origin form manually: scheme://host[:port].
+	rest, ok := strings.CutPrefix(raw, "http://")
+	scheme := "http"
+	if !ok {
+		rest, ok = strings.CutPrefix(raw, "https://")
+		if !ok {
+			return parsedOrigin{}, errors.New("unsupported scheme")
+		}
+		scheme = "https"
+	}
+	// Strip path/query if a full URL slipped in; origins carry none.
+	if i := strings.IndexByte(rest, '/'); i >= 0 {
+		rest = rest[:i]
+	}
+	host, port := rest, ""
+	// IPv6 bracketed form: [::1]:3000.
+	if strings.HasPrefix(rest, "[") {
+		end := strings.IndexByte(rest, ']')
+		if end < 0 {
+			return parsedOrigin{}, errors.New("bad host")
+		}
+		host = rest[1:end]
+		if len(rest) > end+1 {
+			if rest[end+1] != ':' {
+				return parsedOrigin{}, errors.New("bad host")
+			}
+			port = rest[end+2:]
+		}
+	} else if i := strings.LastIndexByte(rest, ':'); i >= 0 {
+		host = rest[:i]
+		port = rest[i+1:]
+	}
+	if host == "" {
+		return parsedOrigin{}, errors.New("empty host")
+	}
+	if port == "" {
+		port = "443"
+		if scheme == "http" {
+			port = "80"
+		}
+	}
+	return parsedOrigin{scheme: scheme, host: strings.ToLower(host), port: port}, nil
+}
+
+func normalizeLoopback(host string) string {
+	switch host {
+	case "localhost", "127.0.0.1", "::1":
+		return "loopback"
+	default:
+		return host
+	}
 }
 
 func (h *Handler) decode(c fiber.Ctx) error {
@@ -132,7 +211,7 @@ func (h *Handler) decode(c fiber.Ctx) error {
 	}
 	if method != "GET" {
 		origin := c.Get("Origin")
-		if (origin != "" && origin != h.Origin && origin != h.LocalOrigin) || c.Get("Sec-Fetch-Site") == "cross-site" {
+		if (origin != "" && !sameOrigin(origin, h.Origin) && !sameOrigin(origin, h.LocalOrigin)) || c.Get("Sec-Fetch-Site") == "cross-site" {
 			return constants.ErrOrigin
 		}
 		if origin == "" && c.Cookies(CookieName) != "" && c.Get("X-Requested-With") != "INTERACTIVEOTEL" {
@@ -464,6 +543,15 @@ func (h *Handler) command(c fiber.Ctx) error {
 		default:
 			result = snapshot
 		}
+	case constants.CMD_SETUP_COMPLETE:
+		if h.Setup == nil {
+			return constants.ErrPayload
+		}
+		var input application.SetupInput
+		if err = decode(e.Payload, &input); err != nil {
+			return err
+		}
+		result, err = h.Setup.Setup(ctx, u, input)
 	case constants.CMD_HOTEL_CREATE, constants.CMD_HOTEL_UPDATE:
 		var input property.Hotel
 		if err = decode(e.Payload, &input); err != nil {

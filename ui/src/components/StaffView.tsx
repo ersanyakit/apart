@@ -1,3 +1,4 @@
+import { StaffIdentityFields, roles, type Person } from "./StaffIdentityFields";
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useState } from "react";
@@ -10,27 +11,6 @@ import {
 } from "./FormKit";
 import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
-type Person = {
-  user_id?: string;
-  hotel_id: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-  branch_ids: string[];
-  password?: string;
-};
-const roles: Record<string, string> = {
-  management: "Yönetim",
-  reception: "Resepsiyon",
-  accounting: "Muhasebe",
-  housekeeping: "Kat hizmetleri",
-  technical_service: "Teknik servis",
-  maintenance: "Bakım",
-  supervisor: "Sorumlu",
-  admin: "Sistem yöneticisi",
-};
 export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
   const [people, setPeople] = useState<Person[]>([]),
     [editing, setEditing] = useState<Person | null>(null),
@@ -188,54 +168,7 @@ function StaffForm({
       }}
     >
       <ErrorMessage message={error} />
-      <div className="grid grid-cols-1 items-start sm:grid-cols-2 gap-4">
-        <TextField
-          label="Ad"
-          required
-          autoComplete="off"
-          value={p.first_name}
-          onChange={(v) => patch({ first_name: v })}
-        />
-        <TextField
-          label="Soyad"
-          required
-          autoComplete="off"
-          value={p.last_name}
-          onChange={(v) => patch({ last_name: v })}
-        />
-        <TextField
-          label="Kullanıcı adı"
-          required
-          autoComplete="off"
-          value={p.username}
-          onChange={(v) => patch({ username: v })}
-        />
-        <TextField
-          label="E-posta"
-          type="email"
-          autoComplete="off"
-          value={p.email}
-          onChange={(v) => patch({ email: v })}
-        />
-        <InlineSelectField
-          label="Rol"
-          value={p.role}
-          onChange={(v) => patch({ role: v })}
-          options={Object.entries(roles)
-            .filter(([r]) => r !== "admin" || s.user.role === "admin")
-            .map(([value, label]) => ({ value, label }))}
-        />
-        <TextField
-          label={p.user_id ? "Yeni şifre (değiştirmek için)" : "Giriş şifresi"}
-          type="password"
-          autoComplete="new-password"
-          minLength={12}
-          maxLength={72}
-          required={!p.user_id}
-          value={p.password || ""}
-          onChange={(v) => patch({ password: v })}
-        />
-      </div>
+      <StaffIdentityFields value={p} onChange={setP} allowAdmin={s.user.role==="admin"}/>
       <div className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-1">
         <p className="font-uninav-book px-1 pb-2 text-[0.875rem] leading-5 text-slate-500">
           Şube erişimleri

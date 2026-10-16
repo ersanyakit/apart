@@ -733,6 +733,7 @@
     "room.list": "GET",
     "room.state": "PUT",
     "room.update": "PUT",
+    "setup.complete": "POST",
     "staff.create": "POST",
     "staff.delete": "DELETE",
     "staff.list": "GET",

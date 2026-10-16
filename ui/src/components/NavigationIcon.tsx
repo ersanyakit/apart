@@ -1,7 +1,7 @@
 import {
   Box, KanbanSquare, ReceiptText, ShieldAlert, Wallet, ChartPie, ChartColumnIncreasing, TrendingUp, Wrench, ChartNoAxesCombined, BedDouble, Building2, CalendarCheck2, CalendarDays, ClipboardList,
   DoorOpen, Files, LayoutGrid, ScrollText, Settings2, SlidersHorizontal,
-  Sparkles, UsersRound, Bell, Search, X, Home, MapPin, type LucideIcon,
+  WandSparkles, Sparkles, UsersRound, Bell, Search, X, Home, MapPin, type LucideIcon,
 } from "lucide-react";
 
 const icons: Record<string, LucideIcon> = {
@@ -11,7 +11,7 @@ const icons: Record<string, LucideIcon> = {
   calendar: CalendarDays, bookings: CalendarCheck2, "bookings-list": ClipboardList,
   stays: BedDouble, guests: UsersRound, settings: Settings2, facility: Building2,
   units: DoorOpen, staff: UsersRound, templates: Files, logs: ScrollText,
-  features: Sparkles, appsettings: SlidersHorizontal, newbooking: ClipboardList,
+  setup: WandSparkles, features: Sparkles, appsettings: SlidersHorizontal, newbooking: ClipboardList,
   search: Search, close: X, notifications: Bell, home: Home, map: MapPin,
 };
 
