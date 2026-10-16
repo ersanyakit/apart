@@ -20,6 +20,13 @@
 .noteOpen h4{font-size:14px;font-weight:550;line-height:1.5;color:var(--color-uni-ink);overflow-wrap:anywhere}
 .noteOpen p{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.65;color:var(--color-uni-muted);white-space:pre-wrap;overflow-wrap:anywhere;margin-top:7px}
 .author{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;font-size:11px;color:var(--color-uni-muted);overflow-wrap:anywhere}
+.bookingGo{display:flex;flex-direction:column;gap:6px;width:100%;margin-top:10px;border-radius:12px;background:var(--color-uni-surface);padding:10px 12px;min-height:44px;text-align:left;color:var(--color-uni-ink);transition:transform var(--interaction-fast),background-color var(--interaction-fast)}
+.bookingGo:hover{background:color-mix(in srgb,var(--color-brand-blue-500) 8%,var(--color-uni-surface))}
+.bookingGo:active{transform:scale(.98);background:color-mix(in srgb,var(--color-brand-blue-500) 14%,var(--color-uni-surface))}
+.bookingGo:focus-visible{outline:2px solid var(--color-brand-blue-500);outline-offset:2px}
+.bookingLine{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-uni-muted);overflow-wrap:anywhere}
+.bookingCta{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--color-brand-blue-600)}
+@media(prefers-reduced-motion:reduce){.bookingGo:active{transform:none}}
 .updated{font-size:10px;color:var(--color-uni-muted);margin-top:7px;line-height:1.5}
 .cardFooter{display:flex;justify-content:space-between;align-items:center;gap:4px;margin-top:12px}
 .empty{padding:32px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;font-size:13px;color:var(--color-uni-muted)}

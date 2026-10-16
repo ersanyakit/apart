@@ -22,6 +22,7 @@
     "test:guests": "node --test tests/guest-operations.test.cjs",
     "test:documents": "node --test tests/document-editor.test.cjs",
     "test:kanban": "node --test tests/kanban.test.cjs",
+    "test:money": "node --test tests/money.test.cjs",
     "test:property-3d": "node --test tests/property-3d.test.cjs",
     "test:bed-presets": "node --test tests/bed-presets.test.cjs",
     "test:status": "node --test tests/status-palette.test.cjs"

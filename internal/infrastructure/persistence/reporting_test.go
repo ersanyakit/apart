@@ -7,8 +7,11 @@ import (
 	"otel/constants"
 	"otel/internal/application"
 	"otel/internal/domain/audit"
+	"otel/internal/domain/booking"
 	"otel/internal/domain/identity"
+	"otel/internal/domain/property"
 	"otel/internal/domain/reporting"
+	"otel/internal/domain/shared"
 	"otel/internal/infrastructure/persistence"
 	"otel/internal/infrastructure/persistence/models"
 	"otel/internal/testdb"
@@ -141,4 +144,95 @@ func TestReportingIsolationIdempotencyAndAudit(t *testing.T) {
 		}
 	})
 
+}
+
+func TestReceptionBookingReceipt(t *testing.T) {
+	db := testdb.Open(t)
+	if e := migrations.Up(db); e != nil {
+		t.Fatal(e)
+	}
+	ctx := context.Background()
+	repo := persistence.New(db)
+	hotel, branch, otherBranch := uuid.New(), uuid.New(), uuid.New()
+	managerID, receptionID := uuid.New(), uuid.New()
+	for _, row := range []any{
+		&models.Hotel{HotelID: hotel, FacilityInfo: models.FacilityInfo{Name: "Tahsilat"}},
+		&models.Branch{BranchID: branch, HotelID: hotel, FacilityInfo: models.FacilityInfo{Name: "Merkez"}},
+		&models.Branch{BranchID: otherBranch, HotelID: hotel, FacilityInfo: models.FacilityInfo{Name: "Şube"}},
+		&models.User{UserID: managerID, HotelID: hotel, UserName: "tahsilat-yonetici", Password: "unused", UserRole: constants.UserRoleManagement},
+		&models.User{UserID: receptionID, HotelID: hotel, UserName: "tahsilat-resepsiyon", Password: "unused", UserRole: constants.UserRoleReception},
+	} {
+		if e := db.Create(row).Error; e != nil {
+			t.Fatal(e)
+		}
+	}
+	if e := db.Exec("INSERT INTO user_branches (user_id, branch_id, hotel_id, role) VALUES (?, ?, ?, ?)", receptionID, branch, hotel, constants.UserRoleReception).Error; e != nil {
+		t.Fatal(e)
+	}
+	catalog := &application.Catalog{Staff: repo, Properties: repo, Media: repo, Features: repo, Layout: repo, Bookings: repo}
+	stay := &application.Accommodation{Catalog: catalog, Layout: repo, Bookings: repo, Notes: repo}
+	manager := identity.User{UserID: managerID, HotelID: hotel, Role: constants.UserRoleManagement, DisplayName: "Yönetici"}
+	reception := identity.User{UserID: receptionID, HotelID: hotel, Role: constants.UserRoleReception, BranchIDs: []uuid.UUID{branch}, DisplayName: "Resepsiyon"}
+	floor, e := stay.SaveFloor(ctx, manager, property.Floor{BranchID: branch, Code: "1", Label: shared.LocalizedString{constants.LanguageTR: "1. Kat"}, Width: 2400, Height: 1600}, true)
+	if e != nil {
+		t.Fatal(e)
+	}
+	room, e := catalog.SaveRoom(ctx, manager, property.Room{BranchID: branch, FloorID: &floor.FloorID, Code: "101", Kind: "room", Capacity: 2, Rentable: true, Status: "Temiz", Position: property.Position{X: 20, Y: 20, Width: 140, Height: 100}}, true)
+	if e != nil {
+		t.Fatal(e)
+	}
+	now := time.Now().UTC()
+	reservation, e := stay.SaveBooking(ctx, reception, booking.Booking{BranchID: branch, RoomID: room.RoomID, GuestName: "Misafir", GuestCount: 1, DailyPriceMinor: 200000, CheckIn: now.Add(24 * time.Hour), CheckOut: now.Add(72 * time.Hour)}, true)
+	if e != nil {
+		t.Fatal(e)
+	}
+	service := application.Reporting{Repository: repo}
+	receipt := func() reporting.Record {
+		return reporting.Record{ID: uuid.New(), HotelID: hotel, BranchID: branch, RoomID: &room.RoomID, BookingID: &reservation.BookingID, Kind: "receipt", Label: "Konaklama tahsilatı", Party: "Misafir", AmountMinor: 200000, Currency: "TRY", Channel: "cash", Status: "completed", OccurredAt: now}
+	}
+	saved, e := service.Record(ctx, reception, receipt())
+	if e != nil {
+		t.Fatalf("reception receipt rejected: %v", e)
+	}
+	if saved.ActorID != receptionID {
+		t.Fatalf("provenance lost: %+v", saved)
+	}
+	folio, e := repo.BookingFolio(ctx, branch, reservation.BookingID)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if len(folio.Totals) != 1 || folio.Totals[0].Paid != 200000 || folio.Totals[0].Balance != 200000 {
+		t.Fatalf("folio wrong: %+v", folio.Totals)
+	}
+	bad := receipt()
+	bad.Kind = "expense"
+	bad.BookingID = nil
+	if _, e = service.Record(ctx, reception, bad); !errors.Is(e, constants.ErrForbidden) {
+		t.Fatalf("reception expense accepted: %v", e)
+	}
+	bad = receipt()
+	bad.BookingID = nil
+	if _, e = service.Record(ctx, reception, bad); !errors.Is(e, constants.ErrForbidden) {
+		t.Fatalf("booking-free receipt accepted: %v", e)
+	}
+	bad = receipt()
+	bad.Reference = "some-account"
+	if _, e = service.Record(ctx, reception, bad); !errors.Is(e, constants.ErrPayload) {
+		t.Fatalf("account matching accepted: %v", e)
+	}
+	bad = receipt()
+	bad.AmountMinor = 0
+	if _, e = service.Record(ctx, reception, bad); !errors.Is(e, constants.ErrPayload) {
+		t.Fatalf("zero receipt accepted: %v", e)
+	}
+	bad = receipt()
+	bad.BranchID = otherBranch
+	if _, e = service.Record(ctx, reception, bad); !errors.Is(e, constants.ErrForbidden) {
+		t.Fatalf("foreign branch accepted: %v", e)
+	}
+	managerFree := receipt()
+	managerFree.BookingID = nil
+	if _, e = service.Record(ctx, manager, managerFree); e != nil {
+		t.Fatalf("manager regression: %v", e)
+	}
 }

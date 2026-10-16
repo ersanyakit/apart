@@ -124,24 +124,36 @@ export function formatMoney(
 }
 
 /**
- * Ham girişi kuruşa çevirir. Biçime göre ayraçları yorumlar
- * (tr: "4.500,00", en: "4,500.00"). Boş/geçersiz → null.
+ * Ham girişi kuruşa çevirir. Son ayraç ondalık sayılır; diğer ayraçlar
+ * binliktir ("1.234,56", "1,234.56", "250,25" ve "250.25" hep doğru
+ * okunur). Tek başına 3 basamaklı grup binliktir ("1.234" → 1234);
+ * yalnızca biçimin kendi ondalık ayracı bu kuralı bozar
+ * (tr'de "1,234" → 1,234). Boş/geçersiz → null.
  */
 export function parseMoney(raw: string, format: MoneyFormatId): number | null {
-  let s = raw.replace(/[\s₺$€£]|TL|TRY|USD|EUR|GBP/gi, "").trim();
-  if (!s) return null;
-  if (format === "tr") {
-    s = s.replace(/\./g, "#").replace(/,/g, ".").replace(/#/g, "");
-  } else {
-    s = s.replace(/,/g, "");
+  const s = raw.replace(/[\s₺$€£]|TL|TRY|USD|EUR|GBP/gi, "").trim();
+  if (!s || !/^[0-9.,]+$/.test(s)) return null;
+  const ownDec = format === "tr" ? "," : ".";
+  const lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+  let int = s, frac = "";
+  if (lastDot >= 0 && lastComma >= 0) {
+    const d = Math.max(lastDot, lastComma);
+    int = s.slice(0, d).replace(/[.,]/g, "");
+    frac = s.slice(d + 1).replace(/[.,]/g, "");
+  } else if (lastDot >= 0 || lastComma >= 0) {
+    const sep = lastDot >= 0 ? "." : ",";
+    const parts = s.split(sep);
+    if (parts.length > 2) {
+      int = parts.join("");
+    } else if (/^\d{3}$/.test(parts[1]) && sep !== ownDec) {
+      int = parts[0] + parts[1];
+    } else {
+      int = parts[0];
+      frac = parts[1];
+    }
   }
-  const parts = s.split(".");
-  const norm =
-    parts.length > 2
-      ? parts.slice(0, -1).join("") + "." + parts[parts.length - 1]
-      : s;
-  // eslint-disable-next-line no-self-compare
-  const f = Number(norm);
+  if (!/^\d*$/.test(int) || !/^\d*$/.test(frac) || (int === "" && frac === "")) return null;
+  const f = Number(frac ? `${int === "" ? "0" : int}.${frac}` : int === "" ? "0" : int);
   if (!Number.isFinite(f) || f < 0 || f > 9999999999) return null;
   return Math.round(f * 100);
 }

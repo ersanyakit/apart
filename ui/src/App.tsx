@@ -87,6 +87,7 @@ import { CustomerDetail } from "./components/reports/CustomerDetail";
 import type { Customer } from "./components/reports/CustomerList";
 import { PropertyView } from "./components/property-3d/PropertyView";
 import { KanbanView } from "./components/kanban/KanbanView";
+import { FolioPayment } from "./components/FolioPayment";
 import { AuditView } from "./components/AuditView";
 import { RoomStatusCard } from "./components/RoomStatusCard";
 import { RoomStatusPicker } from "./components/RoomStatusPicker";
@@ -185,6 +186,10 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
     [reasonOperation,setReasonOperation]=useState<ReasonOperation|null>(null),
     [cleaningRoom,setCleaningRoom]=useState<APIRoom|null>(null),
     [modal, setModal] = useState<Modal | null>(() => startRegistration && snapshot ? { type: "facility", kind: "hotel", create: true } : null),
+    // Oda kartı ve giriş akışından açılan tahsilat penceresi.
+    [payment, setPayment] = useState<{ bookingId: string; entry: "checkin" | "manual" } | null>(null),
+    // Tahsilat sonrası açık folyo görünümlerini yeniden yükler.
+    [folioRev, setFolioRev] = useState(0),
     [busy, setBusy] = useState(false),
     [search, setSearch] = useState(""),
     [floorId, setFloorId] = useState(""),
@@ -366,7 +371,12 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const transition = (b: Booking, action: string) => {
     if(action==="check_out"){setModal(null);setCheckout(b);return}
     if(action==="cancel"){setReasonOperation({kind:"cancel",booking:b});return}
-    void run(async () => { await command("booking.transition", {branch_id:b.branch_id,booking_id:b.booking_id,action});await refresh();});
+    void run(async () => {
+      await command("booking.transition", {branch_id:b.branch_id,booking_id:b.booking_id,action});
+      await refresh();
+      // Girişte ödeme sorusu: kayıt tamamlanınca tahsilat penceresi açılır.
+      if(action==="check_in") setPayment({bookingId:b.booking_id,entry:"checkin"});
+    });
   };
   const changeRoomState=(room:APIRoom,status:string)=>{
     if(status===RoomState.Clean){setCleaningRoom(room);return}
@@ -922,7 +932,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           onOpenBooking={booking => setModal({type:"history",booking})}
           onBook={operator ? room => setModal({ type: "booking", roomId: room.room_id }) : undefined}
           onDefinitions={manager ? () => activateTab("units") : undefined} />}
-        {tab === "kanban" && <KanbanView snapshot={s}/>}
+        {tab === "kanban" && <KanbanView snapshot={s} onOpenBooking={booking => setModal({type:"history",booking})}/>}
         {tab === "logs" && <AuditView hotelId={s.hotel_id} />}
         {tab === "stays" && (
           <StaysScheduler key={s.branch_id} rooms={s.rooms} floors={s.floors} bookings={s.bookings}
@@ -957,7 +967,18 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         onClose={()=>setModal(null)} onRefresh={refresh}
         onEdit={operator?openBookingEdit:undefined}
         onMove={operator?booking=>setModal({type:"move",booking}):undefined}
+        onPayment={operator?(booking)=>setPayment({bookingId:booking.booking_id,entry:"manual"}):undefined}
+        folioRefreshKey={folioRev}
         onTransition={operator?(booking,action)=>{setModal(null);transition(booking,action)}:undefined}/>}
+      {payment && (() => {
+        const booking = s.bookings.find((b) => b.booking_id === payment.bookingId);
+        if (!booking) return null;
+        return <FolioPayment hotelId={s.hotel_id} booking={booking}
+          roomCode={s.rooms.find((r) => r.room_id === booking.room_id)?.code}
+          entry={payment.entry}
+          onClose={() => setPayment(null)}
+          onSaved={async () => { await refresh(); setFolioRev((v) => v + 1); setPayment(null); }} />;
+      })()}
       {modal && !settingsEditorOpen && !detailModal && (
         <Drawer
           title={editorTitle}
@@ -982,6 +1003,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             guestName={contextMenu.booking?.guest_name}
             hasBooking={!!contextMenu.booking}
             onDetails={contextMenu.booking ? ()=>setModal({type:"history",booking:contextMenu.booking!}) : undefined}
+            onPayment={operator && contextMenu.booking && [BookingState.Confirmed,BookingState.CheckedIn].some(status=>status===contextMenu.booking?.status) ? ()=>setPayment({bookingId:contextMenu.booking!.booking_id,entry:"manual"}) : undefined}
             room={{
               ...roomView(contextMenu.room, s.feature_registry),
               status:

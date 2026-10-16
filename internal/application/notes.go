@@ -33,7 +33,7 @@ func (s *Notes) List(ctx context.Context, u identity.User, q notes.Query) (notes
 		return notes.Page{}, e
 	}
 	q.Search = strings.TrimSpace(q.Search)
-	if !notes.ValidStatus(q.Status) || q.Page < 0 || q.Page > 100000 || utf8.RuneCountInString(q.Search) > 200 {
+	if (q.Status != "" && !notes.ValidStatus(q.Status)) || (q.Status == "" && q.BookingID == nil) || q.Page < 0 || q.Page > 100000 || utf8.RuneCountInString(q.Search) > 200 {
 		return notes.Page{}, constants.ErrPayload
 	}
 	if q.Page == 0 {

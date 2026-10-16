@@ -14,7 +14,14 @@ import (
 
 func (r *Repository) ListNotes(ctx context.Context, q notes.Query) (notes.Page, error) {
 	out := notes.Page{Items: []notes.Note{}, Page: q.Page}
-	base := r.db.WithContext(ctx).Model(&notes.Note{}).Where("hotel_id=? AND branch_id=? AND status=? AND archived=?", q.HotelID, q.BranchID, q.Status, q.Archived)
+	base := r.db.WithContext(ctx).Model(&notes.Note{}).Where("hotel_id=? AND branch_id=?", q.HotelID, q.BranchID)
+	if q.BookingID != nil {
+		// Reservation detail: active linked cards (auto-mirrored and manual)
+		// across all columns.
+		base = base.Where("booking_id=? AND archived=?", *q.BookingID, false)
+	} else {
+		base = base.Where("status=? AND archived=?", q.Status, q.Archived)
+	}
 	if q.Search != "" {
 		search := "%" + strings.NewReplacer("\\", "\\\\", "%", "\\%", "_", "\\_").Replace(q.Search) + "%"
 		base = base.Where("title ILIKE ? OR body ILIKE ? OR created_by_name ILIKE ?", search, search, search)
@@ -29,7 +36,20 @@ func noteAudit(n notes.Note) map[string]any {
 	return map[string]any{"title": n.Title, "body": n.Body, "status": n.Status, "priority": n.Priority, "archived": n.Archived, "branch_id": n.BranchID, "actor_name": n.UpdatedByName}
 }
 func matchesNote(n notes.Note, in notes.Input) bool {
-	return n.Title == in.Title && n.Body == in.Body && n.Status == in.Status && n.Priority == in.Priority && n.Archived == in.Archived
+	return n.Title == in.Title && n.Body == in.Body && n.Status == in.Status && n.Priority == in.Priority && n.Archived == in.Archived && notes.SameBookingLink(n.BookingID, in.BookingID) && n.BookingAuto == in.BookingAuto
+}
+
+// FindBookingNote returns the auto-mirrored card of a reservation.
+func (r *Repository) FindBookingNote(ctx context.Context, hotelID, branchID, bookingID uuid.UUID) (notes.Note, bool, error) {
+	var out notes.Note
+	e := r.db.WithContext(ctx).First(&out, "hotel_id=? AND branch_id=? AND booking_id=? AND booking_auto", hotelID, branchID, bookingID).Error
+	if errors.Is(e, gorm.ErrRecordNotFound) {
+		return notes.Note{}, false, nil
+	}
+	if e != nil {
+		return notes.Note{}, false, e
+	}
+	return out, true, nil
 }
 func (r *Repository) SaveNote(ctx context.Context, in notes.Input, actor uuid.UUID, name string) (notes.Note, error) {
 	var out notes.Note
@@ -45,7 +65,7 @@ func (r *Repository) SaveNote(ctx context.Context, in notes.Input, actor uuid.UU
 			if in.Version != 0 {
 				return constants.ErrNotFound
 			}
-			out = notes.Note{ID: in.ID, HotelID: in.HotelID, BranchID: in.BranchID, Title: in.Title, Body: in.Body, Status: in.Status, Priority: in.Priority, Version: 1, CreatedBy: actor, CreatedByName: name, UpdatedBy: actor, UpdatedByName: name, CreatedAt: now, UpdatedAt: now}
+			out = notes.Note{ID: in.ID, HotelID: in.HotelID, BranchID: in.BranchID, BookingID: in.BookingID, BookingAuto: in.BookingAuto, Title: in.Title, Body: in.Body, Status: in.Status, Priority: in.Priority, Version: 1, CreatedBy: actor, CreatedByName: name, UpdatedBy: actor, UpdatedByName: name, CreatedAt: now, UpdatedAt: now}
 			if e := tx.Create(&out).Error; e != nil {
 				return e
 			}
@@ -71,6 +91,8 @@ func (r *Repository) SaveNote(ctx context.Context, in notes.Input, actor uuid.UU
 		out.Status = in.Status
 		out.Priority = in.Priority
 		out.Archived = in.Archived
+		out.BookingID = in.BookingID
+		out.BookingAuto = in.BookingAuto
 		out.Version++
 		out.UpdatedBy = actor
 		out.UpdatedByName = name

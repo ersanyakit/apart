@@ -1,6 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowRightLeft, CalendarPlus, ChevronRight, DoorOpen, FileText, LogIn, LogOut, Pencil, ReceiptText, UsersRound, X, Check, type LucideIcon } from 'lucide-react';
+import { ArrowRightLeft, Banknote, CalendarPlus, ChevronRight, DoorOpen, FileText, LogIn, LogOut, Pencil, ReceiptText, UsersRound, X, Check, type LucideIcon } from 'lucide-react';
 import type { Room, RoomStatus } from '../types';
 import { STATUS_PALETTE, roomStatusKey } from '../lib/status-palette';
 import styles from './ContextMenu.module.css';
@@ -10,6 +10,7 @@ interface ContextMenuProps {
   room: Room; saleLabel: string; saleDisabled: boolean; canCheckOut: boolean; canExchange: boolean;
   canReserve: boolean; allowedStatuses: RoomStatus[]; operationalStatus: string; guestName?: string;
   bookingHint?: string; onEditBooking?: () => void; onDetails?: () => void;
+  onPayment?: () => void;
   onClose: () => void; onOperation: (type: 'reserve' | 'sale' | 'checkout' | 'exchange') => void;
   renderStatus: (onBusyChange: (busy: boolean) => void) => React.ReactNode; onCancel?: () => void;
   onGuests?: () => void; hasBooking: boolean; onPrint: (type: DocumentKind) => void;
@@ -47,6 +48,7 @@ export function ContextMenu(props: ContextMenuProps) {
       {tab==='operations' && <>
         <section className={styles.group} aria-label="Konaklama işlemleri">
           {props.onDetails && <Action icon={ReceiptText} label="Rezervasyon detayı" detail="Misafirler, folyo ve hizmetler" onClick={()=>act(props.onDetails!)}/>}
+          {props.onPayment && <Action icon={Banknote} label="Tahsilat al" detail="Oda borcuna ödeme işle" onClick={()=>act(props.onPayment!)}/>}
           {props.canReserve && <Action icon={CalendarPlus} label="Rezerve Et" detail="Bu oda için yeni rezervasyon" onClick={()=>act(()=>props.onOperation('reserve'))}/>}
           {!props.saleDisabled && <Action icon={props.canCheckOut?FileText:LogIn} label={props.saleLabel} onClick={()=>act(()=>props.onOperation('sale'))}/>}
           {props.canCheckOut && <Action icon={LogOut} label="Çıkış İşlemleri" onClick={()=>act(()=>props.onOperation('checkout'))}/>}

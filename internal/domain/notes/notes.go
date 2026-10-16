@@ -10,11 +10,16 @@ import (
 )
 
 type Note struct {
-	ID            uuid.UUID `gorm:"type:uuid;primaryKey" json:"id"`
-	HotelID       uuid.UUID `gorm:"type:uuid;not null" json:"hotel_id"`
-	BranchID      uuid.UUID `gorm:"type:uuid;not null" json:"branch_id"`
-	Title         string    `gorm:"not null" json:"title"`
-	Body          string    `gorm:"not null" json:"body"`
+	ID            uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
+	HotelID       uuid.UUID  `gorm:"type:uuid;not null" json:"hotel_id"`
+	BranchID      uuid.UUID  `gorm:"type:uuid;not null" json:"branch_id"`
+	BookingID     *uuid.UUID `gorm:"type:uuid" json:"booking_id"`
+	// BookingAuto marks the single card mirrored from the reservation's own
+	// note text. Manual board notes linked to the same reservation keep this
+	// false so the sync never overwrites them.
+	BookingAuto    bool      `gorm:"not null;default:false" json:"booking_auto"`
+	Title         string     `gorm:"not null" json:"title"`
+	Body          string     `gorm:"not null" json:"body"`
 	Status        string    `gorm:"not null" json:"status"`
 	Priority      string    `gorm:"not null" json:"priority"`
 	Archived      bool      `gorm:"not null;default:false" json:"archived"`
@@ -30,15 +35,17 @@ type Note struct {
 func (Note) TableName() string { return "reception_notes" }
 
 type Input struct {
-	ID       uuid.UUID `json:"id"`
-	HotelID  uuid.UUID `json:"hotel_id"`
-	BranchID uuid.UUID `json:"branch_id"`
-	Title    string    `json:"title"`
-	Body     string    `json:"body"`
-	Status   string    `json:"status"`
-	Priority string    `json:"priority"`
-	Archived bool      `json:"archived"`
-	Version  int64     `json:"version"`
+	ID        uuid.UUID  `json:"id"`
+	HotelID   uuid.UUID  `json:"hotel_id"`
+	BranchID  uuid.UUID  `json:"branch_id"`
+	BookingID *uuid.UUID `json:"booking_id"`
+	BookingAuto bool      `json:"booking_auto"`
+	Title     string     `json:"title"`
+	Body      string     `json:"body"`
+	Status    string     `json:"status"`
+	Priority  string     `json:"priority"`
+	Archived  bool       `json:"archived"`
+	Version   int64      `json:"version"`
 }
 
 func ValidStatus(s string) bool { return s == "todo" || s == "doing" || s == "done" }
@@ -56,6 +63,9 @@ type Query struct {
 	Search   string    `json:"search"`
 	Archived bool      `json:"archived"`
 	Page     int       `json:"page"`
+	// BookingID filters active board notes linked to one reservation across
+	// all columns. Status may be empty in this mode.
+	BookingID *uuid.UUID `json:"booking_id"`
 }
 type Page struct {
 	Items []Note `json:"items"`
@@ -68,4 +78,16 @@ const PageSize = 25
 type Repository interface {
 	ListNotes(context.Context, Query) (Page, error)
 	SaveNote(context.Context, Input, uuid.UUID, string) (Note, error)
+	// FindBookingNote returns the auto-mirrored card of a reservation,
+	// or found=false when it has none yet. Manual cards sharing the same
+	// booking link are never returned here.
+	FindBookingNote(context.Context, uuid.UUID, uuid.UUID, uuid.UUID) (Note, bool, error)
+}
+
+// SameBookingLink reports whether two optional booking links match.
+func SameBookingLink(a, b *uuid.UUID) bool {
+	if a == nil || b == nil {
+		return a == nil && b == nil
+	}
+	return *a == *b
 }

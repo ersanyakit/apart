@@ -6,11 +6,13 @@ import { FieldCard, FieldCaption } from "./FieldCard";
 export interface InlineSelectOption {
   value: string;
   label: string;
+  /** Seçenek satırının solundaki rozet ikonu (örn. cinsiyet simgesi). */
+  icon?: React.ReactNode;
 }
 
 /**
  * Satır-içi açılır seçim kartı: DateField ile aynı yüzey dili
- * (başlık + büyük değer + chevron), seçenekler kartın içinde
+ * (rozet + başlık + büyük değer + chevron), seçenekler kartın içinde
  * genişler; native select popup'u kullanılmaz. Pano filtreleri
  * gibi her yerde tek tip seçim için.
  */
@@ -21,6 +23,7 @@ export function InlineSelectField({
   options,
   disabled,
   tone = "surface",
+  icon,
 }: {
   label: string;
   value: string;
@@ -29,6 +32,8 @@ export function InlineSelectField({
   disabled?: boolean;
   /** "surface" ya da gri zemin üstünde "white" kart. */
   tone?: "surface" | "white";
+  /** Tetikleyicinin solundaki rozet (örn. seçili cinsiyet simgesi). */
+  icon?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -56,6 +61,14 @@ export function InlineSelectField({
         onClick={() => setOpen((v) => !v)}
         className="flex w-full cursor-pointer items-center justify-between gap-3 text-left outline-none transition-transform duration-150 ease-out active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 focus-visible:ring-2 focus-visible:ring-neutral-400 rounded-xl"
       >
+        {icon && (
+          <span
+            aria-hidden="true"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-slate-600"
+          >
+            {icon}
+          </span>
+        )}
         <span className="min-w-0 flex-1">
           <FieldCaption>{label}</FieldCaption>
           <span className="font-uninav-book mt-1 block truncate text-[1.25rem] leading-8 text-slate-900">
@@ -106,6 +119,11 @@ export function InlineSelectField({
                         : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                     }`}
                   >
+                    {o.icon && (
+                      <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.06)] text-slate-500">
+                        {o.icon}
+                      </span>
+                    )}
                     <span className="min-w-0 flex-1 truncate">{o.label}</span>
                     {isActive && (
                       <Check

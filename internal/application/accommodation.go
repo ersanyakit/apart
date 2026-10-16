@@ -3,11 +3,14 @@ package application
 import (
 	"context"
 	"fmt"
+	"log/slog"
+
 	"github.com/google/uuid"
 	"otel/constants"
 	"otel/internal/domain/audit"
 	"otel/internal/domain/booking"
 	"otel/internal/domain/identity"
+	"otel/internal/domain/notes"
 	"otel/internal/domain/property"
 	"strings"
 )
@@ -16,6 +19,9 @@ type Accommodation struct {
 	Catalog  *Catalog
 	Layout   property.LayoutRepository
 	Bookings booking.Repository
+	// Notes is optional; when set, a reservation's note text is mirrored to
+	// the reception Kanban board as a linked card.
+	Notes notes.Repository
 }
 
 func (s *Accommodation) Floors(ctx context.Context, u identity.User, id uuid.UUID) ([]property.Floor, error) {
@@ -114,7 +120,8 @@ func (s *Accommodation) SaveBooking(ctx context.Context, u identity.User, b book
 	if !canBook(u) {
 		return b, constants.ErrForbidden
 	}
-	if _, err := s.Catalog.Branch(ctx, u, b.BranchID); err != nil {
+	branch, err := s.Catalog.Branch(ctx, u, b.BranchID)
+	if err != nil {
 		return b, err
 	}
 	if create {
@@ -124,7 +131,93 @@ func (s *Accommodation) SaveBooking(ctx context.Context, u identity.User, b book
 	if err := b.Validate(); err != nil {
 		return b, err
 	}
-	return s.Bookings.SaveBooking(ctx, b, create)
+	saved, err := s.Bookings.SaveBooking(ctx, b, create)
+	if err != nil {
+		return saved, err
+	}
+	// Board sync never fails the reservation itself; a missed card is
+	// recoverable on the next save while a lost reservation is not.
+	s.syncBookingNote(ctx, u, branch.HotelID, saved)
+	return saved, nil
+}
+
+// syncBookingNote mirrors a reservation's note text to the reception Kanban
+// board. The linked card is created on the first save with note text,
+// updated while the text changes, and archived when the text is cleared.
+func (s *Accommodation) syncBookingNote(ctx context.Context, u identity.User, hotelID uuid.UUID, b booking.Booking) {
+	if s.Notes == nil {
+		return
+	}
+	text := strings.TrimSpace(b.Notes)
+	existing, found, err := s.Notes.FindBookingNote(ctx, hotelID, b.BranchID, b.BookingID)
+	if err != nil {
+		slog.Warn("reservation board sync failed", "booking_id", b.BookingID, "error", err)
+		return
+	}
+	if text == "" {
+		if found && !existing.Archived {
+			archived := noteInput(existing)
+			archived.Archived = true
+			if _, err := s.Notes.SaveNote(ctx, archived, u.UserID, actorName(u)); err != nil {
+				slog.Warn("reservation board archive failed", "booking_id", b.BookingID, "error", err)
+			}
+		}
+		return
+	}
+	title := boardNoteTitle(s.roomCode(ctx, b.BranchID, b.RoomID), b.GuestName)
+	if found && !existing.Archived && existing.Title == title && existing.Body == text {
+		return
+	}
+	input := notes.Input{
+		HotelID: hotelID, BranchID: b.BranchID, BookingID: &b.BookingID, BookingAuto: true,
+		Title: title, Body: text, Status: "todo", Priority: "normal",
+	}
+	if found {
+		input.ID = existing.ID
+		input.Version = existing.Version
+		input.Status = existing.Status
+		input.Priority = existing.Priority
+		input.Archived = false
+	} else {
+		input.ID = uuid.New()
+	}
+	if _, err := s.Notes.SaveNote(ctx, input, u.UserID, actorName(u)); err != nil {
+		slog.Warn("reservation board sync failed", "booking_id", b.BookingID, "error", err)
+	}
+}
+
+// roomCode resolves the unit code for board card titles; failures fall back
+// to a guest-only title rather than failing the reservation save.
+func (s *Accommodation) roomCode(ctx context.Context, branchID, roomID uuid.UUID) string {
+	if s.Catalog == nil || s.Catalog.Properties == nil {
+		return ""
+	}
+	rooms, err := s.Catalog.Properties.ListRooms(ctx, branchID)
+	if err != nil {
+		return ""
+	}
+	for _, r := range rooms {
+		if r.RoomID == roomID {
+			return r.Code
+		}
+	}
+	return ""
+}
+
+// boardNoteTitle keeps reservation cards recognizable and searchable.
+func boardNoteTitle(roomCode, guest string) string {
+	guest = strings.TrimSpace(guest)
+	if roomCode == "" {
+		return "Rezervasyon · " + guest
+	}
+	if guest == "" {
+		return "Rezervasyon · Oda " + roomCode
+	}
+	return "Oda " + roomCode + " · " + guest
+}
+
+func noteInput(n notes.Note) notes.Input {
+	return notes.Input{ID: n.ID, HotelID: n.HotelID, BranchID: n.BranchID, BookingID: n.BookingID, BookingAuto: n.BookingAuto, Title: n.Title, Body: n.Body, Status: n.Status, Priority: n.Priority, Archived: n.Archived, Version: n.Version}
 }
 func canBook(u identity.User) bool { return u.IsManager() || u.Role == constants.UserRoleReception }
 func (s *Accommodation) Transition(ctx context.Context, u identity.User, input booking.Transition) (booking.Booking, error) {

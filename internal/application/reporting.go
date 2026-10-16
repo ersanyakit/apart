@@ -36,8 +36,19 @@ func (s *Reporting) Generate(ctx context.Context, u identity.User, f reporting.F
 	return report.Generate(ctx, f, data)
 }
 func (s *Reporting) Record(ctx context.Context, u identity.User, r reporting.Record) (reporting.Record, error) {
-	if e := reportingAccess(u, r.HotelID); e != nil {
-		return r, e
+	if u.IsManager() {
+		if e := reportingAccess(u, r.HotelID); e != nil {
+			return r, e
+		}
+	} else {
+		// Resepsiyon yalnızca kendi tesisindeki rezervasyona bağlı tahsilat
+		// kaydedebilir: gider, iade ve açık hesap eşleştirme yöneticiye özeldir.
+		if !canBook(u) || r.Kind != "receipt" || r.BookingID == nil || !u.CanAccessBranch(r.HotelID, r.BranchID) {
+			return r, constants.ErrForbidden
+		}
+		if strings.TrimSpace(r.Reference) != "" || r.AmountMinor <= 0 {
+			return r, constants.ErrPayload
+		}
 	}
 	if r.Kind == "expense" && r.Category == "payroll" && r.ResponsibleID == nil {
 		return r, constants.ErrPayload

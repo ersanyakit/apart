@@ -3,7 +3,8 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useDragControls, useReducedMotion } from "motion/react";
-import { X } from "lucide-react";
+import { X, type LucideIcon } from "lucide-react";
+import { RoomOperationDialog } from "./RoomOperationDialog";
 
 function SheetDialog({ title, closeLabel, onClose, children }: {
   title: string;
@@ -80,4 +81,36 @@ export function BottomSheet({ open, onClose, title, closeLabel = "Pencereyi kapa
       {open && <SheetDialog key="sheet" title={title} closeLabel={closeLabel} onClose={onClose}>{children}</SheetDialog>}
     </AnimatePresence>, document.body,
   );
+}
+
+/** 768px altı mobil sayılır; eşleşene kadar hiçbir şey çizilmez. */
+function useDesktopSheetBreakpoint() {
+  const [desktop, setDesktop] = useState<boolean | null>(null);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 768px)");
+    const update = () => setDesktop(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return desktop;
+}
+
+/**
+ * Mobilde alttan açılan sheet, masaüstünde ortalanmış modal.
+ * Checkout ve tahsilat gibi işlem pencereleri için tek giriş noktası.
+ */
+export function ResponsiveDialog({ open, onClose, title, subtitle, icon, busy = false, children }: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  subtitle?: string;
+  icon: LucideIcon;
+  busy?: boolean;
+  children: React.ReactNode;
+}) {
+  const desktop = useDesktopSheetBreakpoint();
+  if (desktop === null || !open) return null;
+  if (!desktop) return <BottomSheet open onClose={onClose} title={title}>{children}</BottomSheet>;
+  return <RoomOperationDialog title={title} subtitle={subtitle} icon={icon} busy={busy} onClose={onClose}>{children}</RoomOperationDialog>;
 }

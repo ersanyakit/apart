@@ -17,6 +17,10 @@ import {
   Trash2,
   Info,
   Plus,
+  Mars,
+  Venus,
+  VenusAndMars,
+  CircleUserRound,
 } from "lucide-react";
 import {
   Field,
@@ -25,7 +29,20 @@ import {
   buttonStyle,
   secondaryStyle,
 } from "./FormKit";
-const genderOptions = [{ value: '', label: 'Belirtilmemiş' }, { value: 'female', label: 'Kadın' }, { value: 'male', label: 'Erkek' }, { value: 'unspecified', label: 'Belirtmek istemiyor' }];
+const genderIcon = (value: string, size = 16) => {
+  switch (value) {
+    case 'female': return <Venus size={size} aria-hidden="true" />;
+    case 'male': return <Mars size={size} aria-hidden="true" />;
+    case 'unspecified': return <VenusAndMars size={size} aria-hidden="true" />;
+    default: return <CircleUserRound size={size} aria-hidden="true" />;
+  }
+};
+const genderOptions = [
+  { value: '', label: 'Belirtilmemiş', icon: genderIcon('', 16) },
+  { value: 'female', label: 'Kadın', icon: genderIcon('female', 16) },
+  { value: 'male', label: 'Erkek', icon: genderIcon('male', 16) },
+  { value: 'unspecified', label: 'Belirtmek istemiyor', icon: genderIcon('unspecified', 16) },
+];
 export const localDate = (iso: string) => {
   const d = new Date(iso);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}T${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
@@ -460,7 +477,7 @@ export function BookingForm({
                 )
               }
             />
-            <InlineSelectField label="Cinsiyet" value={g.gender || ''} onChange={v => setGuests(guests.map(item => item.id === g.id ? { ...item, gender: v as Guest['gender'] } : item))} options={genderOptions} />
+            <InlineSelectField label="Cinsiyet" tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => setGuests(guests.map(item => item.id === g.id ? { ...item, gender: v as Guest['gender'] } : item))} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"
@@ -554,6 +571,14 @@ export function BookingForm({
         placeholder="Özel istekler, varış saati vb."
         uppercase
       />
+      <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
+        <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
+        <span>
+          Not yazıp kaydetmeniz bu notu Resepsiyon Notları panosuna kart olarak
+          düşürür; karttaki “Rezervasyona git” ile bu kayda dönersiniz. Notu
+          silmeniz kartı arşivler.
+        </span>
+      </p>
       </FormSection>
       <button className={`uni-control ${buttonStyle} w-full !rounded-[20px] !px-5 !py-4 !text-lg`} disabled={busy || !room}>
         {busy ? "Kaydediliyor…" : checkInAfterSave ? "Konaklamayı Başlat" : "Rezervasyonu Kaydet"}
@@ -777,7 +802,7 @@ export function BookingGuestsForm({
               value={g.tcNo || ""}
               onChange={(v) => patch(i, { tcNo: v })}
             />
-            <InlineSelectField label="Cinsiyet" value={g.gender || ''} onChange={v => patch(i, { gender: v as Guest['gender'] })} options={genderOptions} />
+            <InlineSelectField label="Cinsiyet" tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => patch(i, { gender: v as Guest['gender'] })} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"
