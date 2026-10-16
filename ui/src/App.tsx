@@ -1,6 +1,7 @@
 "use client";
 import { SetupWizard } from "./components/SetupWizard";
-import {operationalRoomStatuses, housekeepingRoomStatuses, roomRequiresReason} from "./lib/statuses";
+import {operationalRoomStatuses, housekeepingRoomStatuses} from "./lib/statuses";
+import { STATUS_PALETTE, roomStatusKey } from "./lib/status-palette";
 
 import { BookingStatus as BookingState, RoomStatus as RoomState } from './lib/statuses.generated';
 
@@ -9,7 +10,6 @@ import { RoomStateEditor } from "./components/RoomStateEditor";
 import roomCardStyles from "./components/RoomStatusCard.module.css";
 import { bookingMatchesDay, bookingSearchText } from "./lib/booking-grid";
 import { BookingDetails } from "./components/BookingDetails";
-import { RoomCleaning } from "./components/RoomCleaning";
 import { ReservationsWorkspace } from "./components/ReservationsWorkspace";
 import { NavigationIcon } from "./components/NavigationIcon";
 import { CheckoutFolio } from "./components/CheckoutFolio";
@@ -20,6 +20,7 @@ import {
   Building2,
   LayoutGrid,
   CalendarDays,
+  ChevronDown,
   Layers,
   Settings,
   Power,
@@ -90,7 +91,6 @@ import { KanbanView } from "./components/kanban/KanbanView";
 import { FolioPayment } from "./components/FolioPayment";
 import { AuditView } from "./components/AuditView";
 import { RoomStatusCard } from "./components/RoomStatusCard";
-import { RoomStatusPicker } from "./components/RoomStatusPicker";
 import { roomBoardState, roomMenuOperation } from "./lib/room-board";
 import { roomView } from "./lib/adapters";
 import { OriginalShell } from "./components/OriginalShell";
@@ -184,7 +184,6 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
     [sidebar, setSidebar] = useState(true),
     [checkout,setCheckout]=useState<Booking|null>(null),
     [reasonOperation,setReasonOperation]=useState<ReasonOperation|null>(null),
-    [cleaningRoom,setCleaningRoom]=useState<APIRoom|null>(null),
     [modal, setModal] = useState<Modal | null>(() => startRegistration && snapshot ? { type: "facility", kind: "hotel", create: true } : null),
     // Oda kartı ve giriş akışından açılan tahsilat penceresi.
     [payment, setPayment] = useState<{ bookingId: string; entry: "checkin" | "manual" } | null>(null),
@@ -203,6 +202,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
     y: number;
     room: APIRoom;
     booking?: Booking;
+    initialTab?: 'operations' | 'status' | 'documents';
   } | null>(null);
   // Rezervasyon sekmesi: oluşturma veya düzenleme formu üst barda sekme
   // olarak açılır (VSCode modeli — sekme değişiminde form durumu korunur).
@@ -377,11 +377,6 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       // Girişte ödeme sorusu: kayıt tamamlanınca tahsilat penceresi açılır.
       if(action==="check_in") setPayment({bookingId:b.booking_id,entry:"checkin"});
     });
-  };
-  const changeRoomState=(room:APIRoom,status:string)=>{
-    if(status===RoomState.Clean){setCleaningRoom(room);return}
-    if(roomRequiresReason(status)||status===RoomState.Dirty){setReasonOperation({kind:"state",room,status});return}
-    void run(async()=>{await command("room.state",{room_id:room.room_id,status});await refresh()});
   };
   const remove = async (type: "room" | "floor", id: string) => {
     if (
@@ -864,12 +859,25 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                           </button>
                         )}
                         {housekeeping && !state.current.length && (
-                          <RoomStatusPicker
-                            roomCode={room.code}
-                            status={state.operationalStatus}
-                            canSetAdvanced={operator}
-                            onPick={status=>changeRoomState(room,status)}
-                          />
+                          <button
+                            type="button"
+                            aria-label={`${room.code} oda durumu: ${STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}. Oda işlemlerinde açın.`}
+                            onClick={(e) => setContextMenu({
+                              x: Math.max(8, Math.min(e.clientX, window.innerWidth - 430)),
+                              y: Math.max(8, Math.min(e.clientY, window.innerHeight - 520)),
+                              room,
+                              booking: active,
+                              initialTab: 'status',
+                            })}
+                            className={`uni-control ${secondaryStyle} gap-2`}
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="h-2.5 w-2.5 shrink-0 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}}
+                            />
+                            <span className="truncate">{STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}</span>
+                            <ChevronDown size={14} strokeWidth={2.5} aria-hidden="true" className="shrink-0 text-slate-400" />
+                          </button>
                         )}
                       </RoomStatusCard>
                     </div>
@@ -901,7 +909,6 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         )}
         {tab === "staff" && <StaffView key={s.hotel_id} snapshot={s} />}
         {checkout&&<CheckoutFolio booking={checkout} onClose={()=>setCheckout(null)} onSaved={async()=>{await refresh();notify("Çıkış tamamlandı.")}}/>}
-        {cleaningRoom&&<RoomCleaning room={cleaningRoom} onClose={()=>setCleaningRoom(null)} onSaved={async()=>{await refresh();notify("Temizlik kaydedildi; oda Temiz olarak güncellendi.")}}/>}
         {reasonOperation&&<OperationReason operation={reasonOperation} onClose={()=>setReasonOperation(null)} onSaved={async()=>{await refresh();notify("İşlem gerekçesiyle kaydedildi.")}}/>}
         {openTabs.includes("guests") && <div hidden={tab !== "guests"}><GuestView key={`${s.hotel_id}-${s.branch_id}`} snapshot={s} /></div>}
         {Object.entries(guestHistoryTabs).map(([id, guest]) => <section key={`${s.hotel_id}-${s.branch_id}-${id}`} hidden={tab !== id} aria-label={`${guest.name} · Konaklama geçmişi`}>
@@ -991,6 +998,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       {contextMenu && (
         <>
           <ContextMenu
+            initialTab={contextMenu.initialTab}
             saleLabel={menuOperation === "check_in" ? (Date.parse(contextMenu.booking!.check_in) > Date.parse(s.server_time) ? "Rezervasyona erken giriş yap" : "Rezervasyona giriş yap") : menuOperation === "receipt" ? "Satış belgeleri" : "Yeni konaklama başlat"}
             saleDisabled={!operator || (menuOperation === "create" && menuRoomOccupied)}
             canCheckOut={operator && contextMenu.booking?.status === BookingState.CheckedIn}

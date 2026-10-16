@@ -6,11 +6,12 @@ import { STATUS_PALETTE, roomStatusKey } from '../lib/status-palette';
 import styles from './ContextMenu.module.css';
 
 type DocumentKind = 'sales' | 'reservation' | 'cancellation' | 'rental' | 'sale_contract';
+type MenuTab = 'operations' | 'status' | 'documents';
 interface ContextMenuProps {
   room: Room; saleLabel: string; saleDisabled: boolean; canCheckOut: boolean; canExchange: boolean;
   canReserve: boolean; allowedStatuses: RoomStatus[]; operationalStatus: string; guestName?: string;
   bookingHint?: string; onEditBooking?: () => void; onDetails?: () => void;
-  onPayment?: () => void;
+  onPayment?: () => void; initialTab?: MenuTab;
   onClose: () => void; onOperation: (type: 'reserve' | 'sale' | 'checkout' | 'exchange') => void;
   renderStatus: (onBusyChange: (busy: boolean) => void) => React.ReactNode; onCancel?: () => void;
   onGuests?: () => void; hasBooking: boolean; onPrint: (type: DocumentKind) => void;
@@ -19,7 +20,12 @@ export function ContextMenu(props: ContextMenuProps) {
   const { room, onClose } = props;
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
-  const [tab, setTab] = useState<'operations' | 'status' | 'documents'>('operations');
+  const resolveTab = (tab: MenuTab): MenuTab => {
+    if (tab === 'status' && !props.allowedStatuses.length) return 'operations';
+    if (tab === 'documents' && !props.hasBooking) return 'operations';
+    return tab;
+  };
+  const [tab, setTab] = useState<MenuTab>(() => resolveTab(props.initialTab ?? 'operations'));
   const [busy, setBusy] = useState(false);
   const condition = STATUS_PALETTE[roomStatusKey(props.operationalStatus)];
   useEffect(() => {
