@@ -1,0 +1,303 @@
+[
+  {
+    "key": "catalog.children.equipment.baby_bedding",
+    "label": {
+      "TR": "Bebek nevresim takımı",
+      "EN": "Baby bedding set"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.baby_bedding"
+    ],
+    "filename": "catalog-children-equipment-baby_bedding.avif"
+  },
+  {
+    "key": "catalog.children.equipment.baby_pillow",
+    "label": {
+      "TR": "Bebek yastığı",
+      "EN": "Baby pillow"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.baby_pillow"
+    ],
+    "filename": "catalog-children-equipment-baby_pillow.avif"
+  },
+  {
+    "key": "catalog.children.equipment.high_chair",
+    "label": {
+      "TR": "Bebek mama sandalyesi",
+      "EN": "Baby high chair"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.high_chair"
+    ],
+    "filename": "catalog-children-equipment-high_chair.avif"
+  },
+  {
+    "key": "catalog.children.equipment.baby_bath",
+    "label": {
+      "TR": "Bebek küveti",
+      "EN": "Baby bath"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.baby_bath"
+    ],
+    "filename": "catalog-children-equipment-baby_bath.avif"
+  },
+  {
+    "key": "catalog.children.equipment.changing_table",
+    "label": {
+      "TR": "Bebek bakım masası",
+      "EN": "Baby changing table"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.changing_table"
+    ],
+    "filename": "catalog-children-equipment-changing_table.avif"
+  },
+  {
+    "key": "catalog.children.equipment.changing_mat",
+    "label": {
+      "TR": "Alt değiştirme minderi",
+      "EN": "Changing mat"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.changing_mat"
+    ],
+    "filename": "catalog-children-equipment-changing_mat.avif"
+  },
+  {
+    "key": "catalog.children.equipment.baby_monitor",
+    "label": {
+      "TR": "Bebek telsizi",
+      "EN": "Baby audio monitor"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.baby_monitor"
+    ],
+    "filename": "catalog-children-equipment-baby_monitor.avif"
+  },
+  {
+    "key": "catalog.children.equipment.child_bed",
+    "label": {
+      "TR": "Çocuk yatağı",
+      "EN": "Child bed"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.child_bed"
+    ],
+    "filename": "catalog-children-equipment-child_bed.avif"
+  },
+  {
+    "key": "catalog.children.equipment.child_stool",
+    "label": {
+      "TR": "Çocuk taburesi",
+      "EN": "Child stool"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.child_stool"
+    ],
+    "filename": "catalog-children-equipment-child_stool.avif"
+  },
+  {
+    "key": "catalog.children.equipment.child_tableware",
+    "label": {
+      "TR": "Çocuk yemek takımı",
+      "EN": "Children's tableware"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.child_tableware"
+    ],
+    "filename": "catalog-children-equipment-child_tableware.avif"
+  },
+  {
+    "key": "catalog.children.equipment.safety_gate",
+    "label": {
+      "TR": "Çocuk güvenlik kapısı",
+      "EN": "Child safety gate"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.safety_gate"
+    ],
+    "filename": "catalog-children-equipment-safety_gate.avif"
+  },
+  {
+    "key": "catalog.children.equipment.socket_cover",
+    "label": {
+      "TR": "Priz koruyucu",
+      "EN": "Socket cover"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.socket_cover"
+    ],
+    "filename": "catalog-children-equipment-socket_cover.avif"
+  },
+  {
+    "key": "catalog.children.equipment.cabinet_lock",
+    "label": {
+      "TR": "Dolap kilidi",
+      "EN": "Cabinet lock"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.cabinet_lock",
+      "catalog.structural.fixtures.cabinet_lock"
+    ],
+    "filename": "catalog-children-equipment-cabinet_lock.avif"
+  },
+  {
+    "key": "catalog.children.equipment.stair_gate",
+    "label": {
+      "TR": "Merdiven güvenlik bariyeri",
+      "EN": "Stair safety gate"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.stair_gate"
+    ],
+    "filename": "catalog-children-equipment-stair_gate.avif"
+  },
+  {
+    "key": "catalog.children.equipment.play_mat",
+    "label": {
+      "TR": "Çocuk oyun matı",
+      "EN": "Children's play mat"
+    },
+    "category": "children",
+    "category_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and Baby Equipment"
+    },
+    "group_label": {
+      "TR": "Çocuk ve Bebek Ekipmanları",
+      "EN": "Children and baby equipment"
+    },
+    "codes": [
+      "catalog.children.equipment.play_mat"
+    ],
+    "filename": "catalog-children-equipment-play_mat.avif"
+  }
+]

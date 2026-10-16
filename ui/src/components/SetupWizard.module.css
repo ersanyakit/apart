@@ -12,8 +12,10 @@
 .body { display:grid; gap:18px; min-width:0; }
 .body > * { min-width:0; }
 .profiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
-.profiles button { min-height:72px; text-align:start; border:1px solid var(--color-uni-border); border-radius:14px; padding:12px; font-size:13px; }
+.profiles button { display:flex; align-items:center; gap:12px; min-height:100px; text-align:start; border:1px solid var(--color-uni-border); border-radius:14px; padding:12px; font-size:13px; }
 .profiles button[aria-pressed=true] { border-color:var(--color-brand-blue-600); background:var(--color-brand-blue-50); }
+.profileIcon { width:72px; height:72px; object-fit:contain; flex-shrink:0; }
+.profiles button > span { min-width:0; }
 .profiles small { display:block; margin-top:5px; color:var(--color-uni-muted); font-size:11px; line-height:1.5; }
 .note { border-radius:14px; background:var(--color-uni-surface); padding:12px 16px; font-size:13px; line-height:1.7; color:var(--color-uni-muted); }
 .footer { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; padding-top:20px; margin-top:20px; border-top:1px solid var(--color-uni-border); }
@@ -22,4 +24,4 @@
 .metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
 .metrics div { padding:16px; border-radius:16px; background:var(--color-uni-surface); font-size:12px; }
 .metrics strong { display:block; font-size:24px; font-weight:600; }
-@media(max-width:640px) { .card { padding:16px; } .profiles { grid-template-columns:repeat(2,minmax(0,1fr)); } .steps { gap:2px; } .steps button { padding:8px; } }
+@media(max-width:640px) { .card { padding:16px; } .profiles { grid-template-columns:repeat(2,minmax(0,1fr)); } .profiles button { flex-direction:column; align-items:flex-start; gap:8px; } .steps { gap:2px; } .steps button { padding:8px; } }

@@ -1,3 +1,4 @@
+import { BedIllustration } from './BedIllustration';
 import { FloorList } from "./FloorList";
 import { useI18n } from "./I18n";
 import { UnitsToolbar } from "./UnitsToolbar";
@@ -5,7 +6,7 @@ import { BedPresetPicker } from "./BedPresetPicker";
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import React, { useEffect, useRef, useState } from "react";
-import { Layers, Plus, Pencil, Trash2, BedDouble, Map as MapIcon } from "lucide-react";
+import { Layers, Plus, Pencil, Trash2, Map as MapIcon } from "lucide-react";
 import {
   command,
   contracts,
@@ -283,7 +284,7 @@ export function InventoryView({
                   >
                     <div className="flex justify-between">
                       <strong>{b.code}</strong>
-                      <BedDouble className="text-brand-blue-500" size={20} />
+                      <BedIllustration type={b.type} structure={b.structure} levels={b.levels} size={80} />
                     </div>
                     <p className="text-xs text-slate-500">
                       {matchBedPreset(b)?.label || bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}

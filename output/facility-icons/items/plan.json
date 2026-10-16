@@ -1,0 +1,728 @@
+[
+  {
+    "key": "catalog.lighting.equipment.generator",
+    "label": {
+      "TR": "Jeneratör",
+      "EN": "Generator"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "lamp",
+    "sort_order": 380
+  },
+  {
+    "key": "catalog.outdoor.equipment.garden_shed",
+    "label": {
+      "TR": "Bahçe deposu",
+      "EN": "Garden shed"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "trees",
+    "sort_order": 440
+  },
+  {
+    "key": "catalog.pool_spa.pool.shared_pool",
+    "label": {
+      "TR": "Ortak havuz",
+      "EN": "Shared pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 449
+  },
+  {
+    "key": "catalog.pool_spa.pool.indoor_pool",
+    "label": {
+      "TR": "Kapalı havuz",
+      "EN": "Indoor pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 450
+  },
+  {
+    "key": "catalog.pool_spa.pool.outdoor_pool",
+    "label": {
+      "TR": "Açık havuz",
+      "EN": "Outdoor pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 451
+  },
+  {
+    "key": "catalog.pool_spa.pool.heated_pool",
+    "label": {
+      "TR": "Isıtmalı havuz",
+      "EN": "Heated pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 452
+  },
+  {
+    "key": "catalog.pool_spa.pool.children_pool",
+    "label": {
+      "TR": "Çocuk havuzu",
+      "EN": "Children's pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 453
+  },
+  {
+    "key": "catalog.pool_spa.pool.infinity_pool",
+    "label": {
+      "TR": "Sonsuzluk havuzu",
+      "EN": "Infinity pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 454
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_ladder",
+    "label": {
+      "TR": "Havuz merdiveni",
+      "EN": "Pool ladder"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 455
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_handrail",
+    "label": {
+      "TR": "Havuz tutamağı",
+      "EN": "Pool handrail"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 456
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_shower",
+    "label": {
+      "TR": "Havuz duşu",
+      "EN": "Pool shower"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 457
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_lounger",
+    "label": {
+      "TR": "Havuz şezlongu",
+      "EN": "Pool lounger"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 458
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_parasol",
+    "label": {
+      "TR": "Havuz şemsiyesi",
+      "EN": "Pool parasol"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 459
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_cover",
+    "label": {
+      "TR": "Havuz örtüsü",
+      "EN": "Pool cover"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 461
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_robot",
+    "label": {
+      "TR": "Havuz temizleme robotu",
+      "EN": "Pool cleaning robot"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 462
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_filter",
+    "label": {
+      "TR": "Havuz filtresi",
+      "EN": "Pool filter"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 463
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_pump",
+    "label": {
+      "TR": "Havuz pompası",
+      "EN": "Pool pump"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 464
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_heater",
+    "label": {
+      "TR": "Havuz ısıtma sistemi",
+      "EN": "Pool heating system"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 465
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_lighting",
+    "label": {
+      "TR": "Havuz aydınlatması",
+      "EN": "Pool lighting"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 466
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_barrier",
+    "label": {
+      "TR": "Havuz güvenlik bariyeri",
+      "EN": "Pool safety barrier"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 467
+  },
+  {
+    "key": "catalog.pool_spa.pool.water_testing_kit",
+    "label": {
+      "TR": "Havuz suyu analiz ekipmanı",
+      "EN": "Pool water testing equipment"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 468
+  },
+  {
+    "key": "catalog.pool_spa.spa.shared_jacuzzi",
+    "label": {
+      "TR": "Ortak jakuzi",
+      "EN": "Shared jacuzzi"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 471
+  },
+  {
+    "key": "catalog.pool_spa.spa.sauna",
+    "label": {
+      "TR": "Sauna",
+      "EN": "Sauna"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 473
+  },
+  {
+    "key": "catalog.pool_spa.spa.steam_room",
+    "label": {
+      "TR": "Buhar odası",
+      "EN": "Steam room"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 474
+  },
+  {
+    "key": "catalog.pool_spa.spa.turkish_bath",
+    "label": {
+      "TR": "Türk hamamı",
+      "EN": "Turkish bath"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 475
+  },
+  {
+    "key": "catalog.pool_spa.spa.massage_bed",
+    "label": {
+      "TR": "Masaj yatağı",
+      "EN": "Massage bed"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 476
+  },
+  {
+    "key": "catalog.pool_spa.spa.spa_lounger",
+    "label": {
+      "TR": "Spa dinlenme koltuğu",
+      "EN": "Spa relaxation chair"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "waves",
+    "sort_order": 477
+  },
+  {
+    "key": "catalog.safety.equipment.security_camera",
+    "label": {
+      "TR": "Güvenlik kamerası",
+      "EN": "Security camera"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "shield",
+    "sort_order": 494
+  },
+  {
+    "key": "catalog.safety.equipment.alarm_system",
+    "label": {
+      "TR": "Alarm sistemi",
+      "EN": "Alarm system"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "shield",
+    "sort_order": 495
+  },
+  {
+    "key": "catalog.safety.equipment.generator",
+    "label": {
+      "TR": "Jeneratör",
+      "EN": "Generator"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "shield",
+    "sort_order": 505
+  },
+  {
+    "key": "catalog.safety.equipment.earthquake_kit",
+    "label": {
+      "TR": "Deprem acil durum ekipmanı",
+      "EN": "Earthquake emergency kit"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "shield",
+    "sort_order": 506
+  },
+  {
+    "key": "catalog.housekeeping.equipment.steam_cleaner",
+    "label": {
+      "TR": "Buharlı temizleyici",
+      "EN": "Steam cleaner"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "brush",
+    "sort_order": 509
+  },
+  {
+    "key": "catalog.housekeeping.equipment.floor_scrubber",
+    "label": {
+      "TR": "Yer yıkama makinesi",
+      "EN": "Floor scrubber"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "brush",
+    "sort_order": 510
+  },
+  {
+    "key": "catalog.housekeeping.equipment.cleaning_trolley",
+    "label": {
+      "TR": "Temizlik arabası",
+      "EN": "Cleaning trolley"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "brush",
+    "sort_order": 513
+  },
+  {
+    "key": "catalog.housekeeping.equipment.laundry_trolley",
+    "label": {
+      "TR": "Kirli çamaşır arabası",
+      "EN": "Laundry trolley"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "brush",
+    "sort_order": 522
+  },
+  {
+    "key": "catalog.children.equipment.playground_equipment",
+    "label": {
+      "TR": "Çocuk oyun alanı ekipmanları",
+      "EN": "Playground equipment"
+    },
+    "kind": "inventory",
+    "scope": "property",
+    "icon_key": "baby",
+    "sort_order": 571
+  },
+  {
+    "key": "catalog.facilities.comfort.smoking_area",
+    "label": {
+      "TR": "Sigara içilebilir alan",
+      "EN": "Smoking area"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 594
+  },
+  {
+    "key": "catalog.facilities.services.free_parking",
+    "label": {
+      "TR": "Ücretsiz otopark",
+      "EN": "Free parking"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 595
+  },
+  {
+    "key": "catalog.facilities.services.covered_parking",
+    "label": {
+      "TR": "Kapalı otopark",
+      "EN": "Covered parking"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 596
+  },
+  {
+    "key": "catalog.facilities.services.valet_parking",
+    "label": {
+      "TR": "Vale hizmeti",
+      "EN": "Valet parking"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 597
+  },
+  {
+    "key": "catalog.facilities.services.airport_transfer",
+    "label": {
+      "TR": "Havaalanı transferi",
+      "EN": "Airport transfer"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 598
+  },
+  {
+    "key": "catalog.facilities.services.breakfast",
+    "label": {
+      "TR": "Kahvaltı",
+      "EN": "Breakfast"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 599
+  },
+  {
+    "key": "catalog.facilities.services.restaurant",
+    "label": {
+      "TR": "Restoran",
+      "EN": "Restaurant"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 600
+  },
+  {
+    "key": "catalog.facilities.services.bar",
+    "label": {
+      "TR": "Bar",
+      "EN": "Bar"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 601
+  },
+  {
+    "key": "catalog.facilities.services.room_service",
+    "label": {
+      "TR": "Oda servisi",
+      "EN": "Room service"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 602
+  },
+  {
+    "key": "catalog.facilities.services.laundry",
+    "label": {
+      "TR": "Çamaşırhane",
+      "EN": "Laundry service"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 603
+  },
+  {
+    "key": "catalog.facilities.services.dry_cleaning",
+    "label": {
+      "TR": "Kuru temizleme",
+      "EN": "Dry cleaning"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 604
+  },
+  {
+    "key": "catalog.facilities.services.daily_cleaning",
+    "label": {
+      "TR": "Günlük temizlik",
+      "EN": "Daily housekeeping"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 605
+  },
+  {
+    "key": "catalog.facilities.services.luggage_storage",
+    "label": {
+      "TR": "Bagaj muhafazası",
+      "EN": "Luggage storage"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 606
+  },
+  {
+    "key": "catalog.facilities.services.reception_24h",
+    "label": {
+      "TR": "24 saat resepsiyon",
+      "EN": "24-hour reception"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 607
+  },
+  {
+    "key": "catalog.facilities.services.elevator",
+    "label": {
+      "TR": "Asansör",
+      "EN": "Elevator"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 608
+  },
+  {
+    "key": "catalog.facilities.services.gym",
+    "label": {
+      "TR": "Spor salonu",
+      "EN": "Gym"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 609
+  },
+  {
+    "key": "catalog.facilities.services.spa",
+    "label": {
+      "TR": "Spa",
+      "EN": "Spa"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 610
+  },
+  {
+    "key": "catalog.facilities.services.sauna",
+    "label": {
+      "TR": "Sauna",
+      "EN": "Sauna"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 611
+  },
+  {
+    "key": "catalog.facilities.services.pool",
+    "label": {
+      "TR": "Havuz",
+      "EN": "Pool"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 612
+  },
+  {
+    "key": "catalog.facilities.services.meeting_room",
+    "label": {
+      "TR": "Toplantı odası",
+      "EN": "Meeting room"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 613
+  },
+  {
+    "key": "catalog.facilities.services.business_center",
+    "label": {
+      "TR": "İş merkezi",
+      "EN": "Business center"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 614
+  },
+  {
+    "key": "catalog.facilities.services.playground",
+    "label": {
+      "TR": "Çocuk oyun alanı",
+      "EN": "Children's play area"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 615
+  },
+  {
+    "key": "catalog.facilities.services.pets_allowed",
+    "label": {
+      "TR": "Evcil hayvan kabulü",
+      "EN": "Pets allowed"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 616
+  },
+  {
+    "key": "catalog.facilities.services.disabled_access",
+    "label": {
+      "TR": "Engelli erişimi",
+      "EN": "Disabled access"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 617
+  },
+  {
+    "key": "catalog.facilities.services.ev_charging",
+    "label": {
+      "TR": "Elektrikli araç şarj istasyonu",
+      "EN": "Electric vehicle charging station"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "building",
+    "sort_order": 618
+  },
+  {
+    "key": "catalog.accessibility.features.elevator",
+    "label": {
+      "TR": "Asansör",
+      "EN": "Elevator"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "accessibility",
+    "sort_order": 628
+  },
+  {
+    "key": "catalog.accessibility.features.ramp",
+    "label": {
+      "TR": "Rampa",
+      "EN": "Ramp"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "accessibility",
+    "sort_order": 629
+  },
+  {
+    "key": "catalog.accessibility.features.tactile_guidance",
+    "label": {
+      "TR": "Dokunsal yönlendirme",
+      "EN": "Tactile guidance"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "accessibility",
+    "sort_order": 633
+  },
+  {
+    "key": "catalog.accessibility.features.accessible_parking",
+    "label": {
+      "TR": "Erişilebilir otopark",
+      "EN": "Accessible parking"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "accessibility",
+    "sort_order": 634
+  },
+  {
+    "key": "catalog.accessibility.features.accessible_common_area",
+    "label": {
+      "TR": "Erişilebilir ortak alan",
+      "EN": "Accessible common area"
+    },
+    "kind": "amenity",
+    "scope": "property",
+    "icon_key": "accessibility",
+    "sort_order": 635
+  }
+]

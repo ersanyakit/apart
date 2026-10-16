@@ -1,0 +1,7 @@
+{
+  "key": "lamp",
+  "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2949284f-82c2-4a83-aa56-dfd2194fd4eb.png",
+  "prompt": "Create ONE hotel amenity icon depicting a rounded table lamp. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+  "generator": "built-in image_gen",
+  "output": "ui/public/images/facility-icons-dott/lamp.avif"
+}

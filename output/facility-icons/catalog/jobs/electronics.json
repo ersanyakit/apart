@@ -1,0 +1,526 @@
+[
+  {
+    "key": "catalog.electronics.equipment.smart_tv",
+    "label": {
+      "TR": "Smart TV",
+      "EN": "Smart TV"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.smart_tv",
+      "catalog.facilities.connectivity.smart_tv"
+    ],
+    "filename": "catalog-electronics-equipment-smart_tv.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.satellite_receiver",
+    "label": {
+      "TR": "Uydu alıcısı",
+      "EN": "Satellite receiver"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.satellite_receiver"
+    ],
+    "filename": "catalog-electronics-equipment-satellite_receiver.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.tv_remote",
+    "label": {
+      "TR": "TV kumandası",
+      "EN": "TV remote"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.tv_remote"
+    ],
+    "filename": "catalog-electronics-equipment-tv_remote.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.sound_system",
+    "label": {
+      "TR": "Ses sistemi",
+      "EN": "Sound system"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.sound_system"
+    ],
+    "filename": "catalog-electronics-equipment-sound_system.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.bluetooth_speaker",
+    "label": {
+      "TR": "Bluetooth hoparlör",
+      "EN": "Bluetooth speaker"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.bluetooth_speaker"
+    ],
+    "filename": "catalog-electronics-equipment-bluetooth_speaker.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.soundbar",
+    "label": {
+      "TR": "Soundbar",
+      "EN": "Soundbar"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.soundbar"
+    ],
+    "filename": "catalog-electronics-equipment-soundbar.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.radio",
+    "label": {
+      "TR": "Radyo",
+      "EN": "Radio"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.radio"
+    ],
+    "filename": "catalog-electronics-equipment-radio.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.telephone",
+    "label": {
+      "TR": "Telefon",
+      "EN": "Telephone"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.telephone",
+      "catalog.workspace.equipment.telephone",
+      "catalog.facilities.connectivity.telephone"
+    ],
+    "filename": "catalog-electronics-equipment-telephone.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.cordless_phone",
+    "label": {
+      "TR": "Kablosuz telefon",
+      "EN": "Cordless phone"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.cordless_phone"
+    ],
+    "filename": "catalog-electronics-equipment-cordless_phone.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.desk_phone",
+    "label": {
+      "TR": "Masa telefonu",
+      "EN": "Desk phone"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.desk_phone"
+    ],
+    "filename": "catalog-electronics-equipment-desk_phone.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.charging_station",
+    "label": {
+      "TR": "Şarj istasyonu",
+      "EN": "Charging station"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.charging_station"
+    ],
+    "filename": "catalog-electronics-equipment-charging_station.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.usb_charger",
+    "label": {
+      "TR": "USB şarj cihazı",
+      "EN": "USB charger"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.usb_charger"
+    ],
+    "filename": "catalog-electronics-equipment-usb_charger.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.plug_adapter",
+    "label": {
+      "TR": "Elektrik priz adaptörü",
+      "EN": "Plug adapter"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.plug_adapter"
+    ],
+    "filename": "catalog-electronics-equipment-plug_adapter.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.extension_cord",
+    "label": {
+      "TR": "Uzatma kablosu",
+      "EN": "Extension cord"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.extension_cord"
+    ],
+    "filename": "catalog-electronics-equipment-extension_cord.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.power_strip",
+    "label": {
+      "TR": "Çoklu priz",
+      "EN": "Power strip"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.power_strip"
+    ],
+    "filename": "catalog-electronics-equipment-power_strip.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.wifi_access_point",
+    "label": {
+      "TR": "Kablosuz internet erişim noktası",
+      "EN": "Wireless access point"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.wifi_access_point"
+    ],
+    "filename": "catalog-electronics-equipment-wifi_access_point.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.ethernet_connection",
+    "label": {
+      "TR": "Ethernet bağlantısı",
+      "EN": "Ethernet connection"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.ethernet_connection"
+    ],
+    "filename": "catalog-electronics-equipment-ethernet_connection.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.projector",
+    "label": {
+      "TR": "Projektör",
+      "EN": "Projector"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.projector"
+    ],
+    "filename": "catalog-electronics-equipment-projector.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.game_console",
+    "label": {
+      "TR": "Oyun konsolu",
+      "EN": "Game console"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.game_console"
+    ],
+    "filename": "catalog-electronics-equipment-game_console.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.disc_player",
+    "label": {
+      "TR": "DVD/Blu-ray oynatıcı",
+      "EN": "DVD/Blu-ray player"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.disc_player"
+    ],
+    "filename": "catalog-electronics-equipment-disc_player.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.smart_home_panel",
+    "label": {
+      "TR": "Akıllı ev kontrol paneli",
+      "EN": "Smart home control panel"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.smart_home_panel"
+    ],
+    "filename": "catalog-electronics-equipment-smart_home_panel.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.smart_speaker",
+    "label": {
+      "TR": "Akıllı hoparlör",
+      "EN": "Smart speaker"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.smart_speaker"
+    ],
+    "filename": "catalog-electronics-equipment-smart_speaker.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.alarm_clock",
+    "label": {
+      "TR": "Alarm saati",
+      "EN": "Alarm clock"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.alarm_clock"
+    ],
+    "filename": "catalog-electronics-equipment-alarm_clock.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.digital_clock",
+    "label": {
+      "TR": "Dijital saat",
+      "EN": "Digital clock"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.digital_clock"
+    ],
+    "filename": "catalog-electronics-equipment-digital_clock.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.table_clock",
+    "label": {
+      "TR": "Masa saati",
+      "EN": "Table clock"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.table_clock",
+      "catalog.decoration.decor.table_clock"
+    ],
+    "filename": "catalog-electronics-equipment-table_clock.avif"
+  },
+  {
+    "key": "catalog.electronics.equipment.baby_monitor",
+    "label": {
+      "TR": "Bebek monitörü",
+      "EN": "Baby monitor"
+    },
+    "category": "electronics",
+    "category_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and Entertainment"
+    },
+    "group_label": {
+      "TR": "Elektronik ve Eğlence Sistemleri",
+      "EN": "Electronics and entertainment"
+    },
+    "codes": [
+      "catalog.electronics.equipment.baby_monitor"
+    ],
+    "filename": "catalog-electronics-equipment-baby_monitor.avif"
+  }
+]

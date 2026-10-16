@@ -1,0 +1,10 @@
+import { chromium } from '../../ui/node_modules/playwright/index.mjs';
+import fs from 'node:fs/promises';
+const keys=(await fs.readdir('ui/public/images/setup-icons-dott')).filter(n=>n.endsWith('.avif'));
+const browser=await chromium.launch({headless:true,args:["--no-sandbox","--disable-dev-shm-usage","--no-zygote","--single-process"]});
+const page=await browser.newPage({viewport:{width:900,height:Math.ceil(keys.length/3)*220}});
+await page.setContent(`<style>body{margin:0;padding:20px;background:#f9f9f9;font:14px sans-serif;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}article{background:white;border:1px solid #eee;border-radius:20px;text-align:center;padding:12px}img{width:160px;height:160px;object-fit:contain;display:block;margin:auto}</style>${keys.map(key=>`<article><img src="http://127.0.0.1:3000/images/setup-icons-dott/${key}">${key}</article>`).join('')}`);
+await page.waitForFunction(()=>[...document.images].every(im=>im.complete&&im.naturalWidth>0));
+await page.screenshot({path:'output/setup-icons/preview.png',fullPage:true});
+await browser.close();
+console.log('AVIF decoded in Chromium:',keys.length);

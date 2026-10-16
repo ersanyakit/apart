@@ -1,0 +1,1056 @@
+[
+  {
+    "key": "catalog.bedroom.beds.queen_bed",
+    "label": {
+      "TR": "Çift kişilik geniş yatak (Queen)",
+      "EN": "Queen bed"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.queen_bed"
+    ],
+    "filename": "catalog-bedroom-beds-queen_bed.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.king_bed",
+    "label": {
+      "TR": "King size yatak",
+      "EN": "King size bed"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.king_bed"
+    ],
+    "filename": "catalog-bedroom-beds-king_bed.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.super_king_bed",
+    "label": {
+      "TR": "Super king size yatak",
+      "EN": "Super king size bed"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.super_king_bed"
+    ],
+    "filename": "catalog-bedroom-beds-super_king_bed.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.zip_link_beds",
+    "label": {
+      "TR": "Birleştirilebilir iki tek kişilik yatak",
+      "EN": "Zip and link twin beds"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.zip_link_beds"
+    ],
+    "filename": "catalog-bedroom-beds-zip_link_beds.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.sleeper_sofa",
+    "label": {
+      "TR": "Kanepe yatak",
+      "EN": "Sleeper sofa"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.sleeper_sofa"
+    ],
+    "filename": "catalog-bedroom-beds-sleeper_sofa.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.extra_bed",
+    "label": {
+      "TR": "İlave yatak",
+      "EN": "Extra bed"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.extra_bed"
+    ],
+    "filename": "catalog-bedroom-beds-extra_bed.avif"
+  },
+  {
+    "key": "catalog.bedroom.beds.travel_cot",
+    "label": {
+      "TR": "Portatif bebek yatağı",
+      "EN": "Travel cot"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak türleri",
+      "EN": "Bed types"
+    },
+    "codes": [
+      "catalog.bedroom.beds.travel_cot",
+      "catalog.children.equipment.travel_cot"
+    ],
+    "filename": "catalog-bedroom-beds-travel_cot.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.headboard",
+    "label": {
+      "TR": "Yatak başlığı",
+      "EN": "Headboard"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.headboard"
+    ],
+    "filename": "catalog-bedroom-bedding-headboard.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.bed_base",
+    "label": {
+      "TR": "Yatak bazası",
+      "EN": "Bed base"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.bed_base"
+    ],
+    "filename": "catalog-bedroom-bedding-bed_base.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.bed_frame",
+    "label": {
+      "TR": "Yatak iskeleti",
+      "EN": "Bed frame"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.bed_frame"
+    ],
+    "filename": "catalog-bedroom-bedding-bed_frame.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.mattress_protector",
+    "label": {
+      "TR": "Yatak koruyucu",
+      "EN": "Mattress protector"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.mattress_protector"
+    ],
+    "filename": "catalog-bedroom-bedding-mattress_protector.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.waterproof_protector",
+    "label": {
+      "TR": "Yatak alezi",
+      "EN": "Waterproof mattress protector"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.waterproof_protector"
+    ],
+    "filename": "catalog-bedroom-bedding-waterproof_protector.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.mattress_pad",
+    "label": {
+      "TR": "Yatak pedi",
+      "EN": "Mattress pad"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.mattress_pad"
+    ],
+    "filename": "catalog-bedroom-bedding-mattress_pad.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.mattress_topper",
+    "label": {
+      "TR": "Yatak üstü şiltesi",
+      "EN": "Mattress topper"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.mattress_topper"
+    ],
+    "filename": "catalog-bedroom-bedding-mattress_topper.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.sleeping_pillow",
+    "label": {
+      "TR": "Baş yastığı",
+      "EN": "Sleeping pillow"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.sleeping_pillow"
+    ],
+    "filename": "catalog-bedroom-bedding-sleeping_pillow.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.orthopedic_pillow",
+    "label": {
+      "TR": "Ortopedik yastık",
+      "EN": "Orthopedic pillow"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.orthopedic_pillow"
+    ],
+    "filename": "catalog-bedroom-bedding-orthopedic_pillow.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.decorative_pillow",
+    "label": {
+      "TR": "Dekoratif yastık",
+      "EN": "Decorative pillow"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.decorative_pillow",
+      "catalog.living_room.seating.decorative_pillow"
+    ],
+    "filename": "catalog-bedroom-bedding-decorative_pillow.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.duvet",
+    "label": {
+      "TR": "Yorgan",
+      "EN": "Duvet"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.duvet"
+    ],
+    "filename": "catalog-bedroom-bedding-duvet.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.blanket",
+    "label": {
+      "TR": "Battaniye",
+      "EN": "Blanket"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.blanket",
+      "catalog.living_room.seating.blanket"
+    ],
+    "filename": "catalog-bedroom-bedding-blanket.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.summer_cover",
+    "label": {
+      "TR": "Pike",
+      "EN": "Summer bed cover"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.summer_cover"
+    ],
+    "filename": "catalog-bedroom-bedding-summer_cover.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.bedspread",
+    "label": {
+      "TR": "Yatak örtüsü",
+      "EN": "Bedspread"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.bedspread"
+    ],
+    "filename": "catalog-bedroom-bedding-bedspread.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.bed_linen",
+    "label": {
+      "TR": "Nevresim",
+      "EN": "Bed linen"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.bed_linen"
+    ],
+    "filename": "catalog-bedroom-bedding-bed_linen.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.sheet",
+    "label": {
+      "TR": "Çarşaf",
+      "EN": "Bed sheet"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.sheet"
+    ],
+    "filename": "catalog-bedroom-bedding-sheet.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.fitted_sheet",
+    "label": {
+      "TR": "Lastikli çarşaf",
+      "EN": "Fitted sheet"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.fitted_sheet"
+    ],
+    "filename": "catalog-bedroom-bedding-fitted_sheet.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.pillowcase",
+    "label": {
+      "TR": "Yastık kılıfı",
+      "EN": "Pillowcase"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.pillowcase"
+    ],
+    "filename": "catalog-bedroom-bedding-pillowcase.avif"
+  },
+  {
+    "key": "catalog.bedroom.bedding.duvet_cover",
+    "label": {
+      "TR": "Yorgan kılıfı",
+      "EN": "Duvet cover"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak ekipmanları",
+      "EN": "Bedding"
+    },
+    "codes": [
+      "catalog.bedroom.bedding.duvet_cover"
+    ],
+    "filename": "catalog-bedroom-bedding-duvet_cover.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.nightstand",
+    "label": {
+      "TR": "Komodin",
+      "EN": "Nightstand"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.nightstand"
+    ],
+    "filename": "catalog-bedroom-furniture-nightstand.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.bedside_table",
+    "label": {
+      "TR": "Başucu sehpası",
+      "EN": "Bedside table"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.bedside_table"
+    ],
+    "filename": "catalog-bedroom-furniture-bedside_table.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.wardrobe",
+    "label": {
+      "TR": "Gardırop",
+      "EN": "Wardrobe"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.wardrobe"
+    ],
+    "filename": "catalog-bedroom-furniture-wardrobe.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.clothes_cabinet",
+    "label": {
+      "TR": "Elbise dolabı",
+      "EN": "Clothes cabinet"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.clothes_cabinet"
+    ],
+    "filename": "catalog-bedroom-furniture-clothes_cabinet.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.clothes_rack",
+    "label": {
+      "TR": "Açık elbise askılığı",
+      "EN": "Open clothes rack"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.clothes_rack"
+    ],
+    "filename": "catalog-bedroom-furniture-clothes_rack.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.hanger",
+    "label": {
+      "TR": "Elbise askısı",
+      "EN": "Clothes hanger"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.hanger",
+      "catalog.housekeeping.equipment.clothes_hanger"
+    ],
+    "filename": "catalog-bedroom-furniture-hanger.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.luggage_rack",
+    "label": {
+      "TR": "Valizlik",
+      "EN": "Luggage rack"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.luggage_rack"
+    ],
+    "filename": "catalog-bedroom-furniture-luggage_rack.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.luggage_bench",
+    "label": {
+      "TR": "Valiz sehpası",
+      "EN": "Luggage bench"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.luggage_bench"
+    ],
+    "filename": "catalog-bedroom-furniture-luggage_bench.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.dresser",
+    "label": {
+      "TR": "Şifonyer",
+      "EN": "Dresser"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.dresser"
+    ],
+    "filename": "catalog-bedroom-furniture-dresser.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.drawer_cabinet",
+    "label": {
+      "TR": "Çekmeceli dolap",
+      "EN": "Drawer cabinet"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.drawer_cabinet"
+    ],
+    "filename": "catalog-bedroom-furniture-drawer_cabinet.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.dressing_table",
+    "label": {
+      "TR": "Makyaj masası",
+      "EN": "Dressing table"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.dressing_table"
+    ],
+    "filename": "catalog-bedroom-furniture-dressing_table.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.vanity_chair",
+    "label": {
+      "TR": "Makyaj sandalyesi",
+      "EN": "Vanity chair"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.vanity_chair"
+    ],
+    "filename": "catalog-bedroom-furniture-vanity_chair.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.full_length_mirror",
+    "label": {
+      "TR": "Boy aynası",
+      "EN": "Full-length mirror"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.full_length_mirror"
+    ],
+    "filename": "catalog-bedroom-furniture-full_length_mirror.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.wall_mirror",
+    "label": {
+      "TR": "Duvar aynası",
+      "EN": "Wall mirror"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.wall_mirror"
+    ],
+    "filename": "catalog-bedroom-furniture-wall_mirror.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.desk",
+    "label": {
+      "TR": "Çalışma masası",
+      "EN": "Desk"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.desk",
+      "catalog.tables_chairs.furniture.desk",
+      "catalog.workspace.equipment.desk"
+    ],
+    "filename": "catalog-bedroom-furniture-desk.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.desk_chair",
+    "label": {
+      "TR": "Çalışma sandalyesi",
+      "EN": "Desk chair"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.desk_chair",
+      "catalog.tables_chairs.furniture.desk_chair",
+      "catalog.workspace.equipment.desk_chair"
+    ],
+    "filename": "catalog-bedroom-furniture-desk_chair.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.reading_chair",
+    "label": {
+      "TR": "Okuma koltuğu",
+      "EN": "Reading chair"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.reading_chair"
+    ],
+    "filename": "catalog-bedroom-furniture-reading_chair.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.bed_end_bench",
+    "label": {
+      "TR": "Yatak ucu bankı",
+      "EN": "Bed-end bench"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.bed_end_bench"
+    ],
+    "filename": "catalog-bedroom-furniture-bed_end_bench.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.bedside_lamp",
+    "label": {
+      "TR": "Başucu lambası",
+      "EN": "Bedside lamp"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.bedside_lamp",
+      "catalog.lighting.equipment.bedside_lamp"
+    ],
+    "filename": "catalog-bedroom-furniture-bedside_lamp.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.night_light",
+    "label": {
+      "TR": "Gece lambası",
+      "EN": "Night light"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.night_light"
+    ],
+    "filename": "catalog-bedroom-furniture-night_light.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.laundry_basket",
+    "label": {
+      "TR": "Çamaşır sepeti",
+      "EN": "Laundry basket"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.laundry_basket",
+      "catalog.housekeeping.equipment.laundry_basket"
+    ],
+    "filename": "catalog-bedroom-furniture-laundry_basket.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.laundry_bag",
+    "label": {
+      "TR": "Kirli çamaşır torbası",
+      "EN": "Laundry bag"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.laundry_bag",
+      "catalog.guest_supplies.supplies.laundry_bag"
+    ],
+    "filename": "catalog-bedroom-furniture-laundry_bag.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.safe",
+    "label": {
+      "TR": "Kasa",
+      "EN": "Safe"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.safe"
+    ],
+    "filename": "catalog-bedroom-furniture-safe.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.ironing_board",
+    "label": {
+      "TR": "Ütü masası",
+      "EN": "Ironing board"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.ironing_board",
+      "catalog.housekeeping.equipment.ironing_board"
+    ],
+    "filename": "catalog-bedroom-furniture-ironing_board.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.iron",
+    "label": {
+      "TR": "Ütü",
+      "EN": "Iron"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.iron",
+      "catalog.housekeeping.equipment.iron"
+    ],
+    "filename": "catalog-bedroom-furniture-iron.avif"
+  },
+  {
+    "key": "catalog.bedroom.furniture.wall_hooks",
+    "label": {
+      "TR": "Duvar askılığı",
+      "EN": "Wall hooks"
+    },
+    "category": "bedroom",
+    "category_label": {
+      "TR": "Yatak Odası ve Uyku Donanımları",
+      "EN": "Bedroom and Sleeping Equipment"
+    },
+    "group_label": {
+      "TR": "Yatak odası mobilyaları",
+      "EN": "Bedroom furniture"
+    },
+    "codes": [
+      "catalog.bedroom.furniture.wall_hooks",
+      "catalog.structural.fixtures.wall_hooks"
+    ],
+    "filename": "catalog-bedroom-furniture-wall_hooks.avif"
+  }
+]

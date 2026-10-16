@@ -1,3 +1,4 @@
+import { BedIllustration } from './BedIllustration';
 import React, { useEffect, useState } from 'react';
 import { BedDouble, Plus, Minus, Trash2 } from 'lucide-react';
 import { command, messageOf } from '../lib/api';
@@ -33,7 +34,7 @@ export function RoomBedsEditor({ roomId, branchId, value, onChange, disabled, re
       {value.map(choice => {
         const preset = BED_PRESETS.find(p => p.key === choice.preset)!;
         return <div key={choice.id} className={styles.row}>
-          <span>{preset.label}<small>{choice.count * preset.bed_places} yatak yeri · {choice.count * preset.capacity} kişi</small></span>
+          <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1} size={48}/><span>{preset.label}<small>{choice.count * preset.bed_places} yatak yeri · {choice.count * preset.capacity} kişi</small></span>
           <div className={styles.counter}>
             <button type="button" className="uni-control nav-icon-button" disabled={disabled || choice.count<=1} aria-label={`${preset.label} azalt`} onClick={()=>onChange(value.map(v=>v.id===choice.id?{...v,count:v.count-1}:v))}><Minus size={16}/></button>
             <output aria-label={`${preset.label} adedi`}>{choice.count}</output>

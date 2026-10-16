@@ -1,0 +1,382 @@
+[
+  {
+    "key": "catalog.structural.fixtures.room_door",
+    "label": {
+      "TR": "Oda kapısı",
+      "EN": "Room door"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.room_door"
+    ],
+    "filename": "catalog-structural-fixtures-room_door.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.bathroom_door",
+    "label": {
+      "TR": "Banyo kapısı",
+      "EN": "Bathroom door"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.bathroom_door"
+    ],
+    "filename": "catalog-structural-fixtures-bathroom_door.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.balcony_door",
+    "label": {
+      "TR": "Balkon kapısı",
+      "EN": "Balcony door"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.balcony_door"
+    ],
+    "filename": "catalog-structural-fixtures-balcony_door.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.window",
+    "label": {
+      "TR": "Pencere",
+      "EN": "Window"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.window"
+    ],
+    "filename": "catalog-structural-fixtures-window.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.double_glazing",
+    "label": {
+      "TR": "Çift cam",
+      "EN": "Double glazing"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.double_glazing"
+    ],
+    "filename": "catalog-structural-fixtures-double_glazing.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.thermal_window",
+    "label": {
+      "TR": "Isı yalıtımlı pencere",
+      "EN": "Thermally insulated window"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.thermal_window"
+    ],
+    "filename": "catalog-structural-fixtures-thermal_window.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.soundproof_window",
+    "label": {
+      "TR": "Ses yalıtımlı pencere",
+      "EN": "Soundproof window"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.soundproof_window"
+    ],
+    "filename": "catalog-structural-fixtures-soundproof_window.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.roller_shutter",
+    "label": {
+      "TR": "Panjur",
+      "EN": "Roller shutter"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.roller_shutter"
+    ],
+    "filename": "catalog-structural-fixtures-roller_shutter.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.shutter",
+    "label": {
+      "TR": "Kepenk",
+      "EN": "Shutter"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.shutter"
+    ],
+    "filename": "catalog-structural-fixtures-shutter.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.insect_screen",
+    "label": {
+      "TR": "Sineklik",
+      "EN": "Insect screen"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.insect_screen"
+    ],
+    "filename": "catalog-structural-fixtures-insect_screen.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.door_handle",
+    "label": {
+      "TR": "Kapı kolu",
+      "EN": "Door handle"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.door_handle"
+    ],
+    "filename": "catalog-structural-fixtures-door_handle.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.door_stop",
+    "label": {
+      "TR": "Kapı stoperi",
+      "EN": "Door stop"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.door_stop"
+    ],
+    "filename": "catalog-structural-fixtures-door_stop.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.door_closer",
+    "label": {
+      "TR": "Kapı yayı",
+      "EN": "Door closer"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.door_closer"
+    ],
+    "filename": "catalog-structural-fixtures-door_closer.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.electronic_lock",
+    "label": {
+      "TR": "Elektronik kilit",
+      "EN": "Electronic lock"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.electronic_lock"
+    ],
+    "filename": "catalog-structural-fixtures-electronic_lock.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.keycard_lock",
+    "label": {
+      "TR": "Kartlı kapı kilidi",
+      "EN": "Keycard door lock"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.keycard_lock"
+    ],
+    "filename": "catalog-structural-fixtures-keycard_lock.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.magnetic_contact",
+    "label": {
+      "TR": "Manyetik kapı kontağı",
+      "EN": "Magnetic door contact"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.magnetic_contact"
+    ],
+    "filename": "catalog-structural-fixtures-magnetic_contact.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.shoe_rack",
+    "label": {
+      "TR": "Ayakkabılık",
+      "EN": "Shoe rack"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.shoe_rack"
+    ],
+    "filename": "catalog-structural-fixtures-shoe_rack.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.shoehorn",
+    "label": {
+      "TR": "Ayakkabı çekeceği",
+      "EN": "Shoehorn"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.shoehorn"
+    ],
+    "filename": "catalog-structural-fixtures-shoehorn.avif"
+  },
+  {
+    "key": "catalog.structural.fixtures.umbrella_stand",
+    "label": {
+      "TR": "Şemsiye standı",
+      "EN": "Umbrella stand"
+    },
+    "category": "structural",
+    "category_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, Windows and Structural Fixtures"
+    },
+    "group_label": {
+      "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+      "EN": "Doors, windows and structural fixtures"
+    },
+    "codes": [
+      "catalog.structural.fixtures.umbrella_stand"
+    ],
+    "filename": "catalog-structural-fixtures-umbrella_stand.avif"
+  }
+]

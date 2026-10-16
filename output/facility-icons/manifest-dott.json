@@ -1,0 +1,1039 @@
+{
+  "generator": "built-in image_gen",
+  "format": "AVIF",
+  "size": [
+    256,
+    256
+  ],
+  "style": "Day of the Tentacle-inspired 2D illustration matching landing artwork",
+  "property_features": 66,
+  "categories": [
+    {
+      "key": "accessibility",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-a66454a1-341a-47ee-8542-6b52abbee5ea.png",
+      "prompt": "Create ONE hotel amenity icon depicting a wheelchair accessibility symbol rendered as a friendly dimensional object. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/accessibility.avif"
+    },
+    {
+      "key": "baby",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-d4cde95e-67a6-4754-91d8-c9e36618e188.png",
+      "prompt": "Create ONE hotel amenity icon depicting a baby stroller. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/baby.avif"
+    },
+    {
+      "key": "bath",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-a396e0e7-dff7-4c26-83b7-5f1438c802a8.png",
+      "prompt": "Create ONE hotel amenity icon depicting a freestanding bathtub with a small curved faucet. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/bath.avif"
+    },
+    {
+      "key": "bed",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-8386b803-179e-44b8-b28b-c61c3dc5fd35.png",
+      "prompt": "Create ONE hotel amenity icon depicting a whimsical double bed with two pillows. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Mix turquoise frame, pink bedding, violet shadows, cyan accents in one object, like furniture in the supplied room cutaway. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/bed.avif"
+    },
+    {
+      "key": "brush",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-829a959c-a8dc-4a40-af7c-2a6537db977a.png",
+      "prompt": "Create ONE hotel amenity icon depicting a cleaning brush and a small sparkle. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/brush.avif"
+    },
+    {
+      "key": "building",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-72f8eedf-5bcc-4bef-8211-ad813028132c.png",
+      "prompt": "Create ONE hotel amenity icon depicting a welcoming small hotel building. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/building.avif"
+    },
+    {
+      "key": "coffee",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4988182e-a1e8-4f14-aa67-a5228ce811d3.png",
+      "prompt": "Create ONE hotel amenity icon depicting a coffee cup on a saucer with a small steam curl. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/coffee.avif"
+    },
+    {
+      "key": "door",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4e664783-2326-49d3-8ef0-c72f1ad1fd47.png",
+      "prompt": "Create ONE hotel amenity icon depicting a slightly open door in its frame. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/door.avif"
+    },
+    {
+      "key": "lamp",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2949284f-82c2-4a83-aa56-dfd2194fd4eb.png",
+      "prompt": "Create ONE hotel amenity icon depicting a rounded table lamp. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/lamp.avif"
+    },
+    {
+      "key": "monitor",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-22ebeb11-c2bd-4108-9b18-985108610435.png",
+      "prompt": "Create ONE hotel amenity icon depicting a desktop computer monitor and keyboard. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/monitor.avif"
+    },
+    {
+      "key": "palette",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-028d5700-aba9-4932-8107-87f69e8f7e3f.png",
+      "prompt": "Create ONE hotel amenity icon depicting an artist paint palette with round paint wells. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/palette.avif"
+    },
+    {
+      "key": "refrigerator",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-ddfc7d8d-a86a-4988-a7e2-2d69ae6dba63.png",
+      "prompt": "Create ONE hotel amenity icon depicting a compact two door refrigerator. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/refrigerator.avif"
+    },
+    {
+      "key": "shield",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-abd985f2-b898-4149-ad5a-255195e9e9e8.png",
+      "prompt": "Create ONE hotel amenity icon depicting a chunky protective shield with a check mark. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/shield.avif"
+    },
+    {
+      "key": "sofa",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-74aec9c2-9a8d-4d20-93f5-f79949c03dbc.png",
+      "prompt": "Create ONE hotel amenity icon depicting a rounded two seat sofa. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/sofa.avif"
+    },
+    {
+      "key": "table",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-8e7aea3c-364d-4f03-8004-d38851d01f98.png",
+      "prompt": "Create ONE hotel amenity icon depicting a round dining table and two chairs. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/table.avif"
+    },
+    {
+      "key": "trees",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-1c7520a7-4414-4d8e-a40b-e3b566c0b5cd.png",
+      "prompt": "Create ONE hotel amenity icon depicting two rounded garden trees. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/trees.avif"
+    },
+    {
+      "key": "tv",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-70a81a9c-9281-40fc-826e-c7178125e613.png",
+      "prompt": "Create ONE hotel amenity icon depicting a flat screen television on a tiny stand. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/tv.avif"
+    },
+    {
+      "key": "utensils",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-c59589ad-5d6d-4762-9d31-17f0e60172d5.png",
+      "prompt": "Create ONE hotel amenity icon depicting a plate with a fork and spoon. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/utensils.avif"
+    },
+    {
+      "key": "waves",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-00f86816-e48a-4edf-9a3a-e98eeb64edac.png",
+      "prompt": "Create ONE hotel amenity icon depicting a small swimming pool with a ladder and blue water. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/waves.avif"
+    },
+    {
+      "key": "wind",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-3731ec31-3f53-49ac-9d52-c12da719851a.png",
+      "prompt": "Create ONE hotel amenity icon depicting a wall mounted air conditioner with soft airflow curves. The attached images are STYLE REFERENCES from the existing website, not edit targets. Match their illustration language closely: Day of the Tentacle / 1990s hand-drawn point-and-click adventure game cartoon, playful crooked geometry, exaggerated wonky perspective, gently bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes and a few hard-edged highlights. 2D illustration with illustrated volume. Palette from our website: turquoise #00C3A0, cyan #2ABDFF, violet #8251FB, pink #FF37C7, fuchsia #F50DB4, sparing orange #FF4D00, white. Use our turquoise, pink, violet and cyan together in the object, assigning distinct colors to its parts, as in the supplied website illustrations. Orange may be used as a small accent. The silhouette must be instantly readable at 40px. One isolated object, large centered with 12% margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, scenery, text, logo, numbers, frame or tile. Avoid 3D renders, clay, plush texture, photorealism, gradients, glossy product mockups. This must look drawn by the same illustrator as the references.",
+      "generator": "built-in image_gen",
+      "output": "ui/public/images/facility-icons-dott/wind.avif"
+    }
+  ],
+  "items": [
+    {
+      "key": "accessible_common_area",
+      "label": {
+        "TR": "Erişilebilir ortak alan",
+        "EN": "Accessible common area"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-7b07b18c-e2a1-4acc-8a21-65e9388c3863.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Accessible common area\". The feature must be represented literally and accurately: an accessible shared hotel lounge with a wheelchair beside a low table, wide clear passage and a broad open doorway. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.accessibility.features.accessible_common_area"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/accessible_common_area.avif"
+    },
+    {
+      "key": "accessible_parking",
+      "label": {
+        "TR": "Erişilebilir otopark",
+        "EN": "Accessible parking"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-6528b37e-e967-43c8-b791-b7efe5ed29cf.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Accessible parking\". The feature must be represented literally and accurately: an accessible parking space marked by a large wheelchair pictogram on the ground beside a parked car. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.accessibility.features.accessible_parking"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/accessible_parking.avif"
+    },
+    {
+      "key": "airport_transfer",
+      "label": {
+        "TR": "Havaalanı transferi",
+        "EN": "Airport transfer"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-dcdaa0cc-098b-43f4-b182-095a687e1eed.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Airport transfer\". The feature must be represented literally and accurately: an airport shuttle minibus with a suitcase beside it and a small airplane silhouette above. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.airport_transfer"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/airport_transfer.avif"
+    },
+    {
+      "key": "alarm_system",
+      "label": {
+        "TR": "Alarm sistemi",
+        "EN": "Alarm system"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-19e69e1b-6676-447d-abeb-313aae220bac.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Alarm system\". The feature must be represented literally and accurately: a wall mounted security alarm siren with a red flashing beacon and a small keypad below. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.safety.equipment.alarm_system"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/alarm_system.avif"
+    },
+    {
+      "key": "bar",
+      "label": {
+        "TR": "Bar",
+        "EN": "Bar"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-535403c3-dfa7-42a6-9507-1e3240137b05.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Bar\". The feature must be represented literally and accurately: a cocktail glass with citrus garnish, a shaker and a small bottle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.bar"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/bar.avif"
+    },
+    {
+      "key": "breakfast",
+      "label": {
+        "TR": "Kahvaltı",
+        "EN": "Breakfast"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-78a2c291-bac6-47b7-a01c-6c242d64667b.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Breakfast\". The feature must be represented literally and accurately: a breakfast tray containing a croissant, fried egg, small glass of orange juice and coffee cup. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.breakfast"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/breakfast.avif"
+    },
+    {
+      "key": "business_center",
+      "label": {
+        "TR": "İş merkezi",
+        "EN": "Business center"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-dba34a87-57e2-4af8-8ab8-25c8626b1ec6.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Business center\". The feature must be represented literally and accurately: a business workstation with a computer monitor, keyboard and an office printer with one sheet of paper. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.business_center"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/business_center.avif"
+    },
+    {
+      "key": "children_pool",
+      "label": {
+        "TR": "Çocuk havuzu",
+        "EN": "Children's pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-f933ff65-a351-4a81-b13d-80069ef71c25.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Children's pool\". The feature must be represented literally and accurately: a shallow tiny children's paddling pool with a toy rubber duck and mini slide. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.children_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/children_pool.avif"
+    },
+    {
+      "key": "cleaning_trolley",
+      "label": {
+        "TR": "Temizlik arabası",
+        "EN": "Cleaning trolley"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-05a6c384-f17a-4c40-be4c-7acedcde9ff0.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Cleaning trolley\". The feature must be represented literally and accurately: a housekeeping cleaning trolley with spray bottles, mop, bucket and folded clean towels. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.housekeeping.equipment.cleaning_trolley"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/cleaning_trolley.avif"
+    },
+    {
+      "key": "covered_parking",
+      "label": {
+        "TR": "Kapalı otopark",
+        "EN": "Covered parking"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-b6c4cb32-f2b3-42aa-a40a-e37f10c4e623.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Covered parking\". The feature must be represented literally and accurately: a car parked under a clearly visible garage canopy supported by two posts. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.covered_parking"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/covered_parking.avif"
+    },
+    {
+      "key": "daily_cleaning",
+      "label": {
+        "TR": "Günlük temizlik",
+        "EN": "Daily housekeeping"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-a1d3c62d-15f3-4b0c-bf22-ae91485652a7.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Daily housekeeping\". The feature must be represented literally and accurately: a hotel housekeeping mop and bucket with a spray bottle, feather duster and two cleaning sparkles. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.daily_cleaning"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/daily_cleaning.avif"
+    },
+    {
+      "key": "disabled_access",
+      "label": {
+        "TR": "Engelli erişimi",
+        "EN": "Disabled access"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-d46a6b40-1a09-402f-893f-664ec6388b39.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Disabled access\". The feature must be represented literally and accurately: an accessible entrance with a wheelchair and a smooth ramp leading through a wide open doorway. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.disabled_access"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/disabled_access.avif"
+    },
+    {
+      "key": "dry_cleaning",
+      "label": {
+        "TR": "Kuru temizleme",
+        "EN": "Dry cleaning"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2bf48077-0457-4ef4-9051-38482268689f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Dry cleaning\". The feature must be represented literally and accurately: a suit jacket on a hanger inside a clear garment bag, with a small steam iron nearby. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.dry_cleaning"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/dry_cleaning.avif"
+    },
+    {
+      "key": "earthquake_kit",
+      "label": {
+        "TR": "Deprem acil durum ekipmanı",
+        "EN": "Earthquake emergency kit"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-f3af12bd-b829-4676-87c7-9ffe9fa748aa.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Earthquake emergency kit\". The feature must be represented literally and accurately: an open earthquake emergency go bag containing flashlight, bottled water, first aid pack and whistle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.safety.equipment.earthquake_kit"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/earthquake_kit.avif"
+    },
+    {
+      "key": "elevator",
+      "label": {
+        "TR": "Asansör",
+        "EN": "Elevator"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-5dce36ae-b672-486b-b87e-9ea4e436567b.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Elevator\". The feature must be represented literally and accurately: an elevator with two sliding doors, up and down arrow buttons and a cabin visible through partly open doors. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.elevator",
+        "catalog.accessibility.features.elevator"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/elevator.avif"
+    },
+    {
+      "key": "ev_charging",
+      "label": {
+        "TR": "Elektrikli araç şarj istasyonu",
+        "EN": "Electric vehicle charging station"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-c3e8c2a3-f4ad-490d-8e73-ce6d28fd4321.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Electric vehicle charging station\". The feature must be represented literally and accurately: an electric vehicle charging pedestal with a thick cable plugged into a small electric car and a lightning emblem. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.ev_charging"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/ev_charging.avif"
+    },
+    {
+      "key": "floor_scrubber",
+      "label": {
+        "TR": "Yer yıkama makinesi",
+        "EN": "Floor scrubber"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-7d9ba956-3830-461f-a934-b31b1a37a2b7.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Floor scrubber\". The feature must be represented literally and accurately: a floor scrubbing machine with a push handle, round powered brush deck and small clean water tank. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.housekeeping.equipment.floor_scrubber"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/floor_scrubber.avif"
+    },
+    {
+      "key": "free_parking",
+      "label": {
+        "TR": "Ücretsiz otopark",
+        "EN": "Free parking"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-7b0c328a-7240-42c2-b222-bfc3362bca8f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Free parking\". The feature must be represented literally and accurately: a small uncovered parking bay with one car and a raised entrance barrier, no coins, no payment machine. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.free_parking"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/free_parking.avif"
+    },
+    {
+      "key": "garden_shed",
+      "label": {
+        "TR": "Bahçe deposu",
+        "EN": "Garden shed"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-ab5c2b63-db15-4444-a92f-a69341ecf6b9.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Garden shed\". The feature must be represented literally and accurately: a small crooked garden storage shed with a pitched roof, door, and a rake leaning against it. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.outdoor.equipment.garden_shed"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/garden_shed.avif"
+    },
+    {
+      "key": "generator",
+      "label": {
+        "TR": "Jeneratör",
+        "EN": "Generator"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-104dc614-42e0-4736-95b0-a742ea162b2b.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Generator\". The feature must be represented literally and accurately: a portable backup electrical generator with a visible motor housing, carry handle, electrical socket and lightning bolt emblem. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.lighting.equipment.generator",
+        "catalog.safety.equipment.generator"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/generator.avif"
+    },
+    {
+      "key": "gym",
+      "label": {
+        "TR": "Spor salonu",
+        "EN": "Gym"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-3f52ddb1-0d89-4022-89e2-5b489bee184f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Gym\". The feature must be represented literally and accurately: a compact gym equipment composition with one dumbbell and a stationary exercise bike. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.gym"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/gym.avif"
+    },
+    {
+      "key": "heated_pool",
+      "label": {
+        "TR": "Isıtmalı havuz",
+        "EN": "Heated pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-c790454a-cf94-4760-9dc3-b1e4d4a01909.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Heated pool\". The feature must be represented literally and accurately: a swimming pool with warm rising steam curls and a thermometer beside the water. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.heated_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/heated_pool.avif"
+    },
+    {
+      "key": "indoor_pool",
+      "label": {
+        "TR": "Kapalı havuz",
+        "EN": "Indoor pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-03383906-4f4f-4d77-acff-e3b34e92e12a.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Indoor pool\". The feature must be represented literally and accurately: a small swimming pool enclosed beneath an arched glass roof and wall. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.indoor_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/indoor_pool.avif"
+    },
+    {
+      "key": "infinity_pool",
+      "label": {
+        "TR": "Sonsuzluk havuzu",
+        "EN": "Infinity pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-cbbf1a62-0291-45c5-9f56-b6e4dcd0b243.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Infinity pool\". The feature must be represented literally and accurately: a swimming pool in perspective with water visibly overflowing one far edge into a lower trough. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.infinity_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/infinity_pool.avif"
+    },
+    {
+      "key": "laundry",
+      "label": {
+        "TR": "Çamaşırhane",
+        "EN": "Laundry service"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4e218185-c0d9-4371-b7cb-7bb4854858a6.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Laundry service\". The feature must be represented literally and accurately: a front loading washing machine with a visible circular door and a folded clean towel on top. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.laundry"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/laundry.avif"
+    },
+    {
+      "key": "laundry_trolley",
+      "label": {
+        "TR": "Kirli çamaşır arabası",
+        "EN": "Laundry trolley"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-6b054d53-82ed-43ad-b6b0-22ff6314afb1.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Laundry trolley\". The feature must be represented literally and accurately: a wheeled hotel laundry cart with a large cloth hamper containing crumpled linens, NO cleaning bottles. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.housekeeping.equipment.laundry_trolley"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/laundry_trolley.avif"
+    },
+    {
+      "key": "luggage_storage",
+      "label": {
+        "TR": "Bagaj muhafazası",
+        "EN": "Luggage storage"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-94d5bbc1-ce0c-4896-8c44-18fb4f378386.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Luggage storage\". The feature must be represented literally and accurately: two travel suitcases stored neatly inside a numbered-free luggage cubby shelf with a small padlock. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.luggage_storage"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/luggage_storage.avif"
+    },
+    {
+      "key": "massage_bed",
+      "label": {
+        "TR": "Masaj yatağı",
+        "EN": "Massage bed"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-f5f20348-5c64-4a63-9817-98dedb885908.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Massage bed\". The feature must be represented literally and accurately: a professional massage table with a clear face cradle opening, folded towel and small oil bottle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.massage_bed"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/massage_bed.avif"
+    },
+    {
+      "key": "meeting_room",
+      "label": {
+        "TR": "Toplantı odası",
+        "EN": "Meeting room"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-296301cf-f355-4e08-a0b3-a6f163efcc10.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Meeting room\". The feature must be represented literally and accurately: a meeting table surrounded by three chairs with a small presentation board at the end. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.meeting_room"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/meeting_room.avif"
+    },
+    {
+      "key": "outdoor_pool",
+      "label": {
+        "TR": "Açık havuz",
+        "EN": "Outdoor pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-df31dd2f-e0d2-4d83-8767-c2319dd8eb3d.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Outdoor pool\". The feature must be represented literally and accurately: an open air swimming pool with one palm tree and sunshine above it. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.outdoor_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/outdoor_pool.avif"
+    },
+    {
+      "key": "pets_allowed",
+      "label": {
+        "TR": "Evcil hayvan kabulü",
+        "EN": "Pets allowed"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-cf4c5ba3-334c-4880-b316-ee82373c7c9a.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pets allowed\". The feature must be represented literally and accurately: a friendly small dog and cat sitting together beside a paw shaped pet bowl. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.pets_allowed"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pets_allowed.avif"
+    },
+    {
+      "key": "playground",
+      "label": {
+        "TR": "Çocuk oyun alanı",
+        "EN": "Children's play area"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-d769265f-726d-492a-a359-f523965dac25.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Children's play area\". The feature must be represented literally and accurately: a children's play area with a small playground slide and a rocking horse on a soft play mat. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.playground"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/playground.avif"
+    },
+    {
+      "key": "playground_equipment",
+      "label": {
+        "TR": "Çocuk oyun alanı ekipmanları",
+        "EN": "Playground equipment"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-dc480f53-a6ef-4c7a-adf3-30a474c224c7.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Playground equipment\". The feature must be represented literally and accurately: a playground equipment set with a small slide, climbing ladder and swing. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.children.equipment.playground_equipment"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/playground_equipment.avif"
+    },
+    {
+      "key": "pool",
+      "label": {
+        "TR": "Havuz",
+        "EN": "Pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-ad6d9ee4-b6db-499b-b34f-72a0f37e8e2d.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool\". The feature must be represented literally and accurately: a simple hotel swimming pool with blue water, a pool ladder and tile coping. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool.avif"
+    },
+    {
+      "key": "pool_barrier",
+      "label": {
+        "TR": "Havuz güvenlik bariyeri",
+        "EN": "Pool safety barrier"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-7c44dbae-fff0-4732-be4a-beb4149de491.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool safety barrier\". The feature must be represented literally and accurately: a gated safety fence around the edge of a small swimming pool. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_barrier"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_barrier.avif"
+    },
+    {
+      "key": "pool_cover",
+      "label": {
+        "TR": "Havuz örtüsü",
+        "EN": "Pool cover"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-1bd00697-65b6-43ec-8937-492b10c37902.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool cover\". The feature must be represented literally and accurately: a swimming pool partly covered by a rolled out floating safety cover, with the cover roller visible. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_cover"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_cover.avif"
+    },
+    {
+      "key": "pool_filter",
+      "label": {
+        "TR": "Havuz filtresi",
+        "EN": "Pool filter"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-ece3b8cb-39c7-4006-8458-01a41ff0417e.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool filter\". The feature must be represented literally and accurately: a swimming pool sand filter system: round filter tank, multiport valve on top and two connecting water pipes, NO pool scene. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_filter"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_filter.avif"
+    },
+    {
+      "key": "pool_handrail",
+      "label": {
+        "TR": "Havuz tutamağı",
+        "EN": "Pool handrail"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-d1ff8857-fcc2-44e0-b673-c689089ef525.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool handrail\". The feature must be represented literally and accurately: one curved safety grab handrail anchored by two round mounts at the swimming pool edge, NO ladder steps. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_handrail"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_handrail.avif"
+    },
+    {
+      "key": "pool_heater",
+      "label": {
+        "TR": "Havuz ısıtma sistemi",
+        "EN": "Pool heating system"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-be98bf24-7e2c-45b3-bd8e-549e028f1e64.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool heating system\". The feature must be represented literally and accurately: a pool heat pump unit with a prominent circular fan grille and two water pipe connections. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_heater"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_heater.avif"
+    },
+    {
+      "key": "pool_ladder",
+      "label": {
+        "TR": "Havuz merdiveni",
+        "EN": "Pool ladder"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-fbd8404c-9840-4412-afa0-11652202bad4.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool ladder\". The feature must be represented literally and accurately: a stainless steel swimming pool ladder with two curved rails and three submerged steps at the water edge. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_ladder"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_ladder.avif"
+    },
+    {
+      "key": "pool_lighting",
+      "label": {
+        "TR": "Havuz aydınlatması",
+        "EN": "Pool lighting"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-25fb642f-579a-4b17-967d-6a8bc7d9330a.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool lighting\". The feature must be represented literally and accurately: one round waterproof underwater pool light mounted in a small tile section, sending bright rays into blue water. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_lighting"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_lighting.avif"
+    },
+    {
+      "key": "pool_lounger",
+      "label": {
+        "TR": "Havuz şezlongu",
+        "EN": "Pool lounger"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-51a912ba-7c75-4b85-9a6e-49e3940cf2e4.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool lounger\". The feature must be represented literally and accurately: one reclining poolside chaise longue with a long slatted seat and adjustable backrest. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_lounger"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_lounger.avif"
+    },
+    {
+      "key": "pool_parasol",
+      "label": {
+        "TR": "Havuz şemsiyesi",
+        "EN": "Pool parasol"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2c90ab54-61ef-4575-a9ae-6f31e301c1ff.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool parasol\". The feature must be represented literally and accurately: one large pool parasol with a bent pole and wide striped canopy in a weighted base. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_parasol"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_parasol.avif"
+    },
+    {
+      "key": "pool_pump",
+      "label": {
+        "TR": "Havuz pompası",
+        "EN": "Pool pump"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2be6ab92-ee51-4169-b020-40df6404c801.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool pump\". The feature must be represented literally and accurately: a swimming pool electric water circulation pump with a visible motor, transparent strainer basket lid and inlet/outlet pipes. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_pump"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_pump.avif"
+    },
+    {
+      "key": "pool_robot",
+      "label": {
+        "TR": "Havuz temizleme robotu",
+        "EN": "Pool cleaning robot"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-541bd5dc-1ca7-4c6a-94bc-e52f4bcef22e.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool cleaning robot\". The feature must be represented literally and accurately: a small robotic swimming pool cleaner with tracks, a suction head and coiled floating cable. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_robot"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_robot.avif"
+    },
+    {
+      "key": "pool_shower",
+      "label": {
+        "TR": "Havuz duşu",
+        "EN": "Pool shower"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-dc232549-c22e-405a-b6dc-b4957413ef0c.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool shower\". The feature must be represented literally and accurately: an outdoor swimming pool shower on a tall curved pipe with a shower head and falling water drops. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.pool_shower"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/pool_shower.avif"
+    },
+    {
+      "key": "ramp",
+      "label": {
+        "TR": "Rampa",
+        "EN": "Ramp"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-5bf5ce6c-0aa0-47a1-a3d9-41cc0d71b42f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Ramp\". The feature must be represented literally and accurately: an accessibility ramp with gently sloping surface and continuous handrails, with a wheelchair at its base. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.accessibility.features.ramp"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/ramp.avif"
+    },
+    {
+      "key": "reception_24h",
+      "label": {
+        "TR": "24 saat resepsiyon",
+        "EN": "24-hour reception"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-e7ac23f7-bd71-4e9e-8ca6-9fa4546129bc.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"24-hour reception\". The feature must be represented literally and accurately: a hotel reception counter with a service bell and a round clock showing hands, with a small moon and sun paired above. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.reception_24h"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/reception_24h.avif"
+    },
+    {
+      "key": "restaurant",
+      "label": {
+        "TR": "Restoran",
+        "EN": "Restaurant"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-0e881c2b-8335-4a9b-8776-f74230d730d5.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Restaurant\". The feature must be represented literally and accurately: a restaurant place setting with a plate, fork, knife and upright folded napkin. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.restaurant"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/restaurant.avif"
+    },
+    {
+      "key": "room_service",
+      "label": {
+        "TR": "Oda servisi",
+        "EN": "Room service"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-80da409e-93df-458e-b9ea-857aa54ba61c.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Room service\". The feature must be represented literally and accurately: a wheeled room service tray trolley with a covered silver cloche and a small teacup. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.room_service"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/room_service.avif"
+    },
+    {
+      "key": "sauna",
+      "label": {
+        "TR": "Sauna",
+        "EN": "Sauna"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-31527c20-c738-429a-ba5d-129f324874af.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Sauna\". The feature must be represented literally and accurately: a wooden sauna cabin cutaway showing a wooden bench and a stone heater with a small ladle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.sauna",
+        "catalog.facilities.services.sauna"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/sauna.avif"
+    },
+    {
+      "key": "security_camera",
+      "label": {
+        "TR": "Güvenlik kamerası",
+        "EN": "Security camera"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-917504fe-11b6-4e5a-ad54-f68ff6209ce3.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Security camera\". The feature must be represented literally and accurately: one angled CCTV security camera with a prominent lens, wall mounting bracket and a short cable. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.safety.equipment.security_camera"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/security_camera.avif"
+    },
+    {
+      "key": "shared_jacuzzi",
+      "label": {
+        "TR": "Ortak jakuzi",
+        "EN": "Shared jacuzzi"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-04848edf-ab55-4233-afe4-a743cd47ac09.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Shared jacuzzi\". The feature must be represented literally and accurately: a round jacuzzi tub with several molded seats, bubbling water and visible water jets. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.shared_jacuzzi"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/shared_jacuzzi.avif"
+    },
+    {
+      "key": "shared_pool",
+      "label": {
+        "TR": "Ortak havuz",
+        "EN": "Shared pool"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-55914d05-df0d-434b-b18c-8e507edbac31.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Shared pool\". The feature must be represented literally and accurately: a communal swimming pool with two different pool ladders and two lounge chairs. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.shared_pool"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/shared_pool.avif"
+    },
+    {
+      "key": "smoking_area",
+      "label": {
+        "TR": "Sigara içilebilir alan",
+        "EN": "Smoking area"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-b54c13e9-8d71-4650-845c-64276d71f39c.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Smoking area\". The feature must be represented literally and accurately: an outdoor standing ashtray with a cigarette resting in its tray and a thin smoke curl. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.comfort.smoking_area"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/smoking_area.avif"
+    },
+    {
+      "key": "spa",
+      "label": {
+        "TR": "Spa",
+        "EN": "Spa"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-b015a2c5-a1d2-41b7-ad73-7c99ecd37ae2.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Spa\". The feature must be represented literally and accurately: a spa treatment arrangement of stacked hot stones, lotus flower, rolled towel and small oil bottle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.spa"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/spa.avif"
+    },
+    {
+      "key": "spa_lounger",
+      "label": {
+        "TR": "Spa dinlenme koltuğu",
+        "EN": "Spa relaxation chair"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-577f2184-34a2-403c-898c-afa5d3d32002.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Spa relaxation chair\". The feature must be represented literally and accurately: one curved ergonomic spa relaxation chaise with a padded reclining seat and rolled towel, NO massage face cradle. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.spa_lounger"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/spa_lounger.avif"
+    },
+    {
+      "key": "steam_cleaner",
+      "label": {
+        "TR": "Buharlı temizleyici",
+        "EN": "Steam cleaner"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-acf61ac8-697e-41b8-8493-faea585ae98f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Steam cleaner\". The feature must be represented literally and accurately: a canister steam cleaning machine with wheels, flexible hose, handheld nozzle and visible steam puffs. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.housekeeping.equipment.steam_cleaner"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/steam_cleaner.avif"
+    },
+    {
+      "key": "steam_room",
+      "label": {
+        "TR": "Buhar odası",
+        "EN": "Steam room"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-e3a9a023-452b-4c40-9207-72ba63bd51e2.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Steam room\". The feature must be represented literally and accurately: a tiled steam room cutaway with a tiled bench and thick curling steam, NO wooden sauna walls. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.steam_room"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/steam_room.avif"
+    },
+    {
+      "key": "tactile_guidance",
+      "label": {
+        "TR": "Dokunsal yönlendirme",
+        "EN": "Tactile guidance"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-699c45c6-e7b8-40c3-aa1a-5e41b0f09ac0.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Tactile guidance\". The feature must be represented literally and accurately: a close view of yellow tactile paving strips with raised parallel ribs and raised warning dots, with a white mobility cane touching them. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.accessibility.features.tactile_guidance"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/tactile_guidance.avif"
+    },
+    {
+      "key": "turkish_bath",
+      "label": {
+        "TR": "Türk hamamı",
+        "EN": "Turkish bath"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-686995d9-b03f-44c1-ae61-ec9e6dcb9a9f.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Turkish bath\". The feature must be represented literally and accurately: a Turkish hammam scene in miniature with a round marble heated platform, a traditional marble basin and a copper bowl. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.spa.turkish_bath"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/turkish_bath.avif"
+    },
+    {
+      "key": "valet_parking",
+      "label": {
+        "TR": "Vale hizmeti",
+        "EN": "Valet parking"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-b84c82c4-0549-45e6-8348-e382fb7901be.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Valet parking\". The feature must be represented literally and accurately: a uniformed valet's gloved hand accepting a car key with a key fob, with a small car silhouette behind. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.facilities.services.valet_parking"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/valet_parking.avif"
+    },
+    {
+      "key": "water_testing_kit",
+      "label": {
+        "TR": "Havuz suyu analiz ekipmanı",
+        "EN": "Pool water testing equipment"
+      },
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-f2dd0c88-9488-40d7-afd2-f5b8fc9ed920.png",
+      "prompt": "Create ONE custom hotel property amenity icon for \"Pool water testing equipment\". The feature must be represented literally and accurately: a pool water testing kit in an open case with color comparator tubes, two dropper bottles and a water sample vial. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+      "generator": "built-in image_gen",
+      "codes": [
+        "catalog.pool_spa.pool.water_testing_kit"
+      ],
+      "output": "ui/public/images/facility-icons-dott/items/water_testing_kit.avif"
+    }
+  ]
+}

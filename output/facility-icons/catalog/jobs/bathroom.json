@@ -1,0 +1,1005 @@
+[
+  {
+    "key": "catalog.bathroom.fixtures.shower",
+    "label": {
+      "TR": "Duş",
+      "EN": "Shower"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.shower"
+    ],
+    "filename": "catalog-bathroom-fixtures-shower.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.shower_cabin",
+    "label": {
+      "TR": "Duşakabin",
+      "EN": "Shower cabin"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.shower_cabin"
+    ],
+    "filename": "catalog-bathroom-fixtures-shower_cabin.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.jacuzzi",
+    "label": {
+      "TR": "Jakuzi",
+      "EN": "Jacuzzi"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.jacuzzi"
+    ],
+    "filename": "catalog-bathroom-fixtures-jacuzzi.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.washbasin",
+    "label": {
+      "TR": "Lavabo",
+      "EN": "Washbasin"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.washbasin"
+    ],
+    "filename": "catalog-bathroom-fixtures-washbasin.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.double_washbasin",
+    "label": {
+      "TR": "Çift lavabo",
+      "EN": "Double washbasin"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.double_washbasin"
+    ],
+    "filename": "catalog-bathroom-fixtures-double_washbasin.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.toilet",
+    "label": {
+      "TR": "Tuvalet",
+      "EN": "Toilet"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.toilet"
+    ],
+    "filename": "catalog-bathroom-fixtures-toilet.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.bidet",
+    "label": {
+      "TR": "Bide",
+      "EN": "Bidet"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.bidet"
+    ],
+    "filename": "catalog-bathroom-fixtures-bidet.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.bidet_spray",
+    "label": {
+      "TR": "Taharet musluğu",
+      "EN": "Bidet spray"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.bidet_spray"
+    ],
+    "filename": "catalog-bathroom-fixtures-bidet_spray.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.bathroom_mirror",
+    "label": {
+      "TR": "Banyo aynası",
+      "EN": "Bathroom mirror"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.bathroom_mirror"
+    ],
+    "filename": "catalog-bathroom-fixtures-bathroom_mirror.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.magnifying_mirror",
+    "label": {
+      "TR": "Büyüteçli makyaj aynası",
+      "EN": "Magnifying makeup mirror"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.magnifying_mirror"
+    ],
+    "filename": "catalog-bathroom-fixtures-magnifying_mirror.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.bathroom_cabinet",
+    "label": {
+      "TR": "Banyo dolabı",
+      "EN": "Bathroom cabinet"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.bathroom_cabinet"
+    ],
+    "filename": "catalog-bathroom-fixtures-bathroom_cabinet.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.vanity_cabinet",
+    "label": {
+      "TR": "Lavabo altı dolabı",
+      "EN": "Vanity cabinet"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.vanity_cabinet"
+    ],
+    "filename": "catalog-bathroom-fixtures-vanity_cabinet.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.towel_rail",
+    "label": {
+      "TR": "Havlu askısı",
+      "EN": "Towel rail"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.towel_rail"
+    ],
+    "filename": "catalog-bathroom-fixtures-towel_rail.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.towel_shelf",
+    "label": {
+      "TR": "Havlu rafı",
+      "EN": "Towel shelf"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.towel_shelf"
+    ],
+    "filename": "catalog-bathroom-fixtures-towel_shelf.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.toilet_paper_holder",
+    "label": {
+      "TR": "Tuvalet kâğıdı tutacağı",
+      "EN": "Toilet paper holder"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.toilet_paper_holder"
+    ],
+    "filename": "catalog-bathroom-fixtures-toilet_paper_holder.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.toilet_brush",
+    "label": {
+      "TR": "Tuvalet fırçası",
+      "EN": "Toilet brush"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.toilet_brush"
+    ],
+    "filename": "catalog-bathroom-fixtures-toilet_brush.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.waste_bin",
+    "label": {
+      "TR": "Çöp kovası",
+      "EN": "Waste bin"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.waste_bin",
+      "catalog.kitchen.furniture.waste_bin",
+      "catalog.housekeeping.equipment.waste_bin"
+    ],
+    "filename": "catalog-bathroom-fixtures-waste_bin.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.soap_dish",
+    "label": {
+      "TR": "Sabunluk",
+      "EN": "Soap dish"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.soap_dish"
+    ],
+    "filename": "catalog-bathroom-fixtures-soap_dish.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.shower_shelf",
+    "label": {
+      "TR": "Duş rafı",
+      "EN": "Shower shelf"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.shower_shelf"
+    ],
+    "filename": "catalog-bathroom-fixtures-shower_shelf.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.shower_head",
+    "label": {
+      "TR": "Duş başlığı",
+      "EN": "Shower head"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.shower_head"
+    ],
+    "filename": "catalog-bathroom-fixtures-shower_head.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.hand_shower",
+    "label": {
+      "TR": "El duşu",
+      "EN": "Hand shower"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.hand_shower"
+    ],
+    "filename": "catalog-bathroom-fixtures-hand_shower.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.hair_dryer",
+    "label": {
+      "TR": "Saç kurutma makinesi",
+      "EN": "Hair dryer"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.hair_dryer"
+    ],
+    "filename": "catalog-bathroom-fixtures-hair_dryer.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.bath_stool",
+    "label": {
+      "TR": "Banyo taburesi",
+      "EN": "Bath stool"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.bath_stool"
+    ],
+    "filename": "catalog-bathroom-fixtures-bath_stool.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.non_slip_mat",
+    "label": {
+      "TR": "Kaymaz banyo paspası",
+      "EN": "Non-slip bath mat"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.non_slip_mat"
+    ],
+    "filename": "catalog-bathroom-fixtures-non_slip_mat.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.scales",
+    "label": {
+      "TR": "Baskül",
+      "EN": "Bathroom scales"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.scales"
+    ],
+    "filename": "catalog-bathroom-fixtures-scales.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.robe_hook",
+    "label": {
+      "TR": "Bornoz askısı",
+      "EN": "Bathrobe hook"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.robe_hook"
+    ],
+    "filename": "catalog-bathroom-fixtures-robe_hook.avif"
+  },
+  {
+    "key": "catalog.bathroom.fixtures.ventilation",
+    "label": {
+      "TR": "Banyo havalandırması",
+      "EN": "Bathroom ventilation"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo donanımları",
+      "EN": "Bathroom fixtures"
+    },
+    "codes": [
+      "catalog.bathroom.fixtures.ventilation"
+    ],
+    "filename": "catalog-bathroom-fixtures-ventilation.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.bath_towel",
+    "label": {
+      "TR": "Banyo havlusu",
+      "EN": "Bath towel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.bath_towel"
+    ],
+    "filename": "catalog-bathroom-linen-bath_towel.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.hand_towel",
+    "label": {
+      "TR": "El havlusu",
+      "EN": "Hand towel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.hand_towel"
+    ],
+    "filename": "catalog-bathroom-linen-hand_towel.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.face_towel",
+    "label": {
+      "TR": "Yüz havlusu",
+      "EN": "Face towel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.face_towel"
+    ],
+    "filename": "catalog-bathroom-linen-face_towel.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.foot_towel",
+    "label": {
+      "TR": "Ayak havlusu",
+      "EN": "Foot towel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.foot_towel"
+    ],
+    "filename": "catalog-bathroom-linen-foot_towel.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.beach_towel",
+    "label": {
+      "TR": "Plaj havlusu",
+      "EN": "Beach towel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.beach_towel"
+    ],
+    "filename": "catalog-bathroom-linen-beach_towel.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.bathrobe",
+    "label": {
+      "TR": "Bornoz",
+      "EN": "Bathrobe"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.bathrobe"
+    ],
+    "filename": "catalog-bathroom-linen-bathrobe.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.bath_mat",
+    "label": {
+      "TR": "Banyo paspası",
+      "EN": "Bath mat"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.bath_mat",
+      "catalog.decoration.textiles.bath_mat"
+    ],
+    "filename": "catalog-bathroom-linen-bath_mat.avif"
+  },
+  {
+    "key": "catalog.bathroom.linen.shower_curtain",
+    "label": {
+      "TR": "Duş perdesi",
+      "EN": "Shower curtain"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo tekstili",
+      "EN": "Bathroom linen"
+    },
+    "codes": [
+      "catalog.bathroom.linen.shower_curtain"
+    ],
+    "filename": "catalog-bathroom-linen-shower_curtain.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.toilet_paper",
+    "label": {
+      "TR": "Tuvalet kâğıdı",
+      "EN": "Toilet paper"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.toilet_paper"
+    ],
+    "filename": "catalog-bathroom-supplies-toilet_paper.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.liquid_soap",
+    "label": {
+      "TR": "Sıvı sabun",
+      "EN": "Liquid soap"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.liquid_soap"
+    ],
+    "filename": "catalog-bathroom-supplies-liquid_soap.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.bar_soap",
+    "label": {
+      "TR": "Katı sabun",
+      "EN": "Bar soap"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.bar_soap"
+    ],
+    "filename": "catalog-bathroom-supplies-bar_soap.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.shampoo",
+    "label": {
+      "TR": "Şampuan",
+      "EN": "Shampoo"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.shampoo"
+    ],
+    "filename": "catalog-bathroom-supplies-shampoo.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.conditioner",
+    "label": {
+      "TR": "Saç kremi",
+      "EN": "Hair conditioner"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.conditioner"
+    ],
+    "filename": "catalog-bathroom-supplies-conditioner.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.shower_gel",
+    "label": {
+      "TR": "Duş jeli",
+      "EN": "Shower gel"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.shower_gel"
+    ],
+    "filename": "catalog-bathroom-supplies-shower_gel.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.body_lotion",
+    "label": {
+      "TR": "Vücut losyonu",
+      "EN": "Body lotion"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.body_lotion"
+    ],
+    "filename": "catalog-bathroom-supplies-body_lotion.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.dental_kit",
+    "label": {
+      "TR": "Diş bakım seti",
+      "EN": "Dental kit"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.dental_kit"
+    ],
+    "filename": "catalog-bathroom-supplies-dental_kit.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.shaving_kit",
+    "label": {
+      "TR": "Tıraş seti",
+      "EN": "Shaving kit"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.shaving_kit"
+    ],
+    "filename": "catalog-bathroom-supplies-shaving_kit.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.shower_cap",
+    "label": {
+      "TR": "Duş bonesi",
+      "EN": "Shower cap"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.shower_cap"
+    ],
+    "filename": "catalog-bathroom-supplies-shower_cap.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.cotton_buds",
+    "label": {
+      "TR": "Kulak çubuğu",
+      "EN": "Cotton buds"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.cotton_buds"
+    ],
+    "filename": "catalog-bathroom-supplies-cotton_buds.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.makeup_pads",
+    "label": {
+      "TR": "Makyaj temizleme pedi",
+      "EN": "Makeup remover pads"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.makeup_pads"
+    ],
+    "filename": "catalog-bathroom-supplies-makeup_pads.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.sanitary_bag",
+    "label": {
+      "TR": "Hijyen poşeti",
+      "EN": "Sanitary bag"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.sanitary_bag"
+    ],
+    "filename": "catalog-bathroom-supplies-sanitary_bag.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.slippers",
+    "label": {
+      "TR": "Terlik",
+      "EN": "Slippers"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.slippers"
+    ],
+    "filename": "catalog-bathroom-supplies-slippers.avif"
+  },
+  {
+    "key": "catalog.bathroom.supplies.vanity_kit",
+    "label": {
+      "TR": "Kişisel bakım seti",
+      "EN": "Personal care kit"
+    },
+    "category": "bathroom",
+    "category_label": {
+      "TR": "Banyo ve Tuvalet",
+      "EN": "Bathroom and Toilet"
+    },
+    "group_label": {
+      "TR": "Banyo sarf malzemeleri",
+      "EN": "Bathroom supplies"
+    },
+    "codes": [
+      "catalog.bathroom.supplies.vanity_kit"
+    ],
+    "filename": "catalog-bathroom-supplies-vanity_kit.avif"
+  }
+]

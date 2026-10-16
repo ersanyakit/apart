@@ -1,0 +1,29 @@
+{
+  "total_entries": 682,
+  "unique_concepts": 634,
+  "ready_entries": 85,
+  "ready_concepts": 80,
+  "pending_concepts": 554,
+  "categories": [
+    "bathroom",
+    "bedroom",
+    "living_room",
+    "tables_chairs",
+    "kitchen",
+    "kitchenware",
+    "electronics",
+    "climate",
+    "lighting",
+    "decoration",
+    "outdoor",
+    "pool_spa",
+    "safety",
+    "housekeeping",
+    "workspace",
+    "children",
+    "facilities",
+    "accessibility",
+    "structural",
+    "guest_supplies"
+  ]
+}

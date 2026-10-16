@@ -1,0 +1,1045 @@
+[
+  {
+    "key": "catalog.kitchen.large_appliances.mini_fridge",
+    "label": {
+      "TR": "Mini buzdolabı",
+      "EN": "Mini fridge"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.mini_fridge"
+    ],
+    "filename": "catalog-kitchen-large_appliances-mini_fridge.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.freezer",
+    "label": {
+      "TR": "Derin dondurucu",
+      "EN": "Freezer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.freezer"
+    ],
+    "filename": "catalog-kitchen-large_appliances-freezer.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.built_in_fridge",
+    "label": {
+      "TR": "Ankastre buzdolabı",
+      "EN": "Built-in refrigerator"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.built_in_fridge"
+    ],
+    "filename": "catalog-kitchen-large_appliances-built_in_fridge.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.ice_maker",
+    "label": {
+      "TR": "Buz makinesi",
+      "EN": "Ice maker"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.ice_maker"
+    ],
+    "filename": "catalog-kitchen-large_appliances-ice_maker.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.dishwasher",
+    "label": {
+      "TR": "Bulaşık makinesi",
+      "EN": "Dishwasher"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.dishwasher"
+    ],
+    "filename": "catalog-kitchen-large_appliances-dishwasher.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.washing_machine",
+    "label": {
+      "TR": "Çamaşır makinesi",
+      "EN": "Washing machine"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.washing_machine"
+    ],
+    "filename": "catalog-kitchen-large_appliances-washing_machine.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.tumble_dryer",
+    "label": {
+      "TR": "Kurutma makinesi",
+      "EN": "Tumble dryer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.tumble_dryer"
+    ],
+    "filename": "catalog-kitchen-large_appliances-tumble_dryer.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.oven",
+    "label": {
+      "TR": "Fırın",
+      "EN": "Oven"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.oven"
+    ],
+    "filename": "catalog-kitchen-large_appliances-oven.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.built_in_oven",
+    "label": {
+      "TR": "Ankastre fırın",
+      "EN": "Built-in oven"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.built_in_oven"
+    ],
+    "filename": "catalog-kitchen-large_appliances-built_in_oven.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.microwave",
+    "label": {
+      "TR": "Mikrodalga fırın",
+      "EN": "Microwave oven"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.microwave"
+    ],
+    "filename": "catalog-kitchen-large_appliances-microwave.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.mini_oven",
+    "label": {
+      "TR": "Mini fırın",
+      "EN": "Mini oven"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.mini_oven"
+    ],
+    "filename": "catalog-kitchen-large_appliances-mini_oven.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.electric_hob",
+    "label": {
+      "TR": "Elektrikli ocak",
+      "EN": "Electric hob"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.electric_hob"
+    ],
+    "filename": "catalog-kitchen-large_appliances-electric_hob.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.gas_hob",
+    "label": {
+      "TR": "Gazlı ocak",
+      "EN": "Gas hob"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.gas_hob"
+    ],
+    "filename": "catalog-kitchen-large_appliances-gas_hob.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.induction_hob",
+    "label": {
+      "TR": "İndüksiyonlu ocak",
+      "EN": "Induction hob"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.induction_hob"
+    ],
+    "filename": "catalog-kitchen-large_appliances-induction_hob.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.countertop_hob",
+    "label": {
+      "TR": "Set üstü ocak",
+      "EN": "Countertop hob"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.countertop_hob"
+    ],
+    "filename": "catalog-kitchen-large_appliances-countertop_hob.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.extractor_hood",
+    "label": {
+      "TR": "Davlumbaz",
+      "EN": "Extractor hood"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.extractor_hood"
+    ],
+    "filename": "catalog-kitchen-large_appliances-extractor_hood.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.extractor_fan",
+    "label": {
+      "TR": "Aspiratör",
+      "EN": "Extractor fan"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.extractor_fan",
+      "catalog.climate.equipment.extractor_fan"
+    ],
+    "filename": "catalog-kitchen-large_appliances-extractor_fan.avif"
+  },
+  {
+    "key": "catalog.kitchen.large_appliances.water_dispenser",
+    "label": {
+      "TR": "Su sebili",
+      "EN": "Water dispenser"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Büyük ev aletleri",
+      "EN": "Large appliances"
+    },
+    "codes": [
+      "catalog.kitchen.large_appliances.water_dispenser"
+    ],
+    "filename": "catalog-kitchen-large_appliances-water_dispenser.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.kettle",
+    "label": {
+      "TR": "Elektrikli su ısıtıcısı (kettle)",
+      "EN": "Electric kettle"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.kettle"
+    ],
+    "filename": "catalog-kitchen-small_appliances-kettle.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.tea_maker",
+    "label": {
+      "TR": "Çay makinesi",
+      "EN": "Tea maker"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.tea_maker"
+    ],
+    "filename": "catalog-kitchen-small_appliances-tea_maker.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.turkish_coffee_maker",
+    "label": {
+      "TR": "Türk kahvesi makinesi",
+      "EN": "Turkish coffee maker"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.turkish_coffee_maker"
+    ],
+    "filename": "catalog-kitchen-small_appliances-turkish_coffee_maker.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.filter_coffee_maker",
+    "label": {
+      "TR": "Filtre kahve makinesi",
+      "EN": "Filter coffee maker"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.filter_coffee_maker"
+    ],
+    "filename": "catalog-kitchen-small_appliances-filter_coffee_maker.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.espresso_machine",
+    "label": {
+      "TR": "Espresso makinesi",
+      "EN": "Espresso machine"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.espresso_machine"
+    ],
+    "filename": "catalog-kitchen-small_appliances-espresso_machine.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.sandwich_toaster",
+    "label": {
+      "TR": "Tost makinesi",
+      "EN": "Sandwich toaster"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.sandwich_toaster"
+    ],
+    "filename": "catalog-kitchen-small_appliances-sandwich_toaster.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.toaster",
+    "label": {
+      "TR": "Ekmek kızartma makinesi",
+      "EN": "Toaster"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.toaster"
+    ],
+    "filename": "catalog-kitchen-small_appliances-toaster.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.blender",
+    "label": {
+      "TR": "Blender",
+      "EN": "Blender"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.blender"
+    ],
+    "filename": "catalog-kitchen-small_appliances-blender.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.hand_blender",
+    "label": {
+      "TR": "El blenderı",
+      "EN": "Hand blender"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.hand_blender"
+    ],
+    "filename": "catalog-kitchen-small_appliances-hand_blender.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.mixer",
+    "label": {
+      "TR": "Mikser",
+      "EN": "Mixer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.mixer"
+    ],
+    "filename": "catalog-kitchen-small_appliances-mixer.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.food_processor",
+    "label": {
+      "TR": "Mutfak robotu",
+      "EN": "Food processor"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.food_processor"
+    ],
+    "filename": "catalog-kitchen-small_appliances-food_processor.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.juicer",
+    "label": {
+      "TR": "Katı meyve sıkacağı",
+      "EN": "Juicer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.juicer"
+    ],
+    "filename": "catalog-kitchen-small_appliances-juicer.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.citrus_juicer",
+    "label": {
+      "TR": "Narenciye sıkacağı",
+      "EN": "Citrus juicer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.citrus_juicer"
+    ],
+    "filename": "catalog-kitchen-small_appliances-citrus_juicer.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.air_fryer",
+    "label": {
+      "TR": "Air fryer",
+      "EN": "Air fryer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.air_fryer"
+    ],
+    "filename": "catalog-kitchen-small_appliances-air_fryer.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.electric_grill",
+    "label": {
+      "TR": "Elektrikli ızgara",
+      "EN": "Electric grill"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.electric_grill",
+      "catalog.outdoor.equipment.electric_grill"
+    ],
+    "filename": "catalog-kitchen-small_appliances-electric_grill.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.electric_pressure_cooker",
+    "label": {
+      "TR": "Elektrikli düdüklü tencere",
+      "EN": "Electric pressure cooker"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.electric_pressure_cooker"
+    ],
+    "filename": "catalog-kitchen-small_appliances-electric_pressure_cooker.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.kitchen_scales",
+    "label": {
+      "TR": "Mutfak tartısı",
+      "EN": "Kitchen scales"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.kitchen_scales"
+    ],
+    "filename": "catalog-kitchen-small_appliances-kitchen_scales.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.coffee_grinder",
+    "label": {
+      "TR": "Kahve öğütücü",
+      "EN": "Coffee grinder"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.coffee_grinder"
+    ],
+    "filename": "catalog-kitchen-small_appliances-coffee_grinder.avif"
+  },
+  {
+    "key": "catalog.kitchen.small_appliances.milk_frother",
+    "label": {
+      "TR": "Elektrikli süt köpürtücü",
+      "EN": "Electric milk frother"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Küçük mutfak aletleri",
+      "EN": "Small kitchen appliances"
+    },
+    "codes": [
+      "catalog.kitchen.small_appliances.milk_frother"
+    ],
+    "filename": "catalog-kitchen-small_appliances-milk_frother.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.kitchen_cabinet",
+    "label": {
+      "TR": "Mutfak dolabı",
+      "EN": "Kitchen cabinet"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.kitchen_cabinet"
+    ],
+    "filename": "catalog-kitchen-furniture-kitchen_cabinet.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.wall_cabinet",
+    "label": {
+      "TR": "Üst dolap",
+      "EN": "Wall cabinet"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.wall_cabinet"
+    ],
+    "filename": "catalog-kitchen-furniture-wall_cabinet.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.base_cabinet",
+    "label": {
+      "TR": "Alt dolap",
+      "EN": "Base cabinet"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.base_cabinet"
+    ],
+    "filename": "catalog-kitchen-furniture-base_cabinet.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.pantry_cabinet",
+    "label": {
+      "TR": "Kiler dolabı",
+      "EN": "Pantry cabinet"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.pantry_cabinet"
+    ],
+    "filename": "catalog-kitchen-furniture-pantry_cabinet.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.food_cupboard",
+    "label": {
+      "TR": "Erzak dolabı",
+      "EN": "Food cupboard"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.food_cupboard"
+    ],
+    "filename": "catalog-kitchen-furniture-food_cupboard.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.worktop",
+    "label": {
+      "TR": "Tezgâh",
+      "EN": "Worktop"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.worktop"
+    ],
+    "filename": "catalog-kitchen-furniture-worktop.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.kitchen_island",
+    "label": {
+      "TR": "Mutfak adası",
+      "EN": "Kitchen island"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.kitchen_island"
+    ],
+    "filename": "catalog-kitchen-furniture-kitchen_island.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.bar_counter",
+    "label": {
+      "TR": "Bar tezgâhı",
+      "EN": "Bar counter"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.bar_counter"
+    ],
+    "filename": "catalog-kitchen-furniture-bar_counter.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.breakfast_bar",
+    "label": {
+      "TR": "Kahvaltı barı",
+      "EN": "Breakfast bar"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.breakfast_bar"
+    ],
+    "filename": "catalog-kitchen-furniture-breakfast_bar.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.dish_rack",
+    "label": {
+      "TR": "Bulaşıklık",
+      "EN": "Dish rack"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.dish_rack"
+    ],
+    "filename": "catalog-kitchen-furniture-dish_rack.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.plate_rack",
+    "label": {
+      "TR": "Tabak rafı",
+      "EN": "Plate rack"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.plate_rack"
+    ],
+    "filename": "catalog-kitchen-furniture-plate_rack.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.spice_rack",
+    "label": {
+      "TR": "Baharat rafı",
+      "EN": "Spice rack"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.spice_rack"
+    ],
+    "filename": "catalog-kitchen-furniture-spice_rack.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.drawer_organizer",
+    "label": {
+      "TR": "Çekmece içi düzenleyici",
+      "EN": "Drawer organizer"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.drawer_organizer"
+    ],
+    "filename": "catalog-kitchen-furniture-drawer_organizer.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.recycling_bin",
+    "label": {
+      "TR": "Geri dönüşüm kutusu",
+      "EN": "Recycling bin"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.recycling_bin",
+      "catalog.housekeeping.equipment.recycling_bin"
+    ],
+    "filename": "catalog-kitchen-furniture-recycling_bin.avif"
+  },
+  {
+    "key": "catalog.kitchen.furniture.kitchen_chair",
+    "label": {
+      "TR": "Mutfak sandalyesi",
+      "EN": "Kitchen chair"
+    },
+    "category": "kitchen",
+    "category_label": {
+      "TR": "Mutfak ve Beyaz Eşyalar",
+      "EN": "Kitchen and Appliances"
+    },
+    "group_label": {
+      "TR": "Mutfak mobilyaları",
+      "EN": "Kitchen furniture"
+    },
+    "codes": [
+      "catalog.kitchen.furniture.kitchen_chair"
+    ],
+    "filename": "catalog-kitchen-furniture-kitchen_chair.avif"
+  }
+]

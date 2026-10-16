@@ -1,0 +1,209 @@
+{
+  "generator": "built-in image_gen",
+  "size": [
+    256,
+    256
+  ],
+  "icons": [
+    {
+      "key": "bath",
+      "subject": "a freestanding bathtub with a small curved faucet",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-e758afd7-e0a7-4301-afcd-0ee2e5d12b0a.png",
+      "color": [
+        "blue",
+        "#2ABDFF"
+      ],
+      "prompt": "Create one premium app amenity icon: a freestanding bathtub with a small curved faucet. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, cyan blue #2ABDFF and pale blue with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "bed",
+      "subject": "a cozy double bed with two pillows",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-56cf5a01-8613-41b0-bf0e-f10dff6c69a9.png",
+      "color": [
+        "pink",
+        "#FF37C7"
+      ],
+      "prompt": "Create one premium app amenity icon: a cozy double bed with two pillows. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, pink #FF37C7 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "sofa",
+      "subject": "a rounded two seat sofa",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-add738bf-3172-412e-8062-b192814d5113.png",
+      "color": [
+        "green",
+        "#00C3A0"
+      ],
+      "prompt": "Create one premium app amenity icon: a rounded two seat sofa. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, green #00C3A0 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "table",
+      "subject": "a round dining table and two chairs",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-1bd990da-fa9d-4509-9eb2-9c067f26e919.png",
+      "color": [
+        "orange",
+        "#FF4D00"
+      ],
+      "prompt": "Create one premium app amenity icon: a round dining table and two chairs. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, orange #FF4D00 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "refrigerator",
+      "subject": "a compact two door refrigerator",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-65151379-20c3-4fd0-a5ae-cc98000a0d9d.png",
+      "color": [
+        "purple",
+        "#8251FB"
+      ],
+      "prompt": "Create one premium app amenity icon: a compact two door refrigerator. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, purple #8251FB and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "utensils",
+      "subject": "a plate with a fork and spoon",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4eb2beed-f2ec-4441-a6bb-b044abe8e0cc.png",
+      "color": [
+        "fuchsia",
+        "#F50DB4"
+      ],
+      "prompt": "Create one premium app amenity icon: a plate with a fork and spoon. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, fuchsia #F50DB4 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "tv",
+      "subject": "a flat screen television on a tiny stand",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-3605e3f8-8e9f-49d9-b964-b8fe0f413b90.png",
+      "color": [
+        "blue",
+        "#2ABDFF"
+      ],
+      "prompt": "Create one premium app amenity icon: a flat screen television on a tiny stand. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, cyan blue #2ABDFF and pale blue with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "wind",
+      "subject": "a wall mounted air conditioner with soft airflow curves",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-bc4fde9a-ecb1-4b8e-b493-7795206ddaa9.png",
+      "color": [
+        "pink",
+        "#FF37C7"
+      ],
+      "prompt": "Create one premium app amenity icon: a wall mounted air conditioner with soft airflow curves. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, pink #FF37C7 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "lamp",
+      "subject": "a rounded table lamp",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-69f33841-b279-4c46-940f-9e477d4a7871.png",
+      "color": [
+        "green",
+        "#00C3A0"
+      ],
+      "prompt": "Create one premium app amenity icon: a rounded table lamp. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, green #00C3A0 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "palette",
+      "subject": "an artist paint palette with round paint wells",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-5eafeb32-8011-4020-92d3-a1ac28af788f.png",
+      "color": [
+        "orange",
+        "#FF4D00"
+      ],
+      "prompt": "Create one premium app amenity icon: an artist paint palette with round paint wells. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, orange #FF4D00 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "trees",
+      "subject": "two rounded garden trees",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-f949c34e-c417-4f56-90c3-1c5e6a530b93.png",
+      "color": [
+        "purple",
+        "#8251FB"
+      ],
+      "prompt": "Create one premium app amenity icon: two rounded garden trees. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, purple #8251FB and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "waves",
+      "subject": "a small swimming pool with a ladder and blue water",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4176df89-1cd0-4f98-9d04-fbea2e007c61.png",
+      "color": [
+        "fuchsia",
+        "#F50DB4"
+      ],
+      "prompt": "Create one premium app amenity icon: a small swimming pool with a ladder and blue water. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, fuchsia #F50DB4 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "shield",
+      "subject": "a chunky protective shield with a check mark",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-43c43a1e-e9a0-4c93-b465-defd6ec259fb.png",
+      "color": [
+        "blue",
+        "#2ABDFF"
+      ],
+      "prompt": "Create one premium app amenity icon: a chunky protective shield with a check mark. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, cyan blue #2ABDFF and pale blue with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "brush",
+      "subject": "a cleaning brush and a small sparkle",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-14eacf12-c646-4589-8d59-61815aedbaa1.png",
+      "color": [
+        "pink",
+        "#FF37C7"
+      ],
+      "prompt": "Create one premium app amenity icon: a cleaning brush and a small sparkle. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, pink #FF37C7 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "monitor",
+      "subject": "a desktop computer monitor and keyboard",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-bcf426fa-9f0a-493f-aa8d-42969b9f7b4e.png",
+      "color": [
+        "green",
+        "#00C3A0"
+      ],
+      "prompt": "Create one premium app amenity icon: a desktop computer monitor and keyboard. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, green #00C3A0 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "baby",
+      "subject": "a baby stroller",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-04f852f6-14ba-44be-8879-b97a60933828.png",
+      "color": [
+        "orange",
+        "#FF4D00"
+      ],
+      "prompt": "Create one premium app amenity icon: a baby stroller. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, orange #FF4D00 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "building",
+      "subject": "a welcoming small hotel building",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-057d53f2-ea6f-40af-aa63-8f991a1b8848.png",
+      "color": [
+        "purple",
+        "#8251FB"
+      ],
+      "prompt": "Create one premium app amenity icon: a welcoming small hotel building. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, purple #8251FB and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "accessibility",
+      "subject": "a wheelchair accessibility symbol rendered as a friendly dimensional object",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-b751b5cd-640a-4156-9486-289e4bb1cd5b.png",
+      "color": [
+        "fuchsia",
+        "#F50DB4"
+      ],
+      "prompt": "Create one premium app amenity icon: a wheelchair accessibility symbol rendered as a friendly dimensional object. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, fuchsia #F50DB4 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "door",
+      "subject": "a slightly open door in its frame",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-55b514c9-3ba6-4f3d-8713-819ebd31d04b.png",
+      "color": [
+        "blue",
+        "#2ABDFF"
+      ],
+      "prompt": "Create one premium app amenity icon: a slightly open door in its frame. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, cyan blue #2ABDFF and pale blue with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    },
+    {
+      "key": "coffee",
+      "subject": "a coffee cup on a saucer with a small steam curl",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-e3eef295-6a6a-4a68-a415-55273371078b.png",
+      "color": [
+        "pink",
+        "#FF37C7"
+      ],
+      "prompt": "Create one premium app amenity icon: a coffee cup on a saucer with a small steam curl. Dott-inspired friendly rounded soft 3D clay icon, simple bold silhouette, smooth matte surfaces, restrained glossy edges, pink #FF37C7 and its pastel tint with warm white, tiny dark navy details only where necessary. Three-quarter view, centered, orthographic, consistent upper-left studio lighting, generous empty margin (object fills 72% of square). Isolated on solid very light neutral #f9f9f9 background. No text, letters, numbers, logos, border or tile. Square image intended for a 256x256 hotel facility icon."
+    }
+  ]
+}

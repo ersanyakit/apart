@@ -1,0 +1,14 @@
+{
+  "key": "dry_cleaning",
+  "label": {
+    "TR": "Kuru temizleme",
+    "EN": "Dry cleaning"
+  },
+  "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2bf48077-0457-4ef4-9051-38482268689f.png",
+  "prompt": "Create ONE custom hotel property amenity icon for \"Dry cleaning\". The feature must be represented literally and accurately: a suit jacket on a hanger inside a clear garment bag, with a small steam iron nearby. Attached images are STYLE REFERENCES ONLY from our existing website and an approved icon; do not recreate their whole scenes. Day of the Tentacle / 1990s hand-drawn adventure-game illustration language: playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded shapes, few hard-edged illustrated highlights. Match the visual style of the reference bed and landing-page drawings. This is 2D hand-drawn illustration with illustrated volume, NOT a 3D render. Strict application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, optional small orange #FF4D00 accents and white; darker shades of these for shadows. Use 2-4 of these colors naturally on distinct parts. Make the specific feature instantly distinguishable from adjacent hotel amenities; retain its essential identifying parts. Simplify for legibility at 40px; bold recognizable silhouette. One isolated object or compact grouped symbol on solid very pale neutral #f9f9f9 background, centered, 12% margin, square composition. No text, letters, numbers, labels, logos, watermark, frame or tile. No clay, plush, photorealism, product mockup, gradients, generic category icon or unrelated decorations.",
+  "generator": "built-in image_gen",
+  "codes": [
+    "catalog.facilities.services.dry_cleaning"
+  ],
+  "output": "ui/public/images/facility-icons-dott/items/dry_cleaning.avif"
+}

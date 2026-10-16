@@ -1,0 +1,488 @@
+[
+  {
+    "key": "catalog.tables_chairs.furniture.dining_table",
+    "label": {
+      "TR": "Yemek masası",
+      "EN": "Dining table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.dining_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-dining_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.round_table",
+    "label": {
+      "TR": "Yuvarlak masa",
+      "EN": "Round table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.round_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-round_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.rectangular_table",
+    "label": {
+      "TR": "Dikdörtgen masa",
+      "EN": "Rectangular table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.rectangular_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-rectangular_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.folding_table",
+    "label": {
+      "TR": "Katlanır masa",
+      "EN": "Folding table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.folding_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-folding_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.balcony_table",
+    "label": {
+      "TR": "Balkon masası",
+      "EN": "Balcony table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.balcony_table",
+      "catalog.outdoor.equipment.balcony_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-balcony_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.garden_table",
+    "label": {
+      "TR": "Bahçe masası",
+      "EN": "Garden table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.garden_table",
+      "catalog.outdoor.equipment.garden_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-garden_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.kitchen_table",
+    "label": {
+      "TR": "Mutfak masası",
+      "EN": "Kitchen table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.kitchen_table",
+      "catalog.kitchen.furniture.kitchen_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-kitchen_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.occasional_table",
+    "label": {
+      "TR": "Sehpa",
+      "EN": "Occasional table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.occasional_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-occasional_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.bar_table",
+    "label": {
+      "TR": "Bar masası",
+      "EN": "Bar table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.bar_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-bar_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.bar_stool",
+    "label": {
+      "TR": "Bar taburesi",
+      "EN": "Bar stool"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.bar_stool"
+    ],
+    "filename": "catalog-tables_chairs-furniture-bar_stool.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.dining_chair",
+    "label": {
+      "TR": "Yemek sandalyesi",
+      "EN": "Dining chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.dining_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-dining_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.folding_chair",
+    "label": {
+      "TR": "Katlanır sandalye",
+      "EN": "Folding chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.folding_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-folding_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.balcony_chair",
+    "label": {
+      "TR": "Balkon sandalyesi",
+      "EN": "Balcony chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.balcony_chair",
+      "catalog.outdoor.equipment.balcony_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-balcony_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.garden_chair",
+    "label": {
+      "TR": "Bahçe sandalyesi",
+      "EN": "Garden chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.garden_chair",
+      "catalog.outdoor.equipment.garden_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-garden_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.sun_lounger",
+    "label": {
+      "TR": "Şezlong",
+      "EN": "Sun lounger"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.sun_lounger",
+      "catalog.outdoor.equipment.sun_lounger"
+    ],
+    "filename": "catalog-tables_chairs-furniture-sun_lounger.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.lounger_cushion",
+    "label": {
+      "TR": "Şezlong minderi",
+      "EN": "Lounger cushion"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.lounger_cushion"
+    ],
+    "filename": "catalog-tables_chairs-furniture-lounger_cushion.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.rocking_chair",
+    "label": {
+      "TR": "Sallanan sandalye",
+      "EN": "Rocking chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.rocking_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-rocking_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.high_chair",
+    "label": {
+      "TR": "Mama sandalyesi",
+      "EN": "High chair"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.high_chair"
+    ],
+    "filename": "catalog-tables_chairs-furniture-high_chair.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.bench",
+    "label": {
+      "TR": "Bank",
+      "EN": "Bench"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.bench"
+    ],
+    "filename": "catalog-tables_chairs-furniture-bench.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.picnic_table",
+    "label": {
+      "TR": "Piknik masası",
+      "EN": "Picnic table"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.picnic_table"
+    ],
+    "filename": "catalog-tables_chairs-furniture-picnic_table.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.tablecloth",
+    "label": {
+      "TR": "Masa örtüsü",
+      "EN": "Tablecloth"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.tablecloth"
+    ],
+    "filename": "catalog-tables_chairs-furniture-tablecloth.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.table_runner",
+    "label": {
+      "TR": "Masa runner’ı",
+      "EN": "Table runner"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.table_runner"
+    ],
+    "filename": "catalog-tables_chairs-furniture-table_runner.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.placemat",
+    "label": {
+      "TR": "Amerikan servis",
+      "EN": "Placemat"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.placemat"
+    ],
+    "filename": "catalog-tables_chairs-furniture-placemat.avif"
+  },
+  {
+    "key": "catalog.tables_chairs.furniture.chair_cushion",
+    "label": {
+      "TR": "Sandalye minderi",
+      "EN": "Chair cushion"
+    },
+    "category": "tables_chairs",
+    "category_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and Chairs"
+    },
+    "group_label": {
+      "TR": "Masa ve Sandalyeler",
+      "EN": "Tables and chairs"
+    },
+    "codes": [
+      "catalog.tables_chairs.furniture.chair_cushion"
+    ],
+    "filename": "catalog-tables_chairs-furniture-chair_cushion.avif"
+  }
+]

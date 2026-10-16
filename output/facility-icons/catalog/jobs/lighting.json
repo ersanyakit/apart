@@ -1,0 +1,366 @@
+[
+  {
+    "key": "catalog.lighting.equipment.chandelier",
+    "label": {
+      "TR": "Avize",
+      "EN": "Chandelier"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.chandelier"
+    ],
+    "filename": "catalog-lighting-equipment-chandelier.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.ceiling_light",
+    "label": {
+      "TR": "Tavan lambası",
+      "EN": "Ceiling light"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.ceiling_light"
+    ],
+    "filename": "catalog-lighting-equipment-ceiling_light.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.pendant_light",
+    "label": {
+      "TR": "Sarkıt lamba",
+      "EN": "Pendant light"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.pendant_light"
+    ],
+    "filename": "catalog-lighting-equipment-pendant_light.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.wall_lights",
+    "label": {
+      "TR": "Duvar aplikleri",
+      "EN": "Wall lights"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.wall_lights"
+    ],
+    "filename": "catalog-lighting-equipment-wall_lights.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.shaded_lamp",
+    "label": {
+      "TR": "Abajur",
+      "EN": "Shaded lamp"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.shaded_lamp",
+      "catalog.decoration.decor.shaded_lamp"
+    ],
+    "filename": "catalog-lighting-equipment-shaded_lamp.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.desk_lamp",
+    "label": {
+      "TR": "Masa lambası",
+      "EN": "Desk lamp"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.desk_lamp",
+      "catalog.workspace.equipment.desk_lamp"
+    ],
+    "filename": "catalog-lighting-equipment-desk_lamp.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.led_lighting",
+    "label": {
+      "TR": "LED aydınlatma",
+      "EN": "LED lighting"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.led_lighting"
+    ],
+    "filename": "catalog-lighting-equipment-led_lighting.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.spot_lighting",
+    "label": {
+      "TR": "Spot aydınlatma",
+      "EN": "Spot lighting"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.spot_lighting"
+    ],
+    "filename": "catalog-lighting-equipment-spot_lighting.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.concealed_led",
+    "label": {
+      "TR": "Gizli LED aydınlatma",
+      "EN": "Concealed LED lighting"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.concealed_led"
+    ],
+    "filename": "catalog-lighting-equipment-concealed_led.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.night_lighting",
+    "label": {
+      "TR": "Gece aydınlatması",
+      "EN": "Night lighting"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.night_lighting"
+    ],
+    "filename": "catalog-lighting-equipment-night_lighting.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.sensor_light",
+    "label": {
+      "TR": "Sensörlü lamba",
+      "EN": "Sensor light"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.sensor_light"
+    ],
+    "filename": "catalog-lighting-equipment-sensor_light.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.emergency_lighting",
+    "label": {
+      "TR": "Acil durum aydınlatması",
+      "EN": "Emergency lighting"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.emergency_lighting",
+      "catalog.safety.equipment.emergency_lighting"
+    ],
+    "filename": "catalog-lighting-equipment-emergency_lighting.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.exit_sign",
+    "label": {
+      "TR": "Acil çıkış levhası",
+      "EN": "Emergency exit sign"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.exit_sign",
+      "catalog.safety.equipment.exit_sign"
+    ],
+    "filename": "catalog-lighting-equipment-exit_sign.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.dimmer",
+    "label": {
+      "TR": "Dimmer",
+      "EN": "Dimmer"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.dimmer"
+    ],
+    "filename": "catalog-lighting-equipment-dimmer.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.smart_switch",
+    "label": {
+      "TR": "Akıllı anahtar",
+      "EN": "Smart switch"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.smart_switch"
+    ],
+    "filename": "catalog-lighting-equipment-smart_switch.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.socket",
+    "label": {
+      "TR": "Priz",
+      "EN": "Power socket"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.socket"
+    ],
+    "filename": "catalog-lighting-equipment-socket.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.usb_socket",
+    "label": {
+      "TR": "USB priz",
+      "EN": "USB socket"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.usb_socket"
+    ],
+    "filename": "catalog-lighting-equipment-usb_socket.avif"
+  },
+  {
+    "key": "catalog.lighting.equipment.ups",
+    "label": {
+      "TR": "Kesintisiz güç kaynağı (UPS)",
+      "EN": "Uninterruptible power supply (UPS)"
+    },
+    "category": "lighting",
+    "category_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and Electricity"
+    },
+    "group_label": {
+      "TR": "Aydınlatma ve Elektrik",
+      "EN": "Lighting and electricity"
+    },
+    "codes": [
+      "catalog.lighting.equipment.ups"
+    ],
+    "filename": "catalog-lighting-equipment-ups.avif"
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "bathroom": {
+    "entries": 51,
+    "pages_reviewed": [
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "bedroom": {
+    "entries": 62,
+    "pages_reviewed": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF",
+      "shared bed alpha preserved"
+    ],
+    "status": "reviewed"
+  },
+  "living_room": {
+    "entries": 27,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "tables_chairs": {
+    "entries": 26,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "kitchen": {
+    "entries": 55,
+    "pages_reviewed": [
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "corrections": [
+      "Extractor fan redrawn as flat under-cabinet unit, distinct from chimney hood"
+    ],
+    "status": "reviewed"
+  }
+}

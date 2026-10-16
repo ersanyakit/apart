@@ -1,0 +1,162 @@
+[
+  {
+    "key": "catalog.pool_spa.pool.private_pool",
+    "label": {
+      "TR": "Özel havuz",
+      "EN": "Private pool"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Havuz",
+      "EN": "Pool"
+    },
+    "codes": [
+      "catalog.pool_spa.pool.private_pool"
+    ],
+    "filename": "catalog-pool_spa-pool-private_pool.avif"
+  },
+  {
+    "key": "catalog.pool_spa.pool.pool_towel",
+    "label": {
+      "TR": "Havuz havlusu",
+      "EN": "Pool towel"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Havuz",
+      "EN": "Pool"
+    },
+    "codes": [
+      "catalog.pool_spa.pool.pool_towel"
+    ],
+    "filename": "catalog-pool_spa-pool-pool_towel.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.room_jacuzzi",
+    "label": {
+      "TR": "Oda içi jakuzi",
+      "EN": "In-room jacuzzi"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.room_jacuzzi"
+    ],
+    "filename": "catalog-pool_spa-spa-room_jacuzzi.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.private_outdoor_jacuzzi",
+    "label": {
+      "TR": "Özel açık hava jakuzisi",
+      "EN": "Private outdoor jacuzzi"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.private_outdoor_jacuzzi"
+    ],
+    "filename": "catalog-pool_spa-spa-private_outdoor_jacuzzi.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.whirlpool_bath",
+    "label": {
+      "TR": "Hidromasajlı küvet",
+      "EN": "Whirlpool bath"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.whirlpool_bath"
+    ],
+    "filename": "catalog-pool_spa-spa-whirlpool_bath.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.spa_towel",
+    "label": {
+      "TR": "Spa havlusu",
+      "EN": "Spa towel"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.spa_towel"
+    ],
+    "filename": "catalog-pool_spa-spa-spa_towel.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.spa_robe",
+    "label": {
+      "TR": "Spa bornozu",
+      "EN": "Spa bathrobe"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.spa_robe"
+    ],
+    "filename": "catalog-pool_spa-spa-spa_robe.avif"
+  },
+  {
+    "key": "catalog.pool_spa.spa.foot_massager",
+    "label": {
+      "TR": "Ayak masaj cihazı",
+      "EN": "Foot massager"
+    },
+    "category": "pool_spa",
+    "category_label": {
+      "TR": "Havuz, Jakuzi ve Spa",
+      "EN": "Pool, Jacuzzi and Spa"
+    },
+    "group_label": {
+      "TR": "Jakuzi ve spa",
+      "EN": "Jacuzzi and spa"
+    },
+    "codes": [
+      "catalog.pool_spa.spa.foot_massager"
+    ],
+    "filename": "catalog-pool_spa-spa-foot_massager.avif"
+  }
+]

@@ -1,0 +1,402 @@
+[
+  {
+    "key": "catalog.outdoor.equipment.garden_armchair",
+    "label": {
+      "TR": "Bahçe koltuğu",
+      "EN": "Garden armchair"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.garden_armchair"
+    ],
+    "filename": "catalog-outdoor-equipment-garden_armchair.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.garden_seating",
+    "label": {
+      "TR": "Bahçe oturma grubu",
+      "EN": "Garden seating set"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.garden_seating"
+    ],
+    "filename": "catalog-outdoor-equipment-garden_seating.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.umbrella",
+    "label": {
+      "TR": "Şemsiye",
+      "EN": "Umbrella"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.umbrella"
+    ],
+    "filename": "catalog-outdoor-equipment-umbrella.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.parasol",
+    "label": {
+      "TR": "Güneş şemsiyesi",
+      "EN": "Parasol"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.parasol"
+    ],
+    "filename": "catalog-outdoor-equipment-parasol.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.pergola",
+    "label": {
+      "TR": "Pergola",
+      "EN": "Pergola"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.pergola"
+    ],
+    "filename": "catalog-outdoor-equipment-pergola.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.porch_swing",
+    "label": {
+      "TR": "Veranda salıncağı",
+      "EN": "Porch swing"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.porch_swing"
+    ],
+    "filename": "catalog-outdoor-equipment-porch_swing.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.hammock",
+    "label": {
+      "TR": "Hamak",
+      "EN": "Hammock"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.hammock"
+    ],
+    "filename": "catalog-outdoor-equipment-hammock.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.barbecue",
+    "label": {
+      "TR": "Barbekü",
+      "EN": "Barbecue"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.barbecue"
+    ],
+    "filename": "catalog-outdoor-equipment-barbecue.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.charcoal_grill",
+    "label": {
+      "TR": "Mangal",
+      "EN": "Charcoal grill"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.charcoal_grill"
+    ],
+    "filename": "catalog-outdoor-equipment-charcoal_grill.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.garden_lighting",
+    "label": {
+      "TR": "Bahçe aydınlatması",
+      "EN": "Garden lighting"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.garden_lighting"
+    ],
+    "filename": "catalog-outdoor-equipment-garden_lighting.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.irrigation_system",
+    "label": {
+      "TR": "Bitki sulama sistemi",
+      "EN": "Plant irrigation system"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.irrigation_system"
+    ],
+    "filename": "catalog-outdoor-equipment-irrigation_system.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.garden_hose",
+    "label": {
+      "TR": "Bahçe hortumu",
+      "EN": "Garden hose"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.garden_hose"
+    ],
+    "filename": "catalog-outdoor-equipment-garden_hose.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.spray_nozzle",
+    "label": {
+      "TR": "Sulama başlığı",
+      "EN": "Spray nozzle"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.spray_nozzle"
+    ],
+    "filename": "catalog-outdoor-equipment-spray_nozzle.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.outdoor_shower",
+    "label": {
+      "TR": "Dış mekân duşu",
+      "EN": "Outdoor shower"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.outdoor_shower"
+    ],
+    "filename": "catalog-outdoor-equipment-outdoor_shower.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.outdoor_sink",
+    "label": {
+      "TR": "Dış mekân lavabo",
+      "EN": "Outdoor sink"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.outdoor_sink"
+    ],
+    "filename": "catalog-outdoor-equipment-outdoor_sink.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.patio_heater",
+    "label": {
+      "TR": "Teras ısıtıcısı",
+      "EN": "Patio heater"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.patio_heater"
+    ],
+    "filename": "catalog-outdoor-equipment-patio_heater.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.outdoor_sockets",
+    "label": {
+      "TR": "Dış mekân prizleri",
+      "EN": "Outdoor sockets"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.outdoor_sockets"
+    ],
+    "filename": "catalog-outdoor-equipment-outdoor_sockets.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.outdoor_rug",
+    "label": {
+      "TR": "Dış mekân halısı",
+      "EN": "Outdoor rug"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.outdoor_rug"
+    ],
+    "filename": "catalog-outdoor-equipment-outdoor_rug.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.garden_cushions",
+    "label": {
+      "TR": "Bahçe minderleri",
+      "EN": "Garden cushions"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.garden_cushions"
+    ],
+    "filename": "catalog-outdoor-equipment-garden_cushions.avif"
+  },
+  {
+    "key": "catalog.outdoor.equipment.fire_pit",
+    "label": {
+      "TR": "Ateş çukuru",
+      "EN": "Fire pit"
+    },
+    "category": "outdoor",
+    "category_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, Terrace and Garden"
+    },
+    "group_label": {
+      "TR": "Balkon, Teras ve Bahçe",
+      "EN": "Balcony, terrace and garden"
+    },
+    "codes": [
+      "catalog.outdoor.equipment.fire_pit"
+    ],
+    "filename": "catalog-outdoor-equipment-fire_pit.avif"
+  }
+]

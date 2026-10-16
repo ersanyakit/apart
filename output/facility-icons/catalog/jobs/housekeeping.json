@@ -1,0 +1,363 @@
+[
+  {
+    "key": "catalog.housekeeping.equipment.vacuum",
+    "label": {
+      "TR": "Elektrikli süpürge",
+      "EN": "Vacuum cleaner"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.vacuum"
+    ],
+    "filename": "catalog-housekeeping-equipment-vacuum.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.robot_vacuum",
+    "label": {
+      "TR": "Robot süpürge",
+      "EN": "Robot vacuum"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.robot_vacuum"
+    ],
+    "filename": "catalog-housekeeping-equipment-robot_vacuum.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.mop",
+    "label": {
+      "TR": "Paspas",
+      "EN": "Mop"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.mop"
+    ],
+    "filename": "catalog-housekeeping-equipment-mop.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.mop_bucket",
+    "label": {
+      "TR": "Mop kovası",
+      "EN": "Mop bucket"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.mop_bucket"
+    ],
+    "filename": "catalog-housekeeping-equipment-mop_bucket.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.bucket",
+    "label": {
+      "TR": "Temizlik kovası",
+      "EN": "Cleaning bucket"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.bucket"
+    ],
+    "filename": "catalog-housekeeping-equipment-bucket.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.window_cleaner",
+    "label": {
+      "TR": "Cam temizleme aparatı",
+      "EN": "Window cleaning tool"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.window_cleaner"
+    ],
+    "filename": "catalog-housekeeping-equipment-window_cleaner.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.squeegee",
+    "label": {
+      "TR": "Cam sileceği",
+      "EN": "Window squeegee"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.squeegee"
+    ],
+    "filename": "catalog-housekeeping-equipment-squeegee.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.dustpan",
+    "label": {
+      "TR": "Faraş",
+      "EN": "Dustpan"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.dustpan"
+    ],
+    "filename": "catalog-housekeeping-equipment-dustpan.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.broom",
+    "label": {
+      "TR": "Süpürge",
+      "EN": "Broom"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.broom"
+    ],
+    "filename": "catalog-housekeeping-equipment-broom.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.microfiber_cloth",
+    "label": {
+      "TR": "Mikrofiber bez",
+      "EN": "Microfiber cloth"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.microfiber_cloth"
+    ],
+    "filename": "catalog-housekeeping-equipment-microfiber_cloth.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.duster",
+    "label": {
+      "TR": "Toz alma aparatı",
+      "EN": "Duster"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.duster"
+    ],
+    "filename": "catalog-housekeeping-equipment-duster.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.drying_rack",
+    "label": {
+      "TR": "Çamaşır kurutmalığı",
+      "EN": "Drying rack"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.drying_rack"
+    ],
+    "filename": "catalog-housekeeping-equipment-drying_rack.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.clothes_peg",
+    "label": {
+      "TR": "Çamaşır askısı",
+      "EN": "Laundry hanger"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.clothes_peg"
+    ],
+    "filename": "catalog-housekeeping-equipment-clothes_peg.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.sewing_kit",
+    "label": {
+      "TR": "Dikiş seti",
+      "EN": "Sewing kit"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.sewing_kit",
+      "catalog.guest_supplies.supplies.sewing_kit"
+    ],
+    "filename": "catalog-housekeeping-equipment-sewing_kit.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.stain_remover",
+    "label": {
+      "TR": "Leke çıkarıcı",
+      "EN": "Stain remover"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.stain_remover"
+    ],
+    "filename": "catalog-housekeeping-equipment-stain_remover.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.surface_cleaner",
+    "label": {
+      "TR": "Yüzey temizleyici",
+      "EN": "Surface cleaner"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.surface_cleaner"
+    ],
+    "filename": "catalog-housekeeping-equipment-surface_cleaner.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.disinfectant",
+    "label": {
+      "TR": "Dezenfektan",
+      "EN": "Disinfectant"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.disinfectant"
+    ],
+    "filename": "catalog-housekeeping-equipment-disinfectant.avif"
+  },
+  {
+    "key": "catalog.housekeeping.equipment.descaler",
+    "label": {
+      "TR": "Kireç çözücü",
+      "EN": "Descaler"
+    },
+    "category": "housekeeping",
+    "category_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and Housekeeping"
+    },
+    "group_label": {
+      "TR": "Temizlik ve Kat Hizmetleri",
+      "EN": "Cleaning and housekeeping"
+    },
+    "codes": [
+      "catalog.housekeeping.equipment.descaler"
+    ],
+    "filename": "catalog-housekeeping-equipment-descaler.avif"
+  }
+]

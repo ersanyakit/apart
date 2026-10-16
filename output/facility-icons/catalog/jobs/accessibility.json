@@ -1,0 +1,242 @@
+[
+  {
+    "key": "catalog.accessibility.features.wheelchair_room",
+    "label": {
+      "TR": "Tekerlekli sandalye erişimine uygun oda",
+      "EN": "Wheelchair-accessible room"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.wheelchair_room"
+    ],
+    "filename": "catalog-accessibility-features-wheelchair_room.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.wide_doorway",
+    "label": {
+      "TR": "Geniş kapı açıklığı",
+      "EN": "Wide doorway"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.wide_doorway"
+    ],
+    "filename": "catalog-accessibility-features-wide_doorway.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.accessible_shower",
+    "label": {
+      "TR": "Engelsiz duş",
+      "EN": "Accessible shower"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.accessible_shower"
+    ],
+    "filename": "catalog-accessibility-features-accessible_shower.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.grab_bar",
+    "label": {
+      "TR": "Tutunma barı",
+      "EN": "Grab bar"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.grab_bar"
+    ],
+    "filename": "catalog-accessibility-features-grab_bar.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.low_sink",
+    "label": {
+      "TR": "Alçak lavabo",
+      "EN": "Low washbasin"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.low_sink"
+    ],
+    "filename": "catalog-accessibility-features-low_sink.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.low_bed",
+    "label": {
+      "TR": "Alçak yatak",
+      "EN": "Low bed"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.low_bed"
+    ],
+    "filename": "catalog-accessibility-features-low_bed.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.accessible_toilet",
+    "label": {
+      "TR": "Erişilebilir tuvalet",
+      "EN": "Accessible toilet"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.accessible_toilet"
+    ],
+    "filename": "catalog-accessibility-features-accessible_toilet.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.shower_seat",
+    "label": {
+      "TR": "Duş oturağı",
+      "EN": "Shower seat"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.shower_seat"
+    ],
+    "filename": "catalog-accessibility-features-shower_seat.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.emergency_button",
+    "label": {
+      "TR": "Acil çağrı butonu",
+      "EN": "Emergency call button"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.emergency_button"
+    ],
+    "filename": "catalog-accessibility-features-emergency_button.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.visual_alarm",
+    "label": {
+      "TR": "Görsel alarm",
+      "EN": "Visual alarm"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.visual_alarm"
+    ],
+    "filename": "catalog-accessibility-features-visual_alarm.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.audible_alarm",
+    "label": {
+      "TR": "İşitsel alarm",
+      "EN": "Audible alarm"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.audible_alarm"
+    ],
+    "filename": "catalog-accessibility-features-audible_alarm.avif"
+  },
+  {
+    "key": "catalog.accessibility.features.braille_signage",
+    "label": {
+      "TR": "Braille işaretleme",
+      "EN": "Braille signage"
+    },
+    "category": "accessibility",
+    "category_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled Access and Accessibility"
+    },
+    "group_label": {
+      "TR": "Engelli Erişimi ve Erişilebilirlik",
+      "EN": "Disabled access and accessibility"
+    },
+    "codes": [
+      "catalog.accessibility.features.braille_signage"
+    ],
+    "filename": "catalog-accessibility-features-braille_signage.avif"
+  }
+]

@@ -1,0 +1,683 @@
+[
+  {
+    "key": "catalog.decoration.textiles.carpet",
+    "label": {
+      "TR": "Halı",
+      "EN": "Carpet"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.carpet"
+    ],
+    "filename": "catalog-decoration-textiles-carpet.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.kilim",
+    "label": {
+      "TR": "Kilim",
+      "EN": "Kilim rug"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.kilim"
+    ],
+    "filename": "catalog-decoration-textiles-kilim.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.runner_rug",
+    "label": {
+      "TR": "Yolluk",
+      "EN": "Runner rug"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.runner_rug"
+    ],
+    "filename": "catalog-decoration-textiles-runner_rug.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.doormat",
+    "label": {
+      "TR": "Kapı önü paspası",
+      "EN": "Doormat"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.doormat"
+    ],
+    "filename": "catalog-decoration-textiles-doormat.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.balcony_rug",
+    "label": {
+      "TR": "Balkon halısı",
+      "EN": "Balcony rug"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.balcony_rug"
+    ],
+    "filename": "catalog-decoration-textiles-balcony_rug.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.curtain",
+    "label": {
+      "TR": "Perde",
+      "EN": "Curtain"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.curtain"
+    ],
+    "filename": "catalog-decoration-textiles-curtain.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.sheer_curtain",
+    "label": {
+      "TR": "Tül perde",
+      "EN": "Sheer curtain"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.sheer_curtain"
+    ],
+    "filename": "catalog-decoration-textiles-sheer_curtain.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.drapes",
+    "label": {
+      "TR": "Fon perde",
+      "EN": "Drapes"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.drapes"
+    ],
+    "filename": "catalog-decoration-textiles-drapes.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.blackout_curtain",
+    "label": {
+      "TR": "Karartma perde",
+      "EN": "Blackout curtain"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.blackout_curtain"
+    ],
+    "filename": "catalog-decoration-textiles-blackout_curtain.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.roller_blind",
+    "label": {
+      "TR": "Stor perde",
+      "EN": "Roller blind"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.roller_blind"
+    ],
+    "filename": "catalog-decoration-textiles-roller_blind.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.zebra_blind",
+    "label": {
+      "TR": "Zebra perde",
+      "EN": "Day and night blind"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.zebra_blind"
+    ],
+    "filename": "catalog-decoration-textiles-zebra_blind.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.venetian_blind",
+    "label": {
+      "TR": "Jaluzi",
+      "EN": "Venetian blind"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.venetian_blind"
+    ],
+    "filename": "catalog-decoration-textiles-venetian_blind.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.sunshade",
+    "label": {
+      "TR": "Güneşlik",
+      "EN": "Sunshade curtain"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.sunshade"
+    ],
+    "filename": "catalog-decoration-textiles-sunshade.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.curtain_rod",
+    "label": {
+      "TR": "Perde kornişi",
+      "EN": "Curtain rod"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.curtain_rod"
+    ],
+    "filename": "catalog-decoration-textiles-curtain_rod.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.curtain_track",
+    "label": {
+      "TR": "Perde rayı",
+      "EN": "Curtain track"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.curtain_track"
+    ],
+    "filename": "catalog-decoration-textiles-curtain_track.avif"
+  },
+  {
+    "key": "catalog.decoration.textiles.tieback",
+    "label": {
+      "TR": "Perde bağı",
+      "EN": "Curtain tieback"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Zemin ve tekstil",
+      "EN": "Floor coverings and textiles"
+    },
+    "codes": [
+      "catalog.decoration.textiles.tieback"
+    ],
+    "filename": "catalog-decoration-textiles-tieback.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.painting",
+    "label": {
+      "TR": "Tablo",
+      "EN": "Painting"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.painting"
+    ],
+    "filename": "catalog-decoration-decor-painting.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.wall_decor",
+    "label": {
+      "TR": "Duvar dekoru",
+      "EN": "Wall decoration"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.wall_decor"
+    ],
+    "filename": "catalog-decoration-decor-wall_decor.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.mirror",
+    "label": {
+      "TR": "Ayna",
+      "EN": "Mirror"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.mirror"
+    ],
+    "filename": "catalog-decoration-decor-mirror.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.vase",
+    "label": {
+      "TR": "Dekoratif vazo",
+      "EN": "Decorative vase"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.vase"
+    ],
+    "filename": "catalog-decoration-decor-vase.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.artificial_flowers",
+    "label": {
+      "TR": "Yapay çiçek",
+      "EN": "Artificial flowers"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.artificial_flowers"
+    ],
+    "filename": "catalog-decoration-decor-artificial_flowers.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.live_plant",
+    "label": {
+      "TR": "Canlı bitki",
+      "EN": "Live plant"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.live_plant"
+    ],
+    "filename": "catalog-decoration-decor-live_plant.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.plant_pot",
+    "label": {
+      "TR": "Saksı",
+      "EN": "Plant pot"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.plant_pot",
+      "catalog.outdoor.equipment.plant_pot"
+    ],
+    "filename": "catalog-decoration-decor-plant_pot.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.sculpture",
+    "label": {
+      "TR": "Dekoratif heykel",
+      "EN": "Decorative sculpture"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.sculpture"
+    ],
+    "filename": "catalog-decoration-decor-sculpture.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.wall_clock",
+    "label": {
+      "TR": "Duvar saati",
+      "EN": "Wall clock"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.wall_clock"
+    ],
+    "filename": "catalog-decoration-decor-wall_clock.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.decorative_tray",
+    "label": {
+      "TR": "Dekoratif tepsi",
+      "EN": "Decorative tray"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.decorative_tray"
+    ],
+    "filename": "catalog-decoration-decor-decorative_tray.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.candle_holder",
+    "label": {
+      "TR": "Mumluk",
+      "EN": "Candle holder"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.candle_holder"
+    ],
+    "filename": "catalog-decoration-decor-candle_holder.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.decorative_candle",
+    "label": {
+      "TR": "Dekoratif mum",
+      "EN": "Decorative candle"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.decorative_candle"
+    ],
+    "filename": "catalog-decoration-decor-decorative_candle.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.book",
+    "label": {
+      "TR": "Kitap",
+      "EN": "Book"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.book"
+    ],
+    "filename": "catalog-decoration-decor-book.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.decorative_basket",
+    "label": {
+      "TR": "Dekoratif sepet",
+      "EN": "Decorative basket"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.decorative_basket"
+    ],
+    "filename": "catalog-decoration-decor-decorative_basket.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.photo_frame",
+    "label": {
+      "TR": "Fotoğraf çerçevesi",
+      "EN": "Photo frame"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.photo_frame"
+    ],
+    "filename": "catalog-decoration-decor-photo_frame.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.pillow",
+    "label": {
+      "TR": "Yastık",
+      "EN": "Pillow"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.pillow"
+    ],
+    "filename": "catalog-decoration-decor-pillow.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.cushion",
+    "label": {
+      "TR": "Kırlent",
+      "EN": "Cushion"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.cushion"
+    ],
+    "filename": "catalog-decoration-decor-cushion.avif"
+  },
+  {
+    "key": "catalog.decoration.decor.door_decoration",
+    "label": {
+      "TR": "Kapı süsü",
+      "EN": "Door decoration"
+    },
+    "category": "decoration",
+    "category_label": {
+      "TR": "Halı, Perde ve Dekorasyon",
+      "EN": "Carpets, Curtains and Decoration"
+    },
+    "group_label": {
+      "TR": "Dekoratif ürünler",
+      "EN": "Decorative items"
+    },
+    "codes": [
+      "catalog.decoration.decor.door_decoration"
+    ],
+    "filename": "catalog-decoration-decor-door_decoration.avif"
+  }
+]

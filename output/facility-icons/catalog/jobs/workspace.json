@@ -1,0 +1,283 @@
+[
+  {
+    "key": "catalog.workspace.equipment.desktop_socket",
+    "label": {
+      "TR": "Masaüstü priz",
+      "EN": "Desktop power socket"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.desktop_socket"
+    ],
+    "filename": "catalog-workspace-equipment-desktop_socket.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.usb_charging_point",
+    "label": {
+      "TR": "USB şarj noktası",
+      "EN": "USB charging point"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.usb_charging_point"
+    ],
+    "filename": "catalog-workspace-equipment-usb_charging_point.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.ethernet_port",
+    "label": {
+      "TR": "Ethernet portu",
+      "EN": "Ethernet port"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.ethernet_port"
+    ],
+    "filename": "catalog-workspace-equipment-ethernet_port.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.wifi",
+    "label": {
+      "TR": "Kablosuz internet",
+      "EN": "Wireless internet"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.wifi"
+    ],
+    "filename": "catalog-workspace-equipment-wifi.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.monitor",
+    "label": {
+      "TR": "Bilgisayar monitörü",
+      "EN": "Computer monitor"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.monitor"
+    ],
+    "filename": "catalog-workspace-equipment-monitor.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.keyboard",
+    "label": {
+      "TR": "Klavye",
+      "EN": "Keyboard"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.keyboard"
+    ],
+    "filename": "catalog-workspace-equipment-keyboard.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.mouse",
+    "label": {
+      "TR": "Fare",
+      "EN": "Mouse"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.mouse"
+    ],
+    "filename": "catalog-workspace-equipment-mouse.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.printer",
+    "label": {
+      "TR": "Yazıcı",
+      "EN": "Printer"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.printer"
+    ],
+    "filename": "catalog-workspace-equipment-printer.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.scanner",
+    "label": {
+      "TR": "Tarayıcı",
+      "EN": "Scanner"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.scanner"
+    ],
+    "filename": "catalog-workspace-equipment-scanner.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.document_organizer",
+    "label": {
+      "TR": "Evrak düzenleyici",
+      "EN": "Document organizer"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.document_organizer"
+    ],
+    "filename": "catalog-workspace-equipment-document_organizer.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.pen_holder",
+    "label": {
+      "TR": "Kalemlik",
+      "EN": "Pen holder"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.pen_holder"
+    ],
+    "filename": "catalog-workspace-equipment-pen_holder.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.notepad",
+    "label": {
+      "TR": "Not defteri",
+      "EN": "Notepad"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.notepad",
+      "catalog.guest_supplies.supplies.notepad"
+    ],
+    "filename": "catalog-workspace-equipment-notepad.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.file_holder",
+    "label": {
+      "TR": "Dosyalık",
+      "EN": "File holder"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.file_holder"
+    ],
+    "filename": "catalog-workspace-equipment-file_holder.avif"
+  },
+  {
+    "key": "catalog.workspace.equipment.presentation_screen",
+    "label": {
+      "TR": "Sunum ekranı",
+      "EN": "Presentation screen"
+    },
+    "category": "workspace",
+    "category_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and Business Equipment"
+    },
+    "group_label": {
+      "TR": "Çalışma Alanı ve İş Donanımları",
+      "EN": "Workspace and business equipment"
+    },
+    "codes": [
+      "catalog.workspace.equipment.presentation_screen"
+    ],
+    "filename": "catalog-workspace-equipment-presentation_screen.avif"
+  }
+]

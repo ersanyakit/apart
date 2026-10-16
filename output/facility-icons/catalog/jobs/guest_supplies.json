@@ -1,0 +1,402 @@
+[
+  {
+    "key": "catalog.guest_supplies.supplies.drinking_water",
+    "label": {
+      "TR": "İçme suyu",
+      "EN": "Drinking water"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.drinking_water"
+    ],
+    "filename": "catalog-guest_supplies-supplies-drinking_water.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.bottled_water",
+    "label": {
+      "TR": "Şişe su",
+      "EN": "Bottled water"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.bottled_water"
+    ],
+    "filename": "catalog-guest_supplies-supplies-bottled_water.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.coffee",
+    "label": {
+      "TR": "Kahve",
+      "EN": "Coffee"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.coffee"
+    ],
+    "filename": "catalog-guest_supplies-supplies-coffee.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.tea",
+    "label": {
+      "TR": "Çay",
+      "EN": "Tea"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.tea"
+    ],
+    "filename": "catalog-guest_supplies-supplies-tea.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.sugar",
+    "label": {
+      "TR": "Şeker",
+      "EN": "Sugar"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.sugar"
+    ],
+    "filename": "catalog-guest_supplies-supplies-sugar.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.sweetener",
+    "label": {
+      "TR": "Tatlandırıcı",
+      "EN": "Sweetener"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.sweetener"
+    ],
+    "filename": "catalog-guest_supplies-supplies-sweetener.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.milk",
+    "label": {
+      "TR": "Süt",
+      "EN": "Milk"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.milk"
+    ],
+    "filename": "catalog-guest_supplies-supplies-milk.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.cream",
+    "label": {
+      "TR": "Krema",
+      "EN": "Cream"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.cream"
+    ],
+    "filename": "catalog-guest_supplies-supplies-cream.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.coffee_capsule",
+    "label": {
+      "TR": "Kahve kapsülü",
+      "EN": "Coffee capsule"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.coffee_capsule"
+    ],
+    "filename": "catalog-guest_supplies-supplies-coffee_capsule.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.minibar_products",
+    "label": {
+      "TR": "Mini bar ürünleri",
+      "EN": "Minibar products"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.minibar_products"
+    ],
+    "filename": "catalog-guest_supplies-supplies-minibar_products.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.snacks",
+    "label": {
+      "TR": "Atıştırmalıklar",
+      "EN": "Snacks"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.snacks"
+    ],
+    "filename": "catalog-guest_supplies-supplies-snacks.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.welcome_refreshment",
+    "label": {
+      "TR": "Karşılama ikramı",
+      "EN": "Welcome refreshment"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.welcome_refreshment"
+    ],
+    "filename": "catalog-guest_supplies-supplies-welcome_refreshment.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.welcome_kit",
+    "label": {
+      "TR": "Hoş geldiniz seti",
+      "EN": "Welcome kit"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.welcome_kit"
+    ],
+    "filename": "catalog-guest_supplies-supplies-welcome_kit.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.disposable_slippers",
+    "label": {
+      "TR": "Tek kullanımlık terlik",
+      "EN": "Disposable slippers"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.disposable_slippers"
+    ],
+    "filename": "catalog-guest_supplies-supplies-disposable_slippers.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.shoe_shine_kit",
+    "label": {
+      "TR": "Ayakkabı parlatma seti",
+      "EN": "Shoe shine kit"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.shoe_shine_kit"
+    ],
+    "filename": "catalog-guest_supplies-supplies-shoe_shine_kit.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.pen",
+    "label": {
+      "TR": "Kalem",
+      "EN": "Pen"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.pen"
+    ],
+    "filename": "catalog-guest_supplies-supplies-pen.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.room_directory",
+    "label": {
+      "TR": "Oda bilgi kitapçığı",
+      "EN": "Room information booklet"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.room_directory"
+    ],
+    "filename": "catalog-guest_supplies-supplies-room_directory.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.menu",
+    "label": {
+      "TR": "Menü",
+      "EN": "Menu"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.menu"
+    ],
+    "filename": "catalog-guest_supplies-supplies-menu.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.napkin",
+    "label": {
+      "TR": "Peçete",
+      "EN": "Napkin"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.napkin"
+    ],
+    "filename": "catalog-guest_supplies-supplies-napkin.avif"
+  },
+  {
+    "key": "catalog.guest_supplies.supplies.tissue",
+    "label": {
+      "TR": "Kâğıt mendil",
+      "EN": "Tissue"
+    },
+    "category": "guest_supplies",
+    "category_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and Guest Refreshments"
+    },
+    "group_label": {
+      "TR": "Sarf Malzemeleri ve Misafir İkramları",
+      "EN": "Consumables and guest refreshments"
+    },
+    "codes": [
+      "catalog.guest_supplies.supplies.tissue"
+    ],
+    "filename": "catalog-guest_supplies-supplies-tissue.avif"
+  }
+]

@@ -1,0 +1,402 @@
+[
+  {
+    "key": "catalog.climate.equipment.split_ac",
+    "label": {
+      "TR": "Split klima",
+      "EN": "Split air conditioner"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.split_ac"
+    ],
+    "filename": "catalog-climate-equipment-split_ac.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.central_ac",
+    "label": {
+      "TR": "Merkezi klima",
+      "EN": "Central air conditioning"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.central_ac"
+    ],
+    "filename": "catalog-climate-equipment-central_ac.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.portable_ac",
+    "label": {
+      "TR": "Taşınabilir klima",
+      "EN": "Portable air conditioner"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.portable_ac"
+    ],
+    "filename": "catalog-climate-equipment-portable_ac.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.heater",
+    "label": {
+      "TR": "Isıtıcı",
+      "EN": "Heater"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.heater"
+    ],
+    "filename": "catalog-climate-equipment-heater.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.electric_radiator",
+    "label": {
+      "TR": "Elektrikli radyatör",
+      "EN": "Electric radiator"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.electric_radiator"
+    ],
+    "filename": "catalog-climate-equipment-electric_radiator.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.oil_radiator",
+    "label": {
+      "TR": "Yağlı radyatör",
+      "EN": "Oil-filled radiator"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.oil_radiator"
+    ],
+    "filename": "catalog-climate-equipment-oil_radiator.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.convector",
+    "label": {
+      "TR": "Konvektör ısıtıcı",
+      "EN": "Convector heater"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.convector"
+    ],
+    "filename": "catalog-climate-equipment-convector.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.fan_heater",
+    "label": {
+      "TR": "Fanlı ısıtıcı",
+      "EN": "Fan heater"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.fan_heater"
+    ],
+    "filename": "catalog-climate-equipment-fan_heater.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.central_heating",
+    "label": {
+      "TR": "Merkezi ısıtma",
+      "EN": "Central heating"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.central_heating"
+    ],
+    "filename": "catalog-climate-equipment-central_heating.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.boiler",
+    "label": {
+      "TR": "Kombi",
+      "EN": "Combi boiler"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.boiler"
+    ],
+    "filename": "catalog-climate-equipment-boiler.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.underfloor_heating",
+    "label": {
+      "TR": "Yerden ısıtma",
+      "EN": "Underfloor heating"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.underfloor_heating"
+    ],
+    "filename": "catalog-climate-equipment-underfloor_heating.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.ceiling_fan",
+    "label": {
+      "TR": "Tavan vantilatörü",
+      "EN": "Ceiling fan"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.ceiling_fan"
+    ],
+    "filename": "catalog-climate-equipment-ceiling_fan.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.pedestal_fan",
+    "label": {
+      "TR": "Ayaklı vantilatör",
+      "EN": "Pedestal fan"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.pedestal_fan"
+    ],
+    "filename": "catalog-climate-equipment-pedestal_fan.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.desk_fan",
+    "label": {
+      "TR": "Masa vantilatörü",
+      "EN": "Desk fan"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.desk_fan"
+    ],
+    "filename": "catalog-climate-equipment-desk_fan.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.air_purifier",
+    "label": {
+      "TR": "Hava temizleme cihazı",
+      "EN": "Air purifier"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.air_purifier"
+    ],
+    "filename": "catalog-climate-equipment-air_purifier.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.humidifier",
+    "label": {
+      "TR": "Hava nemlendirici",
+      "EN": "Humidifier"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.humidifier"
+    ],
+    "filename": "catalog-climate-equipment-humidifier.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.dehumidifier",
+    "label": {
+      "TR": "Hava nem alma cihazı",
+      "EN": "Dehumidifier"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.dehumidifier"
+    ],
+    "filename": "catalog-climate-equipment-dehumidifier.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.thermostat",
+    "label": {
+      "TR": "Termostat",
+      "EN": "Thermostat"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.thermostat"
+    ],
+    "filename": "catalog-climate-equipment-thermostat.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.smart_thermostat",
+    "label": {
+      "TR": "Akıllı termostat",
+      "EN": "Smart thermostat"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.smart_thermostat"
+    ],
+    "filename": "catalog-climate-equipment-smart_thermostat.avif"
+  },
+  {
+    "key": "catalog.climate.equipment.ventilation_system",
+    "label": {
+      "TR": "Havalandırma sistemi",
+      "EN": "Ventilation system"
+    },
+    "category": "climate",
+    "category_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, Cooling and Ventilation"
+    },
+    "group_label": {
+      "TR": "Isıtma, Soğutma ve Havalandırma",
+      "EN": "Heating, cooling and ventilation"
+    },
+    "codes": [
+      "catalog.climate.equipment.ventilation_system"
+    ],
+    "filename": "catalog-climate-equipment-ventilation_system.avif"
+  }
+]

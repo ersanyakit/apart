@@ -78,7 +78,7 @@ export function SetupWizard({snapshot:s,onComplete}:{snapshot:Snapshot;onComplet
    <h3 ref={heading} tabIndex={-1}>{steps[step]}</h3><p className={styles.intro}>{descriptions[step]}</p><ErrorMessage message={error}/>
    <fieldset disabled={busy||!!attempt} className={styles.body}>
     {step===0&&<>
-     <div className={styles.profiles}>{profiles.map(([id,name,hint])=><button className="uni-control" key={id} type="button" aria-pressed={profile===id} onClick={()=>setProfile(id)}>{name}<small>{hint}</small></button>)}</div>
+     <div className={styles.profiles}>{profiles.map(([id,name,hint])=><button className="uni-control" key={id} type="button" aria-pressed={profile===id} onClick={()=>setProfile(id)}><img src={`/images/setup-icons-dott/${id}.avif`} width={72} height={72} alt="" aria-hidden="true" draggable={false} decoding="async" className={styles.profileIcon}/><span>{name}<small>{hint}</small></span></button>)}</div>
      <InlineSelectField label="İşletme" value={company.hotel_id||'new'} onChange={id=>{setCompany(id==='new'?emptyFacility():s.hotels.find(h=>h.hotel_id===id)!);setFacility(emptyFacility());}} options={[...s.hotels.map(h=>({value:h.hotel_id,label:h.name})),...(s.user.role==='admin'?[{value:'new',label:'Yeni işletme oluştur'}]:[])]}/>
      <FacilityDetailsFields kind="hotel" value={company} onChange={setCompany}/>
     </>}

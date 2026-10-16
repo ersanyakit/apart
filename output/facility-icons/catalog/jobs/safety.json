@@ -1,0 +1,404 @@
+[
+  {
+    "key": "catalog.safety.equipment.room_safe",
+    "label": {
+      "TR": "Oda kasası",
+      "EN": "Room safe"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.room_safe"
+    ],
+    "filename": "catalog-safety-equipment-room_safe.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.electronic_safe",
+    "label": {
+      "TR": "Elektronik kasa",
+      "EN": "Electronic safe"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.electronic_safe"
+    ],
+    "filename": "catalog-safety-equipment-electronic_safe.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.fire_extinguisher",
+    "label": {
+      "TR": "Yangın söndürücü",
+      "EN": "Fire extinguisher"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.fire_extinguisher"
+    ],
+    "filename": "catalog-safety-equipment-fire_extinguisher.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.fire_blanket",
+    "label": {
+      "TR": "Yangın battaniyesi",
+      "EN": "Fire blanket"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.fire_blanket"
+    ],
+    "filename": "catalog-safety-equipment-fire_blanket.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.smoke_detector",
+    "label": {
+      "TR": "Duman dedektörü",
+      "EN": "Smoke detector"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.smoke_detector"
+    ],
+    "filename": "catalog-safety-equipment-smoke_detector.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.co_detector",
+    "label": {
+      "TR": "Karbonmonoksit dedektörü",
+      "EN": "Carbon monoxide detector"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.co_detector"
+    ],
+    "filename": "catalog-safety-equipment-co_detector.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.gas_detector",
+    "label": {
+      "TR": "Gaz dedektörü",
+      "EN": "Gas detector"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.gas_detector"
+    ],
+    "filename": "catalog-safety-equipment-gas_detector.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.fire_alarm",
+    "label": {
+      "TR": "Yangın alarmı",
+      "EN": "Fire alarm"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.fire_alarm"
+    ],
+    "filename": "catalog-safety-equipment-fire_alarm.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.sprinkler",
+    "label": {
+      "TR": "Yangın sprinkler sistemi",
+      "EN": "Fire sprinkler system"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.sprinkler"
+    ],
+    "filename": "catalog-safety-equipment-sprinkler.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.first_aid_kit",
+    "label": {
+      "TR": "İlk yardım çantası",
+      "EN": "First aid kit"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.first_aid_kit"
+    ],
+    "filename": "catalog-safety-equipment-first_aid_kit.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.emergency_instructions",
+    "label": {
+      "TR": "Acil durum talimatı",
+      "EN": "Emergency instructions"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.emergency_instructions"
+    ],
+    "filename": "catalog-safety-equipment-emergency_instructions.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.peephole",
+    "label": {
+      "TR": "Kapı dürbünü",
+      "EN": "Door peephole"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.peephole",
+      "catalog.structural.fixtures.peephole"
+    ],
+    "filename": "catalog-safety-equipment-peephole.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.electronic_lock",
+    "label": {
+      "TR": "Elektronik kapı kilidi",
+      "EN": "Electronic door lock"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.electronic_lock"
+    ],
+    "filename": "catalog-safety-equipment-electronic_lock.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.card_access",
+    "label": {
+      "TR": "Kartlı geçiş sistemi",
+      "EN": "Card access system"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.card_access"
+    ],
+    "filename": "catalog-safety-equipment-card_access.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.smart_lock",
+    "label": {
+      "TR": "Akıllı kilit",
+      "EN": "Smart lock"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.smart_lock",
+      "catalog.structural.fixtures.smart_lock"
+    ],
+    "filename": "catalog-safety-equipment-smart_lock.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.mechanical_lock",
+    "label": {
+      "TR": "Mekanik kapı kilidi",
+      "EN": "Mechanical door lock"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.mechanical_lock"
+    ],
+    "filename": "catalog-safety-equipment-mechanical_lock.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.door_chain",
+    "label": {
+      "TR": "Kapı zinciri",
+      "EN": "Door chain"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.door_chain"
+    ],
+    "filename": "catalog-safety-equipment-door_chain.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.window_lock",
+    "label": {
+      "TR": "Pencere kilidi",
+      "EN": "Window lock"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.window_lock"
+    ],
+    "filename": "catalog-safety-equipment-window_lock.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.child_lock",
+    "label": {
+      "TR": "Çocuk güvenlik kilidi",
+      "EN": "Child safety lock"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.child_lock"
+    ],
+    "filename": "catalog-safety-equipment-child_lock.avif"
+  },
+  {
+    "key": "catalog.safety.equipment.rcd",
+    "label": {
+      "TR": "Elektrik kaçak akım rölesi",
+      "EN": "Residual current device"
+    },
+    "category": "safety",
+    "category_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and Emergency Equipment"
+    },
+    "group_label": {
+      "TR": "Güvenlik ve Acil Durum Ekipmanları",
+      "EN": "Safety and emergency equipment"
+    },
+    "codes": [
+      "catalog.safety.equipment.rcd"
+    ],
+    "filename": "catalog-safety-equipment-rcd.avif"
+  }
+]

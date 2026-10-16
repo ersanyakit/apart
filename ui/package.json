@@ -12,6 +12,8 @@
     "test:e2e": "playwright test",
     "test:i18n": "node --test tests/i18n.test.cjs tests/marketing-i18n.test.cjs",
     "test:navigation": "node --test tests/navigation.test.cjs",
+    "test:facility-icons": "node --test tests/facility-icons.test.cjs",
+    "test:catalog-icons": "node --test tests/catalog-icons.test.cjs tests/catalog-icons-render.test.cjs",
     "test:bookings": "node --test tests/booking-arrival.test.cjs",
     "test:stays": "node --test tests/stays-scheduler.test.cjs",
     "test:calendar": "node --test tests/hotel-calendar.test.cjs",

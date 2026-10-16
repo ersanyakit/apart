@@ -1,0 +1,464 @@
+[
+  {
+    "key": "catalog.living_room.seating.three_seater",
+    "label": {
+      "TR": "Üçlü koltuk",
+      "EN": "Three-seater sofa"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.three_seater"
+    ],
+    "filename": "catalog-living_room-seating-three_seater.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.armchair",
+    "label": {
+      "TR": "Tekli koltuk",
+      "EN": "Armchair"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.armchair"
+    ],
+    "filename": "catalog-living_room-seating-armchair.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.wing_chair",
+    "label": {
+      "TR": "Berjer",
+      "EN": "Wing chair"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.wing_chair"
+    ],
+    "filename": "catalog-living_room-seating-wing_chair.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.corner_sofa",
+    "label": {
+      "TR": "Köşe koltuk",
+      "EN": "Corner sofa"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.corner_sofa"
+    ],
+    "filename": "catalog-living_room-seating-corner_sofa.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.l_shaped_sofa",
+    "label": {
+      "TR": "L koltuk",
+      "EN": "L-shaped sofa"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.l_shaped_sofa"
+    ],
+    "filename": "catalog-living_room-seating-l_shaped_sofa.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.sofa",
+    "label": {
+      "TR": "Kanepe",
+      "EN": "Sofa"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.sofa"
+    ],
+    "filename": "catalog-living_room-seating-sofa.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.pouf",
+    "label": {
+      "TR": "Puf",
+      "EN": "Pouf"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.pouf"
+    ],
+    "filename": "catalog-living_room-seating-pouf.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.footstool",
+    "label": {
+      "TR": "Ayak uzatma taburesi",
+      "EN": "Footstool"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.footstool"
+    ],
+    "filename": "catalog-living_room-seating-footstool.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.coffee_table",
+    "label": {
+      "TR": "Orta sehpa",
+      "EN": "Coffee table"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.coffee_table"
+    ],
+    "filename": "catalog-living_room-seating-coffee_table.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.side_table",
+    "label": {
+      "TR": "Yan sehpa",
+      "EN": "Side table"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.side_table"
+    ],
+    "filename": "catalog-living_room-seating-side_table.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.nesting_tables",
+    "label": {
+      "TR": "Zigon sehpa",
+      "EN": "Nesting tables"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.nesting_tables"
+    ],
+    "filename": "catalog-living_room-seating-nesting_tables.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.tv_stand",
+    "label": {
+      "TR": "TV ünitesi",
+      "EN": "TV stand"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.tv_stand"
+    ],
+    "filename": "catalog-living_room-seating-tv_stand.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.bookcase",
+    "label": {
+      "TR": "Kitaplık",
+      "EN": "Bookcase"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.bookcase"
+    ],
+    "filename": "catalog-living_room-seating-bookcase.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.display_cabinet",
+    "label": {
+      "TR": "Vitrin",
+      "EN": "Display cabinet"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.display_cabinet"
+    ],
+    "filename": "catalog-living_room-seating-display_cabinet.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.console",
+    "label": {
+      "TR": "Konsol",
+      "EN": "Console table"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.console"
+    ],
+    "filename": "catalog-living_room-seating-console.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.sideboard",
+    "label": {
+      "TR": "Büfe",
+      "EN": "Sideboard"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.sideboard"
+    ],
+    "filename": "catalog-living_room-seating-sideboard.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.wall_shelf",
+    "label": {
+      "TR": "Duvar rafı",
+      "EN": "Wall shelf"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.wall_shelf",
+      "catalog.decoration.decor.wall_shelf"
+    ],
+    "filename": "catalog-living_room-seating-wall_shelf.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.decorative_shelf",
+    "label": {
+      "TR": "Dekoratif raf",
+      "EN": "Decorative shelf"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.decorative_shelf"
+    ],
+    "filename": "catalog-living_room-seating-decorative_shelf.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.fireplace",
+    "label": {
+      "TR": "Şömine",
+      "EN": "Fireplace"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.fireplace",
+      "catalog.climate.equipment.fireplace"
+    ],
+    "filename": "catalog-living_room-seating-fireplace.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.electric_fireplace",
+    "label": {
+      "TR": "Elektrikli şömine",
+      "EN": "Electric fireplace"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.electric_fireplace"
+    ],
+    "filename": "catalog-living_room-seating-electric_fireplace.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.fireplace_tools",
+    "label": {
+      "TR": "Şömine aksesuarları",
+      "EN": "Fireplace accessories"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.fireplace_tools"
+    ],
+    "filename": "catalog-living_room-seating-fireplace_tools.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.magazine_rack",
+    "label": {
+      "TR": "Dergilik",
+      "EN": "Magazine rack"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.magazine_rack"
+    ],
+    "filename": "catalog-living_room-seating-magazine_rack.avif"
+  },
+  {
+    "key": "catalog.living_room.seating.sofa_throw",
+    "label": {
+      "TR": "Koltuk şalı",
+      "EN": "Sofa throw"
+    },
+    "category": "living_room",
+    "category_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living Room and Seating"
+    },
+    "group_label": {
+      "TR": "Salon ve Oturma Grubu",
+      "EN": "Living room and seating"
+    },
+    "codes": [
+      "catalog.living_room.seating.sofa_throw"
+    ],
+    "filename": "catalog-living_room-seating-sofa_throw.avif"
+  }
+]

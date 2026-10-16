@@ -1,0 +1,402 @@
+[
+  {
+    "key": "catalog.facilities.connectivity.free_wifi",
+    "label": {
+      "TR": "Ücretsiz Wi-Fi",
+      "EN": "Free Wi-Fi"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "İnternet ve iletişim",
+      "EN": "Internet and communication"
+    },
+    "codes": [
+      "catalog.facilities.connectivity.free_wifi"
+    ],
+    "filename": "catalog-facilities-connectivity-free_wifi.avif"
+  },
+  {
+    "key": "catalog.facilities.connectivity.paid_wifi",
+    "label": {
+      "TR": "Ücretli Wi-Fi",
+      "EN": "Paid Wi-Fi"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "İnternet ve iletişim",
+      "EN": "Internet and communication"
+    },
+    "codes": [
+      "catalog.facilities.connectivity.paid_wifi"
+    ],
+    "filename": "catalog-facilities-connectivity-paid_wifi.avif"
+  },
+  {
+    "key": "catalog.facilities.connectivity.wired_internet",
+    "label": {
+      "TR": "Kablolu internet",
+      "EN": "Wired internet"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "İnternet ve iletişim",
+      "EN": "Internet and communication"
+    },
+    "codes": [
+      "catalog.facilities.connectivity.wired_internet"
+    ],
+    "filename": "catalog-facilities-connectivity-wired_internet.avif"
+  },
+  {
+    "key": "catalog.facilities.connectivity.satellite_tv",
+    "label": {
+      "TR": "Uydu TV",
+      "EN": "Satellite TV"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "İnternet ve iletişim",
+      "EN": "Internet and communication"
+    },
+    "codes": [
+      "catalog.facilities.connectivity.satellite_tv"
+    ],
+    "filename": "catalog-facilities-connectivity-satellite_tv.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.air_conditioning",
+    "label": {
+      "TR": "Klima",
+      "EN": "Air conditioning"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.air_conditioning"
+    ],
+    "filename": "catalog-facilities-comfort-air_conditioning.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.heating",
+    "label": {
+      "TR": "Isıtma",
+      "EN": "Heating"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.heating"
+    ],
+    "filename": "catalog-facilities-comfort-heating.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.private_bathroom",
+    "label": {
+      "TR": "Özel banyo",
+      "EN": "Private bathroom"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.private_bathroom"
+    ],
+    "filename": "catalog-facilities-comfort-private_bathroom.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.shared_bathroom",
+    "label": {
+      "TR": "Ortak banyo",
+      "EN": "Shared bathroom"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.shared_bathroom"
+    ],
+    "filename": "catalog-facilities-comfort-shared_bathroom.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.private_kitchen",
+    "label": {
+      "TR": "Özel mutfak",
+      "EN": "Private kitchen"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.private_kitchen"
+    ],
+    "filename": "catalog-facilities-comfort-private_kitchen.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.shared_kitchen",
+    "label": {
+      "TR": "Ortak mutfak",
+      "EN": "Shared kitchen"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.shared_kitchen"
+    ],
+    "filename": "catalog-facilities-comfort-shared_kitchen.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.balcony",
+    "label": {
+      "TR": "Balkon",
+      "EN": "Balcony"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.balcony"
+    ],
+    "filename": "catalog-facilities-comfort-balcony.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.terrace",
+    "label": {
+      "TR": "Teras",
+      "EN": "Terrace"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.terrace"
+    ],
+    "filename": "catalog-facilities-comfort-terrace.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.sea_view",
+    "label": {
+      "TR": "Deniz manzarası",
+      "EN": "Sea view"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.sea_view"
+    ],
+    "filename": "catalog-facilities-comfort-sea_view.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.city_view",
+    "label": {
+      "TR": "Şehir manzarası",
+      "EN": "City view"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.city_view"
+    ],
+    "filename": "catalog-facilities-comfort-city_view.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.garden_view",
+    "label": {
+      "TR": "Bahçe manzarası",
+      "EN": "Garden view"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.garden_view"
+    ],
+    "filename": "catalog-facilities-comfort-garden_view.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.mountain_view",
+    "label": {
+      "TR": "Dağ manzarası",
+      "EN": "Mountain view"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.mountain_view"
+    ],
+    "filename": "catalog-facilities-comfort-mountain_view.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.pool_view",
+    "label": {
+      "TR": "Havuz manzarası",
+      "EN": "Pool view"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.pool_view"
+    ],
+    "filename": "catalog-facilities-comfort-pool_view.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.soundproofing",
+    "label": {
+      "TR": "Ses yalıtımı",
+      "EN": "Soundproofing"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.soundproofing"
+    ],
+    "filename": "catalog-facilities-comfort-soundproofing.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.blackout_curtains",
+    "label": {
+      "TR": "Karartma perde",
+      "EN": "Blackout curtains"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.blackout_curtains"
+    ],
+    "filename": "catalog-facilities-comfort-blackout_curtains.avif"
+  },
+  {
+    "key": "catalog.facilities.comfort.non_smoking_room",
+    "label": {
+      "TR": "Sigara içilmeyen oda",
+      "EN": "Non-smoking room"
+    },
+    "category": "facilities",
+    "category_label": {
+      "TR": "Genel Tesis Olanakları",
+      "EN": "General Property Amenities"
+    },
+    "group_label": {
+      "TR": "Konfor",
+      "EN": "Comfort"
+    },
+    "codes": [
+      "catalog.facilities.comfort.non_smoking_room"
+    ],
+    "filename": "catalog-facilities-comfort-non_smoking_room.avif"
+  }
+]

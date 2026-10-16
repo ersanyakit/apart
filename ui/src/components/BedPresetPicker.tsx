@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { BedDouble, Layers, Plus, ChevronDown } from 'lucide-react';
+import { Plus, ChevronDown } from 'lucide-react';
+import { BedIllustration } from './BedIllustration';
 import { BED_PRESETS, type BedPreset } from '../lib/bed-presets';
 import { TextField, InlineSelectField } from './fields';
 import styles from './RoomRentalSetup.module.css';
@@ -22,10 +23,9 @@ export function BedPresetPicker({ onSelect, disabled, adding = false, compact = 
         <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 text-sm font-medium [&::-webkit-details-marker]:hidden">{label} <span className="flex items-center gap-2 text-xs text-uni-muted">{members.length}<ChevronDown size={16}/></span></summary>
         <div className={styles.presets}>
           {members.map(preset=>{
-            const Icon=preset.structure==='bunk'?Layers:BedDouble;
             return <button key={preset.key} type="button" disabled={disabled} className={`uni-control ${styles.preset}`}
               aria-label={`${preset.label}${adding?' ekle':' seç'}`} onClick={()=>onSelect(preset)}>
-              <Icon size={22} aria-hidden="true"/><span><strong>{preset.label}</strong><small>{preset.capacity} kişi · {preset.bed_places} yatak yeri{preset.physical_count>1?' · 2 ayrı yatak':''}</small></span>
+              <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1}/><span><strong>{preset.label}</strong><small>{preset.capacity} kişi · {preset.bed_places} yatak yeri{preset.physical_count>1?' · 2 ayrı yatak':''}</small></span>
               {adding&&<Plus size={16} aria-hidden="true"/>}
             </button>;
           })}

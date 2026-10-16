@@ -1,0 +1,25 @@
+{
+  "key": "catalog.kitchenware.storage_cleaning.bin_bag",
+  "label": {
+    "TR": "Çöp poşeti",
+    "EN": "Bin bag"
+  },
+  "category": "kitchenware",
+  "category_label": {
+    "TR": "Mutfak Gereçleri ve Sofra Takımları",
+    "EN": "Kitchenware and Tableware"
+  },
+  "group_label": {
+    "TR": "Saklama ve temizlik",
+    "EN": "Storage and cleaning"
+  },
+  "codes": [
+    "catalog.kitchenware.storage_cleaning.bin_bag"
+  ],
+  "filename": "catalog-kitchenware-storage_cleaning-bin_bag.avif",
+  "prompt": "Create ONE dedicated hotel catalog icon for \"Bin bag\" (Turkish label: \"Çöp poşeti\"). Subject: the exact hotel amenity or inventory item \"Bin bag\" in the context of Storage and cleaning; show its essential identifying physical features faithfully. Category: Kitchenware and Tableware. Subcategory: Storage and cleaning. The requested specific object or capability must be recognizable and must not be replaced by its generic category. Related but different items include Ice cube tray, Cling film, Aluminium foil, Baking paper, Dish sponge, Dishwashing liquid; distinguish the requested subtype through its actual construction, components or use. For a service, view or abstract amenity, use a compact literal pictogram showing that particular feature. Day of the Tentacle / 1990s hand-drawn point-and-click adventure-game illustration, matching the attached website and approved bed STYLE REFERENCES. Playful crooked geometry, wonky perspective, bent structural lines, crisp thin dark ink outlines, flat cel-shaded color shapes, a few hard-edged highlights. 2D hand-drawn illustrated volume. Use the application palette: turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, fuchsia #F50DB4, small orange #FF4D00 accents, white and darker shades of those for shadows. Mix 2-4 colors on distinct parts. One isolated object or compact related group, clear silhouette readable at 40px, large centered with 12% empty margin, square composition, solid very pale neutral #f9f9f9 background. No surrounding scene, unrelated props, text, letters, numbers, logos, watermark, frame or decorative tile. No 3D render, clay, plush texture, photorealism, gradients or product mockup. Preserve the coherent illustration style of the supplied references; they are style references only, not edit targets.",
+  "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-2f231eaf-c488-4a00-97dc-9aaf911930ed.png",
+  "generator": "built-in image_gen",
+  "style": "Day of the Tentacle-inspired 2D, application theme palette",
+  "output": "/images/catalog-icons-dott/catalog-kitchenware-storage_cleaning-bin_bag.avif"
+}

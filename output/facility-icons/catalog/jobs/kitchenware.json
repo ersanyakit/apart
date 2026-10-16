@@ -1,0 +1,1783 @@
+[
+  {
+    "key": "catalog.kitchenware.cooking.pot",
+    "label": {
+      "TR": "Tencere",
+      "EN": "Cooking pot"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.pot"
+    ],
+    "filename": "catalog-kitchenware-cooking-pot.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.pan",
+    "label": {
+      "TR": "Tava",
+      "EN": "Frying pan"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.pan"
+    ],
+    "filename": "catalog-kitchenware-cooking-pan.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.shallow_pan",
+    "label": {
+      "TR": "Sahan",
+      "EN": "Shallow pan"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.shallow_pan"
+    ],
+    "filename": "catalog-kitchenware-cooking-shallow_pan.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.wok",
+    "label": {
+      "TR": "Wok tava",
+      "EN": "Wok"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.wok"
+    ],
+    "filename": "catalog-kitchenware-cooking-wok.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.pressure_cooker",
+    "label": {
+      "TR": "Düdüklü tencere",
+      "EN": "Pressure cooker"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.pressure_cooker"
+    ],
+    "filename": "catalog-kitchenware-cooking-pressure_cooker.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.baking_tray",
+    "label": {
+      "TR": "Fırın tepsisi",
+      "EN": "Baking tray"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.baking_tray"
+    ],
+    "filename": "catalog-kitchenware-cooking-baking_tray.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.cake_tin",
+    "label": {
+      "TR": "Kek kalıbı",
+      "EN": "Cake tin"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.cake_tin"
+    ],
+    "filename": "catalog-kitchenware-cooking-cake_tin.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.glass_baking_dish",
+    "label": {
+      "TR": "Borcam",
+      "EN": "Glass baking dish"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.glass_baking_dish"
+    ],
+    "filename": "catalog-kitchenware-cooking-glass_baking_dish.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.casserole_dish",
+    "label": {
+      "TR": "Güveç kabı",
+      "EN": "Casserole dish"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.casserole_dish"
+    ],
+    "filename": "catalog-kitchenware-cooking-casserole_dish.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.grill_pan",
+    "label": {
+      "TR": "Izgara tavası",
+      "EN": "Grill pan"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.grill_pan"
+    ],
+    "filename": "catalog-kitchenware-cooking-grill_pan.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.teapot",
+    "label": {
+      "TR": "Çaydanlık",
+      "EN": "Teapot"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.teapot"
+    ],
+    "filename": "catalog-kitchenware-cooking-teapot.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.cezve",
+    "label": {
+      "TR": "Cezve",
+      "EN": "Turkish coffee pot"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.cezve"
+    ],
+    "filename": "catalog-kitchenware-cooking-cezve.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.milk_jug",
+    "label": {
+      "TR": "Sütlük",
+      "EN": "Milk jug"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.milk_jug"
+    ],
+    "filename": "catalog-kitchenware-cooking-milk_jug.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.lid_set",
+    "label": {
+      "TR": "Kapak seti",
+      "EN": "Lid set"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.lid_set"
+    ],
+    "filename": "catalog-kitchenware-cooking-lid_set.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.chopping_board",
+    "label": {
+      "TR": "Kesme tahtası",
+      "EN": "Chopping board"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.chopping_board"
+    ],
+    "filename": "catalog-kitchenware-cooking-chopping_board.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.knife_set",
+    "label": {
+      "TR": "Bıçak seti",
+      "EN": "Knife set"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.knife_set"
+    ],
+    "filename": "catalog-kitchenware-cooking-knife_set.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.chef_knife",
+    "label": {
+      "TR": "Şef bıçağı",
+      "EN": "Chef's knife"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.chef_knife"
+    ],
+    "filename": "catalog-kitchenware-cooking-chef_knife.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.peeler",
+    "label": {
+      "TR": "Soyacak",
+      "EN": "Peeler"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.peeler"
+    ],
+    "filename": "catalog-kitchenware-cooking-peeler.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.grater",
+    "label": {
+      "TR": "Rende",
+      "EN": "Grater"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.grater"
+    ],
+    "filename": "catalog-kitchenware-cooking-grater.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.kitchen_scissors",
+    "label": {
+      "TR": "Mutfak makası",
+      "EN": "Kitchen scissors"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.kitchen_scissors"
+    ],
+    "filename": "catalog-kitchenware-cooking-kitchen_scissors.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.skimmer",
+    "label": {
+      "TR": "Kevgir",
+      "EN": "Skimmer"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.skimmer"
+    ],
+    "filename": "catalog-kitchenware-cooking-skimmer.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.strainer",
+    "label": {
+      "TR": "Süzgeç",
+      "EN": "Strainer"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.strainer"
+    ],
+    "filename": "catalog-kitchenware-cooking-strainer.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.colander",
+    "label": {
+      "TR": "Süzme kabı",
+      "EN": "Colander"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.colander"
+    ],
+    "filename": "catalog-kitchenware-cooking-colander.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.ladle",
+    "label": {
+      "TR": "Kepçe",
+      "EN": "Ladle"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.ladle"
+    ],
+    "filename": "catalog-kitchenware-cooking-ladle.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.spatula",
+    "label": {
+      "TR": "Spatula",
+      "EN": "Spatula"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.spatula"
+    ],
+    "filename": "catalog-kitchenware-cooking-spatula.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.tongs",
+    "label": {
+      "TR": "Maşa",
+      "EN": "Tongs"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.tongs"
+    ],
+    "filename": "catalog-kitchenware-cooking-tongs.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.whisk",
+    "label": {
+      "TR": "Çırpıcı",
+      "EN": "Whisk"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.whisk"
+    ],
+    "filename": "catalog-kitchenware-cooking-whisk.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.rolling_pin",
+    "label": {
+      "TR": "Merdane",
+      "EN": "Rolling pin"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.rolling_pin"
+    ],
+    "filename": "catalog-kitchenware-cooking-rolling_pin.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.measuring_jug",
+    "label": {
+      "TR": "Ölçü kabı",
+      "EN": "Measuring jug"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.measuring_jug"
+    ],
+    "filename": "catalog-kitchenware-cooking-measuring_jug.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.measuring_spoon",
+    "label": {
+      "TR": "Ölçü kaşığı",
+      "EN": "Measuring spoon"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.measuring_spoon"
+    ],
+    "filename": "catalog-kitchenware-cooking-measuring_spoon.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.mixing_bowl",
+    "label": {
+      "TR": "Hamur yoğurma kabı",
+      "EN": "Mixing bowl"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.mixing_bowl"
+    ],
+    "filename": "catalog-kitchenware-cooking-mixing_bowl.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.salad_spinner",
+    "label": {
+      "TR": "Salata kurutucu",
+      "EN": "Salad spinner"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.salad_spinner"
+    ],
+    "filename": "catalog-kitchenware-cooking-salad_spinner.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.can_opener",
+    "label": {
+      "TR": "Konserve açacağı",
+      "EN": "Can opener"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.can_opener"
+    ],
+    "filename": "catalog-kitchenware-cooking-can_opener.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.bottle_opener",
+    "label": {
+      "TR": "Şişe açacağı",
+      "EN": "Bottle opener"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.bottle_opener"
+    ],
+    "filename": "catalog-kitchenware-cooking-bottle_opener.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.corkscrew",
+    "label": {
+      "TR": "Tirbuşon",
+      "EN": "Corkscrew"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.corkscrew"
+    ],
+    "filename": "catalog-kitchenware-cooking-corkscrew.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.garlic_press",
+    "label": {
+      "TR": "Sarımsak ezici",
+      "EN": "Garlic press"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.garlic_press"
+    ],
+    "filename": "catalog-kitchenware-cooking-garlic_press.avif"
+  },
+  {
+    "key": "catalog.kitchenware.cooking.potato_masher",
+    "label": {
+      "TR": "Patates ezici",
+      "EN": "Potato masher"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Pişirme ekipmanları",
+      "EN": "Cooking equipment"
+    },
+    "codes": [
+      "catalog.kitchenware.cooking.potato_masher"
+    ],
+    "filename": "catalog-kitchenware-cooking-potato_masher.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.dinner_plate",
+    "label": {
+      "TR": "Yemek tabağı",
+      "EN": "Dinner plate"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.dinner_plate"
+    ],
+    "filename": "catalog-kitchenware-tableware-dinner_plate.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.serving_plate",
+    "label": {
+      "TR": "Servis tabağı",
+      "EN": "Serving plate"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.serving_plate"
+    ],
+    "filename": "catalog-kitchenware-tableware-serving_plate.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.dessert_plate",
+    "label": {
+      "TR": "Pasta tabağı",
+      "EN": "Dessert plate"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.dessert_plate"
+    ],
+    "filename": "catalog-kitchenware-tableware-dessert_plate.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.breakfast_plate",
+    "label": {
+      "TR": "Kahvaltı tabağı",
+      "EN": "Breakfast plate"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.breakfast_plate"
+    ],
+    "filename": "catalog-kitchenware-tableware-breakfast_plate.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.soup_bowl",
+    "label": {
+      "TR": "Çorba kasesi",
+      "EN": "Soup bowl"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.soup_bowl"
+    ],
+    "filename": "catalog-kitchenware-tableware-soup_bowl.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.salad_bowl",
+    "label": {
+      "TR": "Salata kasesi",
+      "EN": "Salad bowl"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.salad_bowl"
+    ],
+    "filename": "catalog-kitchenware-tableware-salad_bowl.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.breakfast_set",
+    "label": {
+      "TR": "Kahvaltı servis seti",
+      "EN": "Breakfast serving set"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.breakfast_set"
+    ],
+    "filename": "catalog-kitchenware-tableware-breakfast_set.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.fork",
+    "label": {
+      "TR": "Çatal",
+      "EN": "Fork"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.fork"
+    ],
+    "filename": "catalog-kitchenware-tableware-fork.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.dinner_knife",
+    "label": {
+      "TR": "Yemek bıçağı",
+      "EN": "Dinner knife"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.dinner_knife"
+    ],
+    "filename": "catalog-kitchenware-tableware-dinner_knife.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.dessert_spoon",
+    "label": {
+      "TR": "Tatlı kaşığı",
+      "EN": "Dessert spoon"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.dessert_spoon"
+    ],
+    "filename": "catalog-kitchenware-tableware-dessert_spoon.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.tablespoon",
+    "label": {
+      "TR": "Yemek kaşığı",
+      "EN": "Tablespoon"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.tablespoon"
+    ],
+    "filename": "catalog-kitchenware-tableware-tablespoon.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.teaspoon",
+    "label": {
+      "TR": "Çay kaşığı",
+      "EN": "Teaspoon"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.teaspoon"
+    ],
+    "filename": "catalog-kitchenware-tableware-teaspoon.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.dessert_fork",
+    "label": {
+      "TR": "Tatlı çatalı",
+      "EN": "Dessert fork"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.dessert_fork"
+    ],
+    "filename": "catalog-kitchenware-tableware-dessert_fork.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.serving_fork",
+    "label": {
+      "TR": "Servis çatalı",
+      "EN": "Serving fork"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.serving_fork"
+    ],
+    "filename": "catalog-kitchenware-tableware-serving_fork.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.serving_spoon",
+    "label": {
+      "TR": "Servis kaşığı",
+      "EN": "Serving spoon"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.serving_spoon"
+    ],
+    "filename": "catalog-kitchenware-tableware-serving_spoon.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.tongs",
+    "label": {
+      "TR": "Maşa",
+      "EN": "Serving tongs"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.tongs"
+    ],
+    "filename": "catalog-kitchenware-tableware-tongs.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.water_glass",
+    "label": {
+      "TR": "Su bardağı",
+      "EN": "Water glass"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.water_glass"
+    ],
+    "filename": "catalog-kitchenware-tableware-water_glass.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.soft_drink_glass",
+    "label": {
+      "TR": "Meşrubat bardağı",
+      "EN": "Soft drink glass"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.soft_drink_glass"
+    ],
+    "filename": "catalog-kitchenware-tableware-soft_drink_glass.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.wine_glass",
+    "label": {
+      "TR": "Şarap kadehi",
+      "EN": "Wine glass"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.wine_glass"
+    ],
+    "filename": "catalog-kitchenware-tableware-wine_glass.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.raki_glass",
+    "label": {
+      "TR": "Rakı bardağı",
+      "EN": "Raki glass"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.raki_glass"
+    ],
+    "filename": "catalog-kitchenware-tableware-raki_glass.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.turkish_coffee_cup",
+    "label": {
+      "TR": "Türk kahvesi fincanı",
+      "EN": "Turkish coffee cup"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.turkish_coffee_cup"
+    ],
+    "filename": "catalog-kitchenware-tableware-turkish_coffee_cup.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.tea_glass",
+    "label": {
+      "TR": "Çay bardağı",
+      "EN": "Tea glass"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.tea_glass"
+    ],
+    "filename": "catalog-kitchenware-tableware-tea_glass.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.mug",
+    "label": {
+      "TR": "Kupa",
+      "EN": "Mug"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.mug"
+    ],
+    "filename": "catalog-kitchenware-tableware-mug.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.pitcher",
+    "label": {
+      "TR": "Sürahi",
+      "EN": "Pitcher"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.pitcher"
+    ],
+    "filename": "catalog-kitchenware-tableware-pitcher.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.carafe",
+    "label": {
+      "TR": "Karaf",
+      "EN": "Carafe"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.carafe"
+    ],
+    "filename": "catalog-kitchenware-tableware-carafe.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.thermos",
+    "label": {
+      "TR": "Termos",
+      "EN": "Thermos"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.thermos"
+    ],
+    "filename": "catalog-kitchenware-tableware-thermos.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.tray",
+    "label": {
+      "TR": "Tepsi",
+      "EN": "Tray"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.tray"
+    ],
+    "filename": "catalog-kitchenware-tableware-tray.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.sugar_bowl",
+    "label": {
+      "TR": "Şekerlik",
+      "EN": "Sugar bowl"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.sugar_bowl"
+    ],
+    "filename": "catalog-kitchenware-tableware-sugar_bowl.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.salt_shaker",
+    "label": {
+      "TR": "Tuzluk",
+      "EN": "Salt shaker"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.salt_shaker"
+    ],
+    "filename": "catalog-kitchenware-tableware-salt_shaker.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.pepper_shaker",
+    "label": {
+      "TR": "Biberlik",
+      "EN": "Pepper shaker"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.pepper_shaker"
+    ],
+    "filename": "catalog-kitchenware-tableware-pepper_shaker.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.oil_cruet",
+    "label": {
+      "TR": "Yağdanlık",
+      "EN": "Oil cruet"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.oil_cruet"
+    ],
+    "filename": "catalog-kitchenware-tableware-oil_cruet.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.vinegar_cruet",
+    "label": {
+      "TR": "Sirkelik",
+      "EN": "Vinegar cruet"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.vinegar_cruet"
+    ],
+    "filename": "catalog-kitchenware-tableware-vinegar_cruet.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.napkin_holder",
+    "label": {
+      "TR": "Peçetelik",
+      "EN": "Napkin holder"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.napkin_holder"
+    ],
+    "filename": "catalog-kitchenware-tableware-napkin_holder.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.bread_basket",
+    "label": {
+      "TR": "Ekmek sepeti",
+      "EN": "Bread basket"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.bread_basket"
+    ],
+    "filename": "catalog-kitchenware-tableware-bread_basket.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.presentation_plate",
+    "label": {
+      "TR": "Sunum tabağı",
+      "EN": "Presentation platter"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.presentation_plate"
+    ],
+    "filename": "catalog-kitchenware-tableware-presentation_plate.avif"
+  },
+  {
+    "key": "catalog.kitchenware.tableware.serving_trolley",
+    "label": {
+      "TR": "Servis arabası",
+      "EN": "Serving trolley"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Yemek ve servis takımları",
+      "EN": "Dining and serving sets"
+    },
+    "codes": [
+      "catalog.kitchenware.tableware.serving_trolley"
+    ],
+    "filename": "catalog-kitchenware-tableware-serving_trolley.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.storage_container",
+    "label": {
+      "TR": "Saklama kabı",
+      "EN": "Storage container"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.storage_container"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-storage_container.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.glass_jar",
+    "label": {
+      "TR": "Cam kavanoz",
+      "EN": "Glass jar"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.glass_jar"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-glass_jar.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.food_container",
+    "label": {
+      "TR": "Erzak kutusu",
+      "EN": "Food storage box"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.food_container"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-food_container.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.ice_tray",
+    "label": {
+      "TR": "Buz kalıbı",
+      "EN": "Ice cube tray"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.ice_tray"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-ice_tray.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.cling_film",
+    "label": {
+      "TR": "Streç film",
+      "EN": "Cling film"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.cling_film"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-cling_film.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.aluminium_foil",
+    "label": {
+      "TR": "Alüminyum folyo",
+      "EN": "Aluminium foil"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.aluminium_foil"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-aluminium_foil.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.baking_paper",
+    "label": {
+      "TR": "Pişirme kâğıdı",
+      "EN": "Baking paper"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.baking_paper"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-baking_paper.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.dish_sponge",
+    "label": {
+      "TR": "Bulaşık süngeri",
+      "EN": "Dish sponge"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.dish_sponge"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-dish_sponge.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.dishwashing_liquid",
+    "label": {
+      "TR": "Bulaşık deterjanı",
+      "EN": "Dishwashing liquid"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.dishwashing_liquid"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-dishwashing_liquid.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.dishwasher_tablet",
+    "label": {
+      "TR": "Bulaşık makinesi tableti",
+      "EN": "Dishwasher tablet"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.dishwasher_tablet"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-dishwasher_tablet.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.washing_gloves",
+    "label": {
+      "TR": "Bulaşık eldiveni",
+      "EN": "Washing-up gloves"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.washing_gloves"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-washing_gloves.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.draining_mat",
+    "label": {
+      "TR": "Bulaşıklık altlığı",
+      "EN": "Draining mat"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.draining_mat"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-draining_mat.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.kitchen_towel",
+    "label": {
+      "TR": "Mutfak havlusu",
+      "EN": "Kitchen towel"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.kitchen_towel"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-kitchen_towel.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.tea_towel",
+    "label": {
+      "TR": "Kurulama bezi",
+      "EN": "Tea towel"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.tea_towel"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-tea_towel.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.paper_towel",
+    "label": {
+      "TR": "Kâğıt havlu",
+      "EN": "Paper towel"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.paper_towel",
+      "catalog.guest_supplies.supplies.paper_towel"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-paper_towel.avif"
+  },
+  {
+    "key": "catalog.kitchenware.storage_cleaning.bin_bag",
+    "label": {
+      "TR": "Çöp poşeti",
+      "EN": "Bin bag"
+    },
+    "category": "kitchenware",
+    "category_label": {
+      "TR": "Mutfak Gereçleri ve Sofra Takımları",
+      "EN": "Kitchenware and Tableware"
+    },
+    "group_label": {
+      "TR": "Saklama ve temizlik",
+      "EN": "Storage and cleaning"
+    },
+    "codes": [
+      "catalog.kitchenware.storage_cleaning.bin_bag"
+    ],
+    "filename": "catalog-kitchenware-storage_cleaning-bin_bag.avif"
+  }
+]
