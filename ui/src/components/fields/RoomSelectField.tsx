@@ -219,7 +219,7 @@ export function RoomSelectField({
                   role="listbox"
                   aria-label={label}
                   onKeyDown={onMenuKeyDown}
-                  className="mt-2 max-h-72 space-y-0.5 overflow-y-auto"
+                  className="mt-2 max-h-72 space-y-0.5 overflow-y-auto overscroll-contain"
                 >
                   {filtered.map((r, i) => {
                     const isSelected = r.room_id === value;

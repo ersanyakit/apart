@@ -494,7 +494,16 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 .uni-card-interactive[aria-pressed="true"] { border-color: var(--color-accent); }
 
 /* App navigation: system typography, dynamic viewport and safe-area aware chrome. */
+html:has(.app-shell), body:has(.app-shell) {
+  height: 100%;
+  overflow: hidden;
+}
 .app-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   width: 100%;
   min-width: 0;
   height: 100vh;
@@ -517,6 +526,19 @@ label:active > .uni-choice { scale: var(--interaction-press-scale); }
 }
 .sidebar-menu-row:active:not(:disabled) { background-color: var(--color-brand-blue-200); }
 .sidebar-menu-row:focus-visible { outline-offset: -3px; box-shadow: none; }
+.app-workspace, .app-content-column {
+  display: flex;
+  flex: 1 1 0%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.app-content-column { flex-direction: column; align-self: stretch; }
+.app-content-column > main { flex: 1 1 0%; min-height: 0; overflow-y: auto; }
+.app-content-column > main[data-page="property3d"].flex-col { overflow: hidden; }
+.app-status-footer { flex: 0 0 auto; flex-wrap: wrap; gap: 8px 24px; }
+.app-status-counts { min-width: 0; flex-wrap: wrap; gap: 8px 24px; }
+.app-status-counts > div { white-space: nowrap; }
 .app-shell main { min-height: 0; overscroll-behavior-y: contain; }
 .mobile-app-header {
   display: flex;
@@ -1006,3 +1028,13 @@ main[data-page="facility"] .settings-editor-card form>* { margin-top:0; margin-b
 main[data-page="facility"] .settings-editor-card .field-card { padding:10px 14px; border-radius:16px; }
 main[data-page="facility"] .settings-editor-card .field-card input { font-size:16px; line-height:28px; }
 main[data-page="facility"] .settings-editor-card form>button { align-self:flex-start; min-height:44px; }
+
+/* Kart-içi açılır listesi açıkken komşu kartlar satıra gerilmez:
+   açılan kart uzar, diğerleri doğal yüksekliklerini korur.
+   Liste kapalıyken hiçbir şey değişmez. */
+div.grid:has([aria-expanded="true"]):has([aria-haspopup="listbox"], [role="combobox"], .date-field) > :is(.field-card, :has(> .field-card)),
+div.flex:not(.flex-col):not(.flex-col-reverse):has([aria-expanded="true"]):has([aria-haspopup="listbox"], [role="combobox"], .date-field) > :is(.field-card, :has(> .field-card)),
+.guest-history-filters:has([aria-expanded="true"]) > * {
+  align-self: start;
+  height: auto;
+}

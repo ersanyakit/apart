@@ -99,7 +99,7 @@ export function InlineSelectField({
             <div
               role="listbox"
               aria-label={label}
-              className="mt-3 max-h-72 space-y-0.5 overflow-y-auto border-t border-slate-200/70 pt-3"
+              className="mt-3 max-h-72 space-y-0.5 overflow-y-auto overscroll-contain border-t border-slate-200/70 pt-3"
             >
               {options.map((o) => {
                 const isActive = o.value === value;

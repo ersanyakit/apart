@@ -170,6 +170,16 @@ export function BookingForm({
   }, [roomId ]);
   // Yeni misafir satırları varsayılan uyrukla açılır (Ayarlar → Ülke).
   const { defaultCountry } = useCurrency();
+  // Misafir eklenince liste sonuna kaydır (azaltılmış hareket tercihine saygılı).
+  const listEnd = React.useRef<HTMLDivElement>(null);
+  const guestCount = React.useRef(guests.length);
+  React.useEffect(() => {
+    if (guests.length > guestCount.current) {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      listEnd.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+    }
+    guestCount.current = guests.length;
+  }, [guests.length]);
   // Sahip adı değişince ilk misafir otomatik eşlenir (manuel girilmiş
   // isim ezilmez; eşleşme önceki sahip değeriyle takip edilir).
   const ownerPrev = React.useRef(booking?.guest_name || "");
@@ -310,6 +320,73 @@ export function BookingForm({
         </div>
       </div>
       {booking?.actual_check_in && <p className="text-sm text-emerald-700">Gerçek giriş: {new Date(booking.actual_check_in).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" })}</p>}
+      </FormSection>
+      <FormSection
+        title="Birim"
+        hint={checkedIn ? "Odayı değiştirmek için Oda Taşı işlemini kullanın." : "Tarihlere uygun birim seçin"}
+      >
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="lg:col-span-3">
+          <RoomSelectField
+            label="Kiralanacak birim"
+            disabled={checkedIn}
+            value={room}
+            onChange={setRoom}
+            snapshot={snapshot}
+            checkInISO={start ? new Date(start).toISOString() : snapshot.server_time}
+            excludeBookingId={booking?.booking_id}
+            rooms={options ?? undefined}
+          />
+        </div>
+        <div className="lg:col-span-2">
+          <MoneyField
+            label="Günlük Fiyat"
+            valueMinor={priceMinor}
+            onChange={setPriceMinor}
+          />
+        </div>
+      </div>
+      <div>
+        <button
+          type="button"
+          className={`uni-control ${secondaryStyle} w-full`}
+          disabled={busy || checkedIn || !start || !end}
+          onClick={async () => {
+            setBusy(true);
+            setError("");
+            try {
+              const available = await command<APIRoom[]>("room.availability", {
+                ...query(),
+                ...(booking ? { exclude_booking_id: booking.booking_id } : {}),
+              });
+              setOptions(available);
+              if (!available.some((r) => r.room_id === room)) setRoom("");
+            } catch (e) {
+              setError(messageOf(e));
+            } finally {
+              setBusy(false);
+            }
+          }}
+        >
+          Müsaitlik Kontrolü
+        </button>
+      </div>
+      {options && (
+        <p className="flex items-start gap-2 rounded-xl border border-emerald-200/70 bg-emerald-50/60 px-4 py-3 text-xs text-emerald-800">
+          <Info className="w-4 h-4 shrink-0 mt-0.5" />
+          <span>
+            Bu tarih ve kişi sayısına uygun {options.length} birim. Kesin
+            müsaitlik kaydetme sırasında tekrar kontrol edilir.
+          </span>
+        </p>
+      )}
+      <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
+        <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
+        <span>
+          Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve
+          yatakları da aynı tarihler için kapatır.
+        </span>
+      </p>
       </FormSection>
       <FormSection
         title={`Misafirler${guests.length ? ` · ${guests.length}` : ""}`}
@@ -490,78 +567,29 @@ export function BookingForm({
                 )
               }
             />
+            <div className="sm:col-span-2">
+              <TextAreaField
+                label="Adres"
+                tone="white"
+                value={g.address || ""}
+                placeholder="Mahalle, sokak, apartman, il / ilçe"
+                rows={2}
+                maxLength={1000}
+                onChange={(v) =>
+                  setGuests(
+                    guests.map((n2) =>
+                      n2.id === g.id ? { ...n2, address: v } : n2,
+                    ),
+                  )
+                }
+              />
+            </div>
             </div>
             <BookingBlacklistCheck nationalID={g.tcNo || ""} nationality={g.nationality || ""}/>
           </div>
         ))}
+        <div ref={listEnd} aria-hidden="true" />
       </div>
-      </FormSection>
-      <FormSection
-        title="Birim"
-        hint={checkedIn ? "Odayı değiştirmek için Oda Taşı işlemini kullanın." : "Tarihlere uygun birim seçin"}
-      >
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-        <div className="lg:col-span-3">
-          <RoomSelectField
-            label="Kiralanacak birim"
-            disabled={checkedIn}
-            value={room}
-            onChange={setRoom}
-            snapshot={snapshot}
-            checkInISO={start ? new Date(start).toISOString() : snapshot.server_time}
-            excludeBookingId={booking?.booking_id}
-            rooms={options ?? undefined}
-          />
-        </div>
-        <div className="lg:col-span-2">
-          <MoneyField
-            label="Günlük Fiyat"
-            valueMinor={priceMinor}
-            onChange={setPriceMinor}
-          />
-        </div>
-      </div>
-      <div>
-        <button
-          type="button"
-          className={`uni-control ${secondaryStyle} w-full`}
-          disabled={busy || checkedIn || !start || !end}
-          onClick={async () => {
-            setBusy(true);
-            setError("");
-            try {
-              const available = await command<APIRoom[]>("room.availability", {
-                ...query(),
-                ...(booking ? { exclude_booking_id: booking.booking_id } : {}),
-              });
-              setOptions(available);
-              if (!available.some((r) => r.room_id === room)) setRoom("");
-            } catch (e) {
-              setError(messageOf(e));
-            } finally {
-              setBusy(false);
-            }
-          }}
-        >
-          Müsaitlik Kontrolü
-        </button>
-      </div>
-      {options && (
-        <p className="flex items-start gap-2 rounded-xl border border-emerald-200/70 bg-emerald-50/60 px-4 py-3 text-xs text-emerald-800">
-          <Info className="w-4 h-4 shrink-0 mt-0.5" />
-          <span>
-            Bu tarih ve kişi sayısına uygun {options.length} birim. Kesin
-            müsaitlik kaydetme sırasında tekrar kontrol edilir.
-          </span>
-        </p>
-      )}
-      <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
-        <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
-        <span>
-          Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve
-          yatakları da aynı tarihler için kapatır.
-        </span>
-      </p>
       </FormSection>
       <FormSection title="Notlar" hint="Rezervasyonla ilgili ek bilgi">
       <TextAreaField
@@ -711,6 +739,15 @@ export function BookingGuestsForm({
   const [guests, setGuests] = useState(booking.guests || []),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const listEnd = React.useRef<HTMLDivElement>(null);
+  const guestCount = React.useRef(guests.length);
+  React.useEffect(() => {
+    if (guests.length > guestCount.current) {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      listEnd.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+    }
+    guestCount.current = guests.length;
+  }, [guests.length]);
   const patch = (i: number, p: Partial<import("../types").Guest>) =>
     setGuests((rows) => rows.map((g, n) => (n === i ? { ...g, ...p } : g)));
   return (
@@ -809,10 +846,22 @@ export function BookingGuestsForm({
               value={g.nationality || ""}
               onChange={(v) => patch(i, { nationality: v })}
             />
+            <div className="sm:col-span-2">
+              <TextAreaField
+                label="Adres"
+                tone="white"
+                value={g.address || ""}
+                placeholder="Mahalle, sokak, apartman, il / ilçe"
+                rows={2}
+                maxLength={1000}
+                onChange={(v) => patch(i, { address: v })}
+              />
+            </div>
           </div>
           <BookingBlacklistCheck nationalID={g.tcNo || ""} nationality={g.nationality || ""}/>
         </div>
       ))}
+      <div ref={listEnd} aria-hidden="true" />
       <div className="flex gap-3">
         <button
           type="button"

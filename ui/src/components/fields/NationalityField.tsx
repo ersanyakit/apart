@@ -192,7 +192,7 @@ export function NationalityField({
             <div
               role="listbox"
               aria-label={t("country.results")}
-              className="mt-3 max-h-72 overflow-y-auto border-t border-slate-200/70 pt-3"
+              className="mt-3 max-h-72 overflow-y-auto overscroll-contain border-t border-slate-200/70 pt-3"
             >
               {matches.map((c) => (
                 <CountryRow

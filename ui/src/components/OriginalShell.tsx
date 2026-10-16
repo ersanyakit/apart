@@ -289,7 +289,7 @@ export function OriginalShell({
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="app-workspace flex flex-1 overflow-hidden relative">
         {/* Left Sidebar (masaüstü; mobilde alt bar + bottom sheet) */}
         <motion.aside
           initial={false}
@@ -353,10 +353,10 @@ export function OriginalShell({
           </div>
         </motion.aside>
 
-        <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
+        <div className="app-content-column flex-1 min-w-0 flex flex-col overflow-hidden">
           {children} {/* Footer Info */}
-          <footer className="hidden lg:flex bg-white border-t border-slate-200 px-6 py-2 items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-6 min-w-max">
+          <footer className="app-status-footer hidden lg:flex bg-white border-t border-slate-200 px-6 py-2 items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm">
+            <div className="app-status-counts flex items-center">
               <div className="flex items-center gap-2 font-bold">
                 <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.occupied.accent}}></div>{" "}
                 DOLU: {rooms.filter((r) => r.status === "Dolu").length}
@@ -386,7 +386,7 @@ export function OriginalShell({
                 TADİLAT: {rooms.filter((r) => r.status === RoomState.Maintenance).length}
               </div>
             </div>
-            <div className="italic text-slate-400 ml-6 shrink-0">
+            <div className="italic text-slate-400 shrink-0 whitespace-nowrap">
               interaktifotel.com - v1.0.0
             </div>
           </footer>

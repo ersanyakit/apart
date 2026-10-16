@@ -15,7 +15,15 @@ execFileSync(process.execPath, [
   "--moduleResolution", "node", "--skipLibCheck", "--strict", "--esModuleInterop",
   "--resolveJsonModule", "--jsx", "react-jsx", "--outDir", output,
   "src/components/Sidebar.tsx", "src/components/MobileNav.tsx", "src/components/reports/navigation.ts",
+  "node_modules/next/types/global.d.ts",
 ], { cwd: ui, stdio: "pipe" });
+{
+  const { copyFileSync, mkdirSync } = require("node:fs");
+  mkdirSync(path.join(output, "components"), { recursive: true });
+  for (const css of ["ContextMenu.module.css", "RoomOperationDialog.module.css"])
+    copyFileSync(path.join(ui, "src/components", css), path.join(output, "components", css));
+  require.extensions[".css"] = (module) => { module.exports = {}; };
+}
 process.env.NODE_PATH = path.join(ui, "node_modules");
 require("node:module").Module._initPaths();
 const { SidebarItem } = require(path.join(output, "components/Sidebar.js"));

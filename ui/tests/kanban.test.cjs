@@ -7,7 +7,7 @@ const ui=path.resolve(__dirname,'..'),out=mkdtempSync(path.join(os.tmpdir(),'ote
 after(()=>rmSync(out,{recursive:true,force:true}));
 execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--target','ES2022','--module','commonjs','--moduleResolution','node','--skipLibCheck','--strict','--esModuleInterop','--resolveJsonModule','--jsx','react-jsx','--outDir',out,'src/components/kanban/KanbanView.tsx','src/components/OriginalShell.tsx','src/lib/audit-presentation.ts','node_modules/next/types/global.d.ts'],{cwd:ui,stdio:'pipe'});
 process.env.NODE_PATH=path.join(ui,'node_modules');require('node:module').Module._initPaths();
-mkdirSync(path.join(out,'components/kanban'),{recursive:true});copyFileSync(path.join(ui,'src/components/kanban/KanbanView.module.css'),path.join(out,'components/kanban/KanbanView.module.css'));
+mkdirSync(path.join(out,'components/kanban'),{recursive:true});copyFileSync(path.join(ui,'src/components/kanban/KanbanView.module.css'),path.join(out,'components/kanban/KanbanView.module.css'));for(const css of ['ContextMenu.module.css','RoomOperationDialog.module.css'])copyFileSync(path.join(ui,'src/components',css),path.join(out,'components',css));
 require.extensions['.css']=(module)=>{module.exports={}};
 const React=require('react'),{renderToStaticMarkup:render}=require('react-dom/server');
 const {KanbanView,NoteCard}=require(path.join(out,'components/kanban/KanbanView.js'));

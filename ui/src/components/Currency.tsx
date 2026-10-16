@@ -159,17 +159,39 @@ export function parseMoney(raw: string, format: MoneyFormatId): number | null {
 }
 
 /**
- * Yazarken harf/sembol girişini engeller: sadece rakam ve ilgili
- * biçimin ayraçlarına izin verir, ondalık ayracı tekilleştirir.
+ * Yazarken bozuk tutar oluşmasını engeller: yalnızca rakam ve TEK
+ * ondalık ayracına izin verir, kuruşu 2 basamakla sınırlar.
+ * "123.,231" yazılamaz (ikinci ayraç düşer), "...,...." tek ayraca iner.
+ * Binlik ayraçla YAPIŞTIRILAN metin ("1.234,56") bileşenin onPaste
+ * akışında kuruşa çevrilip kurallı biçime döner; bu filtre yalnızca
+ * tek tek tuşlanan girişi temizler.
  */
 export function sanitizeMoneyInput(raw: string, format: MoneyFormatId): string {
-  let s = raw.replace(/[^0-9.,]/g, "");
   const dec = format === "tr" ? "," : ".";
-  const parts = s.split(dec);
-  if (parts.length > 2) {
-    s = parts[0] + dec + parts.slice(1).join("");
+  let out = "", seenSep = false, frac = 0;
+  for (const ch of raw.replace(/[^0-9.,]/g, "")) {
+    if (ch === "." || ch === ",") {
+      if (!seenSep) {
+        seenSep = true;
+        out += dec;
+      }
+    } else if (!seenSep) {
+      out += ch;
+    } else if (frac < 2) {
+      frac += 1;
+      out += ch;
+    }
   }
-  return s;
+  // Baştaki ayraç "0," olur ("," → "0,"); çıplak ayraç yazılamaz.
+  if (out.startsWith(dec)) out = `0${out}`;
+  return out;
+}
+
+/** Kuruşu giriş biçimine uygun yalın metne çevirir ("1234,56" / "250"). */
+export function canonicalMoneyText(minor: number, format: MoneyFormatId): string {
+  const dec = format === "tr" ? "," : ".";
+  const whole = Math.floor(minor / 100), rest = minor % 100;
+  return rest ? `${whole}${dec}${String(rest).padStart(2, "0")}` : `${whole}`;
 }
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {

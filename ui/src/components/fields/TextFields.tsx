@@ -128,6 +128,8 @@ export function TextAreaField({
   rows = 3,
   disabled,
   uppercase = false,
+  tone = "surface",
+  maxLength,
 }: {
   label: string;
   value: string;
@@ -137,9 +139,12 @@ export function TextAreaField({
   disabled?: boolean;
   /** Açıkken girilen metin tr-TR büyük harfe çevrilir. */
   uppercase?: boolean;
+  /** "surface" ya da gri zemin üstünde "white" kart. */
+  tone?: "surface" | "white";
+  maxLength?: number;
 }) {
   return (
-    <FieldCard>
+    <FieldCard className={tone === "white" ? "bg-white" : undefined}>
       <label className="block min-w-0 cursor-text">
         <FieldCaption>{label}</FieldCaption>
         <textarea
@@ -147,6 +152,7 @@ export function TextAreaField({
           placeholder={placeholder}
           rows={rows}
           disabled={disabled}
+          maxLength={maxLength}
           value={value}
           onChange={(e) =>
             onChange(

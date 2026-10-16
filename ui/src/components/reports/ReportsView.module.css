@@ -1,5 +1,6 @@
 .layout {display:flex;flex-direction:column;gap:20px;min-width:0}
 .filters {display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:start}
+.filters:has([aria-expanded="true"]) > * {align-self:start;height:auto}
 .metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px}
 .metric {background:var(--color-uni-surface);border-radius:24px;padding:22px;min-width:0}
 .metric p {font-size:12px;color:var(--color-uni-muted);margin:0 0 10px}
