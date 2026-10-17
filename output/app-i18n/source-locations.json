@@ -141,6 +141,24 @@
       "line": 47
     }
   ],
+  "{bed} ekle": [
+    {
+      "file": "ui/src/components/BedPresetPicker.tsx",
+      "line": 30
+    }
+  ],
+  "{bed} seç": [
+    {
+      "file": "ui/src/components/BedPresetPicker.tsx",
+      "line": 30
+    }
+  ],
+  "{beds} fiziksel yatak · {places} yatak yeri · {capacity} kişilik kapasite.": [
+    {
+      "file": "ui/src/components/RoomBedsEditor.tsx",
+      "line": 53
+    }
+  ],
   "{count} kişi": [
     {
       "file": "ui/src/components/BookingForm.tsx",
@@ -227,6 +245,16 @@
     {
       "file": "ui/src/lib/i18n/messages.ts",
       "line": 1
+    }
+  ],
+  "{places} yatak yeri · {capacity} kişi": [
+    {
+      "file": "ui/src/components/BedPresetPicker.tsx",
+      "line": 31
+    },
+    {
+      "file": "ui/src/components/RoomBedsEditor.tsx",
+      "line": 42
     }
   ],
   "{theme} teması etkin": [
@@ -436,7 +464,7 @@
   "{value1} adedi": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 43
+      "line": 45
     }
   ],
   "{value1} adet": [
@@ -460,7 +488,7 @@
   "{value1} artır": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 44
+      "line": 46
     },
     {
       "file": "ui/src/components/fields/DateField.tsx",
@@ -480,7 +508,7 @@
   "{value1} azalt": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 42
+      "line": 44
     },
     {
       "file": "ui/src/components/fields/DateField.tsx",
@@ -576,7 +604,7 @@
   "{value1} kaldır": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 45
+      "line": 47
     }
   ],
   "{value1} kat · {value2} {value3}": [
@@ -856,10 +884,6 @@
     }
   ],
   "{value1}{value2}": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 30
-    },
     {
       "file": "ui/src/components/fields/RoomSelectField.tsx",
       "line": 153
@@ -3424,7 +3448,7 @@
   "Birden çok kişilik tek yatak yüzeyi, bağımsız rezervasyonlara bölünmez.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 52
+      "line": 54
     }
   ],
   "Birden fazla konaklama türü": [
@@ -4586,7 +4610,7 @@
     },
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 30
+      "line": 32
     }
   ],
   "Credit Card": [
@@ -6535,12 +6559,6 @@
       "line": 52
     }
   ],
-  "ekle": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 30
-    }
-  ],
   "Ekle": [
     {
       "file": "ui/src/lib/i18n/application-core.json",
@@ -7283,12 +7301,6 @@
     {
       "file": "ui/src/components/UnitSleepingFields.tsx",
       "line": 12
-    }
-  ],
-  "fiziksel yatak ·": [
-    {
-      "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
     }
   ],
   "Fiziksel yatak birimi": [
@@ -9170,7 +9182,7 @@
   "Her yatak yeri ayrı rezervasyon alabilir. Ranzanın her katı ayrı bir yatak yeridir.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
+      "line": 53
     }
   ],
   "Her yatak yeri ayrı rezervasyon alır. Bir ranzanın her katı ayrı yatak yeridir.": [
@@ -11868,7 +11880,7 @@
   "Kayıtlı yataklar · ayrıntıları Yataklar bölümünden düzenleyebilirsiniz.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 30
+      "line": 32
     }
   ],
   "Kaymaz banyo paspası": [
@@ -12303,10 +12315,6 @@
       "line": 77
     },
     {
-      "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 40
-    },
-    {
       "file": "ui/src/components/property-3d/PropertyView.tsx",
       "line": 142
     }
@@ -12334,10 +12342,6 @@
     }
   ],
   "kişi ·": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 31
-    },
     {
       "file": "ui/src/components/InventoryView.tsx",
       "line": 292
@@ -12389,12 +12393,6 @@
     {
       "file": "ui/src/components/BookingForm.tsx",
       "line": 668
-    }
-  ],
-  "kişilik yatak kapasitesi.": [
-    {
-      "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
     }
   ],
   "Kişisel": [
@@ -13780,7 +13778,7 @@
   "Mevcut yataklar alınamadı:": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 29
+      "line": 31
     }
   ],
   "Migration adı küçük harf, rakam ve alt çizgiden oluşmalıdır.": [
@@ -15196,11 +15194,11 @@
   "Odadaki yataklar": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 26
+      "line": 28
     },
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 27
+      "line": 29
     }
   ],
   "Odalar": [
@@ -18430,7 +18428,7 @@
   "Satışa açılma şekli için kiralama tercihini seçin.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
+      "line": 53
     }
   ],
   "Sauna": [
@@ -18485,12 +18483,6 @@
     {
       "file": "ui/src/components/document-editor/markup.ts",
       "line": 4
-    }
-  ],
-  "seç": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 30
     }
   ],
   "Seç": [
@@ -21398,7 +21390,7 @@
   "Tüm yataklar aynı oda rezervasyonuna dahildir.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
+      "line": 53
     }
   ],
   "Tümü": [
@@ -22472,7 +22464,7 @@
   "Yatak düzeni özeti": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 50
+      "line": 52
     }
   ],
   "Yatak ekipmanları": [
@@ -22602,7 +22594,7 @@
   "Yatak türünü ve adedini seçin. Odayla birlikte kaydedilir ve 3 boyutlu görünümde gösterilir.": [
     {
       "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 28
+      "line": 30
     }
   ],
   "Yatak ucu bankı": [
@@ -22641,26 +22633,12 @@
   ],
   "yatak yeri": [
     {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 31
-    },
-    {
       "file": "ui/src/components/InventoryView.tsx",
       "line": 292
     },
     {
       "file": "ui/src/components/property-3d/PropertyView.tsx",
       "line": 158
-    }
-  ],
-  "yatak yeri ·": [
-    {
-      "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 40
-    },
-    {
-      "file": "ui/src/components/RoomBedsEditor.tsx",
-      "line": 51
     }
   ],
   "Yatak yerinin kodu, seviyesi, konumu, ölçüleri ve kapasitesi geçerli ve benzersiz olmalıdır.": [

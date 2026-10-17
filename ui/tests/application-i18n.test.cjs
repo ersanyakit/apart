@@ -15,7 +15,7 @@ const source=require('../src/lib/i18n/application-source.json');
 test('all report headings, report group introductions, setup steps and catalog categories have native resources',async()=>{
  const contracts=require('../src/lib/contracts.generated.json');
  const catalog=require('../../internal/domain/catalog/defaults.json');
- const keys=[...contracts.reports.flatMap(r=>[r.name,r.description]),'Tüm tarihlerdeki müşterilerinizi benzersiz olarak görüntüleyin; ad, kimlik veya telefonla arayın.',...contracts.report_groups.flatMap(g=>[g.name,g.description]),...contracts.reports.filter(r=>r.key.startsWith('reservations.')).map(r=>r.description),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
+ const keys=[...contracts.reports.flatMap(r=>[r.name,r.description]),...contracts.bed_presets.map(p=>p.label),'Tüm tarihlerdeki müşterilerinizi benzersiz olarak görüntüleyin; ad, kimlik veya telefonla arayın.',...contracts.report_groups.flatMap(g=>[g.name,g.description]),...contracts.reports.filter(r=>r.key.startsWith('reservations.')).map(r=>r.description),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
  for(const locale of Object.keys(LOCALES)){
   const dictionary=await loadApplicationDictionary(locale);
   for(const key of keys){assert.ok(Object.hasOwn(source,key),`Unregistered source: ${key}`);assert.ok(Object.hasOwn(dictionary,key),`${locale}: ${key}`);}
@@ -108,7 +108,7 @@ test('extraction excludes implementation strings while retaining visible notific
 
 test('completed shared screens and dialogs have resources across all supported locales',async()=>{
  const locations=JSON.parse(readFileSync(path.join(ui,'../output/app-i18n/source-locations.json'),'utf8'));
- const files=new Set(['SetupWizard.tsx','FacilityDetailsFields.tsx','FloorDefinitionFields.tsx','UnitSleepingFields.tsx','FeatureFields.tsx','CatalogFields.tsx','PropertySwitcher.tsx','AccommodationForms.tsx','BookingForm.tsx','SetupAccommodationFields.tsx','StaffView.tsx','StaffIdentityFields.tsx','RoomFolio.tsx','AppSettingsView.tsx','FontSize.tsx','SettingsEditor.tsx','ConfirmDialog.tsx','PWA.tsx','kanban/NoteModal.tsx','kanban/KanbanView.tsx','kanban/model.ts'].map(file=>'ui/src/components/'+file));
+ const files=new Set(['RoomRentalSetup.tsx','RoomBedsEditor.tsx','BedPresetPicker.tsx','SetupWizard.tsx','FacilityDetailsFields.tsx','FloorDefinitionFields.tsx','UnitSleepingFields.tsx','FeatureFields.tsx','CatalogFields.tsx','PropertySwitcher.tsx','AccommodationForms.tsx','BookingForm.tsx','SetupAccommodationFields.tsx','StaffView.tsx','StaffIdentityFields.tsx','RoomFolio.tsx','AppSettingsView.tsx','FontSize.tsx','SettingsEditor.tsx','ConfirmDialog.tsx','PWA.tsx','kanban/NoteModal.tsx','kanban/KanbanView.tsx','kanban/model.ts'].map(file=>'ui/src/components/'+file));
  const keys=Object.entries(locations).filter(([,refs])=>refs.some(ref=>files.has(ref.file))).map(([key])=>key);
  const fold=text=>text.trim().replace(/\s+/g,' ').toLocaleLowerCase('tr');
  for(const locale of Object.keys(LOCALES)){
