@@ -41,6 +41,22 @@ await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByR
 const {default:assert}=await import('node:assert/strict');
 page.setDefaultTimeout(15000);await page.emulateMedia({reducedMotion:'reduce'});
 await page.getByRole('button',{name:'Oda Durum Çizelgesi',exact:true}).last().click();
+await fs.mkdir('output/navigation-icons',{recursive:true});
+await page.locator('.navigation-artwork').first().waitFor();
+await page.evaluate(async()=>{
+  const urls=[...new Set(Array.from(document.querySelectorAll('.navigation-artwork')).map(el=>getComputedStyle(el).maskImage.match(/url\(["']?(.*?)["']?\)/)?.[1]).filter(Boolean))];
+  await Promise.all(urls.map(async url=>{const img=new Image();img.src=url;await img.decode();}));
+});
+const themeColors=[];
+for(const theme of ['blue','pink','green','orange','purple','fuchsia']) {
+  await page.evaluate(theme=>document.documentElement.setAttribute('data-theme',theme),theme);
+  const color=await page.locator('.navigation-artwork').first().evaluate(el=>getComputedStyle(el).backgroundColor);
+  themeColors.push(color);
+  await page.screenshot({path:`output/navigation-icons/theme-${theme}.png`});
+}
+assert.equal(new Set(themeColors).size,6,'Navigation artwork must follow every theme');
+await page.evaluate(()=>document.documentElement.setAttribute('data-theme','blue'));
+await page.screenshot({path:'output/navigation-icons/desktop.png'});
 await page.getByRole('button',{name:'104 işlemleri',exact:true}).click();
 let modal=page.getByRole('dialog',{name:'Oda 104',exact:true});
 await modal.getByRole('button',{name:'Oda durumu',exact:true}).click();

@@ -1,3 +1,4 @@
+import { RoomCondition, RoomConditionIcon } from './RoomCondition';
 import { useI18n } from "./I18n";
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { boardStatusKey, statusStyle, roomStatusKey, STATUS_PALETTE } from "../lib/status-palette";
@@ -199,10 +200,10 @@ export function FloorBoard({
                 <strong className="text-[10px] font-mono leading-none shrink-0">
                   {room.code}
                 </strong>
-                <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0">
-                  {state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
+                <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0 flex items-center gap-1">
+                  <RoomConditionIcon semantic={boardStatusKey(state)} size={16}/>{state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
                 </span>
-                {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===state.operationalStatus) && <span className="absolute right-1 top-1 h-2 w-2 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}} aria-label={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label} title={STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}/>}
+                {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===state.operationalStatus) && <span className="absolute right-1 top-1"><RoomCondition status={state.operationalStatus} size={24} iconOnly/></span>}
               </button>
             );
           })}

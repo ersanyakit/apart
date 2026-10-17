@@ -1,4 +1,5 @@
 "use client";
+import { RoomCondition } from './components/RoomCondition';
 import { SetupWizard } from "./components/SetupWizard";
 import {operationalRoomStatuses, housekeepingRoomStatuses} from "./lib/statuses";
 import { STATUS_PALETTE, roomStatusKey } from "./lib/status-palette";
@@ -871,11 +872,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                             })}
                             className={`uni-control ${secondaryStyle} gap-2`}
                           >
-                            <span
-                              aria-hidden="true"
-                              className="h-2.5 w-2.5 shrink-0 rounded-full" style={{backgroundColor:STATUS_PALETTE[roomStatusKey(state.operationalStatus)].accent}}
-                            />
-                            <span className="truncate">{STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}</span>
+                            <RoomCondition status={state.operationalStatus}/>
                             <ChevronDown size={14} strokeWidth={2.5} aria-hidden="true" className="shrink-0 text-slate-400" />
                           </button>
                         )}

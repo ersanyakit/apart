@@ -1,22 +1,22 @@
-import {
-  Box, KanbanSquare, ReceiptText, ShieldAlert, Wallet, ChartPie, ChartColumnIncreasing, TrendingUp, Wrench, ChartNoAxesCombined, BedDouble, Building2, CalendarCheck2, CalendarDays, ClipboardList,
-  DoorOpen, Files, LayoutGrid, ScrollText, Settings2, SlidersHorizontal,
-  WandSparkles, Sparkles, UsersRound, Bell, Search, X, Home, MapPin, type LucideIcon,
-} from "lucide-react";
+import { Bell, Search, X, MapPin, ClipboardList } from 'lucide-react';
+import definitions from '../lib/navigation-icons.json';
 
-const icons: Record<string, LucideIcon> = {
-  property3d: Box,
-  kanban: KanbanSquare,
-  folio: ReceiptText, blacklist: ShieldAlert, reports: ChartNoAxesCombined, operations: LayoutGrid, board: CalendarDays,
-  calendar: CalendarDays, bookings: CalendarCheck2, "bookings-list": ClipboardList,
-  stays: BedDouble, guests: UsersRound, settings: Settings2, facility: Building2,
-  units: DoorOpen, staff: UsersRound, templates: Files, logs: ScrollText,
-  setup: WandSparkles, features: Sparkles, appsettings: SlidersHorizontal, newbooking: ClipboardList,
-  search: Search, close: X, notifications: Bell, home: Home, map: MapPin,
-};
-
-export function NavigationIcon({ name, size = 21 }: { name: string; size?: number }) {
-  const reportIcons: Record<string,LucideIcon> = {finance:Wallet,occupancy:ChartPie,reservations:CalendarCheck2,pricing:TrendingUp,guests:UsersRound,staff:UsersRound,operations:Wrench,apart:Building2,hostel:BedDouble,management:ChartColumnIncreasing};
-  const Icon = (name.startsWith("report.") || name.startsWith("report-group.")) ? reportIcons[name.split(".")[1]] ?? ChartNoAxesCombined : icons[(name.startsWith("customer:") || name.startsWith("guest-history:")) ? "guests" : name.startsWith("booking:") ? "bookings" : name] ?? ClipboardList;
-  return <Icon size={size} strokeWidth={1.8} aria-hidden="true" className="shrink-0" />;
+// One artwork map for desktop sidebar, page tabs and mobile navigation.
+const artwork = (name: string) => `/images/navigation-flat/${name}.avif`;
+export const NAVIGATION_ARTWORK: Record<string, string> = Object.fromEntries(
+  Object.entries(definitions.pages).map(([key, name]) => [key, artwork(name)]),
+);
+const REPORT_ARTWORK: Record<string, string> = Object.fromEntries(
+  Object.entries(definitions.reports).map(([key, name]) => [key, artwork(name)]),
+);
+export function navigationArtwork(name: string): string | undefined {
+  if (name.startsWith('report.') || name.startsWith('report-group.')) return REPORT_ARTWORK[name.split('.')[1]] ?? NAVIGATION_ARTWORK.reports;
+  const key = name.startsWith('customer:') || name.startsWith('guest-history:') ? 'guests' : name.startsWith('booking:') ? 'bookings' : name;
+  return NAVIGATION_ARTWORK[key];
+}
+export function NavigationIcon({name, size = 21}: {name: string; size?: number}) {
+  const src = navigationArtwork(name);
+  if (src) return <span aria-hidden="true" className="navigation-artwork shrink-0" style={{width:size,height:size,maskImage:`url("${src}")`,WebkitMaskImage:`url("${src}")`}}/>;
+  const Icon = ({search:Search,close:X,notifications:Bell,map:MapPin})[name] ?? ClipboardList;
+  return <Icon size={size} strokeWidth={1.8} aria-hidden="true" className="shrink-0"/>;
 }

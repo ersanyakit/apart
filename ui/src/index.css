@@ -1038,3 +1038,18 @@ div.flex:not(.flex-col):not(.flex-col-reverse):has([aria-expanded="true"]):has([
   align-self: start;
   height: auto;
 }
+
+/* AVIF provides the contour; the selected theme provides the color live. */
+.navigation-artwork {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--color-brand-blue-600);
+  background-color: currentColor;
+  mask-mode: alpha;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+}

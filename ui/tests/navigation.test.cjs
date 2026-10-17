@@ -107,3 +107,19 @@ test("report sidebar exposes category destinations without individual report row
     for (const report of REPORTS) assert.ok(!markup.includes(`>${report.name}<`));
   }
 });
+
+const {NavigationIcon, navigationArtwork, NAVIGATION_ARTWORK} = require(path.join(output, 'components/NavigationIcon.js'));
+test('every navigation destination uses shared AVIF artwork, including dynamic tabs', () => {
+  const {existsSync} = require('node:fs');
+  const names = [...Object.keys(NAVIGATION_ARTWORK), ...REPORT_GROUPS.map(group => group.id), ...REPORTS.map(report => reportPageID(report.key)), 'booking:sample', 'customer:sample', 'guest-history:sample'];
+  for (const name of names) {
+    const src = navigationArtwork(name);
+    assert.ok(src?.endsWith('.avif'), name);
+    assert.ok(existsSync(path.join(ui, 'public', src)), `${name}: ${src}`);
+    const markup = renderToStaticMarkup(React.createElement(NavigationIcon, {name}));
+    assert.ok(markup.includes(src), name);
+    assert.ok(markup.includes('aria-hidden="true"'), name);
+    assert.ok(markup.includes('mask-image:'), name);
+    assert.ok(!markup.includes('<svg'), name);
+  }
+});

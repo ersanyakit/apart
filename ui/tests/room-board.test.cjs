@@ -116,3 +116,15 @@ test('operational status includes ancestors but not sibling beds', () => {
   assert.equal(state.operationalStatus,'Arizali');
   assert.equal(state.tone,'warning');
 });
+
+test('occupied and reserved room cards retain their condition alongside occupancy artwork', () => {
+  for (const [status,icon] of [['confirmed','reserved'],['checked_in','occupied']]) {
+    const unit={...room,status:'Kirli'};
+    const b=booking({status,actual_check_in:status==='checked_in'?now:undefined});
+    const state=roomBoardState([unit],[b],unit,now);
+    const markup=renderToStaticMarkup(React.createElement(RoomStatusCard,{room:unit,state,now,busy:false,onOpenBooking(){},onContextMenu(){}}));
+    assert.ok(markup.includes(`/images/room-status-dott/${icon}.avif`));
+    assert.ok(markup.includes('/images/room-status-dott/dirty.avif'));
+    assert.ok(markup.includes(state.label));
+  }
+});

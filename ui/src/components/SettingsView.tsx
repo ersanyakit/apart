@@ -1,3 +1,5 @@
+import { RoomCondition } from './RoomCondition';
+import { roomStatusKey, statusStyle } from '../lib/status-palette';
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -255,13 +257,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                 key={s}
                                 type="button"
                                 onClick={() => setNewRoom(prev => ({ ...prev, status: s }))}
-                                className={`uni-control py-2 rounded-lg text-[9px]    border ${
-                                  newRoom.status === s
-                                    ? (s === RoomState.Vacant || s === RoomState.Clean ? 'bg-emerald-600 border-emerald-600 text-white ' : 'bg-rose-600 border-rose-600 text-white ')
-                                    : 'text-slate-400 border-slate-200 hover:border-slate-300'
-                                }`}
+                                aria-pressed={newRoom.status === s}
+                                style={newRoom.status === s ? statusStyle(roomStatusKey(s)) : undefined}
+                                className="uni-control py-2 rounded-lg text-[9px] border border-slate-200"
                               >
-                                {s}
+                                <RoomCondition status={s}/>
                               </button>
                             ))}
                           </div>

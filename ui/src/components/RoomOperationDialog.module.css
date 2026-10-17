@@ -10,7 +10,7 @@
 .actions button { min-height: 44px; border-radius: 12px; padding: 10px 16px; font-size: 13px; }
 .counter { margin-top: -8px; text-align: right; font-size: 11px; color: var(--color-uni-muted); }
 .masters { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 6px; }
-.masters button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 76px; padding: 10px 5px; border: 1px solid transparent; border-radius: 14px; background: var(--color-uni-surface); color: var(--color-uni-muted); font-size: 12px; }
+.masters button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 102px; padding: 10px 5px; border: 1px solid transparent; border-radius: 14px; background: var(--color-uni-surface); color: var(--color-uni-muted); font-size: 12px; }
 .masters button[aria-pressed=true] { background: var(--state-background); border-color: var(--state-accent); color: var(--state-text); }
 .detail { display: grid; gap: 14px; padding: 16px 0 0; border-top: 1px solid color-mix(in srgb,var(--color-uni-ink) 8%,transparent); }
 .detail h3 { font-size: 15px; font-weight: 600; color: var(--color-uni-ink); }

@@ -1,3 +1,4 @@
+import { RoomCondition, RoomConditionIcon } from './RoomCondition';
 import { RoomStatus as RoomState, BookingStatus as BookingState } from '../lib/statuses.generated';
 import React, { useEffect, useRef, useState } from "react";
 import { STATUS_PALETTE, boardStatusKey, roomStatusKey, statusStyle } from "../lib/status-palette";
@@ -70,7 +71,7 @@ export function RoomStatusCard({room,state,now,day,floorName,busy,onOpenBooking,
       <div className={styles.heading}><h3><NavigationIcon name={room.kind === "bed" ? "stays" : room.kind === "apartment" ? "home" : "units"} size={18}/>{room.code}</h3><p>{[unitKinds[room.kind],floorName].filter(Boolean).join(" · ")}</p></div>
       <button type="button" className="nav-icon-button" aria-label={`${room.code} işlemleri`} onClick={openRoomMenu}><MoreHorizontal size={20}/></button>
     </header>
-    <div className={styles.statusRow}><span className={styles.badge} title={state.upcoming ? "Şu an boş · Yaklaşan rezervasyon" : undefined}>{state.label}</span>{showCondition&&condition.label!==state.label&&<span className={styles.condition} style={{color:condition.text}}><i style={{background:condition.accent}}/>{condition.label}</span>}</div>
+    <div className={styles.statusRow}><span className={styles.badge} data-condition={true} title={state.upcoming ? "Şu an boş · Yaklaşan rezervasyon" : undefined}>{showCondition&&condition.label===state.label?<RoomCondition status={state.operationalStatus}/>:<><RoomConditionIcon semantic={boardStatusKey(state)}/>{state.label}</>}</span>{showCondition&&condition.label!==state.label&&<span className={styles.condition} style={{color:condition.text}}><RoomCondition status={state.operationalStatus}/></span>}</div>
     {state.blockingUnit&&state.blockingUnit.room_id!==room.room_id&&<p className={styles.warning}>{state.blockingUnit.code} birimi: {condition.label}</p>}
     {primary?bookingSummary(primary):<div className={styles.empty}><div><strong>{[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===state.operationalStatus)?"Oda hazırlık bekliyor":"Aktif konaklama yok"}</strong></div></div>}
     {state.bookings.length>1&&<details className={styles.more}><summary><ChevronDown size={14}/>{state.bookings.length-1} rezervasyon daha</summary>{state.bookings.slice(1).map(b=><div key={b.booking_id}>{bookingSummary(b)}<div className={styles.moreActions}><button type="button" className="uni-button uni-button-secondary" onClick={()=>onOpenBooking(b)}>Detaylar</button>{transitionButton(b)}</div></div>)}</details>}

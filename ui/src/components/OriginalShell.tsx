@@ -1,3 +1,4 @@
+import { RoomCondition, RoomConditionIcon } from './RoomCondition';
 import { BookingStatus as BookingState } from '../lib/statuses.generated';
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import { STATUS_PALETTE } from "../lib/status-palette";
@@ -358,31 +359,31 @@ export function OriginalShell({
           <footer className="app-status-footer hidden lg:flex bg-white border-t border-slate-200 px-6 py-2 items-center justify-between text-[11px] font-medium text-slate-500 shrink-0 z-10 shadow-sm">
             <div className="app-status-counts flex items-center">
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.occupied.accent}}></div>{" "}
+                <RoomConditionIcon status="Dolu" size={22}/>{" "}
                 DOLU: {rooms.filter((r) => r.status === "Dolu").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.reserved.accent}}></div>{" "}
+                <RoomConditionIcon status="Rezervli" size={22}/>{" "}
                 REZERV: {rooms.filter((r) => r.status === "Rezervli").length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.clean.accent}}></div>{" "}
+                <RoomConditionIcon status={RoomState.Clean} size={22}/>{" "}
                 TEMİZ: {rooms.filter((r) => r.status === RoomState.Clean).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.dirty.accent}}></div>{" "}
+                <RoomConditionIcon status={RoomState.Dirty} size={22}/>{" "}
                 KİRLİ: {rooms.filter((r) => r.status === RoomState.Dirty).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.available.accent}}></div>{" "}
+                <RoomConditionIcon status={RoomState.Vacant} size={22}/>{" "}
                 BOŞ: {rooms.filter((r) => r.status === RoomState.Vacant).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.fault.accent}}></div>{" "}
+                <RoomConditionIcon status={RoomState.OutOfOrder} size={22}/>{" "}
                 ARIZALI: {rooms.filter((r) => r.status === RoomState.OutOfOrder).length}
               </div>
               <div className="flex items-center gap-2 font-bold">
-                <div className="w-3 h-3 rounded-full" style={{backgroundColor:STATUS_PALETTE.maintenance.accent}}></div>{" "}
+                <RoomConditionIcon status={RoomState.Maintenance} size={22}/>{" "}
                 TADİLAT: {rooms.filter((r) => r.status === RoomState.Maintenance).length}
               </div>
             </div>

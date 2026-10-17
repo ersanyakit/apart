@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen",
+  "prompts": {
+    "clean": "Single hotel room condition icon, Day of the Tentacle 1990s cartoon adventure style. Bold dark purple outlines, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise, mint, purple and pink palette with semantic status accents. Centered isolated object on transparent background, no text or characters. Fresh folded mint towels, emerald green checkmark and sparkle stars.",
+    "dirty": "Single hotel room condition icon, Day of the Tentacle 1990s cartoon adventure style. Bold dark purple outlines, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise, mint, purple and pink palette with semantic status accents. Centered isolated object on transparent background, no text or characters. Crumpled mauve towel spilling from turquoise laundry basket, small dusty puff.",
+    "maintenance": "Single hotel room condition icon, Day of the Tentacle 1990s cartoon adventure style. Bold dark purple outlines, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise, mint, purple and pink palette with semantic status accents. Centered isolated object on transparent background, no text or characters. Purple paint roller with mint handle leaning across purple paint tin.",
+    "fault": "Single hotel room condition icon, Day of the Tentacle 1990s cartoon adventure style. Bold dark purple outlines, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise, mint, purple and pink palette with semantic status accents. Centered isolated object on transparent background, no text or characters. Coral red warning triangle with exclamation mark and turquoise repair wrench.",
+    "available": "Single hotel room condition icon, Day of the Tentacle 1990s cartoon adventure style. Bold dark purple outlines, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise, mint, purple and pink palette with semantic status accents. Centered isolated object on transparent background, no text or characters. Open lavender hotel door with turquoise frame and small silver key.",
+    "occupied": "Single isolated hotel room occupancy status icon, Day of the Tentacle 1990s adventure inventory art. Bold dark purple outline, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise mint purple pink, transparent background, no text. Turquoise hotel bed with purple pillows, pink guest silhouette and blue accents.",
+    "reserved": "Single isolated hotel room occupancy status icon, Day of the Tentacle 1990s adventure inventory art. Bold dark purple outline, chunky wonky perspective, clean cel shading, glossy highlights. Turquoise mint purple pink, transparent background, no text. Purple hotel key with turquoise key tag and orange checkmark badge."
+  },
+  "assets": "ui/public/images/room-status-dott/*.avif",
+  "size": 192
+}

@@ -1,0 +1,17 @@
+{
+  "pages": {
+    "operations": "LayoutGrid", "board": "PanelsTopLeft", "property3d": "Box",
+    "calendar": "CalendarDays", "bookings": "CalendarCheck2", "bookings-list": "ClipboardList",
+    "newbooking": "CalendarPlus", "kanban": "PanelsLeftBottom", "stays": "BedDouble",
+    "blacklist": "ShieldBan", "guests": "UsersRound", "settings": "Settings2",
+    "appsettings": "SlidersHorizontal", "personal": "SlidersHorizontal", "setup": "WandSparkles",
+    "facility": "Building2", "units": "DoorOpen", "staff": "ContactRound",
+    "templates": "Files", "logs": "History", "features": "Sparkles",
+    "reports": "ChartNoAxesCombined", "folio": "ReceiptText", "home": "House"
+  },
+  "reports": {
+    "finance": "Wallet", "occupancy": "ChartPie", "reservations": "CalendarCheck2",
+    "pricing": "TrendingUp", "guests": "UsersRound", "staff": "ContactRound",
+    "operations": "Wrench", "apart": "Building2", "hostel": "BedDouble", "management": "ChartColumnIncreasing"
+  }
+}

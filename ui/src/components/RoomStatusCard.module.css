@@ -102,3 +102,5 @@
 .heading h3 > svg { color:var(--room-text); flex-shrink:0; }
 .guestCount { display:inline-flex; align-items:center; gap:5px; }
 .dates dt > svg { flex-shrink:0; }
+
+.badge[data-condition]::before { display:none; }

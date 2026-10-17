@@ -1,10 +1,11 @@
 'use client';
+import { RoomCondition, RoomConditionIcon } from '../RoomCondition';
 import { BookingStatus as BookingState } from '../../lib/statuses.generated';
 
 import { RoomStatus as RoomState } from '../../lib/statuses.generated';
 
 import { sceneStatusColor } from "./model";
-import { STATUS_PALETTE, roomStatusKey } from "../../lib/status-palette";
+import { STATUS_PALETTE, boardStatusKey, roomStatusKey } from "../../lib/status-palette";
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BedDouble, Box, Layers, RefreshCw, X } from 'lucide-react';
@@ -126,8 +127,8 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
         <InlineSelectField label="Oda / birim seçimi" value={selectedRoom?.unit.room_id || ''} onChange={value => select(value || null)} options={[{ value: '', label: 'Bir birim seçin' }, ...rooms.map(r => ({ value: r.unit.room_id, label: `${r.unit.code} · ${r.state.label}` }))]} />
         {selected && selectedRoom ? <>
           <div className={styles.detailHeading}><div><p>{floors.find(f => f.id === selectedRoom.floorId)?.label}</p><h3>{selected.unit.code}</h3><span>{selected.unit.name || unitKinds[selected.unit.kind] || selected.unit.kind}</span></div><button type="button" className="nav-icon-button" aria-label="Birim seçimini temizle" onClick={() => select(null)}><X size={18} /></button></div>
-          <div className={styles.status}><i style={{ background: sceneStatusColor(selected.state) }} />{selected.state.label}</div>
-          {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===selected.state.operationalStatus) && <div className={styles.status}><i style={{background:STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].accent}}/>{STATUS_PALETTE[roomStatusKey(selected.state.operationalStatus)].label}</div>}
+          <div className={styles.status}><RoomConditionIcon semantic={boardStatusKey(selected.state)}/>{selected.state.label}</div>
+          {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===selected.state.operationalStatus) && <div className={styles.status}><RoomCondition status={selected.state.operationalStatus}/></div>}
           {!!currentStays.length && <section className={styles.currentGuests} aria-label="Şu anda konaklayan misafirler"><h4 className={styles.subheading}>Konaklayan misafirler</h4>{currentStays.map(booking => <div className={styles.booking} key={booking.booking_id}>
             {(booking.guests?.length ? booking.guests : [{ id: booking.booking_id, name: booking.guest_name || 'Misafir' }]).map(guest => <strong key={guest.id}>{guest.name}</strong>)}
             <small>{boardDate(booking.actual_check_in || booking.check_in)} → {boardDate(booking.check_out)}</small>
@@ -155,7 +156,7 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
       <span className={styles.updated}>{loading ? 'Yatak tanımları yükleniyor…' : `Son veri: ${boardDate(snapshot.server_time)}`}</span>
     </div>
 
-        <div className={styles.legend} aria-label="Durum renkleri">{(["occupied","reserved","available","dirty","fault","maintenance"] as const).map(key => <span key={key}><i style={{ background: STATUS_PALETTE[key].accent }} />{STATUS_PALETTE[key].label}</span>)}</div>
+        <div className={styles.legend} aria-label="Durum renkleri">{(["occupied","reserved","available","dirty","fault","maintenance"] as const).map(key => <span key={key}><RoomConditionIcon semantic={key} size={22}/>{STATUS_PALETTE[key].label}</span>)}</div>
         <p className={styles.caption}>{hover ? `${hover.unit.code} · ${hover.state.label}` : 'Detaylar için bir odaya veya yatağa tıklayın.'}</p>
         <p className={styles.caption}>Şematik görünüm · {filtered.some(f => f.automatic) ? 'Yerleşimi olmayan veya çakışan birimler otomatik dizildi.' : 'Kat planı sırası korunarak odalar arasındaki boşluklar sıkılaştırıldı.'} Oda içindeki yataklar okunabilirlik için otomatik yerleştirilir.</p>
         </aside>} />

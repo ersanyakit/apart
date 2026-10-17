@@ -1,8 +1,8 @@
+import { RoomCondition } from './RoomCondition';
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowRightLeft, Banknote, CalendarPlus, ChevronRight, DoorOpen, FileText, LogIn, LogOut, Pencil, ReceiptText, UsersRound, X, Check, type LucideIcon } from 'lucide-react';
 import type { Room, RoomStatus } from '../types';
-import { STATUS_PALETTE, roomStatusKey } from '../lib/status-palette';
 import styles from './ContextMenu.module.css';
 
 type DocumentKind = 'sales' | 'reservation' | 'cancellation' | 'rental' | 'sale_contract';
@@ -27,7 +27,6 @@ export function ContextMenu(props: ContextMenuProps) {
   };
   const [tab, setTab] = useState<MenuTab>(() => resolveTab(props.initialTab ?? 'operations'));
   const [busy, setBusy] = useState(false);
-  const condition = STATUS_PALETTE[roomStatusKey(props.operationalStatus)];
   useEffect(() => {
     const element = dialog.current!;
     const previous = document.activeElement as HTMLElement | null;
@@ -44,7 +43,7 @@ export function ContextMenu(props: ContextMenuProps) {
       <div className={styles.heading}><p>Oda işlemleri</p><h2 id={titleId}>Oda {room.number}</h2><span>{props.guestName || room.name || 'Aktif konaklama yok'}</span></div>
       <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${styles.close}`} aria-label="Oda işlemlerini kapat" onClick={onClose}><X size={20}/></button>
     </header>
-    <div className={styles.summary}><span style={{color:condition.text}}><i style={{background:condition.accent}}/>{condition.label}</span>{props.bookingHint && <p>{props.bookingHint}</p>}</div>
+    <div className={styles.summary}><RoomCondition status={props.operationalStatus}/>{props.bookingHint && <p>{props.bookingHint}</p>}</div>
     <nav className={styles.tabs} aria-label="Oda işlem bölümleri">
       <button type="button" disabled={busy} aria-pressed={tab==='operations'} onClick={()=>setTab('operations')}>İşlemler</button>
       {!!props.allowedStatuses.length && <button type="button" disabled={busy} aria-pressed={tab==='status'} onClick={()=>setTab('status')}>Oda durumu</button>}
