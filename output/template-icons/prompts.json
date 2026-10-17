@@ -1,0 +1,45 @@
+{
+  "generator": "built-in image_gen",
+  "jobs": [
+    {
+      "key": "rental_contract",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a signed rental contract sheet beside a hotel room door key, small bed pictogram on the paper",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-038c8a6d-e815-47d5-af61-a842c239be7b.png"
+    },
+    {
+      "key": "sale_contract",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a sales agreement document with two signature lines and a pen beside a handshake, a small coin seal",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-1213510c-9120-4fae-9e8c-2c14503a78c9.png"
+    },
+    {
+      "key": "reservation_receipt",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a hotel reservation confirmation voucher with a calendar pictogram showing arrival and departure dots, a bed pictogram and a large check mark",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-be9d03da-8027-4410-9b66-8db54f76a226.png"
+    },
+    {
+      "key": "sale_receipt",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a payment receipt with a perforated lower edge beside a payment card and coins, a clear check mark",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-4f5cfd58-a9b9-4604-9fe1-7549ccd460df.png"
+    },
+    {
+      "key": "cancellation_receipt",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a booking document with small calendar pictogram and a large pink cancellation X stamp, no money or payment card",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-0e6f4fef-f1db-4d27-924a-183ac3ae5727.png"
+    },
+    {
+      "key": "report_summary",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a concise management report sheet with three large colored metric tiles and a small pie chart",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-1acf2817-22d3-4ec7-9ea0-267058233da4.png"
+    },
+    {
+      "key": "report_detail",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a detailed business report: several overlapping sheets with visible table grids and bar charts, a magnifying glass over one table",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-95bf65b7-7d98-4172-933e-fdeafa1d94c7.png"
+    },
+    {
+      "key": "report_handover",
+      "prompt": "Use case: stylized-concept. One square isolated UI illustration, matching attached hotel STYLE REFERENCE. Day of the Tentacle 1990s hand-drawn adventure-game style, whimsical crooked geometry, thin dark ink contours, flat cel shaded colors, crisp shapes, NOT 3D render. App palette turquoise #00C3A0 cyan #2ABDFF pink #FF37C7 violet #8251FB fuchsia #F50DB4 small orange #FF4D00, white. Plain white background, centered subject filling 85% with safe margins, readable at 96px. No letters, numbers, logos or watermark. Subject: a shift handover clipboard with a checklist and two hands passing a hotel room key, small sun and moon pictograms",
+      "source": "/Users/ersanyakit/.codex/generated_images/01a14642-27d2-7f72-b41b-6abb29de54c7/exec-76ebdb21-eab7-41be-9393-9b8cf208e50d.png"
+    }
+  ]
+}

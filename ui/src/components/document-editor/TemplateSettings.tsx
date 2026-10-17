@@ -1,6 +1,6 @@
 "use client";
 import React,{useEffect,useState} from 'react';
-import {FileText,LayoutTemplate} from 'lucide-react';
+import {FileText,Check} from 'lucide-react';
 import {command,messageOf,type Snapshot} from '../../lib/api';
 import {LOCALES} from '../../lib/i18n/config';
 import {PageHeader} from '../PageHeader';
@@ -10,7 +10,18 @@ import {useNotifications} from '../Toast';
 import {confirmDialog} from '../ConfirmDialog';
 import {DocumentEditor,DocumentPreview} from './DocumentEditor';
 import {documentKinds,reportTemplateKinds,documentFields,reportFields,htmlTemplate,type Template} from './markup';
+import styles from './TemplateSettings.module.css';
 const allKinds={...documentKinds,...reportTemplateKinds};
+const descriptions:Record<string,string>={
+ rental_contract:'Konaklama koşulları, tarihler ve oda demirbaşları.',
+ sale_contract:'Satış koşulları, bedel ve tarafların onayı.',
+ reservation_receipt:'Misafir, giriş ve çıkış bilgileriyle rezervasyon özeti.',
+ sale_receipt:'Tahsil edilen tutar ve ödeme bilgileri.',
+ cancellation_receipt:'İptal edilen rezervasyonun kayıt belgesi.',
+ report_summary:'Temel göstergelerle işletmenin genel durumu.',
+ report_detail:'Tablolar ve göstergelerle ayrıntılı işletme sonuçları.',
+ report_handover:'Vardiya sonunda devredilen işler ve durum bilgileri.',
+};
 const blank=(hotel_id:string,kind:string):Template=>({hotel_id,kind,title:{},body:{},format:'html'});
 export function TemplateSettings({snapshot:s}:{snapshot:Snapshot}){
  const notify=useNotifications();const [templates,setTemplates]=useState<Template[]>([]),[defaults,setDefaults]=useState<Template[]>([]),[draft,setDraft]=useState<Template>(blank(s.hotel_id,'rental_contract')),[language,setLanguage]=useState('TR'),[error,setError]=useState(''),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[dirty,setDirty]=useState(false),[preview,setPreview]=useState(false);
@@ -22,14 +33,20 @@ export function TemplateSettings({snapshot:s}:{snapshot:Snapshot}){
  const languages=[...new Set(['TR',...s.languages,...Object.keys(draft.body),...Object.keys(draft.title)])];
  const isReport=draft.kind.startsWith('report_');
  return <form className="space-y-5" onSubmit={async e=>{e.preventDefault();if(busy||loading)return;setError('');const langs=new Set([...Object.keys(draft.title),...Object.keys(draft.body)]);const next={...draft,title:{...draft.title},body:{...draft.body}};for(const lang of langs){if(!(next.title[lang]??'').trim()&&!(next.body[lang]??'').replace(/<[^>]*>/g,'').trim()){delete next.title[lang];delete next.body[lang];continue}if(!next.title[lang]?.trim()||!next.body[lang]?.replace(/<[^>]*>/g,'').trim()){setError(`${lang} için başlık ve belge metnini birlikte doldurun.`);return}}setBusy(true);try{const saved=await command<Template>('document.template.save',next);setTemplates(rows=>[...rows.filter(t=>t.kind!==saved.kind),saved]);setDraft(htmlTemplate(saved));setDirty(false);notify('Şablon kaydedildi. Yeni belgelerde bu metin kullanılacak.')}catch(e){setError(messageOf(e))}finally{setBusy(false)}}}>
-  <PageHeader pageId="templates"><div className="grid sm:grid-cols-2 gap-3">
-   <InlineSelectField label="Şablon" value={draft.kind} disabled={busy||loading} onChange={v=>void changeKind(v)} options={Object.entries(allKinds).map(([value,label])=>({value,label:`${value.startsWith('report_')?'Rapor · ':'Belge · '}${label}`}))}/>
+  <PageHeader pageId="templates"><div className="w-full sm:max-w-xs">
    <InlineSelectField label="Düzenlenen dil" value={language} onChange={setLanguage} options={languages.map(value=>({value,label:(LOCALES as Record<string,{label:string}>)[value.toLowerCase()]?.label??value}))}/>
   </div></PageHeader>
   <ErrorMessage message={error}/>
+  <section aria-label="Belge ve rapor şablonları" className={styles.catalog}>
+   {Object.entries(allKinds).map(([kind,title])=><button key={kind} type="button" disabled={busy||loading} aria-pressed={draft.kind===kind} className={`uni-control ${styles.card}`} onClick={()=>void changeKind(kind)}>
+    <img src={`/images/template-icons-dott/${kind}.avif`} width={96} height={96} alt="" aria-hidden="true" className={styles.artwork} loading="lazy"/>
+    <span className={styles.copy}><span className={styles.category}>{kind.startsWith('report_')?'Rapor şablonu':'Belge şablonu'}</span><strong>{title}</strong><span className={styles.description}>{descriptions[kind]}</span></span>
+    <span className={styles.selection} aria-hidden="true">{draft.kind===kind&&<Check size={14}/>}</span>
+   </button>)}
+  </section>
   {loading?<p className="text-sm text-uni-muted">Şablonlar yükleniyor…</p>:<>
-   <div className="rounded-[22px] bg-[var(--color-uni-surface)] p-5 flex flex-wrap items-center gap-4">
-    <LayoutTemplate size={24} className="text-blue-600"/><div className="flex-1 min-w-48"><h3 className="font-semibold text-sm">{allKinds[draft.kind]}</h3><p className="text-xs text-uni-muted mt-1">{isReport?'Rapor ekranındaki “Belge hazırla” seçeneğiyle gerçek verilerle doldurulur.':'Hazır metni yükleyin, işletmenize göre düzenleyin ve kaydedin.'}</p></div>
+   <div className={styles.editorHeading}>
+    <img src={`/images/template-icons-dott/${draft.kind}.avif`} width={96} height={96} alt="" aria-hidden="true" className={styles.artwork}/><div className={styles.editorCopy}><h3>{allKinds[draft.kind]}</h3><p>{isReport?'Rapor ekranındaki “Belge hazırla” seçeneğiyle gerçek verilerle doldurulur.':'Hazır metni yükleyin, işletmenize göre düzenleyin ve kaydedin.'}</p></div>
     <button type="button" disabled={busy||!defaults.some(t=>t.kind===draft.kind)} className={secondaryStyle} onClick={()=>void loadDefault()}>Hazır şablonu kullan</button>
    </div>
    <TextField label="Belge başlığı" value={draft.title[language]??''} onChange={v=>update({...draft,title:{...draft.title,[language]:v}})} disabled={busy} maxLength={300}/>
