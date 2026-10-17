@@ -23,7 +23,8 @@
     "features": "features",
     "reports": "reports",
     "folio": "folio",
-    "home": "facility"
+    "home": "facility",
+    "hotel": "facility"
   },
   "reports": {
     "finance": "finance",

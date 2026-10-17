@@ -3,18 +3,19 @@
 .card:global(.room-status-card) {
   display:flex; flex-direction:column; height:100%; min-width:0; overflow:hidden;
   border:1px solid transparent; border-radius:20px;
-  background:color-mix(in srgb,var(--room-tint) 22%,var(--color-uni-surface));
+  background:var(--room-gradient-fallback,var(--room-tint));
+  isolation:isolate;
+  --color-uni-muted:#49515e;
   color:var(--color-uni-ink);
   box-shadow:0 1px 3px rgb(0 0 0 / 3%),0 1px 1px rgb(0 0 0 / 2%);
   transition:background-color var(--interaction-fast) ease,border-color var(--interaction-fast) ease;
 }
 @media (hover:hover) and (pointer:fine) {
   .card:global(.room-status-card):hover {
-    background:color-mix(in srgb,var(--room-tint) 22%,#f2f2f2);
+    border-color:color-mix(in srgb,var(--room-state) 30%,transparent);
   }
 }
 .card:global(.room-status-card):focus-within {
-  background:color-mix(in srgb,var(--room-tint) 22%,#f2f2f2);
   border-color:var(--control-border-hover);
 }
 @media (prefers-reduced-motion:reduce) {
@@ -48,7 +49,24 @@
 .actions:empty { display:none; }
 .actions > button { min-height:44px; border-radius:999px; padding:6px 12px; font-size:12px; display:inline-flex; align-items:center; justify-content:center; gap:6px; background:transparent; }
 .actions > button > svg { display:block; width:16px; height:16px; flex-shrink:0; stroke-width:1.8; }
-.actions .transition { margin-left:auto; border:0; }
+.transition, .actions .transition {
+  min-height:44px;
+  padding:8px 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid rgb(255 255 255 / 70%);
+  border-radius:12px;
+  background:rgb(255 255 255 / 58%);
+  color:var(--room-text);
+  font-size:12px;
+  font-weight:535;
+}
+.actions .transition { margin-left:auto; }
+@media (hover:hover) and (pointer:fine) {
+  .transition:hover:not(:disabled) { background:rgb(255 255 255 / 82%); }
+}
 .more,.cleaning { border-top:1px solid var(--color-uni-border); }
 .more > summary,.cleaning > summary { display:flex; align-items:center; gap:7px; cursor:pointer; min-height:44px; padding:8px 12px; font-size:12px; color:var(--color-uni-muted); list-style:none; }
 .more > summary::-webkit-details-marker,.cleaning > summary::-webkit-details-marker { display:none; }
@@ -104,3 +122,5 @@
 .dates dt > svg { flex-shrink:0; }
 
 .badge[data-condition]::before { display:none; }
+
+.gradient { position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; }

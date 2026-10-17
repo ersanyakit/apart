@@ -1053,7 +1053,7 @@ div.flex:not(.flex-col):not(.flex-col-reverse):has([aria-expanded="true"]):has([
 
 /* Sidebar and mobile menu icon size: change this one token to preview sizes. */
 :root { --sidebar-icon-size: 32px; }
-.sidebar-menu-row, .nav-rail-item, .mobile-menu-row {
+.sidebar-menu-row, .nav-rail-item, .mobile-menu-row, .property-switcher-card {
   --navigation-icon-size: var(--sidebar-icon-size);
 }
 .sidebar-menu-icon, .mobile-menu-icon {

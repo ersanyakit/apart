@@ -128,3 +128,18 @@ test('occupied and reserved room cards retain their condition alongside occupanc
     assert.ok(markup.includes(state.label));
   }
 });
+
+const {roomGradientKey, roomGradientPixels, ROOM_GRADIENT_PALETTES} = require(path.join(output,'lib/room-gradient.js'));
+test('clean empty cards have a clean gradient; occupancy and reservation retain priority',()=>{
+  assert.equal(roomGradientKey({tone:'available',operationalStatus:'Temiz'}),'clean');
+  assert.equal(roomGradientKey({tone:'warning',operationalStatus:'Kirli'}),'dirty');
+  assert.equal(roomGradientKey({tone:'occupied',operationalStatus:'Kirli'}),'occupied');
+  assert.equal(roomGradientKey({tone:'reserved',operationalStatus:'Tadilat'}),'reserved');
+});
+test('gradient phase wraps smoothly and changes placement with scroll',()=>{
+  const colors=ROOM_GRADIENT_PALETTES.clean;
+  assert.deepEqual(roomGradientPixels(colors,0),roomGradientPixels(colors,8));
+  assert.notDeepEqual(roomGradientPixels(colors,0),roomGradientPixels(colors,.5));
+  const before=roomGradientPixels(colors,7.999),after=roomGradientPixels(colors,.001);
+  assert.ok(before.every((value,index)=>Math.abs(value-after[index])<=1));
+});
