@@ -1,0 +1,15 @@
+{
+  "generator": "built-in image_gen",
+  "jobs": [
+    {
+      "key": "whole-room",
+      "subject": "Represent renting the ENTIRE PRIVATE HOTEL ROOM in ONE booking: a compact cutaway room with two beds inside ONE continuous room enclosure, one entrance door and ONE large key in front. All beds clearly belong together within the single room. No multiple keys.",
+      "prompt": "Use case: stylized-concept. Create one square UI icon matching the attached hotel illustration STYLE REFERENCE: Day of the Tentacle / 1990s hand-drawn point-and-click adventure, playful crooked geometry, crisp dark thin ink outlines, flat cel shading, NOT 3D rendering. Palette turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, white, tiny orange accents. Centered isolated subject, plain white background, generous small margin, legible at 96px. No lettering, text, watermark. Represent renting the ENTIRE PRIVATE HOTEL ROOM in ONE booking: a compact cutaway room with two beds inside ONE continuous room enclosure, one entrance door and ONE large key in front. All beds clearly belong together within the single room. No multiple keys."
+    },
+    {
+      "key": "separate-beds",
+      "subject": "Represent renting INDIVIDUAL BEDS separately in a shared room: two clearly separated single beds side by side, each with its OWN distinct key tag directly at its foot; left bed turquoise blanket/pink key tag, right bed violet blanket/cyan key tag. Two keys, one per bed. Small shared floor platform, no private room enclosure. Clearly different from whole-room booking.",
+      "prompt": "Use case: stylized-concept. Create one square UI icon matching the attached hotel illustration STYLE REFERENCE: Day of the Tentacle / 1990s hand-drawn point-and-click adventure, playful crooked geometry, crisp dark thin ink outlines, flat cel shading, NOT 3D rendering. Palette turquoise #00C3A0, cyan #2ABDFF, pink #FF37C7, violet #8251FB, white, tiny orange accents. Centered isolated subject, plain white background, generous small margin, legible at 96px. No lettering, text, watermark. Represent renting INDIVIDUAL BEDS separately in a shared room: two clearly separated single beds side by side, each with its OWN distinct key tag directly at its foot; left bed turquoise blanket/pink key tag, right bed violet blanket/cyan key tag. Two keys, one per bed. Small shared floor platform, no private room enclosure. Clearly different from whole-room booking."
+    }
+  ]
+}

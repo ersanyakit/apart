@@ -18,12 +18,12 @@ const icons = {
   accessibility: Accessibility, door: DoorOpen, coffee: Coffee,
 };
 
-export function CatalogIcon({ iconKey, artwork = false, featureCode }: { iconKey?: string; artwork?: boolean; featureCode?: string }) {
+export function CatalogIcon({ iconKey, artwork = false, featureCode, artworkSize = 40 }: { iconKey?: string; artwork?: boolean; featureCode?: string; artworkSize?: number }) {
   const catalogArtwork = featureCode && Object.hasOwn(catalogIconMap, featureCode) ? (catalogIconMap as Record<string, string>)[featureCode] : undefined;
   const itemIcon = featureCode && Object.hasOwn(facilityIconMap, featureCode) ? (facilityIconMap as Record<string, string>)[featureCode] : undefined;
   const artworkPath = itemIcon ? `items/${itemIcon}` : !featureCode && iconKey && Object.hasOwn(icons, iconKey) ? iconKey : undefined;
   if (artwork && (catalogArtwork || artworkPath)) {
-    return <img src={catalogArtwork || `/images/facility-icons-dott/${artworkPath}.avif`} width={40} height={40} alt="" aria-hidden="true" className="shrink-0 rounded-lg object-contain" loading="lazy" />;
+    return <img src={catalogArtwork || `/images/facility-icons-dott/${artworkPath}.avif`} width={artworkSize} height={artworkSize} style={{ width: artworkSize, height: artworkSize }} alt="" aria-hidden="true" className="shrink-0 rounded-lg object-contain" loading="lazy" />;
   }
   const Icon = icons[iconKey as keyof typeof icons] || Package;
   return <Icon size={21} strokeWidth={1.8} aria-hidden="true" className="shrink-0" />;
@@ -47,7 +47,7 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   const [query, setQuery] = useState("");
   const [opened, setOpened] = useState<string[]>([]);
   const tr = locale === "tr";
-  const useArtwork = readOnly || scope === "property";
+  const useArtwork = true;
   const label = (v?: LocalizedString) => catalogLabel(v, locale);
   const normalize = (v: string) => v.toLocaleLowerCase(locale).normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll("ı", "i");
   const search = normalize(query.trim());
@@ -83,7 +83,7 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
           <button type="button" aria-expanded={expanded} aria-controls={panelId}
             className="uni-control flex min-h-12 w-full items-center gap-3 p-4 text-start focus-visible:ring-2 focus-visible:ring-neutral-400"
             onClick={() => setOpened(opened.includes(category) ? opened.filter((c) => c !== category) : [...opened, category])}>
-            <CatalogIcon iconKey={rows[0].icon_key} artwork={useArtwork} />
+            <CatalogIcon iconKey={rows[0].icon_key} artwork={useArtwork} artworkSize={96} />
             <span className="min-w-0 flex-1">{label(rows[0].category_label)}</span>
             <span className="text-xs text-slate-500">{readOnly ? rows.length : `${selectedCount} / ${all.filter((d) => d.category === category).length}`}</span>
             <ChevronDown aria-hidden="true" size={16} className={expanded ? "rotate-180" : ""} />
@@ -126,9 +126,9 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
                     const current = assignments.get(d.code);
                     const selected = current !== undefined;
                     const name = label(d.label);
-                    return <div key={d.code} className="rounded-xl bg-white p-3">
-                      <div className="flex items-center gap-3">
-                        <CatalogIcon iconKey={d.icon_key} featureCode={d.code} artwork={useArtwork} />
+                    return <div key={d.code} className="min-w-0 rounded-2xl border border-slate-100 bg-white p-4">
+                      <div className="flex items-center gap-4">
+                        <CatalogIcon iconKey={d.icon_key} featureCode={d.code} artwork={useArtwork} artworkSize={96} />
                         <div className="min-w-0 flex-1">
                           {readOnly ? <span className="text-sm">{name}</span> : <Switch label={name}
                             checked={d.catalog_kind === "amenity" ? current === true : selected}

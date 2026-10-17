@@ -46,7 +46,7 @@ export function FacilityView({snapshot:s,onEdit,onCreate,onSelect,onArchive}: {
    {property? <>{contact(property)}
     {!!amenities.length&&<section className={styles.amenities} aria-label="Tesis olanakları">
      <h4>Tesis olanakları</h4>
-     <ul>{amenities.map(a=><li key={a.code}><CatalogIcon iconKey={a.icon} featureCode={a.code} artwork/><span>{a.label}{a.quantity===undefined&&a.value&&` · ${a.value}`}</span>{a.quantity!==undefined&&<span className={styles.quantity} aria-label={`${a.quantity} adet`}>{a.quantity} adet</span>}</li>)}</ul>
+     <ul>{amenities.map(a=><li key={a.code}><CatalogIcon iconKey={a.icon} featureCode={a.code} artwork artworkSize={96}/><div className={styles.amenityContent}><span className={styles.amenityLabel}>{a.label}</span>{a.quantity===undefined&&a.value&&<span className={styles.amenityValue}>{a.value}</span>}{a.quantity!==undefined&&<span className={styles.quantity} aria-label={`${a.quantity} adet`}>{a.quantity} adet</span>}</div></li>)}</ul>
     </section>}
     <details className={styles.details}><summary>Diğer bilgiler ve görseller<ChevronDown size={16}/></summary>
      {localized(property.description)&&<p>{localized(property.description)}</p>}
