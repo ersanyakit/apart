@@ -444,8 +444,8 @@ export function BookingForm({
         }}
         sub={
           selectedRoom?.kind === "bed"
-            ? `Yatak kapasitesi: ${selectedRoom.capacity} kişi`
-            : "Konaklayacak kişi sayısı"
+            ? _uiText("Yatak kapasitesi: {value1} kişi", {value1: String(selectedRoom.capacity)})
+            : _uiText("Konaklayacak kişi sayısı")
         }
       />
       </div>

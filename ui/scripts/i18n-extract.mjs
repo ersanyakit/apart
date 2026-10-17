@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 const ui=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const repo=path.dirname(ui), base=path.join(ui,'src/lib/i18n');
 const messages=new Map();
-const presentation=new Set(['label','title','description','hint','placeholder','caption','emptyText','emptyLabel','aria-label','alt','subtitle','tooltip','message','name']);
+const presentation=new Set(['label','title','description','hint','placeholder','caption','emptyText','emptyLabel','aria-label','alt','subtitle','tooltip','message','name','backLabel','sub','helpText','submitLabel','cancelLabel','confirmLabel','searchPlaceholder']);
 const metadata=new Set(['steps','descriptions','profiles','roles','names','labels','categoryLabels','sourceOptions','paymentOptions','PAGE_HEADERS','COLUMNS','unitKinds','CUSTOMER_DIRECTORY']);
 function add(text,file,line,force=false){
  if(!text||['use client','use server','use strict'].includes(text)||!/[\p{L}]/u.test(text)||(!force&&/^[a-z0-9_.-]+$/.test(text)))return;
@@ -39,10 +39,10 @@ const contracts=JSON.parse(fs.readFileSync(path.join(ui,'src/lib/contracts.gener
 for(const text of Object.values(contracts.errors))add(text,'ui/src/lib/contracts.generated.json',1);
 for(const item of [...contracts.reports,...contracts.report_groups,...contracts.report_record_kinds])for(const key of ['name','description','hint','category'])add(item[key],'ui/src/lib/contracts.generated.json',1);
 const builtins={};
-function localized(value,file){if(!value||!value.TR)return;add(value.TR,file,1);builtins[value.TR]=value;}
+function localized(value,file){if(typeof value==='string'){add(value,file,1,true);return;}if(!value||!value.TR)return;add(value.TR,file,1);builtins[value.TR]=value;}
 const catalog=JSON.parse(fs.readFileSync(path.join(repo,'internal/domain/catalog/defaults.json'),'utf8'));
 for(const category of catalog.categories){localized(category.label,'internal/domain/catalog/defaults.json');for(const group of category.groups){localized(group.label,'internal/domain/catalog/defaults.json');for(const entry of group.entries){localized(entry.label,'internal/domain/catalog/defaults.json');localized(entry.description,'internal/domain/catalog/defaults.json');}}}
-for(const item of [...contracts.bed_presets,...Object.values(contracts.bed_types),...contracts.floor_presets]){localized(item.label,'ui/src/lib/contracts.generated.json');localized(item.description,'ui/src/lib/contracts.generated.json');}
+for(const item of [...contracts.bed_presets,...Object.values(contracts.bed_types),...contracts.floor_presets]){if(typeof item==='string'){localized(item,'ui/src/lib/contracts.generated.json');continue;}localized(item.label,'ui/src/lib/contracts.generated.json');localized(item.description,'ui/src/lib/contracts.generated.json');if(typeof item.label==='string'&&item.name_en)builtins[item.label]={TR:item.label,EN:item.name_en};}
 for(const file of files(path.join(repo,'internal/domain'),['.go']).filter(f=>!f.endsWith('_test.go'))){
  const source=fs.readFileSync(file,'utf8');
  for(const match of source.matchAll(/"(?:[^"\\\n]|\\.)*"/g)){let value;try{value=JSON.parse(match[0]);}catch{continue;}if(human(value))add(value,path.relative(repo,file),source.slice(0,match.index).split('\n').length);}

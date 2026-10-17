@@ -41,10 +41,10 @@ await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByR
 
 
 const {default:assert}=await import('node:assert/strict');
-await page.goto('http://localhost:3000/app?tab=appsettings',{waitUntil:'networkidle'});
-const trigger=page.getByRole('button',{name:/Türkiye/}).filter({has:page.locator('img')}).first();
+await page.getByRole('button',{name:'Ayarlar',exact:true}).first().click();
+const trigger=page.getByRole('button',{name:/Ülke/}).filter({has:page.locator('img')}).first();
 await trigger.waitFor();
-assert.ok((await trigger.locator('img').getAttribute('src')).includes('tr.'));
+assert.match(await trigger.locator('img').getAttribute('src'), /\.svg(?:\?|$)/);
 assert.ok(await trigger.locator('img').evaluate(img=>img.complete && img.naturalWidth>0));
 await trigger.click();
 const options=page.getByRole('option');

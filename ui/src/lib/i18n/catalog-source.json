@@ -229,7 +229,7 @@
   },
   "Tek kişilik yatak": {
     "TR": "Tek kişilik yatak",
-    "EN": "Single bed"
+    "EN": "Single Bed"
   },
   "İki kişilik yatak": {
     "TR": "İki kişilik yatak",
@@ -273,7 +273,7 @@
   },
   "Katlanır yatak": {
     "TR": "Katlanır yatak",
-    "EN": "Folding bed"
+    "EN": "Folding Bed"
   },
   "İlave yatak": {
     "TR": "İlave yatak",
@@ -281,7 +281,7 @@
   },
   "Bebek yatağı": {
     "TR": "Bebek yatağı",
-    "EN": "Baby cot"
+    "EN": "Baby Crib"
   },
   "Portatif bebek yatağı": {
     "TR": "Portatif bebek yatağı",
@@ -2682,6 +2682,110 @@
   "Kâğıt mendil": {
     "TR": "Kâğıt mendil",
     "EN": "Tissue"
+  },
+  "Çift kişilik yatak": {
+    "TR": "Çift kişilik yatak",
+    "EN": "Double Bed"
+  },
+  "2 katlı ranza": {
+    "TR": "2 katlı ranza",
+    "EN": "Bunk Bed"
+  },
+  "3 katlı ranza": {
+    "TR": "3 katlı ranza",
+    "EN": "Triple Bunk Bed"
+  },
+  "4 katlı ranza": {
+    "TR": "4 katlı ranza",
+    "EN": "Quadruple Bunk Bed"
+  },
+  "İki ayrı tek kişilik yatak": {
+    "TR": "İki ayrı tek kişilik yatak",
+    "EN": "Twin Beds"
+  },
+  "Queen yatak": {
+    "TR": "Queen yatak",
+    "EN": "Queen Bed"
+  },
+  "King yatak": {
+    "TR": "King yatak",
+    "EN": "King Bed"
+  },
+  "Süper King yatak": {
+    "TR": "Süper King yatak",
+    "EN": "Super King Bed"
+  },
+  "Altı çift kişilik, üstü tek kişilik ranza": {
+    "TR": "Altı çift kişilik, üstü tek kişilik ranza",
+    "EN": "Double-Over-Single Bunk Bed"
+  },
+  "Altı tek kişilik, üstü çift kişilik ranza": {
+    "TR": "Altı tek kişilik, üstü çift kişilik ranza",
+    "EN": "Single-Over-Double Bunk Bed"
+  },
+  "Altı ve üstü çift kişilik ranza": {
+    "TR": "Altı ve üstü çift kişilik ranza",
+    "EN": "Double-Over-Double Bunk Bed"
+  },
+  "L tipi ranza": {
+    "TR": "L tipi ranza",
+    "EN": "L-Shaped Bunk Bed"
+  },
+  "Tek kişilik ilave yatak": {
+    "TR": "Tek kişilik ilave yatak",
+    "EN": "Extra Single Bed"
+  },
+  "Çift kişilik ilave yatak": {
+    "TR": "Çift kişilik ilave yatak",
+    "EN": "Extra Double Bed"
+  },
+  "Tek kişilik açılır kanepe": {
+    "TR": "Tek kişilik açılır kanepe",
+    "EN": "Single Sofa Bed"
+  },
+  "Çift kişilik açılır kanepe": {
+    "TR": "Çift kişilik açılır kanepe",
+    "EN": "Double Sofa Bed"
+  },
+  "Üç kişilik açılır kanepe": {
+    "TR": "Üç kişilik açılır kanepe",
+    "EN": "Triple Sofa Bed"
+  },
+  "Çekmeceli ilave yatak": {
+    "TR": "Çekmeceli ilave yatak",
+    "EN": "Trundle Bed"
+  },
+  "Yükseltilmiş yatak": {
+    "TR": "Yükseltilmiş yatak",
+    "EN": "Loft Bed"
+  },
+  "Kapsül yatak": {
+    "TR": "Kapsül yatak",
+    "EN": "Capsule Bed"
+  },
+  "Futon / yer yatağı": {
+    "TR": "Futon / yer yatağı",
+    "EN": "Futon"
+  },
+  "Çift kişilik futon": {
+    "TR": "Çift kişilik futon",
+    "EN": "Double Futon"
+  },
+  "Duvara katlanan yatak": {
+    "TR": "Duvara katlanan yatak",
+    "EN": "Murphy Bed"
+  },
+  "Çift kişilik duvara katlanan yatak": {
+    "TR": "Çift kişilik duvara katlanan yatak",
+    "EN": "Double Murphy Bed"
+  },
+  "Divan yatak": {
+    "TR": "Divan yatak",
+    "EN": "Daybed"
+  },
+  "Taşınabilir ek yatak": {
+    "TR": "Taşınabilir ek yatak",
+    "EN": "Rollaway Bed"
   },
   "2. Bodrum": {
     "AM": "የመሬት ውስጥ ፎቅ 2",

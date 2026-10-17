@@ -1,7 +1,7 @@
 import ts from '../../ui/node_modules/typescript/lib/typescript.js';
 import fs from 'node:fs';
 import path from 'node:path';
-const attributes=new Set(['label','title','placeholder','aria-label','alt','description','caption','emptyText','emptyLabel','closeLabel','hint','eyebrow','subtitle','text','message','detail','tooltip']);
+const attributes=new Set(['label','title','placeholder','aria-label','alt','description','caption','emptyText','emptyLabel','closeLabel','hint','eyebrow','subtitle','text','message','detail','tooltip','backLabel','sub','helpText','submitLabel','cancelLabel','confirmLabel','searchPlaceholder']);
 function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?(e.name==='landing'?[]:files(path.join(dir,e.name))):e.name.endsWith('.tsx')?[path.join(dir,e.name)]:[]);}
 let count=0;
 for(const file of ['ui/src/App.tsx',...files('ui/src/components')]){

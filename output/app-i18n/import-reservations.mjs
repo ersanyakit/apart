@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 const base='ui/src/lib/i18n';
 const locales=Object.keys(JSON.parse(fs.readFileSync(`${base}/application-core.json`)));
+const catalog=JSON.parse(fs.readFileSync('internal/domain/catalog/defaults.json'));
 const batches=[
+ ['catalog-categories.tsv',catalog.categories.map(c=>c.label.TR)],
  ['setup-labels.tsv',['İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara']],
  ['reservation-titles.tsv',['Rezervasyon kaynakları','Satış dönüşümü','Giriş ve çıkış listesi','Konaklama süresi','Rezervasyon özeti','Raporu görüntüle','rapor']],
  ['reservation-descriptions.tsv',['Rezervasyon akışını, giriş ve çıkışları, iptalleri takip edin.','Kanal geliri, iptal oranı ve komisyon sonrası satış.','Talep, teklif, kazanılan ve kaybedilen satışlar.','Seçilen dönemin planlanan giriş ve çıkışları.','Gece sayısı ve kısa / uzun konaklama dağılımı.','Oluşturulma tarihine göre rezervasyon durumları.']],
@@ -18,4 +20,4 @@ for(const [file,keys]of batches){
  }
  if(seen.size!==locales.length)throw new Error(`Missing languages: ${locales.filter(l=>!seen.has(l)).join(', ')}`);
 }
-console.log('Imported reservation report cards in all 60 supported languages.');
+console.log('Imported reservation cards, setup labels and catalog categories in all 60 supported languages.');

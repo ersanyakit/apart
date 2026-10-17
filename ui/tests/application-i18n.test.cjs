@@ -12,6 +12,22 @@ const {dateFieldLabels}=require(path.join(out,'formatters.js'));
 const core=require('../src/lib/i18n/application-core.json');
 const source=require('../src/lib/i18n/application-source.json');
 
+test('reservation cards, setup steps and catalog category labels have resources in every supported language',async()=>{
+ const contracts=require('../src/lib/contracts.generated.json');
+ const catalog=require('../../internal/domain/catalog/defaults.json');
+ const keys=[...contracts.reports.filter(r=>r.key.startsWith('reservations.')).flatMap(r=>[r.name,r.description]),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
+ for(const locale of Object.keys(LOCALES)){
+  const dictionary=await loadApplicationDictionary(locale);
+  for(const key of keys){assert.ok(Object.hasOwn(source,key),`Unregistered source: ${key}`);assert.ok(Object.hasOwn(dictionary,key),`${locale}: ${key}`);}
+ }
+});
+
+test('source extraction includes catalog entries and setup/domain validation messages',()=>{
+ const catalog=require('../../internal/domain/catalog/defaults.json');
+ for(const category of catalog.categories)for(const group of category.groups)for(const entry of group.entries)assert.ok(Object.hasOwn(source,entry.label.TR),entry.key);
+ for(const key of ['En az bir kat ekleyin.','Her grup için 1–100 birim seçin.','Personel kullanıcı adları benzersiz olmalı.'])assert.ok(Object.hasOwn(source,key),key);
+});
+
 test('all 60 languages have authored core resources and load their own application catalog',async()=>{
  const keys=Object.keys(core.tr).sort();
  assert.equal(Object.keys(LOCALES).length,60);

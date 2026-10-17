@@ -97,12 +97,6 @@
       "line": 64
     }
   ],
-  " seç": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 30
-    }
-  ],
   " Twin düzenini oda formundan iki ayrı yatak olarak ekleyin.": [
     {
       "file": "ui/src/components/BedPresetPicker.tsx",
@@ -1043,6 +1037,12 @@
       "line": 790
     }
   ],
+  "2 katlı ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "2. Bodrum": [
     {
       "file": "ui/src/lib/contracts.generated.json",
@@ -1121,6 +1121,12 @@
       "line": 69
     }
   ],
+  "3 katlı ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "3. Bir dairenin yataklarını seçin": [
     {
       "file": "ui/src/components/SetupAccommodationFields.tsx",
@@ -1165,6 +1171,12 @@
     {
       "file": "ui/src/components/property-3d/PropertyView.tsx",
       "line": 107
+    }
+  ],
+  "4 katlı ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "4. Kat": [
@@ -1528,6 +1540,10 @@
     }
   ],
   "Açılır kanepe": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
     {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
@@ -2013,10 +2029,28 @@
       "line": 246
     }
   ],
+  "Altı çift kişilik, üstü tek kişilik ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "Altı çizili": [
     {
       "file": "ui/src/components/document-editor/DocumentEditor.tsx",
       "line": 51
+    }
+  ],
+  "Altı tek kişilik, üstü çift kişilik ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Altı ve üstü çift kişilik ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Alüminyum folyo": [
@@ -3250,6 +3284,10 @@
   "Bebek yatağı": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     },
     {
@@ -5367,6 +5405,10 @@
   ],
   "Çekmeceli": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
     }
@@ -5374,6 +5416,12 @@
   "Çekmeceli dolap": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    }
+  ],
+  "Çekmeceli ilave yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     }
   ],
@@ -5681,8 +5729,30 @@
   ],
   "Çift kişilik": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Çift kişilik açılır kanepe": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Çift kişilik duvara katlanan yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Çift kişilik futon": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Çift kişilik geniş yatak (Queen)": [
@@ -5691,10 +5761,20 @@
       "line": 1
     }
   ],
+  "Çift kişilik ilave yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "Çift kişilik yatak": [
     {
       "file": "ui/src/components/property-3d/model.ts",
       "line": 112
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Çift lavabo": [
@@ -6585,6 +6665,18 @@
       "line": 1
     }
   ],
+  "Divan": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Divan yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "divide-y divide-slate-100": [
     {
       "file": "ui/src/App.tsx",
@@ -7035,8 +7127,18 @@
   ],
   "Duvara katlanan": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Duvara katlanan yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Duvarlar": [
@@ -7303,6 +7405,12 @@
     {
       "file": "ui/src/components/kanban/KanbanView.tsx",
       "line": 52
+    }
+  ],
+  "ekle": [
+    {
+      "file": "ui/src/components/BedPresetPicker.tsx",
+      "line": 30
     }
   ],
   "EKLE": [
@@ -8367,6 +8475,18 @@
     {
       "file": "ui/src/components/Theme.tsx",
       "line": 22
+    }
+  ],
+  "Futon": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Futon / yer yatağı": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Gabon": [
@@ -10837,6 +10957,12 @@
       "line": 1
     }
   ],
+  "İki ayrı tek kişilik yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "İki ayrı tek kişilik yatak (Twin)": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -10870,6 +10996,10 @@
   "İlave yatak": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     },
     {
@@ -12489,8 +12619,18 @@
       "line": 33
     },
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Kapsül yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Kara liste": [
@@ -13031,6 +13171,10 @@
       "line": 35
     },
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
     }
@@ -13050,6 +13194,10 @@
   "Katlanır yatak": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     }
   ],
@@ -13101,6 +13249,12 @@
     {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 87
+    }
+  ],
+  "Kaydedilecek tutar: {value1}": [
+    {
+      "file": "ui/src/components/reports/RecordEditor.tsx",
+      "line": 75
     }
   ],
   "Kaydedilen değerlendirmelerin 5 üzerinden puanı.": [
@@ -13815,9 +13969,21 @@
       "line": 39
     }
   ],
+  "King": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "King size yatak": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    }
+  ],
+  "King yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     }
   ],
@@ -15080,6 +15246,10 @@
     }
   ],
   "L tipi ranza": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
     {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
@@ -19931,6 +20101,18 @@
       "line": 1
     }
   ],
+  "Queen": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Queen yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "Queen, ranza, kanepe…": [
     {
       "file": "ui/src/components/BedPresetPicker.tsx",
@@ -19990,6 +20172,10 @@
   "Ranza": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     }
   ],
@@ -21465,6 +21651,12 @@
       "line": 4
     }
   ],
+  "seç": [
+    {
+      "file": "ui/src/components/BedPresetPicker.tsx",
+      "line": 30
+    }
+  ],
   "Seç": [
     {
       "file": "ui/src/components/BookingsTable.tsx",
@@ -22469,8 +22661,18 @@
   ],
   "Süper King": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Süper King yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Süpürge": [
@@ -23447,8 +23649,18 @@
   ],
   "Taşınabilir": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Taşınabilir ek yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Taşınabilir klima": [
@@ -23577,13 +23789,33 @@
   ],
   "Tek kişilik": [
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Tek kişilik açılır kanepe": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
+  "Tek kişilik ilave yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Tek kişilik yatak": [
     {
       "file": "internal/domain/catalog/defaults.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/contracts.generated.json",
       "line": 1
     }
   ],
@@ -25459,6 +25691,12 @@
       "line": 1
     }
   ],
+  "Üç kişilik açılır kanepe": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    }
+  ],
   "Üçlü koltuk": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -26293,6 +26531,12 @@
     {
       "file": "internal/domain/catalog/defaults.json",
       "line": 1
+    }
+  ],
+  "Yatak kapasitesi: {value1} kişi": [
+    {
+      "file": "ui/src/components/BookingForm.tsx",
+      "line": 447
     }
   ],
   "Yatak kategorisi": [
@@ -27269,8 +27513,18 @@
       "line": 36
     },
     {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/accommodation/bed_catalog.go",
       "line": 48
+    }
+  ],
+  "Yükseltilmiş yatak": [
+    {
+      "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
     }
   ],
   "Yüz havlusu": [

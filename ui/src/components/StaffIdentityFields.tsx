@@ -60,7 +60,7 @@ export function StaffIdentityFields({value:p,onChange,allowAdmin=false}:{value:P
           onChange={(v) => patch({ role: v })}
           options={Object.entries(roles)
             .filter(([r]) => r !== "admin" || allowAdmin)
-            .map(([value, label]) => ({ value, label }))}
+            .map(([value, label]) => ({ value, label: _uiText(label) }))}
         />
         <TextField
           label={p.user_id ? _uiText("Yeni şifre (değiştirmek için)") : _uiText("Giriş şifresi")}

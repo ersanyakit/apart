@@ -20,6 +20,7 @@ vm.runInNewContext(compiled, {
     if (name === './fields') return { TextField: () => null, StepperField: () => null, Switch: () => null };
     if (name === '../lib/facility-icon-map.json') return require('../src/lib/facility-icon-map.json');
     if (name === '../lib/catalog-icon-map.json') return images;
+    if (name === '../lib/i18n/catalog-source.json') return require('../src/lib/i18n/catalog-source.json');
     return require(name);
   },
 });
