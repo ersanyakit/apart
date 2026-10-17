@@ -2171,12 +2171,6 @@
       "line": 50
     }
   ],
-  "arşivden geri al": [
-    {
-      "file": "ui/src/components/kanban/KanbanView.tsx",
-      "line": 109
-    }
-  ],
   "Arşivden geri al": [
     {
       "file": "ui/src/components/kanban/KanbanView.tsx",
@@ -2187,12 +2181,6 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 8
-    }
-  ],
-  "arşive taşı": [
-    {
-      "file": "ui/src/components/kanban/KanbanView.tsx",
-      "line": 109
     }
   ],
   "Arşive taşı": [

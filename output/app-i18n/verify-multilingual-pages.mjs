@@ -42,7 +42,7 @@ await page.getByRole('button',{name:/Mavi Avlu Otel/}).click();await page.getByR
 
 const {default:assert}=await import('node:assert/strict');
 const core=JSON.parse(await fs.readFile('ui/src/lib/i18n/application-core.json','utf8'))[language];
-const dictionary=JSON.parse(await fs.readFile(`ui/src/lib/i18n/application/${language}.json`,'utf8'));
+const dictionary={...JSON.parse(await fs.readFile(`ui/src/lib/i18n/marketing/${language}.json`,'utf8')),...JSON.parse(await fs.readFile(`ui/src/lib/i18n/application/${language}.json`,'utf8')),...core};
 await page.waitForFunction(language=>document.documentElement.lang===language,language);
 await page.getByRole('button',{name:core['Rezervasyon'],exact:true}).first().click();
 const cards=page.locator('button').filter({has:page.locator('span[class*="description"]')});
@@ -53,7 +53,7 @@ const contracts=JSON.parse(await fs.readFile('ui/src/lib/contracts.generated.jso
 for(const group of contracts.report_groups){
  const label=core[group.name]||dictionary[group.name];assert.ok(label,`Missing group label ${group.name}`);
  await page.locator('aside').getByRole('button',{name:label,exact:true}).first().click();
- for(const report of contracts.reports.filter(r=>r.category===group.name))await page.getByRole('button',{name:core[report.name]||dictionary[report.name],exact:true}).waitFor();
+ for(const report of contracts.reports.filter(r=>r.category===group.name)){await page.getByRole('button',{name:core[report.name]||dictionary[report.name],exact:true}).waitFor();await page.getByText(dictionary[report.description],{exact:true}).first().waitFor();}
 }
 await page.getByRole('button',{name:core['Olanak Tanımları'],exact:true}).first().click();
 for(const c of catalog.categories)await page.getByText(dictionary[c.label.TR],{exact:true}).first().waitFor();
@@ -68,5 +68,5 @@ for(const label of ['Canlı önizleme','Hesap','Sayı biçimi'])await page.getBy
 await page.getByRole('button',{name:dictionary['Detayları Gör'],exact:true}).click();
 await page.getByText(dictionary['İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.'],{exact:true}).waitFor();
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-settings-translations.png`});
-console.log('PASS',language,'all report headings, reservation descriptions, catalog categories, setup steps and settings preview');
+console.log('PASS',language,'all report cards and descriptions, catalog categories, setup steps and settings preview');
 await browser.close();

@@ -15,7 +15,7 @@ const source=require('../src/lib/i18n/application-source.json');
 test('all report headings, report group introductions, setup steps and catalog categories have native resources',async()=>{
  const contracts=require('../src/lib/contracts.generated.json');
  const catalog=require('../../internal/domain/catalog/defaults.json');
- const keys=[...contracts.reports.map(r=>r.name),...contracts.report_groups.flatMap(g=>[g.name,g.description]),...contracts.reports.filter(r=>r.key.startsWith('reservations.')).map(r=>r.description),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
+ const keys=[...contracts.reports.flatMap(r=>[r.name,r.description]),'Tüm tarihlerdeki müşterilerinizi benzersiz olarak görüntüleyin; ad, kimlik veya telefonla arayın.',...contracts.report_groups.flatMap(g=>[g.name,g.description]),...contracts.reports.filter(r=>r.key.startsWith('reservations.')).map(r=>r.description),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
  for(const locale of Object.keys(LOCALES)){
   const dictionary=await loadApplicationDictionary(locale);
   for(const key of keys){assert.ok(Object.hasOwn(source,key),`Unregistered source: ${key}`);assert.ok(Object.hasOwn(dictionary,key),`${locale}: ${key}`);}
@@ -103,4 +103,19 @@ test('unit types and action contexts have distinct native translations in all la
 test('extraction excludes implementation strings while retaining visible notifications and form errors',()=>{
  for(const key of ['peer sr-only','interactiveotel:locale','navigation-artwork shrink-0','button,input','ı'])assert.ok(!Object.hasOwn(source,key),key);
  for(const key of ['Geçerli bir tutar girin (örnek: {example}).','Tercihler kaydedilemedi. Ayarlar ekranından yeniden deneyebilirsiniz.','Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında personelin yeniden giriş yapması gerekir.'])assert.ok(Object.hasOwn(source,key),key);
+});
+
+
+test('completed shared screens and dialogs have resources across all supported locales',async()=>{
+ const locations=JSON.parse(readFileSync(path.join(ui,'../output/app-i18n/source-locations.json'),'utf8'));
+ const files=new Set(['StaffView.tsx','StaffIdentityFields.tsx','RoomFolio.tsx','AppSettingsView.tsx','FontSize.tsx','SettingsEditor.tsx','ConfirmDialog.tsx','PWA.tsx','kanban/NoteModal.tsx','kanban/model.ts'].map(file=>'ui/src/components/'+file));
+ const keys=Object.entries(locations).filter(([,refs])=>refs.some(ref=>files.has(ref.file))).map(([key])=>key);
+ const fold=text=>text.trim().replace(/\s+/g,' ').toLocaleLowerCase('tr');
+ for(const locale of Object.keys(LOCALES)){
+  const dictionary=await loadApplicationDictionary(locale),known=new Set(Object.keys(dictionary).map(fold));
+  for(const key of keys){
+   const parts=key.match(/^([^\p{L}\p{N}{]*)(.*?)([^\p{L}\p{N}}]*)$/us);
+   assert.ok(known.has(fold(key))||(parts&&known.has(fold(parts[2]))),`${locale}: ${key}`);
+  }
+ }
 });

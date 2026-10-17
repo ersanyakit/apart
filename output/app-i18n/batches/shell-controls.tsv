@@ -1,0 +1,59 @@
+en	Main menu	Main tabs	Collapse menu	Expand menu	Close tab: {value1}	Close: {value1}	Notifications: open reception notes	MY ACCOUNT	HOTEL SOFTWARE	Premium management	CALENDAR	Logo
+de	Hauptmenü	Hauptregisterkarten	Menü einklappen	Menü ausklappen	Registerkarte schließen: {value1}	Schließen: {value1}	Benachrichtigungen: Rezeptionsnotizen öffnen	MEIN KONTO	HOTELSOFTWARE	Premium-Verwaltung	KALENDER	Logo
+fr	Menu principal	Onglets principaux	Réduire le menu	Développer le menu	Fermer l’onglet : {value1}	Fermer : {value1}	Notifications : ouvrir les notes de réception	MON COMPTE	LOGICIEL HÔTELIER	Gestion premium	CALENDRIER	Logo
+ru	Главное меню	Основные вкладки	Свернуть меню	Развернуть меню	Закрыть вкладку: {value1}	Закрыть: {value1}	Уведомления: открыть заметки стойки регистрации	МОЙ АККАУНТ	ПРОГРАММА ДЛЯ ОТЕЛЯ	Премиальное управление	КАЛЕНДАРЬ	Логотип
+ar	القائمة الرئيسية	علامات التبويب الرئيسية	طي القائمة	توسيع القائمة	إغلاق علامة التبويب: {value1}	إغلاق: {value1}	الإشعارات: فتح ملاحظات الاستقبال	حسابي	برنامج إدارة الفنادق	إدارة متميزة	التقويم	الشعار
+ne	मुख्य मेनु	मुख्य ट्याबहरू	मेनु खुम्च्याउनुहोस्	मेनु विस्तार गर्नुहोस्	ट्याब बन्द गर्नुहोस्: {value1}	बन्द गर्नुहोस्: {value1}	सूचनाहरू: रिसेप्सन टिप्पणी खोल्नुहोस्	मेरो खाता	होटल सफ्टवेयर	प्रिमियम व्यवस्थापन	पात्रो	लोगो
+th	เมนูหลัก	แท็บหลัก	ย่อเมนู	ขยายเมนู	ปิดแท็บ: {value1}	ปิด: {value1}	การแจ้งเตือน: เปิดบันทึกแผนกต้อนรับ	บัญชีของฉัน	โปรแกรมโรงแรม	การบริหารระดับพรีเมียม	ปฏิทิน	โลโก้
+zh-CN	主菜单	主标签页	收起菜单	展开菜单	关闭标签页：{value1}	关闭：{value1}	通知：打开前台备注	我的账户	酒店管理软件	高级管理	日历	徽标
+zh-TW	主選單	主要分頁	收合選單	展開選單	關閉分頁：{value1}	關閉：{value1}	通知：開啟櫃台備註	我的帳戶	飯店管理軟體	進階管理	行事曆	標誌
+hi	मुख्य मेन्यू	मुख्य टैब	मेन्यू समेटें	मेन्यू फैलाएँ	टैब बंद करें: {value1}	बंद करें: {value1}	सूचनाएँ: रिसेप्शन नोट खोलें	मेरा खाता	होटल सॉफ़्टवेयर	प्रीमियम प्रबंधन	कैलेंडर	लोगो
+km	ម៉ឺនុយមេ	ផ្ទាំងមេ	បង្រួមម៉ឺនុយ	ពង្រីកម៉ឺនុយ	បិទផ្ទាំង៖ {value1}	បិទ៖ {value1}	ការជូនដំណឹង៖ បើកកំណត់សម្គាល់ទទួលភ្ញៀវ	គណនីរបស់ខ្ញុំ	កម្មវិធីសណ្ឋាគារ	ការគ្រប់គ្រងកម្រិតខ្ពស់	ប្រតិទិន	ឡូហ្គោ
+si	ප්‍රධාන මෙනුව	ප්‍රධාන ටැබ්	මෙනුව හකුළන්න	මෙනුව විහිදුවන්න	ටැබය වසන්න: {value1}	වසන්න: {value1}	දැනුම්දීම්: පිළිගැනීමේ සටහන් විවෘත කරන්න	මගේ ගිණුම	හෝටල් මෘදුකාංගය	උසස් කළමනාකරණය	දින දර්ශනය	ලාංඡනය
+ta	முதன்மைப் பட்டி	முதன்மைத் தாவல்கள்	பட்டியைச் சுருக்கு	பட்டியை விரிவாக்கு	தாவலை மூடு: {value1}	மூடு: {value1}	அறிவிப்புகள்: வரவேற்புக் குறிப்புகளைத் திற	எனது கணக்கு	ஹோட்டல் மென்பொருள்	பிரீமியம் நிர்வாகம்	நாட்காட்டி	இலச்சினை
+yue	主選單	主要分頁	收埋選單	展開選單	關閉分頁：{value1}	關閉：{value1}	通知：開啟接待處備註	我嘅帳戶	酒店管理軟件	進階管理	日曆	標誌
+ur	مرکزی مینو	مرکزی ٹیب	مینو سمیٹیں	مینو کھولیں	ٹیب بند کریں: {value1}	بند کریں: {value1}	اطلاعات: استقبالیہ کے نوٹ کھولیں	میرا اکاؤنٹ	ہوٹل سافٹ ویئر	پریمیم انتظام	کیلنڈر	لوگو
+bn	প্রধান মেনু	প্রধান ট্যাব	মেনু সংকুচিত করুন	মেনু প্রসারিত করুন	ট্যাব বন্ধ করুন: {value1}	বন্ধ করুন: {value1}	বিজ্ঞপ্তি: অভ্যর্থনার নোট খুলুন	আমার অ্যাকাউন্ট	হোটেল সফটওয়্যার	প্রিমিয়াম ব্যবস্থাপনা	ক্যালেন্ডার	লোগো
+dz	དཀར་ཆག་གཙོ་བོ།	མཚོན་རྟགས་གཙོ་བོ།	དཀར་ཆག་སྡུད།	དཀར་ཆག་རྒྱ་བསྐྱེད།	མཚོན་རྟགས་ཁ་བསྡམས་: {value1}	ཁ་བསྡམས་: {value1}	བརྡ་བསྐུལ་: མགྲོན་བསུའི་དྲན་ཐོ་ཁ་ཕྱེ།	ངེའི་རྩིས་ཁྲ།	མགྲོན་ཁང་གློག་རིམ།	མཐོ་རིམ་འཛིན་སྐྱོང་།	ཟླ་ཐོ།	ལས་རྟགས།
+es	Menú principal	Pestañas principales	Contraer menú	Expandir menú	Cerrar pestaña: {value1}	Cerrar: {value1}	Notificaciones: abrir notas de recepción	MI CUENTA	SOFTWARE HOTELERO	Gestión prémium	CALENDARIO	Logotipo
+it	Menu principale	Schede principali	Comprimi menu	Espandi menu	Chiudi scheda: {value1}	Chiudi: {value1}	Notifiche: apri note della reception	IL MIO ACCOUNT	SOFTWARE ALBERGHIERO	Gestione premium	CALENDARIO	Logo
+pt	Menu principal	Separadores principais	Recolher menu	Expandir menu	Fechar separador: {value1}	Fechar: {value1}	Notificações: abrir notas da receção	A MINHA CONTA	SOFTWARE HOTELEIRO	Gestão premium	CALENDÁRIO	Logótipo
+nl	Hoofdmenu	Hoofdtabbladen	Menu inklappen	Menu uitklappen	Tabblad sluiten: {value1}	Sluiten: {value1}	Meldingen: receptienotities openen	MIJN ACCOUNT	HOTELSOFTWARE	Premiumbeheer	KALENDER	Logo
+pl	Menu główne	Główne karty	Zwiń menu	Rozwiń menu	Zamknij kartę: {value1}	Zamknij: {value1}	Powiadomienia: otwórz notatki recepcji	MOJE KONTO	OPROGRAMOWANIE HOTELOWE	Zarządzanie premium	KALENDARZ	Logo
+cs	Hlavní nabídka	Hlavní karty	Sbalit nabídku	Rozbalit nabídku	Zavřít kartu: {value1}	Zavřít: {value1}	Oznámení: otevřít poznámky recepce	MŮJ ÚČET	HOTELOVÝ SOFTWARE	Prémiové řízení	KALENDÁŘ	Logo
+hu	Főmenü	Fő lapok	Menü összecsukása	Menü kibontása	Lap bezárása: {value1}	Bezárás: {value1}	Értesítések: recepciós jegyzetek megnyitása	FIÓKOM	SZÁLLODASZOFTVER	Prémium kezelés	NAPTÁR	Logó
+ro	Meniu principal	File principale	Restrânge meniul	Extinde meniul	Închide fila: {value1}	Închide: {value1}	Notificări: deschide notele recepției	CONTUL MEU	SOFTWARE HOTELIER	Management premium	CALENDAR	Siglă
+el	Κύριο μενού	Κύριες καρτέλες	Σύμπτυξη μενού	Ανάπτυξη μενού	Κλείσιμο καρτέλας: {value1}	Κλείσιμο: {value1}	Ειδοποιήσεις: άνοιγμα σημειώσεων υποδοχής	Ο ΛΟΓΑΡΙΑΣΜΟΣ ΜΟΥ	ΛΟΓΙΣΜΙΚΟ ΞΕΝΟΔΟΧΕΙΟΥ	Διαχείριση premium	ΗΜΕΡΟΛΟΓΙΟ	Λογότυπο
+uk	Головне меню	Основні вкладки	Згорнути меню	Розгорнути меню	Закрити вкладку: {value1}	Закрити: {value1}	Сповіщення: відкрити нотатки рецепції	МІЙ ОБЛІКОВИЙ ЗАПИС	ПРОГРАМА ДЛЯ ГОТЕЛЮ	Преміальне управління	КАЛЕНДАР	Логотип
+bg	Главно меню	Основни раздели	Свий менюто	Разгъни менюто	Затвори раздела: {value1}	Затвори: {value1}	Известия: отвори бележките на рецепцията	МОЯТ ПРОФИЛ	ХОТЕЛСКИ СОФТУЕР	Премиум управление	КАЛЕНДАР	Лого
+sr	Главни мени	Главне картице	Скупи мени	Прошири мени	Затвори картицу: {value1}	Затвори: {value1}	Обавештења: отвори белешке рецепције	МОЈ НАЛОГ	ХОТЕЛСКИ СОФТВЕР	Премијум управљање	КАЛЕНДАР	Логотип
+hr	Glavni izbornik	Glavne kartice	Sažmi izbornik	Proširi izbornik	Zatvori karticu: {value1}	Zatvori: {value1}	Obavijesti: otvori bilješke recepcije	MOJ RAČUN	HOTELSKI SOFTVER	Premium upravljanje	KALENDAR	Logotip
+sk	Hlavná ponuka	Hlavné karty	Zbaliť ponuku	Rozbaliť ponuku	Zavrieť kartu: {value1}	Zavrieť: {value1}	Oznámenia: otvoriť poznámky recepcie	MÔJ ÚČET	HOTELOVÝ SOFTVÉR	Prémiové riadenie	KALENDÁR	Logo
+sl	Glavni meni	Glavni zavihki	Strni meni	Razširi meni	Zapri zavihek: {value1}	Zapri: {value1}	Obvestila: odpri opombe recepcije	MOJ RAČUN	HOTELSKA PROGRAMSKA OPREMA	Vrhunsko upravljanje	KOLEDAR	Logotip
+fi	Päävalikko	Päävälilehdet	Supista valikko	Laajenna valikko	Sulje välilehti: {value1}	Sulje: {value1}	Ilmoitukset: avaa vastaanoton muistiinpanot	OMA TILI	HOTELLIOHJELMISTO	Premium-hallinta	KALENTERI	Logo
+sv	Huvudmeny	Huvudflikar	Fäll ihop menyn	Expandera menyn	Stäng flik: {value1}	Stäng: {value1}	Meddelanden: öppna receptionsanteckningar	MITT KONTO	HOTELLPROGRAM	Premiumhantering	KALENDER	Logotyp
+da	Hovedmenu	Hovedfaner	Fold menuen sammen	Udvid menuen	Luk fane: {value1}	Luk: {value1}	Meddelelser: åbn receptionsnoter	MIN KONTO	HOTELSOFTWARE	Premiumstyring	KALENDER	Logo
+no	Hovedmeny	Hovedfaner	Skjul menyen	Utvid menyen	Lukk fane: {value1}	Lukk: {value1}	Varsler: åpne resepsjonsnotater	MIN KONTO	HOTELLPROGRAM	Premiumstyring	KALENDER	Logo
+ms	Menu utama	Tab utama	Kecilkan menu	Kembangkan menu	Tutup tab: {value1}	Tutup: {value1}	Pemberitahuan: buka nota kaunter penerimaan	AKAUN SAYA	PERISIAN HOTEL	Pengurusan premium	KALENDAR	Logo
+id	Menu utama	Tab utama	Ciutkan menu	Perluas menu	Tutup tab: {value1}	Tutup: {value1}	Notifikasi: buka catatan resepsionis	AKUN SAYA	PERANGKAT LUNAK HOTEL	Manajemen premium	KALENDER	Logo
+vi	Trình đơn chính	Các thẻ chính	Thu gọn trình đơn	Mở rộng trình đơn	Đóng thẻ: {value1}	Đóng: {value1}	Thông báo: mở ghi chú lễ tân	TÀI KHOẢN CỦA TÔI	PHẦN MỀM KHÁCH SẠN	Quản lý cao cấp	LỊCH	Biểu trưng
+ja	メインメニュー	メインタブ	メニューを折りたたむ	メニューを展開	タブを閉じる：{value1}	閉じる：{value1}	通知：フロントメモを開く	マイアカウント	ホテル管理ソフト	プレミアム管理	カレンダー	ロゴ
+ko	기본 메뉴	기본 탭	메뉴 접기	메뉴 펼치기	탭 닫기: {value1}	닫기: {value1}	알림: 프런트 메모 열기	내 계정	호텔 소프트웨어	프리미엄 관리	달력	로고
+fa	منوی اصلی	زبانه‌های اصلی	جمع کردن منو	باز کردن منو	بستن زبانه: {value1}	بستن: {value1}	اعلان‌ها: باز کردن یادداشت‌های پذیرش	حساب من	نرم‌افزار هتل	مدیریت ویژه	تقویم	نشان
+he	תפריט ראשי	לשוניות ראשיות	צמצום התפריט	הרחבת התפריט	סגירת לשונית: {value1}	סגירה: {value1}	התראות: פתיחת הערות הקבלה	החשבון שלי	תוכנת מלון	ניהול פרימיום	לוח שנה	לוגו
+sw	Menyu kuu	Vichupo vikuu	Kunja menyu	Panua menyu	Funga kichupo: {value1}	Funga: {value1}	Arifa: fungua madokezo ya mapokezi	AKAUNTI YANGU	PROGRAMU YA HOTELI	Usimamizi wa kiwango cha juu	KALENDA	Nembo
+am	ዋና ምናሌ	ዋና ትሮች	ምናሌውን ሰብስብ	ምናሌውን ዘርጋ	ትር ዝጋ፦ {value1}	ዝጋ፦ {value1}	ማሳወቂያዎች፦ የመቀበያ ማስታወሻዎችን ክፈት	የእኔ መለያ	የሆቴል ሶፍትዌር	ፕሪሚየም አስተዳደር	የቀን መቁጠሪያ	አርማ
+mr	मुख्य मेनू	मुख्य टॅब	मेनू संकुचित करा	मेनू विस्तृत करा	टॅब बंद करा: {value1}	बंद करा: {value1}	सूचना: रिसेप्शनच्या टिपा उघडा	माझे खाते	हॉटेल सॉफ्टवेअर	प्रीमियम व्यवस्थापन	दिनदर्शिका	लोगो
+pa	ਮੁੱਖ ਮੀਨੂ	ਮੁੱਖ ਟੈਬ	ਮੀਨੂ ਸਮੇਟੋ	ਮੀਨੂ ਫੈਲਾਓ	ਟੈਬ ਬੰਦ ਕਰੋ: {value1}	ਬੰਦ ਕਰੋ: {value1}	ਸੂਚਨਾਵਾਂ: ਰਿਸੈਪਸ਼ਨ ਨੋਟ ਖੋਲ੍ਹੋ	ਮੇਰਾ ਖਾਤਾ	ਹੋਟਲ ਸਾਫਟਵੇਅਰ	ਪ੍ਰੀਮੀਅਮ ਪ੍ਰਬੰਧਨ	ਕੈਲੰਡਰ	ਲੋਗੋ
+te	ప్రధాన మెను	ప్రధాన ట్యాబ్‌లు	మెనును కుదించు	మెనును విస్తరించు	ట్యాబ్ మూసివేయి: {value1}	మూసివేయి: {value1}	నోటిఫికేషన్లు: రిసెప్షన్ గమనికలు తెరువు	నా ఖాతా	హోటల్ సాఫ్ట్‌వేర్	ప్రీమియం నిర్వహణ	క్యాలెండర్	లోగో
+my	ပင်မမီနူး	ပင်မတက်ဘ်များ	မီနူး ချုံ့ရန်	မီနူး ချဲ့ရန်	တက်ဘ် ပိတ်ရန်: {value1}	ပိတ်ရန်: {value1}	အသိပေးချက်များ: ဧည့်ကြိုမှတ်ချက်များ ဖွင့်ရန်	ကျွန်ုပ်အကောင့်	ဟိုတယ်ဆော့ဖ်ဝဲ	ပရီမီယံစီမံခန့်ခွဲမှု	ပြက္ခဒိန်	အမှတ်တံဆိပ်
+lo	ເມນູຫຼັກ	ແຖບຫຼັກ	ຫຍໍ້ເມນູ	ຂະຫຍາຍເມນູ	ປິດແຖບ: {value1}	ປິດ: {value1}	ການແຈ້ງເຕືອນ: ເປີດໝາຍເຫດຕ້ອນຮັບ	ບັນຊີຂອງຂ້ອຍ	ໂປຣແກຣມໂຮງແຮມ	ການບໍລິຫານພຣີມຽມ	ປະຕິທິນ	ໂລໂກ້
+ka	მთავარი მენიუ	მთავარი ჩანართები	მენიუს შეკუმშვა	მენიუს გაშლა	ჩანართის დახურვა: {value1}	დახურვა: {value1}	შეტყობინებები: მიღების შენიშვნების გახსნა	ჩემი ანგარიში	სასტუმროს პროგრამა	პრემიუმ მართვა	კალენდარი	ლოგო
+hy	Գլխավոր ընտրացանկ	Գլխավոր ներդիրներ	Ծալել ընտրացանկը	Բացել ընտրացանկը	Փակել ներդիրը՝ {value1}	Փակել՝ {value1}	Ծանուցումներ՝ բացել ընդունարանի նշումները	ԻՄ ՀԱՇԻՎԸ	ՀՅՈՒՐԱՆՈՑԱՅԻՆ ԾՐԱԳԻՐ	Պրեմիում կառավարում	ՕՐԱՑՈՒՅՑ	Պատկերանշան
+az	Əsas menyu	Əsas vərəqlər	Menyunu daralt	Menyunu genişləndir	Vərəqi bağla: {value1}	Bağla: {value1}	Bildirişlər: resepsiyon qeydlərini aç	HESABIM	OTEL PROQRAMI	Premium idarəetmə	TƏQVİM	Loqo
+kk	Негізгі мәзір	Негізгі қойындылар	Мәзірді жию	Мәзірді жаю	Қойындыны жабу: {value1}	Жабу: {value1}	Хабарландырулар: қабылдау ескертпелерін ашу	МЕНІҢ ТІРКЕЛГІМ	ҚОНАҚҮЙ БАҒДАРЛАМАСЫ	Премиум басқару	КҮНТІЗБЕ	Логотип
+uz	Asosiy menyu	Asosiy varaqlar	Menyuni yig‘ish	Menyuni kengaytirish	Varaqni yopish: {value1}	Yopish: {value1}	Bildirishnomalar: resepsion izohlarini ochish	HISOBIM	MEHMONXONA DASTURI	Premium boshqaruv	TAQVIM	Logotip
+ky	Негизги меню	Негизги өтмөктөр	Менюну жыйноо	Менюну кеңейтүү	Өтмөктү жабуу: {value1}	Жабуу: {value1}	Билдирмелер: кабыл алуу эскертмелерин ачуу	МЕНИН КАТТОО ЭСЕБИМ	МЕЙМАНКАНА ПРОГРАММАСЫ	Премиум башкаруу	ЖЫЛНААМА	Логотип
+mn	Үндсэн цэс	Үндсэн табууд	Цэс хураах	Цэс дэлгэх	Таб хаах: {value1}	Хаах: {value1}	Мэдэгдэл: хүлээн авахын тэмдэглэл нээх	МИНИЙ БҮРТГЭЛ	ЗОЧИД БУУДЛЫН ПРОГРАМ	Премиум удирдлага	ХУАНЛИ	Лого
+ps	اصلي غورنۍ	اصلي ټبونه	غورنۍ راټوله کړئ	غورنۍ پراخه کړئ	ټب وتړئ: {value1}	وتړئ: {value1}	خبرتیاوې: د استقبالیې یادښتونه پرانیزئ	زما حساب	د هوټل سافټویر	غوره مدیریت	کلیزه	نښان
+ku	Menûya sereke	Tabên sereke	Menûyê biçûk bike	Menûyê fireh bike	Tabê bigire: {value1}	Bigire: {value1}	Agahdarî: nîşeyên resepsiyonê veke	HESABÊ MIN	BERNAMEYA OTÊLÊ	Rêveberiya premium	SALNAME	Logo

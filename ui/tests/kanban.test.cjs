@@ -39,10 +39,10 @@ test('note cards have author history and keyboard/touch controls besides draggin
  for(const text of ['204 geç çıkış','Ayşe','Can','Son işlem','Acil'])assert.ok(html.includes(text));assert.ok(html.includes('draggable="true"'));
  all.find(n=>n.type==='button'&&n.props['aria-label'].endsWith('notu aç')).props.onClick();assert.ok(opened);
  all.find(n=>n.props.ariaLabel==='204 geç çıkış: durum').props.onChange('doing');assert.equal(moved,'doing');
- all.find(n=>n.type==='button'&&n.props['aria-label'].endsWith('arşive taşı')).props.onClick();assert.ok(archived);
+ all.find(n=>n.type==='button'&&n.props['aria-label'].endsWith('Arşive taşı')).props.onClick();assert.ok(archived);
  tree.props.onDragStart({dataTransfer:{setData(type,id){assert.equal(type,'application/x-hotel-note');assert.equal(id,'n')}}});assert.ok(dragged);
  const locked=capture(NoteCard,{...props,disabled:true});assert.equal(locked.props.draggable,false);assert.ok(nodes(locked).find(n=>n.type==='fieldset').props.disabled);
- assert.ok(render(React.createElement(NoteCard,{...props,note:{...note,archived:true}})).includes('arşivden geri al'));
+ assert.ok(render(React.createElement(NoteCard,{...props,note:{...note,archived:true}})).includes('Arşivden geri al'));
  const input=noteInput(note);assert.equal(input.version,2);assert.ok(!('created_by' in input));assert.ok(!('updated_by_name' in input));assert.deepEqual(COLUMNS.map(c=>c.value),['todo','doing','done']);
 });
 test('header exposes notes shortcuts and the operation menu for reception staff',()=>{
