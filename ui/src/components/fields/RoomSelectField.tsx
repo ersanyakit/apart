@@ -124,7 +124,7 @@ export function RoomSelectField({
       <FieldCard className="h-full">
         <button
           type="button"
-          aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(selected ? `${selected.code} ${_uiText(unitKinds[selected.kind] || "")}` : "yok")})}
+          aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(selected ? `${selected.code} ${_uiText(unitKinds[selected.kind] || "")}` : _uiText("yok"))})}
           aria-haspopup="listbox"
           aria-expanded={open}
           disabled={disabled}

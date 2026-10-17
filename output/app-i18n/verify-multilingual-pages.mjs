@@ -49,6 +49,12 @@ const cards=page.locator('button').filter({has:page.locator('span[class*="descri
 const reports=JSON.parse(await fs.readFile('ui/src/lib/contracts.generated.json','utf8')).reports.filter(r=>r.key.startsWith('reservations.'));
 for(const r of reports){await page.getByText(dictionary[r.name],{exact:true}).first().waitFor();await page.getByText(dictionary[r.description],{exact:true}).first().waitFor();}
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-reservations.png`});
+const contracts=JSON.parse(await fs.readFile('ui/src/lib/contracts.generated.json','utf8'));
+for(const group of contracts.report_groups){
+ const label=core[group.name]||dictionary[group.name];assert.ok(label,`Missing group label ${group.name}`);
+ await page.locator('aside').getByRole('button',{name:label,exact:true}).first().click();
+ for(const report of contracts.reports.filter(r=>r.category===group.name))await page.getByRole('button',{name:core[report.name]||dictionary[report.name],exact:true}).waitFor();
+}
 await page.getByRole('button',{name:core['Olanak Tanımları'],exact:true}).first().click();
 for(const c of catalog.categories)await page.getByText(dictionary[c.label.TR],{exact:true}).first().waitFor();
 await page.getByRole('button',{name:dictionary['Özellik Ekle'],exact:true}).waitFor();
@@ -57,5 +63,10 @@ await page.getByRole('button',{name:core['Kurulum Sihirbazı'],exact:true}).firs
 const steps=page.getByRole('navigation',{name:dictionary['Kurulum adımları']});
 for(const label of ['İşletme','Tesis','Olanaklar','Katlar','Odalar','Personel','Kontrol'])assert.ok(await steps.getByRole('button',{name:new RegExp(dictionary[label]||core[label])}).count(),label);
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-setup.png`});
-console.log('PASS',language,'reservation card names/descriptions, catalog categories and setup step labels');
+await page.locator('aside').getByRole('button',{name:core['Ayarlar'],exact:true}).click();
+for(const label of ['Canlı önizleme','Hesap','Sayı biçimi'])await page.getByText(dictionary[label],{exact:true}).first().waitFor();
+await page.getByRole('button',{name:dictionary['Detayları Gör'],exact:true}).click();
+await page.getByText(dictionary['İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.'],{exact:true}).waitFor();
+await page.screenshot({path:`output/app-i18n/screenshots/${language}-settings-translations.png`});
+console.log('PASS',language,'all report headings, reservation descriptions, catalog categories, setup steps and settings preview');
 await browser.close();

@@ -100,7 +100,7 @@ export function SetupWizard({snapshot:s,onComplete}:{snapshot:Snapshot;onComplet
      <Button variant="secondary" onClick={()=>setFloors(old=>[...old,{...setupFloors(1,true)[0],code:'',label:{TR:''},sort_order:old.length+1}])}><Plus size={16}/>{_uiText("Başka kat ekle")}</Button>
     </>}
     {step===4&&<>
-     {groups.map(g=><SettingsSection key={g.id} defaultOpen title={g.name} description={_uiText("{value1} kat · {value2} {value3}", {value1: String(g.floorKey==='all'?floors.length:1), value2: String((g.floorKey==='all'?floors.length:1)*g.count), value3: String(g.kind.includes('apartment')?'daire':'oda')})}><div className="space-y-4">
+     {groups.map(g=><SettingsSection key={g.id} defaultOpen title={g.name} description={_uiText("{value1} kat · {value2} {value3}", {value1: String(g.floorKey==='all'?floors.length:1), value2: String((g.floorKey==='all'?floors.length:1)*g.count), value3: _uiText(g.kind.includes('apartment')?'Daire':'Oda')})}><div className="space-y-4">
       <SetupAccommodationFields value={g} onChange={patch=>patchGroup(g.id,patch)} floors={floors} definitions={s.feature_registry.definitions||[]} branchId={s.branch_id} disabled={busy}/>
       {groups.length>1&&<Button variant="secondary" onClick={()=>setGroups(old=>old.filter(item=>item.id!==g.id))}><Trash2 size={16}/>{_uiText("Bu oda tipini kaldır")}</Button>}
      </div></SettingsSection>)}

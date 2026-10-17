@@ -18,7 +18,7 @@ import {
 import { FONT_SIZE_OPTIONS, useFontSize } from "./FontSize";
 import { BACKGROUND_OPTIONS, THEME_OPTIONS, useTheme } from "./Theme";
 import {
-  CURRENCIES, localizedCurrencies,
+  localizedCurrencies,
   MONEY_FORMATS,
   formatMoney,
   useCurrency,
@@ -60,7 +60,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
   const [previewMessage, setPreviewMessage] = useState("");
   const currentTheme = THEME_OPTIONS.find((option) => option.id === theme)!;
   const countryCurrency = currencyForCountry(defaultCountry);
-  const countryCurrencyLabel = CURRENCIES.find((o) => o.id === countryCurrency);
+  const countryCurrencyLabel = localizedCurrencies(locale).find((o) => o.id === countryCurrency);
 
   return (
     <div className="w-full space-y-5 pb-8 font-sans text-uni-ink">
@@ -98,7 +98,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </fieldset>
         <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
           <Check size={14} className="text-brand-blue-600" />
-          <span>{_uiText(currentTheme.label)} {_uiText("tema etkin")}</span>
+          <span>{_uiText("{theme} teması etkin", {theme:_uiText(currentTheme.label)})}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           <span>{_uiText(saveLabel)}</span>
         </div>
@@ -170,7 +170,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
             </button>
             <button type="button" className="uni-control uni-button uni-button-soft" onClick={() => setPreviewMessage("İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.")}>{_uiText("Detayları Gör")} </button>
           </div>
-          <p role="status" className="mt-3 text-xs leading-5 text-uni-muted">{previewMessage || _uiText("Butonları deneyerek renk ve etkileşimleri önizleyebilirsin.")}</p>
+          <p role="status" className="mt-3 text-xs leading-5 text-uni-muted">{previewMessage ? _uiText(previewMessage) : _uiText("Butonları deneyerek renk ve etkileşimleri önizleyebilirsin.")}</p>
         </div>
       </section>
 

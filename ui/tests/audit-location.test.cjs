@@ -35,3 +35,9 @@ test('manager headlines describe room changes and report cancellation accurately
  assert.equal(auditHeadline({entity:'report_records',action:'delete'}),'İşlem kaydı iptal edildi');
  assert.equal(auditSubject({entity:'bookings',action:'check_in',details:{after:{guest_name:'Deniz Örnek'}}}),'Deniz Örnek');
 });
+
+
+test('audit location translates owned unit labels while preserving codes and branch names',()=>{
+ const t=source=>({'Oda':'Room','Daire':'Apartment','Birim':'Unit'}[source]??source);
+ assert.deepEqual(auditLocationSummary('rooms',{after_location:{...location,code:'Oda-101',branch_name:'Daire'}},t),{label:'Room Oda-101',branch:'Daire',inferred:false});
+});

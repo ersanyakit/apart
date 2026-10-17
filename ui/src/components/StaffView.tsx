@@ -66,7 +66,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
                   {p.first_name} {p.last_name}
                 </h3>
                 <p className="text-xs text-slate-400 mt-1">
-                  {p.username} · {roles[p.role]}
+                  {p.username} · {_uiText(roles[p.role] || p.role)}
                 </p>
               </div>
               <p className="text-xs text-slate-500">

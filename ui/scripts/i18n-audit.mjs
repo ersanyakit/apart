@@ -9,7 +9,13 @@ for(const locale of Object.keys(core)){
  const marketing=JSON.parse(await fs.readFile(path.join(base,'marketing',`${locale}.json`),'utf8'));
  const resource=JSON.parse(await fs.readFile(path.join(base,'application',`${locale}.json`),'utf8'));
  const keys=new Set([...Object.keys(marketing),...Object.keys(resource),...Object.keys(plurals[locale])].map(fold));
- const missing=Object.keys(source).filter(key=>!keys.has(fold(key)));
+ // Match the runtime lookup, including punctuation around an existing message.
+ const hasTranslation=key=>{
+  if(keys.has(fold(key)))return true;
+  const parts=key.match(/^([^\p{L}\p{N}{]*)(.*?)([^\p{L}\p{N}}]*)$/us);
+  return !!parts&&keys.has(fold(parts[2]));
+ };
+ const missing=Object.keys(source).filter(key=>!hasTranslation(key));
  audit.languages[locale]={translated:audit.sourceMessages-missing.length,missingCount:missing.length,missing};
  if(missing.length)audit.complete=false;
 }

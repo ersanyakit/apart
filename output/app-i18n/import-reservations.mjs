@@ -1,8 +1,19 @@
 import fs from 'node:fs';
 const base='ui/src/lib/i18n';
 const locales=Object.keys(JSON.parse(fs.readFileSync(`${base}/application-core.json`)));
+const placeholders=text=>[...text.matchAll(/\{(\w+)\}/g)].map(match=>match[1]).sort().join(',');
 const catalog=JSON.parse(fs.readFileSync('internal/domain/catalog/defaults.json'));
 const batches=[
+ ['settings-actions.tsv',["Birincil buton önizlemesi. Tema tüm uygulamaya uygulandı.", "İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.", "Butonları deneyerek renk ve etkileşimleri önizleyebilirsin.", "Oturumu kapatmak istediğinize emin misiniz?", "Tercihler kaydedilemedi. Ayarlar ekranından yeniden deneyebilirsiniz.", "Bilgileri düzenleyip kaydet. Listeye dönerek diğer kayıtlarla devam edebilirsin."]],
+ ['settings-guidance.tsv',["Menüler, butonlar ve vurgular seçtiğin renge uyum sağlar.", "Senin için en rahat okunan boyutu seç.", "Sitenin zemin rengi.", "Oda ve rezervasyonlarını tek bir yerden yönet.", "Para birimi elle seçildiği için otomatik takip kapalı.", "Bu ülkenin listede para birimi yok, mevcut korunur", "Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez.", "Tercihlerin kullanıcı hesabında saklanır; başka cihazlarda da hesabına giriş yaptığında uygulanır."]],
+ ['settings-labels.tsv',["Aktif kullanıcı", "Arka plan", "Canlı önizleme", "Detayları Gör", "Elle seçim etkin", "Erişim yetkisi", "Hesabına kaydedildi", "Hesap", "Hesap tercihlerin", "Otomatik takibe dön", "Örnek:", "Sayı biçimi", "{theme} teması etkin", "Tema rengi", "Varsayılan ülkeyi takip ediyor", "Yazı boyutu", "/ gece", "12 aktif kayıt"]],
+ ['appearance.tsv',["Mavi", "Pembe", "Yeşil", "Turuncu", "Mor", "Fuşya", "Beyaz", "Açık gri", "Kompakt", "Büyük", "Çok Büyük", "Daha fazla içerik", "Daha okunaklı", "En okunaklı"]],
+ ['stay-controls.tsv',["Arşiv birimi", "Zaman kaydedilmemiş", "Giriş yapılmadı", "Çıkış yapılmadı", "Girişi gerçekleştiren", "Çıkışı gerçekleştiren", "İptali gerçekleştiren", "Rezervasyonu alan", "İşlemleri gerçekleştiren personel", "Birim seçin", "Birim ara", "Uygun birim yok", "Oda kodu veya tip ara…", "Sözleşme ve Dekontlar", "Tahsilat al", "Oda hesabı yükleniyor…", "Folyoyu yenile", "Oda ve konaklama işlemleri"]],
+ ['report-groups.tsv',["Yönetim", "Finans", "Doluluk", "Gelir yönetimi", "Operasyon", "Apart", "Hostel"]],
+ ['staff-guidance.tsv',["Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında personelin yeniden giriş yapması gerekir.", "Yönetim rolü otelin tüm şubelerine erişir.", "{value1} {value2} personel kaydı silinsin mi? Açık oturumları kapatılacak, işlem geçmişi korunacak."]],
+ ['form-fields.tsv',["Cinsiyet", "Erkek", "Kadın", "Rezervasyon numarası", "Kapora", "Tarih aralığı", "Birim fiyat", "Sonuç", "Önceki", "Sonraki", "Yeni Personel", "Personeli Kaydet", "Personeli Düzenle", "Şube erişimleri", "Otelin tüm şubeleri", "Yatak türü", "Oda tipi", "Kat adı", "Kategori adı", "Üst birim"]],
+ ['context-templates.tsv',["{value1} raporları", "{value1} seçin. Seçili: {value2}", "{value1} artır", "{value1} azalt", "{value1} düzenle", "{value1} sil", "Geçerli bir tutar girin (örnek: {example}).", "{value1} seçimi"]],
+ ['report-group-descriptions.tsv',["İşletmenizin genel durumunu, performansını ve önemli göstergelerini inceleyin.", "Tahsilatları, ödemeleri, bakiyeleri ve finansal hareketleri takip edin.", "Oda ve yatak kullanımını, müsaitliği ve doluluk eğilimlerini inceleyin.", "Gelir performansını ve fiyatlandırma göstergelerini karşılaştırın.", "Müşterilerinizi, misafir profilini ve konaklama geçmişini inceleyin.", "Personel faaliyetlerini ve ekip performansını takip edin.", "Temizlik, bakım ve günlük operasyon kayıtlarını inceleyin.", "Apart işletmenizin konaklama ve tahsilat durumunu takip edin.", "Hostelinizin yatak kullanımını ve konaklama performansını inceleyin."]],
  ['report-accommodation.tsv',["Daire giderleri", "Daire geliri", "Daire bakımı", "Daire doluluğu", "Daire faaliyet sonucu", "Ranza kapasitesi", "Ortak alan kullanımı", "Ek hizmet gelirleri", "Grup konaklama", "Yatak ve oda değişimleri", "Yatak doluluğu", "Yatak hazırlığı", "Yatak başına gelir", "Kısa süreli konaklama", "Yatakhane performansı"]],
  ['report-headings-detail.tsv',["Misafir profili", "Tekrar gelen misafirler", "Misafir memnuniyeti", "Şikâyetler", "Kapasite kullanımı", "Günlük doluluk", "Gelecek doluluk", "Geçmiş doluluk", "Birim performansı", "Rakip fiyatları", "Gelir tahmini", "ADR ve RevPAR", "Fiyat performansı", "Müşteri Listesi", "Kontrat bitişleri", "Güvence depozitoları", "Kira ve tahsilat", "Uzun dönem konaklama"]],
  ['report-headings.tsv',["Yönetim özeti", "Tesis karşılaştırması", "İşlem kayıtları", "Günlük gelir ve tahsilat", "Gider Dağılımı", "Gelir–gider", "Ödeme yöntemleri", "Personel Maaşları", "Birim bazında faaliyet sonucu", "Alacak ve borç", "İptal ve iadeler", "Kira Giderleri", "Fatura Giderleri", "Kayıp ve hasar", "Temizlik", "Stok ve tüketim", "Arıza ve bakım", "Personel performansı", "Vardiya ve kasa", "Görev tamamlama"]],
@@ -31,9 +42,9 @@ for(const [file,keys,options={}]of batches){
   if(!locales.includes(locale)||seen.has(locale)||values.length!==keys.length||values.some(v=>!v.trim()))throw new Error(`Invalid translation row: ${file} ${locale} (${values.length})`);
   seen.add(locale);
   const destination=`${base}/application/${locale}.json`,dictionary=JSON.parse(fs.readFileSync(destination));
-  keys.forEach((key,i)=>{if(!options.preserveExisting||!Object.hasOwn(dictionary,key))dictionary[key]=values[i]});
+  keys.forEach((key,i)=>{if(placeholders(key)!==placeholders(values[i]))throw new Error(`Placeholder mismatch: ${file} ${locale} ${key}`);if(!options.preserveExisting||!Object.hasOwn(dictionary,key))dictionary[key]=values[i]});
   fs.writeFileSync(destination,JSON.stringify(dictionary,null,2)+'\n');
  }
  if(seen.size!==locales.length)throw new Error(`Missing languages: ${locales.filter(l=>!seen.has(l)).join(', ')}`);
 }
-console.log('Imported reservation cards, setup labels and catalog categories in all 60 supported languages.');
+console.log(`Imported ${batches.length} reviewed translation batches in all ${locales.length} supported languages; named placeholders validated.`);

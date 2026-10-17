@@ -127,3 +127,16 @@ test('utility expenses have a dedicated report and clear existing expense entry 
  const form=renderToStaticMarkup(wrap(React.createElement(RecordEditor,{snapshot,kinds:RECORD_KINDS,currency:'TRY',initialKind:'expense',initialCategory:'electricity',skipKindSelection:true,onClose(){},onSaved(){}})));
  for(const label of ['Fatura gideri ekle','Fatura tutarı','Fatura dönemi / açıklama','Fatura tedarikçisi','Fatura / referans numarası'])assert.ok(form.includes(label),label);
 });
+
+
+test('chart localization preserves funnel order, pivot totals and user-authored names',()=>{
+ const translate=(source,params={})=>({'Açık':'Open','Teklif verildi':'Quoted','Onaylı':'Confirmed','Kaybedildi':'Lost','Tamamlandı':'Completed','Diğer ({count} grup)':'Other ({count} groups)'}[source]??source).replace(/\{(\w+)\}/g,(token,key)=>String(params[key]??token));
+ const funnel=CHARTS['reservations.conversion'][0];
+ const points=chartPoints([{status:'lost',count:1},{status:'confirmed',count:3},{status:'open',count:5},{status:'quoted',count:4}],funnel,'en',translate);
+ assert.deepEqual(points.map(p=>p.label),['Open','Quoted','Confirmed','Lost']);
+ const pivot=pivotData([{responsible:'open',status:'open'},{responsible:'open',status:'open'},{responsible:'cash',status:'completed'}],CHARTS['staff.tasks'][1],'en',translate);
+ assert.equal(pivot.rows.find(r=>r.label==='open').values[pivot.columns.indexOf('Open')],2);
+ assert.ok(pivot.rows.some(r=>r.label==='cash'));
+ const many=chartPoints(Array.from({length:14},(_,i)=>({status:String(i),count:1})),{...funnel,kind:'donut'},'en',translate);
+ assert.equal(many.at(-1).label,'Other (3 groups)');
+});

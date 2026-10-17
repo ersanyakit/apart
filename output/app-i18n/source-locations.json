@@ -229,6 +229,12 @@
       "line": 1
     }
   ],
+  "{theme} teması etkin": [
+    {
+      "file": "ui/src/components/AppSettingsView.tsx",
+      "line": 101
+    }
+  ],
   "{value1}": [
     {
       "file": "ui/src/components/CheckoutFolio.tsx",
@@ -7531,6 +7537,12 @@
       "line": 1
     }
   ],
+  "Geçerli bir tutar girin (örnek: {example}).": [
+    {
+      "file": "ui/src/components/fields/MoneyField.tsx",
+      "line": 116
+    }
+  ],
   "Geçerli bir tutar girin.": [
     {
       "file": "ui/src/components/reports/RecordEditor.tsx",
@@ -7541,12 +7553,6 @@
     {
       "file": "ui/src/lib/phone/index.ts",
       "line": 34
-    }
-  ],
-  "Geçerli tutar yazın (örn.": [
-    {
-      "file": "ui/src/components/fields/MoneyField.tsx",
-      "line": 116
     }
   ],
   "Geçersiz belge türü.": [
@@ -20563,12 +20569,6 @@
       "line": 1
     }
   ],
-  "tema etkin": [
-    {
-      "file": "ui/src/components/AppSettingsView.tsx",
-      "line": 101
-    }
-  ],
   "Tema rengi": [
     {
       "file": "ui/src/components/AppSettingsView.tsx",
@@ -23160,6 +23160,10 @@
     }
   ],
   "yok": [
+    {
+      "file": "ui/src/components/fields/RoomSelectField.tsx",
+      "line": 127
+    },
     {
       "file": "ui/src/lib/i18n/messages.ts",
       "line": 1

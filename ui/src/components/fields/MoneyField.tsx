@@ -113,7 +113,7 @@ export function MoneyField({
           {sub ?? _uiText("{value1} / gece", {value1: String(formatMoney(valueMinor, currency, format))})}
         </span>
         {invalid && (
-          <span role="alert" className="mt-1 block text-[0.875rem] leading-5 text-red-600">{_uiText("Geçerli tutar yazın (örn.")} {example})
+          <span role="alert" className="mt-1 block text-[0.875rem] leading-5 text-red-600">{_uiText("Geçerli bir tutar girin (örnek: {example}).", {example})}
           </span>
         )}
       </label>

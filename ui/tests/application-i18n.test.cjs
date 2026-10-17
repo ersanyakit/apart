@@ -12,10 +12,10 @@ const {dateFieldLabels}=require(path.join(out,'formatters.js'));
 const core=require('../src/lib/i18n/application-core.json');
 const source=require('../src/lib/i18n/application-source.json');
 
-test('reservation cards, setup steps and catalog category labels have resources in every supported language',async()=>{
+test('all report headings, report group introductions, setup steps and catalog categories have native resources',async()=>{
  const contracts=require('../src/lib/contracts.generated.json');
  const catalog=require('../../internal/domain/catalog/defaults.json');
- const keys=[...contracts.reports.filter(r=>r.key.startsWith('reservations.')).flatMap(r=>[r.name,r.description]),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
+ const keys=[...contracts.reports.map(r=>r.name),...contracts.report_groups.flatMap(g=>[g.name,g.description]),...contracts.reports.filter(r=>r.key.startsWith('reservations.')).map(r=>r.description),...catalog.categories.map(c=>c.label.TR),'İşletme','Tesis','Olanaklar','Katlar','Odalar','Kontrol','İleri','Özellik Ekle','Kategori Ekle','Katalogda ara','Raporu görüntüle'];
  for(const locale of Object.keys(LOCALES)){
   const dictionary=await loadApplicationDictionary(locale);
   for(const key of keys){assert.ok(Object.hasOwn(source,key),`Unregistered source: ${key}`);assert.ok(Object.hasOwn(dictionary,key),`${locale}: ${key}`);}
@@ -97,4 +97,10 @@ test('unit types and action contexts have distinct native translations in all la
  assert.equal(applicationText(en,'Güncelle'),'Update');
  assert.equal(applicationText(en,'Durum'),'Status');
  assert.notEqual(applicationText(en,'Kaydediliyor…'),applicationText(en,'Yükleniyor…'));
+});
+
+
+test('extraction excludes implementation strings while retaining visible notifications and form errors',()=>{
+ for(const key of ['peer sr-only','interactiveotel:locale','navigation-artwork shrink-0','button,input','ı'])assert.ok(!Object.hasOwn(source,key),key);
+ for(const key of ['Geçerli bir tutar girin (örnek: {example}).','Tercihler kaydedilemedi. Ayarlar ekranından yeniden deneyebilirsiniz.','Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında personelin yeniden giriş yapması gerekir.'])assert.ok(Object.hasOwn(source,key),key);
 });

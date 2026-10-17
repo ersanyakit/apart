@@ -1,0 +1,59 @@
+en	{value1} reports	Select {value1}. Selected: {value2}	Increase {value1}	Decrease {value1}	Edit {value1}	Delete {value1}	Enter a valid amount (example: {example}).	{value1} selection
+de	Berichte: {value1}	{value1} auswählen. Ausgewählt: {value2}	{value1} erhöhen	{value1} verringern	{value1} bearbeiten	{value1} löschen	Geben Sie einen gültigen Betrag ein (Beispiel: {example}).	Auswahl: {value1}
+fr	Rapports : {value1}	Sélectionner {value1}. Sélection : {value2}	Augmenter {value1}	Diminuer {value1}	Modifier {value1}	Supprimer {value1}	Saisissez un montant valide (exemple : {example}).	Sélection : {value1}
+ru	Отчёты: {value1}	Выберите {value1}. Выбрано: {value2}	Увеличить {value1}	Уменьшить {value1}	Изменить {value1}	Удалить {value1}	Введите корректную сумму (пример: {example}).	Выбор: {value1}
+ar	تقارير {value1}	اختر {value1}. المحدد: {value2}	زيادة {value1}	تقليل {value1}	تعديل {value1}	حذف {value1}	أدخل مبلغًا صالحًا (مثال: {example}).	اختيار {value1}
+ne	{value1} प्रतिवेदनहरू	{value1} छान्नुहोस्। छानिएको: {value2}	{value1} बढाउनुहोस्	{value1} घटाउनुहोस्	{value1} सम्पादन गर्नुहोस्	{value1} मेटाउनुहोस्	मान्य रकम लेख्नुहोस् (उदाहरण: {example})।	{value1} छनोट
+th	รายงาน{value1}	เลือก{value1} เลือกไว้: {value2}	เพิ่ม{value1}	ลด{value1}	แก้ไข{value1}	ลบ{value1}	กรอกจำนวนเงินที่ถูกต้อง (ตัวอย่าง: {example})	การเลือก{value1}
+zh-CN	{value1}报表	选择{value1}。已选择：{value2}	增加{value1}	减少{value1}	编辑{value1}	删除{value1}	请输入有效金额（示例：{example}）。	{value1}选择
+zh-TW	{value1}報表	選擇{value1}。已選擇：{value2}	增加{value1}	減少{value1}	編輯{value1}	刪除{value1}	請輸入有效金額（範例：{example}）。	{value1}選擇
+hi	{value1} रिपोर्ट	{value1} चुनें। चयनित: {value2}	{value1} बढ़ाएँ	{value1} घटाएँ	{value1} संपादित करें	{value1} हटाएँ	मान्य राशि दर्ज करें (उदाहरण: {example})।	{value1} चयन
+km	របាយការណ៍ {value1}	ជ្រើសរើស {value1}។ បានជ្រើស៖ {value2}	បង្កើន {value1}	បន្ថយ {value1}	កែសម្រួល {value1}	លុប {value1}	បញ្ចូលទឹកប្រាក់ត្រឹមត្រូវ (ឧទាហរណ៍៖ {example})។	ការជ្រើសរើស {value1}
+si	{value1} වාර්තා	{value1} තෝරන්න. තෝරා ඇත්තේ: {value2}	{value1} වැඩි කරන්න	{value1} අඩු කරන්න	{value1} සංස්කරණය කරන්න	{value1} මකන්න	වලංගු මුදලක් ඇතුළත් කරන්න (උදාහරණය: {example}).	{value1} තේරීම
+ta	{value1} அறிக்கைகள்	{value1} தேர்ந்தெடுக்கவும். தேர்ந்தெடுத்தது: {value2}	{value1} அதிகரி	{value1} குறை	{value1} திருத்து	{value1} நீக்கு	செல்லுபடியான தொகையை உள்ளிடவும் (எடுத்துக்காட்டு: {example}).	{value1} தேர்வு
+yue	{value1}報表	選擇{value1}。已選擇：{value2}	增加{value1}	減少{value1}	編輯{value1}	刪除{value1}	請輸入有效金額（例子：{example}）。	{value1}選擇
+ur	{value1} کی رپورٹیں	{value1} منتخب کریں۔ منتخب: {value2}	{value1} بڑھائیں	{value1} گھٹائیں	{value1} میں ترمیم کریں	{value1} حذف کریں	درست رقم درج کریں (مثال: {example})۔	{value1} کا انتخاب
+bn	{value1} প্রতিবেদন	{value1} নির্বাচন করুন। নির্বাচিত: {value2}	{value1} বাড়ান	{value1} কমান	{value1} সম্পাদনা করুন	{value1} মুছুন	সঠিক পরিমাণ লিখুন (উদাহরণ: {example})।	{value1} নির্বাচন
+dz	{value1} སྙན་ཞུ།	{value1} གདམ། གདམ་ཡོདཔ་: {value2}	{value1} ཡར་སེང་འབད།	{value1} མར་ཕབ་འབད།	{value1} ཞུན་དག་འབད།	{value1} བཏོན་གཏང་།	དངུལ་བསྡོམས་ནུས་ཅན་བཙུགས་ (དཔེར་ན་: {example})།	{value1} གདམ་ཁ།
+es	Informes de {value1}	Seleccione {value1}. Selección: {value2}	Aumentar {value1}	Reducir {value1}	Editar {value1}	Eliminar {value1}	Introduzca un importe válido (ejemplo: {example}).	Selección de {value1}
+it	Report: {value1}	Seleziona {value1}. Selezione: {value2}	Aumenta {value1}	Diminuisci {value1}	Modifica {value1}	Elimina {value1}	Inserisci un importo valido (esempio: {example}).	Selezione di {value1}
+pt	Relatórios de {value1}	Selecione {value1}. Selecionado: {value2}	Aumentar {value1}	Diminuir {value1}	Editar {value1}	Eliminar {value1}	Introduza um valor válido (exemplo: {example}).	Seleção de {value1}
+nl	Rapporten: {value1}	Selecteer {value1}. Geselecteerd: {value2}	{value1} verhogen	{value1} verlagen	{value1} bewerken	{value1} verwijderen	Voer een geldig bedrag in (voorbeeld: {example}).	Selectie van {value1}
+pl	Raporty: {value1}	Wybierz {value1}. Wybrano: {value2}	Zwiększ {value1}	Zmniejsz {value1}	Edytuj {value1}	Usuń {value1}	Wpisz prawidłową kwotę (przykład: {example}).	Wybór: {value1}
+cs	Přehledy: {value1}	Vyberte {value1}. Vybráno: {value2}	Zvýšit {value1}	Snížit {value1}	Upravit {value1}	Smazat {value1}	Zadejte platnou částku (příklad: {example}).	Výběr: {value1}
+hu	Jelentések: {value1}	Válasszon: {value1}. Kiválasztva: {value2}	{value1} növelése	{value1} csökkentése	{value1} szerkesztése	{value1} törlése	Adjon meg érvényes összeget (példa: {example}).	Kiválasztás: {value1}
+ro	Rapoarte: {value1}	Selectați {value1}. Selectat: {value2}	Mărește {value1}	Micșorează {value1}	Editează {value1}	Șterge {value1}	Introduceți o sumă validă (exemplu: {example}).	Selectare: {value1}
+el	Αναφορές: {value1}	Επιλέξτε {value1}. Επιλεγμένο: {value2}	Αύξηση: {value1}	Μείωση: {value1}	Επεξεργασία: {value1}	Διαγραφή: {value1}	Εισαγάγετε έγκυρο ποσό (παράδειγμα: {example}).	Επιλογή: {value1}
+uk	Звіти: {value1}	Виберіть {value1}. Вибрано: {value2}	Збільшити {value1}	Зменшити {value1}	Редагувати {value1}	Видалити {value1}	Введіть коректну суму (приклад: {example}).	Вибір: {value1}
+bg	Отчети: {value1}	Изберете {value1}. Избрано: {value2}	Увеличи {value1}	Намали {value1}	Редактирай {value1}	Изтрий {value1}	Въведете валидна сума (пример: {example}).	Избор: {value1}
+sr	Извештаји: {value1}	Изаберите {value1}. Изабрано: {value2}	Повећај {value1}	Смањи {value1}	Уреди {value1}	Обриши {value1}	Унесите исправан износ (пример: {example}).	Избор: {value1}
+hr	Izvještaji: {value1}	Odaberite {value1}. Odabrano: {value2}	Povećaj {value1}	Smanji {value1}	Uredi {value1}	Izbriši {value1}	Unesite valjani iznos (primjer: {example}).	Odabir: {value1}
+sk	Prehľady: {value1}	Vyberte {value1}. Vybrané: {value2}	Zvýšiť {value1}	Znížiť {value1}	Upraviť {value1}	Vymazať {value1}	Zadajte platnú sumu (príklad: {example}).	Výber: {value1}
+sl	Poročila: {value1}	Izberite {value1}. Izbrano: {value2}	Povečaj {value1}	Zmanjšaj {value1}	Uredi {value1}	Izbriši {value1}	Vnesite veljaven znesek (primer: {example}).	Izbira: {value1}
+fi	Raportit: {value1}	Valitse {value1}. Valittu: {value2}	Suurenna: {value1}	Pienennä: {value1}	Muokkaa: {value1}	Poista: {value1}	Anna kelvollinen summa (esimerkki: {example}).	Valinta: {value1}
+sv	Rapporter: {value1}	Välj {value1}. Valt: {value2}	Öka {value1}	Minska {value1}	Redigera {value1}	Ta bort {value1}	Ange ett giltigt belopp (exempel: {example}).	Val av {value1}
+da	Rapporter: {value1}	Vælg {value1}. Valgt: {value2}	Øg {value1}	Sænk {value1}	Rediger {value1}	Slet {value1}	Indtast et gyldigt beløb (eksempel: {example}).	Valg af {value1}
+no	Rapporter: {value1}	Velg {value1}. Valgt: {value2}	Øk {value1}	Reduser {value1}	Rediger {value1}	Slett {value1}	Skriv inn et gyldig beløp (eksempel: {example}).	Valg av {value1}
+ms	Laporan {value1}	Pilih {value1}. Dipilih: {value2}	Tambah {value1}	Kurangkan {value1}	Edit {value1}	Padam {value1}	Masukkan jumlah yang sah (contoh: {example}).	Pemilihan {value1}
+id	Laporan {value1}	Pilih {value1}. Dipilih: {value2}	Tambah {value1}	Kurangi {value1}	Edit {value1}	Hapus {value1}	Masukkan jumlah yang valid (contoh: {example}).	Pemilihan {value1}
+vi	Báo cáo {value1}	Chọn {value1}. Đã chọn: {value2}	Tăng {value1}	Giảm {value1}	Sửa {value1}	Xóa {value1}	Nhập số tiền hợp lệ (ví dụ: {example}).	Lựa chọn {value1}
+ja	{value1}レポート	{value1}を選択。選択済み：{value2}	{value1}を増やす	{value1}を減らす	{value1}を編集	{value1}を削除	有効な金額を入力してください（例：{example}）。	{value1}の選択
+ko	{value1} 보고서	{value1} 선택. 선택됨: {value2}	{value1} 늘리기	{value1} 줄이기	{value1} 편집	{value1} 삭제	올바른 금액을 입력하세요(예: {example}).	{value1} 선택
+fa	گزارش‌های {value1}	{value1} را انتخاب کنید. انتخاب‌شده: {value2}	افزایش {value1}	کاهش {value1}	ویرایش {value1}	حذف {value1}	مبلغ معتبر وارد کنید (نمونه: {example}).	انتخاب {value1}
+he	דוחות {value1}	בחירת {value1}. נבחר: {value2}	הגדלת {value1}	הקטנת {value1}	עריכת {value1}	מחיקת {value1}	יש להזין סכום תקין (לדוגמה: {example}).	בחירת {value1}
+sw	Ripoti za {value1}	Chagua {value1}. Iliyochaguliwa: {value2}	Ongeza {value1}	Punguza {value1}	Hariri {value1}	Futa {value1}	Weka kiasi halali (mfano: {example}).	Uchaguzi wa {value1}
+am	የ{value1} ሪፖርቶች	{value1} ይምረጡ። የተመረጠው፦ {value2}	{value1} ጨምር	{value1} ቀንስ	{value1} አርትዕ	{value1} ሰርዝ	ትክክለኛ መጠን ያስገቡ (ለምሳሌ፦ {example})።	የ{value1} ምርጫ
+mr	{value1} अहवाल	{value1} निवडा. निवडलेले: {value2}	{value1} वाढवा	{value1} कमी करा	{value1} संपादित करा	{value1} हटवा	वैध रक्कम लिहा (उदाहरण: {example}).	{value1} निवड
+pa	{value1} ਰਿਪੋਰਟਾਂ	{value1} ਚੁਣੋ। ਚੁਣਿਆ: {value2}	{value1} ਵਧਾਓ	{value1} ਘਟਾਓ	{value1} ਸੋਧੋ	{value1} ਮਿਟਾਓ	ਸਹੀ ਰਕਮ ਦਰਜ ਕਰੋ (ਉਦਾਹਰਨ: {example})।	{value1} ਦੀ ਚੋਣ
+te	{value1} నివేదికలు	{value1} ఎంచుకోండి. ఎంచుకున్నది: {value2}	{value1} పెంచు	{value1} తగ్గించు	{value1} సవరించు	{value1} తొలగించు	చెల్లుబాటు అయ్యే మొత్తాన్ని నమోదు చేయండి (ఉదాహరణ: {example}).	{value1} ఎంపిక
+my	{value1} အစီရင်ခံစာများ	{value1} ကို ရွေးပါ။ ရွေးထားသည်: {value2}	{value1} ကို တိုးရန်	{value1} ကို လျှော့ရန်	{value1} ကို ပြင်ရန်	{value1} ကို ဖျက်ရန်	မှန်ကန်သော ပမာဏကို ထည့်ပါ (ဥပမာ: {example})။	{value1} ရွေးချယ်မှု
+lo	ລາຍງານ {value1}	ເລືອກ {value1}. ເລືອກແລ້ວ: {value2}	ເພີ່ມ {value1}	ຫຼຸດ {value1}	ແກ້ໄຂ {value1}	ລຶບ {value1}	ປ້ອນຈຳນວນເງິນທີ່ຖືກຕ້ອງ (ຕົວຢ່າງ: {example}).	ການເລືອກ {value1}
+ka	{value1} ანგარიშები	აირჩიეთ {value1}. არჩეულია: {value2}	გაზარდეთ {value1}	შეამცირეთ {value1}	{value1} რედაქტირება	{value1} წაშლა	შეიყვანეთ სწორი თანხა (მაგალითი: {example}).	{value1} არჩევა
+hy	{value1} հաշվետվություններ	Ընտրեք {value1}։ Ընտրված է՝ {value2}	Ավելացնել {value1}	Նվազեցնել {value1}	Խմբագրել {value1}	Ջնջել {value1}	Մուտքագրեք վավեր գումար (օրինակ՝ {example})։	{value1} ընտրություն
+az	{value1} hesabatları	{value1} seçin. Seçilib: {value2}	{value1} artır	{value1} azalt	{value1} redaktə et	{value1} sil	Düzgün məbləğ daxil edin (nümunə: {example}).	{value1} seçimi
+kk	{value1} есептері	{value1} таңдаңыз. Таңдалғаны: {value2}	{value1} арттыру	{value1} азайту	{value1} өңдеу	{value1} жою	Дұрыс соманы енгізіңіз (мысалы: {example}).	{value1} таңдау
+uz	{value1} hisobotlari	{value1} tanlang. Tanlangan: {value2}	{value1} oshirish	{value1} kamaytirish	{value1} tahrirlash	{value1} o‘chirish	To‘g‘ri summani kiriting (misol: {example}).	{value1} tanlash
+ky	{value1} отчеттору	{value1} тандаңыз. Тандалганы: {value2}	{value1} көбөйтүү	{value1} азайтуу	{value1} түзөтүү	{value1} өчүрүү	Туура сумманы киргизиңиз (мисалы: {example}).	{value1} тандоо
+mn	{value1} тайлангууд	{value1} сонгоно уу. Сонгосон: {value2}	{value1} нэмэх	{value1} багасгах	{value1} засах	{value1} устгах	Зөв дүн оруулна уу (жишээ: {example}).	{value1} сонголт
+ps	د {value1} راپورونه	{value1} وټاکئ. ټاکل شوی: {value2}	{value1} زیات کړئ	{value1} کم کړئ	{value1} سم کړئ	{value1} ړنګ کړئ	سمه اندازه ولیکئ (بېلګه: {example}).	د {value1} ټاکنه
+ku	Raporên {value1}	{value1} hilbijêre. Hilbijartî: {value2}	{value1} zêde bike	{value1} kêm bike	{value1} biguherîne	{value1} jê bibe	Mîqdareke derbasdar binivîse (mînak: {example}).	Hilbijartina {value1}
