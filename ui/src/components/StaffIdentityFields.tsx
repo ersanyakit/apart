@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { InlineSelectField, TextField } from "./fields";
 export type Person = {
   user_id?: string;
@@ -21,38 +22,40 @@ export const roles: Record<string, string> = {
   admin: "Sistem yöneticisi",
 };
 export function StaffIdentityFields({value:p,onChange,allowAdmin=false}:{value:Person;onChange:(value:Person)=>void;allowAdmin?:boolean}) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
  const patch=(value:Partial<Person>)=>onChange({...p,...value});
  return (      <div className="grid grid-cols-1 items-start sm:grid-cols-2 gap-4">
         <TextField
-          label="Ad"
+          label={_uiText("Ad")}
           required
           autoComplete="off"
           value={p.first_name}
           onChange={(v) => patch({ first_name: v })}
         />
         <TextField
-          label="Soyad"
+          label={_uiText("Soyad")}
           required
           autoComplete="off"
           value={p.last_name}
           onChange={(v) => patch({ last_name: v })}
         />
         <TextField
-          label="Kullanıcı adı"
+          label={_uiText("Kullanıcı adı")}
           required
           autoComplete="off"
           value={p.username}
           onChange={(v) => patch({ username: v })}
         />
         <TextField
-          label="E-posta"
+          label={_uiText("E-posta")}
           type="email"
           autoComplete="off"
           value={p.email}
           onChange={(v) => patch({ email: v })}
         />
         <InlineSelectField
-          label="Rol"
+          label={_uiText("Rol")}
           value={p.role}
           onChange={(v) => patch({ role: v })}
           options={Object.entries(roles)
@@ -60,7 +63,7 @@ export function StaffIdentityFields({value:p,onChange,allowAdmin=false}:{value:P
             .map(([value, label]) => ({ value, label }))}
         />
         <TextField
-          label={p.user_id ? "Yeni şifre (değiştirmek için)" : "Giriş şifresi"}
+          label={p.user_id ? _uiText("Yeni şifre (değiştirmek için)") : _uiText("Giriş şifresi")}
           type="password"
           autoComplete="new-password"
           minLength={12}

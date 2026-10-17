@@ -1,0 +1,7 @@
+import ts from '../../ui/node_modules/typescript/lib/typescript.js';import fs from 'node:fs';
+const attrs=new Set(['label','title','placeholder','aria-label','alt','description','caption','emptyText','emptyLabel','closeLabel','hint','eyebrow','subtitle','text','message','detail','tooltip']);
+const report=JSON.parse(fs.readFileSync('output/app-i18n/migration.json','utf8'));let count=0;
+for(const {file}of report){let source=fs.readFileSync(file,'utf8');const ast=ts.createSourceFile(file,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX),edits=[];
+function restore(call){const text=call.arguments[0].text;if(!call.arguments[1])return JSON.stringify(text);const params=new Map(call.arguments[1].properties.map(p=>{let value=p.initializer;if(ts.isCallExpression(value)&&value.expression.getText(ast)==='String')value=value.arguments[0];return[p.name.getText(ast),value.getText(ast)];}));return '`'+text.replace(/`/g,'\\`').replace(/\$\{/g,'\\${').replace(/\{(value\d+)\}/g,(m,key)=>'${'+params.get(key)+'}')+'`';}
+function visit(n){if(ts.isCallExpression(n)&&n.expression.getText(ast)==='_uiText'){let a=n.parent;while(a&&!ts.isJsxAttribute(a))a=a.parent;if(a&&!attrs.has(a.name.getText(ast))){edits.push([n.getStart(ast),n.end,restore(n)]);count++;return;}}ts.forEachChild(n,visit);}visit(ast);for(const [a,b,text]of edits.sort((a,b)=>b[0]-a[0]))source=source.slice(0,a)+text+source.slice(b);fs.writeFileSync(file,source);}
+console.log('Restored non-text JSX attribute values:',count);

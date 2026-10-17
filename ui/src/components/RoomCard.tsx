@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { RoomCondition } from './RoomCondition';
 import { statusStyle, roomStatusKey } from "../lib/status-palette";
 import React from 'react';
@@ -15,6 +16,8 @@ interface RoomCardProps {
 }
 
 export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelected, onDragStart, onDrop }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const reducedMotion = useReducedMotion();
 
 
@@ -25,7 +28,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelec
       role="button"
       tabIndex={0}
       aria-pressed={isSelected}
-      aria-label={`${room.number} numaralı oda, ${room.status}. İşlemleri aç`}
+      aria-label={_uiText("{value1} numaralı oda, {value2}. İşlemleri aç", {value1: String(room.number), value2: String(room.status)})}
       onKeyDown={(e) => {
         if (["Enter", " ", "ContextMenu"].includes(e.key) || (e.shiftKey && e.key === "F10")) {
           e.preventDefault();
@@ -55,18 +58,14 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelec
               <rect x="42" y="60" width="16" height="20" rx="2" fill="#fff" stroke="#e2e8f0" strokeWidth="1" />
            </svg>
 
-           <div className={`
-             absolute -top-2 -right-1 w-10 h-10 rounded-xl border-2 border-white flex items-center justify-center font-medium text-base z-10
-
-           `} style={statusStyle(roomStatusKey(room.status))}>
+           <div className={"\n             absolute -top-2 -right-1 w-10 h-10 rounded-xl border-2 border-white flex items-center justify-center font-medium text-base z-10\n\n           "} style={statusStyle(roomStatusKey(room.status))}>
              <RoomCondition status={room.status} size={30} iconOnly/>
            </div>
 
            {room.guests && room.guests.length > 1 && (
               <div className="absolute top-8 -right-2 bg-slate-900 text-white text-[8px] font-black px-1.5 py-0.5 rounded-lg border-2 border-white shadow-lg flex items-center gap-1 z-20">
                  <Users className="w-2 h-2" />
-                 {room.guests.length} MİSAFİR
-              </div>
+                 {room.guests.length} {_uiText("MİSAFİR")} </div>
            )}
         </div>
 
@@ -81,17 +80,17 @@ export const RoomCard: React.FC<RoomCardProps> = ({ room, onContextMenu, isSelec
              {room.checkIn ? (
                <div className="w-full space-y-1">
                 <div className="flex items-center justify-between text-[11px] font-medium">
-                  <span className="text-slate-400 tracking-wider text-left">GİRİŞ:</span>
+                  <span className="text-slate-400 tracking-wider text-left">{_uiText("GİRİŞ:")}</span>
                   <span className="text-slate-700 bg-slate-50 px-1.5 py-0.5 rounded font-mono text-right truncate max-w-[65px]">{room.checkIn.split(/[ T]/)[0]}</span>
                 </div>
                 <div className="flex items-center justify-between text-[11px] font-medium">
-                  <span className="text-slate-400 tracking-wider text-left">ÇIKIŞ:</span>
+                  <span className="text-slate-400 tracking-wider text-left">{_uiText("ÇIKIŞ:")}</span>
                   <span className="text-red-500 bg-red-50 px-1.5 py-0.5 rounded font-mono text-right truncate max-w-[65px]">{room.checkOut?.split(/[ T]/)[0]}</span>
                 </div>
                </div>
              ) : (
                <div className="py-1.5 bg-slate-50/50 rounded-lg border border-slate-100 border-dashed">
-                 <p className="text-[11px] text-uni-muted font-medium text-center">BOŞ</p>
+                 <p className="text-[11px] text-uni-muted font-medium text-center">{_uiText("BOŞ")}</p>
                </div>
              )}
            </div>

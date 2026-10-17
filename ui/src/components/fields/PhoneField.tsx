@@ -12,6 +12,8 @@ export function PhoneField({ label = 'Telefon', value, onChange, defaultCountry 
   label?: string; value: string; onChange: (value: string) => void; defaultCountry?: string;
   required?: boolean; disabled?: boolean; tone?: 'white' | 'surface';
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { locale } = useI18n();
   const [override, setOverride] = useState<string>();
   const [open, setOpen] = useState(false);
@@ -69,10 +71,10 @@ export function PhoneField({ label = 'Telefon', value, onChange, defaultCountry 
   return <div ref={root} className={styles.root} onKeyDown={event => {
     if (event.key === 'Escape' && open) { event.preventDefault(); event.stopPropagation(); setOpen(false); trigger.current?.focus(); }
   }}>
-    <FieldCard className={tone === 'white' ? 'h-full bg-white' : 'h-full'}>
+    <FieldCard className={tone === 'white' ? "h-full bg-white" : "h-full"}>
       <label htmlFor={id}><FieldCaption>{label}</FieldCaption></label>
       <div className={styles.row}>
-        <button ref={trigger} type="button" disabled={disabled} className={styles.country} aria-label={`${label} ülkesi: ${selected?.name || country}, +${plan.callingCode}`} aria-haspopup="listbox" aria-expanded={open} aria-controls={`${id}-countries`} onClick={() => {setOpen(!open); setSearch(''); setActive(0);}}>
+        <button ref={trigger} type="button" disabled={disabled} className={styles.country} aria-label={_uiText("{value1} ülkesi: {value2}, +{value3}", {value1: String(label), value2: String(selected?.name || country), value3: String(plan.callingCode)})} aria-haspopup="listbox" aria-expanded={open} aria-controls={`${id}-countries`} onClick={() => {setOpen(!open); setSearch(''); setActive(0);}}>
           {FLAG_ASSETS[country] ? <img src={FLAG_ASSETS[country]} alt=""/> : <Globe2 size={20} aria-hidden="true"/>}
           <span>+{plan.callingCode}</span><ChevronDown size={13} aria-hidden="true"/>
         </button>
@@ -90,17 +92,17 @@ export function PhoneField({ label = 'Telefon', value, onChange, defaultCountry 
             if (at >= 0 && at < display.length) { event.preventDefault(); change(display.slice(0, at) + display.slice(at + 1), backwards ? at : caret); }
           }}/>
       </div>
-      <p id={`${id}-hint`} className={styles.hint} data-error={touched && !!error || undefined} aria-live="polite">{touched && error ? error : `Örnek: +${plan.callingCode} ${formatNationalPhone(plan.example, country)}`}</p>
+      <p id={`${id}-hint`} className={styles.hint} data-error={touched && !!error || undefined} aria-live="polite">{touched && error ? error : _uiText("Örnek: +{value1} {value2}", {value1: String(plan.callingCode), value2: String(formatNationalPhone(plan.example, country))})}</p>
       {open && <div className={styles.picker}>
-        <div className={styles.search}><Search size={16} aria-hidden="true"/><input ref={searchInput} role="combobox" aria-label="Telefon ülkesi ara" aria-expanded="true" aria-controls={`${id}-countries`} aria-autocomplete="list" aria-activedescendant={matches.length ? `${id}-option-${active}` : undefined} value={search} placeholder="Ülke veya telefon kodu ara" onChange={e => {setSearch(e.target.value); setActive(0);}} onKeyDown={event => {
+        <div className={styles.search}><Search size={16} aria-hidden="true"/><input ref={searchInput} role="combobox" aria-label={_uiText("Telefon ülkesi ara")} aria-expanded="true" aria-controls={`${id}-countries`} aria-autocomplete="list" aria-activedescendant={matches.length ? `${id}-option-${active}` : undefined} value={search} placeholder={_uiText("Ülke veya telefon kodu ara")} onChange={e => {setSearch(e.target.value); setActive(0);}} onKeyDown={event => {
           if (['ArrowDown','ArrowUp','Home','End'].includes(event.key)) {event.preventDefault();setActive(n => event.key === 'Home' ? 0 : event.key === 'End' ? Math.max(0,matches.length-1) : Math.max(0,Math.min(matches.length-1,n+(event.key==='ArrowDown'?1:-1))));}
           if (event.key === 'Enter') {event.preventDefault();if(matches[active])pick(matches[active].code);}
         }}/></div>
-        <div id={`${id}-countries`} role="listbox" aria-label="Telefon ülkeleri" className={styles.options}>
+        <div id={`${id}-countries`} role="listbox" aria-label={_uiText("Telefon ülkeleri")} className={styles.options}>
           {matches.map((c,index) => <button key={c.code} id={`${id}-option-${index}`} type="button" role="option" aria-selected={country===c.code} data-active={active===index || undefined} onMouseDown={e => e.preventDefault()} onClick={() => pick(c.code)}>
             {FLAG_ASSETS[c.code] && <img src={FLAG_ASSETS[c.code]} alt=""/>}<span>{c.name}</span><small>+{phonePlans[c.code].callingCode}</small>{country===c.code && <Check size={15} aria-hidden="true"/>}
           </button>)}
-          {!matches.length && <p className={styles.hint}>Ülke bulunamadı.</p>}
+          {!matches.length && <p className={styles.hint}>{_uiText("Ülke bulunamadı.")}</p>}
         </div>
       </div>}
     </FieldCard>

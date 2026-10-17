@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -50,6 +51,8 @@ interface TechnicalSupportProps {
 }
 
 export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [requests, setRequests] = useState<SupportRequest[]>(MOCK_REQUESTS);
   const [view, setView] = useState<'list' | 'new' | 'detail'>('list');
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
@@ -67,7 +70,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
       id: Math.random().toString(36).substr(2, 9),
       ...newRequest,
       status: 'Beklemede',
-      createdAt: new Date().toLocaleString('tr-TR', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' })
+      createdAt: new Date().toLocaleString(_uiLocale, { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' })
     };
 
     setRequests([freshRequest, ...requests]);
@@ -104,16 +107,10 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
               </button>
               <div>
                 <h2 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
-                  <Plus className="w-6 h-6 text-orange-600" />
-                  Yeni Teknik Talep Formu
-                </h2>
+                  <Plus className="w-6 h-6 text-orange-600" />{_uiText("Yeni Teknik Talep Formu")} </h2>
                 <div className="flex items-center gap-2 mt-1">
-                   <span className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-orange-50 text-orange-600">
-                     ARIZA BİLDİRİMİ
-                   </span>
-                   <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                     LÜTFEN SORUNU DETAYLICA TANIMLAYIN
-                   </span>
+                   <span className="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md bg-orange-50 text-orange-600">{_uiText("ARIZA BİLDİRİMİ")} </span>
+                   <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("LÜTFEN SORUNU DETAYLICA TANIMLAYIN")} </span>
                 </div>
               </div>
             </div>
@@ -122,16 +119,12 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                <button
                  onClick={() => setView('list')}
                   className="uni-control px-6 py-3 bg-white border border-slate-200 rounded-2xl text-xs  text-slate-500 hover:bg-slate-50 active:bg-slate-50    shadow-sm  cursor-pointer"
-               >
-                 İPTAL ET
-               </button>
+               >{_uiText("İPTAL ET")} </button>
                <button
                  onClick={handleSendRequest}
                   className="uni-control px-10 py-3 rounded-2xl text-xs  text-white     flex items-center gap-2  cursor-pointer bg-orange-600 shadow-orange-200"
                >
-                 <Send className="w-4 h-4" />
-                 TALEBİ GÖNDER
-               </button>
+                 <Send className="w-4 h-4" />{_uiText("TALEBİ GÖNDER")} </button>
             </div>
           </div>
 
@@ -144,46 +137,42 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-black text-slate-800 tracking-tight">TALEP DETAYLARI</h3>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Temel ariza bilgileri</p>
+                      <h3 className="text-base font-black text-slate-800 tracking-tight">{_uiText("TALEP DETAYLARI")}</h3>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("Temel ariza bilgileri")}</p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">LOKASYON / ODA</label>
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{_uiText("LOKASYON / ODA")}</label>
                       <input
                         type="text"
                         value={newRequest.roomNumber}
                         onChange={(e) => setNewRequest({...newRequest, roomNumber: e.target.value})}
-                        placeholder="Örn: 204 veya Resepsiyon"
+                        placeholder={_uiText("Örn: 204 veya Resepsiyon")}
                         className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none transition-all"
                       />
                     </div>
                     <div className="md:col-span-12 space-y-3">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">KATEGORİ SEÇİN</label>
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{_uiText("KATEGORİ SEÇİN")}</label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
                         {[
-                          { id: 'Elektrik', label: 'ELEKTRİK', icon: <Zap className="w-5 h-5" /> },
-                          { id: 'Tesisat', label: 'TESİSAT', icon: <Droplets className="w-5 h-5" /> },
-                          { id: 'Marangoz', label: 'MARANGOZ', icon: <Hammer className="w-5 h-5" /> },
-                          { id: 'Yazılım', label: 'YAZILIM', icon: <Monitor className="w-5 h-5" /> },
-                          { id: 'Ürün', label: 'ÜRÜN', icon: <Package className="w-5 h-5" /> },
-                          { id: 'Genel', label: 'GENEL', icon: <HelpCircle className="w-5 h-5" /> },
+                          { id: 'Elektrik', label: _uiText("ELEKTRİK"), icon: <Zap className="w-5 h-5" /> },
+                          { id: 'Tesisat', label: _uiText("TESİSAT"), icon: <Droplets className="w-5 h-5" /> },
+                          { id: 'Marangoz', label: _uiText("MARANGOZ"), icon: <Hammer className="w-5 h-5" /> },
+                          { id: 'Yazılım', label: _uiText("YAZILIM"), icon: <Monitor className="w-5 h-5" /> },
+                          { id: 'Ürün', label: _uiText("ÜRÜN"), icon: <Package className="w-5 h-5" /> },
+                          { id: 'Genel', label: _uiText("GENEL"), icon: <HelpCircle className="w-5 h-5" /> },
                         ].map((cat) => (
                           <button
                             key={cat.id}
                             type="button"
                             onClick={() => setNewRequest({...newRequest, category: cat.id as any})}
-                            className={`uni-control flex flex-col items-center justify-center p-4 rounded-3xl border-2    gap-2  cursor-pointer ${
-                              newRequest.category === cat.id
+                            className={`uni-control flex flex-col items-center justify-center p-4 rounded-3xl border-2    gap-2  cursor-pointer ${newRequest.category === cat.id
                                 ? 'bg-orange-600 border-orange-600 text-white  shadow-orange-100 ring-4 ring-orange-500/10'
-                                : 'bg-white border-slate-100 text-slate-500 hover:border-orange-200 hover:bg-orange-50/30'
-                            }`}
+                                : 'bg-white border-slate-100 text-slate-500 hover:border-orange-200 hover:bg-orange-50/30'}`}
                           >
-                            <div className={`p-2 rounded-xl transition-all duration-150 ease-out ${
-                              newRequest.category === cat.id ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-orange-100/50 group-hover:text-orange-600'
-                            }`}>
+                            <div className={`p-2 rounded-xl transition-all duration-150 ease-out ${newRequest.category === cat.id ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-orange-100/50 group-hover:text-orange-600'}`}>
                               {cat.icon}
                             </div>
                             <span className="text-[10px] font-black tracking-widest">{cat.label}</span>
@@ -194,12 +183,12 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">ARIZA / SORUN AÇIKLAMASI</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">{_uiText("ARIZA / SORUN AÇIKLAMASI")}</label>
                     <textarea
                       rows={5}
                       value={newRequest.description}
                       onChange={(e) => setNewRequest({...newRequest, description: e.target.value})}
-                      placeholder="Lütfen teknik sorunu buraya açıklayın..."
+                      placeholder={_uiText("Lütfen teknik sorunu buraya açıklayın...")}
                       className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
                     />
                   </div>
@@ -211,15 +200,15 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <MessageSquare className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-black text-slate-800 tracking-tight">EK NOTLAR</h3>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Teknik ekibe iletilecek notlar</p>
+                      <h3 className="text-base font-black text-slate-800 tracking-tight">{_uiText("EK NOTLAR")}</h3>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("Teknik ekibe iletilecek notlar")}</p>
                     </div>
                   </div>
                   <textarea
                     rows={3}
                     value={newRequest.notes}
                     onChange={(e) => setNewRequest({...newRequest, notes: e.target.value})}
-                    placeholder="Varsa eklemek istediğiniz notlar..."
+                    placeholder={_uiText("Varsa eklemek istediğiniz notlar...")}
                     className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 focus:ring-4 focus:ring-orange-500/5 focus:border-orange-500 outline-none resize-none transition-all"
                   />
                 </section>
@@ -232,8 +221,8 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <AlertCircle className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-base font-black text-slate-800 tracking-tight">ÖNCELİK</h3>
-                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Aciliyet durumu belirtin</p>
+                      <h3 className="text-base font-black text-slate-800 tracking-tight">{_uiText("ÖNCELİK")}</h3>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("Aciliyet durumu belirtin")}</p>
                     </div>
                   </div>
 
@@ -242,11 +231,9 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <button
                         key={p}
                         onClick={() => setNewRequest({...newRequest, priority: p as any})}
-                        className={`uni-control py-3 rounded-2xl text-[10px]  border  ${
-                          newRequest.priority === p
+                        className={`uni-control py-3 rounded-2xl text-[10px]  border  ${newRequest.priority === p
                             ? 'bg-orange-600 border-orange-600 text-white '
-                            : 'bg-white border-slate-100 text-slate-500 hover:bg-slate-50'
-                        }`}
+                            : 'bg-white border-slate-100 text-slate-500 hover:bg-slate-50'}`}
                       >
                         {p.toUpperCase()}
                       </button>
@@ -261,10 +248,8 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                        <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div>
-                       <h4 className="font-black text-sm uppercase tracking-wider">Bilgilendirme</h4>
-                       <p className="text-[10px] font-bold text-white/70 leading-relaxed mt-2 italic">
-                         "Talep gönderildikten sonra teknik ekip paneline anlık olarak düşecektir. Acil talepler için bildirim sesi aktif edilecektir."
-                       </p>
+                       <h4 className="font-black text-sm uppercase tracking-wider">{_uiText("Bilgilendirme")}</h4>
+                       <p className="text-[10px] font-bold text-white/70 leading-relaxed mt-2 italic">{_uiText("\"Talep gönderildikten sonra teknik ekip paneline anlık olarak düşecektir. Acil talepler için bildirim sesi aktif edilecektir.\"")} </p>
                     </div>
                   </div>
                 </div>
@@ -295,15 +280,12 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
               </button>
               <div>
                 <h2 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
-                  <FileText className="w-6 h-6 text-brand-blue-600" />
-                  Teknik Talep Detayı
-                </h2>
+                  <FileText className="w-6 h-6 text-brand-blue-600" />{_uiText("Teknik Talep Detayı")} </h2>
                 <div className="flex items-center gap-3 mt-1">
                    <span className={`text-[11px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md ${getStatusBgStyle(selectedRequest.status)} ${getStatusTextStyle(selectedRequest.status)}`}>
                      {selectedRequest.status}
                    </span>
-                   <span className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">
-                     KAYIT NO: <span className="text-slate-900 font-black">#T-{selectedRequest.id.toUpperCase()}</span>
+                   <span className="text-[11px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("KAYIT NO:")} <span className="text-slate-900 font-black">{_uiText("#T-")}{selectedRequest.id.toUpperCase()}</span>
                    </span>
                 </div>
               </div>
@@ -318,9 +300,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                    }}
                    className="uni-control px-10 py-3 rounded-2xl text-xs  text-white     flex items-center gap-2  cursor-pointer bg-green-600 shadow-green-200"
                  >
-                   <CheckCircle2 className="w-4 h-4" />
-                   TALEBİ TAMAMLA
-                 </button>
+                   <CheckCircle2 className="w-4 h-4" />{_uiText("TALEBİ TAMAMLA")} </button>
                )}
                <button
                  onClick={() => {
@@ -343,7 +323,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                       <Wrench className="w-6 h-6" />
                     </div>
                     <div>
-                       <p className="text-[11px] text-slate-400 font-black uppercase tracking-widest mb-1.5">ARIZA TANIMI</p>
+                       <p className="text-[11px] text-slate-400 font-black uppercase tracking-widest mb-1.5">{_uiText("ARIZA TANIMI")}</p>
                        <h3 className="text-xl font-bold text-slate-800 leading-tight">{selectedRequest.description}</h3>
                     </div>
                   </div>
@@ -351,14 +331,12 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   <div className="grid grid-cols-2 gap-10">
                      <div className="space-y-1.5">
                         <p className="text-[11px] text-slate-400 font-black uppercase tracking-[0.2em] flex items-center gap-2">
-                           <Tag className="w-3.5 h-3.5" /> KATEGORİ
-                        </p>
+                           <Tag className="w-3.5 h-3.5" /> {_uiText("KATEGORİ")} </p>
                         <p className="text-base font-black text-slate-700">{selectedRequest.category}</p>
                      </div>
                      <div className="space-y-1.5">
                         <p className="text-[11px] text-slate-400 font-black uppercase tracking-[0.2em] flex items-center gap-2">
-                           <Calendar className="w-3.5 h-3.5" /> KAYIT TARİHİ
-                        </p>
+                           <Calendar className="w-3.5 h-3.5" /> {_uiText("KAYIT TARİHİ")} </p>
                         <p className="text-base font-black text-slate-700">{selectedRequest.createdAt}</p>
                      </div>
                   </div>
@@ -369,11 +347,11 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                      <div className="w-10 h-10 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-500">
                        <MessageSquare className="w-5 h-5" />
                      </div>
-                     <h3 className="text-sm font-black text-slate-800 uppercase tracking-widest">EK NOTLAR VE GÜNCELLEMELER</h3>
+                     <h3 className="text-sm font-black text-slate-800 uppercase tracking-widest">{_uiText("EK NOTLAR VE GÜNCELLEMELER")}</h3>
                   </div>
                   <div className="p-6 bg-slate-50 rounded-[28px] border border-slate-100">
                      <p className="text-sm font-medium text-slate-600 italic">
-                        {selectedRequest.notes || 'Herhangi bir ek not bulunmuyor.'}
+                        {selectedRequest.notes || _uiText("Herhangi bir ek not bulunmuyor.")}
                      </p>
                   </div>
                 </section>
@@ -384,18 +362,18 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                    <div className="absolute top-0 right-0 w-32 h-32 bg-brand-blue-500/20 rounded-full -mr-16 -mt-16 blur-3xl" />
 
                     <div className="relative z-10 mb-8 border-b border-white/10 pb-6">
-                       <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-5">KONUM BİLGİSİ</p>
+                       <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-5">{_uiText("KONUM BİLGİSİ")}</p>
                        <div className="flex items-center gap-5">
                           <div className="w-16 h-16 bg-white/10 rounded-[22px] flex flex-col items-center justify-center font-black border border-white/5 shadow-2xl">
-                             <span className="text-[10px] opacity-60 uppercase tracking-tighter">BÖLÜM</span>
+                             <span className="text-[10px] opacity-60 uppercase tracking-tighter">{_uiText("BÖLÜM")}</span>
                              <span className="text-2xl leading-none mt-0.5">{selectedRequest.roomNumber}</span>
                           </div>
                           <div>
                              <p className="font-black text-lg uppercase tracking-tight">
-                               {selectedRequest.roomNumber === 'Sistem' ? 'MERKEZİ ÜNİTE' : `KONAKLAMA ÜNİTESİ`}
+                               {selectedRequest.roomNumber === 'Sistem' ? _uiText("MERKEZİ ÜNİTE") : _uiText("KONAKLAMA ÜNİTESİ")}
                              </p>
                              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-1">
-                               {selectedRequest.roomNumber === 'Sistem' ? 'YAZILIM VE ALTYAPI' : 'OTEL KAT PLANI / HİZMET ALANI'}
+                               {selectedRequest.roomNumber === 'Sistem' ? _uiText("YAZILIM VE ALTYAPI") : _uiText("OTEL KAT PLANI / HİZMET ALANI")}
                              </p>
                           </div>
                        </div>
@@ -403,16 +381,16 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
 
                    <div className="relative z-10 space-y-6">
                       <div>
-                         <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-3">PERSONEL ATAMASI</p>
+                         <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-3">{_uiText("PERSONEL ATAMASI")}</p>
                          <div className="flex items-center gap-3">
                             <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-white/60">
                                <User className="w-4.5 h-4.5" />
                             </div>
-                            <span className="text-base font-bold text-slate-300">{selectedRequest.assignedTo || 'Henüz Atanmadı'}</span>
+                            <span className="text-base font-bold text-slate-300">{selectedRequest.assignedTo || _uiText("Henüz Atanmadı")}</span>
                          </div>
                       </div>
                       <div>
-                         <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-3">ÖNCELİK DURUMU</p>
+                         <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em] mb-3">{_uiText("ÖNCELİK DURUMU")}</p>
                          <div className={`inline-flex px-4 py-1.5 rounded-xl text-[11px] font-black border ${getPriorityStyle(selectedRequest.priority)}`}>
                             {selectedRequest.priority.toUpperCase()}
                          </div>
@@ -422,7 +400,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                    <div className="mt-12 relative z-10">
                       <div className="uni-card p-4 bg-white/5 border border-white/10 rounded-[28px] flex items-center gap-3">
                          <Clock className="w-4.5 h-4.5 text-brand-blue-400" />
-                         <span className="text-[11px] font-bold text-slate-400">Tahmini Müdahale: 15 Dakika</span>
+                         <span className="text-[11px] font-bold text-slate-400">{_uiText("Tahmini Müdahale: 15 Dakika")}</span>
                       </div>
                    </div>
                 </div>
@@ -448,10 +426,10 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                <Wrench className="w-7 h-7" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-800 tracking-tight">Teknik Destek Merkezi</h2>
+              <h2 className="text-2xl font-black text-slate-800 tracking-tight">{_uiText("Teknik Destek Merkezi")}</h2>
               <div className="flex items-center gap-2 mt-0.5">
                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                 <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Teknik ekip çevrimiçi (4 Personel)</p>
+                 <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{_uiText("Teknik ekip çevrimiçi (4 Personel)")}</p>
               </div>
             </div>
           </div>
@@ -461,7 +439,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 group-focus-within:text-orange-500 transition-all duration-150 ease-out" />
               <input
                 type="text"
-                placeholder="Talep no veya oda ara..."
+                placeholder={_uiText("Talep no veya oda ara...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="uni-input w-full pl-11 pr-5 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-bold focus:outline-none focus:ring-4 focus:ring-orange-500/5 focus:border-orange-300 transition-all shadow-sm"
@@ -471,18 +449,16 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
               onClick={() => setView('new')}
               className="uni-control flex items-center justify-center gap-2 bg-orange-600 text-white px-7 py-3.5 rounded-[22px] text-xs  hover:bg-orange-700 active:bg-orange-700     shadow-orange-100  cursor-pointer whitespace-nowrap"
             >
-              <Plus className="w-4 h-4 transition-transform group-hover:rotate-90 duration-300" />
-              YENİ TALEP OLUŞTUR
-            </button>
+              <Plus className="w-4 h-4 transition-transform group-hover:rotate-90 duration-300" />{_uiText("YENİ TALEP OLUŞTUR")} </button>
           </div>
         </div>
 
         {/* Stats Summary Area */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          <StatCard label="BEKLEYEN" value={requests.filter(r => r.status === 'Beklemede').length} color="bg-orange-500" icon={<Clock className="w-5 h-5" />} />
-          <StatCard label="MÜDAHALE EDİLEN" value={requests.filter(r => r.status === 'Devam Ediyor').length} color="bg-brand-blue-500" icon={<AlertCircle className="w-5 h-5" />} />
-          <StatCard label="ÇÖZÜLENLER" value={requests.filter(r => r.status === 'Tamamlandı').length} color="bg-emerald-500" icon={<CheckCircle2 className="w-5 h-5" />} />
-          <StatCard label="KATEGORİLER" value={6} color="bg-slate-800" icon={<Monitor className="w-5 h-5" />} />
+          <StatCard label={_uiText("BEKLEYEN")} value={requests.filter(r => r.status === 'Beklemede').length} color="bg-orange-500" icon={<Clock className="w-5 h-5" />} />
+          <StatCard label={_uiText("MÜDAHALE EDİLEN")} value={requests.filter(r => r.status === 'Devam Ediyor').length} color="bg-brand-blue-500" icon={<AlertCircle className="w-5 h-5" />} />
+          <StatCard label={_uiText("ÇÖZÜLENLER")} value={requests.filter(r => r.status === 'Tamamlandı').length} color="bg-emerald-500" icon={<CheckCircle2 className="w-5 h-5" />} />
+          <StatCard label={_uiText("KATEGORİLER")} value={6} color="bg-slate-800" icon={<Monitor className="w-5 h-5" />} />
         </div>
 
         {/* Main Request List Area */}
@@ -498,13 +474,11 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   className="uni-card bg-white rounded-[32px] p-6 border border-slate-200/60 shadow-sm hover:shadow-xl hover:shadow-slate-200/40 hover:scale-[1.03] transition-all duration-150 ease-out group flex items-start gap-6 relative overflow-hidden cursor-pointer"
               >
                 {/* Visual Accent */}
-                <div className={`absolute top-0 left-0 w-1.5 h-full ${
-                  req.status === 'Beklemede' ? 'bg-orange-500' :
-                  req.status === 'Devam Ediyor' ? 'bg-brand-blue-500' : 'bg-emerald-500'
-                }`}></div>
+                <div className={`absolute top-0 left-0 w-1.5 h-full ${req.status === 'Beklemede' ? 'bg-orange-500' :
+                  req.status === 'Devam Ediyor' ? 'bg-brand-blue-500' : 'bg-emerald-500'}`}></div>
 
                 <div className={`w-16 h-16 rounded-[22px] flex flex-col items-center justify-center font-black shrink-0 ${req.priority === 'Acil' ? 'bg-red-50 text-red-600 animate-pulse' : 'bg-slate-50 text-slate-800'}`}>
-                  <span className="text-[9px] uppercase mb-0.5 opacity-50">ODA</span>
+                  <span className="text-[9px] uppercase mb-0.5 opacity-50">{_uiText("ODA")}</span>
                   <span className="text-xl leading-none">{req.roomNumber}</span>
                 </div>
 
@@ -525,7 +499,7 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
                   <div className="flex items-center gap-4 mt-4">
                      <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100">
                         <User className="w-3 h-3 text-slate-300" />
-                        <span className="text-slate-600">{req.assignedTo || 'BOŞTA'}</span>
+                        <span className="text-slate-600">{req.assignedTo || _uiText("BOŞTA")}</span>
                      </div>
                      <div className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-widest ml-auto ${getStatusTextStyle(req.status)}`}>
                         <CheckCircle2 className="w-3.5 h-3.5" />
@@ -542,8 +516,8 @@ export const TechnicalSupport: React.FC<TechnicalSupportProps> = ({ onSubmit }) 
             {filtered.length === 0 && (
               <div className="col-span-2 flex flex-col items-center justify-center py-20 bg-slate-50 rounded-[40px] border-4 border-dashed border-slate-200">
                  <AlertCircle className="w-20 h-20 text-slate-200 mb-6" />
-                 <p className="text-slate-400 font-black text-lg uppercase tracking-[0.2em]">Sonuç Bulunamadı</p>
-                 <p className="text-slate-300 text-sm font-bold mt-2">Arama kriterlerinizi kontrol edin veya yeni bir talep oluşturun.</p>
+                 <p className="text-slate-400 font-black text-lg uppercase tracking-[0.2em]">{_uiText("Sonuç Bulunamadı")}</p>
+                 <p className="text-slate-300 text-sm font-bold mt-2">{_uiText("Arama kriterlerinizi kontrol edin veya yeni bir talep oluşturun.")}</p>
               </div>
             )}
           </div>

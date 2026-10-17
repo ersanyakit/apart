@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "../I18n";
+
 import React,{useEffect,useRef,useState} from 'react';
 import {createEditor,$getRoot,$getSelection,$setSelection,$isRangeSelection,$createParagraphNode,$createTextNode,FORMAT_TEXT_COMMAND,FORMAT_ELEMENT_COMMAND,UNDO_COMMAND,REDO_COMMAND,CAN_UNDO_COMMAND,CAN_REDO_COMMAND,COMMAND_PRIORITY_LOW,type LexicalEditor,type BaseSelection} from 'lexical';
 import {HeadingNode,QuoteNode,registerRichText,$createHeadingNode} from '@lexical/rich-text';
@@ -13,11 +15,13 @@ import {sanitizeMarkup} from './markup';
 import styles from './DocumentEditor.module.css';
 
 export function DocumentEditor({value,onChange,fields={},language='TR',label='Belge metni',disabled=false}:{value:string;onChange:(html:string)=>void;fields?:Record<string,string>;language?:string;label?:string;disabled?:boolean}){
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
  const root=useRef<HTMLDivElement>(null),editorRef=useRef<LexicalEditor|null>(null),selection=useRef<BaseSelection|null>(null);
  const latest=useRef({value,onChange,disabled});latest.current={value,onChange,disabled};
  const lastHTML=useRef(value),[format,setFormat]=useState({bold:false,italic:false,underline:false}),[undo,setUndo]=useState(false),[redo,setRedo]=useState(false),[words,setWords]=useState(0),[error,setError]=useState('');
  useEffect(()=>{
-  const editor=createEditor({namespace:'OtelDocumentEditor',nodes:[HeadingNode,QuoteNode,ListNode,ListItemNode,TableNode,TableRowNode,TableCellNode],theme:{text:{bold:styles.bold,italic:styles.italic,underline:styles.underline,strikethrough:styles.strike,underlineStrikethrough:styles.underlineStrike}},onError:()=>setError('Metin düzenlenemedi. İçeriğinizi kontrol edip tekrar deneyin.'),editable:!latest.current.disabled});
+  const editor=createEditor({namespace:'OtelDocumentEditor',nodes:[HeadingNode,QuoteNode,ListNode,ListItemNode,TableNode,TableRowNode,TableCellNode],theme:{text:{bold:styles.bold,italic:styles.italic,underline:styles.underline,strikethrough:styles.strike,underlineStrikethrough:styles.underlineStrike}},onError:()=>setError(_uiText("Metin düzenlenemedi. İçeriğinizi kontrol edip tekrar deneyin.")),editable:!latest.current.disabled});
   editorRef.current=editor;editor.setRootElement(root.current);
   const cleanup=[registerRichText(editor),registerList(editor),registerTablePlugin(editor),registerTableSelectionObserver(editor),registerHistory(editor,createEmptyHistoryState(),300),editor.registerCommand(CAN_UNDO_COMMAND,v=>{setUndo(v);return false},COMMAND_PRIORITY_LOW),editor.registerCommand(CAN_REDO_COMMAND,v=>{setRedo(v);return false},COMMAND_PRIORITY_LOW)];
   cleanup.push(editor.registerUpdateListener(({editorState,dirtyElements,dirtyLeaves,tags})=>editorState.read(()=>{
@@ -35,13 +39,13 @@ export function DocumentEditor({value,onChange,fields={},language='TR',label='Be
  const act=(fn:(e:LexicalEditor)=>void)=>{const e=editorRef.current;if(!e||disabled)return;e.update(()=>{if(selection.current)$setSelection(selection.current.clone());else $getRoot().selectEnd();fn(e)});e.focus()};
  const tool=(title:string,icon:React.ReactNode,fn:(e:LexicalEditor)=>void,pressed?:boolean,off=false)=><button key={title} type="button" className={styles.tool} title={title} aria-label={title} aria-pressed={pressed} disabled={disabled||off} onMouseDown={e=>e.preventDefault()} onClick={()=>act(fn)}>{icon}</button>;
  return <section className={styles.editor} aria-label={label}>
-  <div className={styles.toolbar} role="toolbar" aria-label="Metin biçimlendirme">
+  <div className={styles.toolbar} role="toolbar" aria-label={_uiText("Metin biçimlendirme")}>
    {tool('Geri al',<Undo2 size={17}/>,e=>e.dispatchCommand(UNDO_COMMAND,undefined),undefined,!undo)}
    {tool('Yinele',<Redo2 size={17}/>,e=>e.dispatchCommand(REDO_COMMAND,undefined),undefined,!redo)}
    <span className={styles.separator}/>
-   {tool('Normal metin',<>Metin</>,()=>{$setBlocksType($getSelection(),()=>$createParagraphNode())})}
-   {tool('Başlık',<>H2</>,()=>{$setBlocksType($getSelection(),()=>$createHeadingNode('h2'))})}
-   {tool('Alt başlık',<>H3</>,()=>{$setBlocksType($getSelection(),()=>$createHeadingNode('h3'))})}
+   {tool('Normal metin',<>{_uiText("Metin")}</>,()=>{$setBlocksType($getSelection(),()=>$createParagraphNode())})}
+   {tool('Başlık',<>{_uiText("H2")}</>,()=>{$setBlocksType($getSelection(),()=>$createHeadingNode('h2'))})}
+   {tool('Alt başlık',<>{_uiText("H3")}</>,()=>{$setBlocksType($getSelection(),()=>$createHeadingNode('h3'))})}
    {tool('Kalın',<Bold size={17}/>,e=>e.dispatchCommand(FORMAT_TEXT_COMMAND,'bold'),format.bold)}
    {tool('İtalik',<Italic size={17}/>,e=>e.dispatchCommand(FORMAT_TEXT_COMMAND,'italic'),format.italic)}
    {tool('Altı çizili',<Underline size={17}/>,e=>e.dispatchCommand(FORMAT_TEXT_COMMAND,'underline'),format.underline)}
@@ -51,14 +55,16 @@ export function DocumentEditor({value,onChange,fields={},language='TR',label='Be
    {tool('Ortala',<AlignCenter size={17}/>,e=>e.dispatchCommand(FORMAT_ELEMENT_COMMAND,'center'))}
    {tool('Sağa hizala',<AlignRight size={17}/>,e=>e.dispatchCommand(FORMAT_ELEMENT_COMMAND,'right'))}
    {tool('Tablo ekle (3 satır, 2 sütun)',<Table2 size={17}/>,e=>e.dispatchCommand(INSERT_TABLE_COMMAND,{rows:'3',columns:'2',includeHeaders:true}))}
-   {Object.keys(fields).length>0&&<div className={styles.fields}><InlineSelectField label="Otomatik bilgi ekle" value="" disabled={disabled} options={[{value:'',label:'Alan seçin…'},...Object.entries(fields).map(([value,label])=>({value,label}))]} onChange={key=>{if(key)act(()=>{const s=$getSelection();if($isRangeSelection(s))s.insertNodes([$createTextNode(`{{${key}}}`)])})}}/></div>}
+   {Object.keys(fields).length>0&&<div className={styles.fields}><InlineSelectField label={_uiText("Otomatik bilgi ekle")} value="" disabled={disabled} options={[{value:'',label:"Alan seçin…"},...Object.entries(fields).map(([value,label])=>({value,label}))]} onChange={key=>{if(key)act(()=>{const s=$getSelection();if($isRangeSelection(s))s.insertNodes([$createTextNode(`{{${key}}}`)])})}}/></div>}
   </div>
   {error&&<p role="alert" className="p-3 text-red-600 text-sm">{error}</p>}
-  <div ref={root} contentEditable={!disabled} suppressContentEditableWarning role="textbox" aria-multiline="true" aria-label={label} aria-disabled={disabled} spellCheck lang={language.toLowerCase()} dir={language==='AR'?'rtl':'ltr'} className={styles.body}/>
-  <div className={styles.footer}><span>{words} kelime</span><span>{Object.keys(fields).length?'Eklediğiniz bilgi alanları belge oluşturulurken otomatik doldurulur.':'Metni ve biçimini burada düzenleyebilirsiniz.'}</span></div>
+  <div ref={root} contentEditable={!disabled} suppressContentEditableWarning role="textbox" aria-multiline="true" aria-label={label} aria-disabled={disabled} spellCheck lang={language.toLowerCase()} dir={language==='AR'?"rtl":"ltr"} className={styles.body}/>
+  <div className={styles.footer}><span>{words} {_uiText("kelime")}</span><span>{Object.keys(fields).length?_uiText("Eklediğiniz bilgi alanları belge oluşturulurken otomatik doldurulur."):_uiText("Metni ve biçimini burada düzenleyebilirsiniz.")}</span></div>
  </section>;
 }
 export function DocumentPreview({body,format,language='TR'}:{body:string;format?:string;language?:string}){
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
  const [safe,setSafe]=useState('');useEffect(()=>setSafe(format==='html'?sanitizeMarkup(body):''),[body,format]);
- return <div className={styles.preview} lang={language.toLowerCase()} dir={language==='AR'?'rtl':'ltr'}>{format==='html'?<div dangerouslySetInnerHTML={{__html:safe}}/>:<div className="whitespace-pre-wrap">{body}</div>}</div>;
+ return <div className={styles.preview} lang={language.toLowerCase()} dir={language==='AR'?"rtl":"ltr"}>{format==='html'?<div dangerouslySetInnerHTML={{__html:safe}}/>:<div className="whitespace-pre-wrap">{body}</div>}</div>;
 }

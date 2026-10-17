@@ -1,4 +1,6 @@
 'use client';
+import { useI18n } from "../I18n";
+
 import { RoomCondition, RoomConditionIcon } from '../RoomCondition';
 import { BookingStatus as BookingState } from '../../lib/statuses.generated';
 
@@ -31,6 +33,8 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   snapshot: Snapshot;
   onOpenBooking?: (booking: Booking) => void; onBook?: (room: APIRoom) => void; onDefinitions?: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [language] = usePreference<string>("locale", "tr");
   const [snapshot, setSnapshot] = useState(initialSnapshot);
   useEffect(() => { setSnapshot(initialSnapshot); }, [initialSnapshot]);
@@ -97,12 +101,12 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
   const bookableUnit = selectedId ? sceneBookingTarget(snapshot, selectedId) : undefined;
   const clearFilters = () => { setFloorId('all'); setTone('all'); setQuery(''); setOnlyAvailableBeds(false); };
   return <div className={styles.page}>
-    {(bedError || refreshError) && <div className={styles.notice} role="alert"><p>{bedError ? `Fiziksel yatak ölçüleri alınamadı: ${bedError}. Birim kayıtları gösteriliyor.` : `Veriler yenilenemedi: ${refreshError}`}</p><button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => void refresh()}>Tekrar dene</button></div>}
+    {(bedError || refreshError) && <div className={styles.notice} role="alert"><p>{bedError ? _uiText("Fiziksel yatak ölçüleri alınamadı: {value1}. Birim kayıtları gösteriliyor.", {value1: String(bedError)}) : _uiText("Veriler yenilenemedi: {value1}", {value1: String(refreshError)})}</p><button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => void refresh()}>{_uiText("Tekrar dene")}</button></div>}
     {rooms.length ? <div className={`${styles.workspace}${panelOpen ? '' : ` ${styles.detailsHidden}`}`}>
       <div className={styles.sceneColumn}>
-        <PropertyCanvas floorControls={<nav className={styles.floorTabs} aria-label="3B kat görünümü">
+        <PropertyCanvas floorControls={<nav className={styles.floorTabs} aria-label={_uiText("3B kat görünümü")}>
       <div className={styles.floorGrid}>
-        {[{ id: 'all', label: 'Tüm katlar' }, ...floors].map(floor => {
+        {[{ id: 'all', label: "Tüm katlar" }, ...floors].map(floor => {
           const number = floor.label.trim().match(/^(?:kat\s*)?(-?\d+)\.?(?:\s*kat)?$/i)?.[1];
           return <button type="button" key={floor.id} aria-label={floor.label} title={floor.label} aria-pressed={effectiveFloor === floor.id}
             className={`uni-button ${styles.floorButton}`} onClick={() => { setFloorId(floor.id); setSelectedId(null); }}>
@@ -110,57 +114,57 @@ export function PropertyView({ snapshot: initialSnapshot, onOpenBooking, onBook,
           </button>;
         })}
       </div>
-      <div className={styles.sceneSwitches} role="group" aria-label="3B görünüm seçenekleri">
-        <Switch label="Katları ayır" checked={exploded} onChange={setExploded} />
-        <Switch label="Duvarlar" checked={walls} onChange={setWalls} />
-        <Switch label="Yalnızca boş yatakları göster" checked={onlyAvailableBeds} onChange={value => { setOnlyAvailableBeds(value); setSelectedId(null); if (value) setTone('all'); }} />
+      <div className={styles.sceneSwitches} role="group" aria-label={_uiText("3B görünüm seçenekleri")}>
+        <Switch label={_uiText("Katları ayır")} checked={exploded} onChange={setExploded} />
+        <Switch label={_uiText("Duvarlar")} checked={walls} onChange={setWalls} />
+        <Switch label={_uiText("Yalnızca boş yatakları göster")} checked={onlyAvailableBeds} onChange={value => { setOnlyAvailableBeds(value); setSelectedId(null); if (value) setTone('all'); }} />
       </div>
     </nav>} floors={filtered} exploded={exploded} walls={walls} selectedId={selected?.unit.room_id || null} focusRequest={focusRequest} onSelect={select} onHover={setHoverId} panelOpen={panelOpen} onTogglePanel={() => setPanelOpen(v => !v)} details={
-        <aside ref={detailsRef} className={styles.details} aria-label="Oda ve yatak bilgileri" aria-hidden={!panelOpen} inert={!panelOpen}>
+        <aside ref={detailsRef} className={styles.details} aria-label={_uiText("Oda ve yatak bilgileri")} aria-hidden={!panelOpen} inert={!panelOpen}>
         {selected && <div className={styles.reservationAction}>
-          <button type="button" className="uni-button uni-button-primary rounded-full" disabled={!onBook || !bookableUnit} onClick={() => { if (onBook && bookableUnit) onBook(bookableUnit); }}>Rezervasyon oluştur</button>
-          {!onBook ? <small>Rezervasyon oluşturma yetkiniz bulunmuyor.</small> : !bookableUnit ? <small>Bu birim satışa kapalı, pasif veya bakımda. Birim tanımındaki satış ayarını kontrol edin.</small> : <>
-            {bookableUnit.room_id !== selected.unit.room_id && <small>Rezervasyon {bookableUnit.code} odasının tamamı için oluşturulur.</small>}
-            {!!selected.state.current.length && <small>Mevcut konaklama / rezervasyon var. Yeni rezervasyon için uygun tarih seçin.</small>}
+          <button type="button" className="uni-button uni-button-primary rounded-full" disabled={!onBook || !bookableUnit} onClick={() => { if (onBook && bookableUnit) onBook(bookableUnit); }}>{"Rezervasyon oluştur"}</button>
+          {!onBook ? <small>{"Rezervasyon oluşturma yetkiniz bulunmuyor."}</small> : !bookableUnit ? <small>{"Bu birim satışa kapalı, pasif veya bakımda. Birim tanımındaki satış ayarını kontrol edin."}</small> : <>
+            {bookableUnit.room_id !== selected.unit.room_id && <small>{"Rezervasyon"} {bookableUnit.code} {"odasının tamamı için oluşturulur."}</small>}
+            {!!selected.state.current.length && <small>{"Mevcut konaklama / rezervasyon var. Yeni rezervasyon için uygun tarih seçin."}</small>}
           </>}
         </div>}
-        <InlineSelectField label="Oda / birim seçimi" value={selectedRoom?.unit.room_id || ''} onChange={value => select(value || null)} options={[{ value: '', label: 'Bir birim seçin' }, ...rooms.map(r => ({ value: r.unit.room_id, label: `${r.unit.code} · ${r.state.label}` }))]} />
+        <InlineSelectField label={_uiText("Oda / birim seçimi")} value={selectedRoom?.unit.room_id || ''} onChange={value => select(value || null)} options={[{ value: '', label: "Bir birim seçin" }, ...rooms.map(r => ({ value: r.unit.room_id, label: `${r.unit.code} · ${r.state.label}` }))]} />
         {selected && selectedRoom ? <>
-          <div className={styles.detailHeading}><div><p>{floors.find(f => f.id === selectedRoom.floorId)?.label}</p><h3>{selected.unit.code}</h3><span>{selected.unit.name || unitKinds[selected.unit.kind] || selected.unit.kind}</span></div><button type="button" className="nav-icon-button" aria-label="Birim seçimini temizle" onClick={() => select(null)}><X size={18} /></button></div>
+          <div className={styles.detailHeading}><div><p>{floors.find(f => f.id === selectedRoom.floorId)?.label}</p><h3>{selected.unit.code}</h3><span>{selected.unit.name || unitKinds[selected.unit.kind] || selected.unit.kind}</span></div><button type="button" className="nav-icon-button" aria-label={_uiText("Birim seçimini temizle")} onClick={() => select(null)}><X size={18} /></button></div>
           <div className={styles.status}><RoomConditionIcon semantic={boardStatusKey(selected.state)}/>{selected.state.label}</div>
           {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===selected.state.operationalStatus) && <div className={styles.status}><RoomCondition status={selected.state.operationalStatus}/></div>}
-          {!!currentStays.length && <section className={styles.currentGuests} aria-label="Şu anda konaklayan misafirler"><h4 className={styles.subheading}>Konaklayan misafirler</h4>{currentStays.map(booking => <div className={styles.booking} key={booking.booking_id}>
+          {!!currentStays.length && <section className={styles.currentGuests} aria-label={_uiText("Şu anda konaklayan misafirler")}><h4 className={styles.subheading}>{"Konaklayan misafirler"}</h4>{currentStays.map(booking => <div className={styles.booking} key={booking.booking_id}>
             {(booking.guests?.length ? booking.guests : [{ id: booking.booking_id, name: booking.guest_name || 'Misafir' }]).map(guest => <strong key={guest.id}>{guest.name}</strong>)}
-            <small>{boardDate(booking.actual_check_in || booking.check_in)} → {boardDate(booking.check_out)}</small>
-            {onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>Konaklama detayını aç</button>}
+            <small>{boardDate(booking.actual_check_in || booking.check_in, _uiLocale)} → {boardDate(booking.check_out, _uiLocale)}</small>
+            {onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>{"Konaklama detayını aç"}</button>}
           </div>)}</section>}
 
-          <dl className={styles.facts}><div><dt>Kapasite</dt><dd>{selected.unit.effective_capacity || selected.unit.capacity} kişi</dd></div><div><dt>Satış durumu</dt><dd>{selected.unit.inactive ? 'Pasif' : selected.unit.rentable ? 'Ayrı rezerve edilebilir' : 'Üst birimle birlikte'}</dd></div>{selected.unit.kind === 'bed' && <div><dt>Ranza seviyesi</dt><dd>{selectedRoom.beds.find(b => b.unit.room_id === selected.unit.room_id)?.level || 1}</dd></div>}</dl>
-          {selectedRoom.hasJacuzzi && <p className={styles.status}>Jakuzi mevcut</p>}
+          <dl className={styles.facts}><div><dt>{"Kapasite"}</dt><dd>{selected.unit.effective_capacity || selected.unit.capacity} {"kişi"}</dd></div><div><dt>{"Satış durumu"}</dt><dd>{selected.unit.inactive ? "Pasif" : selected.unit.rentable ? "Ayrı rezerve edilebilir" : "Üst birimle birlikte"}</dd></div>{selected.unit.kind === 'bed' && <div><dt>{"Ranza seviyesi"}</dt><dd>{selectedRoom.beds.find(b => b.unit.room_id === selected.unit.room_id)?.level || 1}</dd></div>}</dl>
+          {selectedRoom.hasJacuzzi && <p className={styles.status}>{"Jakuzi mevcut"}</p>}
           {selected.unit.status_reason && <p className={styles.caption}>{selected.unit.status_reason}</p>}
-          {!!selectedRoom.beds.length && <section><h4 className={styles.subheading}>Yatak yerleri</h4><div className={styles.bedList}>{selectedRoom.beds.map(bed => <button type="button" key={bed.group + ":" + bed.level} aria-pressed={selectedId === bed.unit.room_id} className={styles.bedButton} onClick={() => activate(bed.unit.room_id)}><BedDouble size={18} style={{ color: sceneStatusColor(bed.state) }} aria-hidden="true" /><span><strong>{bed.label || bed.unit.code}</strong><small>{bed.visualOnly ? "Kayıtlı oda yatak düzeni" : `${bed.state.label} · ${bed.unit.capacity} kişi`}</small></span></button>)}</div></section>}
-          {selectedRoom.beds.length === 0 && <p className={styles.caption}>Bu birime fiziksel yatak tanımı eklenmemiş.</p>}
-          <section><h4 className={styles.subheading}>Konaklama ve rezervasyonlar</h4>{bookings.length ? bookings.map(booking => <div className={styles.booking} key={booking.booking_id}><strong>{booking.guest_name || 'Misafir'}</strong><span>{booking.status === BookingState.CheckedIn ? 'Giriş yapıldı' : booking.status === BookingState.Confirmed ? 'Onaylı rezervasyon' : 'Çıkış yapıldı'}</span><small>{boardDate(booking.check_in)} → {boardDate(booking.check_out)}</small>{onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>Rezervasyonu aç</button>}</div>) : <p className={styles.caption}>Aktif veya yaklaşan rezervasyon bulunmuyor.</p>}</section>
+          {!!selectedRoom.beds.length && <section><h4 className={styles.subheading}>{"Yatak yerleri"}</h4><div className={styles.bedList}>{selectedRoom.beds.map(bed => <button type="button" key={bed.group + ":" + bed.level} aria-pressed={selectedId === bed.unit.room_id} className={styles.bedButton} onClick={() => activate(bed.unit.room_id)}><BedDouble size={18} style={{ color: sceneStatusColor(bed.state) }} aria-hidden="true" /><span><strong>{bed.label || bed.unit.code}</strong><small>{bed.visualOnly ? "Kayıtlı oda yatak düzeni" : `${bed.state.label} · ${bed.unit.capacity} kişi`}</small></span></button>)}</div></section>}
+          {selectedRoom.beds.length === 0 && <p className={styles.caption}>{"Bu birime fiziksel yatak tanımı eklenmemiş."}</p>}
+          <section><h4 className={styles.subheading}>{"Konaklama ve rezervasyonlar"}</h4>{bookings.length ? bookings.map(booking => <div className={styles.booking} key={booking.booking_id}><strong>{booking.guest_name || "Misafir"}</strong><span>{booking.status === BookingState.CheckedIn ? "Giriş yapıldı" : booking.status === BookingState.Confirmed ? "Onaylı rezervasyon" : "Çıkış yapıldı"}</span><small>{boardDate(booking.check_in, _uiLocale)} → {boardDate(booking.check_out, _uiLocale)}</small>{onOpenBooking && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => onOpenBooking(booking)}>{"Rezervasyonu aç"}</button>}</div>) : <p className={styles.caption}>{"Aktif veya yaklaşan rezervasyon bulunmuyor."}</p>}</section>
 
-        </> : <div className={styles.emptyDetail}><Box size={32} strokeWidth={1.4} /><p>Bir oda veya yatak seçin.</p><span>Kapasite, durum ve rezervasyon bilgileri burada görünür.</span></div>}
+        </> : <div className={styles.emptyDetail}><Box size={32} strokeWidth={1.4} /><p>{"Bir oda veya yatak seçin."}</p><span>{"Kapasite, durum ve rezervasyon bilgileri burada görünür."}</span></div>}
         <div className={styles.panelActions}>
-          <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => void refresh()} disabled={refreshing}><RefreshCw size={17} aria-hidden="true" />{refreshing ? 'Yenileniyor…' : 'Yenile'}</button>
-          {onDefinitions && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={onDefinitions}>Kat ve oda tanımları</button>}
+          <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => void refresh()} disabled={refreshing}><RefreshCw size={17} aria-hidden="true" />{refreshing ? "Yenileniyor…" : "Yenile"}</button>
+          {onDefinitions && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={onDefinitions}>{"Kat ve oda tanımları"}</button>}
         </div>
-        <TextField label="Oda veya misafir ara" value={query} onChange={setQuery} placeholder="Oda kodu, adı veya misafir" />
-        <InlineSelectField label="Durum" value={tone} onChange={setTone} options={[{ value: 'all', label: 'Tüm durumlar' }, ...Object.entries(STATUS_LABELS).map(([value, label]) => ({ value, label }))]} />
+        <TextField label={_uiText("Oda veya misafir ara")} value={query} onChange={setQuery} placeholder={_uiText("Oda kodu, adı veya misafir")} />
+        <InlineSelectField label={_uiText("Durum")} value={tone} onChange={setTone} options={[{ value: 'all', label: "Tüm durumlar" }, ...Object.entries(STATUS_LABELS).map(([value, label]) => ({ value, label }))]} />
     <div className={styles.summary}>
-      <span><Box size={17} aria-hidden="true" />{rooms.filter(r => r.unit.kind !== 'bed').length} oda / birim</span>
-      <span><BedDouble size={17} aria-hidden="true" />{places.length} yatak yeri</span>
-      <span>{places.reduce((sum, p) => sum + (p.unit.inactive ? 0 : p.unit.capacity), 0)} aktif yatak kapasitesi</span>
-      <span className={styles.updated}>{loading ? 'Yatak tanımları yükleniyor…' : `Son veri: ${boardDate(snapshot.server_time)}`}</span>
+      <span><Box size={17} aria-hidden="true" />{rooms.filter(r => r.unit.kind !== 'bed').length} {"oda / birim"}</span>
+      <span><BedDouble size={17} aria-hidden="true" />{places.length} {"yatak yeri"}</span>
+      <span>{places.reduce((sum, p) => sum + (p.unit.inactive ? 0 : p.unit.capacity), 0)} {"aktif yatak kapasitesi"}</span>
+      <span className={styles.updated}>{loading ? "Yatak tanımları yükleniyor…" : `Son veri: ${boardDate(snapshot.server_time, _uiLocale)}`}</span>
     </div>
 
-        <div className={styles.legend} aria-label="Durum renkleri">{(["occupied","reserved","available","dirty","fault","maintenance"] as const).map(key => <span key={key}><RoomConditionIcon semantic={key} size={22}/>{STATUS_PALETTE[key].label}</span>)}</div>
-        <p className={styles.caption}>{hover ? `${hover.unit.code} · ${hover.state.label}` : 'Detaylar için bir odaya veya yatağa tıklayın.'}</p>
-        <p className={styles.caption}>Şematik görünüm · {filtered.some(f => f.automatic) ? 'Yerleşimi olmayan veya çakışan birimler otomatik dizildi.' : 'Kat planı sırası korunarak odalar arasındaki boşluklar sıkılaştırıldı.'} Oda içindeki yataklar okunabilirlik için otomatik yerleştirilir.</p>
+        <div className={styles.legend} aria-label={_uiText("Durum renkleri")}>{(["occupied","reserved","available","dirty","fault","maintenance"] as const).map(key => <span key={key}><RoomConditionIcon semantic={key} size={22}/>{STATUS_PALETTE[key].label}</span>)}</div>
+        <p className={styles.caption}>{hover ? `${hover.unit.code} · ${hover.state.label}` : "Detaylar için bir odaya veya yatağa tıklayın."}</p>
+        <p className={styles.caption}>{"Şematik görünüm ·"} {filtered.some(f => f.automatic) ? "Yerleşimi olmayan veya çakışan birimler otomatik dizildi." : "Kat planı sırası korunarak odalar arasındaki boşluklar sıkılaştırıldı."} {"Oda içindeki yataklar okunabilirlik için otomatik yerleştirilir."}</p>
         </aside>} />
       </div>
-    </div> : <div className={styles.empty}><Box size={42} strokeWidth={1.3} /><h3>{floors.some(f => f.rooms.length) ? 'Filtrelere uygun birim bulunamadı' : 'Bu tesiste görüntülenecek birim yok'}</h3><p>{floors.some(f => f.rooms.length) ? 'Kat, durum veya arama filtresini değiştirin.' : 'Kat ve oda tanımları eklendiğinde tesisiniz burada oluşacak.'}</p>{floors.some(f => f.rooms.length) ? <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={clearFilters}>Filtreleri temizle</button> : onDefinitions && <button type="button" className="uni-button uni-button-primary rounded-full" onClick={onDefinitions}>Kat ve oda tanımları</button>}</div>}
+    </div> : <div className={styles.empty}><Box size={42} strokeWidth={1.3} /><h3>{floors.some(f => f.rooms.length) ? _uiText("Filtrelere uygun birim bulunamadı") : _uiText("Bu tesiste görüntülenecek birim yok")}</h3><p>{floors.some(f => f.rooms.length) ? _uiText("Kat, durum veya arama filtresini değiştirin.") : _uiText("Kat ve oda tanımları eklendiğinde tesisiniz burada oluşacak.")}</p>{floors.some(f => f.rooms.length) ? <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={clearFilters}>{_uiText("Filtreleri temizle")}</button> : onDefinitions && <button type="button" className="uni-button uni-button-primary rounded-full" onClick={onDefinitions}>{_uiText("Kat ve oda tanımları")}</button>}</div>}
   </div>;
 }

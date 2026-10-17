@@ -47,6 +47,8 @@ function SectionHeading({ icon, title, description }: {
 }
 
 export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsViewProps) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const preferences = useUserPreferences();
   const saveLabel = preferences?.saveState === "saving" ? "Kaydediliyor…" : preferences?.saveState === "error" ? "Kaydedilemedi" : preferences?.saveState === "saved" ? "Hesabına kaydedildi" : "Hesap tercihlerin";
   const { locale, direction, setLocale, t } = useI18n();
@@ -63,14 +65,14 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
     <div className="w-full space-y-5 pb-8 font-sans text-uni-ink">
       <PageHeader pageId="appsettings" actions={<>
         <span className="text-sm text-uni-muted" role="status">{saveLabel}</span>
-        {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>Yeniden dene</button>}
+        {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>{"Yeniden dene"}</button>}
       </>} />
 
       <div className="mx-auto max-w-[720px] space-y-5">
-      <section aria-label="Görünüm" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
-        <SectionHeading icon={<Palette size={20} />} title="Tema rengi" description="Menüler, butonlar ve vurgular seçtiğin renge uyum sağlar." />
+      <section aria-label={_uiText("Görünüm")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Palette size={20} />} title={_uiText("Tema rengi")} description={_uiText("Menüler, butonlar ve vurgular seçtiğin renge uyum sağlar.")} />
         <fieldset>
-          <legend className="sr-only">Tema Rengi</legend>
+          <legend className="sr-only">{_uiText("Tema Rengi")}</legend>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
             {THEME_OPTIONS.map((option) => (
               <label key={option.id} className="relative min-w-0 cursor-pointer">
@@ -95,16 +97,16 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </fieldset>
         <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
           <Check size={14} className="text-brand-blue-600" />
-          <span>{currentTheme.label} tema etkin</span>
+          <span>{currentTheme.label} {_uiText("tema etkin")}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           <span>{saveLabel}</span>
         </div>
 
         <div className="my-6 border-t border-uni-border" />
 
-        <SectionHeading icon={<ALargeSmall size={20} />} title="Yazı boyutu" description="Senin için en rahat okunan boyutu seç." />
+        <SectionHeading icon={<ALargeSmall size={20} />} title={_uiText("Yazı boyutu")} description={_uiText("Senin için en rahat okunan boyutu seç.")} />
         <fieldset>
-          <legend className="sr-only">Yazı Boyutu</legend>
+          <legend className="sr-only">{_uiText("Yazı Boyutu")}</legend>
           <div className="grid grid-cols-2 gap-1 rounded-[20px] border border-uni-border p-1 sm:grid-cols-4">
             {FONT_SIZE_OPTIONS.map((option) => (
               <label key={option.id} className="relative min-w-0 cursor-pointer">
@@ -128,8 +130,8 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         <div className="my-6 border-t border-uni-border" />
 
         <fieldset>
-          <legend className="text-xs font-medium text-uni-muted">Arka plan</legend>
-          <p className="mt-1 text-xs text-uni-muted">Sitenin zemin rengi.</p>
+          <legend className="text-xs font-medium text-uni-muted">{_uiText("Arka plan")}</legend>
+          <p className="mt-1 text-xs text-uni-muted">{_uiText("Sitenin zemin rengi.")}</p>
           <div className="mt-2 grid grid-cols-2 gap-1 rounded-[20px] border border-uni-border p-1">
             {BACKGROUND_OPTIONS.map((option) => (
               <label key={option.id} className="relative flex min-w-0 cursor-pointer items-center gap-2.5 rounded-2xl px-3 py-2 transition-colors hover:bg-uni-surface">
@@ -140,7 +142,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={background === option.id}
                   onChange={() => setBackground(option.id)}
                   className="peer sr-only"
-                  aria-label={`${option.label} (${option.hint})`}
+                  aria-label={_uiText("{value1} ({value2})", {value1: String(option.label), value2: String(option.hint)})}
                 />
                 <span
                   aria-hidden="true"
@@ -157,20 +159,17 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
 
         <div className="mt-6 rounded-[20px] border border-uni-border bg-uni-surface p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs font-medium text-uni-muted">Canlı önizleme</span>
-            <span className="rounded-full bg-brand-blue-100 px-2.5 py-1 text-xs font-medium text-brand-blue-600">12 aktif kayıt</span>
+            <span className="text-xs font-medium text-uni-muted">{_uiText("Canlı önizleme")}</span>
+            <span className="rounded-full bg-brand-blue-100 px-2.5 py-1 text-xs font-medium text-brand-blue-600">{_uiText("12 aktif kayıt")}</span>
           </div>
-          <p className="text-lg font-medium tracking-[-0.02em]">Oda Durum Çizelgesi</p>
-          <p className="mt-1 text-sm leading-6 text-uni-muted">Oda ve rezervasyonlarını tek bir yerden yönet.</p>
+          <p className="text-lg font-medium tracking-[-0.02em]">{_uiText("Oda Durum Çizelgesi")}</p>
+          <p className="mt-1 text-sm leading-6 text-uni-muted">{_uiText("Oda ve rezervasyonlarını tek bir yerden yönet.")}</p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <button type="button" className={`uni-control ${buttonStyle}`} onClick={() => setPreviewMessage("Birincil buton önizlemesi. Tema tüm uygulamaya uygulandı.")}>
-              Rezervasyon Al <ArrowUpRight size={16} />
+            <button type="button" className={`uni-control ${buttonStyle}`} onClick={() => setPreviewMessage("Birincil buton önizlemesi. Tema tüm uygulamaya uygulandı.")}>{_uiText("Rezervasyon Al")} <ArrowUpRight size={16} />
             </button>
-            <button type="button" className="uni-control uni-button uni-button-soft" onClick={() => setPreviewMessage("İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.")}>
-              Detayları Gör
-            </button>
+            <button type="button" className="uni-control uni-button uni-button-soft" onClick={() => setPreviewMessage("İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.")}>{_uiText("Detayları Gör")} </button>
           </div>
-          <p role="status" className="mt-3 text-xs leading-5 text-uni-muted">{previewMessage || "Butonları deneyerek renk ve etkileşimleri önizleyebilirsin."}</p>
+          <p role="status" className="mt-3 text-xs leading-5 text-uni-muted">{previewMessage || _uiText("Butonları deneyerek renk ve etkileşimleri önizleyebilirsin.")}</p>
         </div>
       </section>
 
@@ -195,25 +194,23 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           <span>{countryByCode(defaultCountry, locale)?.name}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           {countryCurrencyLabel ? (
-            <span>Para birimi: <span className="font-bold text-uni-ink">{countryCurrencyLabel.label} ({countryCurrencyLabel.id})</span></span>
+            <span>{_uiText("Para birimi:")} <span className="font-bold text-uni-ink">{countryCurrencyLabel.label} ({countryCurrencyLabel.id})</span></span>
           ) : (
-            <span>Bu ülkenin listede para birimi yok, mevcut korunur</span>
+            <span>{_uiText("Bu ülkenin listede para birimi yok, mevcut korunur")}</span>
           )}
         </div>
         {!currencyAuto && (
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-uni-surface px-4 py-3 text-xs text-uni-muted">
-            <span>Para birimi elle seçildiği için otomatik takip kapalı.</span>
-            <button type="button" className="uni-control cursor-pointer font-bold text-brand-blue-700 hover:underline" onClick={resetCurrencyAuto}>
-              Otomatik takibe dön
-            </button>
+            <span>{_uiText("Para birimi elle seçildiği için otomatik takip kapalı.")}</span>
+            <button type="button" className="uni-control cursor-pointer font-bold text-brand-blue-700 hover:underline" onClick={resetCurrencyAuto}>{_uiText("Otomatik takibe dön")} </button>
           </div>
         )}
       </section>
 
-      <section aria-label="Para birimi" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
-        <SectionHeading icon={<Banknote size={20} />} title="Para birimi" description="Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez." />
+      <section aria-label={_uiText("Para birimi")} className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
+        <SectionHeading icon={<Banknote size={20} />} title={_uiText("Para birimi")} description={_uiText("Tutarlar hangi para birimi ve biçimde gösterilir. Belgelerdeki kayıtlı para birimi değişmez.")} />
         <InlineSelectField
-          label="Para birimi"
+          label={_uiText("Para birimi")}
           value={currency}
           onChange={(value) => setCurrency(value as typeof currency)}
           options={CURRENCIES.map((option) => ({
@@ -225,7 +222,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         <div className="my-6 border-t border-uni-border" />
 
         <fieldset>
-          <legend className="text-xs font-medium text-uni-muted">Sayı biçimi</legend>
+          <legend className="text-xs font-medium text-uni-muted">{_uiText("Sayı biçimi")}</legend>
           <div className="mt-2 grid grid-cols-2 gap-1 rounded-[20px] border border-uni-border p-1">
             {MONEY_FORMATS.map((option) => (
               <label key={option.id} className="relative min-w-0 cursor-pointer">
@@ -236,7 +233,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={format === option.id}
                   onChange={() => setFormat(option.id)}
                   className="peer sr-only"
-                  aria-label={`${option.hint} (${option.label})`}
+                  aria-label={_uiText("{value1} ({value2})", {value1: String(option.hint), value2: String(option.label)})}
                 />
                 <span className="uni-choice flex min-h-10 flex-col items-center justify-center rounded-2xl px-2 py-2 transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
                   <span className="text-xs font-bold text-uni-ink">{option.label}</span>
@@ -248,10 +245,10 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </fieldset>
 
         <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
-          <span>Örnek:</span>
-          <span className="font-bold text-uni-ink">{formatMoney(450000, currency, format)} / gece</span>
+          <span>{_uiText("Örnek:")}</span>
+          <span className="font-bold text-uni-ink">{formatMoney(450000, currency, format)} {_uiText("/ gece")}</span>
           <span aria-hidden="true" className="mx-1">·</span>
-          <span>{currencyAuto ? "Varsayılan ülkeyi takip ediyor" : "Elle seçim etkin"}</span>
+          <span>{currencyAuto ? _uiText("Varsayılan ülkeyi takip ediyor") : _uiText("Elle seçim etkin")}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           <span>{saveLabel}</span>
         </div>
@@ -259,17 +256,17 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
 
       <InstallAppPanel/>
       <section aria-labelledby="account-heading" className="uni-card rounded-[24px] border border-uni-border bg-white p-5 sm:p-6">
-        <h3 id="account-heading" className="mb-5 text-base font-medium">Hesap</h3>
+        <h3 id="account-heading" className="mb-5 text-base font-medium">{_uiText("Hesap")}</h3>
         <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-blue-100 text-brand-blue-600"><User size={19} /></span>
           <div className="min-w-0 flex-1">
             <p className="break-words text-sm font-medium">{userName}</p>
-            <p className="mt-1 text-xs text-uni-muted">Aktif kullanıcı</p>
+            <p className="mt-1 text-xs text-uni-muted">{_uiText("Aktif kullanıcı")}</p>
           </div>
         </div>
         <div className="my-4 border-t border-uni-border" />
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-          <span className="flex items-center gap-2 text-uni-muted"><ShieldCheck size={17} /> Erişim yetkisi</span>
+          <span className="flex items-center gap-2 text-uni-muted"><ShieldCheck size={17} /> {_uiText("Erişim yetkisi")}</span>
           <span className="font-medium">{userRole}</span>
         </div>
       </section>
@@ -282,9 +279,8 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
             if (await confirmDialog("Oturumu kapatmak istediğinize emin misiniz?")) onLogout();
           }}
         >
-          <LogOut size={16} /> Oturumu Kapat
-        </button>
-        <p className="px-3 text-center text-xs leading-5 text-uni-muted">Tercihlerin kullanıcı hesabında saklanır; başka cihazlarda da hesabına giriş yaptığında uygulanır.</p>
+          <LogOut size={16} /> {_uiText("Oturumu Kapat")} </button>
+        <p className="px-3 text-center text-xs leading-5 text-uni-muted">{_uiText("Tercihlerin kullanıcı hesabında saklanır; başka cihazlarda da hesabına giriş yaptığında uygulanır.")}</p>
       </div>
       </div>
     </div>

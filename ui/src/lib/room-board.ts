@@ -40,7 +40,7 @@ export function roomBoardState(rooms: APIRoom[], bookings: Booking[], room: APIR
   };
 }
 
-export const boardDate = (value: string) => new Date(value).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+export const boardDate = (value: string, locale = "tr-TR") => new Date(value).toLocaleString(locale, { timeZone: "Europe/Istanbul", day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
 export function bookingCanCheckIn(booking: Booking, now: string) {
   return booking.status === BookingState.Confirmed && Date.parse(booking.check_out) > Date.parse(now);

@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { RoomCondition } from './RoomCondition';
 import { roomStatusKey, statusStyle } from '../lib/status-palette';
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
@@ -64,6 +65,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onUpdateInventory,
   initialTab = 'rooms'
 }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [activeTab, setActiveTab] = useState<'rooms' | 'inventory'>(initialTab as any);
   const [isAdding, setIsAdding] = useState(false);
   const [editingRoomId, setEditingRoomId] = useState<string | null>(null);
@@ -173,36 +176,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         <div className="uni-card flex bg-white p-1 rounded-2xl border border-slate-200 shadow-sm w-fit">
           <button
             onClick={() => setActiveTab('rooms')}
-            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${
-              activeTab === 'rooms' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            Oda Yönetimi
-          </button>
+            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${activeTab === 'rooms' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'}`}
+          >{_uiText("Oda Yönetimi")} </button>
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${
-              activeTab === 'inventory' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'
-            }`}
-          >
-            Demirbaş Tanımları
-          </button>
+            className={`uni-control px-6 py-2.5 rounded-xl text-xs     ${activeTab === 'inventory' ? 'uni-button-primary text-white  shadow-brand-blue-100' : 'text-slate-400 hover:text-slate-600'}`}
+          >{_uiText("Demirbaş Tanımları")} </button>
         </div>
 
         {activeTab === 'rooms' ? (
           <div className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Oda Listesi</h2>
-                <p className="text-sm text-slate-400 font-medium italic mt-1">Odaları ve oda bazlı demirbaşları yönetin.</p>
+                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">{_uiText("Oda Listesi")}</h2>
+                <p className="text-sm text-slate-400 font-medium italic mt-1">{_uiText("Odaları ve oda bazlı demirbaşları yönetin.")}</p>
               </div>
               <motion.button
                 onClick={() => setIsAdding(true)}
                 className="uni-control flex items-center gap-2 px-6 py-3 uni-button-primary text-white rounded-2xl text-xs     shadow-brand-blue-100       cursor-pointer"
               >
-                <PlusCircle className="w-4 h-4" />
-                Yeni Oda Ekle
-              </motion.button>
+                <PlusCircle className="w-4 h-4" />{_uiText("Yeni Oda Ekle")} </motion.button>
             </div>
 
             <AnimatePresence>
@@ -215,7 +208,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 >
                   <div className="flex items-center justify-between mb-8">
                     <h3 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
-                      {editingRoomId ? `ODA #${newRoom.number} GÜNCELLE` : 'YENİ ODA KAYDI'}
+                      {editingRoomId ? _uiText("ODA #{value1} GÜNCELLE", {value1: String(newRoom.number)}) : _uiText("YENİ ODA KAYDI")}
                     </h3>
                     <button
                       onClick={() => {
@@ -233,7 +226,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="space-y-6">
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ODA NUMARASI</label>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("ODA NUMARASI")}</label>
                           <input
                             required
                             value={newRoom.number}
@@ -242,7 +235,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           />
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">TİP</label>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TİP")}</label>
                           <div className="grid grid-cols-3 gap-2">
                             {['1+0', '1+1', '2+1', 'Suit', 'Kral'].map(t => (
                               <button key={t} type="button" onClick={() => setNewRoom(prev => ({ ...prev, type: t }))} className={`uni-control py-3 rounded-xl text-[10px]   border ${newRoom.type === t ? 'uni-button-primary text-white' : 'text-slate-400 border-slate-200'}`}>{t}</button>
@@ -250,7 +243,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">DURUM</label>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("DURUM")}</label>
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             {([RoomState.Vacant, RoomState.Clean, RoomState.Dirty, RoomState.OutOfOrder] as RoomStatus[]).map(s => (
                               <button
@@ -267,14 +260,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           </div>
                         </div>
                         <div className="space-y-4">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center justify-between">
-                            ODA GÖRSEL YÖNETİMİ
-                            <span className="text-[8px] italic normal-case text-slate-300 font-medium">URL girip Enter'a basın</span>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center justify-between">{_uiText("ODA GÖRSEL YÖNETİMİ")} <span className="text-[8px] italic normal-case text-slate-300 font-medium">{_uiText("URL girip Enter'a basın")}</span>
                           </label>
                           <div className="grid grid-cols-3 gap-2">
                              {newRoom.imageUrls?.map((url, idx) => (
                                <div key={idx} className="relative group aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
-                                  <img src={url} alt={`Preview ${idx}`} className="w-full h-full object-cover" />
+                                  <img src={url} alt={_uiText("Preview {value1}", {value1: String(idx)})} className="w-full h-full object-cover" />
                                   <button
                                     type="button"
                                     onClick={() => setNewRoom(prev => ({ ...prev, imageUrls: prev.imageUrls?.filter((_, i) => i !== idx) }))}
@@ -289,7 +280,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                   <PlusCircle className="w-6 h-6 text-slate-200" />
                                   <input
                                     type="text"
-                                    placeholder="Link..."
+                                    placeholder={_uiText("Link...")}
                                     className="uni-input absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                     onKeyDown={(e) => {
                                       if (e.key === 'Enter') {
@@ -307,9 +298,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           </div>
                         </div>
                               <div className="space-y-4">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center justify-between">
-                            ÖZELLİKLER VE DEMİRBAŞLAR
-                            <span className="text-[8px] italic normal-case text-slate-300 font-medium">Merkezi listeden seçim yapın</span>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center justify-between">{_uiText("ÖZELLİKLER VE DEMİRBAŞLAR")} <span className="text-[8px] italic normal-case text-slate-300 font-medium">{_uiText("Merkezi listeden seçim yapın")}</span>
                           </label>
                           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 max-h-[320px] overflow-y-auto p-4 bg-slate-50 rounded-2xl border border-slate-100 no-scrollbar">
                             {/* Standard Features */}
@@ -325,11 +314,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                       : [...(prev.features || []), f]
                                   }));
                                 }}
-                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${
-                                  newRoom.features?.includes(f)
+                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${newRoom.features?.includes(f)
                                     ? 'uni-button-primary border-brand-blue-600 text-white '
-                                    : 'bg-white border-slate-200 text-slate-500 hover:border-brand-blue-200'
-                                }`}
+                                    : 'bg-white border-slate-200 text-slate-500 hover:border-brand-blue-200'}`}
                                 title={f}
                               >
                                 {f}
@@ -343,11 +330,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                                 key={`inv-${item.id}`}
                                 type="button"
                                 onClick={() => toggleInventory(item.id)}
-                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${
-                                  newRoom.inventoryIds?.includes(item.id)
+                                className={`uni-control px-3 py-2.5 rounded-xl border text-[9px]   tracking-tight  text-left truncate flex items-center justify-between group ${newRoom.inventoryIds?.includes(item.id)
                                     ? 'bg-brand-blue-500 border-brand-blue-500 text-white '
-                                    : 'bg-white border-slate-100 text-slate-400 hover:border-brand-blue-200'
-                                }`}
+                                    : 'bg-white border-slate-100 text-slate-400 hover:border-brand-blue-200'}`}
                                 title={item.name}
                               >
                                 {item.name}
@@ -358,11 +343,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         </div>
 
                         <div className="space-y-2">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ODA AÇIKLAMASI</label>
+                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("ODA AÇIKLAMASI")}</label>
                           <textarea
                             value={newRoom.description}
                             onChange={e => setNewRoom(prev => ({ ...prev, description: e.target.value }))}
-                            placeholder="Oda hakkında kısa bilgi, manzara durumu vb..."
+                            placeholder={_uiText("Oda hakkında kısa bilgi, manzara durumu vb...")}
                             className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-bold outline-none focus:border-neutral-400 transition-all min-h-[80px] resize-none"
                           />
                         </div>
@@ -377,11 +362,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           setEditingRoomId(null);
                         }}
                         className="uni-control px-6 py-3 text-slate-400 font-bold  text-[10px]"
-                      >
-                        İPTAL
-                      </button>
+                      >{_uiText("İPTAL")} </button>
                       <button type="submit" className="uni-control px-10 py-3 uni-button-primary text-white rounded-2xl   text-[10px] ">
-                        {editingRoomId ? 'GÜNCELLE' : 'ODA EKLE'}
+                        {editingRoomId ? _uiText("GÜNCELLE") : _uiText("ODA EKLE")}
                       </button>
                     </div>
                   </form>
@@ -411,7 +394,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         )}
                       </div>
                       <div>
-                        <h4 className="text-sm font-black uppercase">ODA {room.number}</h4>
+                        <h4 className="text-sm font-black uppercase">{_uiText("ODA")} {room.number}</h4>
                         <span className="text-[10px] font-bold text-slate-400 uppercase">{room.type}</span>
                       </div>
                     </div>
@@ -419,7 +402,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       <button
                         onClick={() => handleStartEdit(room)}
                         className="uni-control p-2 text-slate-300 hover:text-brand-blue-600   "
-                        title="Düzenle"
+                        title={_uiText("Düzenle")}
                       >
                         <Edit className="w-4 h-4" />
                       </button>
@@ -428,7 +411,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           setRoomToDelete(room);
                         }}
                         className="uni-control p-2 text-red-100 hover:text-red-500   "
-                        title="Sil"
+                        title={_uiText("Sil")}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -438,7 +421,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
                        <Box className="w-3 h-3 text-brand-blue-600" />
-                       <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Odaya Ait Demirbaşlar</span>
+                       <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{_uiText("Odaya Ait Demirbaşlar")}</span>
                     </div>
                     {room.description && (
                       <p className="text-[10px] text-slate-400 font-medium leading-relaxed italic line-clamp-2">
@@ -448,10 +431,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                     <div className="flex flex-wrap gap-1.5">
                       {room.inventoryIds && room.inventoryIds.length > 0 ? room.inventoryIds.map(invId => (
                         <span key={invId} className="px-2 py-1 bg-slate-50 text-slate-600 rounded-lg text-[9px] font-bold border border-slate-100">
-                          {inventory.find(i => i.id === invId)?.name || 'Tanımsız'}
+                          {inventory.find(i => i.id === invId)?.name || _uiText("Tanımsız")}
                         </span>
                       )) : (
-                        <span className="text-[9px] text-slate-300 italic font-medium">Demirbaş atanmamış</span>
+                        <span className="text-[9px] text-slate-300 italic font-medium">{_uiText("Demirbaş atanmamış")}</span>
                       )}
                     </div>
                   </div>
@@ -462,21 +445,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         ) : activeTab === 'inventory' ? (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Demirbaş Tanımları</h2>
-              <p className="text-sm text-slate-400 font-medium italic mt-1">Otelinizdeki standart demirbaş tiplerini belirleyin.</p>
+              <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">{_uiText("Demirbaş Tanımları")}</h2>
+              <p className="text-sm text-slate-400 font-medium italic mt-1">{_uiText("Otelinizdeki standart demirbaş tiplerini belirleyin.")}</p>
             </div>
 
             <div className="uni-card bg-white border border-slate-200 rounded-[32px] p-8 shadow-sm">
               <form onSubmit={handleAddInventory} className="flex gap-4 mb-8">
                 <div className="flex-1">
                   <input
-                    placeholder="Yeni demirbaş adı... (Örn: Klima)"
+                    placeholder={_uiText("Yeni demirbaş adı... (Örn: Klima)")}
                     value={newItemName}
                     onChange={e => setNewItemName(e.target.value)}
                     className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-800 outline-none focus:border-neutral-400 transition-all"
                   />
                 </div>
-                <button type="submit" className="uni-control px-8 py-4 uni-button-primary text-white rounded-2xl   text-[10px]  shadow-brand-blue-100">EKLE</button>
+                <button type="submit" className="uni-control px-8 py-4 uni-button-primary text-white rounded-2xl   text-[10px]  shadow-brand-blue-100">{_uiText("EKLE")}</button>
               </form>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -500,10 +483,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-brand-blue-600 rounded-2xl flex items-center justify-center text-white shrink-0"><ListRestart className="w-5 h-5" /></div>
                   <div>
-                    <h4 className="text-xs font-black text-brand-blue-700 uppercase tracking-widest mb-1">NASIL ÇALIŞIR?</h4>
-                    <p className="text-[11px] text-brand-blue-600/80 font-medium leading-relaxed italic">
-                      Burada tanımladığınız demirbaşlar, oda eklerken veya düzenlerken seçim listesinde otomatik olarak görünecektir. Bu sayede her oda için tekrar tekrar isim yazmanıza gerek kalmaz.
-                    </p>
+                    <h4 className="text-xs font-black text-brand-blue-700 uppercase tracking-widest mb-1">{_uiText("NASIL ÇALIŞIR?")}</h4>
+                    <p className="text-[11px] text-brand-blue-600/80 font-medium leading-relaxed italic">{_uiText("Burada tanımladığınız demirbaşlar, oda eklerken veya düzenlerken seçim listesinde otomatik olarak görünecektir. Bu sayede her oda için tekrar tekrar isim yazmanıza gerek kalmaz.")} </p>
                   </div>
                </div>
             </div>
@@ -516,8 +497,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           isOpen={!!roomToDelete}
           onClose={() => setRoomToDelete(null)}
           onConfirm={() => onDeleteRoom(roomToDelete.id)}
-          title="Odayı Sil"
-          message={`${roomToDelete.number} nolu odayı ve odaya ait olan tüm kayıtları sistemden silmek istediğinize emin misiniz?`}
+          title={_uiText("Odayı Sil")}
+          message={_uiText("{value1} nolu odayı ve odaya ait olan tüm kayıtları sistemden silmek istediğinize emin misiniz?", {value1: String(roomToDelete.number)})}
           confirmText="Sil"
           cancelText="Vazgeç"
           type="danger"

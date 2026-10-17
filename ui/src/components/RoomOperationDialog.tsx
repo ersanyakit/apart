@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { X, type LucideIcon } from 'lucide-react';
@@ -8,6 +9,8 @@ import styles from './RoomOperationDialog.module.css';
 export function RoomOperationDialog({title, subtitle, icon: Icon, busy = false, onClose, children}: {
   title: string; subtitle?: string; icon: LucideIcon; busy?: boolean; onClose: () => void; children: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const dialog = useRef<HTMLDialogElement>(null), id = useId();
   useEffect(() => {
     const el=dialog.current!, previous=document.activeElement as HTMLElement | null;
@@ -21,8 +24,8 @@ export function RoomOperationDialog({title, subtitle, icon: Icon, busy = false, 
   }}>
     <header className={menu.header}>
       <span className={menu.roomIcon}><Icon size={24} strokeWidth={1.8} aria-hidden="true"/></span>
-      <div className={menu.heading}><p>Oda ve konaklama işlemleri</p><h2 id={id}>{title}</h2>{subtitle&&<span>{subtitle}</span>}</div>
-      <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${menu.close}`} aria-label="Pencereyi kapat" onClick={onClose}><X size={20}/></button>
+      <div className={menu.heading}><p>{_uiText("Oda ve konaklama işlemleri")}</p><h2 id={id}>{title}</h2>{subtitle&&<span>{subtitle}</span>}</div>
+      <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${menu.close}`} aria-label={_uiText("Pencereyi kapat")} onClick={onClose}><X size={20}/></button>
     </header>
     <div className={`${menu.content} ${styles.content}`}>{children}</div>
   </dialog>,document.body);

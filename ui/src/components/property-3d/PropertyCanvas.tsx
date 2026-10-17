@@ -1,4 +1,6 @@
 'use client';
+import { useI18n } from "../I18n";
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Move, ArrowLeft, ArrowRight, ArrowUp, ArrowDown, PanelRightClose, PanelRightOpen, RotateCcw, RotateCw, ZoomIn, ZoomOut, Scan, ArrowDownToLine, PanelTop } from 'lucide-react';
 import { useTheme, THEME_OPTIONS } from '../Theme';
@@ -19,6 +21,8 @@ export function PropertyCanvas({ floors, exploded, walls, selectedId, onSelect, 
   focusRequest?: { id: string; version: number };
   details: React.ReactNode; floorControls?: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { theme } = useTheme();
   const accent = THEME_OPTIONS.find(option => option.id === theme)?.color || THEME_OPTIONS[0].color;
   const host = useRef<HTMLDivElement>(null), engine = useRef<Engine | null>(null);
@@ -54,18 +58,18 @@ export function PropertyCanvas({ floors, exploded, walls, selectedId, onSelect, 
   function action(value: CameraAction) { if (status === 'ready') engine.current?.action(value); }
   const PanelIcon = panelOpen ? PanelRightClose : PanelRightOpen;
   return <div className={`${styles.stage} property-stage`}>
-    <div ref={host} className={styles.canvas} role="img" aria-label="Tesisin etkileşimli 3 boyutlu kat planı. Birimleri oda seçimi alanından da seçebilirsiniz." />
-    {status === 'loading' && <div className={styles.overlay} role="status">3 boyutlu görünüm hazırlanıyor…</div>}
-    {status === 'error' && <div className={styles.overlay} role="alert"><strong>3 boyutlu görünüm açılamadı.</strong><p>Tarayıcınızın WebGL desteğini kontrol edin. Oda ve yatak bilgilerine aşağıdaki seçim alanından ulaşabilirsiniz.</p><button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => setAttempt(v => v + 1)}>Yeniden dene</button></div>}
-    <div className={styles.stageTools} role="group" aria-label="Görünüm araçları">
-      <button type="button" className="nav-icon-button" aria-expanded={panelOpen} aria-label={panelOpen ? 'Bilgi panelini gizle' : 'Bilgi panelini göster'} title={panelOpen ? 'Bilgi panelini gizle' : 'Bilgi panelini göster'} onClick={onTogglePanel}><PanelIcon size={19} aria-hidden="true" /></button>
+    <div ref={host} className={styles.canvas} role="img" aria-label={_uiText("Tesisin etkileşimli 3 boyutlu kat planı. Birimleri oda seçimi alanından da seçebilirsiniz.")} />
+    {status === 'loading' && <div className={styles.overlay} role="status">{_uiText("3 boyutlu görünüm hazırlanıyor…")}</div>}
+    {status === 'error' && <div className={styles.overlay} role="alert"><strong>{_uiText("3 boyutlu görünüm açılamadı.")}</strong><p>{_uiText("Tarayıcınızın WebGL desteğini kontrol edin. Oda ve yatak bilgilerine aşağıdaki seçim alanından ulaşabilirsiniz.")}</p><button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => setAttempt(v => v + 1)}>{_uiText("Yeniden dene")}</button></div>}
+    <div className={styles.stageTools} role="group" aria-label={_uiText("Görünüm araçları")}>
+      <button type="button" className="nav-icon-button" aria-expanded={panelOpen} aria-label={panelOpen ? _uiText("Bilgi panelini gizle") : _uiText("Bilgi panelini göster")} title={panelOpen ? _uiText("Bilgi panelini gizle") : _uiText("Bilgi panelini göster")} onClick={onTogglePanel}><PanelIcon size={19} aria-hidden="true" /></button>
     </div>
     {floorControls}
     {details}
-    <div className={styles.cameraControls} role="group" aria-label="3 boyutlu kamera kontrolleri">
-      <button type="button" className="nav-icon-button" disabled={status !== 'ready'} aria-pressed={panMode} aria-label="Sürükleyerek kaydır" title="Sürükleyerek kaydır" onClick={() => setPanMode(value => !value)}><Move size={19} aria-hidden="true" /></button>
+    <div className={styles.cameraControls} role="group" aria-label={_uiText("3 boyutlu kamera kontrolleri")}>
+      <button type="button" className="nav-icon-button" disabled={status !== 'ready'} aria-pressed={panMode} aria-label={_uiText("Sürükleyerek kaydır")} title={_uiText("Sürükleyerek kaydır")} onClick={() => setPanMode(value => !value)}><Move size={19} aria-hidden="true" /></button>
       {ACTIONS.map(([value, label, Icon]) => <button key={value} type="button" className="nav-icon-button" disabled={status !== 'ready'} title={label} aria-label={label} onClick={() => action(value)}><Icon size={19} aria-hidden="true" /></button>)}
     </div>
-    <p className={styles.gestureHint}>{panMode ? 'Sürükle: kaydır' : 'Sürükle: döndür'} · Sağ tuş / Shift + sürükle: kaydır · İki parmak: kaydır / yakınlaştır</p>
+    <p className={styles.gestureHint}>{panMode ? _uiText("Sürükle: kaydır") : _uiText("Sürükle: döndür")} {_uiText("· Sağ tuş / Shift + sürükle: kaydır · İki parmak: kaydır / yakınlaştır")}</p>
   </div>;
 }

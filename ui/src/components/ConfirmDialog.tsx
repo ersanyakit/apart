@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AlertTriangle, X } from "lucide-react";
@@ -14,6 +16,8 @@ export function confirmDialog(message: string): Promise<boolean> {
   });
 }
 export function ConfirmDialogHost() {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [request, setRequest] = useState<Request | null>(null);
   const panel = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -82,7 +86,7 @@ export function ConfirmDialogHost() {
             <AlertTriangle size={24} />
           </span>
           <button
-            aria-label="Kapat"
+            aria-label={_uiText("Kapat")}
             onClick={() => finish(false)}
             className="uni-control p-2 rounded-full hover:bg-slate-100 text-slate-400"
           >
@@ -92,9 +96,7 @@ export function ConfirmDialogHost() {
         <h2
           id="confirm-title"
           className="text-lg font-black text-slate-800 mt-5"
-        >
-          İşlemi onaylayın
-        </h2>
+        >{_uiText("İşlemi onaylayın")} </h2>
         <p
           id="confirm-description"
           className="mt-3 text-sm leading-6 text-slate-500 whitespace-pre-wrap"
@@ -106,15 +108,11 @@ export function ConfirmDialogHost() {
             data-cancel
             onClick={() => finish(false)}
             className="uni-control px-5 py-3 rounded-xl bg-slate-100 text-slate-600 text-sm font-bold hover:bg-slate-200"
-          >
-            Vazgeç
-          </button>
+          >{_uiText("Vazgeç")} </button>
           <button
             onClick={() => finish(true)}
             className="uni-control px-5 py-3 rounded-xl uni-button-primary text-white text-sm font-bold "
-          >
-            Onayla
-          </button>
+          >{_uiText("Onayla")} </button>
         </div>
       </div>
     </div>,

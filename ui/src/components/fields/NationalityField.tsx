@@ -20,6 +20,8 @@ export function CountryRow({
   selected: boolean;
   onPick: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <button
       type="button"
@@ -28,11 +30,9 @@ export function CountryRow({
       // Fareyle seçimde input blur'ü seçimi yutmaması için.
       onMouseDown={(e) => e.preventDefault()}
       onClick={onPick}
-      className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-start outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-        selected
+      className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-start outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${selected
           ? "bg-brand-blue-50/70 text-brand-blue-700"
-          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-      }`}
+          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
     >
       <span aria-hidden="true" className="text-xl leading-none">
         {countryFlag(country.code)}
@@ -70,6 +70,8 @@ export function NationalityField({
   tone?: "surface" | "white";
   placeholder?: string;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { locale, direction, t } = useI18n();
   const selected = countryByCode(value, locale);
   const [text, setText] = useState(selected?.name ?? "");

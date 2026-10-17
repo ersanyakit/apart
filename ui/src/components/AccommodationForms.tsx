@@ -59,6 +59,8 @@ export function UnitForm({
   room?: APIRoom;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const [draft, setDraft] = useState<APIRoom>(
     room
@@ -102,7 +104,7 @@ export function UnitForm({
       <ErrorMessage message={error} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <TextField
-          label="Birim kodu"
+          label={_uiText("Birim kodu")}
           required
           autoComplete="off"
           uppercase
@@ -110,7 +112,7 @@ export function UnitForm({
           onChange={(v) => patch({ code: v })}
         />
         <InlineSelectField
-          label="Birim türü"
+          label={_uiText("Birim türü")}
           value={draft.kind}
           disabled={draft.kind === "bed"}
           onChange={(v) =>
@@ -126,7 +128,7 @@ export function UnitForm({
             .map(([value, label]) => ({ value, label }))}
         />
         <InlineSelectField
-          label="Kat"
+          label={_uiText("Kat")}
           value={draft.floor_id || ""}
           disabled={draft.kind === "bed"}
           onChange={(v) => patch({ floor_id: v || null })}
@@ -139,22 +141,22 @@ export function UnitForm({
           ]}
         />
         <TextField
-          label="Oda tipi"
-          placeholder="Standart, aile, süit…"
+          label={_uiText("Oda tipi")}
+          placeholder={_uiText("Standart, aile, süit…")}
           value={draft.type}
           onChange={(v) => patch({ type: v })}
         />
         {draft.kind === "bed" && (
           <>
             <TextField
-              label="Ranza grubu (isteğe bağlı)"
+              label={_uiText("Ranza grubu (isteğe bağlı)")}
               disabled
-              placeholder="RANZA-01"
+              placeholder={_uiText("RANZA-01")}
               value={draft.bed_group}
               onChange={(v) => patch({ bed_group: v })}
             />
             <TextField
-              label="Yatak seviyesi"
+              label={_uiText("Yatak seviyesi")}
               type="number"
               disabled
               value={String(draft.bed_level)}
@@ -165,10 +167,10 @@ export function UnitForm({
       </div>
       <UnitSleepingFields kind={draft.kind} rentable={draft.rentable} onRentableChange={rentable=>patch({rentable})}
         mode={rentalMode} onModeChange={setRentalMode} beds={bedChoices} onBedsChange={setBedChoices} roomId={room?.room_id} branchId={snapshot.branch_id} disabled={busy}/>
-      <SettingsSection title="Yerleşim ve gelişmiş ayarlar" description="Üst birim ve kat planındaki konum.">
+      <SettingsSection title={_uiText("Yerleşim ve gelişmiş ayarlar")} description={_uiText("Üst birim ve kat planındaki konum.")}>
         <div className="grid gap-4">
         <InlineSelectField
-          label="Üst birim"
+          label={_uiText("Üst birim")}
           value={draft.parent_id || ""}
           disabled={draft.kind === "bed"}
           onChange={(v) => patch({ parent_id: v || null })}
@@ -186,7 +188,7 @@ export function UnitForm({
         {(["x", "y", "width", "height"] as const).map((key, i) => (
           <TextField
             key={key}
-            label={["Plan X", "Plan Y", "Genişlik", "Yükseklik"][i]}
+            label={[_uiText("Plan X"), _uiText("Plan Y"), _uiText("Genişlik"), _uiText("Yükseklik")][i]}
             type="number"
             value={String(draft.position[key])}
             onChange={(v) =>
@@ -202,16 +204,16 @@ export function UnitForm({
       </div>
         </div>
       </SettingsSection>
-      <SettingsSection title="Açıklamalar" description="İsteğe bağlı, farklı dillerde oda açıklaması.">
+      <SettingsSection title={_uiText("Açıklamalar")} description={_uiText("İsteğe bağlı, farklı dillerde oda açıklaması.")}>
       <LocalizedTextFields
-        label="Açıklama"
-        hint="Her dil için ayrı açıklama ekleyin."
+        label={_uiText("Açıklama")}
+        hint={_uiText("Her dil için ayrı açıklama ekleyin.")}
         values={draft.description || {}}
         onChange={(description) => patch({ description })}
         multiline
       />
       </SettingsSection>
-      <SettingsSection title="Oda olanakları" description="Odada bulunan olanakları ve envanteri seçin.">
+      <SettingsSection title={_uiText("Oda olanakları")} description={_uiText("Odada bulunan olanakları ve envanteri seçin.")}>
       <FeatureFields
         definitions={snapshot.feature_registry.definitions || []}
         scope="room"
@@ -219,7 +221,7 @@ export function UnitForm({
         onChange={(feature_assignments) => patch({ feature_assignments })}
       />
       </SettingsSection>
-      <SettingsSection title="Görseller ve videolar" description={`${draft.assets.length} medya dosyası`}>
+      <SettingsSection title={_uiText("Görseller ve videolar")} description={_uiText("{value1} medya dosyası", {value1: String(draft.assets.length)})}>
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => patch({ assets })}
@@ -228,7 +230,7 @@ export function UnitForm({
       />
       </SettingsSection>
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
-        {busy ? "Kaydediliyor…" : "Birimi Kaydet"}
+        {busy ? _uiText("Kaydediliyor…") : _uiText("Birimi Kaydet")}
       </button>
     </form>
   );
@@ -244,6 +246,8 @@ export function FloorForm({
   floors?: Floor[];
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const [draft, setDraft] = useState<Floor>(
     floor || {
@@ -283,9 +287,7 @@ export function FloorForm({
     >
       <ErrorMessage message={error} />
       <FloorDefinitionFields draft={draft} setDraft={setDraft} preset={preset} setPreset={setPreset} floors={floors} busy={busy}/>
-      <button disabled={busy} className={`uni-control ${buttonStyle}`}>
-        Katı Kaydet
-      </button>
+      <button disabled={busy} className={`uni-control ${buttonStyle}`}>{_uiText("Katı Kaydet")} </button>
     </form>
   );
 }
@@ -300,6 +302,8 @@ export function FacilityForm({
   create?: boolean;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { defaultCountry } = useCurrency();
   const current =
     kind === "hotel"
@@ -356,21 +360,21 @@ export function FacilityForm({
     >
       <ErrorMessage message={error} />
       <div className="rounded-2xl bg-uni-surface px-4 py-3 text-sm">
-        <p className="font-medium">{kind === "hotel" ? "Şirketin ticari bilgileri" : snapshot.hotels.find(h=>h.hotel_id===snapshot.hotel_id)?.name}</p>
-        <p className="mt-1 text-xs text-uni-muted">{kind === "hotel" ? "Örn. Meyman Turizm A.Ş. Otellerinizi bu şirketin altında oluşturabilirsiniz." : "Bu otele ait iletişim, adres ve tanıtım bilgilerini düzenleyin."}</p>
+        <p className="font-medium">{kind === "hotel" ? _uiText("Şirketin ticari bilgileri") : snapshot.hotels.find(h=>h.hotel_id===snapshot.hotel_id)?.name}</p>
+        <p className="mt-1 text-xs text-uni-muted">{kind === "hotel" ? _uiText("Örn. Meyman Turizm A.Ş. Otellerinizi bu şirketin altında oluşturabilirsiniz.") : _uiText("Bu otele ait iletişim, adres ve tanıtım bilgilerini düzenleyin.")}</p>
       </div>
       <FacilityDetailsFields kind={kind} value={draft} onChange={setDraft} busy={busy}/>
-      <SettingsSection title="Tanıtım ve açıklamalar" description="Farklı dillerde açıklama ekleyin.">
+      <SettingsSection title={_uiText("Tanıtım ve açıklamalar")} description={_uiText("Farklı dillerde açıklama ekleyin.")}>
       <LocalizedTextFields
-        label="Açıklama"
-        hint="Her dil için ayrı açıklama ekleyin."
+        label={_uiText("Açıklama")}
+        hint={_uiText("Her dil için ayrı açıklama ekleyin.")}
         values={draft.description || {}}
         onChange={(description) => setDraft({ ...draft, description })}
         multiline
       />
       </SettingsSection>
       {kind === "branch" && (
-        <SettingsSection title="Otel olanakları" description="Havuz, otopark, kahvaltı ve diğer olanaklar.">
+        <SettingsSection title={_uiText("Otel olanakları")} description={_uiText("Havuz, otopark, kahvaltı ve diğer olanaklar.")}>
         <FeatureFields
           definitions={snapshot.feature_registry.definitions || []}
           scope="property"
@@ -381,7 +385,7 @@ export function FacilityForm({
         />
       </SettingsSection>
       )}
-      <SettingsSection title="Görseller ve videolar" description={`${draft.assets.length} medya dosyası`}>
+      <SettingsSection title={_uiText("Görseller ve videolar")} description={_uiText("{value1} medya dosyası", {value1: String(draft.assets.length)})}>
       <MediaEditor
         value={draft.assets}
         onChange={(assets) => setDraft({ ...draft, assets })}
@@ -390,7 +394,7 @@ export function FacilityForm({
       />
       </SettingsSection>
       <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
-        {busy ? "Kaydediliyor…" : kind === "hotel" ? "Şirketi kaydet" : "Oteli kaydet"}
+        {busy ? _uiText("Kaydediliyor…") : kind === "hotel" ? _uiText("Şirketi kaydet") : _uiText("Oteli kaydet")}
       </button>
     </form>
   );
@@ -402,6 +406,8 @@ export function BulkUnitForm({
   snapshot: Snapshot;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const [floor, setFloor] = useState(snapshot.floors[0]?.floor_id || "");
   const [parent, setParent] = useState("");
@@ -440,13 +446,10 @@ export function BulkUnitForm({
       }}
     >
       <ErrorMessage message={error} />
-      <p className="text-sm text-slate-500">
-        100 yatak ve 2 ranza seviyesi seçildiğinde 50 ranza grubunda 100 ayrı
-        yatak oluşturulur. Kayıtların tamamı birlikte kaydedilir.
-      </p>
+      <p className="text-sm text-slate-500">{_uiText("100 yatak ve 2 ranza seviyesi seçildiğinde 50 ranza grubunda 100 ayrı yatak oluşturulur. Kayıtların tamamı birlikte kaydedilir.")} </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InlineSelectField
-          label="Kat"
+          label={_uiText("Kat")}
           value={floor}
           onChange={setFloor}
           options={[
@@ -458,7 +461,7 @@ export function BulkUnitForm({
           ]}
         />
         <InlineSelectField
-          label="Üst birim"
+          label={_uiText("Üst birim")}
           value={parent}
           onChange={setParent}
           options={[
@@ -469,7 +472,7 @@ export function BulkUnitForm({
           ]}
         />
         <InlineSelectField
-          label="Tür"
+          label={_uiText("Tür")}
           value={kind}
           onChange={setKind}
           options={Object.entries(unitKinds).map(([value, label]) => ({
@@ -478,7 +481,7 @@ export function BulkUnitForm({
           }))}
         />
         <TextField
-          label="Kod ön eki"
+          label={_uiText("Kod ön eki")}
           required
           autoComplete="off"
           uppercase
@@ -486,7 +489,7 @@ export function BulkUnitForm({
           onChange={setPrefix}
         />
         <TextField
-          label="Birim sayısı"
+          label={_uiText("Birim sayısı")}
           type="number"
           required
           value={String(count)}
@@ -494,7 +497,7 @@ export function BulkUnitForm({
         />
         {kind === "bed" && (
           <TextField
-            label="Yatak kişi kapasitesi"
+            label={_uiText("Yatak kişi kapasitesi")}
             type="number"
             required
             value={String(capacity)}
@@ -503,7 +506,7 @@ export function BulkUnitForm({
         )}
         {kind === "bed" && (
           <TextField
-            label="Ranza seviye sayısı"
+            label={_uiText("Ranza seviye sayısı")}
             type="number"
             required
             value={String(levels)}
@@ -512,7 +515,7 @@ export function BulkUnitForm({
         )}
       </div>
       <button className={`uni-control ${buttonStyle}`} disabled={busy}>
-        {busy ? "Oluşturuluyor…" : `${count} Birimi Oluştur`}
+        {busy ? _uiText("Oluşturuluyor…") : _uiText("{value1} Birimi Oluştur", {value1: String(count)})}
       </button>
     </form>
   );

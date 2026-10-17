@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React from "react";
 import { Minus, Plus } from "lucide-react";
 import { FieldCard, FieldCaption } from "./FieldCard";
@@ -66,6 +67,8 @@ export function StepperField({
   sub?: string;
   disabled?: boolean;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const clamp = (v: number) => Math.min(max, Math.max(min, (stepSize === 1 ? Math.floor(v) : Number(v.toFixed(6)))));
   // Basılı-tut tekrarı bayat değerle çalışmasın diye güncel değer ref'te tutulur.
   const valueRef = React.useRef(value);
@@ -110,7 +113,7 @@ export function StepperField({
     <FieldCard>
       <div
         role="group"
-        aria-label={`${label} seçimi`}
+        aria-label={_uiText("{value1} seçimi", {value1: String(label)})}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest("button,input")) return;
           inputRef.current?.focus();
@@ -157,7 +160,7 @@ export function StepperField({
         <div className="flex shrink-0 flex-col gap-[10px]">
           <button
             type="button"
-            aria-label={`${label} artır`}
+            aria-label={_uiText("{value1} artır", {value1: String(label)})}
             disabled={disabled || value >= max}
             {...holdUp}
             className={stepperButtonClass}
@@ -166,7 +169,7 @@ export function StepperField({
           </button>
           <button
             type="button"
-            aria-label={`${label} azalt`}
+            aria-label={_uiText("{value1} azalt", {value1: String(label)})}
             disabled={disabled || value <= min}
             {...holdDown}
             className={stepperButtonClass}

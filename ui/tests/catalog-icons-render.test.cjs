@@ -16,7 +16,7 @@ const loaded = { exports: {} };
 vm.runInNewContext(compiled, {
   module: loaded, exports: loaded.exports,
   require(name) {
-    if (name === './I18n') return { useI18n: () => ({ locale: 'tr' }) };
+    if (name === './I18n') return { useI18n: () => ({ locale: 'tr', m: value=>value }) };
     if (name === './fields') return { TextField: () => null, StepperField: () => null, Switch: () => null };
     if (name === '../lib/facility-icon-map.json') return require('../src/lib/facility-icon-map.json');
     if (name === '../lib/catalog-icon-map.json') return images;

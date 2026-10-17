@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 
 import React, { useId, useLayoutEffect, useRef } from "react";
 import { ArrowLeft } from "lucide-react";
@@ -13,6 +15,8 @@ export function SettingsEditor({ title, description = "Bilgileri düzenleyip kay
   onClose: () => void;
   children: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const id = useId();
   const heading = useRef<HTMLHeadingElement>(null);
   useLayoutEffect(() => {

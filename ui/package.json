@@ -10,7 +10,7 @@
     "start": "next start --hostname 127.0.0.1 --port 3001",
     "lint": "tsc --noEmit",
     "test:e2e": "playwright test",
-    "test:i18n": "node --test tests/i18n.test.cjs tests/marketing-i18n.test.cjs",
+    "test:i18n": "node --test tests/i18n.test.cjs tests/marketing-i18n.test.cjs tests/application-i18n.test.cjs",
     "test:navigation": "node --test tests/navigation.test.cjs",
     "test:facility-icons": "node --test tests/facility-icons.test.cjs",
     "test:catalog-icons": "node --test tests/catalog-icons.test.cjs tests/catalog-icons-render.test.cjs",
@@ -27,7 +27,8 @@
     "test:money": "node --test tests/money.test.cjs",
     "test:property-3d": "node --test tests/property-3d.test.cjs",
     "test:bed-presets": "node --test tests/bed-presets.test.cjs",
-    "test:status": "node --test tests/status-palette.test.cjs"
+    "test:status": "node --test tests/status-palette.test.cjs",
+    "audit:i18n": "node scripts/i18n-audit.mjs --strict"
   },
   "dependencies": {
     "@lexical/history": "^0.39.0",

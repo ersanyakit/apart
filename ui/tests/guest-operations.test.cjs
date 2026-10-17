@@ -13,7 +13,7 @@ test('folio defaults to a compact summary, keeps important balances visible and 
  const markup=render(React.createElement(FolioDetails,{folio:{booking:{guest_name:'Ayşe',check_in:'2026-10-14T12:00:00Z',check_out:'2026-10-15T12:00:00Z'},room:'101',lines:[{id:'line',label:'Kahvaltı',kind:'income',currency:'TRY',amount_minor:5000,at:'2026-10-14T12:00:00Z',notes:'İki kişi'}],notes:['Bilgi'],totals:[{currency:'TRY',charges:15000,paid:10000,refunds:1000,balance:6000,security_deposit:2000,pending_refunds:1000}]}}));
  const hidden=markup.indexOf('hidden=""');assert.ok(hidden>0);const summary=markup.slice(0,hidden),details=markup.slice(hidden);
  for(const label of ['Toplam ücret','Alınan ödeme / kapora','Misafirin kalan borcu','Bekleyen iade','Eldeki güvence depozitosu','Detayları göster'])assert.ok(summary.includes(label),label);
- assert.ok(summary.includes('aria-expanded="false"'));assert.ok(summary.includes('lucide-receipt-text'));assert.ok(!summary.includes('Kahvaltı'));assert.ok(details.includes('Kahvaltı'));assert.ok(details.includes('İki kişi'));
+ assert.ok(summary.includes('aria-expanded="false"'));assert.ok(summary.includes('/images/navigation-dott-simple/folio.avif'));assert.ok(!summary.includes('Kahvaltı'));assert.ok(details.includes('Kahvaltı'));assert.ok(details.includes('İki kişi'));
 });
 
 test('shared guest comments show score, author, hotel, note and dates',()=>{

@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React from "react";
 
 /**
@@ -11,6 +12,8 @@ export function FieldCard({
   children: React.ReactNode;
   className?: string;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <div
       className={`field-card rounded-[20px] bg-[#f9f9f9] p-4 outline-none transition-all duration-150 ease-out hover:bg-[#efefef] focus-within:bg-[#efefef] focus-within:ring-2 focus-within:ring-neutral-300 active:scale-[0.99] ${className}`}

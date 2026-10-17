@@ -1,43 +1,17 @@
+import { dateFieldLabels } from '../../lib/i18n/formatters';
+
+import { useI18n } from "../I18n";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Minus, Plus } from "lucide-react";
 import { FieldCaption } from "./FieldCard";
 import { useHoldStep } from "./StepperField";
 
-const displayFmt = new Intl.DateTimeFormat("tr-TR", {
-  day: "numeric",
-  month: "short",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-const subFmt = new Intl.DateTimeFormat("tr-TR", {
-  weekday: "long",
-  year: "numeric",
-});
-const monthFmt = new Intl.DateTimeFormat("tr-TR", {
-  month: "long",
-  year: "numeric",
-});
-const monthShortFmt = new Intl.DateTimeFormat("tr-TR", { month: "short" });
-const weekdayFmt = new Intl.DateTimeFormat("tr-TR", { weekday: "short" });
-// Bilinen bir Pazartesi'den 7 gün etiketi (Pzt … Paz).
-const WEEKDAYS = Array.from({ length: 7 }, (_, i) =>
-  weekdayFmt.format(new Date(2024, 0, 1 + i)),
-);
-const MONTHS_SHORT = Array.from({ length: 12 }, (_, m) =>
-  monthShortFmt.format(new Date(2024, m, 1)),
-);
-
 const pad = (n: number) => String(n).padStart(2, "0");
 const toLocalValue = (d: Date) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 const toDateOnlyValue = (d: Date) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-const displayDateFmt = new Intl.DateTimeFormat("tr-TR", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
 const startOfDay = (d: Date) => {
   const c = new Date(d);
   c.setHours(0, 0, 0, 0);
@@ -73,6 +47,8 @@ function TimeStepper({
   max: number;
   onChange: (v: number) => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const clamp = (v: number) => Math.min(max, Math.max(min, v));
   const holdDown = useHoldStep(() => onChange(clamp(value - 1)), value <= min);
   const holdUp = useHoldStep(() => onChange(clamp(value + 1)), value >= max);
@@ -82,13 +58,13 @@ function TimeStepper({
         {label}
       </p>
       <div className="mt-1.5 flex items-center justify-between gap-1.5">
-        <button type="button" aria-label={`${label} azalt`} disabled={value <= min} {...holdDown} className={circleMiniClass}>
+        <button type="button" aria-label={_uiText("{value1} azalt", {value1: String(label)})} disabled={value <= min} {...holdDown} className={circleMiniClass}>
           <Minus size={14} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <span aria-live="polite" className="font-uninav-book min-w-0 flex-1 text-center text-[1.125rem] leading-7 text-slate-900 tabular-nums">
           {pad(value)}
         </span>
-        <button type="button" aria-label={`${label} artır`} disabled={value >= max} {...holdUp} className={circleMiniClass}>
+        <button type="button" aria-label={_uiText("{value1} artır", {value1: String(label)})} disabled={value >= max} {...holdUp} className={circleMiniClass}>
           <Plus size={14} strokeWidth={2.5} aria-hidden="true" />
         </button>
       </div>
@@ -138,6 +114,9 @@ export function DateField({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
+  const {displayFmt,displayDateFmt,subFmt,monthFmt,WEEKDAYS,MONTHS_SHORT}=dateFieldLabels(_uiLocale);
   const [innerOpen, setInnerOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
   const open = isControlled ? controlledOpen : innerOpen;
@@ -271,7 +250,7 @@ export function DateField({
     <div ref={rootRef} className={`date-field rounded-[20px] bg-[#f9f9f9] p-4 transition-colors duration-150 ease-out ${open ? "" : "hover:bg-[#efefef]"}`}>
       <button
         type="button"
-        aria-label={`${label} seçin. Seçili: ${valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "yok"}`}
+        aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "yok")})}
         aria-expanded={open}
         disabled={disabled}
         onClick={() => setOpen((v) => !v)}
@@ -280,14 +259,12 @@ export function DateField({
         <span className="min-w-0 flex-1">
           <FieldCaption>{label}</FieldCaption>
             <span
-              className={`font-uninav-book mt-1 block truncate text-[1.5rem] leading-[1.75rem] ${
-                valid ? "text-slate-900" : "text-slate-400"
-              }`}
+              className={`font-uninav-book mt-1 block truncate text-[1.5rem] leading-[1.75rem] ${valid ? "text-slate-900" : "text-slate-400"}`}
             >
-            {valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : "Tarih seçin"}
+            {valid && parsed ? (withTime ? displayFmt.format(parsed) : displayDateFmt.format(parsed)) : _uiText("Tarih seçin")}
           </span>
           <span className="mt-1 block truncate text-[0.875rem] leading-5 text-slate-500">
-            {sub ?? (valid && parsed ? subFmt.format(parsed) : withTime ? "gün • saat" : "gün • ay • yıl")}
+            {sub ?? (valid && parsed ? subFmt.format(parsed) : withTime ? _uiText("gün • saat") : _uiText("gün • ay • yıl"))}
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-2">
@@ -317,7 +294,7 @@ export function DateField({
             <div className="flex items-center justify-between">
               <button
                 type="button"
-                aria-label={mode === "day" ? "Önceki ay" : "Önceki yıl"}
+                aria-label={mode === "day" ? _uiText("Önceki ay") : _uiText("Önceki yıl")}
                 onClick={() => (mode === "day" ? moveMonth(-1) : setViewY((y) => y - 1))}
                 className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-white hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               >
@@ -325,7 +302,7 @@ export function DateField({
               </button>
               <button
                 type="button"
-                aria-label={mode === "day" ? "Ay ve yıl seç" : "Gün görünümüne dön"}
+                aria-label={mode === "day" ? _uiText("Ay ve yıl seç") : _uiText("Gün görünümüne dön")}
                 aria-expanded={mode === "monthyear"}
                 onClick={() => setMode((m) => (m === "day" ? "monthyear" : "day"))}
                 className="flex cursor-pointer items-center gap-1 rounded-full px-3 py-1.5 outline-none transition-colors duration-150 ease-out hover:bg-slate-100 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400"
@@ -333,7 +310,7 @@ export function DateField({
                 <span aria-live="polite" className="font-uninav-book text-[0.9375rem] leading-5 text-slate-900 capitalize">
                   {mode === "day"
                     ? monthFmt.format(new Date(viewY, viewM, 1))
-                    : `${viewY}`}
+                    : _uiText("{value1}", {value1: String(viewY)})}
                 </span>
                 <ChevronDown
                   size={14}
@@ -344,7 +321,7 @@ export function DateField({
               </button>
               <button
                 type="button"
-                aria-label={mode === "day" ? "Sonraki ay" : "Sonraki yıl"}
+                aria-label={mode === "day" ? _uiText("Sonraki ay") : _uiText("Sonraki yıl")}
                 onClick={() => (mode === "day" ? moveMonth(1) : setViewY((y) => y + 1))}
                 className="flex h-8 w-8 items-center justify-center rounded-full text-slate-500 transition-all duration-150 ease-out hover:bg-white hover:text-slate-900 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               >
@@ -354,7 +331,7 @@ export function DateField({
 
             {mode === "day" ? (
               <>
-                <div aria-label="Hızlı tarihler" className="mt-3 flex gap-2">
+                <div aria-label={_uiText("Hızlı tarihler")} className="mt-3 flex gap-2">
                   {PRESETS.map((p) => {
                     const active = isPresetDay(p.offset);
                     return (
@@ -363,11 +340,9 @@ export function DateField({
                         type="button"
                         aria-pressed={active}
                         onClick={() => pickPreset(p.offset)}
-                      className={`flex-1 cursor-pointer rounded-full border px-2 py-1.5 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-                        active
+                      className={`flex-1 cursor-pointer rounded-full border px-2 py-1.5 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${active
                           ? "border-brand-blue-300 bg-brand-blue-50 text-brand-blue-700"
-                          : "border-slate-300/80 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                      }`}
+                          : "border-slate-300/80 text-slate-500 hover:bg-slate-50 hover:text-slate-900"}`}
                       >
                         {p.label}
                       </button>
@@ -402,16 +377,14 @@ export function DateField({
                         key={day}
                         type="button"
                         disabled={out || disabled}
-                        aria-label={`${day} ${monthFmt.format(new Date(viewY, viewM, 1))}`}
+                        aria-label={_uiText("{value1} {value2}", {value1: String(day), value2: String(monthFmt.format(new Date(viewY, viewM, 1)))})}
                         aria-pressed={isSel}
                         onClick={() => pickDay(day)}
-                        className={`flex aspect-square w-full items-center justify-center rounded-full text-[0.9375rem] tabular-nums outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-                          isSel
+                        className={`flex aspect-square w-full items-center justify-center rounded-full text-[0.9375rem] tabular-nums outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 ${isSel
                             ? "bg-brand-blue-600 font-bold text-white shadow-md active:scale-[0.98] cursor-pointer"
                             : out
                               ? "cursor-not-allowed text-slate-300"
-                              : "text-slate-700 hover:bg-slate-100 active:scale-[0.98] cursor-pointer"
-                        } ${!isSel && isToday ? "ring-1 ring-inset ring-slate-400" : ""}`}
+                              : "text-slate-700 hover:bg-slate-100 active:scale-[0.98] cursor-pointer"} ${!isSel && isToday ? "ring-1 ring-inset ring-slate-400" : ""}`}
                       >
                         {day}
                       </button>
@@ -422,10 +395,10 @@ export function DateField({
             {withTime && (
               <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-200/70 pt-3">
                 <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
-                  <TimeStepper label="Saat" value={curH} min={0} max={23} onChange={(h) => setTime(h, curMi)} />
+                  <TimeStepper label={_uiText("Saat")} value={curH} min={0} max={23} onChange={(h) => setTime(h, curMi)} />
                 </div>
                 <div className="rounded-2xl border border-slate-100 bg-slate-50/70 px-3 py-2.5">
-                  <TimeStepper label="Dakika" value={curMi} min={0} max={59} onChange={(mi) => setTime(curH, mi)} />
+                  <TimeStepper label={_uiText("Dakika")} value={curMi} min={0} max={59} onChange={(mi) => setTime(curH, mi)} />
                 </div>
               </div>
             )}
@@ -442,11 +415,9 @@ export function DateField({
                       type="button"
                       aria-pressed={isSel}
                       onClick={() => pickMonthYear(m, viewY)}
-                      className={`rounded-xl px-1 py-2.5 text-[13px] font-bold outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 active:scale-[0.98] cursor-pointer ${
-                        isSel
+                      className={`rounded-xl px-1 py-2.5 text-[13px] font-bold outline-none transition-all duration-150 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 active:scale-[0.98] cursor-pointer ${isSel
                           ? "bg-brand-blue-600 text-white shadow-md"
-                          : "text-slate-600 hover:bg-white hover:text-slate-900"
-                      } ${!isSel && isCur ? "ring-1 ring-inset ring-slate-300" : ""}`}
+                          : "text-slate-600 hover:bg-white hover:text-slate-900"} ${!isSel && isCur ? "ring-1 ring-inset ring-slate-300" : ""}`}
                     >
                       {name}
                     </button>
@@ -463,16 +434,12 @@ export function DateField({
                   setOpen(false);
                 }}
                 className="flex-1 rounded-xl px-3 py-2 text-[13px] font-bold text-slate-500 transition-all duration-150 ease-out hover:bg-slate-100 hover:text-slate-700 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
-              >
-                Temizle
-              </button>
+              >{_uiText("Temizle")} </button>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 className="flex-[2] rounded-xl bg-brand-blue-600 px-3 py-2 text-[13px] font-bold text-white transition-all duration-150 ease-out hover:bg-brand-blue-700 active:bg-brand-blue-700 active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-brand-blue-500/40"
-              >
-                Tamam
-              </button>
+              >{_uiText("Tamam")} </button>
             </div>
             </div>
           </motion.div>

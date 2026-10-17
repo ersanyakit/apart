@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { useState } from 'react';
 import { Plus, ChevronDown } from 'lucide-react';
 import { BedIllustration } from './BedIllustration';
@@ -9,13 +10,15 @@ const categories = { standard:'Standart yataklar', bunk:'Ranzalar', extra:'İlav
 export function BedPresetPicker({ onSelect, disabled, adding = false, compact = false }: {
   onSelect: (preset: BedPreset) => void; disabled?: boolean; adding?: boolean; compact?: boolean;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [query,setQuery]=useState('');
   const [categoryFilter,setCategoryFilter]=useState('standard');
-  const normalized=(value:string)=>value.toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('ı','i');
+  const normalized=(value:string)=>value.toLocaleLowerCase(_uiLocale).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replaceAll('ı','i');
   const presets=BED_PRESETS.filter(p=>(adding||p.physical_count===1)&&normalized(`${p.label} ${p.name_en}`).includes(normalized(query.trim())));
   return <div className="space-y-3">
-    <TextField label="Yatak türü ara" type="search" value={query} onChange={setQuery} placeholder="Queen, ranza, kanepe…"/>
-    {compact&&!query.trim()&&<InlineSelectField label="Yatak kategorisi" value={categoryFilter} onChange={setCategoryFilter} options={Object.entries(categories).map(([value,label])=>({value,label}))}/>}
+    <TextField label={_uiText("Yatak türü ara")} type="search" value={query} onChange={setQuery} placeholder={_uiText("Queen, ranza, kanepe…")}/>
+    {compact&&!query.trim()&&<InlineSelectField label={_uiText("Yatak kategorisi")} value={categoryFilter} onChange={setCategoryFilter} options={Object.entries(categories).map(([value,label])=>({value,label}))}/>}
     {Object.entries(categories).filter(([category])=>!compact||!!query.trim()||category===categoryFilter).map(([category,label])=>{
       const members=presets.filter(p=>p.category===category);
       if(!members.length)return null;
@@ -24,15 +27,15 @@ export function BedPresetPicker({ onSelect, disabled, adding = false, compact = 
         <div className={styles.presets}>
           {members.map(preset=>{
             return <button key={preset.key} type="button" disabled={disabled} className={`uni-control ${styles.preset}`}
-              aria-label={`${preset.label}${adding?' ekle':' seç'}`} onClick={()=>onSelect(preset)}>
-              <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1}/><span><strong>{preset.label}</strong><small>{preset.capacity} kişi · {preset.bed_places} yatak yeri{preset.physical_count>1?' · 2 ayrı yatak':''}</small></span>
+              aria-label={_uiText("{value1}{value2}", {value1: String(preset.label), value2: String(adding?' ekle':' seç')})} onClick={()=>onSelect(preset)}>
+              <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1}/><span><strong>{preset.label}</strong><small>{preset.capacity} {_uiText("kişi ·")} {preset.bed_places} {_uiText("yatak yeri")}{preset.physical_count>1?_uiText(" · 2 ayrı yatak"):''}</small></span>
               {adding&&<Plus size={16} aria-hidden="true"/>}
             </button>;
           })}
         </div>
       </details>;
     })}
-    {!presets.length&&<p className="text-sm text-uni-muted">Bu aramayla eşleşen yatak türü yok.</p>}
-    <p className="text-xs text-uni-muted">Ölçüler başlangıç değerleridir; fiziksel yatak ayrıntılarından değiştirilebilir.{!adding&&' Twin düzenini oda formundan iki ayrı yatak olarak ekleyin.'}</p>
+    {!presets.length&&<p className="text-sm text-uni-muted">{_uiText("Bu aramayla eşleşen yatak türü yok.")}</p>}
+    <p className="text-xs text-uni-muted">{_uiText("Ölçüler başlangıç değerleridir; fiziksel yatak ayrıntılarından değiştirilebilir.")}{!adding&&_uiText(" Twin düzenini oda formundan iki ayrı yatak olarak ekleyin.")}</p>
   </div>;
 }

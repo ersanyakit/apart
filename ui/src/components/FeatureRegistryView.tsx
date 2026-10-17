@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
 import { CatalogFields } from "./CatalogFields";
@@ -31,6 +32,8 @@ export function FeatureRegistryView({
   snapshot: Snapshot;
   onRefresh: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const notify = useNotifications();
   const [draft, setDraft] = useState<FeatureDefinition | null>(null),
     [category, setCategory] = useState(false),
@@ -44,7 +47,7 @@ export function FeatureRegistryView({
     if (busy) return;
     setBusy(true);
     try {
-      if (!(await confirmDialog(`${name} ${kind === "category" ? "kategorisi" : "olanağı"} silinsin mi?`))) return;
+      if (!(await confirmDialog(_uiText("{value1} {value2} silinsin mi?", {value1: String(name), value2: String(kind === "category" ? "kategorisi" : "olanağı")})))) return;
       await command(kind === "category" ? "feature.category.delete" : "feature.delete", { hotel_id: snapshot.hotel_id, id });
       if (kind === "feature") setDraft(null);
       setError("");
@@ -82,17 +85,13 @@ export function FeatureRegistryView({
             className={`uni-control ${buttonStyle}`}
             disabled={!snapshot.feature_registry.categories?.length}
             onClick={() => setDraft(empty())}
-          >
-            Özellik Ekle
-          </button>
-          <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>
-            Kategori Ekle
-          </button>
+          >{"Özellik Ekle"} </button>
+          <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>{"Kategori Ekle"} </button>
         </div>
         } />
         {customCategories.length > 0 && (
-          <section aria-label="Kendi kategorileriniz" className="space-y-3">
-            <h3 className="text-base font-medium text-slate-900">Kendi kategorileriniz</h3>
+          <section aria-label={_uiText("Kendi kategorileriniz")} className="space-y-3">
+            <h3 className="text-base font-medium text-slate-900">{_uiText("Kendi kategorileriniz")}</h3>
             <div className="grid gap-3 md:grid-cols-3">
               {customCategories.map((c) => (
                 <div key={c.category_id} className="flex items-center gap-3 rounded-[20px] bg-[#f9f9f9] p-4">
@@ -101,7 +100,7 @@ export function FeatureRegistryView({
                     <p className="truncate text-sm text-slate-500">{c.code}</p>
                   </div>
                   <button type="button" className="nav-icon-button text-red-600" disabled={busy}
-                    aria-label={`${localized(c.label) || c.code} kategorisini sil`}
+                    aria-label={_uiText("{value1} kategorisini sil", {value1: String(localized(c.label) || c.code)})}
                     onClick={() => void remove("category", c.category_id, localized(c.label) || c.code)}>
                     <Trash2 size={18} aria-hidden="true" />
                   </button>
@@ -126,14 +125,11 @@ export function FeatureRegistryView({
         </div>
         <CatalogFields definitions={snapshot.feature_registry.definitions || []} readOnly />
         {!snapshot.feature_registry.definitions?.length && (
-          <p className="text-sm text-slate-400 p-8">
-            Havuz, jakuzi ve manzara gibi özellikleri tanımlamak için önce bir
-            kategori ekleyin.
-          </p>
+          <p className="text-sm text-slate-400 p-8">{_uiText("Havuz, jakuzi ve manzara gibi özellikleri tanımlamak için önce bir kategori ekleyin.")} </p>
         )}
       </div>
       {category && (
-        <SettingsEditor title="Kategori Ekle" onClose={() => setCategory(false)}>
+        <SettingsEditor title={_uiText("Kategori Ekle")} onClose={() => setCategory(false)}>
           <form
             className="space-y-4"
             onSubmit={async (e) => {
@@ -160,7 +156,7 @@ export function FeatureRegistryView({
           >
             <ErrorMessage message={error} />
             <TextField
-              label="Kod"
+              label={_uiText("Kod")}
               required
               autoComplete="off"
               uppercase
@@ -168,19 +164,17 @@ export function FeatureRegistryView({
               onChange={setCode}
             />
             <LocalizedTextFields
-              label="Kategori adı"
-              hint="Her dil için ayrı ad ekleyin."
+              label={_uiText("Kategori adı")}
+              hint={_uiText("Her dil için ayrı ad ekleyin.")}
               values={categoryLabels}
               onChange={setCategoryLabels}
             />
-            <button disabled={busy} className={`uni-control ${buttonStyle}`}>
-              Kaydet
-            </button>
+            <button disabled={busy} className={`uni-control ${buttonStyle}`}>{_uiText("Kaydet")} </button>
           </form>
         </SettingsEditor>
       )}
       {draft && (
-        <SettingsEditor title="Özellik Tanımı" onClose={() => setDraft(null)}>
+        <SettingsEditor title={_uiText("Özellik Tanımı")} onClose={() => setDraft(null)}>
           <form
             className="space-y-5"
             onSubmit={async (e) => {
@@ -205,7 +199,7 @@ export function FeatureRegistryView({
             <ErrorMessage message={error} />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <TextField
-                label="Kod"
+                label={_uiText("Kod")}
                 required
                 autoComplete="off"
                 uppercase
@@ -213,7 +207,7 @@ export function FeatureRegistryView({
                 onChange={(v) => setDraft({ ...draft, code: v })}
               />
               <InlineSelectField
-                label="Kategori"
+                label={_uiText("Kategori")}
                 value={draft.category_id}
                 onChange={(v) => setDraft({ ...draft, category_id: v })}
                 options={(snapshot.feature_registry.categories || []).map((c) => ({
@@ -223,22 +217,22 @@ export function FeatureRegistryView({
               />
             </div>
             <LocalizedTextFields
-              label="İsim"
-              hint="Jakuzi, buzdolabı gibi her dilde ayrı ad ekleyin."
+              label={_uiText("İsim")}
+              hint={_uiText("Jakuzi, buzdolabı gibi her dilde ayrı ad ekleyin.")}
               values={draft.label || {}}
               onChange={(label) => setDraft({ ...draft, label })}
-              placeholder="Örn. Jakuzi"
+              placeholder={_uiText("Örn. Jakuzi")}
             />
             <LocalizedTextFields
-              label="Açıklama"
-              hint="Her dilde ayrı açıklama ekleyin."
+              label={_uiText("Açıklama")}
+              hint={_uiText("Her dilde ayrı açıklama ekleyin.")}
               values={draft.description || {}}
               onChange={(description) => setDraft({ ...draft, description })}
               multiline
-              placeholder="Örn. Isıtmalı açık hava jakuzisi"
+              placeholder={_uiText("Örn. Isıtmalı açık hava jakuzisi")}
             />
             <InlineSelectField
-              label="Veri türü"
+              label={_uiText("Veri türü")}
               value={draft.value_type}
               onChange={(v) =>
                 setDraft({
@@ -261,7 +255,7 @@ export function FeatureRegistryView({
             />
             {["enum", "multi_enum"].includes(draft.value_type) && (
               <TextField
-                label="Seçenek kodları (virgülle ayırın)"
+                label={_uiText("Seçenek kodları (virgülle ayırın)")}
                 autoComplete="off"
                 value={draft.options.join(",")}
                 onChange={(v) => {
@@ -281,7 +275,7 @@ export function FeatureRegistryView({
                 {(["min", "max"] as const).map((k) => (
                   <TextField
                     key={k}
-                    label={k === "min" ? "Minimum" : "Maksimum"}
+                    label={k === "min" ? _uiText("Minimum") : _uiText("Maksimum")}
                     type="number"
                     value={draft[k] == null ? "" : String(draft[k])}
                     onChange={(v) =>
@@ -298,11 +292,11 @@ export function FeatureRegistryView({
               {(["room", "property"] as const).map((scope) => (
                 <Switch
                   key={scope}
-                  label={scope === "room" ? "Birim" : "Tesis"}
+                  label={scope === "room" ? _uiText("Birim") : _uiText("Tesis")}
                   hint={
                     scope === "room"
-                      ? "Oda ve dairelerde seçilebilir."
-                      : "Tesis genelinde geçerli."
+                      ? _uiText("Oda ve dairelerde seçilebilir.")
+                      : _uiText("Tesis genelinde geçerli.")
                   }
                   checked={draft.scopes.includes(scope)}
                   onChange={(v) =>
@@ -316,14 +310,14 @@ export function FeatureRegistryView({
                 />
               ))}
               <Switch
-                label="Filtrelenebilir"
-                hint="Arama ve filtrelerde çıkar."
+                label={_uiText("Filtrelenebilir")}
+                hint={_uiText("Arama ve filtrelerde çıkar.")}
                 checked={draft.filterable}
                 onChange={(v) => setDraft({ ...draft, filterable: v })}
               />
               <Switch
-                label="Zorunlu"
-                hint="Her birimde değer girilmeli."
+                label={_uiText("Zorunlu")}
+                hint={_uiText("Her birimde değer girilmeli.")}
                 checked={draft.required}
                 onChange={(v) => setDraft({ ...draft, required: v })}
               />
@@ -336,14 +330,11 @@ export function FeatureRegistryView({
               onBusy={setUploading}
             />
             <div className="flex flex-wrap gap-3">
-              <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>
-                Özelliği Kaydet
-              </button>
+              <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>{_uiText("Özelliği Kaydet")} </button>
               {draft.feature_id && !draft.catalog_kind && (
                 <button type="button" disabled={busy || uploading} className={`uni-control ${secondaryStyle} text-red-600`}
                   onClick={() => void remove("feature", draft.feature_id!, localized(draft.label) || draft.code)}>
-                  <Trash2 size={18} aria-hidden="true" /> Olanağı Sil
-                </button>
+                  <Trash2 size={18} aria-hidden="true" /> {_uiText("Olanağı Sil")} </button>
               )}
             </div>
           </form>

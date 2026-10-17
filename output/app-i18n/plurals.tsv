@@ -1,0 +1,60 @@
+tr|{count} kişi|{count} kişi
+en|{count} guest|{count} guests
+de|{count} Gast|{count} Gäste
+fr|{count} client|{count} clients
+ru|{count} гость|{count} гостей
+ar|نزيل واحد|{count} نزيل
+ne|{count} अतिथि|{count} अतिथि
+th|ผู้เข้าพัก {count} คน|ผู้เข้าพัก {count} คน
+zh-CN|{count} 位住客|{count} 位住客
+zh-TW|{count} 位住客|{count} 位住客
+hi|{count} अतिथि|{count} अतिथि
+km|ភ្ញៀវ {count} នាក់|ភ្ញៀវ {count} នាក់
+si|අමුත්තා {count}|අමුත්තන් {count}
+ta|{count} விருந்தினர்|{count} விருந்தினர்கள்
+yue|{count} 位住客|{count} 位住客
+ur|{count} مہمان|{count} مہمان
+bn|{count} জন অতিথি|{count} জন অতিথি
+dz|མགྱོནམ་ {count}|མགྱོནམ་ {count}
+es|{count} huésped|{count} huéspedes
+it|{count} ospite|{count} ospiti
+pt|{count} hóspede|{count} hóspedes
+nl|{count} gast|{count} gasten
+pl|{count} gość|{count} gości
+cs|{count} host|{count} hostů
+hu|{count} vendég|{count} vendég
+ro|{count} oaspete|{count} oaspeți
+el|{count} επισκέπτης|{count} επισκέπτες
+uk|{count} гість|{count} гостей
+bg|{count} гост|{count} гости
+sr|{count} гост|{count} гостију
+hr|{count} gost|{count} gostiju
+sk|{count} hosť|{count} hostí
+sl|{count} gost|{count} gostov
+fi|{count} vieras|{count} vierasta
+sv|{count} gäst|{count} gäster
+da|{count} gæst|{count} gæster
+no|{count} gjest|{count} gjester
+ms|{count} tetamu|{count} tetamu
+id|{count} tamu|{count} tamu
+vi|{count} khách|{count} khách
+ja|宿泊者 {count} 名|宿泊者 {count} 名
+ko|투숙객 {count}명|투숙객 {count}명
+fa|{count} مهمان|{count} مهمان
+he|אורח אחד|{count} אורחים
+sw|Mgeni {count}|Wageni {count}
+am|{count} እንግዳ|{count} እንግዶች
+mr|{count} पाहुणा|{count} पाहुणे
+pa|{count} ਮਹਿਮਾਨ|{count} ਮਹਿਮਾਨ
+te|{count} అతిథి|{count} అతిథులు
+my|ဧည့်သည် {count} ဦး|ဧည့်သည် {count} ဦး
+lo|ແຂກ {count} ຄົນ|ແຂກ {count} ຄົນ
+ka|{count} სტუმარი|{count} სტუმარი
+hy|{count} հյուր|{count} հյուր
+az|{count} qonaq|{count} qonaq
+kk|{count} қонақ|{count} қонақ
+uz|{count} mehmon|{count} mehmon
+ky|{count} конок|{count} конок
+mn|{count} зочин|{count} зочин
+ps|{count} مېلمه|{count} مېلمانه
+ku|{count} mêvan|{count} mêvan

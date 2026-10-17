@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Building2, Check, ChevronDown, Search } from "lucide-react";
@@ -32,6 +33,8 @@ export function RoomSelectField({
   rooms?: APIRoom[];
   disabled?: boolean;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIdx, setActiveIdx] = useState(0);
@@ -57,11 +60,11 @@ export function RoomSelectField({
     return map;
   }, [rooms, snapshot.rooms, snapshot.bookings, checkInISO, excludeBookingId]);
 
-  const q = query.toLocaleLowerCase("tr");
+  const q = query.toLocaleLowerCase(_uiLocale);
   const filtered = rooms.filter((r) => {
     if (!q) return true;
     const hay = `${r.code} ${unitKinds[r.kind]} ${r.effective_capacity || r.capacity}`
-      .toLocaleLowerCase("tr");
+      .toLocaleLowerCase(_uiLocale);
     return hay.includes(q);
   });
 
@@ -121,7 +124,7 @@ export function RoomSelectField({
       <FieldCard className="h-full">
         <button
           type="button"
-          aria-label={`${label} seçin. Seçili: ${selected ? `${selected.code} ${unitKinds[selected.kind]}` : "yok"}`}
+          aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(selected ? `${selected.code} ${unitKinds[selected.kind]}` : "yok")})}
           aria-haspopup="listbox"
           aria-expanded={open}
           disabled={disabled}
@@ -138,19 +141,17 @@ export function RoomSelectField({
             <FieldCaption>{label}</FieldCaption>
             <span className="mt-1 flex h-10 min-w-0 items-center">
               <span
-                className={`font-uninav-book block truncate text-[1.25rem] leading-8 ${
-                  selected ? "text-slate-900" : "text-slate-400"
-                }`}
+                className={`font-uninav-book block truncate text-[1.25rem] leading-8 ${selected ? "text-slate-900" : "text-slate-400"}`}
               >
                 {selected
-                  ? `${selected.code} · ${unitKinds[selected.kind]}`
-                  : "Birim seçin"}
+                  ? _uiText("{value1} · {value2}", {value1: String(selected.code), value2: String(unitKinds[selected.kind])})
+                  : _uiText("Birim seçin")}
               </span>
             </span>
             <span className="mt-1 block truncate text-[0.875rem] leading-5 text-slate-500">
               {selected
-                ? `${selected.kind === "bed" ? `${selected.capacity} kişi · ` : ""}${selectedBusy ? "Dolu" : "Müsait"}`
-                : "kod · tip · müsaitlik"}
+                ? _uiText("{value1}{value2}", {value1: String(selected.kind === "bed" ? `${selected.capacity} kişi · ` : ""), value2: String(selectedBusy ? "Dolu" : "Müsait")})
+                : _uiText("kod · tip · müsaitlik")}
             </span>
           </span>
           <span className="flex shrink-0 items-center gap-2">
@@ -188,8 +189,8 @@ export function RoomSelectField({
                   />
                   <input
                     ref={searchRef}
-                    aria-label="Birim ara"
-                    placeholder="Oda kodu veya tip ara…"
+                    aria-label={_uiText("Birim ara")}
+                    placeholder={_uiText("Oda kodu veya tip ara…")}
                     value={query}
                     onChange={(e) => {
                       setQuery(e.target.value);
@@ -234,11 +235,9 @@ export function RoomSelectField({
                         aria-selected={isSelected}
                         onClick={() => pick(r.room_id)}
                         onMouseEnter={() => setActiveIdx(i)}
-                        className={`flex min-h-12 w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left outline-none transition-colors duration-150 ease-out select-none ${
-                          isSelected
+                        className={`flex min-h-12 w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-left outline-none transition-colors duration-150 ease-out select-none ${isSelected
                             ? "uni-nav-sub-active bg-brand-blue-50/70 text-brand-blue-700"
-                            : "uni-nav-sub text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                        } ${isActive && !isSelected ? "bg-slate-100" : ""}`}
+                            : "uni-nav-sub text-slate-600 hover:bg-slate-100 hover:text-slate-900"} ${isActive && !isSelected ? "bg-slate-100" : ""}`}
                       >
                         <span
                           aria-hidden="true"
@@ -249,7 +248,7 @@ export function RoomSelectField({
                             {r.code}
                           </span>
                           <span className="block truncate text-xs leading-4 text-slate-500">
-                            {unitKinds[r.kind]}{r.kind === "bed" ? ` · ${r.capacity} kişi` : ""}
+                            {unitKinds[r.kind]}{r.kind === "bed" ? _uiText(" · {value1} kişi", {value1: String(r.capacity)}) : ""}
                           </span>
                         </span>
                         {isSelected ? (
@@ -262,16 +261,14 @@ export function RoomSelectField({
                           <span
                             className={`shrink-0 text-[11px] font-bold uppercase tracking-wider ${busy ? "text-red-500" : "text-green-600"}`}
                           >
-                            {busy ? "Dolu" : "Müsait"}
+                            {busy ? _uiText("Dolu") : _uiText("Müsait")}
                           </span>
                         )}
                       </button>
                     );
                   })}
                   {filtered.length === 0 && (
-                    <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
-                      Uygun birim yok
-                    </p>
+                    <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">{_uiText("Uygun birim yok")} </p>
                   )}
                 </div>
               </div>

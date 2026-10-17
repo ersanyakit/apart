@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { BookingStatus as BookingState } from '../lib/statuses.generated';
 import styles from "./GuestView.module.css";
 import type { CustomerStay } from "./reports/CustomerDetail";
@@ -39,6 +40,8 @@ export function GuestView({
   guestName?: string;
   onBack?: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [revision, setRevision] = useState(0);
   const [ratingPage, setRatingPage] = useState(1), [ratingSize, setRatingSize] = useState(25);
   const [reputation, setReputation] = useState<Reputation | null>(null);
@@ -140,43 +143,41 @@ export function GuestView({
     }
   };
   const tools = <div className="guest-history-filters">
-    {!guestId && <TextField label="Misafir arama" placeholder="Ad, kimlik veya telefon" value={search} onChange={value=>{setSearch(value);setPage(1);}}/>}
-    <DateField label="Başlangıç" value={from} onChange={value=>{setFrom(value);setPage(1);}}/>
-    <DateField label="Bitiş" value={to} onChange={value=>{setTo(value);setPage(1);}}/>
-    <InlineSelectField label="Kayıtlar" value={status} onChange={value=>{setStatus(value);setPage(1);}} options={[
-      {value:'',label:'Tüm konaklamalar'}, {value:BookingState.CheckedIn,label:'Şu an konaklayanlar'},
-      {value:BookingState.Completed,label:'Çıkış yapanlar'}, {value:BookingState.Confirmed,label:'Planlanan rezervasyonlar'}, {value:BookingState.Cancelled,label:'İptal edilenler'},
+    {!guestId && <TextField label={_uiText("Misafir arama")} placeholder={_uiText("Ad, kimlik veya telefon")} value={search} onChange={value=>{setSearch(value);setPage(1);}}/>}
+    <DateField label={_uiText("Başlangıç")} value={from} onChange={value=>{setFrom(value);setPage(1);}}/>
+    <DateField label={_uiText("Bitiş")} value={to} onChange={value=>{setTo(value);setPage(1);}}/>
+    <InlineSelectField label={_uiText("Kayıtlar")} value={status} onChange={value=>{setStatus(value);setPage(1);}} options={[
+      {value:'',label:"Tüm konaklamalar"}, {value:BookingState.CheckedIn,label:"Şu an konaklayanlar"},
+      {value:BookingState.Completed,label:"Çıkış yapanlar"}, {value:BookingState.Confirmed,label:"Planlanan rezervasyonlar"}, {value:BookingState.Cancelled,label:"İptal edilenler"},
     ]}/>
   </div>;
   if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>{setAssessment(null);setRevision(value=>value+1);}}/>;
   return (
     <div className={`guest-history-page space-y-5 ${styles.page}`}>
       <ErrorMessage message={error} />
-      {guestId && onBack && <button type="button" className={`${secondaryStyle} !rounded-full`} onClick={onBack}><ArrowLeft size={16}/>Misafir listesine dön</button>}
-      {guestId && <header className="guest-history-heading"><span className="guest-history-avatar"><NavigationIcon name="guests" size={24}/></span><div><p>Misafir Konaklama Geçmişi</p><h2>{guestName || 'Misafir'}</h2><span>{total} konaklama kaydı · {s.branches.find(branch=>branch.branch_id===s.branch_id)?.name || 'Seçili tesis'}</span></div></header>}
+      {guestId && onBack && <button type="button" className={`${secondaryStyle} !rounded-full`} onClick={onBack}><ArrowLeft size={16}/>{_uiText("Misafir listesine dön")}</button>}
+      {guestId && <header className="guest-history-heading"><span className="guest-history-avatar"><NavigationIcon name="guests" size={24}/></span><div><p>{_uiText("Misafir Konaklama Geçmişi")}</p><h2>{guestName || _uiText("Misafir")}</h2><span>{total} {_uiText("konaklama kaydı ·")} {s.branches.find(branch=>branch.branch_id===s.branch_id)?.name || _uiText("Seçili tesis")}</span></div></header>}
       {guestId ? tools : <PageHeader pageId="guests">{tools}</PageHeader>}
       <div className={styles.toolbar}>
-        <div><h3>{guestId ? "Konaklama kayıtları" : "Misafir kayıtları"}<span className={styles.count}>{total}</span></h3><p>Konaklama bilgileri, geçmiş ücretler ve misafir değerlendirmeleri</p></div>
+        <div><h3>{guestId ? _uiText("Konaklama kayıtları") : _uiText("Misafir kayıtları")}<span className={styles.count}>{total}</span></h3><p>{_uiText("Konaklama bilgileri, geçmiş ücretler ve misafir değerlendirmeleri")}</p></div>
         <div className={`flex gap-2 ${styles.toolbarActions}`}>
-          <button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(value=>value+1)}><RefreshCw size={15} aria-hidden="true"/>Yenile</button>
-          {(search||from||to||status)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setSearch('');setFrom('');setTo('');setStatus('');setPage(1);}}><X size={15} aria-hidden="true"/>Filtreleri temizle</button>}
+          <button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(value=>value+1)}><RefreshCw size={15} aria-hidden="true"/>{_uiText("Yenile")}</button>
+          {(search||from||to||status)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setSearch('');setFrom('');setTo('');setStatus('');setPage(1);}}><X size={15} aria-hidden="true"/>{_uiText("Filtreleri temizle")}</button>}
           <button
             className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("xlsx")}
           >
-            <Download size={15} aria-hidden="true"/> Excel İndir
-          </button>
+            <Download size={15} aria-hidden="true"/> {_uiText("Excel İndir")} </button>
           <button
             className={`uni-control ${secondaryStyle}`}
             disabled={busy}
             onClick={() => download("pdf")}
           >
-            <FileText size={15} aria-hidden="true"/> PDF İndir
-          </button>
+            <FileText size={15} aria-hidden="true"/> {_uiText("PDF İndir")} </button>
         </div>
       </div>
-      <div className={`guest-history-table ${styles.grid}`} aria-busy={busy} tabIndex={0} role="region" aria-label="Misafir konaklama tablosu; tüm sütunlar için yatay kaydırın">
+      <div className={`guest-history-table ${styles.grid}`} aria-busy={busy} tabIndex={0} role="region" aria-label={_uiText("Misafir konaklama tablosu; tüm sütunlar için yatay kaydırın")}>
         <table>
           <colgroup>{[220,130,116,116,185,180,130,180].map((width,index)=><col key={index} style={{width}}/>)}</colgroup>
           <thead className="bg-slate-50 text-slate-400">
@@ -191,8 +192,8 @@ export function GuestView({
                   <button type="button" className="uni-control guest-table-sort" onClick={() => sortBy(key)}><span>{label}</span>{sort===key?(desc?<ArrowDown size={14}/>:<ArrowUp size={14}/>):<ArrowUpDown size={14}/>}</button>
                 </th>
               ))}
-              <th scope="col" className="guest-table-amount">Konaklama bedeli</th><th scope="col">Birlikte kaldıkları</th>
-              <th scope="col">Durum</th><th scope="col">İşlemler</th>
+              <th scope="col" className="guest-table-amount">{_uiText("Konaklama bedeli")}</th><th scope="col">{_uiText("Birlikte kaldıkları")}</th>
+              <th scope="col">{_uiText("Durum")}</th><th scope="col">{_uiText("İşlemler")}</th>
             </tr>
           </thead>
           <tbody>
@@ -209,8 +210,8 @@ export function GuestView({
                       openHistory?.({ id: r.guest_id, name: r.name })
                     }
                   >
-                    <span className={styles.avatar} aria-hidden="true">{r.name.trim().split(/\s+/).map(part=>part[0]).slice(0,2).join('').toLocaleUpperCase('tr')}</span>
-                    <span className={styles.identity}><strong>{r.name}</strong><span className="guest-table-secondary">{r.phone || "Telefon kaydedilmemiş"}</span></span>
+                    <span className={styles.avatar} aria-hidden="true">{r.name.trim().split(/\s+/).map(part=>part[0]).slice(0,2).join('').toLocaleUpperCase(_uiLocale)}</span>
+                    <span className={styles.identity}><strong>{r.name}</strong><span className="guest-table-secondary">{r.phone || _uiText("Telefon kaydedilmemiş")}</span></span>
                   </button>
                 </td>
                 <td>
@@ -219,7 +220,7 @@ export function GuestView({
                 </td>
                 <td><StayDate value={r.start}/></td>
                 <td><StayDate value={r.end}/></td>
-                <td className="guest-table-amount">{r.daily_price_minor>0?<><strong>{display(r.lodging_amount_minor,'money',r.currency||'TRY')}</strong><p className="guest-table-secondary">{display(r.daily_price_minor,'money',r.currency||'TRY')} / gece · {r.booking_nights} gece</p>{r.status===BookingState.Cancelled&&<p className="mt-1 text-xs text-uni-muted">İptal öncesi bedel</p>}</>:<span className="text-xs text-uni-muted">Fiyat girilmemiş</span>}</td>
+                <td className="guest-table-amount">{r.daily_price_minor>0?<><strong>{display(r.lodging_amount_minor,'money',r.currency||'TRY', _uiLocale)}</strong><p className="guest-table-secondary">{display(r.daily_price_minor,'money',r.currency||'TRY', _uiLocale)} {_uiText("/ gece ·")} {r.booking_nights} {_uiText("gece")}</p>{r.status===BookingState.Cancelled&&<p className="mt-1 text-xs text-uni-muted">{_uiText("İptal öncesi bedel")}</p>}</>:<span className="text-xs text-uni-muted">{_uiText("Fiyat girilmemiş")}</span>}</td>
                 <td>
                   {!r.companions.length && <span className="guest-table-secondary">—</span>}
                   {r.companions.map((c) => (
@@ -234,35 +235,35 @@ export function GuestView({
                     </button>
                   ))}
                 </td>
-                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><div className={styles.rowActions}>{openHistory && <button type="button" className="uni-control" aria-label={`${r.name} konaklama geçmişi`} onClick={()=>openHistory({id:r.guest_id,name:r.name})}><History size={15} aria-hidden="true"/>Konaklama geçmişi</button>}<button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>Puan / Kara liste</button></div></td>
+                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><div className={styles.rowActions}>{openHistory && <button type="button" className="uni-control" aria-label={_uiText("{value1} konaklama geçmişi", {value1: String(r.name)})} onClick={()=>openHistory({id:r.guest_id,name:r.name})}><History size={15} aria-hidden="true"/>{_uiText("Konaklama geçmişi")}</button>}<button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>{_uiText("Puan / Kara liste")}</button></div></td>
               </tr>
             ))}
           </tbody>
         </table>
         {!rows.length && (
           <p className="p-8 text-slate-400 text-sm">
-            {busy ? "Yükleniyor…" : "Bu sorguda kayıt bulunamadı."}
+            {busy ? _uiText("Yükleniyor…") : _uiText("Bu sorguda kayıt bulunamadı.")}
           </p>
         )}
       </div>
-      <p className="text-xs text-uni-muted">Bedel rezervasyonun tamamına aittir; oda değişikliği satırlarında tekrar görünebilir. Ek hizmetler ve tahsilatlar dahil değildir.</p>
-      <Pagination label="Misafir listesi sayfaları" noun="kayıt" page={page} pageSize={pageSize} total={total} busy={busy} onPageChange={setPage} onPageSizeChange={v=>{setPageSize(v);setPage(1)}}/>
+      <p className="text-xs text-uni-muted">{_uiText("Bedel rezervasyonun tamamına aittir; oda değişikliği satırlarında tekrar görünebilir. Ek hizmetler ve tahsilatlar dahil değildir.")}</p>
+      <Pagination label={_uiText("Misafir listesi sayfaları")} noun="kayıt" page={page} pageSize={pageSize} total={total} busy={busy} onPageChange={setPage} onPageSizeChange={v=>{setPageSize(v);setPage(1)}}/>
       {guestId && <>
-        <section aria-label="Misafir ve rezervasyon notları" className="space-y-3 rounded-2xl border border-uni-border p-4">
-          <h3 className="font-semibold">Misafir ve rezervasyon notları</h3>
-          <p className="text-xs text-uni-muted">Listelenen konaklamaların notları. Önceki kayıtları görmek için konaklama sayfasını değiştirebilirsiniz.</p>
+        <section aria-label={_uiText("Misafir ve rezervasyon notları")} className="space-y-3 rounded-2xl border border-uni-border p-4">
+          <h3 className="font-semibold">{_uiText("Misafir ve rezervasyon notları")}</h3>
+          <p className="text-xs text-uni-muted">{_uiText("Listelenen konaklamaların notları. Önceki kayıtları görmek için konaklama sayfasını değiştirebilirsiniz.")}</p>
           {rows.filter((row,index,all)=>all.findIndex(other=>other.booking_id===row.booking_id)===index).filter(row=>row.guest_note||row.booking_notes||row.cancellation_reason).map(row=><article key={row.booking_id} className="space-y-3 rounded-xl bg-uni-surface p-4">
             <p className="text-xs text-uni-muted">{row.branch_name} · {row.room_code} · {date(row.start)}</p>
             <dl className="grid gap-3 text-sm sm:grid-cols-2">{[['Misafire özel not',row.guest_note],['Rezervasyon notu',row.booking_notes],['İptal gerekçesi',row.cancellation_reason]].filter(([,text])=>text).map(([label,text])=><div key={label}><dt className="text-xs font-medium text-uni-muted">{label}</dt><dd className="mt-1 whitespace-pre-wrap break-words">{text}</dd></div>)}</dl>
           </article>)}
-          {!busy&&!rows.some(row=>row.guest_note||row.booking_notes||row.cancellation_reason)&&<p className="text-sm text-uni-muted">Listelenen konaklamalara not eklenmemiş.</p>}
+          {!busy&&!rows.some(row=>row.guest_note||row.booking_notes||row.cancellation_reason)&&<p className="text-sm text-uni-muted">{_uiText("Listelenen konaklamalara not eklenmemiş.")}</p>}
         </section>
-        <section aria-label="Misafir yorumları ve puanları" className="space-y-4 rounded-2xl border border-uni-border p-4">
-          <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold">Yorumlar ve puanlar</h3>{reputation&&<span className="rounded-full bg-brand-blue-50 px-3 py-2 text-xs text-brand-blue-700">{reputation.rating_count?`${reputation.average.toFixed(1)} / 5 · ${reputation.rating_count} değerlendirme`:'Henüz değerlendirilmedi'}</span>}</div>
+        <section aria-label={_uiText("Misafir yorumları ve puanları")} className="space-y-4 rounded-2xl border border-uni-border p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-semibold">{_uiText("Yorumlar ve puanlar")}</h3>{reputation&&<span className="rounded-full bg-brand-blue-50 px-3 py-2 text-xs text-brand-blue-700">{reputation.rating_count?_uiText("{value1} / 5 · {value2} değerlendirme", {value1: String(reputation.average.toFixed(1)), value2: String(reputation.rating_count)}):_uiText("Henüz değerlendirilmedi")}</span>}</div>
           <ErrorMessage message={ratingError}/>
-          {ratingError&&<button type="button" className={secondaryStyle} onClick={()=>setRevision(value=>value+1)}>Tekrar dene</button>}
-          {ratingLoading?<p role="status" className="text-sm text-uni-muted">Yorumlar yükleniyor…</p>:reputation&&<><CustomerComments data={reputation}/><BlacklistNotice items={reputation.blacklist}/></>}
-          <Pagination label="Misafir yorum sayfaları" noun="yorum" page={ratingPage} pageSize={ratingSize} total={reputation?.rating_count??0} busy={ratingLoading||!reputation} onPageChange={setRatingPage} onPageSizeChange={size=>{setRatingSize(size);setRatingPage(1);}}/>
+          {ratingError&&<button type="button" className={secondaryStyle} onClick={()=>setRevision(value=>value+1)}>{_uiText("Tekrar dene")}</button>}
+          {ratingLoading?<p role="status" className="text-sm text-uni-muted">{_uiText("Yorumlar yükleniyor…")}</p>:reputation&&<><CustomerComments data={reputation}/><BlacklistNotice items={reputation.blacklist}/></>}
+          <Pagination label={_uiText("Misafir yorum sayfaları")} noun="yorum" page={ratingPage} pageSize={ratingSize} total={reputation?.rating_count??0} busy={ratingLoading||!reputation} onPageChange={setRatingPage} onPageSizeChange={size=>{setRatingSize(size);setRatingPage(1);}}/>
         </section>
       </>}
 

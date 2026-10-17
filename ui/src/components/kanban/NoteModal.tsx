@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "../I18n";
+
 import React,{useEffect,useId,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {StickyNote,X} from 'lucide-react';
@@ -7,6 +9,8 @@ import styles from './KanbanView.module.css';
 
 /** Native modal keeps keyboard focus and background interaction inside the note. */
 export function NoteModal({title,busy,dirty,onClose,children}:{title:string;busy:boolean;dirty:boolean;onClose:()=>void;children:(requestClose:()=>void)=>React.ReactNode}) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
  const [mounted,setMounted]=useState(false),[discard,setDiscard]=useState(false);
  const dialog=useRef<HTMLDialogElement>(null),keepEditing=useRef<HTMLButtonElement>(null);
  const titleId=useId();
@@ -28,9 +32,9 @@ export function NoteModal({title,busy,dirty,onClose,children}:{title:string;busy
   onCancel={event=>{event.preventDefault();if(discard)setDiscard(false);else close()}}>
   <div className={styles.scrim} aria-hidden="true" onClick={close}/>
   <section className={styles.modalPanel}>
-   <header className={styles.modalHeader}><div className="flex min-w-0 items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-uni-surface)]"><StickyNote size={20} aria-hidden="true"/></span><h2 id={titleId}>{discard?'Değişiklikler kaydedilmedi':title}</h2></div><button type="button" className="nav-icon-button" aria-label="Not penceresini kapat" disabled={busy} onClick={close}><X size={20}/></button></header>
+   <header className={styles.modalHeader}><div className="flex min-w-0 items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-uni-surface)]"><StickyNote size={20} aria-hidden="true"/></span><h2 id={titleId}>{discard?_uiText("Değişiklikler kaydedilmedi"):title}</h2></div><button type="button" className="nav-icon-button" aria-label={_uiText("Not penceresini kapat")} disabled={busy} onClick={close}><X size={20}/></button></header>
    <div className={styles.modalBody}>
-    {discard?<div className="space-y-5"><p className="text-sm leading-6 text-uni-muted">Pencereyi kapatırsanız yazdığınız değişiklikler kaybolacak.</p><div className={styles.actions}><button ref={keepEditing} type="button" className={secondaryStyle} onClick={()=>setDiscard(false)}>Düzenlemeye devam et</button><button type="button" className={buttonStyle} onClick={onClose}>Değişikliklerden vazgeç</button></div></div>:children(close)}
+    {discard?<div className="space-y-5"><p className="text-sm leading-6 text-uni-muted">{_uiText("Pencereyi kapatırsanız yazdığınız değişiklikler kaybolacak.")}</p><div className={styles.actions}><button ref={keepEditing} type="button" className={secondaryStyle} onClick={()=>setDiscard(false)}>{_uiText("Düzenlemeye devam et")}</button><button type="button" className={buttonStyle} onClick={onClose}>{_uiText("Değişikliklerden vazgeç")}</button></div></div>:children(close)}
    </div>
   </section>
  </dialog>,document.body);

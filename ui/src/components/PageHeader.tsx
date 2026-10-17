@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 import React, { createContext, useContext, useId } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { usePreference } from "./UserPreferences";
@@ -32,11 +34,14 @@ export function PageHeader({ pageId, propertyName, actions, children, globalActi
   pageId: PageID; propertyName?: string; actions?: React.ReactNode;
   children?: React.ReactNode; globalActions?: React.ReactNode; className?: string;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const inherited = useContext(HeaderContext);
   const [collapsed, setCollapsed] = usePreference<boolean>(`header.${pageId}`, false);
   const id = useId();
   const report = reportForPage(pageId) ?? reportGroupForPage(pageId);
-  const [title, description] = report ? [report.name, report.description] : PAGE_HEADERS[pageId as keyof typeof PAGE_HEADERS];
+  const [titleSource, descriptionSource] = report ? [report.name, report.description] : PAGE_HEADERS[pageId as keyof typeof PAGE_HEADERS];
+  const title=_uiText(titleSource),description=_uiText(descriptionSource);
   return <header className={`page-header ${className}`} data-collapsed={collapsed} aria-labelledby={`${id}-title`}>
     <div className="page-header-top">
       <div className="page-header-heading">
@@ -49,14 +54,14 @@ export function PageHeader({ pageId, propertyName, actions, children, globalActi
         </h2>
       </div>
       <button type="button" className="nav-icon-button page-header-toggle" aria-expanded={!collapsed} aria-controls={`${id}-details`}
-        aria-label={`${title}: üst alanı ${collapsed ? "genişlet" : "daralt"}`} title={collapsed ? "Üst alanı genişlet" : "Üst alanı daralt"}
+        aria-label={_uiText("{value1}: üst alanı {value2}", {value1: String(title), value2: String(collapsed ? "genişlet" : "daralt")})} title={collapsed ? _uiText("Üst alanı genişlet") : _uiText("Üst alanı daralt")}
         onClick={() => setCollapsed(!collapsed)}>
         {collapsed ? <ChevronDown size={20} aria-hidden="true" /> : <ChevronUp size={20} aria-hidden="true" />}
       </button>
     </div>
     <div id={`${id}-details`} className="page-header-details" hidden={collapsed}>
-      <p className="page-header-description">{description}</p>
-      <div className="page-header-actions" role="group" aria-label={`${title} araç çubuğu`}>{globalActions ?? inherited.actions}{actions}</div>
+      <p className="page-header-description">{_uiText(description)}</p>
+      <div className="page-header-actions" role="group" aria-label={_uiText("{value1} araç çubuğu", {value1: String(title)})}>{globalActions ?? inherited.actions}{actions}</div>
       {children && <div className="page-header-tools">{children}</div>}
     </div>
   </header>;

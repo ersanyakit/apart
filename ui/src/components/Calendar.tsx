@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths, getDay } from 'date-fns';
@@ -9,6 +10,8 @@ interface CalendarProps {
 }
 
 export const ReservationCalendar: React.FC<CalendarProps> = ({ selectedDate, onSelect }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(selectedDate));
 
   const days = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
@@ -29,8 +32,8 @@ export const ReservationCalendar: React.FC<CalendarProps> = ({ selectedDate, onS
           {format(currentMonth, 'MMMM yyyy', { locale: tr })}
         </span>
         <div className="flex gap-2">
-          <button type="button" aria-label="Önceki ay" className="uni-control rounded-lg p-1 hover:bg-uni-hover" onClick={prevMonth}><ChevronLeft size={16} /></button>
-          <button type="button" aria-label="Sonraki ay" className="uni-control rounded-lg p-1 hover:bg-uni-hover" onClick={nextMonth}><ChevronRight size={16} /></button>
+          <button type="button" aria-label={_uiText("Önceki ay")} className="uni-control rounded-lg p-1 hover:bg-uni-hover" onClick={prevMonth}><ChevronLeft size={16} /></button>
+          <button type="button" aria-label={_uiText("Sonraki ay")} className="uni-control rounded-lg p-1 hover:bg-uni-hover" onClick={nextMonth}><ChevronRight size={16} /></button>
         </div>
       </div>
       <div className="p-3 bg-white">
@@ -67,9 +70,7 @@ export const ReservationCalendar: React.FC<CalendarProps> = ({ selectedDate, onS
             onSelect(now);
           }}
           className="uni-control w-full mt-3 bg-brand-blue-50 text-brand-blue-600 py-2 rounded-lg text-[10px]    hover:bg-brand-blue-100 "
-        >
-          Bugün
-        </button>
+        >{_uiText("Bugün")} </button>
       </div>
     </div>
   );

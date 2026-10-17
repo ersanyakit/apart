@@ -1,3 +1,4 @@
+import { useI18n } from './I18n';
 import React from 'react';
 import { STATUS_PALETTE, roomStatusKey, type SemanticStatus } from '../lib/status-palette';
 
@@ -19,6 +20,8 @@ export function RoomConditionIcon({status, size = 24, semantic}: {status?: strin
 }
 
 export function RoomCondition({status, size = 24, iconOnly = false}: {status: string; size?: number; iconOnly?: boolean}) {
+  const {m}=useI18n();
   const palette = STATUS_PALETTE[roomStatusKey(status)];
-  return <span title={palette.label} aria-label={iconOnly ? palette.label : undefined} style={{display:'inline-flex',alignItems:'center',gap:6,color:palette.text,verticalAlign:'middle'}}><RoomConditionIcon status={status} size={size}/>{!iconOnly && <span>{palette.label}</span>}</span>;
+  const label=m(palette.label);
+  return <span title={label} aria-label={iconOnly ? label : undefined} style={{display:'inline-flex',alignItems:'center',gap:6,color:palette.text,verticalAlign:'middle'}}><RoomConditionIcon status={status} size={size}/>{!iconOnly && <span>{label}</span>}</span>;
 }

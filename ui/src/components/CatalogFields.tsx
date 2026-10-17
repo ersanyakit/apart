@@ -19,6 +19,8 @@ const icons = {
 };
 
 export function CatalogIcon({ iconKey, artwork = false, featureCode, artworkSize = 40 }: { iconKey?: string; artwork?: boolean; featureCode?: string; artworkSize?: number }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const catalogArtwork = featureCode && Object.hasOwn(catalogIconMap, featureCode) ? (catalogIconMap as Record<string, string>)[featureCode] : undefined;
   const itemIcon = featureCode && Object.hasOwn(facilityIconMap, featureCode) ? (facilityIconMap as Record<string, string>)[featureCode] : undefined;
   const artworkPath = itemIcon ? `items/${itemIcon}` : !featureCode && iconKey && Object.hasOwn(icons, iconKey) ? iconKey : undefined;
@@ -42,6 +44,8 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   readOnly?: boolean;
   scope?: "room" | "property";
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { locale } = useI18n();
   const id = useId();
   const [query, setQuery] = useState("");
@@ -63,17 +67,17 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   ]);
   if (!all.length) return null;
   return (
-    <section className="space-y-4" aria-label={tr ? "Standart olanak ve envanter kataloğu" : "Standard amenities and inventory catalog"}>
+    <section className="space-y-4" aria-label={tr ? _uiText("Standart olanak ve envanter kataloğu") : _uiText("Standard amenities and inventory catalog")}>
       <div>
-        <h3 className="font-uninav-book text-lg text-slate-900">{scope === "property" ? (tr ? "Tesis olanakları ve envanteri" : "Property amenities and inventory") : (tr ? "Olanaklar ve oda envanteri" : "Amenities and room inventory")}</h3>
+        <h3 className="font-uninav-book text-lg text-slate-900">{scope === "property" ? (tr ? _uiText("Tesis olanakları ve envanteri") : _uiText("Property amenities and inventory")) : (tr ? _uiText("Olanaklar ve oda envanteri") : _uiText("Amenities and room inventory"))}</h3>
         <p className="mt-1 text-sm text-slate-500">{readOnly
-          ? (tr ? "Tüm otellerin ortak kataloğu. Odaya ait ürün ve olanaklar oda formunda seçilir." : "Shared catalog for all hotels. Room items and amenities are selected in the room form.")
-          : scope === "property" ? (tr ? "Tesisin ortak alanlarında sunulan olanakları seçin. Fiziksel ürünlerde adedi belirtin." : "Select amenities available at the property. Enter quantities for physical items.")
-          : (tr ? "Yalnızca bu odada bulunanları seçin. Fiziksel ürünlerde adedi belirtin." : "Select what is available in this room. Enter quantities for physical items.")}</p>
+          ? (tr ? _uiText("Tüm otellerin ortak kataloğu. Odaya ait ürün ve olanaklar oda formunda seçilir.") : _uiText("Shared catalog for all hotels. Room items and amenities are selected in the room form."))
+          : scope === "property" ? (tr ? _uiText("Tesisin ortak alanlarında sunulan olanakları seçin. Fiziksel ürünlerde adedi belirtin.") : _uiText("Select amenities available at the property. Enter quantities for physical items."))
+          : (tr ? _uiText("Yalnızca bu odada bulunanları seçin. Fiziksel ürünlerde adedi belirtin.") : _uiText("Select what is available in this room. Enter quantities for physical items."))}</p>
       </div>
-      <TextField label={tr ? "Katalogda ara" : "Search catalog"} type="search" value={query} onChange={setQuery}
-        placeholder={tr ? "Havlu, Wi-Fi, mutfak…" : "Towel, Wi-Fi, kitchen…"} />
-      {!items.length && <p className="text-sm text-slate-500">{tr ? "Eşleşen kayıt yok." : "No matching items."}</p>}
+      <TextField label={tr ? _uiText("Katalogda ara") : _uiText("Search catalog")} type="search" value={query} onChange={setQuery}
+        placeholder={tr ? _uiText("Havlu, Wi-Fi, mutfak…") : _uiText("Towel, Wi-Fi, kitchen…")} />
+      {!items.length && <p className="text-sm text-slate-500">{tr ? _uiText("Eşleşen kayıt yok.") : _uiText("No matching items.")}</p>}
       {categories.map((category, index) => {
         const rows = items.filter((d) => d.category === category);
         const expanded = !!search || opened.includes(category);
@@ -85,7 +89,7 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
             onClick={() => setOpened(opened.includes(category) ? opened.filter((c) => c !== category) : [...opened, category])}>
             <CatalogIcon iconKey={rows[0].icon_key} artwork={useArtwork} artworkSize={96} />
             <span className="min-w-0 flex-1">{label(rows[0].category_label)}</span>
-            <span className="text-xs text-slate-500">{readOnly ? rows.length : `${selectedCount} / ${all.filter((d) => d.category === category).length}`}</span>
+            <span className="text-xs text-slate-500">{readOnly ? rows.length : _uiText("{value1} / {value2}", {value1: String(selectedCount), value2: String(all.filter((d) => d.category === category).length)})}</span>
             <ChevronDown aria-hidden="true" size={16} className={expanded ? "rotate-180" : ""} />
           </button>
           <div id={panelId} hidden={!expanded} className="space-y-4 px-4 pb-4">
@@ -110,14 +114,14 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
                   <h4 className="text-sm font-medium text-slate-600">{groupName}</h4>
                   {!readOnly && <div className="flex flex-wrap items-center gap-1">
                     <button type="button" disabled={allSelected} onClick={() => updateGroup(true)}
-                      aria-label={`${groupName}: ${tr ? "Tümünü seç" : "Select all"}`}
+                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: String(tr ? "Tümünü seç" : "Select all")})}
                       className="uni-control min-h-11 rounded-xl px-3 text-xs font-medium text-slate-700 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
-                      {tr ? "Tümünü seç" : "Select all"}
+                      {tr ? _uiText("Tümünü seç") : _uiText("Select all")}
                     </button>
                     <button type="button" disabled={!anySelected} onClick={() => updateGroup(false)}
-                      aria-label={`${groupName}: ${tr ? "Seçimi temizle" : "Clear selection"}`}
+                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: String(tr ? "Seçimi temizle" : "Clear selection")})}
                       className="uni-control min-h-11 rounded-xl px-3 text-xs text-slate-500 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
-                      {tr ? "Seçimi temizle" : "Clear selection"}
+                      {tr ? _uiText("Seçimi temizle") : _uiText("Clear selection")}
                     </button>
                   </div>}
                 </div>
@@ -136,9 +140,9 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
                         </div>
                       </div>
                       {readOnly ? <p className="mt-1 break-all text-xs text-slate-400">
-                        {d.code} · {d.scopes.includes("room") ? (tr ? "Oda" : "Room") : (tr ? "Ortak alan / tesis" : "Common area / property")}
+                        {d.code} · {d.scopes.includes("room") ? (tr ? _uiText("Oda") : _uiText("Room")) : (tr ? _uiText("Ortak alan / tesis") : _uiText("Common area / property"))}
                       </p> : selected && d.catalog_kind !== "amenity" && <div className="mt-2">
-                        <StepperField label={`${name} — ${tr ? "Adet" : "Quantity"}`} min={0} max={Number.MAX_SAFE_INTEGER}
+                        <StepperField label={_uiText("{value1} — {value2}", {value1: String(name), value2: String(tr ? "Adet" : "Quantity")})} min={0} max={Number.MAX_SAFE_INTEGER}
                           value={typeof current === "number" ? current : 1} onChange={(n) => set(d.code, n)} />
                       </div>}
                     </div>;

@@ -7,10 +7,12 @@ export function FloorList({floors,rooms,busy,onEdit,onDelete,onRooms}: {
  floors:Floor[];rooms:APIRoom[];busy:boolean;
  onEdit:(floor:Floor)=>void;onDelete:(floor:Floor)=>void;onRooms:(floor:Floor)=>void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
  const {locale}=useI18n();
- return <section aria-label="Kat yönetimi" className="space-y-3">
-  <p className="text-sm text-uni-muted">{floors.length} kat · Düzenleme ve silme işlemlerini ilgili katın yanından yapabilirsiniz.</p>
-  {!floors.length&&<div className="rounded-2xl bg-uni-surface p-6 text-sm text-uni-muted">Henüz kat eklenmedi. Üstteki “Kat Ekle” düğmesiyle hazır katlardan birini seçin.</div>}
+ return <section aria-label={_uiText("Kat yönetimi")} className="space-y-3">
+  <p className="text-sm text-uni-muted">{floors.length} {_uiText("kat · Düzenleme ve silme işlemlerini ilgili katın yanından yapabilirsiniz.")}</p>
+  {!floors.length&&<div className="rounded-2xl bg-uni-surface p-6 text-sm text-uni-muted">{_uiText("Henüz kat eklenmedi. Üstteki “Kat Ekle” düğmesiyle hazır katlardan birini seçin.")}</div>}
   {[...floors].sort((a,b)=>a.sort_order-b.sort_order||a.code.localeCompare(b.code)).map(f=>{
    const units=rooms.filter(r=>r.floor_id===f.floor_id);
    const roomCount=units.filter(r=>r.kind!=='bed').length;
@@ -20,14 +22,14 @@ export function FloorList({floors,rooms,busy,onEdit,onDelete,onRooms}: {
     <div className="flex min-w-0 items-center gap-3">
      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-uni-surface text-brand-blue-600"><Layers size={21}/></span>
      <div className="min-w-0"><h3 className="break-words text-sm font-semibold">{name} <span className="ml-2 text-xs font-normal text-uni-muted">{f.code}</span></h3>
-      <p className="mt-1 text-xs text-uni-muted">{roomCount} oda / birim{bedCount>0?` · ${bedCount} yatak yeri`:''}</p>
-      {!!units.length&&<p className="mt-1 text-xs text-uni-muted">Silmek için önce bu kattaki birimleri taşıyın veya kaldırın.</p>}
+      <p className="mt-1 text-xs text-uni-muted">{roomCount} {_uiText("oda / birim")}{bedCount>0?_uiText(" · {value1} yatak yeri", {value1: String(bedCount)}):''}</p>
+      {!!units.length&&<p className="mt-1 text-xs text-uni-muted">{_uiText("Silmek için önce bu kattaki birimleri taşıyın veya kaldırın.")}</p>}
      </div>
     </div>
     <div className="flex flex-wrap gap-2">
-     <Button variant="secondary" onClick={()=>onRooms(f)} aria-label={`${name} birimlerini göster`}><DoorOpen size={18}/>Birimler</Button>
-     <Button variant="secondary" disabled={busy} onClick={()=>onEdit(f)} aria-label={`${name} düzenle`}><Pencil size={18}/>Düzenle</Button>
-     <Button variant="secondary" disabled={busy||units.length>0} onClick={()=>onDelete(f)} aria-label={`${name} sil`}><Trash2 size={18}/>Sil</Button>
+     <Button variant="secondary" onClick={()=>onRooms(f)} aria-label={_uiText("{value1} birimlerini göster", {value1: String(name)})}><DoorOpen size={18}/>{_uiText("Birimler")}</Button>
+     <Button variant="secondary" disabled={busy} onClick={()=>onEdit(f)} aria-label={_uiText("{value1} düzenle", {value1: String(name)})}><Pencil size={18}/>{_uiText("Düzenle")}</Button>
+     <Button variant="secondary" disabled={busy||units.length>0} onClick={()=>onDelete(f)} aria-label={_uiText("{value1} sil", {value1: String(name)})}><Trash2 size={18}/>{_uiText("Sil")}</Button>
     </div>
    </article>;
   })}

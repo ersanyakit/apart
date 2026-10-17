@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React from "react";
 import { X } from "lucide-react";
 import { FieldCard, FieldCaption } from "./FieldCard";
@@ -53,6 +54,8 @@ export function LocalizedTextFields({
   compact?: boolean;
   placeholder?: string;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const entered = centralCodes().filter(
     (code) => values[code] !== undefined,
   );
@@ -62,7 +65,7 @@ export function LocalizedTextFields({
   ];
   const remaining = centralCodes()
     .filter((code) => values[code] === undefined)
-    .map((code) => ({ value: code, label: `${languageName(code)} (${code})` }));
+    .map((code) => ({ value: code, label: _uiText("{value1} ({value2})", {value1: String(languageName(code)), value2: String(code)}) }));
 
   const setLang = (code: string, text: string) =>
     onChange({ ...values, [code]: text });
@@ -98,26 +101,24 @@ export function LocalizedTextFields({
               {code}
             </span>
             <label className="block min-w-0 flex-1 cursor-text">
-              <FieldCaption>{`${languageName(code)} ${label.toLocaleLowerCase("tr-TR")}`}</FieldCaption>
+              <FieldCaption>{_uiText("{value1} {value2}", {value1: String(languageName(code)), value2: String(label.toLocaleLowerCase(_uiLocale))})}</FieldCaption>
               {multiline ? (
                 <textarea
                   rows={rows}
                   required={code === requiredLang}
-                  aria-label={`${languageName(code)} ${label}`}
+                  aria-label={_uiText("{value1} {value2}", {value1: String(languageName(code)), value2: String(label)})}
                   placeholder={placeholder}
                   value={values[code] ?? ""}
                   onChange={(e) => setLang(code, e.target.value)}
-                  className={`mt-1 w-full min-w-0 resize-y bg-transparent outline-none placeholder:text-slate-400 placeholder:text-base disabled:opacity-60 ${
-                    mono
+                  className={`mt-1 w-full min-w-0 resize-y bg-transparent outline-none placeholder:text-slate-400 placeholder:text-base disabled:opacity-60 ${mono
                       ? "font-mono text-xs leading-6 text-slate-800"
-                      : "font-uninav-book text-[1.125rem] leading-7 text-slate-900"
-                  }`}
+                      : "font-uninav-book text-[1.125rem] leading-7 text-slate-900"}`}
                 />
               ) : (
                 <input
                   type="text"
                   required={code === requiredLang}
-                  aria-label={`${languageName(code)} ${label}`}
+                  aria-label={_uiText("{value1} {value2}", {value1: String(languageName(code)), value2: String(label)})}
                   placeholder={placeholder}
                   autoComplete="off"
                   value={values[code] ?? ""}
@@ -128,8 +129,8 @@ export function LocalizedTextFields({
             </label>
             <button
               type="button"
-              aria-label={`${languageName(code)} çevirisini kaldır`}
-              title="Çeviriyi kaldır"
+              aria-label={_uiText("{value1} çevirisini kaldır", {value1: String(languageName(code))})}
+              title={_uiText("Çeviriyi kaldır")}
               disabled={ordered.length <= 1}
               onClick={() => dropLang(code)}
               className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 outline-none transition-all duration-150 ease-out hover:bg-red-50 hover:text-red-500 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:pointer-events-none disabled:opacity-30"
@@ -141,7 +142,7 @@ export function LocalizedTextFields({
       ))}
       {remaining.length > 0 && (
         <InlineSelectField
-          label="Dil ekle"
+          label={_uiText("Dil ekle")}
           value=""
           onChange={(code) => {
             if (code) setLang(code, "");

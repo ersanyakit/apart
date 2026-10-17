@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -43,6 +45,8 @@ interface Hotel {
 export const LoginScreen: React.FC<{
   onLogin: (selection?: Selection, register?: boolean) => Promise<void>;
 }> = ({ onLogin }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [hotels, setHotels] = useState<
     (Hotel & { hotel_id: string; branch_id: string })[]
   >([]);
@@ -172,7 +176,7 @@ export const LoginScreen: React.FC<{
         animate={{ opacity: 1 }}
         className="w-full max-w-4xl grid md:grid-cols-12 bg-white rounded-[40px] shadow-2xl shadow-slate-200/50 overflow-hidden relative z-10 border border-white"
       >
-        <aside className={`${styles.brandPanel} md:col-span-5`} aria-label="Otel yönetim sistemi">
+        <aside className={`${styles.brandPanel} md:col-span-5`} aria-label={_uiText("Otel yönetim sistemi")}>
           <picture className={styles.artwork}>
             <source media="(max-width: 767px)" srcSet="/images/auth/reception-small.avif" />
             <img
@@ -184,15 +188,15 @@ export const LoginScreen: React.FC<{
             />
           </picture>
           <div className={styles.brandCopy}>
-            <h1>interaktif<br /><span>OTEL PROGRAMI</span></h1>
-            <p>Yeni nesil interaktif yönetim sistemi ile tüm operasyonlarınızı tek bir ekran üzerinden yönetin.</p>
+            <h1>{_uiText("interaktif")}<br /><span>{_uiText("OTEL PROGRAMI")}</span></h1>
+            <p>{_uiText("Yeni nesil interaktif yönetim sistemi ile tüm operasyonlarınızı tek bir ekran üzerinden yönetin.")}</p>
           </div>
           <div className={styles.brandFooter}>
             <div className={styles.security}>
               <ShieldCheck size={20} aria-hidden="true" />
-              <span>Güvenli Oturum Yönetimi</span>
+              <span>{_uiText("Güvenli Oturum Yönetimi")}</span>
             </div>
-            <span className={styles.version}>VER {contracts.application_version}</span>
+            <span className={styles.version}>{_uiText("VER")} {contracts.application_version}</span>
           </div>
         </aside>
 
@@ -214,16 +218,16 @@ export const LoginScreen: React.FC<{
               )}
               <div>
                 <h2 className="text-xl font-black text-slate-800 uppercase tracking-tight">
-                  {step === "hotel" && "Otel Seçimi"}
-                  {step === "user" && "Kullanıcı Seçimi"}
-                  {step === "password" && "Oturum Aç"}
-                  {step === "register" && "Yeni Otel Kaydı"}
+                  {step === "hotel" && _uiText("Otel Seçimi")}
+                  {step === "user" && _uiText("Kullanıcı Seçimi")}
+                  {step === "password" && _uiText("Oturum Aç")}
+                  {step === "register" && _uiText("Yeni Otel Kaydı")}
                 </h2>
                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mt-1">
-                  {step === "hotel" && "Lütfen sistemdeki tesisinizi seçin"}
+                  {step === "hotel" && _uiText("Lütfen sistemdeki tesisinizi seçin")}
                   {step === "user" && selectedHotel?.name}
                   {step === "password" && selectedUser?.name}
-                  {step === "register" && "Tesisinizi sisteme tanımlayın"}
+                  {step === "register" && _uiText("Tesisinizi sisteme tanımlayın")}
                 </p>
               </div>
             </div>
@@ -237,9 +241,7 @@ export const LoginScreen: React.FC<{
                 }}
                 className="uni-control flex items-center gap-2 px-3 py-2 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[10px]    hover:bg-brand-blue-100 active:bg-brand-blue-100    shadow-sm  cursor-pointer"
               >
-                <Plus className="w-3.5 h-3.5" />
-                YENİ KAYIT
-              </button>
+                <Plus className="w-3.5 h-3.5" />{_uiText("YENİ KAYIT")} </button>
             )}
           </div>
 
@@ -255,16 +257,14 @@ export const LoginScreen: React.FC<{
                   className="flex flex-col h-full"
                 >
                   <div className="mb-4">
-                    <LoginInput label="Otel ara" icon={<Search size={21} strokeWidth={1.8} />}
-                      type="search" placeholder="Otel adı veya konum" value={searchQuery}
+                    <LoginInput label={_uiText("Otel ara")} icon={<Search size={21} strokeWidth={1.8} />}
+                      type="search" placeholder={_uiText("Otel adı veya konum")} value={searchQuery}
                       onChange={e => setSearchQuery(e.target.value)} />
                   </div>
 
                   <div className="flex-1 overflow-y-auto no-scrollbar space-y-3 pr-2">
                     {loading && (
-                      <p className="text-xs text-slate-400 p-4">
-                        Tesisler yükleniyor…
-                      </p>
+                      <p className="text-xs text-slate-400 p-4">{_uiText("Tesisler yükleniyor…")} </p>
                     )}
                     {filteredHotels.map((hotel) => (
                       <motion.button
@@ -316,9 +316,7 @@ export const LoginScreen: React.FC<{
                         <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center text-slate-300 mb-4">
                           <Search className="w-8 h-8" />
                         </div>
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">
-                          OTEL BULUNAMADI
-                        </p>
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">{_uiText("OTEL BULUNAMADI")} </p>
                       </div>
                     )}
                   </div>
@@ -334,9 +332,7 @@ export const LoginScreen: React.FC<{
                   className="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto pb-4"
                 >
                   {peopleLoading && (
-                    <p className="col-span-full text-xs text-slate-400">
-                      Personel yükleniyor…
-                    </p>
+                    <p className="col-span-full text-xs text-slate-400">{_uiText("Personel yükleniyor…")} </p>
                   )}
                   {people.map((person) => (
                     <motion.button
@@ -353,14 +349,10 @@ export const LoginScreen: React.FC<{
                     </motion.button>
                   ))}
                   {!peopleLoading && people.length === 0 && (
-                    <p className="col-span-full text-xs text-slate-400 py-4">
-                      Bu tesis için henüz personel tanımlanmamış.
-                    </p>
+                    <p className="col-span-full text-xs text-slate-400 py-4">{_uiText("Bu tesis için henüz personel tanımlanmamış.")} </p>
                   )}
                   <details className="col-span-full mt-4">
-                    <summary className="cursor-pointer text-xs font-bold text-slate-400 hover:text-brand-blue-600 py-2">
-                      Diğer hesapla giriş
-                    </summary>
+                    <summary className="cursor-pointer text-xs font-bold text-slate-400 hover:text-brand-blue-600 py-2">{_uiText("Diğer hesapla giriş")} </summary>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -373,14 +365,12 @@ export const LoginScreen: React.FC<{
                       }}
                       className="col-span-full space-y-3 rounded-[24px] border border-slate-200 p-4"
                     >
-                      <LoginInput label="Kullanıcı adı veya e-posta" icon={<User size={21} strokeWidth={1.8} />}
+                      <LoginInput label={_uiText("Kullanıcı adı veya e-posta")} icon={<User size={21} strokeWidth={1.8} />}
                           required
                           autoComplete="username"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)} />
-                      <button className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer">
-                        DEVAM ET
-                      </button>
+                      <button className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer">{_uiText("DEVAM ET")} </button>
                     </form>
                   </details>
                 </motion.div>
@@ -401,7 +391,7 @@ export const LoginScreen: React.FC<{
                     {selectedUser.name}
                   </h3>
                   <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 mb-6">
-                    {selectedUser.role ? `${selectedUser.role} / ` : ""}
+                    {selectedUser.role ? _uiText("{value1} / ", {value1: String(selectedUser.role)}) : ""}
                     {selectedHotel?.name}
                   </p>
 
@@ -409,16 +399,16 @@ export const LoginScreen: React.FC<{
                     onSubmit={handleLogin}
                     className="w-full max-w-sm space-y-4"
                   >
-                    <LoginInput label="Şifre" icon={<Key size={21} strokeWidth={1.8} />}
+                    <LoginInput label={_uiText("Şifre")} icon={<Key size={21} strokeWidth={1.8} />}
                       autoFocus type="password" autoComplete="current-password" required
-                      placeholder="Şifrenizi girin" value={password}
+                      placeholder={_uiText("Şifrenizi girin")} value={password}
                       onChange={e => setPassword(e.target.value)} />
                     <motion.button
                       type="submit"
                       disabled={busy}
                       className="uni-control w-full py-4 uni-button-primary   text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100     cursor-pointer disabled:cursor-not-allowed"
                     >
-                      {busy ? "GİRİŞ YAPILIYOR…" : "SİSTEME GİRİŞ YAP"}
+                      {busy ? _uiText("GİRİŞ YAPILIYOR…") : _uiText("SİSTEME GİRİŞ YAP")}
                     </motion.button>
                   </form>
                 </motion.div>
@@ -433,16 +423,13 @@ export const LoginScreen: React.FC<{
                   className="space-y-4 pt-2"
                 >
                   <form onSubmit={handleLogin} className="space-y-4">
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      Yeni otel kaydı için yönetici hesabınızla giriş yapın.
-                      Ardından tesis bilgilerini doldurabilirsiniz.
-                    </p>
-                    <LoginInput label="Kullanıcı adı" icon={<User size={21} strokeWidth={1.8} />}
+                    <p className="text-xs text-slate-400 leading-relaxed">{_uiText("Yeni otel kaydı için yönetici hesabınızla giriş yapın. Ardından tesis bilgilerini doldurabilirsiniz.")} </p>
+                    <LoginInput label={_uiText("Kullanıcı adı")} icon={<User size={21} strokeWidth={1.8} />}
                         required
                         autoComplete="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)} />
-                    <LoginInput label="Şifre" icon={<Key size={21} strokeWidth={1.8} />}
+                    <LoginInput label={_uiText("Şifre")} icon={<Key size={21} strokeWidth={1.8} />}
                         required
                         type="password"
                         autoComplete="current-password"
@@ -451,9 +438,7 @@ export const LoginScreen: React.FC<{
                     <button
                       disabled={busy}
                       className="uni-control w-full py-4 uni-button-primary text-white rounded-2xl text-xs   tracking-[0.2em]  shadow-brand-blue-100"
-                    >
-                      GİRİŞ YAP VE TESİS EKLE
-                    </button>
+                    >{_uiText("GİRİŞ YAP VE TESİS EKLE")} </button>
                   </form>
                 </motion.div>
               )}
@@ -469,9 +454,7 @@ export const LoginScreen: React.FC<{
                 {contracts.brandName}
               </span>
             </a>
-            <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest">
-              interaktifotel.com
-            </div>
+            <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest">{_uiText("interaktifotel.com")} </div>
             </div>
           </div>
         </div>

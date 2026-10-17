@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
@@ -35,6 +36,8 @@ export function InlineSelectField({
   /** Tetikleyicinin solundaki rozet (örn. seçili cinsiyet simgesi). */
   icon?: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [open, setOpen] = useState(false);
   const reducedMotion = useReducedMotion();
   const selected = options.find((o) => o.value === value);
@@ -54,7 +57,7 @@ export function InlineSelectField({
     <FieldCard className={tone === "white" ? "h-full bg-white" : "h-full"}>
       <button
         type="button"
-        aria-label={`${label}: ${selected?.label ?? "Seçin"}`}
+        aria-label={_uiText("{value1}: {value2}", {value1: String(label), value2: String(selected?.label ?? "Seçin")})}
         aria-haspopup="listbox"
         aria-expanded={open}
         disabled={disabled}
@@ -72,7 +75,7 @@ export function InlineSelectField({
         <span className="min-w-0 flex-1">
           <FieldCaption>{label}</FieldCaption>
           <span className="font-uninav-book mt-1 block truncate text-[1.25rem] leading-8 text-slate-900">
-            {selected?.label ?? "Seçin"}
+            {selected?.label ?? _uiText("Seçin")}
           </span>
         </span>
         <ChevronDown
@@ -113,11 +116,9 @@ export function InlineSelectField({
                       setOpen(false);
                       if (o.value !== value) onChange(o.value);
                     }}
-                    className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.9375rem] font-bold outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-                      isActive
+                    className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[0.9375rem] font-bold outline-none transition-colors duration-150 ease-out select-none focus-visible:ring-2 focus-visible:ring-neutral-400 ${isActive
                         ? "bg-brand-blue-50/70 text-brand-blue-700"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                    }`}
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
                   >
                     {o.icon && (
                       <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.06)] text-slate-500">

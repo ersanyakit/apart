@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { useRef, useState } from 'react';
 import { UploadCloud, LoaderCircle, Film } from 'lucide-react';
 import { messageOf } from '../lib/api';
@@ -10,6 +11,8 @@ type Preview = { name: string; url: string; video: boolean };
 export function MediaUpload({ disabled, count, onUpload }: {
   disabled?: boolean; count: number; onUpload: (files: File[]) => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const input = useRef<HTMLInputElement>(null);
   const locked = useRef(false);
   const depth = useRef(0);
@@ -21,12 +24,12 @@ export function MediaUpload({ disabled, count, onUpload }: {
     if (disabled || locked.current || !files.length) return;
     setError('');
     if (files.length > 10 || count + files.length > 30) {
-      setError('Tek seferde en fazla 10 dosya yükleyebilirsiniz. Galeri toplam 30 dosya içerebilir.'); return;
+      setError(_uiText("Tek seferde en fazla 10 dosya yükleyebilirsiniz. Galeri toplam 30 dosya içerebilir.")); return;
     }
     for (const file of files) {
-      if (!accepted.includes(file.type)) { setError(`${file.name}: JPG, PNG, GIF, WebP, MP4 veya WebM seçin.`); return; }
+      if (!accepted.includes(file.type)) { setError(_uiText("{value1}: JPG, PNG, GIF, WebP, MP4 veya WebM seçin.", {value1: String(file.name)})); return; }
       const max = file.type.startsWith('image/') ? 10 : 50;
-      if (!file.size || file.size > max * 1024 * 1024) { setError(`${file.name}: Dosya boş olmamalı ve ${max} MB sınırını aşmamalı.`); return; }
+      if (!file.size || file.size > max * 1024 * 1024) { setError(_uiText("{value1}: Dosya boş olmamalı ve {value2} MB sınırını aşmamalı.", {value1: String(file.name), value2: String(max)})); return; }
     }
     locked.current = true;
     const previews = files.map(file => ({ name: file.name, url: URL.createObjectURL(file), video: file.type.startsWith('video/') }));
@@ -42,20 +45,20 @@ export function MediaUpload({ disabled, count, onUpload }: {
       onDragLeave={e => { e.preventDefault(); if (--depth.current <= 0) setDragging(false); }}
       onDrop={e => { e.preventDefault(); depth.current = 0; setDragging(false); void upload(Array.from(e.dataTransfer.files)); }}>
       <span className={styles.icon}><UploadCloud size={26}/></span>
-      <strong>{busy ? 'Dosyalar yükleniyor…' : 'Görsellerinizi ve videolarınızı buraya bırakın'}</strong>
-      <p>JPG, PNG, GIF, WebP · En fazla 10 MB<br/>MP4, WebM · En fazla 50 MB</p>
+      <strong>{busy ? _uiText("Dosyalar yükleniyor…") : _uiText("Görsellerinizi ve videolarınızı buraya bırakın")}</strong>
+      <p>{_uiText("JPG, PNG, GIF, WebP · En fazla 10 MB")}<br/>{_uiText("MP4, WebM · En fazla 50 MB")}</p>
       <button type="button" className={`uni-control ${styles.choose}`} disabled={disabled || busy || count >= 30} onClick={() => input.current?.click()}>
-        {busy ? <LoaderCircle size={16} className={styles.spinner}/> : <UploadCloud size={16}/>} {busy ? 'Yükleniyor' : 'Dosya seç'}
+        {busy ? <LoaderCircle size={16} className={styles.spinner}/> : <UploadCloud size={16}/>} {busy ? _uiText("Yükleniyor") : _uiText("Dosya seç")}
       </button>
-      <input ref={input} className="sr-only" tabIndex={-1} type="file" multiple accept={accepted.join(',')} aria-label="Medya dosyalarını yükle" disabled={disabled || busy || count >= 30}
+      <input ref={input} className="sr-only" tabIndex={-1} type="file" multiple accept={accepted.join(',')} aria-label={_uiText("Medya dosyalarını yükle")} disabled={disabled || busy || count >= 30}
         onChange={e => { const files = Array.from(e.target.files || []); e.target.value = ''; void upload(files); }}/>
-      <small>{count} / 30 dosya · Tek seferde 10 dosya</small>
+      <small>{count} {_uiText("/ 30 dosya · Tek seferde 10 dosya")}</small>
     </div>
     {error && <p className={styles.error} role="alert">{error}</p>}
     {busy && <div className={styles.queue} role="status" aria-live="polite">
       {pending.map((p,i) => <div key={i} className={styles.item}>
         {p.video ? <Film size={24}/> : <img src={p.url} alt=""/>}
-        <span>{p.name}<small>Yükleniyor…</small></span><LoaderCircle size={18} className={styles.spinner}/>
+        <span>{p.name}<small>{_uiText("Yükleniyor…")}</small></span><LoaderCircle size={18} className={styles.spinner}/>
       </div>)}
     </div>}
   </div>;

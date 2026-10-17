@@ -22,6 +22,8 @@ export function CountrySelect({
   onChange: (code: string) => void;
   label: string;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { locale, direction, t } = useI18n();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
@@ -76,7 +78,7 @@ export function CountrySelect({
               {label}
             </span>
             <span className="block truncate text-[1.125rem] font-medium leading-7 text-uni-ink">
-              {selected ? `${selected.name}` : t("country.select")}
+              {selected ? _uiText("{value1}", {value1: String(selected.name)}) : t("country.select")}
             </span>
           </span>
         </span>

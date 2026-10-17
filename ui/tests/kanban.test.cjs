@@ -19,6 +19,7 @@ const {auditChanges,auditEntities,auditSummary}=require(path.join(out,'lib/audit
 const snapshot={hotel_id:'h',branch_id:'b',user:{user_id:'u',role:'reception',displayname:'Ayşe',username:'ayse'},hotels:[],branches:[],rooms:[],bookings:[],feature_registry:{categories:[],definitions:[]}};
 const wrap=c=>React.createElement(NotificationProvider,null,c);
 const note={id:'n',hotel_id:'h',branch_id:'b',title:'204 geç çıkış',body:'Saat 14.00 için görüşülecek.\nİkinci not.',status:'todo',priority:'urgent',archived:false,version:2,created_by:'u',created_by_name:'Ayşe',updated_by:'u2',updated_by_name:'Can',created_at:'2026-10-14T08:00:00Z',updated_at:'2026-10-14T09:00:00Z'};
+const capture=(Component,props)=>{let result;const Host=()=>{result=Component(props);return result;};render(React.createElement(Host));return result;};
 const nodes=n=>n&&typeof n==='object'?[n,...React.Children.toArray(n.props?.children).flatMap(nodes)]:[];
 test('board uses three clear columns, shared collapsible header, search and archive switch',()=>{
  const html=render(wrap(React.createElement(KanbanView,{snapshot})));
@@ -30,13 +31,13 @@ test('board uses three clear columns, shared collapsible header, search and arch
 test('note cards have author history and keyboard/touch controls besides dragging',()=>{
  let opened=false,moved='',archived=false,dragged=false;
  const props={note,disabled:false,onOpen(){opened=true},onMove:s=>moved=s,onArchive(){archived=true},onDrag(){dragged=true},onDragEnd(){}};
- const tree=NoteCard(props),all=nodes(tree),html=render(tree);
+ const tree=capture(NoteCard,props),all=nodes(tree),html=render(tree);
  for(const text of ['204 geç çıkış','Ayşe','Can','Son işlem','Acil'])assert.ok(html.includes(text));assert.ok(html.includes('draggable="true"'));
  all.find(n=>n.type==='button'&&n.props['aria-label'].endsWith('notu aç')).props.onClick();assert.ok(opened);
  all.find(n=>n.props.ariaLabel==='204 geç çıkış: durum').props.onChange('doing');assert.equal(moved,'doing');
  all.find(n=>n.type==='button'&&n.props['aria-label'].endsWith('arşive taşı')).props.onClick();assert.ok(archived);
  tree.props.onDragStart({dataTransfer:{setData(type,id){assert.equal(type,'application/x-hotel-note');assert.equal(id,'n')}}});assert.ok(dragged);
- const locked=NoteCard({...props,disabled:true});assert.equal(locked.props.draggable,false);assert.ok(nodes(locked).find(n=>n.type==='fieldset').props.disabled);
+ const locked=capture(NoteCard,{...props,disabled:true});assert.equal(locked.props.draggable,false);assert.ok(nodes(locked).find(n=>n.type==='fieldset').props.disabled);
  assert.ok(render(React.createElement(NoteCard,{...props,note:{...note,archived:true}})).includes('arşivden geri al'));
  const input=noteInput(note);assert.equal(input.version,2);assert.ok(!('created_by' in input));assert.ok(!('updated_by_name' in input));assert.deepEqual(COLUMNS.map(c=>c.value),['todo','doing','done']);
 });

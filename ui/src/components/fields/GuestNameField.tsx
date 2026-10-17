@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Info, Search } from "lucide-react";
@@ -60,6 +61,8 @@ export function GuestNameField({
   uppercase?: boolean;
   tone?: "surface" | "white";
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [open, setOpen] = useState(false);
   const [rows, setRows] = useState<GuestRow[]>([]);
   const [total, setTotal] = useState(0);
@@ -125,7 +128,7 @@ export function GuestNameField({
   }, [open ]);
 
   const pick = (r: GuestRow) => {
-    const nm = uppercase ? r.name.toLocaleUpperCase("tr-TR") : r.name;
+    const nm = uppercase ? r.name.toLocaleUpperCase(_uiLocale) : r.name;
     onChange(nm);
     onPick?.({
       id: r.guest_id,
@@ -146,7 +149,7 @@ export function GuestNameField({
   };
 
   const write = (raw: string) => {
-    onChange(uppercase ? raw.toLocaleUpperCase("tr-TR") : raw);
+    onChange(uppercase ? raw.toLocaleUpperCase(_uiLocale) : raw);
     setSelectedId(null);
     setRows([]);
     setBusy(true);
@@ -189,8 +192,8 @@ export function GuestNameField({
           <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
-              aria-label="Kayıtlı misafir aramasını aç/kapat"
-              title="Kayıtlı misafir aramasını aç/kapat"
+              aria-label={_uiText("Kayıtlı misafir aramasını aç/kapat")}
+              title={_uiText("Kayıtlı misafir aramasını aç/kapat")}
               aria-expanded={open}
               aria-haspopup="listbox"
               disabled={disabled}
@@ -203,13 +206,13 @@ export function GuestNameField({
               type="button"
               aria-label={
                 selectedId
-                  ? "Seçili misafirin geçmişi ve notları"
-                  : "Detay için önce listeden bir kayıt seçin"
+                  ? _uiText("Seçili misafirin geçmişi ve notları")
+                  : _uiText("Detay için önce listeden bir kayıt seçin")
               }
               title={
                 selectedId
-                  ? "Geçmiş ve notlar"
-                  : "Detay için önce listeden bir kayıt seçin"
+                  ? _uiText("Geçmiş ve notlar")
+                  : _uiText("Detay için önce listeden bir kayıt seçin")
               }
               disabled={disabled || !selectedId || !openHistory}
               onClick={(event) => {
@@ -244,7 +247,7 @@ export function GuestNameField({
                 id={listId}
                 role="listbox"
                 aria-busy={busy}
-                aria-label="Kayıtlı misafir sonuçları"
+                aria-label={_uiText("Kayıtlı misafir sonuçları")}
                 className="max-h-72 overflow-y-auto"
               >
                 {rows.map((r) => {
@@ -271,15 +274,15 @@ export function GuestNameField({
                         </span>
                         <span className="block truncate text-xs leading-4 text-slate-500">
                           {[r.phone, r.national_id].filter(Boolean).join(" · ") ||
-                            "iletişim yok"}
+                            _uiText("iletişim yok")}
                         </span>
                       </span>
                       <span
                         className="flex shrink-0 items-center gap-1.5"
                         title={
                           r.nationality
-                            ? `Uyruk: ${r.nationality}`
-                            : "Uyruk kayıtlı değil"
+                            ? _uiText("Uyruk: {value1}", {value1: String(r.nationality)})
+                            : _uiText("Uyruk kayıtlı değil")
                         }
                       >
                         <span aria-hidden="true" className="text-xl leading-none">
@@ -297,21 +300,17 @@ export function GuestNameField({
                 {!busy && !error && rows.length === 0 && (
                   <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
                     {value.trim()
-                      ? "Aramaya uygun kayıtlı misafir yok"
-                      : "Henüz kayıtlı misafir yok"}
+                      ? _uiText("Aramaya uygun kayıtlı misafir yok")
+                      : _uiText("Henüz kayıtlı misafir yok")}
                   </p>
                 )}
                 {busy && rows.length === 0 && (
-                  <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
-                    Aranıyor…
-                  </p>
+                  <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">{_uiText("Aranıyor…")} </p>
                 )}
               </div>
               {error && <p role="alert" className="mt-2 text-sm text-red-600">{error}</p>}
               <p className="mt-2 border-t border-slate-200/70 px-1 pt-2 text-[11px] font-medium leading-4 text-slate-400">
-                {total} kayıtlı misafir · seçim adı doldurur, kayıtlı
-                telefon/kimlik boş alanlara işlenir
-              </p>
+                {total} {_uiText("kayıtlı misafir · seçim adı doldurur, kayıtlı telefon/kimlik boş alanlara işlenir")} </p>
             </div>
           </motion.div>
         )}

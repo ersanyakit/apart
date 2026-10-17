@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React from "react";
 import { X } from "lucide-react";
 export const inputStyle = "uni-input w-full px-4 py-3 text-sm";
@@ -10,6 +11,8 @@ export function Field({
   label: string;
   children: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const id = React.useId();
   const control =
     React.isValidElement(children) &&
@@ -46,6 +49,8 @@ export function Drawer({
   /** side: sağ panel · center: ortada Windows-formu tipi dialog */
   layout?: "side" | "center";
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   if (layout === "center") {
     return (
       <div
@@ -67,7 +72,7 @@ export function Drawer({
             <h2 className="min-w-0 truncate text-lg font-black tracking-tight">{title}</h2>
             <button
               type="button"
-              aria-label="Pencereyi kapat"
+              aria-label={_uiText("Pencereyi kapat")}
               onClick={onClose}
               className="uni-control flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 outline-none transition-all duration-150 ease-out hover:bg-slate-200 hover:text-slate-900 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-neutral-400"
             >
@@ -99,7 +104,7 @@ export function Drawer({
           <h2 className="min-w-0 truncate text-lg font-black tracking-tight">{title}</h2>
           <button
             type="button"
-            aria-label="Pencereyi kapat"
+            aria-label={_uiText("Pencereyi kapat")}
             className={`uni-control ${secondaryStyle} flex h-9 w-9 shrink-0 items-center justify-center !rounded-full !p-0`}
             onClick={onClose}
           >
@@ -112,12 +117,13 @@ export function Drawer({
   );
 }
 export function ErrorMessage({ message }: { message: string }) {
+  const {m:_uiText}=useI18n();
   return message ? (
     <div
       role="alert"
       className="rounded-xl border border-red-100 bg-red-50 p-4 text-sm text-red-700"
     >
-      {message}
+      {_uiText(message)}
     </div>
   ) : null;
 }

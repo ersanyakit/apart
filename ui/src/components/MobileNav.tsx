@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useEffect, useRef, useState } from "react";
 import { Check, ChevronRight, LogOut, Menu } from "lucide-react";
 import { BottomSheet } from "./BottomSheet";
@@ -22,6 +23,8 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
   onSelection: (selection: Selection) => void;
   onLogout: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [sheetOpen, setSheetOpen] = useState(false);
   const pendingLogout = useRef(false);
   const userName = snapshot.user.displayname || snapshot.user.username;
@@ -39,20 +42,20 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
 
   return (
     <>
-      <nav aria-label="Mobil ana gezinti" className="mobile-tab-bar">
+      <nav aria-label={_uiText("Mobil ana gezinti")} className="mobile-tab-bar">
         {visibleTabs.map((tab) => (
           <button key={tab.id} type="button" aria-current={activeTab === tab.id ? "page" : undefined}
             onClick={() => pick(tab.id)} className="mobile-tab">
             <NavigationIcon name={tab.id} size={24} />
-            <span>{tab.label}</span>
+            <span>{_uiText(tab.label)}</span>
           </button>
         ))}
-        <button type="button" aria-label="Menüyü aç" aria-expanded={sheetOpen} aria-haspopup="dialog"
+        <button type="button" aria-label={_uiText("Menüyü aç")} aria-expanded={sheetOpen} aria-haspopup="dialog"
           data-active={!primaryActive || sheetOpen} onClick={() => setSheetOpen(true)} className="mobile-tab">
-          <Menu size={24} strokeWidth={1.8} aria-hidden="true" /><span>Menü</span>
+          <Menu size={24} strokeWidth={1.8} aria-hidden="true" /><span>{_uiText("Menü")}</span>
         </button>
       </nav>
-      <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="Menü" closeLabel="Menüyü kapat"
+      <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} title={_uiText("Menü")} closeLabel={_uiText("Menüyü kapat")}
         onExitComplete={() => {
           if (!pendingLogout.current) return;
           pendingLogout.current = false;
@@ -72,8 +75,8 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
             <p className="mt-0.5 truncate text-[13px] text-slate-500">{snapshot.branches.find((b) => b.branch_id === snapshot.branch_id)?.name}</p>
           </div>
         </div>
-        <section aria-label="Aktif işletme" className="mb-6">
-          <h3 className="mobile-menu-heading">İşletme</h3>
+        <section aria-label={_uiText("Aktif işletme")} className="mb-6">
+          <h3 className="mobile-menu-heading">{_uiText("İşletme")}</h3>
           <PropertySwitcher snapshot={snapshot} onSelection={onSelection} />
         </section>
         {groups.map((group) => (
@@ -94,7 +97,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
         <button type="button" data-destructive="true" className="mobile-menu-row w-full rounded-2xl bg-white"
           onClick={() => { pendingLogout.current = true; setSheetOpen(false); }}>
           <span className="mobile-menu-icon bg-red-50 text-red-600"><LogOut size={20} /></span>
-          <span>Oturumu kapat</span>
+          <span>{_uiText("Oturumu kapat")}</span>
         </button>
       </BottomSheet>
     </>

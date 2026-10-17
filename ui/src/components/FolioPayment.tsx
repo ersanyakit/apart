@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Banknote } from "lucide-react";
 import { command, localized, messageOf, type Booking } from "../lib/api";
@@ -26,6 +28,8 @@ export function FolioPayment({ hotelId, booking, roomCode, entry, onClose, onSav
   onClose: () => void;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const notify = useNotifications();
   const currency = booking.currency || "TRY";
   const [folio, setFolio] = useState<Folio | null>(null);
@@ -78,7 +82,7 @@ export function FolioPayment({ hotelId, booking, roomCode, entry, onClose, onSav
       if (retry.current?.payload !== serialized) retry.current = { payload: serialized, id: crypto.randomUUID() };
       await command("report.record", { ...body, id: retry.current.id });
       retry.current = null;
-      notify("Tahsilat kaydedildi.");
+      notify(_uiText("Tahsilat kaydedildi."));
       await onSaved();
     } catch (e) {
       setError(messageOf(e));
@@ -88,30 +92,30 @@ export function FolioPayment({ hotelId, booking, roomCode, entry, onClose, onSav
   };
   return <ResponsiveDialog
     open
-    title={entry === "checkin" ? "Ödeme alındı mı?" : "Tahsilat al"}
-    subtitle={`${booking.guest_name}${roomCode ? ` · Oda ${roomCode}` : ""}${entry === "checkin" ? " · Giriş tamamlandı" : ""}`}
+    title={entry === "checkin" ? _uiText("Ödeme alındı mı?") : _uiText("Tahsilat al")}
+    subtitle={_uiText("{value1}{value2}{value3}", {value1: String(booking.guest_name), value2: String(roomCode ? ` · Oda ${roomCode}` : ""), value3: String(entry === "checkin" ? " · Giriş tamamlandı" : "")})}
     icon={Banknote}
     busy={busy}
     onClose={() => { if (!busy) onClose(); }}
   >
     <div className="space-y-4">
       <ErrorMessage message={error} />
-      {loading && <p role="status" className="text-sm text-uni-muted">Folyo ve kalan borç yükleniyor…</p>}
+      {loading && <p role="status" className="text-sm text-uni-muted">{_uiText("Folyo ve kalan borç yükleniyor…")}</p>}
       {total && <dl className="grid grid-cols-3 gap-3 rounded-2xl bg-[var(--color-uni-surface)] p-4 text-sm">
-        <div><dt className="text-xs text-uni-muted">Toplam ücret</dt><dd className="mt-1 font-semibold">{money(total.charges, total.currency)}</dd></div>
-        <div><dt className="text-xs text-uni-muted">Alınan</dt><dd className="mt-1 font-semibold">{money(total.paid, total.currency)}</dd></div>
-        <div><dt className="text-xs text-uni-muted">Kalan borç</dt><dd className="mt-1 font-semibold">{money(total.balance, total.currency)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Toplam ücret")}</dt><dd className="mt-1 font-semibold">{money(total.charges, total.currency)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Alınan")}</dt><dd className="mt-1 font-semibold">{money(total.paid, total.currency)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Kalan borç")}</dt><dd className="mt-1 font-semibold">{money(total.balance, total.currency)}</dd></div>
       </dl>}
-      {total && total.balance <= 0 && !loading && <p className="text-sm text-uni-muted">Bu rezervasyonda tahsil edilecek borç kalmamış; isterseniz avans tahsil edebilirsiniz.</p>}
-      <MoneyField label={`Alınan tutar (${currency})`} valueMinor={amount} onChange={setAmount} disabled={busy || loading} />
-      <InlineSelectField label="Ödeme yöntemi" value={channel} onChange={setChannel} options={methods} />
-      <TextField label="Açıklama" value={label} onChange={setLabel} maxLength={200} required disabled={busy} />
+      {total && total.balance <= 0 && !loading && <p className="text-sm text-uni-muted">{_uiText("Bu rezervasyonda tahsil edilecek borç kalmamış; isterseniz avans tahsil edebilirsiniz.")}</p>}
+      <MoneyField label={_uiText("Alınan tutar ({value1})", {value1: String(currency)})} valueMinor={amount} onChange={setAmount} disabled={busy || loading} />
+      <InlineSelectField label={_uiText("Ödeme yöntemi")} value={channel} onChange={setChannel} options={methods} />
+      <TextField label={_uiText("Açıklama")} value={label} onChange={setLabel} maxLength={200} required disabled={busy} />
       <div className="flex flex-wrap justify-end gap-2">
         <button type="button" className={`${secondaryStyle} !rounded-full`} disabled={busy} onClick={onClose}>
-          {entry === "checkin" ? "Ödeme alınmadı" : "Vazgeç"}
+          {entry === "checkin" ? _uiText("Ödeme alınmadı") : _uiText("Vazgeç")}
         </button>
         <button type="button" className={`${buttonStyle} !rounded-full`} disabled={busy || loading || !valid} onClick={() => void save()}>
-          {busy ? "Kaydediliyor…" : "Tahsilatı kaydet"}
+          {busy ? _uiText("Kaydediliyor…") : _uiText("Tahsilatı kaydet")}
         </button>
       </div>
     </div>

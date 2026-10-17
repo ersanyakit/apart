@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 import { BookingStatus as BookingState } from '../lib/statuses.generated';
 
 import { statusStyle } from "../lib/status-palette";
@@ -27,6 +29,8 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
   /** Tahsilat gibi dış işlemlerden sonra folyoyu yeniden yükler. */
   folioRefreshKey?: number;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const dialog = useRef<HTMLDialogElement>(null);
   const [tab, setTab] = useState<BookingDetailTab>(initialTab);
   const canOperate = ['admin', 'management', 'reception'].includes(snapshot.user.role);
@@ -41,28 +45,28 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
     return () => { element.close(); document.body.style.overflow = overflow; previousFocus?.focus({preventScroll:true}); };
   }, []);
   const tabs: {id:BookingDetailTab;label:string}[] = [
-    {id:'overview',label:'Genel bakış'},
-    ...(canOperate ? [{id:'folio' as const,label:'Folyo ve hizmetler'}] : []),
-    {id:'documents',label:'Belgeler'}, {id:'history',label:'İşlem geçmişi'},
-    ...(editable ? [{id:'guests' as const,label:'Misafirleri düzenle'}] : []),
+    {id:'overview',label:_uiText("Genel bakış")},
+    ...(canOperate ? [{id:'folio' as const,label:_uiText("Folyo ve hizmetler")}] : []),
+    {id:'documents',label:_uiText("Belgeler")}, {id:'history',label:_uiText("İşlem geçmişi")},
+    ...(editable ? [{id:'guests' as const,label:_uiText("Misafirleri düzenle")}] : []),
   ];
   return createPortal(<dialog ref={dialog} className="booking-detail-dialog" aria-labelledby="booking-detail-title"
     onCancel={event=>{event.preventDefault();onClose();}} onClick={event=>{if(event.target===event.currentTarget)onClose();}}>
     <header className="booking-detail-header">
-      <div><p className="text-xs text-uni-muted">Rezervasyon detayı · {room?.code || 'Birim'} · {bookingStatuses[b.status]}</p><h2 id="booking-detail-title">{b.guest_name || 'Konaklama detayı'}</h2></div>
-      <button type="button" className="nav-icon-button" autoFocus aria-label="Rezervasyon detayını kapat" onClick={onClose}><X size={21}/></button>
+      <div><p className="text-xs text-uni-muted">{_uiText("Rezervasyon detayı ·")} {room?.code || _uiText("Birim")} · {bookingStatuses[b.status]}</p><h2 id="booking-detail-title">{b.guest_name || _uiText("Konaklama detayı")}</h2></div>
+      <button type="button" className="nav-icon-button" autoFocus aria-label={_uiText("Rezervasyon detayını kapat")} onClick={onClose}><X size={21}/></button>
     </header>
-    <nav className="booking-detail-tabs" aria-label="Rezervasyon detay bölümleri">{tabs.map(item=><button key={item.id} type="button" className="uni-button rounded-full" aria-pressed={tab===item.id} onClick={()=>setTab(item.id)}>{item.label}</button>)}</nav>
+    <nav className="booking-detail-tabs" aria-label={_uiText("Rezervasyon detay bölümleri")}>{tabs.map(item=><button key={item.id} type="button" className="uni-button rounded-full" aria-pressed={tab===item.id} onClick={()=>setTab(item.id)}>{item.label}</button>)}</nav>
     <div className="booking-detail-content">
       {tab==='overview' && <div className="booking-detail-overview">
-        <div className="booking-detail-summary"><BookingArrival booking={b}/><div className="text-right"><span className="block text-xs text-uni-muted">Gecelik fiyat</span><strong className="text-xl"><MoneyText minor={b.daily_price_minor || 0}/></strong><span className="mt-1 block text-xs text-uni-muted">{b.guest_count} kişi</span></div></div>
-        <dl className="booking-detail-dates"><div><dt>Rezervasyon kaynağı</dt><dd>{bookingSourceLabel(b.source)}</dd></div>{b.external_reservation_id && <div><dt>Kanal rezervasyon numarası</dt><dd className="break-all">{b.external_reservation_id}</dd></div>}{b.external_property_id && <div><dt>Kanaldaki tesis kimliği</dt><dd className="break-all">{b.external_property_id}</dd></div>}</dl>
-        <dl className="booking-detail-dates"><div><dt>Planlanan giriş</dt><dd>{boardDate(b.check_in)}</dd></div><div><dt>Planlanan çıkış</dt><dd>{boardDate(b.check_out)}</dd></div></dl>
+        <div className="booking-detail-summary"><BookingArrival booking={b}/><div className="text-right"><span className="block text-xs text-uni-muted">{_uiText("Gecelik fiyat")}</span><strong className="text-xl"><MoneyText minor={b.daily_price_minor || 0}/></strong><span className="mt-1 block text-xs text-uni-muted">{b.guest_count} {_uiText("kişi")}</span></div></div>
+        <dl className="booking-detail-dates"><div><dt>{_uiText("Rezervasyon kaynağı")}</dt><dd>{bookingSourceLabel(b.source)}</dd></div>{b.external_reservation_id && <div><dt>{_uiText("Kanal rezervasyon numarası")}</dt><dd className="break-all">{b.external_reservation_id}</dd></div>}{b.external_property_id && <div><dt>{_uiText("Kanaldaki tesis kimliği")}</dt><dd className="break-all">{b.external_property_id}</dd></div>}</dl>
+        <dl className="booking-detail-dates"><div><dt>{_uiText("Planlanan giriş")}</dt><dd>{boardDate(b.check_in, _uiLocale)}</dd></div><div><dt>{_uiText("Planlanan çıkış")}</dt><dd>{boardDate(b.check_out, _uiLocale)}</dd></div></dl>
         <div className="booking-detail-columns"><BookingGuestList booking={b}/><BookingActors booking={b}/></div>
         {editable
           ? <BookingNoteEditor booking={b} hotelId={snapshot.hotel_id} onRefresh={onRefresh}/>
-          : (b.notes && <section className="booking-detail-note"><h3>Rezervasyon notu</h3><p>{b.notes}</p><p className="mt-2 text-xs text-uni-muted">Bu not, Resepsiyon Notları panosunda oda bilgisiyle birlikte kart olarak görünür.</p></section>)}
-        {b.cancellation_reason && <section className="booking-detail-note"><h3>İptal gerekçesi</h3><p>{b.cancellation_reason}</p></section>}
+          : (b.notes && <section className="booking-detail-note"><h3>{_uiText("Rezervasyon notu")}</h3><p>{b.notes}</p><p className="mt-2 text-xs text-uni-muted">{_uiText("Bu not, Resepsiyon Notları panosunda oda bilgisiyle birlikte kart olarak görünür.")}</p></section>)}
+        {b.cancellation_reason && <section className="booking-detail-note"><h3>{_uiText("İptal gerekçesi")}</h3><p>{b.cancellation_reason}</p></section>}
       </div>}
       {tab==='folio' && canOperate && <RoomFolio booking={b} onDocuments={()=>setTab('documents')} onPayment={onPayment&&editable?()=>onPayment(b):undefined} refreshKey={folioRefreshKey}/>}
       {tab==='documents' && <BookingDocuments initialKind={initialDocumentKind} snapshot={snapshot} booking={b} onFolio={canOperate?()=>setTab('folio'):undefined}/>}
@@ -70,15 +74,15 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
       {tab==='history' && <div className="space-y-5">
         <BookingActors booking={b}/>
         <BookingArrival booking={b}/>
-        <dl className="booking-detail-dates"><div><dt>Kayıt zamanı</dt><dd>{b.created_at ? boardDate(b.created_at) : 'Bilgi kaydedilmemiş'}</dd></div><div><dt>Son güncelleme</dt><dd>{b.updated_at ? boardDate(b.updated_at) : 'Bilgi kaydedilmemiş'}</dd></div></dl>
-        <section><h3 className="mb-3 font-semibold">Birim geçmişi</h3><ol className="booking-detail-history">{(b.allocations || []).map(allocation=><li key={allocation.allocation_id}><strong>{snapshot.rooms.find(room=>room.room_id===allocation.room_id)?.code || 'Arşiv birimi'}</strong><span>{boardDate(allocation.start)} → {boardDate(allocation.end)}</span></li>)}</ol>{!b.allocations?.length && <p className="text-sm text-uni-muted">Birim hareketi kaydedilmemiş.</p>}</section>
+        <dl className="booking-detail-dates"><div><dt>{_uiText("Kayıt zamanı")}</dt><dd>{b.created_at ? boardDate(b.created_at, _uiLocale) : _uiText("Bilgi kaydedilmemiş")}</dd></div><div><dt>{_uiText("Son güncelleme")}</dt><dd>{b.updated_at ? boardDate(b.updated_at, _uiLocale) : _uiText("Bilgi kaydedilmemiş")}</dd></div></dl>
+        <section><h3 className="mb-3 font-semibold">{_uiText("Birim geçmişi")}</h3><ol className="booking-detail-history">{(b.allocations || []).map(allocation=><li key={allocation.allocation_id}><strong>{snapshot.rooms.find(room=>room.room_id===allocation.room_id)?.code || _uiText("Arşiv birimi")}</strong><span>{boardDate(allocation.start, _uiLocale)} → {boardDate(allocation.end, _uiLocale)}</span></li>)}</ol>{!b.allocations?.length && <p className="text-sm text-uni-muted">{_uiText("Birim hareketi kaydedilmemiş.")}</p>}</section>
       </div>}
     </div>
     {editable && <footer className="booking-detail-actions">
-      {onTransition && b.status===BookingState.Confirmed && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onTransition(b,'cancel')}>Rezervasyonu iptal et</button>}
-      {onEdit && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onEdit(b)}><Pencil size={16}/>Rezervasyonu düzenle</button>}
-      {onMove && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onMove(b)}><ArrowRightLeft size={16}/>Birim değiştir</button>}
-      {onTransition && <button type="button" className="uni-button uni-button-primary rounded-full" style={statusStyle(b.status===BookingState.CheckedIn?"departure":"occupied")} onClick={()=>onTransition(b,b.status===BookingState.CheckedIn?'check_out':'check_in')}>{b.status===BookingState.CheckedIn?<LogOut size={16}/>:<LogIn size={16}/>} {b.status===BookingState.CheckedIn?'Çıkış yap':earlyArrival?'Erken giriş yap':'Giriş yap'}</button>}
+      {onTransition && b.status===BookingState.Confirmed && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onTransition(b,'cancel')}>{_uiText("Rezervasyonu iptal et")}</button>}
+      {onEdit && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onEdit(b)}><Pencil size={16}/>{_uiText("Rezervasyonu düzenle")}</button>}
+      {onMove && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={()=>onMove(b)}><ArrowRightLeft size={16}/>{_uiText("Birim değiştir")}</button>}
+      {onTransition && <button type="button" className="uni-button uni-button-primary rounded-full" style={statusStyle(b.status===BookingState.CheckedIn?"departure":"occupied")} onClick={()=>onTransition(b,b.status===BookingState.CheckedIn?'check_out':'check_in')}>{b.status===BookingState.CheckedIn?<LogOut size={16}/>:<LogIn size={16}/>} {b.status===BookingState.CheckedIn?_uiText("Çıkış yap"):earlyArrival?_uiText("Erken giriş yap"):_uiText("Giriş yap")}</button>}
     </footer>}
     </dialog>,document.body);
 }
@@ -92,6 +96,8 @@ export function BookingDetails({ booking: b, snapshot, initialTab = 'overview', 
 function BookingNoteEditor({ booking: b, hotelId, onRefresh }: {
   booking: Booking; hotelId: string; onRefresh: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const notify = useNotifications();
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(b.notes || "");
@@ -153,7 +159,7 @@ function BookingNoteEditor({ booking: b, hotelId, onRefresh }: {
       });
       setNewTitle(""); setNewBody(""); setAdding(false);
       await loadLinked();
-      notify("Not panoya eklendi.");
+      notify(_uiText("Not panoya eklendi."));
     } catch (e) {
       setAddError(messageOf(e));
     } finally {
@@ -163,14 +169,14 @@ function BookingNoteEditor({ booking: b, hotelId, onRefresh }: {
   if (!editing) {
     return <section className="booking-detail-note">
       <div className="flex items-start justify-between gap-3">
-        <h3>Rezervasyon notu</h3>
+        <h3>{_uiText("Rezervasyon notu")}</h3>
         <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={open}>
-          <Pencil size={16} />{b.notes ? "Notu düzenle" : "Not ekle"}
+          <Pencil size={16} />{b.notes ? _uiText("Notu düzenle") : _uiText("Not ekle")}
         </button>
       </div>
       {b.notes
-        ? <><p className="mt-2">{b.notes}</p><p className="mt-2 text-xs text-uni-muted">Bu not, Resepsiyon Notları panosunda oda bilgisiyle birlikte kart olarak görünür.</p></>
-        : <p className="mt-2 text-sm text-uni-muted">Henüz not yok. Ekleyeceğiniz not panoya kart olarak düşer.</p>}
+        ? <><p className="mt-2">{b.notes}</p><p className="mt-2 text-xs text-uni-muted">{_uiText("Bu not, Resepsiyon Notları panosunda oda bilgisiyle birlikte kart olarak görünür.")}</p></>
+        : <p className="mt-2 text-sm text-uni-muted">{_uiText("Henüz not yok. Ekleyeceğiniz not panoya kart olarak düşer.")}</p>}
       <LinkedBookingNotes linked={linked} adding={adding} setAdding={setAdding}
         newTitle={newTitle} setNewTitle={setNewTitle} newBody={newBody} setNewBody={setNewBody}
         addBusy={addBusy} addError={addError} onAdd={() => void add()} />
@@ -178,17 +184,17 @@ function BookingNoteEditor({ booking: b, hotelId, onRefresh }: {
   }
   return <section className="booking-detail-note">
     <div className="flex items-start justify-between gap-3">
-      <h3>{b.notes ? "Notu düzenle" : "Not ekle"}</h3>
+      <h3>{b.notes ? _uiText("Notu düzenle") : _uiText("Not ekle")}</h3>
       <StickyNote size={18} aria-hidden="true" className="shrink-0 text-slate-400" />
     </div>
     <div className="mt-3">
-      <TextAreaField label="Rezervasyon notu" value={text} onChange={setText} placeholder="Özel istekler, varış saati vb." rows={4} disabled={busy} uppercase />
+      <TextAreaField label={_uiText("Rezervasyon notu")} value={text} onChange={setText} placeholder={_uiText("Özel istekler, varış saati vb.")} rows={4} disabled={busy} uppercase />
     </div>
     {error && <p role="alert" className="mt-2 text-sm text-red-600">{error}</p>}
-    <p className="mt-2 text-xs text-uni-muted">Kaydetmeniz bu notu panodaki karta işler; yazıyı silmeniz kartı arşivler.</p>
+    <p className="mt-2 text-xs text-uni-muted">{_uiText("Kaydetmeniz bu notu panodaki karta işler; yazıyı silmeniz kartı arşivler.")}</p>
     <div className="mt-3 flex gap-2">
-      <button type="button" className="uni-button uni-button-secondary rounded-full" disabled={busy} onClick={() => setEditing(false)}>Vazgeç</button>
-      <button type="button" className="uni-button uni-button-primary rounded-full" disabled={busy} onClick={() => void save()}>{busy ? "Kaydediliyor…" : "Notu kaydet"}</button>
+      <button type="button" className="uni-button uni-button-secondary rounded-full" disabled={busy} onClick={() => setEditing(false)}>{_uiText("Vazgeç")}</button>
+      <button type="button" className="uni-button uni-button-primary rounded-full" disabled={busy} onClick={() => void save()}>{busy ? _uiText("Kaydediliyor…") : _uiText("Notu kaydet")}</button>
     </div>
   </section>;
 }
@@ -199,11 +205,13 @@ function LinkedBookingNotes({ linked, adding, setAdding, newTitle, setNewTitle, 
   newTitle: string; setNewTitle: (v: string) => void; newBody: string; setNewBody: (v: string) => void;
   addBusy: boolean; addError: string; onAdd: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const statusLabel = (value: Note["status"]) => COLUMNS.find(c => c.value === value)?.label ?? value;
   return <div className="mt-4 border-t border-slate-200/70 pt-3">
     <div className="flex items-center justify-between gap-3">
-      <h3 className="text-sm font-semibold">Panodaki notlar{linked ? ` · ${linked.length}` : ""}</h3>
-      {!adding && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => setAdding(true)}>Panoya not ekle</button>}
+      <h3 className="text-sm font-semibold">{_uiText("Panodaki notlar")}{linked ? _uiText(" · {value1}", {value1: String(linked.length)}) : ""}</h3>
+      {!adding && <button type="button" className="uni-button uni-button-secondary rounded-full" onClick={() => setAdding(true)}>{_uiText("Panoya not ekle")}</button>}
     </div>
     {linked && linked.length > 0 && <ul className="mt-3 space-y-2">
       {linked.map(note => <li key={note.id} className="rounded-xl bg-slate-50 px-3 py-2.5">
@@ -215,14 +223,14 @@ function LinkedBookingNotes({ linked, adding, setAdding, newTitle, setNewTitle, 
         <p className="mt-1 text-[11px] text-slate-400">{note.created_by_name} · {noteDate(note.created_at)}</p>
       </li>)}
     </ul>}
-    {linked && linked.length === 0 && !adding && <p className="mt-2 text-sm text-uni-muted">Bu rezervasyona bağlı pano kartı yok.</p>}
+    {linked && linked.length === 0 && !adding && <p className="mt-2 text-sm text-uni-muted">{_uiText("Bu rezervasyona bağlı pano kartı yok.")}</p>}
     {adding && <div className="mt-3 space-y-3">
-      <TextField label="Başlık" value={newTitle} onChange={setNewTitle} placeholder="Örn. Geç çıkış talebi" maxLength={160} required />
-      <TextAreaField label="Not" value={newBody} onChange={setNewBody} placeholder="Ekip için ayrıntı…" rows={3} disabled={addBusy} uppercase />
+      <TextField label={_uiText("Başlık")} value={newTitle} onChange={setNewTitle} placeholder={_uiText("Örn. Geç çıkış talebi")} maxLength={160} required />
+      <TextAreaField label={_uiText("Not")} value={newBody} onChange={setNewBody} placeholder={_uiText("Ekip için ayrıntı…")} rows={3} disabled={addBusy} uppercase />
       {addError && <p role="alert" className="text-sm text-red-600">{addError}</p>}
       <div className="flex gap-2">
-        <button type="button" className="uni-button uni-button-secondary rounded-full" disabled={addBusy} onClick={() => setAdding(false)}>Vazgeç</button>
-        <button type="button" className="uni-button uni-button-primary rounded-full" disabled={addBusy || !newTitle.trim()} onClick={onAdd}>{addBusy ? "Ekleniyor…" : "Panoya ekle"}</button>
+        <button type="button" className="uni-button uni-button-secondary rounded-full" disabled={addBusy} onClick={() => setAdding(false)}>{_uiText("Vazgeç")}</button>
+        <button type="button" className="uni-button uni-button-primary rounded-full" disabled={addBusy || !newTitle.trim()} onClick={onAdd}>{addBusy ? _uiText("Ekleniyor…") : _uiText("Panoya ekle")}</button>
       </div>
     </div>}
   </div>;

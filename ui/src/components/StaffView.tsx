@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { StaffIdentityFields, roles, type Person } from "./StaffIdentityFields";
 import { PageHeader } from "./PageHeader";
 import { SettingsEditor } from "./SettingsEditor";
@@ -12,6 +13,8 @@ import {
 import { InlineSelectField, Switch, TextField } from "./fields";
 import { confirmDialog } from "./ConfirmDialog";
 export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [people, setPeople] = useState<Person[]>([]),
     [editing, setEditing] = useState<Person | null>(null),
     [error, setError] = useState(""),
@@ -49,9 +52,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
             })
           }
         >
-          <Plus size={14} />
-          Personel Ekle
-        </button>
+          <Plus size={14} />{"Personel Ekle"} </button>
         } />
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {people.map((p) => (
@@ -70,7 +71,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
               </div>
               <p className="text-xs text-slate-500">
                 {["management", "admin"].includes(p.role)
-                  ? "Otelin tüm şubeleri"
+                  ? _uiText("Otelin tüm şubeleri")
                   : p.branch_ids
                       .map(
                         (id) =>
@@ -83,9 +84,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
                   className={`uni-control ${secondaryStyle}`}
                   onClick={() => setEditing({ ...p, password: "" })}
                 >
-                  <Pencil size={13} />
-                  Düzenle
-                </button>
+                  <Pencil size={13} />{_uiText("Düzenle")} </button>
                 <button
                   className={`uni-control ${secondaryStyle}`}
                   disabled={p.user_id === s.user.user_id}
@@ -107,9 +106,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
                     }
                   }}
                 >
-                  <Trash2 size={13} />
-                  Sil
-                </button>
+                  <Trash2 size={13} />{_uiText("Sil")} </button>
               </div>
             </article>
           ))}
@@ -117,7 +114,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
       </div>
       {editing && (
         <SettingsEditor
-          title={editing.user_id ? "Personeli Düzenle" : "Yeni Personel"}
+          title={editing.user_id ? _uiText("Personeli Düzenle") : _uiText("Yeni Personel")}
           onClose={() => setEditing(null)}
         >
           <StaffForm
@@ -142,6 +139,8 @@ function StaffForm({
   snapshot: Snapshot;
   onSaved: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [p, setP] = useState(initial),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -170,9 +169,7 @@ function StaffForm({
       <ErrorMessage message={error} />
       <StaffIdentityFields value={p} onChange={setP} allowAdmin={s.user.role==="admin"}/>
       <div className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-1">
-        <p className="font-uninav-book px-1 pb-2 text-[0.875rem] leading-5 text-slate-500">
-          Şube erişimleri
-        </p>
+        <p className="font-uninav-book px-1 pb-2 text-[0.875rem] leading-5 text-slate-500">{_uiText("Şube erişimleri")} </p>
         {s.branches.map((b) => (
           <Switch
             key={b.branch_id}
@@ -189,18 +186,11 @@ function StaffForm({
           />
         ))}
         {["management", "admin"].includes(p.role) && (
-          <p className="px-1 pt-1 text-xs text-slate-400">
-            Yönetim rolü otelin tüm şubelerine erişir.
-          </p>
+          <p className="px-1 pt-1 text-xs text-slate-400">{_uiText("Yönetim rolü otelin tüm şubelerine erişir.")} </p>
         )}
       </div>
-      <p className="text-xs text-slate-400">
-        Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında
-        personelin yeniden giriş yapması gerekir.
-      </p>
-      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
-        Personeli Kaydet
-      </button>
+      <p className="text-xs text-slate-400">{_uiText("Girişte yalnızca personelin adı gösterilir. Güncelleme sonrasında personelin yeniden giriş yapması gerekir.")} </p>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>{_uiText("Personeli Kaydet")} </button>
     </form>
   );
 }

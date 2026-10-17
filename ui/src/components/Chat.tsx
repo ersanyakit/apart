@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Send, Smile, Paperclip, MoreVertical, Search, CheckCheck } from 'lucide-react';
@@ -18,6 +19,8 @@ const MOCK_MESSAGES: Message[] = [
 ];
 
 export const Chat: React.FC = () => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [messages, setMessages] = useState<Message[]>(MOCK_MESSAGES);
   const [inputValue, setInputValue] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -50,17 +53,17 @@ export const Chat: React.FC = () => {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Sohbet ara..."
+              placeholder={_uiText("Sohbet ara...")}
               className="uni-input w-full pl-9 pr-4 py-2 bg-slate-50 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-neutral-400"
             />
           </div>
         </div>
         <div className="flex-1 overflow-y-auto px-2 py-4 space-y-1">
-          <ChatItem label="Genel Sohbet" sub="Herkes burada" active />
-          <ChatItem label="Resepsiyon" sub="Oda giriş/çıkış" />
-          <ChatItem label="Temizlik Ekibi" sub="Sıradaki odalar" />
-          <ChatItem label="Teknik Servis" sub="Arıza bildirimleri" />
-          <ChatItem label="Yönetim" sub="Duyurular" />
+          <ChatItem label={_uiText("Genel Sohbet")} sub="Herkes burada" active />
+          <ChatItem label={_uiText("Resepsiyon")} sub="Oda giriş/çıkış" />
+          <ChatItem label={_uiText("Temizlik Ekibi")} sub="Sıradaki odalar" />
+          <ChatItem label={_uiText("Teknik Servis")} sub="Arıza bildirimleri" />
+          <ChatItem label={_uiText("Yönetim")} sub="Duyurular" />
         </div>
       </div>
 
@@ -69,12 +72,10 @@ export const Chat: React.FC = () => {
         {/* Chat Header */}
         <div className="px-6 py-4 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-brand-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-blue-100">
-               GS
-            </div>
+            <div className="w-10 h-10 bg-brand-blue-600 rounded-2xl flex items-center justify-center text-white font-bold shadow-lg shadow-brand-blue-100">{_uiText("GS")} </div>
             <div>
-              <h3 className="text-sm font-black text-slate-800">Genel Sohbet</h3>
-              <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">Çevrimiçi (12 Kişi)</p>
+              <h3 className="text-sm font-black text-slate-800">{_uiText("Genel Sohbet")}</h3>
+              <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">{_uiText("Çevrimiçi (12 Kişi)")}</p>
             </div>
           </div>
           <button className="uni-control p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100">
@@ -92,7 +93,7 @@ export const Chat: React.FC = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 className={`flex ${msg.isMe ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`max-w-[70%] group`}>
+                <div className={"max-w-[70%] group"}>
                   {!msg.isMe && <p className="text-[10px] font-black text-slate-400 uppercase ml-2 mb-1">{msg.sender}</p>}
                   <div className={`
                     px-4 py-3 rounded-2xl shadow-sm text-sm relative
@@ -118,7 +119,7 @@ export const Chat: React.FC = () => {
              </button>
              <input
                 type="text"
-                placeholder="Mesajınızı yazın..."
+                placeholder={_uiText("Mesajınızı yazın...")}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}

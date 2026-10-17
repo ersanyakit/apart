@@ -1,4 +1,6 @@
 "use client";
+import { useI18n } from "./I18n";
+
 
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -17,6 +19,8 @@ export function useNotifications() {
 }
 
 function Toast({ notice, dismiss }: { notice: Notice; dismiss: (id: number) => void }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -32,12 +36,14 @@ function Toast({ notice, dismiss }: { notice: Notice; dismiss: (id: number) => v
     onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
     onFocusCapture={() => setFocused(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false); }}>
     <span className="app-toast-icon"><Icon size={21} aria-hidden="true" /></span>
-    <p role={notice.type === "error" ? "alert" : "status"} aria-atomic="true">{notice.message}</p>
-    <button type="button" className="nav-icon-button app-toast-close" aria-label="Bildirimi kapat" onClick={() => dismiss(notice.id)}><X size={18} aria-hidden="true" /></button>
+    <p role={notice.type === "error" ? "alert" : "status"} aria-atomic="true">{_uiText(notice.message)}</p>
+    <button type="button" className="nav-icon-button app-toast-close" aria-label={_uiText("Bildirimi kapat")} onClick={() => dismiss(notice.id)}><X size={18} aria-hidden="true" /></button>
   </motion.div>;
 }
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [notices, setNotices] = useState<Notice[]>([]);
   const [mounted, setMounted] = useState(false);
   const sequence = useRef(0);
@@ -50,7 +56,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   }, []);
   return <NotificationContext.Provider value={notify}>
     {children}
-    {mounted && createPortal(<section className="app-toast-stack" aria-label="Bildirimler">
+    {mounted && createPortal(<section className="app-toast-stack" aria-label={_uiText("Bildirimler")}>
       <AnimatePresence initial={false}>{notices.map(notice => <Toast key={notice.id} notice={notice} dismiss={dismiss} />)}</AnimatePresence>
     </section>, document.body)}
   </NotificationContext.Provider>;

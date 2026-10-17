@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React from "react";
 import { motion, useReducedMotion } from "motion/react";
 
@@ -21,6 +22,8 @@ export function Switch({
   disabled?: boolean;
   hideLabel?: boolean;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const reducedMotion = useReducedMotion();
   return (
     <button
@@ -40,9 +43,7 @@ export function Switch({
       </span>
       <span
         aria-hidden="true"
-        className={`flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors duration-150 ease-out ${
-          checked ? "justify-end bg-brand-blue-500" : "justify-start bg-slate-200"
-        }`}
+        className={`flex h-7 w-12 shrink-0 items-center rounded-full p-1 transition-colors duration-150 ease-out ${checked ? "justify-end bg-brand-blue-500" : "justify-start bg-slate-200"}`}
       >
         <motion.span
           initial={false}

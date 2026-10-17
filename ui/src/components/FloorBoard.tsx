@@ -37,6 +37,8 @@ export function FloorBoard({
   day?: string;
   onOpenBooking?: (booking: Booking) => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const floor = snapshot.floors.find((f) => f.floor_id === floorId)!;
   const rooms = snapshot.rooms.filter((r) => r.floor_id === floorId && (onEdit || r.rentable !== false));
@@ -61,7 +63,7 @@ export function FloorBoard({
       <ErrorMessage message={error} />
       <div className="flex justify-between items-center">
         <p className="text-xs text-slate-500">
-          {localized(floor.label,locale.toUpperCase()) || floor.code} · {rooms.length} birim ·{" "}
+          {localized(floor.label,locale.toUpperCase()) || floor.code} · {rooms.length} {_uiText("birim ·")}{" "}
           {floor.width} × {floor.height}
         </p>
         {canManage && (
@@ -75,7 +77,7 @@ export function FloorBoard({
                 );
               }}
             >
-              {editing ? "Vazgeç" : "Planı Düzenle"}
+              {editing ? _uiText("Vazgeç") : _uiText("Planı Düzenle")}
             </button>
             {editing && (
               <button
@@ -99,18 +101,13 @@ export function FloorBoard({
                     setBusy(false);
                   }
                 }}
-              >
-                Planı Kaydet
-              </button>
+              >{_uiText("Planı Kaydet")} </button>
             )}
           </div>
         )}
       </div>
       {editing && (
-        <p className="text-xs text-brand-blue-700">
-          Birimleri sürükleyerek yerleştirin. Boyutları ve kat atamasını birim
-          düzenleme ekranından değiştirebilirsiniz.
-        </p>
+        <p className="text-xs text-brand-blue-700">{_uiText("Birimleri sürükleyerek yerleştirin. Boyutları ve kat atamasını birim düzenleme ekranından değiştirebilirsiniz.")} </p>
       )}
       <div className="uni-card overflow-auto rounded-2xl border border-slate-200 bg-white p-4">
         <div
@@ -164,7 +161,7 @@ export function FloorBoard({
               <button
                 type="button"
                 key={room.room_id}
-                title={`${room.code} · ${state.label}${occupied.length ? ` · ${occupied.map(b => b.guest_name).join(", ")}` : ""}`}
+                title={_uiText("{value1} · {value2}{value3}", {value1: String(room.code), value2: String(state.label), value3: String(occupied.length ? ` · ${occupied.map(b => b.guest_name).join(", ")}` : "")})}
                 className={`uni-control absolute rounded-lg border shadow-sm overflow-hidden flex flex-col items-center justify-center px-1 ${editing ? "cursor-move touch-none" : "cursor-pointer"}`}
                 style={{
                   ...statusStyle(boardStatusKey(state)),
@@ -201,7 +198,7 @@ export function FloorBoard({
                   {room.code}
                 </strong>
                 <span className="text-[8px] leading-none mt-1 truncate max-w-full shrink-0 flex items-center gap-1">
-                  <RoomConditionIcon semantic={boardStatusKey(state)} size={16}/>{state.label}{occupied[0] ? ` · ${occupied[0].guest_name}` : ""}
+                  <RoomConditionIcon semantic={boardStatusKey(state)} size={16}/>{state.label}{occupied[0] ? _uiText(" · {value1}", {value1: String(occupied[0].guest_name)}) : ""}
                 </span>
                 {[RoomState.Dirty,RoomState.OutOfOrder,RoomState.Maintenance].some(status=>status===state.operationalStatus) && <span className="absolute right-1 top-1"><RoomCondition status={state.operationalStatus} size={24} iconOnly/></span>}
               </button>
@@ -210,9 +207,7 @@ export function FloorBoard({
         </div>
       </div>
       {!rooms.length && (
-        <p className="text-center text-sm text-slate-400 py-8">
-          Bu katta henüz birim yok.
-        </p>
+        <p className="text-center text-sm text-slate-400 py-8">{_uiText("Bu katta henüz birim yok.")} </p>
       )}
     </div>
   );

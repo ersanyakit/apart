@@ -165,6 +165,9 @@ function readTabFromUrl(): string | null {
 }
 type AppProps = { initialData: Snapshot | null; initialTab?: string };
 export default function App({ initialData, initialTab = "board" }: AppProps) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
+  const {locale:entryLocale}=useI18n();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(() => initialData ? normalize(initialData) : null);
   const [sessionStart, setSessionStart] = useState({ tab: initialTab, register: false });
   const onLogin = async (selection?: Selection, register = false) => {
@@ -173,10 +176,12 @@ export default function App({ initialData, initialTab = "board" }: AppProps) {
     setSnapshot(normalize(data));
   };
   return <UserPreferencesProvider key={snapshot?.user.user_id || "guest"} userId={snapshot?.user.user_id} initial={snapshot?.user.preferences}>
-    <I18nProvider><AppContent snapshot={snapshot} setSnapshot={setSnapshot} initialTab={sessionStart.tab} startRegistration={sessionStart.register} onLogin={onLogin} /></I18nProvider>
+    <I18nProvider initialLocale={entryLocale} syncDocument><AppContent snapshot={snapshot} setSnapshot={setSnapshot} initialTab={sessionStart.tab} startRegistration={sessionStart.register} onLogin={onLogin} /></I18nProvider>
   </UserPreferencesProvider>;
 }
 function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLogin }: { snapshot: Snapshot | null; setSnapshot: React.Dispatch<React.SetStateAction<Snapshot | null>>; initialTab: string; startRegistration: boolean; onLogin: (selection?: Selection, register?: boolean) => Promise<void> }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const notify = useNotifications();
   const preferences = useUserPreferences();
@@ -294,7 +299,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const saved = async () => {
     await refresh();
     setModal(null);
-    notify("Değişiklikler kaydedildi.");
+    notify(_uiText("Değişiklikler kaydedildi."));
   };
   const run = async (
     task: () => Promise<void>,
@@ -337,8 +342,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
       (!floorId || r.floor_id === floorId) &&
       (!kind || r.kind === kind) &&
       `${r.code} ${r.type} ${unitKinds[r.kind]} ${(roomStates.get(r.room_id)?.bookings || []).map(b => [b.guest_name, ...(b.guests || []).map(g => g.name)].join(" ")).join(" ")}`
-        .toLocaleLowerCase("tr")
-        .includes(search.toLocaleLowerCase("tr")),
+        .toLocaleLowerCase(_uiLocale)
+        .includes(search.toLocaleLowerCase(_uiLocale)),
   );
   const leafRooms = s.rooms.filter(
       (r) => !s.rooms.some((c) => c.parent_id === r.room_id),
@@ -353,7 +358,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         (tab !== "stays" || b.status === BookingState.CheckedIn) &&
         (!bookingFilter || b.status === bookingFilter) &&
         bookingSearchText(b,s.rooms.find(room=>room.room_id===b.room_id)?.code||'')
-          .includes(search.toLocaleLowerCase("tr")),
+          .includes(search.toLocaleLowerCase(_uiLocale)),
     )
     // En son eklenen en üstte (kayıt tarihi yoksa giriş tarihine düşer).
     .sort((a, b) => {
@@ -381,7 +386,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const remove = async (type: "room" | "floor", id: string) => {
     if (
       await confirmDialog(
-        "Bu kaydı silmek istiyor musunuz? Kullanımdaki kayıtlar silinemez.",
+        _uiText("Bu kaydı silmek istiyor musunuz? Kullanımdaki kayıtlar silinemez."),
       )
     )
       void run(async () => {
@@ -389,11 +394,11 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         await refresh();
       });
   };
-  const title = navigation.find((n) => n.id === tab)?.label || "";
+  const title = _uiText(navigation.find((n) => n.id === tab)?.label || "");
   const removeBranch = async (id: string, name: string) => {
     if (
       !(await confirmDialog(
-        `"${name}" arşive kaldırılsın mı? Kayıtlar fiziksel olarak silinmez, geçmiş korunur.`,
+        _uiText("\"{value1}\" arşive kaldırılsın mı? Kayıtlar fiziksel olarak silinmez, geçmiş korunur.", {value1: String(name)}),
       ))
     )
       return;
@@ -521,7 +526,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   const pageActions = (
     <div className="flex gap-2">
       <button
-        aria-label="Yenile"
+        aria-label={_uiText("Yenile")}
         disabled={busy}
         className={`uni-control ${secondaryStyle}`}
         onClick={() => void run(() => refresh(), "Kayıtlar güncellendi.")}
@@ -533,9 +538,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           className={`uni-control ${buttonStyle}`}
           onClick={() => openBookingCreate()}
         >
-          <Plus size={16} />
-          Rezervasyon Al
-        </button>
+          <Plus size={16} />{_uiText("Rezervasyon Al")} </button>
       )}
     </div>
   );
@@ -564,8 +567,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         )
       }
     >
-      <main data-page={tab} ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label="Sayfa içeriği" className={tab === "property3d" && !settingsEditorOpen ? "flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden" : "flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6"}>
-        {settingsEditorOpen && <SettingsEditor icon={modal?.type === "folio" ? <NavigationIcon name="folio"/> : undefined} title={editorTitle} description={modal?.type === "documents" ? "Belge türünü seçin, metni kontrol edin ve çıktınızı oluşturun." : modal?.type === "folio" ? "Hizmetleri kalem kalem ekleyin; borç, tahsilat ve bakiyeyi takip edin." : undefined} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
+      <main data-page={tab} ref={mainRef} onScroll={event => { pageScroll.current[tab] = event.currentTarget.scrollTop; }} tabIndex={0} aria-label={_uiText("Sayfa içeriği")} className={tab === "property3d" && !settingsEditorOpen ? "flex-1 min-w-0 min-h-0 flex flex-col overflow-hidden" : "flex-1 min-w-0 overflow-y-auto p-4 md:p-7 space-y-6"}>
+        {settingsEditorOpen && <SettingsEditor icon={modal?.type === "folio" ? <NavigationIcon name="folio"/> : undefined} title={editorTitle} description={modal?.type === "documents" ? _uiText("Belge türünü seçin, metni kontrol edin ve çıktınızı oluşturun.") : modal?.type === "folio" ? _uiText("Hizmetleri kalem kalem ekleyin; borç, tahsilat ve bakiyeyi takip edin.") : undefined} onClose={() => setModal(null)}>{editorContent}</SettingsEditor>}
         <div hidden={settingsEditorOpen} className={tab === "property3d" && !settingsEditorOpen ? "app-page-content flex flex-1 min-h-0 min-w-0 overflow-hidden" : "app-page-content space-y-6"}>
         <AnimatePresence>
           {bookingTab && bookingTabId && (
@@ -583,19 +586,19 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <h2 className="font-uninav-book text-[2.25rem] leading-[2.5rem] tracking-[-0.01em] text-slate-900">
-                    {bookingTab.kind === "create" ? (bookingTab.sale ? "Yeni Konaklama" : "Yeni Rezervasyon") : "Rezervasyonu Düzenle"}
+                    {bookingTab.kind === "create" ? (bookingTab.sale ? _uiText("Yeni Konaklama") : _uiText("Yeni Rezervasyon")) : _uiText("Rezervasyonu Düzenle")}
                   </h2>
                   <p className="mt-2 text-[0.875rem] leading-5 text-slate-500">
                     {bookingTab.kind === "create"
                       ? bookingTab.roomId
-                        ? `${s.rooms.find((r) => r.room_id === bookingTab.roomId)?.code ?? ""} birimi için tarih, misafir ve ödeme öncesi bilgileri girin.`
-                        : "Tarih, birim ve misafir bilgilerini girin."
-                      : `${bookingTab.booking.guest_name} kaydını güncelleyin.`}
+                        ? _uiText("{value1} birimi için tarih, misafir ve ödeme öncesi bilgileri girin.", {value1: String(s.rooms.find((r) => r.room_id === bookingTab.roomId)?.code ?? "")})
+                        : _uiText("Tarih, birim ve misafir bilgilerini girin.")
+                      : _uiText("{value1} kaydını güncelleyin.", {value1: String(bookingTab.booking.guest_name)})}
                   </p>
                 </div>
                 <button
                   type="button"
-                  aria-label="Sekmeyi kapat"
+                  aria-label={_uiText("Sekmeyi kapat")}
                   onClick={() => bookingTabId && closeTab(bookingTabId)}
                   className="uni-control flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 outline-none transition-all duration-150 ease-out hover:bg-slate-200 hover:text-slate-900 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-brand-blue-500/40"
                 >
@@ -629,16 +632,16 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         </AnimatePresence>
         {["board", "bookings", "bookings-list"].includes(tab) && (
           <>
-            <PageHeader className={tab === "board" ? roomCardStyles.boardHeader : undefined} pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>Arıza bildir</button>:undefined}>
+            <PageHeader className={tab === "board" ? roomCardStyles.boardHeader : undefined} pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>{"Arıza bildir"}</button>:undefined}>
             <div className="flex flex-wrap items-stretch gap-3">
               <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
                 <label className="block min-w-0 cursor-text">
-                  <FieldCaption>Ara</FieldCaption>
+                  <FieldCaption>{_uiText("Ara")}</FieldCaption>
                   <span className="mt-1 flex items-center gap-2">
                     <Search size={16} strokeWidth={2.2} aria-hidden="true" className="shrink-0 text-slate-400" />
                     <input
-                      aria-label="Kayıtlarda ara"
-                      placeholder="Birim veya misafir ara…"
+                      aria-label={_uiText("Kayıtlarda ara")}
+                      placeholder={_uiText("Birim veya misafir ara…")}
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       className="font-uninav-book w-full min-w-0 bg-transparent text-[1.125rem] leading-7 text-slate-900 outline-none placeholder:text-slate-400 placeholder:text-base"
@@ -646,7 +649,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                     {search && (
                       <button
                         type="button"
-                        aria-label="Aramayı temizle"
+                        aria-label={_uiText("Aramayı temizle")}
                         onClick={() => setSearch("")}
                         className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-slate-400 outline-none transition-colors hover:bg-slate-200/60 hover:text-slate-700 focus-visible:ring-2 focus-visible:ring-neutral-400"
                       >
@@ -660,7 +663,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                 <>
                   <div className="min-w-36 flex-1">
                     <InlineSelectField
-                      label="Kat"
+                      label={_uiText("Kat")}
                       value={floorId}
                       onChange={(v) => {
                         setFloorId(v);
@@ -677,7 +680,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                   </div>
                   <div className="min-w-36 flex-1">
                     <InlineSelectField
-                      label="Birim türü"
+                      label={_uiText("Birim türü")}
                       value={kind}
                       onChange={(v) => setKind(v)}
                       options={[
@@ -693,7 +696,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               ) : (
                 <div className="min-w-36 flex-1">
                   <InlineSelectField
-                    label="Durum"
+                    label={_uiText("Durum")}
                     value={bookingFilter}
                     onChange={(v) => setBookingFilter(v)}
                     options={[
@@ -709,7 +712,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               {tab !== "units" && (
                 <div className="min-w-40 flex-1">
                   <DateField
-                    label="Tarih"
+                    label={_uiText("Tarih")}
                     value={dateFilter}
                     onChange={(v) => setDateFilter(v)}
                     withTime={false}
@@ -720,11 +723,11 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             </PageHeader>
             {tab === "board" && <div className={roomCardStyles.summaryStats}>
               {[
-                { label: "TANIMLI BİRİM", value: s.rooms.length },
-                { label: "TANIMLI YATAK KAPASİTESİ", value: totalCapacity },
-                { label: "AYRILMIŞ YATAK KAPASİTESİ", value: capacityInUse },
+                { label: _uiText("TANIMLI BİRİM"), value: s.rooms.length },
+                { label: _uiText("TANIMLI YATAK KAPASİTESİ"), value: totalCapacity },
+                { label: _uiText("AYRILMIŞ YATAK KAPASİTESİ"), value: capacityInUse },
                 {
-                  label: "AKTİF KONAKLAMA",
+                  label: _uiText("AKTİF KONAKLAMA"),
                   value: s.bookings.filter((b) => b.status === BookingState.CheckedIn)
                     .length,
                 },
@@ -748,16 +751,15 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           <>
             <div className="flex flex-wrap justify-between gap-3">
               <p className="font-uninav-book text-[0.875rem] leading-5 text-slate-500">
-                {dateFilter ? `${dateFilter} · Günün tamamı` : "Şu an"} ·{" "}
-                {visibleRooms.length} birim
-              </p>
+                {dateFilter ? _uiText("{value1} · Günün tamamı", {value1: String(dateFilter)}) : _uiText("Şu an")} ·{" "}
+                {visibleRooms.length} {_uiText("birim")} </p>
               <button
                 disabled={!floorId}
                 className={`uni-control ${secondaryStyle}`}
                 onClick={() => setPlan(!plan)}
               >
                 <Map size={15} />
-                {plan ? "Kart Görünümü" : "Kat Planı"}
+                {plan ? _uiText("Kart Görünümü") : _uiText("Kat Planı")}
               </button>
             </div>
             {plan && floorId ? (
@@ -847,7 +849,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                             : undefined
                         }
                       >
-                        {operator && folioBooking && <button className={`uni-control ${secondaryStyle}`} onClick={()=>setModal({type:"folio",booking:folioBooking})}><NavigationIcon name="folio" size={18}/>Folyo</button>}
+                        {operator && folioBooking && <button className={`uni-control ${secondaryStyle}`} onClick={()=>setModal({type:"folio",booking:folioBooking})}><NavigationIcon name="folio" size={18}/>{_uiText("Folyo")}</button>}
                         {operator && room.rentable && !active && (
                           <button
                             className={`uni-control ${secondaryStyle}`}
@@ -855,14 +857,12 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                               openBookingCreate(room.room_id)
                             }
                           >
-                            <Plus size={12} />
-                            Rezervasyon
-                          </button>
+                            <Plus size={12} />{_uiText("Rezervasyon")} </button>
                         )}
                         {housekeeping && !state.current.length && (
                           <button
                             type="button"
-                            aria-label={`${room.code} oda durumu: ${STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label}. Oda işlemlerinde açın.`}
+                            aria-label={_uiText("{value1} oda durumu: {value2}. Oda işlemlerinde açın.", {value1: String(room.code), value2: String(STATUS_PALETTE[roomStatusKey(state.operationalStatus)].label)})}
                             onClick={(e) => setContextMenu({
                               x: Math.max(8, Math.min(e.clientX, window.innerWidth - 430)),
                               y: Math.max(8, Math.min(e.clientY, window.innerHeight - 520)),
@@ -885,7 +885,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
             {!visibleRooms.length && (
               <Empty
                 onClick={manager ? () => setModal({ type: "unit" }) : undefined}
-                label="Henüz görüntülenecek birim yok. Önce kat ve birimlerinizi tanımlayın."
+                label={_uiText("Henüz görüntülenecek birim yok. Önce kat ve birimlerinizi tanımlayın.")}
               />
             )}
           </>
@@ -908,7 +908,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         {checkout&&<CheckoutFolio booking={checkout} onClose={()=>setCheckout(null)} onSaved={async()=>{await refresh();notify("Çıkış tamamlandı.")}}/>}
         {reasonOperation&&<OperationReason operation={reasonOperation} onClose={()=>setReasonOperation(null)} onSaved={async()=>{await refresh();notify("İşlem gerekçesiyle kaydedildi.")}}/>}
         {openTabs.includes("guests") && <div hidden={tab !== "guests"}><GuestView key={`${s.hotel_id}-${s.branch_id}`} snapshot={s} /></div>}
-        {Object.entries(guestHistoryTabs).map(([id, guest]) => <section key={`${s.hotel_id}-${s.branch_id}-${id}`} hidden={tab !== id} aria-label={`${guest.name} · Konaklama geçmişi`}>
+        {Object.entries(guestHistoryTabs).map(([id, guest]) => <section key={`${s.hotel_id}-${s.branch_id}-${id}`} hidden={tab !== id} aria-label={_uiText("{value1} · Konaklama geçmişi", {value1: String(guest.name)})}>
           <GuestView snapshot={s} guestId={guest.id} guestName={guest.name} onBack={()=>activateTab("guests")}/>
         </section>)}
         {tab === "blacklist" && <BlacklistView snapshot={s} onGuests={()=>activateTab("guests")} />}
@@ -919,16 +919,15 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           onOpenBooking={booking => setModal({type:"history",booking})} />}
         {activeReportGroup?.id === tab && (manager
           ? <ReportGroupView group={activeReportGroup} onSelect={activateTab} />
-          : <p>Raporlama yalnızca işletme yöneticilerine açıktır.</p>)}
+          : <p>{_uiText("Raporlama yalnızca işletme yöneticilerine açıktır.")}</p>)}
         {manager && (reportForPage(tab) || tab === "reports") && activeReportGroup && <button
           type="button" className="uni-control inline-flex min-h-11 items-center gap-2 rounded-full border border-uni-border bg-uni-surface px-4 text-sm font-medium"
           onClick={() => activateTab(activeReportGroup.id)}>
-          <span aria-hidden="true">←</span> {activeReportGroup.name} raporlarına dön
-        </button>}
+          <span aria-hidden="true">←</span> {activeReportGroup.name} {_uiText("raporlarına dön")} </button>}
         {openTabs.includes("report.guests.customers") && <div hidden={tab !== "report.guests.customers"}>
           <ReportsView key={`${customerScope}-customers`} snapshot={s} reportKey="guests.customers" onOpenCustomer={openCustomer}/>
         </div>}
-        {manager && customerScopeRef.current === customerScope && Object.entries(customerTabs).map(([id, customer]) => <section key={`${customerScope}-${id}`} hidden={tab !== id} aria-label={`${customer.name} · Müşteri detayı`}>
+        {manager && customerScopeRef.current === customerScope && Object.entries(customerTabs).map(([id, customer]) => <section key={`${customerScope}-${id}`} hidden={tab !== id} aria-label={_uiText("{value1} · Müşteri detayı", {value1: String(customer.name)})}>
           <CustomerDetail snapshot={s} customer={customer} onClose={() => activateTab("report.guests.customers")}/>
         </section>)}
         {tab !== "report.guests.customers" && (tab === "reports" || reportForPage(tab)) && <ReportsView key={`${s.hotel_id}-${tab}`} snapshot={s} reportKey={reportForPage(tab)?.key ?? "management.dashboard"} onOpenCustomer={openCustomer} />}
@@ -1091,15 +1090,15 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
   );
 }
 function Empty({ label, onClick }: { label: string; onClick?: () => void }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <div className="rounded-2xl border-2 border-dashed border-slate-200 p-12 text-center space-y-4">
       <Building2 className="mx-auto text-slate-300" size={36} />
       <p className="text-sm text-slate-400">{label}</p>
       {onClick && (
         <button className={`uni-control ${buttonStyle}`} onClick={onClick}>
-          <Plus size={15} />
-          Yeni Kayıt
-        </button>
+          <Plus size={15} />{_uiText("Yeni Kayıt")} </button>
       )}
     </div>
   );
@@ -1111,8 +1110,10 @@ function Table({
   headings: string[];
   children: React.ReactNode;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
-    <div tabIndex={0} role="region" aria-label="Kayıt tablosu; yatay kaydırılabilir" className="rounded-2xl border border-slate-200 bg-white overflow-x-auto">
+    <div tabIndex={0} role="region" aria-label={_uiText("Kayıt tablosu; yatay kaydırılabilir")} className="rounded-2xl border border-slate-200 bg-white overflow-x-auto">
       <table className="w-full text-left text-xs">
         <thead className="bg-slate-50 text-[10px] uppercase text-slate-500">
           <tr>

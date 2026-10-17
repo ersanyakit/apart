@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Printer, Download, Share2, FileText, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
@@ -14,6 +15,8 @@ interface DocumentPreviewProps {
 }
 
 export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, hotel, isOpen, onClose }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const printRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = () => {
@@ -57,9 +60,9 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
 
   const getDocTitle = () => {
     switch(type) {
-      case 'sales': return 'SATIŞ MAKBUZU';
+      case 'sales': return _uiText("SATIŞ MAKBUZU");
       case 'reservation': return 'REZERVASYON FORMU';
-      case 'cancellation': return 'İPTAL FORMU';
+      case 'cancellation': return _uiText("İPTAL FORMU");
       default: return 'BELGE';
     }
   };
@@ -99,7 +102,7 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
                </div>
                <div>
                   <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase leading-none mb-1">{getDocTitle()}</h3>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none">ÖNİZLEME VE ONAY</p>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none">{_uiText("ÖNİZLEME VE ONAY")}</p>
                </div>
             </div>
 
@@ -108,8 +111,7 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
                 onClick={handlePrint}
                 className="uni-control flex items-center gap-2 px-6 py-2.5 uni-button-primary text-white rounded-xl text-[10px]          shadow-brand-blue-500/20  cursor-pointer"
               >
-                <Printer size={14} /> YAZDIR
-              </button>
+                <Printer size={14} /> {_uiText("YAZDIR")} </button>
               <button
                 onClick={onClose}
                 className="uni-control p-2.5 hover:bg-slate-100 text-slate-400 hover:text-slate-900 rounded-xl "
@@ -130,65 +132,65 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
               <div className="flex justify-between items-start border-b-2 border-slate-900 pb-10 mb-10">
                 <div className="space-y-4">
                   {hotel.logoUrl && (
-                    <img src={hotel.logoUrl} alt="Logo" className="h-16 w-auto object-contain grayscale" />
+                    <img src={hotel.logoUrl} alt={_uiText("Logo")} className="h-16 w-auto object-contain grayscale" />
                   )}
                   <div>
                     <h1 className="text-2xl font-black text-slate-900 tracking-tight uppercase">{hotel.name}</h1>
                     <p className="text-[10px] text-slate-500 font-bold max-w-xs leading-relaxed mt-2 uppercase">{hotel.address}</p>
-                    <p className="text-[10px] text-slate-500 font-bold mt-1 uppercase">TEL: {hotel.phone} | {hotel.email}</p>
+                    <p className="text-[10px] text-slate-500 font-bold mt-1 uppercase">{_uiText("TEL:")} {hotel.phone} | {hotel.email}</p>
                   </div>
                 </div>
                 <div className="text-right space-y-2">
                   <div className="inline-block px-4 py-1.5 bg-slate-900 text-white text-[10px] font-black tracking-[0.2em] mb-4">
                     {getDocTitle()}
                   </div>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">DÖKÜMAN NO</p>
-                  <p className="text-lg font-black text-slate-900 tracking-tighter">#DOC-{Math.floor(100000 + Math.random() * 900000)}</p>
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-4">TARİH</p>
-                  <p className="text-sm font-bold text-slate-900">{format(new Date(), 'dd MMMM yyyy HH:mm', { locale: tr })}</p>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("DÖKÜMAN NO")}</p>
+                  <p className="text-lg font-black text-slate-900 tracking-tighter">{_uiText("#DOC-")}{Math.floor(100000 + Math.random() * 900000)}</p>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-4">{_uiText("TARİH")}</p>
+                  <p className="text-sm font-bold text-slate-900">{new Intl.DateTimeFormat(_uiLocale,{dateStyle:'long',timeStyle:'short',timeZone:'Europe/Istanbul'}).format(new Date())}</p>
                 </div>
               </div>
 
               {/* Guest & Stay Info */}
               <div className="grid grid-cols-2 gap-16 mb-16">
                 <div>
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">MİSAFİR BİLGİLERİ</h4>
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">{_uiText("MİSAFİR BİLGİLERİ")}</h4>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-[9px] font-black text-slate-400 uppercase mb-1">AD SOYAD</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase mb-1">{_uiText("AD SOYAD")}</p>
                       <p className="text-sm font-black text-slate-800 uppercase leading-none">{data.guests?.[0]?.name || data.name}</p>
                     </div>
                     {data.guests?.[0]?.phone && (
                       <div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase mb-1">İLETİŞİM</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase mb-1">{_uiText("İLETİŞİM")}</p>
                         <p className="text-sm font-bold text-slate-700">{data.guests[0].phone}</p>
                       </div>
                     )}
                     {data.guests?.[0]?.address && (
                       <div>
-                        <p className="text-[9px] font-black text-slate-400 uppercase mb-1">ADRES</p>
+                        <p className="text-[9px] font-black text-slate-400 uppercase mb-1">{_uiText("ADRES")}</p>
                         <p className="text-xs font-medium text-slate-500 leading-relaxed uppercase">{data.guests[0].address}</p>
                       </div>
                     )}
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">KONAKLAMA DETAYLARI</h4>
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-100 pb-2">{_uiText("KONAKLAMA DETAYLARI")}</h4>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <p className="text-[9px] font-black text-slate-400 uppercase">ODA NO</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase">{_uiText("ODA NO")}</p>
                       <p className="text-sm font-black text-slate-900">{data.number}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-[9px] font-black text-slate-400 uppercase">ODA TİPİ</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase">{_uiText("ODA TİPİ")}</p>
                       <p className="text-sm font-black text-slate-900">{data.type}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-[9px] font-black text-slate-400 uppercase">GİRİŞ TARİHİ</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase">{_uiText("GİRİŞ TARİHİ")}</p>
                       <p className="text-xs font-bold text-slate-700">{data.checkIn}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-[9px] font-black text-slate-400 uppercase">ÇIKIŞ TARİHİ</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase">{_uiText("ÇIKIŞ TARİHİ")}</p>
                       <p className="text-xs font-bold text-slate-700">{data.checkOut}</p>
                     </div>
                   </div>
@@ -200,17 +202,17 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-y border-slate-200">
-                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">AÇIKLAMA</th>
-                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">ADET</th>
-                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">BİRİM FİYAT</th>
-                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">TOPLAM</th>
+                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("AÇIKLAMA")}</th>
+                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">{_uiText("ADET")}</th>
+                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">{_uiText("BİRİM FİYAT")}</th>
+                      <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">{_uiText("TOPLAM")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     <tr>
                       <td className="py-4">
-                        <p className="text-xs font-black text-slate-800 uppercase">KONAKLAMA BEDELİ</p>
-                        <p className="text-[9px] text-slate-400 font-bold uppercase mt-1 tracking-tight">STANDART ODA ({data.number})</p>
+                        <p className="text-xs font-black text-slate-800 uppercase">{_uiText("KONAKLAMA BEDELİ")}</p>
+                        <p className="text-[9px] text-slate-400 font-bold uppercase mt-1 tracking-tight">{_uiText("STANDART ODA (")}{data.number})</p>
                       </td>
                       <td className="py-4 text-xs font-bold text-slate-700 text-center">1</td>
                       <td className="py-4 text-xs font-bold text-slate-700 text-right">₺4.500,00</td>
@@ -224,25 +226,25 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
               <div className="mt-16 pt-16 border-t border-slate-100 flex justify-between items-end">
                 <div className="space-y-8">
                   <div className="space-y-4">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">TESLİM EDEN (RESEPSİYON)</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TESLİM EDEN (RESEPSİYON)")}</p>
                     <div className="w-48 h-px bg-slate-200" />
                   </div>
                   <div className="space-y-4">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">TESLİM ALAN (MİSAFİR)</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TESLİM ALAN (MİSAFİR)")}</p>
                     <div className="w-48 h-px bg-slate-200" />
                   </div>
                 </div>
                 <div className="bg-slate-50 p-8 rounded-[2rem] min-w-[300px] space-y-4">
                   <div className="flex justify-between items-center text-slate-400">
-                    <span className="text-[10px] font-black uppercase tracking-widest">ARA TOPLAM</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">{_uiText("ARA TOPLAM")}</span>
                     <span className="text-xs font-bold">₺4.500,00</span>
                   </div>
                   <div className="flex justify-between items-center text-slate-400">
-                    <span className="text-[10px] font-black uppercase tracking-widest">KDV (%20)</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">{_uiText("KDV (%20)")}</span>
                     <span className="text-xs font-bold">₺900,00</span>
                   </div>
                   <div className="pt-4 border-t border-slate-200 flex justify-between items-center">
-                    <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em]">GENEL TOPLAM</span>
+                    <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em]">{_uiText("GENEL TOPLAM")}</span>
                     <span className="text-xl font-black text-slate-900 tracking-tighter">₺5.400,00</span>
                   </div>
                 </div>
@@ -250,18 +252,14 @@ export const DocumentPreview: React.FC<DocumentPreviewProps> = ({ type, data, ho
 
               {/* Compliance Info */}
               <div className="mt-10 pt-10 border-t border-slate-50 text-center">
-                <p className="text-[8px] text-slate-300 font-bold uppercase tracking-[0.3em]">
-                  BU BELGE KYS HOTEL OTOMASYON SİSTEMİ TARAFINDAN OLUŞTURULMUŞTUR.
-                </p>
+                <p className="text-[8px] text-slate-300 font-bold uppercase tracking-[0.3em]">{_uiText("BU BELGE KYS HOTEL OTOMASYON SİSTEMİ TARAFINDAN OLUŞTURULMUŞTUR.")} </p>
               </div>
             </div>
           </div>
 
           <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-center gap-4 text-slate-400">
             <AlertTriangle size={14} className="text-orange-400 shrink-0" />
-            <p className="text-[9px] font-bold uppercase tracking-widest">
-              ÖNİZLEMEDEKİ BİLGİLERİN DOĞRULUĞUNDAN EMİN OLDUKTAN SONRA YAZDIRMA İŞLEMİNİ BAŞLATIN.
-            </p>
+            <p className="text-[9px] font-bold uppercase tracking-widest">{_uiText("ÖNİZLEMEDEKİ BİLGİLERİN DOĞRULUĞUNDAN EMİN OLDUKTAN SONRA YAZDIRMA İŞLEMİNİ BAŞLATIN.")} </p>
           </div>
         </motion.div>
       </div>

@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState, useMemo } from 'react';
 import {
   useReactTable,
@@ -42,6 +43,8 @@ interface StayingListProps {
 const columnHelper = createColumnHelper<Room>();
 
 export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchive, onOperation, onPrint, handleContextMenu }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [selectedGuest, setSelectedGuest] = useState<Room | null>(null);
@@ -66,7 +69,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
     if (!isArchive) {
       cols.push(
         columnHelper.accessor('number', {
-          header: () => <div className="flex items-center gap-2"><Hash className="w-3 h-3"/> ODA</div>,
+          header: () => <div className="flex items-center gap-2"><Hash className="w-3 h-3"/> {_uiText("ODA")}</div>,
           cell: info => <span className="font-black text-brand-blue-600">{info.getValue()}</span>,
           size: 80,
         })
@@ -76,19 +79,19 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
     cols.push(
       columnHelper.accessor(row => row.guests?.[0]?.name || row.name, {
         id: 'guestName',
-        header: () => <div className="flex items-center gap-2"><User className="w-3 h-3"/> MÜŞTERİ</div>,
+        header: () => <div className="flex items-center gap-2"><User className="w-3 h-3"/> {_uiText("MÜŞTERİ")}</div>,
         cell: info => (
           <div className="flex flex-col">
             <span className="font-bold text-slate-800 uppercase tracking-tight">{info.getValue()}</span>
             {info.row.original.guests && info.row.original.guests.length > 1 && (
-              <span className="text-[9px] text-brand-blue-500 font-bold">+{info.row.original.guests.length - 1} EK MİSAFİR</span>
+              <span className="text-[9px] text-brand-blue-500 font-bold">+{info.row.original.guests.length - 1} {_uiText("EK MİSAFİR")}</span>
             )}
           </div>
         ),
       }),
       columnHelper.accessor(row => row.guests?.[0]?.phone || '', {
         id: 'phone',
-        header: () => <div className="flex items-center gap-2"><Phone className="w-3 h-3"/> TELEFON</div>,
+        header: () => <div className="flex items-center gap-2"><Phone className="w-3 h-3"/> {_uiText("TELEFON")}</div>,
         cell: info => <span className="text-slate-500 font-medium">{info.getValue() || '---'}</span>,
       })
     );
@@ -97,26 +100,24 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
       cols.push(
         columnHelper.accessor(row => row.guests?.[0]?.address || '', {
           id: 'address',
-          header: () => <div className="flex items-center gap-2"><MapPin className="w-3 h-3"/> ADRES</div>,
+          header: () => <div className="flex items-center gap-2"><MapPin className="w-3 h-3"/> {_uiText("ADRES")}</div>,
           cell: info => <span className="text-slate-500 font-medium line-clamp-1">{info.getValue() || '---'}</span>,
         })
       );
     } else {
       cols.push(
         columnHelper.accessor('checkIn', {
-          header: () => <div className="flex items-center gap-2"><Calendar className="w-3 h-3"/> GİRİŞ</div>,
+          header: () => <div className="flex items-center gap-2"><Calendar className="w-3 h-3"/> {_uiText("GİRİŞ")}</div>,
           cell: info => <span className="text-slate-600 font-bold">{info.getValue()?.split(' ')[0] || '---'}</span>,
         }),
         columnHelper.accessor('checkOut', {
-          header: () => <div className="flex items-center gap-2 text-red-500"><Calendar className="w-3 h-3"/> ÇIKIŞ</div>,
+          header: () => <div className="flex items-center gap-2 text-red-500"><Calendar className="w-3 h-3"/> {_uiText("ÇIKIŞ")}</div>,
           cell: info => <span className="text-red-500 font-black">{info.getValue()?.split(' ')[0] || '---'}</span>,
         }),
         columnHelper.accessor('status', {
           header: 'DURUM',
           cell: info => (
-            <span className={`px-2 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${
-              info.getValue() === 'Dolu' ? 'bg-red-50 text-red-600 ring-1 ring-red-100' : 'bg-brand-blue-50 text-brand-blue-600 ring-1 ring-brand-blue-100'
-            }`}>
+            <span className={`px-2 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${info.getValue() === 'Dolu' ? 'bg-red-50 text-red-600 ring-1 ring-red-100' : 'bg-brand-blue-50 text-brand-blue-600 ring-1 ring-brand-blue-100'}`}>
               {info.getValue()}
             </span>
           ),
@@ -136,7 +137,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                 <button
                   onClick={() => onOperation?.('checkout', info.row.original.id)}
                   className="uni-control p-2 hover:bg-red-50 text-slate-400 hover:text-red-600 rounded-lg "
-                  title="Çıkış Yap"
+                  title={_uiText("Çıkış Yap")}
                 >
                   <UserMinus className="w-4 h-4" />
                 </button>
@@ -149,21 +150,21 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                <button
                 onClick={() => onPrint?.('reservation', info.row.original.id)}
                 className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-brand-blue-600 rounded-md "
-                title="Rezervasyon Dekontu"
+                title={_uiText("Rezervasyon Dekontu")}
               >
                 <Calendar className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onPrint?.('sales', info.row.original.id)}
                 className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-emerald-600 rounded-md "
-                title="Satış Dekontu"
+                title={_uiText("Satış Dekontu")}
               >
                 <Printer className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onPrint?.('cancellation', info.row.original.id)}
                 className="uni-control p-1.5 hover:bg-white text-slate-400 hover:text-rose-600 rounded-md "
-                title="İptal Dekontu"
+                title={_uiText("İptal Dekontu")}
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -219,7 +220,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-brand-blue-500 transition-all" />
           <input
             type="text"
-            placeholder={isArchive ? "Binlerce kayıt arasında akıllı arama..." : "Konaklayanlar listesinde ara..."}
+            placeholder={isArchive ? _uiText("Binlerce kayıt arasında akıllı arama...") : _uiText("Konaklayanlar listesinde ara...")}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="uni-input w-full pl-11 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[13px] font-medium focus:outline-none focus:ring-4 focus:ring-neutral-300/5 focus:border-neutral-400/40 transition-all placeholder:text-slate-400"
@@ -228,7 +229,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
 
         <div className="flex items-center gap-4 px-2">
            <div className="flex flex-col items-end">
-              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Kayıt Sayısı</span>
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{_uiText("Kayıt Sayısı")}</span>
               <span className="text-sm font-black text-slate-700 tracking-tight leading-none">{table.getFilteredRowModel().rows.length}</span>
            </div>
         </div>
@@ -248,7 +249,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                     >
                       {header.isPlaceholder ? null : (
                         <div
-                          className={header.column.getCanSort() ? 'cursor-pointer select-none flex items-center gap-1.5 hover:text-slate-900 transition-colors group' : ''}
+                          className={header.column.getCanSort() ? "cursor-pointer select-none flex items-center gap-1.5 hover:text-slate-900 transition-colors group" : ''}
                           onClick={header.column.getToggleSortingHandler()}
                         >
                           {flexRender(header.column.columnDef.header, header.getContext())}
@@ -286,7 +287,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
           {table.getRowModel().rows.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 text-slate-300">
               <Search className="w-8 h-8 mb-3 opacity-20" />
-              <p className="font-bold text-[11px] tracking-widest uppercase">Eşleşen kayıt bulunamadı</p>
+              <p className="font-bold text-[11px] tracking-widest uppercase">{_uiText("Eşleşen kayıt bulunamadı")}</p>
             </div>
           )}
         </div>
@@ -299,7 +300,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                className="uni-input text-[10px] font-black bg-white border border-slate-200 rounded-lg px-2 py-1 outline-none focus:border-neutral-400"
              >
                {[15, 30, 50, 100].map(size => (
-                 <option key={size} value={size}>{size} SATIR</option>
+                 <option key={size} value={size}>{size} {_uiText("SATIR")}</option>
                ))}
              </select>
           </div>
@@ -312,8 +313,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="text-[10px] font-black text-slate-600 px-2">
-              SAYFA {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
+            <span className="text-[10px] font-black text-slate-600 px-2">{_uiText("SAYFA")} {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
             </span>
             <button
               onClick={() => table.nextPage()}
@@ -350,7 +350,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                     <History className="w-6 h-6" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-black text-slate-800 tracking-tight uppercase leading-none mb-1">KONAKLAMA GEÇMİŞİ</h2>
+                    <h2 className="text-lg font-black text-slate-800 tracking-tight uppercase leading-none mb-1">{_uiText("KONAKLAMA GEÇMİŞİ")}</h2>
                     <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{selectedGuest.guests?.[0]?.name || selectedGuest.name}</p>
                   </div>
                 </div>
@@ -378,24 +378,22 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
                             <span className="text-xl font-black text-slate-800 tracking-tighter">{stay.number}</span>
-                            <span className="text-[10px] bg-slate-50 text-slate-400 px-2 py-1 rounded-lg font-black uppercase tracking-widest">ODA</span>
+                            <span className="text-[10px] bg-slate-50 text-slate-400 px-2 py-1 rounded-lg font-black uppercase tracking-widest">{_uiText("ODA")}</span>
                           </div>
                           {stay.status === 'Dolu' && (
-                            <span className="px-2 py-1 bg-red-50 text-red-500 rounded-lg text-[9px] font-black uppercase tracking-widest animate-pulse">AKTİF</span>
+                            <span className="px-2 py-1 bg-red-50 text-red-500 rounded-lg text-[9px] font-black uppercase tracking-widest animate-pulse">{_uiText("AKTİF")}</span>
                           )}
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-1">
                             <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
-                              <Clock className="w-3 h-3" /> GİRİŞ
-                            </p>
+                              <Clock className="w-3 h-3" /> {_uiText("GİRİŞ")} </p>
                             <p className="text-xs font-bold text-slate-700">{stay.checkIn}</p>
                           </div>
                           <div className="space-y-1">
                             <p className="text-[9px] font-black text-red-400 uppercase tracking-widest flex items-center gap-1.5">
-                              <Clock className="w-3 h-3" /> ÇIKIŞ
-                            </p>
+                              <Clock className="w-3 h-3" /> {_uiText("ÇIKIŞ")} </p>
                             <p className="text-xs font-bold text-red-500">{stay.checkOut}</p>
                           </div>
                         </div>
@@ -406,7 +404,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
                   {guestHistory.length === 0 && (
                     <div className="flex flex-col items-center justify-center py-20 text-slate-300">
                       <History className="w-12 h-12 mb-4 opacity-20" />
-                      <p className="font-bold text-sm uppercase tracking-widest">Kayıt Bulunamadı</p>
+                      <p className="font-bold text-sm uppercase tracking-widest">{_uiText("Kayıt Bulunamadı")}</p>
                     </div>
                   )}
                 </div>
@@ -414,7 +412,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
 
               <div className="p-8 bg-slate-50 border-t border-slate-100">
                 <div className="flex items-center justify-between text-slate-400">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em]">TOPLAM KONAKLAMA</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em]">{_uiText("TOPLAM KONAKLAMA")}</span>
                   <span className="text-lg font-black text-slate-900 tracking-tighter">{guestHistory.length}</span>
                 </div>
               </div>

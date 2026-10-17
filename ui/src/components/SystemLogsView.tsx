@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React from 'react';
 import { motion } from 'motion/react';
 import {
@@ -16,6 +17,8 @@ interface SystemLogsViewProps {
 }
 
 export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <div className="flex-1 overflow-y-auto p-8 bg-[#f8fafc]">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -26,19 +29,15 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
               <History className="w-8 h-8" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Sistem Logları</h2>
-              <p className="text-sm text-slate-400 font-medium italic mt-1">Sistem üzerinde gerçekleştirilen tüm işlemlerin detaylı geçmişi.</p>
+              <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">{_uiText("Sistem Logları")}</h2>
+              <p className="text-sm text-slate-400 font-medium italic mt-1">{_uiText("Sistem üzerinde gerçekleştirilen tüm işlemlerin detaylı geçmişi.")}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
              <button className="uni-control flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-[10px]    text-slate-500 hover:bg-slate-50  shadow-sm">
-                <Download className="w-3.5 h-3.5" />
-                Dışa Aktar (CSV)
-             </button>
+                <Download className="w-3.5 h-3.5" />{_uiText("Dışa Aktar (CSV)")} </button>
              <div className="flex items-center gap-2 px-4 py-2 bg-brand-blue-50 border border-brand-blue-100 rounded-xl text-brand-blue-600 text-[10px] font-black uppercase tracking-widest">
-                <Activity className="w-3.5 h-3.5" />
-                CANLI TAKİP AKTİF
-              </div>
+                <Activity className="w-3.5 h-3.5" />{_uiText("CANLI TAKİP AKTİF")} </div>
           </div>
         </div>
 
@@ -48,14 +47,12 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300" />
             <input
               type="text"
-              placeholder="LOGLARDA ARA (GERÇEKLEŞTİREN, EYLEM, AÇIKLAMA...)"
+              placeholder={_uiText("LOGLARDA ARA (GERÇEKLEŞTİREN, EYLEM, AÇIKLAMA...)")}
               className="uni-input w-full pl-14 pr-6 py-4 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 placeholder:text-slate-400 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 transition-all shadow-sm"
             />
           </div>
           <button className="uni-control px-6 py-4 bg-white border border-slate-200 rounded-2xl text-[10px]    text-slate-400 hover:text-slate-600 flex items-center gap-3  shrink-0">
-             <Filter className="w-4 h-4" />
-             Filtrele
-          </button>
+             <Filter className="w-4 h-4" />{_uiText("Filtrele")} </button>
         </div>
 
         {/* Logs Table */}
@@ -64,10 +61,10 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-50/50 border-b border-slate-100">
-                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">ZAMANLAMA</th>
-                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">EYLEM TİPİ</th>
-                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">PERSONEL</th>
-                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">İŞLEM DETAYI</th>
+                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("ZAMANLAMA")}</th>
+                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("EYLEM TİPİ")}</th>
+                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("PERSONEL")}</th>
+                  <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("İŞLEM DETAYI")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
@@ -81,18 +78,16 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
                   >
                     <td className="px-8 py-5">
                       <div className="flex flex-col">
-                        <span className="text-[11px] font-black text-slate-700 tracking-tight">{new Date(log.date).toLocaleDateString('tr-TR')}</span>
-                        <span className="text-[10px] font-bold text-slate-400 mt-0.5">{new Date(log.date).toLocaleTimeString('tr-TR')}</span>
+                        <span className="text-[11px] font-black text-slate-700 tracking-tight">{new Date(log.date).toLocaleDateString(_uiLocale)}</span>
+                        <span className="text-[10px] font-bold text-slate-400 mt-0.5">{new Date(log.date).toLocaleTimeString(_uiLocale)}</span>
                       </div>
                     </td>
                     <td className="px-8 py-5">
-                      <span className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border ${
-                        log.action.includes('Hata') || log.action.includes('İptal') || log.action.includes('Silme')
+                      <span className={`px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest border ${log.action.includes('Hata') || log.action.includes('İptal') || log.action.includes('Silme')
                         ? 'bg-red-50 text-red-600 border-red-100'
                         : log.action.includes('Değişim') || log.action.includes('Güncelleme')
                         ? 'bg-amber-50 text-amber-600 border-amber-100'
-                        : 'bg-brand-blue-50 text-brand-blue-600 border-brand-blue-100'
-                      }`}>
+                        : 'bg-brand-blue-50 text-brand-blue-600 border-brand-blue-100'}`}>
                         {log.action}
                       </span>
                     </td>
@@ -120,8 +115,8 @@ export const SystemLogsView: React.FC<SystemLogsViewProps> = ({ logs }) => {
                           <History className="w-8 h-8" />
                         </div>
                         <div>
-                          <p className="text-xs font-black text-slate-300 uppercase tracking-[0.2em]">HERHANGİ BİR KAYIT BULUNAMADI</p>
-                          <p className="text-[10px] text-slate-200 uppercase mt-1">Sistem hareketleri henüz kaydedilmemiş.</p>
+                          <p className="text-xs font-black text-slate-300 uppercase tracking-[0.2em]">{_uiText("HERHANGİ BİR KAYIT BULUNAMADI")}</p>
+                          <p className="text-[10px] text-slate-200 uppercase mt-1">{_uiText("Sistem hareketleri henüz kaydedilmemiş.")}</p>
                         </div>
                       </div>
                     </td>

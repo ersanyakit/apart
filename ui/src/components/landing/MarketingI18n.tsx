@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { useI18n } from '../I18n';
 import { LOCALES, LOCALE_STORAGE_KEY, type Locale } from '../../lib/i18n/config';
@@ -20,6 +20,11 @@ export function MarketingI18nProvider({children,initialDictionary}: {children:Re
  const [loading,setLoading]=useState(false);
  const [error,setError]=useState(false);
  const request=useRef(0);
+ useEffect(()=>{
+  let active=true;
+  loadMarketingDictionary(locale).then(next=>{if(active)setDictionary(next);}).catch(()=>{});
+  return()=>{active=false};
+ },[locale]);
  const m=useCallback((source:string,params?:Record<string,string|number>)=>marketingText(dictionary,source,params),[dictionary]);
  const selectLocale=async (value:Locale)=>{
   const current=++request.current;setLoading(true);setError(false);

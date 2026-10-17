@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { PhoneField } from "./fields/PhoneField";
 import React, { useState } from 'react';
 import { Plus, Trash2, User, CreditCard, Phone, MessageSquare, Search, History, X, Calendar, MapPin, Star, ShieldCheck } from 'lucide-react';
@@ -19,6 +20,8 @@ const GUEST_HISTORY: Guest[] = [
 ];
 
 export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [searchQuery, setSearchQuery] = useState('');
   const [activeHistoryGuestId, setActiveHistoryGuestId] = useState<string | null>(null);
 
@@ -63,8 +66,8 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
             <User className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-base font-black text-slate-800 tracking-tight uppercase">KONAKLAYAN MİSAFİRLER</h3>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Hızlı giriş için misafir geçmişi aktiftir</p>
+            <h3 className="text-base font-black text-slate-800 tracking-tight uppercase">{_uiText("KONAKLAYAN MİSAFİRLER")}</h3>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("Hızlı giriş için misafir geçmişi aktiftir")}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -72,9 +75,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
             onClick={addGuest}
             className="uni-control flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-2xl text-[10px]  hover:bg-emerald-700   shadow-emerald-100 group whitespace-nowrap"
           >
-            <Plus className="w-4 h-4 transition-transform group-hover:rotate-90" />
-            YENİ MİSAFİR EKLE
-          </button>
+            <Plus className="w-4 h-4 transition-transform group-hover:rotate-90" />{_uiText("YENİ MİSAFİR EKLE")} </button>
         </div>
       </div>
 
@@ -91,8 +92,8 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     {index + 1}
                   </div>
                   <div>
-                    <h4 className="text-xs font-black text-slate-800 uppercase tracking-tight">MİSAFİR BİLGİLERİ</h4>
-                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{index === 0 ? 'ASIL KONAKLAYAN' : 'EK MİSAFİR'}</p>
+                    <h4 className="text-xs font-black text-slate-800 uppercase tracking-tight">{_uiText("MİSAFİR BİLGİLERİ")}</h4>
+                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{index === 0 ? _uiText("ASIL KONAKLAYAN") : _uiText("EK MİSAFİR")}</p>
                   </div>
                 </div>
 
@@ -104,33 +105,28 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     }}
                     className="uni-control flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-blue-50 text-brand-blue-600 rounded-xl text-[9px]  hover:bg-brand-blue-100  border border-brand-blue-100/50 group"
                   >
-                    <History className="w-3.5 h-3.5 transition-transform group-hover:rotate-[-45deg]" />
-                    ARŞİVDEN GETİR
-                  </button>
+                    <History className="w-3.5 h-3.5 transition-transform group-hover:rotate-[-45deg]" />{_uiText("ARŞİVDEN GETİR")} </button>
 
                   {guests.length > 1 && (
                     <button
                       onClick={() => removeGuest(guest.id)}
                       className="uni-control flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-50 text-rose-600 rounded-xl text-[9px]  hover:bg-rose-100 active:bg-rose-100    border border-rose-100/50  cursor-pointer"
-                      title="Misafiri Sil"
+                      title={_uiText("Misafiri Sil")}
                     >
-                      <Trash2 className="w-3.5 h-3.5" />
-                      SİL
-                    </button>
+                      <Trash2 className="w-3.5 h-3.5" />{_uiText("SİL")} </button>
                   )}
                 </div>
               </div>
 
               <div className="lg:col-span-4 space-y-1.5 order-2 lg:order-1">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                  <User className="w-3 h-3" /> TAM AD SOYAD
-                </label>
+                  <User className="w-3 h-3" /> {_uiText("TAM AD SOYAD")} </label>
                 <div className="relative">
                   <input
                     type="text"
                     value={guest.name || ''}
                     onChange={(e) => updateGuest(guest.id, 'name', e.target.value.toUpperCase())}
-                    placeholder="MİSAFİR ADI VE SOYADI"
+                    placeholder={_uiText("MİSAFİR ADI VE SOYADI")}
                     className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner uppercase"
                   />
                   {guest.name && (
@@ -143,31 +139,29 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
 
               <div className="lg:col-span-4 space-y-1.5 order-3 lg:order-2">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                  <CreditCard className="w-3 h-3" /> T.C. NO / PASAPORT
-                </label>
+                  <CreditCard className="w-3 h-3" /> {_uiText("T.C. NO / PASAPORT")} </label>
                 <input
                   type="text"
                   maxLength={11}
                   value={guest.tcNo || ''}
                   onChange={(e) => updateGuest(guest.id, 'tcNo', e.target.value.replace(/\D/g, ''))}
-                  placeholder="KİMLİK NUMARASI"
+                  placeholder={_uiText("KİMLİK NUMARASI")}
                   className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-black text-slate-800 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all shadow-inner"
                 />
               </div>
 
               <div className="lg:col-span-4 space-y-1.5 order-4 lg:order-3">
-                <PhoneField label="Telefon" value={guest.phone || ''} defaultCountry={guest.nationality || 'TR'} onChange={value => updateGuest(guest.id, 'phone', value)} />
+                <PhoneField label={_uiText("Telefon")} value={guest.phone || ''} defaultCountry={guest.nationality || "TR"} onChange={value => updateGuest(guest.id, 'phone', value)} />
               </div>
 
               <div className="lg:col-span-12 space-y-1.5 order-5 lg:order-4 pt-4 border-t border-slate-50 mt-4">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
-                  <MessageSquare className="w-3 h-3" /> MİSAFİR ÖZEL NOTU / AYRINTILAR
-                </label>
+                  <MessageSquare className="w-3 h-3" /> {_uiText("MİSAFİR ÖZEL NOTU / AYRINTILAR")} </label>
                 <textarea
                   rows={2}
                   value={guest.note || ''}
                   onChange={(e) => updateGuest(guest.id, 'note', e.target.value)}
-                  placeholder="ÖZEL TALEPLER, ALERJİLER VEYA KİMLİK AYRINTILARI..."
+                  placeholder={_uiText("ÖZEL TALEPLER, ALERJİLER VEYA KİMLİK AYRINTILARI...")}
                   className="uni-input w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-[32px] text-sm font-bold text-slate-700 focus:ring-4 focus:ring-neutral-300 focus:border-neutral-400 outline-none transition-all resize-none shadow-inner"
                 />
               </div>
@@ -180,13 +174,11 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
             <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-200 mb-6 border-2 border-slate-100">
                <User className="w-10 h-10" />
             </div>
-            <p className="text-slate-400 font-black text-sm uppercase tracking-widest">Henüz misafir eklenmedi</p>
+            <p className="text-slate-400 font-black text-sm uppercase tracking-widest">{_uiText("Henüz misafir eklenmedi")}</p>
             <button
               onClick={addGuest}
               className="uni-control mt-6 px-10 py-4 bg-slate-900 text-white rounded-3xl  text-xs   hover:uni-button-primary   shadow-slate-200 animate-bounce"
-            >
-              İLK MİSAFİRİ EKLE
-            </button>
+            >{_uiText("İLK MİSAFİRİ EKLE")} </button>
           </div>
         )}
       </div>
@@ -216,11 +208,9 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                       <History className="w-6 h-6" />
                    </div>
                    <div>
-                      <h2 className="text-lg font-black text-slate-800 tracking-tight leading-none mb-1">MİSAFİR ARŞİVİ</h2>
+                      <h2 className="text-lg font-black text-slate-800 tracking-tight leading-none mb-1">{_uiText("MİSAFİR ARŞİVİ")}</h2>
                       <div className="flex items-center gap-2">
-                        <span className="text-[8px] font-black text-brand-blue-500 uppercase tracking-widest bg-brand-blue-50 px-1.5 py-0.5 rounded border border-brand-blue-100">
-                           GÜVENLİ VERİ
-                        </span>
+                        <span className="text-[8px] font-black text-brand-blue-500 uppercase tracking-widest bg-brand-blue-50 px-1.5 py-0.5 rounded border border-brand-blue-100">{_uiText("GÜVENLİ VERİ")} </span>
                       </div>
                    </div>
                 </div>
@@ -242,7 +232,7 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="İsim veya T.C. Kimlik ile ara..."
+                    placeholder={_uiText("İsim veya T.C. Kimlik ile ara...")}
                     className="uni-input w-full pl-11 pr-5 py-4 bg-slate-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-800 outline-none focus:ring-4 focus:ring-neutral-300 focus:border-neutral-300 transition-all placeholder:text-slate-400"
                   />
                 </div>
@@ -272,16 +262,14 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
                          </div>
                       </div>
 
-                      <div className="bg-slate-900 group-hover:bg-brand-blue-600 text-white px-4 py-2 rounded-lg text-[9px] font-black transition-all shadow-lg shadow-slate-100 uppercase tracking-widest">
-                         AKTAR
-                      </div>
+                      <div className="bg-slate-900 group-hover:bg-brand-blue-600 text-white px-4 py-2 rounded-lg text-[9px] font-black transition-all shadow-lg shadow-slate-100 uppercase tracking-widest">{_uiText("AKTAR")} </div>
                     </button>
                   ))}
 
                   {filteredHistory.length === 0 && (
                     <div className="flex flex-col items-center justify-center py-12 px-6 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-white">
                        <Search className="w-8 h-8 text-slate-200 mb-3" />
-                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Kayıt Bulunamadı</p>
+                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("Kayıt Bulunamadı")}</p>
                     </div>
                   )}
                 </div>
@@ -289,13 +277,11 @@ export const GuestListForm: React.FC<GuestListFormProps> = ({ guests, onChange }
 
               {/* Modal Footer */}
               <div className="bg-slate-50/50 p-6 border-t border-slate-100 flex items-center justify-between">
-                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">TOPLAM {GUEST_HISTORY.length} KAYIT</p>
+                <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TOPLAM")} {GUEST_HISTORY.length} {_uiText("KAYIT")}</p>
                 <button
                   onClick={() => setActiveHistoryGuestId(null)}
                   className="uni-control px-6 py-2.5 bg-white text-slate-500 hover:text-slate-700 border border-slate-200 rounded-xl text-[9px]    "
-                >
-                  KAPAT
-                </button>
+                >{_uiText("KAPAT")} </button>
               </div>
             </motion.div>
           </div>

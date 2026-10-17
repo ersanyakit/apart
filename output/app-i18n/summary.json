@@ -1,0 +1,249 @@
+{
+  "complete": false,
+  "sourceMessages": 1963,
+  "languages": 60,
+  "perLanguage": {
+    "tr": {
+      "translated": 1963,
+      "missingCount": 0
+    },
+    "en": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "de": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "fr": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ru": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ar": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ne": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "th": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "zh-CN": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "zh-TW": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "hi": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "km": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "si": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ta": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "yue": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ur": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "bn": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "dz": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "es": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "it": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "pt": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "nl": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "pl": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "cs": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "hu": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ro": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "el": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "uk": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "bg": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "sr": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "hr": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "sk": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "sl": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "fi": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "sv": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "da": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "no": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ms": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "id": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "vi": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ja": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ko": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "fa": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "he": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "sw": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "am": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "mr": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "pa": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "te": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "my": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "lo": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ka": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "hy": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "az": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "kk": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "uz": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ky": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "mn": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ps": {
+      "translated": 234,
+      "missingCount": 1729
+    },
+    "ku": {
+      "translated": 234,
+      "missingCount": 1729
+    }
+  },
+  "translation_method": "Assistant-authored core dictionaries; existing AI-authored marketing dictionaries reused. No Google Translate integration.",
+  "remaining_work": "Generate and review missing application messages for every target language; model download currently fails with DNS resolution errors."
+}

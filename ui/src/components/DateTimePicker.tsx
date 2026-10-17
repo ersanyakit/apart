@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Calendar as CalendarIcon, Clock, ChevronLeft, ChevronRight, CalendarDays } from 'lucide-react';
@@ -12,6 +13,8 @@ interface DateTimePickerProps {
 }
 
 export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange, label, hideTime = false }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(value || new Date());
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +29,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const days = ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pz'];
+  const days=Array.from({length:7},(_,i)=>new Intl.DateTimeFormat(_uiLocale,{weekday:'short'}).format(new Date(2024,0,1+i)));
   const start = startOfMonth(currentMonth);
   const end = endOfMonth(currentMonth);
   const dateInterval = eachDayOfInterval({ start, end });
@@ -56,7 +59,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
       >
         <CalendarIcon className={`w-4 h-4 transition-colors ${isOpen ? 'text-brand-blue-600' : 'text-slate-400'}`} />
         <span className="flex-1 truncate">
-          {format(value, hideTime ? 'dd MMMM yyyy' : 'dd.MM.yyyy HH:mm', { locale: tr })}
+          {new Intl.DateTimeFormat(_uiLocale,{dateStyle:'long',...(hideTime?{}:{timeStyle:'short'})}).format(value)}
         </span>
       </button>
 
@@ -79,7 +82,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
               </button>
               <div className="text-center">
                 <p className="text-xs font-black text-slate-800 uppercase tracking-tight">
-                  {format(currentMonth, 'MMMM yyyy', { locale: tr })}
+                  {new Intl.DateTimeFormat(_uiLocale,{month:'long',year:'numeric'}).format(currentMonth)}
                 </p>
               </div>
               <button
@@ -125,7 +128,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <Clock className="w-4 h-4 text-slate-400" />
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">SAAT</span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("SAAT")}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <input
@@ -154,16 +157,12 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({ value, onChange,
                     onChange(today);
                   }}
                   className="uni-control flex-1 py-2 bg-slate-100 text-slate-600 rounded-xl text-[10px]    hover:bg-slate-200 "
-                >
-                  BUGÜN
-                </button>
+                >{_uiText("BUGÜN")} </button>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
                   className="uni-control flex-1 py-2 uni-button-primary text-white rounded-xl text-[10px]     shadow-brand-blue-100  "
-                >
-                  KAPAT
-                </button>
+                >{_uiText("KAPAT")} </button>
               </div>
             </div>
           </motion.div>

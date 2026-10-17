@@ -50,6 +50,8 @@ export function InventoryView({
   onBulk: () => void;
   onBook: (room: APIRoom) => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const [floor, setFloor] = useState(""),
     [selected, setSelected] = useState<string[]>([]),
@@ -95,7 +97,7 @@ export function InventoryView({
   const remove = async (ids: string[]) => {
     if (
       await confirmDialog(
-        `${ids.length} seçili birim ve alt birimleri silinsin mi?\nKayıtlar ve geçmişi korunur. Aktif rezervasyonu bulunan birimler silinmez.`,
+        _uiText("{value1} seçili birim ve alt birimleri silinsin mi?\nKayıtlar ve geçmişi korunur. Aktif rezervasyonu bulunan birimler silinmez.", {value1: String(ids.length)}),
       )
     )
       await work(() =>
@@ -145,8 +147,8 @@ export function InventoryView({
         {mode === "rooms" && (
           <>
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-uni-muted">
-              <span>{rooms.length} oda / birim · Yatak ayrıntıları için “Yataklar” görünümünü kullanın.</span>
-              {!!selected.length&&<button className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>remove(selected)}><Trash2 size={14}/>Seçilenleri Sil ({selected.length})</button>}
+              <span>{rooms.length} {_uiText("oda / birim · Yatak ayrıntıları için “Yataklar” görünümünü kullanın.")}</span>
+              {!!selected.length&&<button className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>remove(selected)}><Trash2 size={14}/>{_uiText("Seçilenleri Sil (")}{selected.length})</button>}
             </div>
             <div className="rounded-2xl border border-slate-200 overflow-auto bg-white">
               <table className="w-full text-left text-xs">
@@ -154,7 +156,7 @@ export function InventoryView({
                   <tr>
                     <th className="p-4">
                       <Switch
-                        label="Tüm birimleri seç"
+                        label={_uiText("Tüm birimleri seç")}
                         hideLabel
                         checked={
                           rooms.length > 0 &&
@@ -188,7 +190,7 @@ export function InventoryView({
                       <td className="p-4">
                         <Switch
                           hideLabel
-                          label={`${r.code} seç`}
+                          label={_uiText("{value1} seç", {value1: String(r.code)})}
                           checked={selected.includes(r.room_id)}
                           onChange={(checked) =>
                             setSelected((v) =>
@@ -209,13 +211,13 @@ export function InventoryView({
                           "—"}
                       </td>
                       <td>{unitKinds[r.kind]}</td>
-                      <td>{r.kind === "bed" ? `${r.capacity} kişilik yatak yeri` : r.rental_mode === "beds" ? "Yataklar ayrı ayrı" : r.rentable ? "Tamamı kiralanır" : "Ayrı kiralanmaz"}</td>
+                      <td>{r.kind === "bed" ? _uiText("{value1} kişilik yatak yeri", {value1: String(r.capacity)}) : r.rental_mode === "beds" ? _uiText("Yataklar ayrı ayrı") : r.rentable ? _uiText("Tamamı kiralanır") : _uiText("Ayrı kiralanmaz")}</td>
                       <td>{r.status}</td>
                       <td className="p-3">
                         <div className="flex gap-2">
                           <button
                             className={`uni-control ${secondaryStyle}`}
-                            aria-label={`${r.code} düzenle`}
+                            aria-label={_uiText("{value1} düzenle", {value1: String(r.code)})}
                             onClick={() => onUnit(r)}
                           >
                             <Pencil size={13} />
@@ -227,13 +229,11 @@ export function InventoryView({
                                 setParent(r.room_id);
                                 setMode("beds");
                               }}
-                            >
-                              Yatakları
-                            </button>
+                            >{_uiText("Yatakları")} </button>
                           )}
                           <button
                             className={`uni-control ${secondaryStyle}`}
-                            aria-label={`${r.code} sil`}
+                            aria-label={_uiText("{value1} sil", {value1: String(r.code)})}
                             onClick={() => remove([r.room_id])}
                           >
                             <Trash2 size={13} />
@@ -245,9 +245,7 @@ export function InventoryView({
                 </tbody>
               </table>
               {!rooms.length && (
-                <p className="p-10 text-sm text-slate-400">
-                  Bu katta henüz birim tanımlanmamış.
-                </p>
+                <p className="p-10 text-sm text-slate-400">{_uiText("Bu katta henüz birim tanımlanmamış.")} </p>
               )}
             </div>
           </>
@@ -257,7 +255,7 @@ export function InventoryView({
             <div className="flex flex-wrap gap-3 items-end">
               <div className="min-w-44 flex-1">
                 <InlineSelectField
-                  label="Oda"
+                  label={_uiText("Oda")}
                   value={parent || ""}
                   onChange={(v) => setParent(v || null)}
                   options={[
@@ -287,20 +285,16 @@ export function InventoryView({
                       <BedIllustration type={b.type} structure={b.structure} levels={b.levels} size={80} />
                     </div>
                     <p className="text-xs text-slate-500">
-                      {matchBedPreset(b)?.label || bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}
-                      seviye · {b.width_cm || "—"} × {b.length_cm || "—"} cm
-                    </p>
+                      {matchBedPreset(b)?.label || bedTypes[b.type]} · {structures[b.structure]} · {b.levels}{" "}{_uiText("seviye ·")} {b.width_cm || "—"} × {b.length_cm || "—"} {_uiText("cm")} </p>
                     <p className="text-xs font-bold">
                       {b.places
                         .filter((p) => p.is_active)
-                        .reduce((n, p) => n + p.capacity, 0)}{" "}
-                      kişi · {b.places.length} yatak yeri
-                    </p>
-                    <details><summary className="min-h-11 cursor-pointer text-xs text-uni-muted">Yatak yerleri ({b.places.length})</summary>
+                        .reduce((n, p) => n + p.capacity, 0)}{" "}{_uiText("kişi ·")} {b.places.length} {_uiText("yatak yeri")} </p>
+                    <details><summary className="min-h-11 cursor-pointer text-xs text-uni-muted">{_uiText("Yatak yerleri (")}{b.places.length})</summary>
                     {b.places.map((p) => (
                       <p key={p.unit_id} className="text-xs text-slate-400">
-                        {p.code} · Seviye {p.level} · {p.capacity} kişi ·{" "}
-                        {p.is_active ? "Aktif" : "Pasif"}
+                        {p.code} {_uiText("· Seviye")} {p.level} · {p.capacity} {_uiText("kişi ·")}{" "}
+                        {p.is_active ? _uiText("Aktif") : _uiText("Pasif")}
                       </p>
                     ))}
                     </details>
@@ -308,9 +302,7 @@ export function InventoryView({
                       <button
                         className={`uni-control ${secondaryStyle}`}
                         onClick={() => setBed(b)}
-                      >
-                        Düzenle
-                      </button>
+                      >{_uiText("Düzenle")} </button>
                       <button
                         className={`uni-control ${secondaryStyle}`}
                         onClick={async () => {
@@ -323,9 +315,7 @@ export function InventoryView({
                               command("bed.delete", { id: b.bed_id }),
                             );
                         }}
-                      >
-                        Sil
-                      </button>
+                      >{_uiText("Sil")} </button>
                     </div>
                   </article>
                 ))}
@@ -345,7 +335,7 @@ export function InventoryView({
         )}
       </div>
       {bed && (
-        <SettingsEditor title="Fiziksel Yatak Tanımı" onClose={() => setBed(null)}>
+        <SettingsEditor title={_uiText("Fiziksel Yatak Tanımı")} onClose={() => setBed(null)}>
           <BedForm
             bed={bed}
             snapshot={s}
@@ -368,6 +358,8 @@ function BedForm({
   snapshot: Snapshot;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const {locale}=useI18n();
   const [b, setB] = useState(bed),
     [error, setError] = useState(""),
@@ -426,19 +418,17 @@ function BedForm({
       }}
     >
       <ErrorMessage message={error} />
-      <section aria-label="Hazır yatak tanımları" className="space-y-3">
+      <section aria-label={_uiText("Hazır yatak tanımları")} className="space-y-3">
         <div>
-          <h3 className="font-uninav-book text-base text-uni-ink">Hazır yatak tanımları</h3>
-          <p className="mt-1 text-sm text-uni-muted">
-            Bir seçenekle tür, ölçü, seviye ve kapasiteyi doldurun. Ölçüler başlangıç değerleridir; kaydetmeden önce düzenleyebilirsiniz.
-          </p>
+          <h3 className="font-uninav-book text-base text-uni-ink">{_uiText("Hazır yatak tanımları")}</h3>
+          <p className="mt-1 text-sm text-uni-muted">{_uiText("Bir seçenekle tür, ölçü, seviye ve kapasiteyi doldurun. Ölçüler başlangıç değerleridir; kaydetmeden önce düzenleyebilirsiniz.")} </p>
         </div>
         <BedPresetPicker disabled={busy} onSelect={applyPreset}/>
         <p role="status" className="text-xs text-uni-muted">{presetNotice}</p>
       </section>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <TextField
-          label="Yatak kodu"
+          label={_uiText("Yatak kodu")}
           required
           autoComplete="off"
           uppercase
@@ -457,7 +447,7 @@ function BedForm({
           }
         />
         <InlineSelectField
-          label="Oda"
+          label={_uiText("Oda")}
           value={b.room_id || ""}
           onChange={(v) =>
             patch({
@@ -475,7 +465,7 @@ function BedForm({
           ]}
         />
         <InlineSelectField
-          label="Kat"
+          label={_uiText("Kat")}
           value={b.floor_id || ""}
           onChange={(v) => patch({ floor_id: v || null })}
           options={[
@@ -487,7 +477,7 @@ function BedForm({
           ]}
         />
         <InlineSelectField
-          label="Yatak türü"
+          label={_uiText("Yatak türü")}
           value={b.type}
           onChange={(v) => patch({ type: v })}
           options={Object.entries(bedTypes).map(([value, label]) => ({
@@ -496,7 +486,7 @@ function BedForm({
           }))}
         />
         <InlineSelectField
-          label="Fiziksel yapı"
+          label={_uiText("Fiziksel yapı")}
           value={b.structure}
           onChange={(v) => patch({ structure: v })}
           options={Object.entries(structures).map(([value, label]) => ({
@@ -505,38 +495,35 @@ function BedForm({
           }))}
         />
         <TextField
-          label="Seviye sayısı"
+          label={_uiText("Seviye sayısı")}
           type="number"
           value={String(b.levels)}
           onChange={(v) => levels(Number(v))}
         />
         <TextField
-          label="Yatak genişliği (cm)"
+          label={_uiText("Yatak genişliği (cm)")}
           type="number"
           value={String(b.width_cm)}
           onChange={(v) => patch({ width_cm: Number(v) })}
         />
         <TextField
-          label="Yatak uzunluğu (cm)"
+          label={_uiText("Yatak uzunluğu (cm)")}
           type="number"
           value={String(b.length_cm)}
           onChange={(v) => patch({ length_cm: Number(v) })}
         />
       </div>
-      <p className="text-xs text-slate-500">
-        Her fiziksel yatak ayrı kaydedilir. Kapasite, aktif yatak yerlerinin
-        kişi kapasitelerinin toplamıdır. Twin düzeni oda tanımında seçilir.
-      </p>
-      <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">Yatak yerleri</h3>
+      <p className="text-xs text-slate-500">{_uiText("Her fiziksel yatak ayrı kaydedilir. Kapasite, aktif yatak yerlerinin kişi kapasitelerinin toplamıdır. Twin düzeni oda tanımında seçilir.")} </p>
+      <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">{_uiText("Yatak yerleri")}</h3>
       {b.places.map((p, i) => (
         <div
           key={i}
           className="rounded-[20px] bg-[#f9f9f9] p-4 space-y-3"
         >
-          <strong className="font-uninav-book block text-[0.875rem] leading-5 text-slate-500">Seviye {p.level}</strong>
+          <strong className="font-uninav-book block text-[0.875rem] leading-5 text-slate-500">{_uiText("Seviye")} {p.level}</strong>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <TextField
-              label="Yer kodu"
+              label={_uiText("Yer kodu")}
               tone="white"
               required
               autoComplete="off"
@@ -545,7 +532,7 @@ function BedForm({
               onChange={(v) => changePlace(i, { code: v })}
             />
             <InlineSelectField
-              label="Konum"
+              label={_uiText("Konum")}
               tone="white"
               value={p.position}
               onChange={(v) => changePlace(i, { position: v })}
@@ -557,7 +544,7 @@ function BedForm({
               }).map(([value, label]) => ({ value, label }))}
             />
             <TextField
-              label="Kişi kapasitesi"
+              label={_uiText("Kişi kapasitesi")}
               tone="white"
               type="number"
               required
@@ -565,14 +552,14 @@ function BedForm({
               onChange={(v) => changePlace(i, { capacity: Number(v) })}
             />
             <TextField
-              label="Genişlik (cm)"
+              label={_uiText("Genişlik (cm)")}
               tone="white"
               type="number"
               value={String(p.width_cm)}
               onChange={(v) => changePlace(i, { width_cm: Number(v) })}
             />
             <TextField
-              label="Uzunluk (cm)"
+              label={_uiText("Uzunluk (cm)")}
               tone="white"
               type="number"
               value={String(p.length_cm)}
@@ -581,14 +568,14 @@ function BedForm({
           </div>
           <div className="space-y-1">
             <Switch
-              label="Aktif"
-              hint="Pasif yataklar planda ve aramada görünmez."
+              label={_uiText("Aktif")}
+              hint={_uiText("Pasif yataklar planda ve aramada görünmez.")}
               checked={p.is_active}
               onChange={(v) => changePlace(i, { is_active: v })}
             />
             <Switch
-              label="Ayrı rezerve edilebilir"
-              hint={parentRentalMode ? "Odanın kiralama şekline göre belirlenir. Oda tanımından değiştirebilirsiniz." : "Kapalıysa yalnızca üst birimle birlikte kiralanır."}
+              label={_uiText("Ayrı rezerve edilebilir")}
+              hint={parentRentalMode ? _uiText("Odanın kiralama şekline göre belirlenir. Oda tanımından değiştirebilirsiniz.") : _uiText("Kapalıysa yalnızca üst birimle birlikte kiralanır.")}
               disabled={!!parentRentalMode}
               checked={parentRentalMode ? parentRentalMode === "beds" : p.rentable}
               onChange={(v) => changePlace(i, { rentable: v })}
@@ -596,9 +583,7 @@ function BedForm({
           </div>
         </div>
       ))}
-      <button className={`uni-control ${buttonStyle}`} disabled={busy}>
-        Yatağı Kaydet
-      </button>
+      <button className={`uni-control ${buttonStyle}`} disabled={busy}>{_uiText("Yatağı Kaydet")} </button>
     </form>
   );
 }

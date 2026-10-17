@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import type { StaticImageData } from "next/image";
 import housePng from "../assets/icons/house.png";
 import datePng from "../assets/icons/date.png";
@@ -48,6 +49,8 @@ export function TreeIcon({
   alt: string;
   size?: 16 | 20;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <img
       src={src.src}

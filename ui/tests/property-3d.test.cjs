@@ -80,7 +80,7 @@ test('page dedicates content to the scene with no page header and keeps controls
 });
 test('operation menu and active tab expose the new page for reception', () => {
   const html = render(React.createElement(OriginalShell, { snapshot: snapshot([]), activeTab: 'property3d', setActiveTab() {}, openTabs: ['board', 'property3d'], onCloseTab() {}, onSelection() {}, onLogout() {}, at: now, onDate() {}, children: null }));
-  assert.ok(html.includes('3 Boyutlu Görünüm')); assert.ok(html.includes('lucide-box')); assert.ok(html.includes('aria-current="page"'));
+  assert.ok(html.includes('3 Boyutlu Görünüm')); assert.ok(html.includes('/images/navigation-dott-simple/property3d.avif')); assert.ok(html.includes('aria-current="page"'));
 });
 
 test('scene rebuild and teardown release geometries, materials and textures; camera actions stay finite', () => {

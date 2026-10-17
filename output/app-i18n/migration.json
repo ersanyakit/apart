@@ -1,0 +1,517 @@
+[
+  {
+    "file": "ui/src/App.tsx",
+    "edits": 91,
+    "components": 4
+  },
+  {
+    "file": "ui/src/components/AccommodationForms.tsx",
+    "edits": 63,
+    "components": 4
+  },
+  {
+    "file": "ui/src/components/AppSettingsView.tsx",
+    "edits": 51,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/AuditView.tsx",
+    "edits": 34,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BedIllustration.tsx",
+    "edits": 3,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BedPresetPicker.tsx",
+    "edits": 14,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BlacklistView.tsx",
+    "edits": 29,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/BookingActors.tsx",
+    "edits": 13,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BookingArrival.tsx",
+    "edits": 10,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BookingDetails.tsx",
+    "edits": 62,
+    "components": 3
+  },
+  {
+    "file": "ui/src/components/BookingForm.tsx",
+    "edits": 81,
+    "components": 3
+  },
+  {
+    "file": "ui/src/components/BookingGuestList.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/BookingsTable.tsx",
+    "edits": 49,
+    "components": 3
+  },
+  {
+    "file": "ui/src/components/Button.tsx",
+    "edits": 3,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/Calendar.tsx",
+    "edits": 7,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/CatalogFields.tsx",
+    "edits": 34,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/Chat.tsx",
+    "edits": 16,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/CheckoutFolio.tsx",
+    "edits": 37,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/ConfirmDialog.tsx",
+    "edits": 6,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/ContextMenu.tsx",
+    "edits": 29,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/CountrySelect.tsx",
+    "edits": 3,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/DateTimePicker.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/DocumentPreview.tsx",
+    "edits": 33,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/DocumentsView.tsx",
+    "edits": 28,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FacilityDetailsFields.tsx",
+    "edits": 13,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FacilityView.tsx",
+    "edits": 28,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FeatureFields.tsx",
+    "edits": 19,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FeatureRegistryView.tsx",
+    "edits": 42,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FloorBoard.tsx",
+    "edits": 12,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FloorDefinitionFields.tsx",
+    "edits": 12,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FloorList.tsx",
+    "edits": 13,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FloorPresetPicker.tsx",
+    "edits": 5,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FolioPayment.tsx",
+    "edits": 20,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/FolioServices.tsx",
+    "edits": 26,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/FormKit.tsx",
+    "edits": 7,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/GuestAssessment.tsx",
+    "edits": 40,
+    "components": 4
+  },
+  {
+    "file": "ui/src/components/GuestHistoryModal.tsx",
+    "edits": 25,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/GuestListForm.tsx",
+    "edits": 29,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/GuestView.tsx",
+    "edits": 65,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/HotelSettingsView.tsx",
+    "edits": 32,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/InventoryView.tsx",
+    "edits": 65,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/LoginScreen.tsx",
+    "edits": 37,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/MediaEditor.tsx",
+    "edits": 31,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/MediaUpload.tsx",
+    "edits": 16,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/MobileNav.tsx",
+    "edits": 13,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/OperationForm.tsx",
+    "edits": 80,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/OperationReason.tsx",
+    "edits": 18,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/OriginalShell.tsx",
+    "edits": 62,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/PWA.tsx",
+    "edits": 13,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/PageHeader.tsx",
+    "edits": 11,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/Pagination.tsx",
+    "edits": 19,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/PropertySwitcher.tsx",
+    "edits": 5,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/ReservationsWorkspace.tsx",
+    "edits": 4,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomBedsEditor.tsx",
+    "edits": 22,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomCard.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomFolio.tsx",
+    "edits": 6,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomOperationDialog.tsx",
+    "edits": 7,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomRentalSetup.tsx",
+    "edits": 11,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomStateEditor.tsx",
+    "edits": 26,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/RoomStatusCard.tsx",
+    "edits": 46,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/SettingsEditor.tsx",
+    "edits": 4,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/SettingsView.tsx",
+    "edits": 44,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/SetupAccommodationFields.tsx",
+    "edits": 38,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/SetupWizard.tsx",
+    "edits": 61,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/Sidebar.tsx",
+    "edits": 6,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/StaffIdentityFields.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/StaffSettingsView.tsx",
+    "edits": 31,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/StaffView.tsx",
+    "edits": 18,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/StayingList.tsx",
+    "edits": 30,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/SystemLogsView.tsx",
+    "edits": 15,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/TechnicalSupport.tsx",
+    "edits": 67,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/Toast.tsx",
+    "edits": 8,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/TreeIcon.tsx",
+    "edits": 4,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/UniSelect.tsx",
+    "edits": 16,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/UnitSleepingFields.tsx",
+    "edits": 5,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/UnitsToolbar.tsx",
+    "edits": 16,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/document-editor/DocumentEditor.tsx",
+    "edits": 17,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/document-editor/ReportDocumentEditor.tsx",
+    "edits": 18,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/document-editor/TemplateSettings.tsx",
+    "edits": 26,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/DateField.tsx",
+    "edits": 30,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/fields/FieldCard.tsx",
+    "edits": 3,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/GuestNameField.tsx",
+    "edits": 19,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/InlineSelectField.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/LocalizedTextFields.tsx",
+    "edits": 11,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/MoneyField.tsx",
+    "edits": 5,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/NationalityField.tsx",
+    "edits": 6,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/fields/PhoneField.tsx",
+    "edits": 16,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/RoomSelectField.tsx",
+    "edits": 18,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/StepperField.tsx",
+    "edits": 6,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/SwitchField.tsx",
+    "edits": 5,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/fields/TextFields.tsx",
+    "edits": 5,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/hotel-calendar/HotelCalendar.tsx",
+    "edits": 30,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/kanban/KanbanView.tsx",
+    "edits": 59,
+    "components": 4
+  },
+  {
+    "file": "ui/src/components/kanban/NoteModal.tsx",
+    "edits": 7,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/property-3d/PropertyCanvas.tsx",
+    "edits": 19,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/property-3d/PropertyView.tsx",
+    "edits": 73,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/reports/CustomerDetail.tsx",
+    "edits": 70,
+    "components": 5
+  },
+  {
+    "file": "ui/src/components/reports/CustomerList.tsx",
+    "edits": 31,
+    "components": 2
+  },
+  {
+    "file": "ui/src/components/reports/RecordEditor.tsx",
+    "edits": 92,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/reports/ReportCharts.tsx",
+    "edits": 26,
+    "components": 6
+  },
+  {
+    "file": "ui/src/components/reports/ReportGroupView.tsx",
+    "edits": 9,
+    "components": 1
+  },
+  {
+    "file": "ui/src/components/reports/ReportsView.tsx",
+    "edits": 74,
+    "components": 3
+  },
+  {
+    "file": "ui/src/components/stays-scheduler/StaysScheduler.tsx",
+    "edits": 60,
+    "components": 1
+  }
+]

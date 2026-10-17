@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React from "react";
 import { FieldCard, FieldCaption } from "./FieldCard";
 
@@ -35,6 +36,8 @@ export function TextField({
   /** "surface" (varsayılan gri kart) ya da gri zemin üstünde "white" kart. */
   tone?: "surface" | "white";
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <FieldCard
       className={tone === "white" ? "bg-white" : undefined}
@@ -54,7 +57,7 @@ export function TextField({
           value={value}
           onChange={(e) =>
             onChange(
-              uppercase ? e.target.value.toLocaleUpperCase("tr-TR") : e.target.value,
+              uppercase ? e.target.value.toLocaleUpperCase(_uiLocale) : e.target.value,
             )
           }
           className="font-uninav-book mt-1 w-full min-w-0 bg-transparent text-[1.25rem] leading-8 text-slate-900 uppercase outline-none placeholder:text-slate-400 placeholder:normal-case disabled:opacity-60"
@@ -143,6 +146,8 @@ export function TextAreaField({
   tone?: "surface" | "white";
   maxLength?: number;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   return (
     <FieldCard className={tone === "white" ? "bg-white" : undefined}>
       <label className="block min-w-0 cursor-text">
@@ -156,7 +161,7 @@ export function TextAreaField({
           value={value}
           onChange={(e) =>
             onChange(
-              uppercase ? e.target.value.toLocaleUpperCase("tr-TR") : e.target.value,
+              uppercase ? e.target.value.toLocaleUpperCase(_uiLocale) : e.target.value,
             )
           }
           className="font-uninav-book mt-1 w-full min-w-0 resize-y bg-transparent text-base leading-6 text-slate-900 uppercase outline-none placeholder:text-slate-400 placeholder:normal-case disabled:opacity-60"

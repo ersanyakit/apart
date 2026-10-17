@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { bookingStatusKey, statusStyle as semanticStatusStyle } from "../lib/status-palette";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -84,6 +85,8 @@ export function GuestHistoryModal({
   guestName?: string;
   onClose: () => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [profile, setProfile] = useState<GuestProfileDetail | null>(null);
   const [stays, setStays] = useState<GuestStayDetail[]>([]);
   const [total, setTotal] = useState(0);
@@ -124,7 +127,7 @@ export function GuestHistoryModal({
       })
       .catch(() => {
         if (!active) return;
-        setError("Geçmiş yüklenemedi. Tekrar deneyin.");
+        setError(_uiText("Geçmiş yüklenemedi. Tekrar deneyin."));
       })
       .finally(() => {
         if (active) setBusy(false);
@@ -179,7 +182,7 @@ export function GuestHistoryModal({
       ref={dialogRef}
       className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-slate-800 backdrop:bg-transparent open:flex items-end justify-center sm:items-center sm:p-4"
       aria-modal="true"
-      aria-label={`${name} konaklama geçmişi`}
+      aria-label={_uiText("{value1} konaklama geçmişi", {value1: String(name)})}
       onCancel={(event) => { event.preventDefault(); onClose(); }}
       onClick={(event) => event.stopPropagation()}
     >
@@ -224,14 +227,14 @@ export function GuestHistoryModal({
               </span>
             </span>
             <span className="block truncate text-xs font-medium text-slate-500">
-              {contact || "iletişim yok"}
-              {profile?.address ? ` · ${profile.address}` : ""}
+              {contact || _uiText("iletişim yok")}
+              {profile?.address ? _uiText(" · {value1}", {value1: String(profile.address)}) : ""}
             </span>
           </span>
           <button
             type="button"
             autoFocus
-            aria-label="Kapat"
+            aria-label={_uiText("Kapat")}
             onClick={onClose}
             className="uni-control flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-100 text-slate-600 outline-none transition-all duration-150 ease-out hover:bg-slate-200 active:scale-[0.96] focus-visible:ring-2 focus-visible:ring-neutral-400"
           >
@@ -241,7 +244,7 @@ export function GuestHistoryModal({
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
           {busy ? (
-            <p className="py-10 text-center text-sm text-slate-400">Yükleniyor…</p>
+            <p className="py-10 text-center text-sm text-slate-400">{_uiText("Yükleniyor…")}</p>
           ) : error ? (
             <p role="alert" className="py-10 text-center text-sm text-red-600">
               {error}
@@ -253,12 +256,12 @@ export function GuestHistoryModal({
                   {
                     icon: <BedDouble size={15} aria-hidden="true" />,
                     value: String(total || stays.length),
-                    label: "Konaklama",
+                    label: _uiText("Konaklama"),
                   },
                   {
                     icon: <Users size={15} aria-hidden="true" />,
                     value: String(nights),
-                    label: "Gece",
+                    label: _uiText("Gece"),
                   },
                   {
                     icon: <Wallet size={15} aria-hidden="true" />,
@@ -266,7 +269,7 @@ export function GuestHistoryModal({
                       spent > 0
                         ? formatMoney(spent, currency, format)
                         : "—",
-                    label: "Harcama",
+                    label: _uiText("Harcama"),
                   },
                 ].map((s) => (
                   <div
@@ -285,23 +288,20 @@ export function GuestHistoryModal({
               </div>
 
               {notes.length > 0 && (
-                <section aria-label="Misafir notları" className="space-y-2">
+                <section aria-label={_uiText("Misafir notları")} className="space-y-2">
                   <h3 className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400">
-                    <StickyNote size={14} aria-hidden="true" />
-                    Notlar · {notes.length}
+                    <StickyNote size={14} aria-hidden="true" />{_uiText("Notlar ·")} {notes.length}
                   </h3>
                   {notes.map((n, i) => (
                     <div
                       key={`${n.kind}-${n.context}-${i}`}
-                      className={`rounded-2xl border px-4 py-3 ${
-                        n.kind === "guest"
+                      className={`rounded-2xl border px-4 py-3 ${n.kind === "guest"
                           ? "border-amber-200/70 bg-amber-50/60"
-                          : "border-slate-200/70 bg-slate-50/70"
-                      }`}
+                          : "border-slate-200/70 bg-slate-50/70"}`}
                     >
                       <p className="text-sm leading-6 text-slate-800">{n.text}</p>
                       <p className="mt-1 text-[11px] font-medium text-slate-400">
-                        {n.kind === "guest" ? "Kişi notu" : "Rezervasyon notu"} ·{" "}
+                        {n.kind === "guest" ? _uiText("Kişi notu") : _uiText("Rezervasyon notu")} ·{" "}
                         {n.context}
                       </p>
                     </div>
@@ -309,15 +309,12 @@ export function GuestHistoryModal({
                 </section>
               )}
 
-              <section aria-label="Konaklamalar" className="space-y-2">
+              <section aria-label={_uiText("Konaklamalar")} className="space-y-2">
                 <h3 className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400">
-                  <BedDouble size={14} aria-hidden="true" />
-                  Konaklamalar · {total || stays.length}
+                  <BedDouble size={14} aria-hidden="true" />{_uiText("Konaklamalar ·")} {total || stays.length}
                 </h3>
                 {stays.length === 0 && (
-                  <p className="rounded-2xl bg-[#f9f9f9] px-4 py-6 text-center text-sm text-slate-400">
-                    Bu misafire ait konaklama kaydı yok.
-                  </p>
+                  <p className="rounded-2xl bg-[#f9f9f9] px-4 py-6 text-center text-sm text-slate-400">{_uiText("Bu misafire ait konaklama kaydı yok.")} </p>
                 )}
                 {stays.map((s) => {
                   const n = nightsOf(s.start, s.end);
@@ -341,17 +338,16 @@ export function GuestHistoryModal({
                         </span>
                       </div>
                       <p className="mt-1 text-xs font-medium tabular-nums text-slate-500">
-                        {dayFmt(s.start)} → {dayFmt(s.end)} · {n} gece
-                      </p>
+                        {dayFmt(s.start)} → {dayFmt(s.end)} · {n} {_uiText("gece")} </p>
                       <div className="mt-1 flex items-center justify-between gap-3">
                         <p className="min-w-0 truncate text-xs text-slate-500">
                           {s.companions.length > 0
-                            ? `Birlikte: ${s.companions.map((c) => c.name).join(", ")}`
-                            : "Tek konaklama"}
+                            ? _uiText("Birlikte: {value1}", {value1: String(s.companions.map((c) => c.name).join(", "))})
+                            : _uiText("Tek konaklama")}
                         </p>
                         <p className="shrink-0 text-[13px] font-black text-brand-blue-700">
                           {s.daily_price_minor > 0
-                            ? `${formatMoney(s.daily_price_minor, currency, format)} /gece`
+                            ? _uiText("{value1} /gece", {value1: String(formatMoney(s.daily_price_minor, currency, format))})
                             : "—"}
                         </p>
                       </div>

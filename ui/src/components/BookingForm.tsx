@@ -138,6 +138,8 @@ export function BookingForm({
   checkInAfterSave?: boolean;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { t } = useI18n();
   const checkedIn = booking?.status === BookingState.CheckedIn;
   const [room, setRoom] = useState(booking?.room_id || roomId || "");
@@ -282,13 +284,13 @@ export function BookingForm({
     >
       <ErrorMessage message={error} />
       <FormSection
-        title="Konaklama Tarihleri"
-        hint={checkedIn ? "Planlanan tarihleri düzenliyorsunuz. Gerçek giriş saati ve oda değişikliği geçmişi korunur." : checkInAfterSave ? "Konaklama kaydedilince oda müsaitse hemen giriş yapılır. Gerçek giriş saati ayrıca kaydedilir." : "Giriş ve çıkış tarih-saatleri"}
+        title={_uiText("Konaklama Tarihleri")}
+        hint={checkedIn ? _uiText("Planlanan tarihleri düzenliyorsunuz. Gerçek giriş saati ve oda değişikliği geçmişi korunur.") : checkInAfterSave ? _uiText("Konaklama kaydedilince oda müsaitse hemen giriş yapılır. Gerçek giriş saati ayrıca kaydedilir.") : _uiText("Giriş ve çıkış tarih-saatleri")}
       >
       <div className="grid grid-cols-12 gap-4 items-start">
         <div className="col-span-12 sm:col-span-5 min-w-0">
           <DateField
-            label={checkedIn ? "Planlanan giriş" : "Giriş"}
+            label={checkedIn ? _uiText("Planlanan giriş") : _uiText("Giriş")}
             value={start}
             open={datesOpen}
             onOpenChange={setDatesOpen}
@@ -297,7 +299,7 @@ export function BookingForm({
         </div>
         <div className="col-span-12 sm:col-span-2 min-w-0">
           <StepperField
-            label="Gece"
+            label={_uiText("Gece")}
             value={nights}
             min={1}
             max={365}
@@ -307,7 +309,7 @@ export function BookingForm({
         </div>
         <div className="col-span-12 sm:col-span-5 min-w-0">
           <DateField
-            label={checkedIn ? "Planlanan çıkış" : "Çıkış"}
+            label={checkedIn ? _uiText("Planlanan çıkış") : _uiText("Çıkış")}
             value={end}
             min={start || undefined}
             open={datesOpen}
@@ -319,16 +321,16 @@ export function BookingForm({
           />
         </div>
       </div>
-      {booking?.actual_check_in && <p className="text-sm text-emerald-700">Gerçek giriş: {new Date(booking.actual_check_in).toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" })}</p>}
+      {booking?.actual_check_in && <p className="text-sm text-emerald-700">{_uiText("Gerçek giriş:")} {new Date(booking.actual_check_in).toLocaleString(_uiLocale, { timeZone: "Europe/Istanbul" })}</p>}
       </FormSection>
       <FormSection
-        title="Birim"
-        hint={checkedIn ? "Odayı değiştirmek için Oda Taşı işlemini kullanın." : "Tarihlere uygun birim seçin"}
+        title={_uiText("Birim")}
+        hint={checkedIn ? _uiText("Odayı değiştirmek için Oda Taşı işlemini kullanın.") : _uiText("Tarihlere uygun birim seçin")}
       >
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         <div className="lg:col-span-3">
           <RoomSelectField
-            label="Kiralanacak birim"
+            label={_uiText("Kiralanacak birim")}
             disabled={checkedIn}
             value={room}
             onChange={setRoom}
@@ -340,7 +342,7 @@ export function BookingForm({
         </div>
         <div className="lg:col-span-2">
           <MoneyField
-            label="Günlük Fiyat"
+            label={_uiText("Günlük Fiyat")}
             valueMinor={priceMinor}
             onChange={setPriceMinor}
           />
@@ -367,30 +369,22 @@ export function BookingForm({
               setBusy(false);
             }
           }}
-        >
-          Müsaitlik Kontrolü
-        </button>
+        >{_uiText("Müsaitlik Kontrolü")} </button>
       </div>
       {options && (
         <p className="flex items-start gap-2 rounded-xl border border-emerald-200/70 bg-emerald-50/60 px-4 py-3 text-xs text-emerald-800">
           <Info className="w-4 h-4 shrink-0 mt-0.5" />
-          <span>
-            Bu tarih ve kişi sayısına uygun {options.length} birim. Kesin
-            müsaitlik kaydetme sırasında tekrar kontrol edilir.
-          </span>
+          <span>{_uiText("Bu tarih ve kişi sayısına uygun")} {options.length} {_uiText("birim. Kesin müsaitlik kaydetme sırasında tekrar kontrol edilir.")} </span>
         </p>
       )}
       <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
         <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
-        <span>
-          Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve
-          yatakları da aynı tarihler için kapatır.
-        </span>
+        <span>{_uiText("Seçilen birimin tamamı ayrılır. Daire rezervasyonu, içindeki oda ve yatakları da aynı tarihler için kapatır.")} </span>
       </p>
       </FormSection>
       <FormSection
-        title={`Misafirler${guests.length ? ` · ${guests.length}` : ""}`}
-        hint="Sahip, kişi sayısı ve konaklayanlar"
+        title={_uiText("Misafirler{value1}", {value1: String(guests.length ? ` · ${guests.length}` : "")})}
+        hint={_uiText("Sahip, kişi sayısı ve konaklayanlar")}
         action={
           <button
             className={`uni-control ${secondaryStyle} gap-2`}
@@ -403,18 +397,16 @@ export function BookingForm({
               setCount(Math.max(count, guests.length + 1));
             }}
           >
-            <Plus className="w-4 h-4" aria-hidden="true" />
-            Misafir Ekle
-          </button>
+            <Plus className="w-4 h-4" aria-hidden="true" />{"Misafir Ekle"} </button>
         }
       >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
       <GuestNameField
-        label="Rezervasyon sahibi"
+        label={_uiText("Rezervasyon sahibi")}
         value={name}
         hotelId={snapshot.hotel_id}
         branchId={snapshot.branch_id}
-        placeholder="Ad soyad"
+        placeholder={_uiText("Ad soyad")}
         required
         autoComplete="off"
         uppercase
@@ -442,7 +434,7 @@ export function BookingForm({
         }}
       />
       <StepperField
-        label="Kişi sayısı"
+        label={_uiText("Kişi sayısı")}
         value={count}
         min={1}
         max={100000}
@@ -460,12 +452,8 @@ export function BookingForm({
       <div className="space-y-3 pt-1">
         {guests.length === 0 && (
           <div className="rounded-xl border border-dashed border-slate-200 bg-white px-4 py-6 text-center">
-            <p className="text-xs font-bold text-slate-600">
-              Henüz misafir eklenmedi
-            </p>
-            <p className="text-[11px] text-slate-500 font-medium mt-1">
-              Yukarıdaki butonla konaklayanları tek tek ekleyin
-            </p>
+            <p className="text-xs font-bold text-slate-600">{_uiText("Henüz misafir eklenmedi")} </p>
+            <p className="text-[11px] text-slate-500 font-medium mt-1">{_uiText("Yukarıdaki butonla konaklayanları tek tek ekleyin")} </p>
           </div>
         )}
         {guests.map((g, i) => (
@@ -478,14 +466,12 @@ export function BookingForm({
                 <span aria-hidden="true" className="font-uninav-book flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[13px] text-slate-700 shadow-sm ring-1 ring-slate-200/70">
                   {i + 1}
                 </span>
-                <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">
-                  Misafir
-                </span>
+                <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">{_uiText("Misafir")} </span>
               </span>
               <button
                 type="button"
-                aria-label="Misafiri kaldır"
-                title="Misafiri kaldır"
+                aria-label={_uiText("Misafiri kaldır")}
+                title={_uiText("Misafiri kaldır")}
                 className="uni-control flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
                 onClick={() => setGuests(guests.filter((_, n) => n !== i))}
               >
@@ -494,7 +480,7 @@ export function BookingForm({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <GuestNameField
-              label="Ad Soyad"
+              label={_uiText("Ad Soyad")}
               tone="white"
               required
               uppercase
@@ -529,7 +515,7 @@ export function BookingForm({
               }
             />
             <PhoneField
-              label="Telefon"
+              label={_uiText("Telefon")}
               tone="white"
               defaultCountry={g.nationality || defaultCountry}
               value={g.phone || ""}
@@ -542,7 +528,7 @@ export function BookingForm({
               }
             />
             <TextField
-              label="Kimlik / Pasaport"
+              label={_uiText("Kimlik / Pasaport")}
               tone="white"
               uppercase
               value={g.tcNo || ""}
@@ -554,7 +540,7 @@ export function BookingForm({
                 )
               }
             />
-            <InlineSelectField label="Cinsiyet" tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => setGuests(guests.map(item => item.id === g.id ? { ...item, gender: v as Guest['gender'] } : item))} options={genderOptions} />
+            <InlineSelectField label={_uiText("Cinsiyet")} tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => setGuests(guests.map(item => item.id === g.id ? { ...item, gender: v as Guest['gender'] } : item))} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"
@@ -569,10 +555,10 @@ export function BookingForm({
             />
             <div className="sm:col-span-2">
               <TextAreaField
-                label="Adres"
+                label={_uiText("Adres")}
                 tone="white"
                 value={g.address || ""}
-                placeholder="Mahalle, sokak, apartman, il / ilçe"
+                placeholder={_uiText("Mahalle, sokak, apartman, il / ilçe")}
                 rows={2}
                 maxLength={1000}
                 onChange={(v) =>
@@ -591,25 +577,21 @@ export function BookingForm({
         <div ref={listEnd} aria-hidden="true" />
       </div>
       </FormSection>
-      <FormSection title="Notlar" hint="Rezervasyonla ilgili ek bilgi">
+      <FormSection title={_uiText("Notlar")} hint={_uiText("Rezervasyonla ilgili ek bilgi")}>
       <TextAreaField
-        label="Notlar"
+        label={_uiText("Notlar")}
         value={notes}
         onChange={setNotes}
-        placeholder="Özel istekler, varış saati vb."
+        placeholder={_uiText("Özel istekler, varış saati vb.")}
         uppercase
       />
       <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
         <Info className="w-4 h-4 shrink-0 mt-0.5 text-brand-blue-600" />
-        <span>
-          Not yazıp kaydetmeniz bu notu Resepsiyon Notları panosuna kart olarak
-          düşürür; karttaki “Rezervasyona git” ile bu kayda dönersiniz. Notu
-          silmeniz kartı arşivler.
-        </span>
+        <span>{_uiText("Not yazıp kaydetmeniz bu notu Resepsiyon Notları panosuna kart olarak düşürür; karttaki “Rezervasyona git” ile bu kayda dönersiniz. Notu silmeniz kartı arşivler.")} </span>
       </p>
       </FormSection>
       <button className={`uni-control ${buttonStyle} w-full !rounded-[20px] !px-5 !py-4 !text-lg`} disabled={busy || !room}>
-        {busy ? "Kaydediliyor…" : checkInAfterSave ? "Konaklamayı Başlat" : "Rezervasyonu Kaydet"}
+        {busy ? _uiText("Kaydediliyor…") : checkInAfterSave ? _uiText("Konaklamayı Başlat") : _uiText("Rezervasyonu Kaydet")}
       </button>
     </form>
   );
@@ -623,6 +605,8 @@ export function MoveBookingForm({
   booking: Booking;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [mode, setMode] = useState("move");
   const [target, setTarget] = useState("");
   const [other, setOther] = useState("");
@@ -657,44 +641,44 @@ export function MoveBookingForm({
         {booking.guest_name} ·{" "}
         {snapshot.rooms.find((r) => r.room_id === booking.room_id)?.code}
       </p>
-      <Field label="İşlem">
+      <Field label={_uiText("İşlem")}>
         <select
           className={`uni-input ${inputStyle}`}
           value={mode}
           onChange={(e) => setMode(e.target.value)}
         >
-          <option value="move">Başka birime taşı</option>
-          <option value="swap">İki rezervasyonun birimlerini değiştir</option>
+          <option value="move">{_uiText("Başka birime taşı")}</option>
+          <option value="swap">{_uiText("İki rezervasyonun birimlerini değiştir")}</option>
         </select>
       </Field>
       {mode === "move" ? (
-        <Field label="Hedef birim">
+        <Field label={_uiText("Hedef birim")}>
           <select
             required
             className={`uni-input ${inputStyle}`}
             value={target}
             onChange={(e) => setTarget(e.target.value)}
           >
-            <option value="">Seçin</option>
+            <option value="">{_uiText("Seçin")}</option>
             {snapshot.rooms
               .filter((r) => r.rentable && r.room_id !== booking.room_id)
               .map((r) => (
                 <option key={r.room_id} value={r.room_id}>
                   {r.code} · {unitKinds[r.kind]} ·{" "}
-                  {r.kind === "bed" ? `${r.capacity} kişi` : "Kişi sayısı rezervasyonda"}
+                  {r.kind === "bed" ? _uiText("{value1} kişi", {value1: String(r.capacity)}) : _uiText("Kişi sayısı rezervasyonda")}
                 </option>
               ))}
           </select>
         </Field>
       ) : (
-        <Field label="Diğer rezervasyon">
+        <Field label={_uiText("Diğer rezervasyon")}>
           <select
             required
             className={`uni-input ${inputStyle}`}
             value={other}
             onChange={(e) => setOther(e.target.value)}
           >
-            <option value="">Seçin</option>
+            <option value="">{_uiText("Seçin")}</option>
             {snapshot.bookings
               .filter(
                 (b) =>
@@ -712,15 +696,8 @@ export function MoveBookingForm({
           </select>
         </Field>
       )}
-      <p className="text-xs text-slate-500">
-        Konaklayan misafir için değişiklik işlem anından itibaren uygulanır;
-        önceki birim geçmişte korunur. Rezervasyon değişikliği planlanan
-        konaklamanın tamamını kapsar. Tarih çakışmaları ve tek tek kiralanan
-        yatakların kişi sınırları iki taraf için birlikte kontrol edilir.
-      </p>
-      <button disabled={busy} className={`uni-control ${buttonStyle}`}>
-        Değişikliği Kaydet
-      </button>
+      <p className="text-xs text-slate-500">{_uiText("Konaklayan misafir için değişiklik işlem anından itibaren uygulanır; önceki birim geçmişte korunur. Rezervasyon değişikliği planlanan konaklamanın tamamını kapsar. Tarih çakışmaları ve tek tek kiralanan yatakların kişi sınırları iki taraf için birlikte kontrol edilir.")} </p>
+      <button disabled={busy} className={`uni-control ${buttonStyle}`}>{_uiText("Değişikliği Kaydet")} </button>
     </form>
   );
 }
@@ -734,6 +711,8 @@ export function BookingGuestsForm({
   hotelId: string;
   onSaved: () => Promise<void>;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { t } = useI18n();
   const { defaultCountry } = useCurrency();
   const [guests, setGuests] = useState(booking.guests || []),
@@ -773,10 +752,7 @@ export function BookingGuestsForm({
       }}
     >
       <ErrorMessage message={error} />
-      <p className="text-sm text-slate-500">
-        Her misafir ayrı kaydedilir. Konaklama sırasında eklenen veya ayrılan
-        kişilerin zamanları geçmişte korunur.
-      </p>
+      <p className="text-sm text-slate-500">{_uiText("Her misafir ayrı kaydedilir. Konaklama sırasında eklenen veya ayrılan kişilerin zamanları geçmişte korunur.")} </p>
       {guests.map((g, i) => (
         <div
           key={g.id}
@@ -787,14 +763,12 @@ export function BookingGuestsForm({
               <span aria-hidden="true" className="font-uninav-book flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-[13px] text-slate-700 shadow-sm ring-1 ring-slate-200/70">
                 {i + 1}
               </span>
-              <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">
-                Misafir
-              </span>
+              <span className="truncate text-xs font-black text-slate-700 uppercase tracking-wider">{_uiText("Misafir")} </span>
             </span>
             <button
               type="button"
-              aria-label="Misafiri kaldır"
-              title="Misafiri kaldır"
+              aria-label={_uiText("Misafiri kaldır")}
+              title={_uiText("Misafiri kaldır")}
               className="uni-control flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all duration-150 ease-out active:scale-[0.98] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
               onClick={() =>
                 setGuests((rows) => rows.filter((_, n) => n !== i))
@@ -805,7 +779,7 @@ export function BookingGuestsForm({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <GuestNameField
-              label="Ad Soyad"
+              label={_uiText("Ad Soyad")}
               tone="white"
               required
               uppercase
@@ -826,20 +800,20 @@ export function BookingGuestsForm({
               }
             />
             <PhoneField
-              label="Telefon"
+              label={_uiText("Telefon")}
               tone="white"
               defaultCountry={g.nationality || defaultCountry}
               value={g.phone || ""}
               onChange={(v) => patch(i, { phone: v })}
             />
             <TextField
-              label="Kimlik / Pasaport"
+              label={_uiText("Kimlik / Pasaport")}
               tone="white"
               uppercase
               value={g.tcNo || ""}
               onChange={(v) => patch(i, { tcNo: v })}
             />
-            <InlineSelectField label="Cinsiyet" tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => patch(i, { gender: v as Guest['gender'] })} options={genderOptions} />
+            <InlineSelectField label={_uiText("Cinsiyet")} tone="white" icon={genderIcon(g.gender || '', 19)} value={g.gender || ''} onChange={v => patch(i, { gender: v as Guest['gender'] })} options={genderOptions} />
             <NationalityField
               label={t("guest.nationality")}
               tone="white"
@@ -848,10 +822,10 @@ export function BookingGuestsForm({
             />
             <div className="sm:col-span-2">
               <TextAreaField
-                label="Adres"
+                label={_uiText("Adres")}
                 tone="white"
                 value={g.address || ""}
-                placeholder="Mahalle, sokak, apartman, il / ilçe"
+                placeholder={_uiText("Mahalle, sokak, apartman, il / ilçe")}
                 rows={2}
                 maxLength={1000}
                 onChange={(v) => patch(i, { address: v })}
@@ -872,12 +846,8 @@ export function BookingGuestsForm({
               { id: crypto.randomUUID(), name: "", nationality: defaultCountry },
             ])
           }
-        >
-          Misafir Ekle
-        </button>
-        <button className={`uni-control ${buttonStyle}`} disabled={busy || !guests.length}>
-          Misafirleri Kaydet
-        </button>
+        >{_uiText("Misafir Ekle")} </button>
+        <button className={`uni-control ${buttonStyle}`} disabled={busy || !guests.length}>{_uiText("Misafirleri Kaydet")} </button>
       </div>
     </form>
   );

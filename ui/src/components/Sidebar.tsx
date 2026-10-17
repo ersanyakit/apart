@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React from "react";
 import { Check, ChevronRight } from "lucide-react";
 import { NavigationIcon } from "./NavigationIcon";
@@ -22,6 +23,8 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
   activeTab,
   onSelect,
 }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   if (!isOpen) {
     return <div className="space-y-1">
       {(item.subItems ?? [item]).map((entry) => (
@@ -60,11 +63,9 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                     <NavigationIcon name={entry.id} size={48} />
                   </span>
                   <span
-                    className={`min-w-0 flex-1 truncate text-[15px] leading-6 ${
-                      isActive
+                    className={`min-w-0 flex-1 truncate text-[15px] leading-6 ${isActive
                         ? "font-semibold text-brand-blue-700"
-                        : "font-medium text-slate-900"
-                    }`}
+                        : "font-medium text-slate-900"}`}
                   >
                     {entry.label}
                   </span>

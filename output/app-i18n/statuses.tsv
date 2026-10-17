@@ -1,0 +1,61 @@
+# Checked in|Checked out|Upcoming reservation|Inactive|Early check-in|Room status|Room actions|Current status
+tr|Giriş yapıldı|Çıkış yapıldı|Yaklaşan rezervasyon|Pasif|Erken giriş yap|Oda durumu|Oda işlemleri|Mevcut durum
+en|Checked in|Checked out|Upcoming reservation|Inactive|Early check-in|Room status|Room actions|Current status
+de|Eingecheckt|Ausgecheckt|Bevorstehende Reservierung|Inaktiv|Früher Check-in|Zimmerstatus|Zimmeraktionen|Aktueller Status
+fr|Arrivée enregistrée|Départ enregistré|Réservation à venir|Inactif|Arrivée anticipée|État de la chambre|Actions de la chambre|État actuel
+ru|Заселён|Выселен|Предстоящее бронирование|Неактивен|Раннее заселение|Состояние номера|Действия с номером|Текущее состояние
+ar|تم تسجيل الوصول|تم تسجيل المغادرة|حجز قادم|غير نشط|تسجيل وصول مبكر|حالة الغرفة|إجراءات الغرفة|الحالة الحالية
+ne|चेक इन गरिएको|चेक आउट गरिएको|आगामी आरक्षण|निष्क्रिय|चाँडो चेक इन|कोठाको अवस्था|कोठाका कार्यहरू|हालको अवस्था
+th|เช็กอินแล้ว|เช็กเอาต์แล้ว|การจองที่กำลังจะมาถึง|ไม่ใช้งาน|เช็กอินก่อนเวลา|สถานะห้อง|การดำเนินการห้องพัก|สถานะปัจจุบัน
+zh-CN|已办理入住|已办理退房|即将到来的预订|已停用|提前入住|客房状态|客房操作|当前状态
+zh-TW|已辦理入住|已辦理退房|即將到來的預訂|已停用|提前入住|客房狀態|客房操作|目前狀態
+hi|चेक इन हो गया|चेक आउट हो गया|आगामी आरक्षण|निष्क्रिय|समय से पहले चेक इन|कमरे की स्थिति|कमरे की कार्रवाइयाँ|वर्तमान स्थिति
+km|បានចុះឈ្មោះចូល|បានចុះឈ្មោះចេញ|ការកក់ខាងមុខ|អសកម្ម|ចុះឈ្មោះចូលមុនម៉ោង|ស្ថានភាពបន្ទប់|សកម្មភាពបន្ទប់|ស្ថានភាពបច្ចុប្បន្ន
+si|ඇතුළත්ව ඇත|පිටත්ව ඇත|ඉදිරි වෙන්කිරීම|අක්‍රියයි|කලින් ඇතුළත් කිරීම|කාමරයේ තත්ත්වය|කාමර ක්‍රියා|වත්මන් තත්ත්වය
+ta|வருகை பதிவுசெய்யப்பட்டது|வெளியேற்றம் பதிவுசெய்யப்பட்டது|வரவிருக்கும் முன்பதிவு|செயலில் இல்லை|முன்கூட்டிய வருகை பதிவு|அறை நிலை|அறைச் செயல்கள்|தற்போதைய நிலை
+yue|已辦理入住|已辦理退房|即將到來嘅預訂|已停用|提早入住|客房狀態|客房操作|目前狀態
+ur|چیک اِن ہو گیا|چیک آؤٹ ہو گیا|آئندہ بکنگ|غیر فعال|وقت سے پہلے چیک اِن|کمرے کی حالت|کمرے کی کارروائیاں|موجودہ حالت
+bn|চেক ইন হয়েছে|চেক আউট হয়েছে|আসন্ন বুকিং|নিষ্ক্রিয়|আগাম চেক ইন|কক্ষের অবস্থা|কক্ষের কার্যক্রম|বর্তমান অবস্থা
+dz|ནང་འཛུལ་ཐོ་བཀོད་ཡོད།|ཕྱིར་ཐོན་ཐོ་བཀོད་ཡོད།|འོང་ནི་ཨིན་པའི་སྔོན་མངགས།|ལཱ་མི་འབད།|དུས་ཚོད་ཀྱི་ཧེ་མ་ནང་འཛུལ།|ཁང་མིག་གནས་སྟངས།|ཁང་མིག་བྱ་བ།|ད་ལྟོའི་གནས་སྟངས།
+es|Entrada registrada|Salida registrada|Reserva próxima|Inactivo|Entrada anticipada|Estado de la habitación|Acciones de la habitación|Estado actual
+it|Arrivo registrato|Partenza registrata|Prenotazione imminente|Inattivo|Check-in anticipato|Stato della camera|Azioni della camera|Stato attuale
+pt|Entrada registada|Saída registada|Reserva próxima|Inativo|Entrada antecipada|Estado do quarto|Ações do quarto|Estado atual
+nl|Ingecheckt|Uitgecheckt|Aankomende reservering|Inactief|Vroeg inchecken|Kamerstatus|Kameracties|Huidige status
+pl|Zameldowano|Wymeldowano|Nadchodząca rezerwacja|Nieaktywny|Wcześniejsze zameldowanie|Status pokoju|Działania dotyczące pokoju|Bieżący status
+cs|Host ubytován|Host odhlášen|Nadcházející rezervace|Neaktivní|Předčasné ubytování|Stav pokoje|Akce pokoje|Aktuální stav
+hu|Bejelentkezett|Kijelentkezett|Közelgő foglalás|Inaktív|Korai bejelentkezés|Szoba állapota|Szobaműveletek|Jelenlegi állapot
+ro|Sosire înregistrată|Plecare înregistrată|Rezervare viitoare|Inactiv|Sosire anticipată|Starea camerei|Acțiuni cameră|Starea actuală
+el|Η άφιξη καταχωρίστηκε|Η αναχώρηση καταχωρίστηκε|Προσεχής κράτηση|Ανενεργό|Πρόωρη άφιξη|Κατάσταση δωματίου|Ενέργειες δωματίου|Τρέχουσα κατάσταση
+uk|Заселено|Виселено|Майбутнє бронювання|Неактивний|Раннє заселення|Стан номера|Дії з номером|Поточний стан
+bg|Настанен|Напуснал|Предстояща резервация|Неактивен|Ранно настаняване|Състояние на стаята|Действия със стаята|Текущо състояние
+sr|Гост пријављен|Гост одјављен|Предстојећа резервација|Неактивно|Рана пријава|Статус собе|Радње за собу|Тренутни статус
+hr|Gost prijavljen|Gost odjavljen|Nadolazeća rezervacija|Neaktivno|Rana prijava|Status sobe|Radnje za sobu|Trenutni status
+sk|Hosť ubytovaný|Hosť odhlásený|Nadchádzajúca rezervácia|Neaktívne|Skoré ubytovanie|Stav izby|Akcie izby|Aktuálny stav
+sl|Gost prijavljen|Gost odjavljen|Prihajajoča rezervacija|Neaktivno|Zgodnja prijava|Stanje sobe|Dejanja za sobo|Trenutno stanje
+fi|Kirjattu sisään|Kirjattu ulos|Tuleva varaus|Ei käytössä|Aikainen sisäänkirjautuminen|Huoneen tila|Huoneen toiminnot|Nykyinen tila
+sv|Incheckad|Utcheckad|Kommande bokning|Inaktiv|Tidig incheckning|Rumsstatus|Rumsåtgärder|Aktuell status
+da|Tjekket ind|Tjekket ud|Kommende reservation|Inaktiv|Tidlig indtjekning|Værelsesstatus|Værelseshandlinger|Nuværende status
+no|Sjekket inn|Sjekket ut|Kommende reservasjon|Inaktiv|Tidlig innsjekking|Romstatus|Romhandlinger|Gjeldende status
+ms|Telah daftar masuk|Telah daftar keluar|Tempahan akan datang|Tidak aktif|Daftar masuk awal|Status bilik|Tindakan bilik|Status semasa
+id|Sudah check-in|Sudah check-out|Reservasi mendatang|Tidak aktif|Check-in awal|Status kamar|Tindakan kamar|Status saat ini
+vi|Đã nhận phòng|Đã trả phòng|Đặt phòng sắp tới|Không hoạt động|Nhận phòng sớm|Trạng thái phòng|Thao tác phòng|Trạng thái hiện tại
+ja|チェックイン済み|チェックアウト済み|今後の予約|無効|アーリーチェックイン|客室の状態|客室の操作|現在の状態
+ko|체크인 완료|체크아웃 완료|예정된 예약|비활성|얼리 체크인|객실 상태|객실 작업|현재 상태
+fa|ورود ثبت شد|خروج ثبت شد|رزرو پیش رو|غیرفعال|ورود زودهنگام|وضعیت اتاق|عملیات اتاق|وضعیت فعلی
+he|צ׳ק-אין בוצע|צ׳ק-אאוט בוצע|הזמנה קרובה|לא פעיל|צ׳ק-אין מוקדם|מצב החדר|פעולות החדר|המצב הנוכחי
+sw|Ameingia|Ameondoka|Uhifadhi ujao|Haijatumika|Kuingia mapema|Hali ya chumba|Vitendo vya chumba|Hali ya sasa
+am|መግባት ተመዝግቧል|መውጣት ተመዝግቧል|መጪ ቦታ ማስያዣ|ንቁ ያልሆነ|ቀድሞ መግባት|የክፍል ሁኔታ|የክፍል እርምጃዎች|የአሁኑ ሁኔታ
+mr|चेक इन झाले|चेक आउट झाले|आगामी आरक्षण|निष्क्रिय|लवकर चेक इन|खोलीची स्थिती|खोलीसंबंधी कृती|सध्याची स्थिती
+pa|ਚੈੱਕ ਇਨ ਹੋ ਗਿਆ|ਚੈੱਕ ਆਊਟ ਹੋ ਗਿਆ|ਆਉਣ ਵਾਲੀ ਬੁਕਿੰਗ|ਅਕਿਰਿਆਸ਼ੀਲ|ਸਮੇਂ ਤੋਂ ਪਹਿਲਾਂ ਚੈੱਕ ਇਨ|ਕਮਰੇ ਦੀ ਸਥਿਤੀ|ਕਮਰੇ ਦੀਆਂ ਕਾਰਵਾਈਆਂ|ਮੌਜੂਦਾ ਸਥਿਤੀ
+te|చెక్ ఇన్ పూర్తయింది|చెక్ అవుట్ పూర్తయింది|రాబోయే రిజర్వేషన్|నిష్క్రియం|ముందస్తు చెక్ ఇన్|గది స్థితి|గది చర్యలు|ప్రస్తుత స్థితి
+my|ဝင်ရောက်မှု မှတ်တမ်းတင်ပြီး|ထွက်ခွာမှု မှတ်တမ်းတင်ပြီး|လာမည့်ကြိုတင်မှာယူမှု|အသုံးမပြုတော့ပါ|အချိန်စော၍ ဝင်ရောက်ရန်|အခန်းအခြေအနေ|အခန်းလုပ်ဆောင်ချက်များ|လက်ရှိအခြေအနေ
+lo|ເຊັກອິນແລ້ວ|ເຊັກເອົາແລ້ວ|ການຈອງທີ່ຈະມາເຖິງ|ບໍ່ໃຊ້ງານ|ເຊັກອິນກ່ອນເວລາ|ສະຖານະຫ້ອງ|ການດຳເນີນການຫ້ອງ|ສະຖານະປັດຈຸບັນ
+ka|შესახლებულია|გასახლებულია|მომავალი ჯავშანი|არააქტიური|ადრეული შესახლება|ოთახის სტატუსი|ოთახის მოქმედებები|მიმდინარე სტატუსი
+hy|Ժամանումը գրանցված է|Մեկնումը գրանցված է|Առաջիկա ամրագրում|Ոչ ակտիվ|Վաղ ժամանում|Սենյակի կարգավիճակ|Սենյակի գործողություններ|Ընթացիկ կարգավիճակ
+az|Giriş qeyd edilib|Çıxış qeyd edilib|Yaxınlaşan rezervasiya|Qeyri-aktiv|Erkən giriş|Otaq vəziyyəti|Otaq əməliyyatları|Cari vəziyyət
+kk|Кіру тіркелді|Шығу тіркелді|Алдағы брондау|Белсенді емес|Ерте кіру|Бөлме күйі|Бөлме әрекеттері|Ағымдағы күй
+uz|Kirish qayd etildi|Chiqish qayd etildi|Yaqinlashayotgan bandlov|Faol emas|Erta kirish|Xona holati|Xona amallari|Joriy holat
+ky|Кирүү катталды|Чыгуу катталды|Алдыдагы брондоо|Жигердүү эмес|Эрте кирүү|Бөлмөнүн абалы|Бөлмө аракеттери|Учурдагы абал
+mn|Ирснийг бүртгэсэн|Гарсныг бүртгэсэн|Удахгүй ирэх захиалга|Идэвхгүй|Эрт бүртгүүлэх|Өрөөний төлөв|Өрөөний үйлдлүүд|Одоогийн төлөв
+ps|ننوتل ثبت شول|وتل ثبت شول|راتلونکی ریزرف|غیرفعال|وختي ننوتل|د کوټې حالت|د کوټې کړنې|اوسنی حالت
+ku|Têketin hate tomarkirin|Derketin hate tomarkirin|Rezervasyona nêzîk|Neçalak|Têketina zû|Rewşa odeyê|Karûbarên odeyê|Rewşa niha

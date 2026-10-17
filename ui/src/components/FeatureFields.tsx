@@ -19,6 +19,8 @@ export function FeatureFields({
   value: FeatureAssignment[];
   onChange: (items: FeatureAssignment[]) => void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { locale } = useI18n();
   const language = locale.toUpperCase();
   const set = (code: string, v: FeatureValue) =>
@@ -50,17 +52,11 @@ export function FeatureFields({
     <CatalogFields definitions={definitions} scope={scope} value={value} onChange={onChange} />
     {(items.length > 0 || !definitions.some((d) => d.catalog_kind && d.scopes.includes(scope))) && <section className="space-y-4">
       <div className="min-w-0">
-        <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">
-          Olanaklar ve Özellikler
-        </h3>
-        <p className="mt-1 text-[0.875rem] leading-5 text-slate-500">
-          Bu kayıt için geçerli ek özellikler.
-        </p>
+        <h3 className="font-uninav-book text-[1.125rem] leading-6 text-slate-900">{_uiText("Olanaklar ve Özellikler")} </h3>
+        <p className="mt-1 text-[0.875rem] leading-5 text-slate-500">{_uiText("Bu kayıt için geçerli ek özellikler.")} </p>
       </div>
       {!items.length && (
-        <p className="text-xs text-slate-400">
-          Olanak Tanımları ekranından bu tesis için özellik ekleyebilirsiniz.
-        </p>
+        <p className="text-xs text-slate-400">{_uiText("Olanak Tanımları ekranından bu tesis için özellik ekleyebilirsiniz.")} </p>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {items.map((d) => {
@@ -85,13 +81,13 @@ export function FeatureFields({
                 >
                   {localized(d.label, language)}
                   {d.required ? " *" : ""}
-                  {d.unit ? ` (${d.unit})` : ""}
+                  {d.unit ? _uiText(" ({value1})", {value1: String(d.unit)}) : ""}
                 </label>
                 {assignment && !d.required && (
                   <button
                     type="button"
-                    title="Atamayı kaldır"
-                    aria-label={`${d.code} atamasını kaldır`}
+                    title={_uiText("Atamayı kaldır")}
+                    aria-label={_uiText("{value1} atamasını kaldır", {value1: String(d.code)})}
                     onClick={() =>
                       onChange(value.filter((a) => a.code !== d.code))
                     }
@@ -113,9 +109,9 @@ export function FeatureFields({
                     }
                     className={bareSelectClass}
                   >
-                    <option value="">Belirtilmedi</option>
-                    <option value="true">Var / Evet</option>
-                    <option value="false">Yok / Hayır</option>
+                    <option value="">{_uiText("Belirtilmedi")}</option>
+                    <option value="true">{_uiText("Var / Evet")}</option>
+                    <option value="false">{_uiText("Yok / Hayır")}</option>
                   </select>
                   {chevron}
                 </div>
@@ -146,7 +142,7 @@ export function FeatureFields({
                     }
                     className={bareSelectClass}
                   >
-                    <option value="">Seçiniz</option>
+                    <option value="">{_uiText("Seçiniz")}</option>
                     {d.options.map((o) => (
                       <option key={o} value={o}>
                         {localized(d.option_labels?.[o], language) || o}
@@ -172,11 +168,9 @@ export function FeatureFields({
                               : [...(Array.isArray(v) ? v : []), o],
                           )
                         }
-                        className={`uni-control rounded-xl px-3 py-2 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${
-                          selected
+                        className={`uni-control rounded-xl px-3 py-2 text-xs font-bold outline-none transition-all duration-150 ease-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-neutral-400 ${selected
                             ? "uni-button-primary"
-                            : "bg-white text-slate-600 hover:bg-slate-50"
-                        }`}
+                            : "bg-white text-slate-600 hover:bg-slate-50"}`}
                       >
                         {localized(d.option_labels?.[o], language) || o}
                       </button>

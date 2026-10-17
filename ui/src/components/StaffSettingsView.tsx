@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -47,6 +48,8 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
   staff = [],
   onUpdateStaff
 }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [isAdding, setIsAdding] = useState(false);
   const [editingStaffId, setEditingStaffId] = useState<string | null>(null);
   const [staffToDelete, setStaffToDelete] = useState<Staff | null>(null);
@@ -111,8 +114,8 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
       <div className="max-w-5xl mx-auto space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Personel Yönetimi</h2>
-            <p className="text-sm text-slate-400 font-medium italic mt-1">Sisteme erişimi olan personeli ve rollerini yönetin.</p>
+            <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">{_uiText("Personel Yönetimi")}</h2>
+            <p className="text-sm text-slate-400 font-medium italic mt-1">{_uiText("Sisteme erişimi olan personeli ve rollerini yönetin.")}</p>
           </div>
           <motion.button
             onClick={() => {
@@ -122,9 +125,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
             }}
             className="uni-control flex items-center gap-2 px-6 py-3 uni-button-primary text-white rounded-2xl text-xs     shadow-brand-blue-100       cursor-pointer"
           >
-            <UserPlus className="w-4 h-4" />
-            Yeni Personel Ekle
-          </motion.button>
+            <UserPlus className="w-4 h-4" />{_uiText("Yeni Personel Ekle")} </motion.button>
         </div>
 
         <AnimatePresence>
@@ -137,7 +138,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
             >
                <div className="flex items-center justify-between mb-8">
                 <h3 className="text-lg font-black text-slate-800 uppercase tracking-tighter">
-                  {editingStaffId ? 'PERSONEL GÜNCELLE' : 'YENİ PERSONEL KAYDI'}
+                  {editingStaffId ? _uiText("PERSONEL GÜNCELLE") : _uiText("YENİ PERSONEL KAYDI")}
                 </h3>
                 <button
                   onClick={() => {
@@ -153,7 +154,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
               <form onSubmit={handleAddStaff} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">PERSONEL ADI SOYADI</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("PERSONEL ADI SOYADI")}</label>
                     <input
                       required
                       value={newStaff.name}
@@ -162,7 +163,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">SİSTEM KULLANICI ADI</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("SİSTEM KULLANICI ADI")}</label>
                     <input
                       required
                       value={newStaff.username}
@@ -171,18 +172,16 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ROL / YETKİ SEÇİMİ</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("ROL / YETKİ SEÇİMİ")}</label>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {(['Yönetici', 'Resepsiyon', 'Muhasebe', 'Kat Hizmetleri', 'Teknik Servis'] as StaffRole[]).map(role => (
                         <button
                           key={role}
                           type="button"
                           onClick={() => setNewStaff(prev => ({ ...prev, role }))}
-                          className={`uni-control px-4 py-3 rounded-xl border text-[10px]   tracking-tight  ${
-                            newStaff.role === role
+                          className={`uni-control px-4 py-3 rounded-xl border text-[10px]   tracking-tight  ${newStaff.role === role
                               ? 'uni-button-primary border-brand-blue-600 text-white  shadow-brand-blue-100'
-                              : 'bg-white border-slate-200 text-slate-400 hover:border-brand-blue-200 hover:text-slate-600'
-                          }`}
+                              : 'bg-white border-slate-200 text-slate-400 hover:border-brand-blue-200 hover:text-slate-600'}`}
                         >
                           {role}
                         </button>
@@ -190,27 +189,21 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     </div>
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">SİSTEM YETKİLERİ</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("SİSTEM YETKİLERİ")}</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
                       {PERMISSION_LABELS.map(({ key, label, icon }) => (
                         <button
                           key={key}
                           type="button"
                           onClick={() => togglePermission(key as keyof StaffPermissions)}
-                          className={`uni-control flex items-center gap-3 px-3 py-2.5 rounded-xl border  ${
-                            newStaff.permissions?.[key as keyof StaffPermissions]
+                          className={`uni-control flex items-center gap-3 px-3 py-2.5 rounded-xl border  ${newStaff.permissions?.[key as keyof StaffPermissions]
                               ? 'bg-brand-blue-50 border-brand-blue-200 shadow-sm'
-                              : 'bg-white border-slate-100'
-                          }`}
+                              : 'bg-white border-slate-100'}`}
                         >
-                           <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
-                             newStaff.permissions?.[key as keyof StaffPermissions] ? 'bg-brand-blue-600 text-white' : 'bg-slate-50 text-slate-300'
-                           }`}>
+                           <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${newStaff.permissions?.[key as keyof StaffPermissions] ? 'bg-brand-blue-600 text-white' : 'bg-slate-50 text-slate-300'}`}>
                               {React.cloneElement(icon as React.ReactElement<{className?:string}>, { className: 'w-3.5 h-3.5' })}
                            </div>
-                           <span className={`text-[9px] font-black uppercase tracking-tighter text-left leading-tight ${
-                             newStaff.permissions?.[key as keyof StaffPermissions] ? 'text-brand-blue-800' : 'text-slate-400'
-                           }`}>
+                           <span className={`text-[9px] font-black uppercase tracking-tighter text-left leading-tight ${newStaff.permissions?.[key as keyof StaffPermissions] ? 'text-brand-blue-800' : 'text-slate-400'}`}>
                              {label}
                            </span>
                         </button>
@@ -218,18 +211,16 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">DURUM</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("DURUM")}</label>
                     <div className="flex gap-2">
                       {(['Aktif', 'Pasif'] as const).map(status => (
                         <button
                           key={status}
                           type="button"
                           onClick={() => setNewStaff(prev => ({ ...prev, status }))}
-                          className={`uni-control flex-1 px-4 py-3 rounded-xl border text-[10px]     ${
-                            newStaff.status === status
+                          className={`uni-control flex-1 px-4 py-3 rounded-xl border text-[10px]     ${newStaff.status === status
                               ? (status === 'Aktif' ? 'bg-green-600 border-green-600 text-white  shadow-green-100' : 'bg-slate-600 border-slate-600 text-white  shadow-slate-100')
-                              : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
-                          }`}
+                              : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'}`}
                         >
                           {status}
                         </button>
@@ -237,7 +228,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">TELEFON</label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TELEFON")}</label>
                     <input
                       value={newStaff.phone}
                       onChange={e => setNewStaff(prev => ({ ...prev, phone: e.target.value }))}
@@ -254,11 +245,9 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                       setEditingStaffId(null);
                     }}
                     className="uni-control px-6 py-3 text-slate-400 font-bold  text-[10px]"
-                  >
-                    İPTAL
-                  </button>
+                  >{_uiText("İPTAL")} </button>
                   <button type="submit" className="uni-control px-10 py-3 uni-button-primary text-white rounded-2xl   text-[10px] ">
-                    {editingStaffId ? 'GÜNCELLE' : 'PERSONEL EKLE'}
+                    {editingStaffId ? _uiText("GÜNCELLE") : _uiText("PERSONEL EKLE")}
                   </button>
                 </div>
               </form>
@@ -270,12 +259,12 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">PERSONEL</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">ROL</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">İLETİŞİM</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">YETKİLER</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">DURUM</th>
-                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">İŞLEMLER</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("PERSONEL")}</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("ROL")}</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("İLETİŞİM")}</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("YETKİLER")}</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{_uiText("DURUM")}</th>
+                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] text-right">{_uiText("İŞLEMLER")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -315,9 +304,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                        {PERMISSION_LABELS.map(p => (
                          <div
                            key={p.key}
-                           className={`w-6 h-6 rounded-lg flex items-center justify-center border-2 border-white shadow-sm transition-all ${
-                             s.permissions?.[p.key as keyof StaffPermissions] ? 'bg-brand-blue-600 text-white' : 'bg-slate-50 text-slate-200'
-                           }`}
+                           className={`w-6 h-6 rounded-lg flex items-center justify-center border-2 border-white shadow-sm transition-all ${s.permissions?.[p.key as keyof StaffPermissions] ? 'bg-brand-blue-600 text-white' : 'bg-slate-50 text-slate-200'}`}
                            title={p.label}
                          >
                            {React.cloneElement(p.icon as React.ReactElement<{className?:string}>, { className: 'w-2.5 h-2.5' })}
@@ -329,9 +316,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                      </div>
                    </td>
                    <td className="px-6 py-4">
-                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border ${
-                        s.status === 'Aktif' ? 'bg-green-50 text-green-600 border-green-100' : 'bg-slate-50 text-slate-400 border-slate-100'
-                      }`}>
+                      <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border ${s.status === 'Aktif' ? 'bg-green-50 text-green-600 border-green-100' : 'bg-slate-50 text-slate-400 border-slate-100'}`}>
                         {s.status}
                       </span>
                    </td>
@@ -353,8 +338,8 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
           isOpen={!!staffToDelete}
           onClose={() => setStaffToDelete(null)}
           onConfirm={() => removeStaff(staffToDelete.id)}
-          title="Personeli Sil"
-          message={`${staffToDelete.name} isimli personeli sistemden silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`}
+          title={_uiText("Personeli Sil")}
+          message={_uiText("{value1} isimli personeli sistemden silmek istediğinize emin misiniz? Bu işlem geri alınamaz.", {value1: String(staffToDelete.name)})}
           confirmText="Sil"
           cancelText="Vazgeç"
           type="danger"

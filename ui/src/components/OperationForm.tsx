@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { RoomStatus as RoomState } from '../lib/statuses.generated';
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
@@ -46,6 +47,8 @@ export const OperationForm: React.FC<OperationFormProps> = ({
   onConfirm,
   onCancel,
 }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [formError, setFormError] = React.useState("");
   const [formData, setFormData] = useState({
     customerName: room.name || "",
@@ -112,14 +115,14 @@ export const OperationForm: React.FC<OperationFormProps> = ({
   };
 
   const paymentMethods = [
-    { id: "Nakit", label: "NAKİT", icon: <Banknote className="w-3 h-3" /> },
+    { id: "Nakit", label: _uiText("NAKİT"), icon: <Banknote className="w-3 h-3" /> },
     {
       id: "Kredi Kartı",
-      label: "K. KARTI",
+      label: _uiText("K. KARTI"),
       icon: <CreditCard className="w-3 h-3" />,
     },
-    { id: "Havale", label: "HAVALE", icon: <Send className="w-3 h-3" /> },
-    { id: "Şirket", label: "ŞİRKET", icon: <Building2 className="w-3 h-3" /> },
+    { id: "Havale", label: _uiText("HAVALE"), icon: <Send className="w-3 h-3" /> },
+    { id: "Şirket", label: _uiText("ŞİRKET"), icon: <Building2 className="w-3 h-3" /> },
   ];
 
   const titles = {
@@ -148,13 +151,13 @@ export const OperationForm: React.FC<OperationFormProps> = ({
       const targetRoom = availableRooms.find(
         (r) => r.id === formData.targetRoomId,
       );
-      return `ODA ${room.number} kaydını ODA ${targetRoom?.number} üzerine aktarmak istediğinize emin misiniz?`;
+      return _uiText("ODA {value1} kaydını ODA {value2} üzerine aktarmak istediğinize emin misiniz?", {value1: String(room.number), value2: String(targetRoom?.number)});
     }
     if (type === "checkout")
-      return `ODA ${room.number} için check-out işlemini onaylıyor musunuz? Odadaki tüm misafir kayıtları silinecektir.`;
+      return _uiText("ODA {value1} için check-out işlemini onaylıyor musunuz? Odadaki tüm misafir kayıtları silinecektir.", {value1: String(room.number)});
     if (type === "reserve")
-      return `${formData.customerName} adına oda ${room.number} için rezervasyon kaydı yapılacaktır.`;
-    return `${formData.customerName} adına oda ${room.number} için satış işlemi (check-in) yapılacaktır.`;
+      return _uiText("{value1} adına oda {value2} için rezervasyon kaydı yapılacaktır.", {value1: String(formData.customerName), value2: String(room.number)});
+    return _uiText("{value1} adına oda {value2} için satış işlemi (check-in) yapılacaktır.", {value1: String(formData.customerName), value2: String(room.number)});
   };
 
   const [isConfirming, setIsConfirming] = useState(false);
@@ -211,11 +214,8 @@ export const OperationForm: React.FC<OperationFormProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-0">
               <span
                 className={`text-[10px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded self-start ${operationColors[type]}`}
-              >
-                SYSTEM
-              </span>
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                ODA:{" "}
+              >{_uiText("SYSTEM")} </span>
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("ODA:")}{" "}
                 <span className="text-slate-900 font-black">
                   #{room.number}
                 </span>
@@ -233,27 +233,19 @@ export const OperationForm: React.FC<OperationFormProps> = ({
               }}
               className="uni-control flex-1 md:flex-none px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-lg text-[11px]  text-slate-500 hover:bg-slate-200 active:bg-slate-200    shadow-sm  cursor-pointer   flex items-center gap-2"
             >
-              <FileText className="w-3.5 h-3.5" />
-              DEKONT AL
-            </button>
+              <FileText className="w-3.5 h-3.5" />{_uiText("DEKONT AL")} </button>
           )}
           <button
             onClick={onCancel}
             className="uni-control flex-1 md:flex-none px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-[11px]  text-slate-500 hover:bg-slate-50 active:bg-slate-50    shadow-sm  cursor-pointer  "
-          >
-            İPTAL
-          </button>
+          >{_uiText("İPTAL")} </button>
           <button
             onClick={handleConfirm}
-            className={`uni-control flex-[2] md:flex-none px-5 py-2 rounded-lg text-[11px]  text-white     flex items-center justify-center gap-2  cursor-pointer   ${
-              type === "checkout"
+            className={`uni-control flex-[2] md:flex-none px-5 py-2 rounded-lg text-[11px]  text-white     flex items-center justify-center gap-2  cursor-pointer   ${type === "checkout"
                 ? "bg-rose-600 shadow-rose-200"
-                : "uni-button-primary shadow-brand-blue-200"
-            }`}
+                : "uni-button-primary shadow-brand-blue-200"}`}
           >
-            <Save className="w-3.5 h-3.5" />
-            KAYDI ONAYLA
-          </button>
+            <Save className="w-3.5 h-3.5" />{_uiText("KAYDI ONAYLA")} </button>
         </div>
       </div>
 
@@ -282,9 +274,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 <AlertCircle className="w-10 h-10" />
               </div>
 
-              <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-4">
-                İŞLEM ONAYI
-              </h4>
+              <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-4">{_uiText("İŞLEM ONAYI")} </h4>
               <p className="text-sm text-slate-500 font-medium leading-relaxed mb-10 italic">
                 {getConfirmationMessage()}
               </p>
@@ -293,15 +283,11 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 <button
                   onClick={() => setIsConfirming(false)}
                   className="uni-control flex-1 py-4 text-slate-400  text-[11px]  tracking-[0.2em] hover:text-slate-600 "
-                >
-                  VAZGEÇ
-                </button>
+                >{_uiText("VAZGEÇ")} </button>
                 <button
                   onClick={handleConfirm}
                   className="uni-control flex-2 py-4 uni-button-primary text-white rounded-[20px] text-[11px]   tracking-[0.2em]  shadow-brand-blue-100       cursor-pointer"
-                >
-                  EVET, ONAYLIYORUM
-                </button>
+                >{_uiText("EVET, ONAYLIYORUM")} </button>
               </div>
             </motion.div>
           </motion.div>
@@ -324,9 +310,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   <div className="p-5 bg-amber-50 border-2 border-amber-200 rounded-3xl mb-6 shadow-inner">
                     <div className="flex items-center gap-3 mb-4">
                       <Repeat className="w-5 h-5 text-amber-600" />
-                      <label className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em]">
-                        HEDEF ODA SEÇİMİ (TRANSFER EDİLECEK ODA)
-                      </label>
+                      <label className="text-[11px] font-black text-amber-600 uppercase tracking-[0.2em]">{_uiText("HEDEF ODA SEÇİMİ (TRANSFER EDİLECEK ODA)")} </label>
                     </div>
                     <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2.5">
                       {availableRooms.map((targetRoom) => (
@@ -339,11 +323,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               targetRoomId: targetRoom.id,
                             })
                           }
-                          className={`uni-control flex flex-col items-center justify-center p-3 rounded-2xl border-2  gap-1 h-20 shadow-sm ${
-                            formData.targetRoomId === targetRoom.id
+                          className={`uni-control flex flex-col items-center justify-center p-3 rounded-2xl border-2  gap-1 h-20 shadow-sm ${formData.targetRoomId === targetRoom.id
                               ? "bg-amber-500 border-amber-600 text-white  ring-4 ring-amber-500/10 scale-105 z-10"
-                              : "bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-600"
-                          }`}
+                              : "bg-white border-slate-100 text-slate-400 hover:border-amber-300 hover:text-amber-600"}`}
                         >
                           <span className="text-[13px] font-black tracking-tight">
                             #{targetRoom.number}
@@ -356,9 +338,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                       {availableRooms.length === 0 && (
                         <div className="uni-card col-span-full py-8 text-center bg-white/50 rounded-2xl border-2 border-dashed border-amber-200">
                           <AlertCircle className="w-8 h-8 text-amber-300 mx-auto mb-2" />
-                          <p className="text-[10px] font-black text-amber-400 uppercase tracking-widest">
-                            MÜSAİT ODA BULUNAMADI
-                          </p>
+                          <p className="text-[10px] font-black text-amber-400 uppercase tracking-widest">{_uiText("MÜSAİT ODA BULUNAMADI")} </p>
                         </div>
                       )}
                     </div>
@@ -368,21 +348,15 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   {/* Guest Info */}
                   <div className="md:col-span-7 space-y-1 relative">
                     <div className="flex items-center justify-between ml-0.5">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                        AD SOYAD / ÜNVAN
-                      </label>
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("AD SOYAD / ÜNVAN")} </label>
                       <button
                         type="button"
                         onClick={() => setShowHistory(!showHistory)}
-                        className={`uni-control flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px]   tracking-tight  ${
-                          showHistory
+                        className={`uni-control flex items-center gap-1.5 px-2 py-0.5 rounded text-[8px]   tracking-tight  ${showHistory
                             ? "uni-button-primary text-white "
-                            : "bg-brand-blue-50 text-brand-blue-600 hover:bg-brand-blue-100"
-                        }`}
+                            : "bg-brand-blue-50 text-brand-blue-600 hover:bg-brand-blue-100"}`}
                       >
-                        <History className="w-2.5 h-2.5" />
-                        GEÇMİŞTEN GETİR
-                      </button>
+                        <History className="w-2.5 h-2.5" />{_uiText("GEÇMİŞTEN GETİR")} </button>
                     </div>
                     <div className="relative group">
                       <User className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
@@ -395,7 +369,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                             customerName: e.target.value,
                           })
                         }
-                        placeholder="MİSAFİR İSMİ..."
+                        placeholder={_uiText("MİSAFİR İSMİ...")}
                         className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none uppercase placeholder:text-slate-400"
                       />
                     </div>
@@ -419,7 +393,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                 onChange={(e) =>
                                   setHistorySearch(e.target.value)
                                 }
-                                placeholder="İSİM, TELEFON VEYA TC ARA..."
+                                placeholder={_uiText("İSİM, TELEFON VEYA TC ARA...")}
                                 className="uni-input w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-neutral-400 placeholder:text-slate-400 shadow-inner"
                               />
                             </div>
@@ -461,16 +435,13 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                             {guest.phone}
                                           </span>
                                           <div className="w-1 h-1 bg-slate-200 rounded-full" />
-                                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                                            TC: {guest.tcNo}
+                                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{_uiText("TC:")} {guest.tcNo}
                                           </span>
                                         </div>
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                                      <span className="text-[9px] font-black text-brand-blue-600 bg-brand-blue-50 px-2 py-1 rounded-lg uppercase tracking-widest">
-                                        SEÇ
-                                      </span>
+                                      <span className="text-[9px] font-black text-brand-blue-600 bg-brand-blue-50 px-2 py-1 rounded-lg uppercase tracking-widest">{_uiText("SEÇ")} </span>
                                     </div>
                                   </div>
                                 </button>
@@ -480,24 +451,18 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                                 <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mx-auto mb-3 text-slate-300">
                                   <Search size={20} />
                                 </div>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                  ARANAN MİSAFİR BULUNAMADI
-                                </p>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{_uiText("ARANAN MİSAFİR BULUNAMADI")} </p>
                               </div>
                             )}
                           </div>
-                          <div className="p-3 bg-brand-blue-600 text-white text-[9px] font-black uppercase tracking-[0.2em] text-center">
-                            MERKEZİ MİSAFİR VERİTABANI
-                          </div>
+                          <div className="p-3 bg-brand-blue-600 text-white text-[9px] font-black uppercase tracking-[0.2em] text-center">{_uiText("MERKEZİ MİSAFİR VERİTABANI")} </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
 
                   <div className="md:col-span-5 space-y-1">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
-                      TELEFON
-                    </label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">{_uiText("TELEFON")} </label>
                     <div className="relative">
                       <Phone className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
                       <input
@@ -506,7 +471,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                         onChange={(e) =>
                           setFormData({ ...formData, phone: e.target.value })
                         }
-                        placeholder="05xx..."
+                        placeholder={_uiText("05xx...")}
                         className="uni-input w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-bold text-slate-800 outline-none"
                       />
                     </div>
@@ -515,7 +480,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   {/* Planning */}
                   <div className="md:col-span-6">
                     <DateTimePicker
-                      label="GİRİŞ"
+                      label={_uiText("GİRİŞ")}
                       value={formData.checkIn}
                       onChange={(date) =>
                         setFormData({ ...formData, checkIn: date })
@@ -524,7 +489,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   </div>
                   <div className="md:col-span-6">
                     <DateTimePicker
-                      label="ÇIKIŞ"
+                      label={_uiText("ÇIKIŞ")}
                       value={formData.checkOut}
                       onChange={(date) =>
                         setFormData({ ...formData, checkOut: date })
@@ -543,9 +508,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
               >
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                   <div className="md:col-span-4 space-y-1">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
-                      BİRİM FİYAT
-                    </label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">{_uiText("BİRİM FİYAT")} </label>
                     <div className="relative">
                       <CreditCard className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-300" />
                       <input
@@ -560,9 +523,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                   </div>
 
                   <div className="md:col-span-8 flex flex-col gap-1">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
-                      ÖDEME YÖNTEMİ
-                    </label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">{_uiText("ÖDEME YÖNTEMİ")} </label>
                     <div className="grid grid-cols-4 gap-1.5 w-full">
                       {paymentMethods.map((method) => (
                         <button
@@ -571,11 +532,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                           onClick={() =>
                             setFormData({ ...formData, paymentType: method.id })
                           }
-                          className={`uni-control flex flex-col items-center justify-center py-2.5 rounded-xl border  gap-1.5 ${
-                            formData.paymentType === method.id
+                          className={`uni-control flex flex-col items-center justify-center py-2.5 rounded-xl border  gap-1.5 ${formData.paymentType === method.id
                               ? "uni-button-primary border-brand-blue-600 text-white  shadow-brand-blue-100 ring-4 ring-brand-blue-500/5"
-                              : "bg-slate-50 border-slate-200 text-slate-400 hover:border-slate-300 hover:bg-white hover:text-slate-600"
-                          }`}
+                              : "bg-slate-50 border-slate-200 text-slate-400 hover:border-slate-300 hover:bg-white hover:text-slate-600"}`}
                         >
                           <span
                             className={`${formData.paymentType === method.id ? "opacity-100" : "opacity-40"}`}
@@ -592,32 +551,24 @@ export const OperationForm: React.FC<OperationFormProps> = ({
 
                   {type === "reserve" && (
                     <div
-                      className={`md:col-span-12 p-4 rounded-xl border transition-all ${
-                        formData.isDeposit
+                      className={`md:col-span-12 p-4 rounded-xl border transition-all ${formData.isDeposit
                           ? "bg-emerald-50/50 border-emerald-200 ring-1 ring-emerald-100"
-                          : "bg-slate-50 border-slate-200"
-                      }`}
+                          : "bg-slate-50 border-slate-200"}`}
                     >
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-150 ease-out shadow-sm ${
-                              formData.isDeposit
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-150 ease-out shadow-sm ${formData.isDeposit
                                 ? "bg-emerald-600 text-white shadow-emerald-200"
-                                : "bg-white text-slate-400 border border-slate-100"
-                            }`}
+                                : "bg-white text-slate-400 border border-slate-100"}`}
                           >
                             <Wallet className="w-5 h-5" />
                           </div>
                           <div>
                             <p
                               className={`text-xs font-black uppercase tracking-tight ${formData.isDeposit ? "text-emerald-900" : "text-slate-600"}`}
-                            >
-                              ÖN ÖDEME / KAPORA
-                            </p>
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
-                              KAYIT SIRASINDA ALINAN TUTAR
-                            </p>
+                            >{_uiText("ÖN ÖDEME / KAPORA")} </p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{_uiText("KAYIT SIRASINDA ALINAN TUTAR")} </p>
                           </div>
                         </div>
 
@@ -628,27 +579,19 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               onClick={() =>
                                 setFormData({ ...formData, isDeposit: false })
                               }
-                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${
-                                !formData.isDeposit
+                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${!formData.isDeposit
                                   ? "bg-slate-100 text-slate-600 shadow-sm"
-                                  : "text-slate-400 hover:text-slate-500"
-                              }`}
-                            >
-                              YOK
-                            </button>
+                                  : "text-slate-400 hover:text-slate-500"}`}
+                            >{_uiText("YOK")} </button>
                             <button
                               type="button"
                               onClick={() =>
                                 setFormData({ ...formData, isDeposit: true })
                               }
-                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${
-                                formData.isDeposit
+                              className={`uni-control px-4 py-1.5 rounded-lg text-[10px]   ${formData.isDeposit
                                   ? "bg-emerald-600 text-white  shadow-emerald-100"
-                                  : "text-slate-400 hover:text-slate-500"
-                              }`}
-                            >
-                              ALINDI
-                            </button>
+                                  : "text-slate-400 hover:text-slate-500"}`}
+                            >{_uiText("ALINDI")} </button>
                           </div>
 
                           {formData.isDeposit && (
@@ -658,9 +601,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               className="relative group min-w-[140px]"
                             >
                               <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
-                                <span className="text-[10px] font-black text-emerald-600 uppercase">
-                                  TL
-                                </span>
+                                <span className="text-[10px] font-black text-emerald-600 uppercase">{_uiText("TL")} </span>
                                 <div className="w-px h-3 bg-emerald-200" />
                               </div>
                               <input
@@ -684,12 +625,10 @@ export const OperationForm: React.FC<OperationFormProps> = ({
 
                   {/* Notes Section moved here for better flow */}
                   <div className="md:col-span-12 space-y-1">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">
-                      NOTLAR / ÖZEL İSTEKLER
-                    </label>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-0.5">{_uiText("NOTLAR / ÖZEL İSTEKLER")} </label>
                     <textarea
                       rows={2}
-                      placeholder="Misafir ile ilgili ek bilgiler..."
+                      placeholder={_uiText("Misafir ile ilgili ek bilgiler...")}
                       className="uni-input w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-800 outline-none resize-none focus:border-neutral-400 transition-all"
                       value={formData.notes || ""}
                       onChange={(e) =>
@@ -712,18 +651,14 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                     <div className="w-8 h-8 bg-slate-50 rounded-lg flex items-center justify-center text-slate-400">
                       <User className="w-4 h-4" />
                     </div>
-                    <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase">
-                      MİSAFİR LİSTESİ
-                    </h3>
+                    <h3 className="text-sm font-black text-slate-800 tracking-tight uppercase">{_uiText("MİSAFİR LİSTESİ")} </h3>
                   </div>
                   <button
                     type="button"
                     onClick={addGuest}
                     className="uni-control px-3 py-1.5 bg-brand-blue-50 text-brand-blue-600 rounded-lg text-[10px]    hover:bg-brand-blue-100  flex items-center gap-1.5"
                   >
-                    <Save className="w-3 h-3 rotate-45" />
-                    YENİ EKLE
-                  </button>
+                    <Save className="w-3 h-3 rotate-45" />{_uiText("YENİ EKLE")} </button>
                 </div>
 
                 <div className="space-y-3">
@@ -734,9 +669,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                     >
                       <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
                         <div className="md:col-span-5 space-y-1">
-                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                            AD SOYAD
-                          </label>
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{_uiText("AD SOYAD")} </label>
                           <input
                             type="text"
                             value={guest.name || ""}
@@ -748,13 +681,11 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               )
                             }
                             className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none uppercase"
-                            placeholder="MİSAFİR ADI..."
+                            placeholder={_uiText("MİSAFİR ADI...")}
                           />
                         </div>
                         <div className="md:col-span-3 space-y-1">
-                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                            TC NO / PASAPORT
-                          </label>
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TC NO / PASAPORT")} </label>
                           <input
                             type="text"
                             maxLength={11}
@@ -767,13 +698,11 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               )
                             }
                             className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
-                            placeholder="KİMLİK NO"
+                            placeholder={_uiText("KİMLİK NO")}
                           />
                         </div>
                         <div className="md:col-span-3 space-y-1">
-                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
-                            TELEFON
-                          </label>
+                          <label className="text-[8px] font-black text-slate-400 uppercase tracking-widest">{_uiText("TELEFON")} </label>
                           <input
                             type="text"
                             value={guest.phone || ""}
@@ -781,7 +710,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               updateGuest(guest.id, "phone", e.target.value)
                             }
                             className="uni-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-800 outline-none"
-                            placeholder="05xx..."
+                            placeholder={_uiText("05xx...")}
                           />
                         </div>
                         <div className="md:col-span-1 flex justify-end">
@@ -797,9 +726,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                         {/* Guest Note Field */}
                         <div className="md:col-span-12 space-y-1 mt-1">
                           <label className="text-[8px] font-black text-indigo-400 uppercase tracking-widest flex items-center gap-1.5">
-                            <FileText size={10} /> MİSAFİR ÖZEL NOTU (TERCİHLER,
-                            ALERJİLER VB.)
-                          </label>
+                            <FileText size={10} /> {_uiText("MİSAFİR ÖZEL NOTU (TERCİHLER, ALERJİLER VB.)")} </label>
                           <input
                             type="text"
                             value={guest.note || ""}
@@ -807,7 +734,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               updateGuest(guest.id, "note", e.target.value)
                             }
                             className="uni-input w-full px-3 py-1.5 bg-indigo-50/30 border border-indigo-100 rounded-lg text-xs font-medium text-slate-600 outline-none focus:border-indigo-300 transition-all italic placeholder:text-slate-400"
-                            placeholder="Bu misafir için özel bir not yazın..."
+                            placeholder={_uiText("Bu misafir için özel bir not yazın...")}
                           />
                         </div>
                       </div>
@@ -826,25 +753,19 @@ export const OperationForm: React.FC<OperationFormProps> = ({
             >
               <div className="bg-white rounded-xl shadow-xl shadow-slate-200/20 border border-slate-200 overflow-hidden">
                 <div
-                  className={`p-4 relative overflow-hidden ${
-                    type === "checkout"
+                  className={`p-4 relative overflow-hidden ${type === "checkout"
                       ? "bg-rose-600"
                       : type === "reserve"
                         ? "bg-emerald-600"
-                        : "bg-brand-blue-700"
-                  } text-white`}
+                        : "bg-brand-blue-700"} text-white`}
                 >
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl opacity-50" />
-                  <h3 className="text-[9px] font-black text-white/50 uppercase tracking-[0.2em] mb-4 relative z-10">
-                    ÖZET
-                  </h3>
+                  <h3 className="text-[9px] font-black text-white/50 uppercase tracking-[0.2em] mb-4 relative z-10">{_uiText("ÖZET")} </h3>
 
                   <div className="flex justify-between items-center relative z-10">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center font-black bg-white/10 border border-white/20">
-                        <span className="text-[8px] opacity-60 font-bold uppercase tracking-tighter">
-                          ODA
-                        </span>
+                        <span className="text-[8px] opacity-60 font-bold uppercase tracking-tighter">{_uiText("ODA")} </span>
                         <span className="text-base">{room.number}</span>
                       </div>
                       <div className="min-w-0">
@@ -855,11 +776,9 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                     </div>
                     <div className="text-right">
                       <p className="text-base font-black leading-none">
-                        {Number(formData.price).toLocaleString("tr-TR", {
+                        {Number(formData.price).toLocaleString(_uiLocale, {
                           minimumFractionDigits: 2,
-                        })}{" "}
-                        TL
-                      </p>
+                        })}{" "}{_uiText("TL")} </p>
                     </div>
                   </div>
                 </div>
@@ -867,67 +786,47 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                 <div className="p-4 space-y-4 bg-white">
                   <div className="space-y-3">
                     <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
-                      <span className="uppercase tracking-widest text-[9px]">
-                        KONAKLAMA SÜRESİ
-                      </span>
-                      <span className="text-slate-900 font-black">2 GECE</span>
+                      <span className="uppercase tracking-widest text-[9px]">{_uiText("KONAKLAMA SÜRESİ")} </span>
+                      <span className="text-slate-900 font-black">{_uiText("2 GECE")}</span>
                     </div>
                     <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
-                      <span className="uppercase tracking-widest text-[9px]">
-                        GÜNLÜK BİRİM FİYAT
-                      </span>
+                      <span className="uppercase tracking-widest text-[9px]">{_uiText("GÜNLÜK BİRİM FİYAT")} </span>
                       <span className="text-slate-700 font-bold">
-                        {Number(formData.price).toLocaleString("tr-TR", {
+                        {Number(formData.price).toLocaleString(_uiLocale, {
                           minimumFractionDigits: 2,
-                        })}{" "}
-                        TL
-                      </span>
+                        })}{" "}{_uiText("TL")} </span>
                     </div>
                     <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-slate-50 pb-2">
-                      <span className="uppercase tracking-widest text-[9px]">
-                        HİZMET TOPLAMI (KDV HARİÇ)
-                      </span>
+                      <span className="uppercase tracking-widest text-[9px]">{_uiText("HİZMET TOPLAMI (KDV HARİÇ)")} </span>
                       <span className="text-slate-700 font-bold">
-                        {(Number(formData.price) * 2).toLocaleString("tr-TR", {
+                        {(Number(formData.price) * 2).toLocaleString(_uiLocale, {
                           minimumFractionDigits: 2,
-                        })}{" "}
-                        TL
-                      </span>
+                        })}{" "}{_uiText("TL")} </span>
                     </div>
                     {formData.isDeposit && (
                       <div className="flex justify-between items-center text-[10px] font-black text-emerald-600 border-b border-emerald-100 bg-emerald-50/30 -mx-1 px-1 py-1 rounded">
-                        <span className="uppercase tracking-widest text-[9px]">
-                          TAHSİL EDİLEN KAPORA
-                        </span>
+                        <span className="uppercase tracking-widest text-[9px]">{_uiText("TAHSİL EDİLEN KAPORA")} </span>
                         <span className="font-black">
                           -
                           {Number(formData.depositAmount).toLocaleString(
-                            "tr-TR",
+                            _uiLocale,
                             { minimumFractionDigits: 2 },
-                          )}{" "}
-                          TL
-                        </span>
+                          )}{" "}{_uiText("TL")} </span>
                       </div>
                     )}
                     <div className="flex justify-between items-center text-[10px] font-black text-indigo-400">
-                      <span className="uppercase tracking-widest text-[9px]">
-                        KDV (%20)
-                      </span>
+                      <span className="uppercase tracking-widest text-[9px]">{_uiText("KDV (%20)")} </span>
                       <span className="text-indigo-600 font-bold text-[11px]">
                         {(Number(formData.price) * 2 * 0.2).toLocaleString(
-                          "tr-TR",
+                          _uiLocale,
                           { minimumFractionDigits: 2 },
-                        )}{" "}
-                        TL
-                      </span>
+                        )}{" "}{_uiText("TL")} </span>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t-2 border-slate-100 mt-4 bg-slate-50 -mx-4 px-4 py-4">
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
-                        TOPLAM BAKİYE
-                      </span>
+                      <span className="text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">{_uiText("TOPLAM BAKİYE")} </span>
                       <span className="text-[10px] font-black text-brand-blue-600 bg-brand-blue-50 px-2 py-0.5 rounded uppercase">
                         {formData.paymentType}
                       </span>
@@ -941,7 +840,7 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                               ? Number(formData.depositAmount)
                               : 0)
                           )
-                            .toLocaleString("tr-TR", {
+                            .toLocaleString(_uiLocale, {
                               minimumFractionDigits: 0,
                             })
                             .split(",")[0]
@@ -955,20 +854,17 @@ export const OperationForm: React.FC<OperationFormProps> = ({
                             ? Number(formData.depositAmount)
                             : 0)
                         )
-                          .toLocaleString("tr-TR", { minimumFractionDigits: 2 })
+                          .toLocaleString(_uiLocale, { minimumFractionDigits: 2 })
                           .split(",")[1] || "00"}
                       </span>
-                      <span className="text-sm font-black text-slate-500 ml-1 uppercase">
-                        TL
-                      </span>
+                      <span className="text-sm font-black text-slate-500 ml-1 uppercase">{_uiText("TL")} </span>
                     </div>
                   </div>
 
                   {formData.notes && (
                     <div className="mt-4 p-3 bg-amber-50 border border-amber-100 rounded-xl">
                       <p className="text-[9px] font-black text-amber-600 uppercase tracking-widest mb-1 flex items-center gap-1.5">
-                        <AlertCircle size={10} /> GENEL REZERVASYON NOTU
-                      </p>
+                        <AlertCircle size={10} /> {_uiText("GENEL REZERVASYON NOTU")} </p>
                       <p className="text-[11px] text-amber-800 font-medium italic leading-relaxed">
                         "{formData.notes}"
                       </p>

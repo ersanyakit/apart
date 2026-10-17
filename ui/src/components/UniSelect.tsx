@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ChevronDown } from "lucide-react";
@@ -40,6 +41,8 @@ export const UniSelect: React.FC<UniSelectProps> = ({
   variant = "compact",
   grouped = false,
 }) => {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const reducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -179,9 +182,7 @@ export const UniSelect: React.FC<UniSelectProps> = ({
                   );
                 })}
                 {options.length === 0 && (
-                  <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">
-                    Kayıt yok
-                  </p>
+                  <p className="font-uninav-book px-3 py-4 text-center text-[12px] leading-4 text-slate-400">{_uiText("Kayıt yok")} </p>
                 )}
               </div>
             </div>

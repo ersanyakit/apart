@@ -1,3 +1,4 @@
+import { useI18n } from "../I18n";
 import React, { useEffect, useRef, useState } from "react";
 import { FieldCard, FieldCaption } from "./FieldCard";
 import {
@@ -46,6 +47,8 @@ export function MoneyField({
   /** Verilmezse Ayarlar'daki para birimi kullanılır (kayıt ekranları kendi birimini verir). */
   currency?: CurrencyId;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { currency: preferredCurrency, format } = useCurrency();
   const currency = currencyOverride ?? preferredCurrency;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -107,11 +110,10 @@ export function MoneyField({
           </span>
         </span>
         <span className="mt-1 block truncate text-[0.875rem] leading-5 text-slate-500">
-          {sub ?? `${formatMoney(valueMinor, currency, format)} / gece`}
+          {sub ?? _uiText("{value1} / gece", {value1: String(formatMoney(valueMinor, currency, format))})}
         </span>
         {invalid && (
-          <span role="alert" className="mt-1 block text-[0.875rem] leading-5 text-red-600">
-            Geçerli tutar yazın (örn. {example})
+          <span role="alert" className="mt-1 block text-[0.875rem] leading-5 text-red-600">{_uiText("Geçerli tutar yazın (örn.")} {example})
           </span>
         )}
       </label>

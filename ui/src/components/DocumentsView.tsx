@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { NavigationIcon } from "./NavigationIcon";
 import React, { useEffect, useState } from "react";
 import {
@@ -37,6 +38,8 @@ export function BookingDocuments({
   initialKind?: string;
   onFolio?:()=>void;
 }) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const [kind, setKind] = useState(initialKind),
     [language, setLanguage] = useState("TR"),
     [amountMinor, setAmountMinor] = useState(0),
@@ -122,13 +125,13 @@ export function BookingDocuments({
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
-      {onFolio&&<button type="button" className={secondaryStyle} onClick={onFolio}><NavigationIcon name="folio" size={18}/>Oda folyosu / Hizmet ekle</button>}
+      {onFolio&&<button type="button" className={secondaryStyle} onClick={onFolio}><NavigationIcon name="folio" size={18}/>{_uiText("Oda folyosu / Hizmet ekle")}</button>}
       <p className="text-sm font-black">
         {b.guest_name} · {s.rooms.find((r) => r.room_id === b.room_id)?.code}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <InlineSelectField
-          label="Belge türü"
+          label={_uiText("Belge türü")}
           value={kind}
           onChange={(v) => {
             setKind(v);
@@ -141,7 +144,7 @@ export function BookingDocuments({
           }))}
         />
         <InlineSelectField
-          label="Dil"
+          label={_uiText("Dil")}
           value={language}
           onChange={(v) => {
             setLanguage(v);
@@ -155,14 +158,14 @@ export function BookingDocuments({
             <MoneyField
               label={
                 kind === "sale_receipt"
-                  ? "Tahsil edilen tutar"
-                  : "Sözleşme bedeli"
+                  ? _uiText("Tahsil edilen tutar")
+                  : _uiText("Sözleşme bedeli")
               }
               valueMinor={amountMinor}
               onChange={setAmountMinor}
             />
             <InlineSelectField
-              label="Para birimi"
+              label={_uiText("Para birimi")}
               value={currency}
               onChange={setCurrency}
               options={CURRENCIES.map((c) => ({
@@ -175,7 +178,7 @@ export function BookingDocuments({
         {kind === "sale_receipt" && (
           <>
             <InlineSelectField
-              label="Ödeme yöntemi"
+              label={_uiText("Ödeme yöntemi")}
               value={method}
               onChange={setMethod}
               options={
@@ -192,13 +195,13 @@ export function BookingDocuments({
               }
             />
             <DateField
-              label="Ödeme tarihi"
+              label={_uiText("Ödeme tarihi")}
               value={paidAt}
               onChange={setPaidAt}
             />
             <div className="sm:col-span-2">
               <TextField
-                label="İşlem referansı"
+                label={_uiText("İşlem referansı")}
                 autoComplete="off"
                 value={reference}
                 onChange={setReference}
@@ -212,9 +215,7 @@ export function BookingDocuments({
           className={`uni-control ${secondaryStyle}`}
           disabled={busy}
           onClick={() => prepare(false)}
-        >
-          Önizle
-        </button>
+        >{_uiText("Önizle")} </button>
         <button
           className={`uni-control ${buttonStyle}`}
           disabled={busy}
@@ -226,9 +227,7 @@ export function BookingDocuments({
             )
               await prepare(true);
           }}
-        >
-          Belgeyi Oluştur ve İndir
-        </button>
+        >{_uiText("Belgeyi Oluştur ve İndir")} </button>
       </div>
       {preview && (
         <article
@@ -238,10 +237,10 @@ export function BookingDocuments({
         >
           <h3 className="font-uninav-book mb-4 text-xl leading-7 text-slate-900">{preview.title}</h3>
           {customBody !== null ? <DocumentEditor value={customBody} onChange={setCustomBody} language={language} disabled={busy}/> : <DocumentPreview body={preview.body} format={preview.format} language={language}/>}
-          <div className="flex gap-3 mt-4"><button type="button" disabled={busy} className={secondaryStyle} onClick={() => setCustomBody(customBody===null ? (preview.format==='html'?preview.body:plainHTML(preview.body)) : null)}>{customBody===null?'Bu belgenin metnini düzenle':'Şablon metnine dön'}</button><p className="text-xs text-uni-muted self-center">Düzenleme yalnızca oluşturacağınız belgeye uygulanır.</p></div>
+          <div className="flex gap-3 mt-4"><button type="button" disabled={busy} className={secondaryStyle} onClick={() => setCustomBody(customBody===null ? (preview.format==='html'?preview.body:plainHTML(preview.body)) : null)}>{customBody===null?_uiText("Bu belgenin metnini düzenle"):_uiText("Şablon metnine dön")}</button><p className="text-xs text-uni-muted self-center">{_uiText("Düzenleme yalnızca oluşturacağınız belgeye uygulanır.")}</p></div>
         </article>
       )}
-      <h3 className="font-uninav-book text-xs font-bold uppercase tracking-wider text-slate-500">Kayıtlı belgeler</h3>
+      <h3 className="font-uninav-book text-xs font-bold uppercase tracking-wider text-slate-500">{_uiText("Kayıtlı belgeler")}</h3>
       {documents.map((d) => (
         <div
           className="flex justify-between gap-3 items-center rounded-[20px] bg-[#f9f9f9] p-4"
@@ -250,7 +249,7 @@ export function BookingDocuments({
           <div className="min-w-0">
             <strong className="block truncate text-sm text-slate-900">{d.title}</strong>
             <p className="text-xs text-slate-400">
-              {d.language} · {new Date(d.created_at).toLocaleString("tr-TR")}
+              {d.language} · {new Date(d.created_at).toLocaleString(_uiLocale)}
             </p>
           </div>
           <button
@@ -270,9 +269,7 @@ export function BookingDocuments({
                 setBusy(false);
               }
             }}
-          >
-            PDF İndir
-          </button>
+          >{_uiText("PDF İndir")} </button>
         </div>
       ))}
     </div>

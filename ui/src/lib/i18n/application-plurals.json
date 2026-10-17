@@ -1,0 +1,380 @@
+{
+  "tr": {
+    "{count} kişi": {
+      "one": "{count} kişi",
+      "other": "{count} kişi"
+    }
+  },
+  "en": {
+    "{count} kişi": {
+      "one": "{count} guest",
+      "other": "{count} guests"
+    }
+  },
+  "de": {
+    "{count} kişi": {
+      "one": "{count} Gast",
+      "other": "{count} Gäste"
+    }
+  },
+  "fr": {
+    "{count} kişi": {
+      "one": "{count} client",
+      "other": "{count} clients"
+    }
+  },
+  "ru": {
+    "{count} kişi": {
+      "one": "{count} гость",
+      "other": "{count} гостей",
+      "few": "{count} гостя",
+      "many": "{count} гостей"
+    }
+  },
+  "ar": {
+    "{count} kişi": {
+      "one": "نزيل واحد",
+      "other": "{count} نزيل",
+      "zero": "لا نزلاء",
+      "two": "نزيلان",
+      "few": "{count} نزلاء",
+      "many": "{count} نزيلاً"
+    }
+  },
+  "ne": {
+    "{count} kişi": {
+      "one": "{count} अतिथि",
+      "other": "{count} अतिथि"
+    }
+  },
+  "th": {
+    "{count} kişi": {
+      "one": "ผู้เข้าพัก {count} คน",
+      "other": "ผู้เข้าพัก {count} คน"
+    }
+  },
+  "zh-CN": {
+    "{count} kişi": {
+      "one": "{count} 位住客",
+      "other": "{count} 位住客"
+    }
+  },
+  "zh-TW": {
+    "{count} kişi": {
+      "one": "{count} 位住客",
+      "other": "{count} 位住客"
+    }
+  },
+  "hi": {
+    "{count} kişi": {
+      "one": "{count} अतिथि",
+      "other": "{count} अतिथि"
+    }
+  },
+  "km": {
+    "{count} kişi": {
+      "one": "ភ្ញៀវ {count} នាក់",
+      "other": "ភ្ញៀវ {count} នាក់"
+    }
+  },
+  "si": {
+    "{count} kişi": {
+      "one": "අමුත්තා {count}",
+      "other": "අමුත්තන් {count}"
+    }
+  },
+  "ta": {
+    "{count} kişi": {
+      "one": "{count} விருந்தினர்",
+      "other": "{count} விருந்தினர்கள்"
+    }
+  },
+  "yue": {
+    "{count} kişi": {
+      "one": "{count} 位住客",
+      "other": "{count} 位住客"
+    }
+  },
+  "ur": {
+    "{count} kişi": {
+      "one": "{count} مہمان",
+      "other": "{count} مہمان"
+    }
+  },
+  "bn": {
+    "{count} kişi": {
+      "one": "{count} জন অতিথি",
+      "other": "{count} জন অতিথি"
+    }
+  },
+  "dz": {
+    "{count} kişi": {
+      "one": "མགྱོནམ་ {count}",
+      "other": "མགྱོནམ་ {count}"
+    }
+  },
+  "es": {
+    "{count} kişi": {
+      "one": "{count} huésped",
+      "other": "{count} huéspedes"
+    }
+  },
+  "it": {
+    "{count} kişi": {
+      "one": "{count} ospite",
+      "other": "{count} ospiti"
+    }
+  },
+  "pt": {
+    "{count} kişi": {
+      "one": "{count} hóspede",
+      "other": "{count} hóspedes"
+    }
+  },
+  "nl": {
+    "{count} kişi": {
+      "one": "{count} gast",
+      "other": "{count} gasten"
+    }
+  },
+  "pl": {
+    "{count} kişi": {
+      "one": "{count} gość",
+      "other": "{count} gości",
+      "few": "{count} goście",
+      "many": "{count} gości"
+    }
+  },
+  "cs": {
+    "{count} kişi": {
+      "one": "{count} host",
+      "other": "{count} hostů",
+      "few": "{count} hosté"
+    }
+  },
+  "hu": {
+    "{count} kişi": {
+      "one": "{count} vendég",
+      "other": "{count} vendég"
+    }
+  },
+  "ro": {
+    "{count} kişi": {
+      "one": "{count} oaspete",
+      "other": "{count} oaspeți",
+      "few": "{count} oaspeți"
+    }
+  },
+  "el": {
+    "{count} kişi": {
+      "one": "{count} επισκέπτης",
+      "other": "{count} επισκέπτες"
+    }
+  },
+  "uk": {
+    "{count} kişi": {
+      "one": "{count} гість",
+      "other": "{count} гостей",
+      "few": "{count} гості",
+      "many": "{count} гостей"
+    }
+  },
+  "bg": {
+    "{count} kişi": {
+      "one": "{count} гост",
+      "other": "{count} гости"
+    }
+  },
+  "sr": {
+    "{count} kişi": {
+      "one": "{count} гост",
+      "other": "{count} гостију",
+      "few": "{count} госта"
+    }
+  },
+  "hr": {
+    "{count} kişi": {
+      "one": "{count} gost",
+      "other": "{count} gostiju",
+      "few": "{count} gosta"
+    }
+  },
+  "sk": {
+    "{count} kişi": {
+      "one": "{count} hosť",
+      "other": "{count} hostí",
+      "few": "{count} hostia"
+    }
+  },
+  "sl": {
+    "{count} kişi": {
+      "one": "{count} gost",
+      "other": "{count} gostov",
+      "two": "{count} gosta",
+      "few": "{count} gostje"
+    }
+  },
+  "fi": {
+    "{count} kişi": {
+      "one": "{count} vieras",
+      "other": "{count} vierasta"
+    }
+  },
+  "sv": {
+    "{count} kişi": {
+      "one": "{count} gäst",
+      "other": "{count} gäster"
+    }
+  },
+  "da": {
+    "{count} kişi": {
+      "one": "{count} gæst",
+      "other": "{count} gæster"
+    }
+  },
+  "no": {
+    "{count} kişi": {
+      "one": "{count} gjest",
+      "other": "{count} gjester"
+    }
+  },
+  "ms": {
+    "{count} kişi": {
+      "one": "{count} tetamu",
+      "other": "{count} tetamu"
+    }
+  },
+  "id": {
+    "{count} kişi": {
+      "one": "{count} tamu",
+      "other": "{count} tamu"
+    }
+  },
+  "vi": {
+    "{count} kişi": {
+      "one": "{count} khách",
+      "other": "{count} khách"
+    }
+  },
+  "ja": {
+    "{count} kişi": {
+      "one": "宿泊者 {count} 名",
+      "other": "宿泊者 {count} 名"
+    }
+  },
+  "ko": {
+    "{count} kişi": {
+      "one": "투숙객 {count}명",
+      "other": "투숙객 {count}명"
+    }
+  },
+  "fa": {
+    "{count} kişi": {
+      "one": "{count} مهمان",
+      "other": "{count} مهمان"
+    }
+  },
+  "he": {
+    "{count} kişi": {
+      "one": "אורח אחד",
+      "other": "{count} אורחים",
+      "two": "שני אורחים"
+    }
+  },
+  "sw": {
+    "{count} kişi": {
+      "one": "Mgeni {count}",
+      "other": "Wageni {count}"
+    }
+  },
+  "am": {
+    "{count} kişi": {
+      "one": "{count} እንግዳ",
+      "other": "{count} እንግዶች"
+    }
+  },
+  "mr": {
+    "{count} kişi": {
+      "one": "{count} पाहुणा",
+      "other": "{count} पाहुणे"
+    }
+  },
+  "pa": {
+    "{count} kişi": {
+      "one": "{count} ਮਹਿਮਾਨ",
+      "other": "{count} ਮਹਿਮਾਨ"
+    }
+  },
+  "te": {
+    "{count} kişi": {
+      "one": "{count} అతిథి",
+      "other": "{count} అతిథులు"
+    }
+  },
+  "my": {
+    "{count} kişi": {
+      "one": "ဧည့်သည် {count} ဦး",
+      "other": "ဧည့်သည် {count} ဦး"
+    }
+  },
+  "lo": {
+    "{count} kişi": {
+      "one": "ແຂກ {count} ຄົນ",
+      "other": "ແຂກ {count} ຄົນ"
+    }
+  },
+  "ka": {
+    "{count} kişi": {
+      "one": "{count} სტუმარი",
+      "other": "{count} სტუმარი"
+    }
+  },
+  "hy": {
+    "{count} kişi": {
+      "one": "{count} հյուր",
+      "other": "{count} հյուր"
+    }
+  },
+  "az": {
+    "{count} kişi": {
+      "one": "{count} qonaq",
+      "other": "{count} qonaq"
+    }
+  },
+  "kk": {
+    "{count} kişi": {
+      "one": "{count} қонақ",
+      "other": "{count} қонақ"
+    }
+  },
+  "uz": {
+    "{count} kişi": {
+      "one": "{count} mehmon",
+      "other": "{count} mehmon"
+    }
+  },
+  "ky": {
+    "{count} kişi": {
+      "one": "{count} конок",
+      "other": "{count} конок"
+    }
+  },
+  "mn": {
+    "{count} kişi": {
+      "one": "{count} зочин",
+      "other": "{count} зочин"
+    }
+  },
+  "ps": {
+    "{count} kişi": {
+      "one": "{count} مېلمه",
+      "other": "{count} مېلمانه"
+    }
+  },
+  "ku": {
+    "{count} kişi": {
+      "one": "{count} mêvan",
+      "other": "{count} mêvan"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { useI18n } from "./I18n";
 import { RoomCondition } from './RoomCondition';
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -17,6 +18,8 @@ interface ContextMenuProps {
   onGuests?: () => void; hasBooking: boolean; onPrint: (type: DocumentKind) => void;
 }
 export function ContextMenu(props: ContextMenuProps) {
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
   const { room, onClose } = props;
   const dialog = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -40,42 +43,44 @@ export function ContextMenu(props: ContextMenuProps) {
     onClick={event=>{const r=event.currentTarget.getBoundingClientRect();if(!busy&&event.target===event.currentTarget&&(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom))onClose();}}>
     <header className={styles.header}>
       <span className={styles.roomIcon}><DoorOpen size={24} strokeWidth={1.8} aria-hidden="true"/></span>
-      <div className={styles.heading}><p>Oda işlemleri</p><h2 id={titleId}>Oda {room.number}</h2><span>{props.guestName || room.name || 'Aktif konaklama yok'}</span></div>
-      <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${styles.close}`} aria-label="Oda işlemlerini kapat" onClick={onClose}><X size={20}/></button>
+      <div className={styles.heading}><p>{_uiText("Oda işlemleri")}</p><h2 id={titleId}>{_uiText("Oda")} {room.number}</h2><span>{props.guestName || room.name || _uiText("Aktif konaklama yok")}</span></div>
+      <button type="button" autoFocus disabled={busy} className={`nav-icon-button ${styles.close}`} aria-label={_uiText("Oda işlemlerini kapat")} onClick={onClose}><X size={20}/></button>
     </header>
     <div className={styles.summary}><RoomCondition status={props.operationalStatus}/>{props.bookingHint && <p>{props.bookingHint}</p>}</div>
-    <nav className={styles.tabs} aria-label="Oda işlem bölümleri">
-      <button type="button" disabled={busy} aria-pressed={tab==='operations'} onClick={()=>setTab('operations')}>İşlemler</button>
-      {!!props.allowedStatuses.length && <button type="button" disabled={busy} aria-pressed={tab==='status'} onClick={()=>setTab('status')}>Oda durumu</button>}
-      {props.hasBooking && <button type="button" disabled={busy} aria-pressed={tab==='documents'} onClick={()=>setTab('documents')}>Belgeler</button>}
+    <nav className={styles.tabs} aria-label={_uiText("Oda işlem bölümleri")}>
+      <button type="button" disabled={busy} aria-pressed={tab==='operations'} onClick={()=>setTab('operations')}>{_uiText("İşlemler")}</button>
+      {!!props.allowedStatuses.length && <button type="button" disabled={busy} aria-pressed={tab==='status'} onClick={()=>setTab('status')}>{_uiText("Oda durumu")}</button>}
+      {props.hasBooking && <button type="button" disabled={busy} aria-pressed={tab==='documents'} onClick={()=>setTab('documents')}>{_uiText("Belgeler")}</button>}
     </nav>
     <div className={styles.content}>
       {tab==='operations' && <>
-        <section className={styles.group} aria-label="Konaklama işlemleri">
-          {props.onDetails && <Action icon={ReceiptText} label="Rezervasyon detayı" detail="Misafirler, folyo ve hizmetler" onClick={()=>act(props.onDetails!)}/>}
-          {props.onPayment && <Action icon={Banknote} label="Tahsilat al" detail="Oda borcuna ödeme işle" onClick={()=>act(props.onPayment!)}/>}
-          {props.canReserve && <Action icon={CalendarPlus} label="Rezerve Et" detail="Bu oda için yeni rezervasyon" onClick={()=>act(()=>props.onOperation('reserve'))}/>}
+        <section className={styles.group} aria-label={_uiText("Konaklama işlemleri")}>
+          {props.onDetails && <Action icon={ReceiptText} label={_uiText("Rezervasyon detayı")} detail={_uiText("Misafirler, folyo ve hizmetler")} onClick={()=>act(props.onDetails!)}/>}
+          {props.onPayment && <Action icon={Banknote} label={_uiText("Tahsilat al")} detail={_uiText("Oda borcuna ödeme işle")} onClick={()=>act(props.onPayment!)}/>}
+          {props.canReserve && <Action icon={CalendarPlus} label={_uiText("Rezerve Et")} detail={_uiText("Bu oda için yeni rezervasyon")} onClick={()=>act(()=>props.onOperation('reserve'))}/>}
           {!props.saleDisabled && <Action icon={props.canCheckOut?FileText:LogIn} label={props.saleLabel} onClick={()=>act(()=>props.onOperation('sale'))}/>}
-          {props.canCheckOut && <Action icon={LogOut} label="Çıkış İşlemleri" onClick={()=>act(()=>props.onOperation('checkout'))}/>}
-          {props.canExchange && <Action icon={ArrowRightLeft} label="Oda Değiştir" onClick={()=>act(()=>props.onOperation('exchange'))}/>}
-          {props.onEditBooking && <Action icon={Pencil} label="Rezervasyon tarihlerini düzenle" onClick={()=>act(props.onEditBooking!)}/>}
-          {props.onGuests && <Action icon={UsersRound} label="Misafirleri Düzenle" onClick={()=>act(props.onGuests!)}/>}
+          {props.canCheckOut && <Action icon={LogOut} label={_uiText("Çıkış İşlemleri")} onClick={()=>act(()=>props.onOperation('checkout'))}/>}
+          {props.canExchange && <Action icon={ArrowRightLeft} label={_uiText("Oda Değiştir")} onClick={()=>act(()=>props.onOperation('exchange'))}/>}
+          {props.onEditBooking && <Action icon={Pencil} label={_uiText("Rezervasyon tarihlerini düzenle")} onClick={()=>act(props.onEditBooking!)}/>}
+          {props.onGuests && <Action icon={UsersRound} label={_uiText("Misafirleri Düzenle")} onClick={()=>act(props.onGuests!)}/>}
         </section>
-        {props.onCancel && <section className={styles.group} aria-label="Diğer işlemler">
-          {props.onCancel && <Action icon={X} label="Rezervasyonu İptal Et" danger onClick={()=>act(props.onCancel!)}/>}
+        {props.onCancel && <section className={styles.group} aria-label={_uiText("Diğer işlemler")}>
+          {props.onCancel && <Action icon={X} label={_uiText("Rezervasyonu İptal Et")} danger onClick={()=>act(props.onCancel!)}/>}
         </section>}
       </>}
       {tab==='status' && props.renderStatus(setBusy)}
-      {tab==='documents' && <section className={styles.group} aria-label="Konaklama belgeleri">
+      {tab==='documents' && <section className={styles.group} aria-label={_uiText("Konaklama belgeleri")}>
         {([['reservation','Rezervasyon Dekontu'],['sales','Satış Dekontu'],['cancellation','İptal Dekontu'],['rental','Kira Sözleşmesi'],['sale_contract','Satış Sözleşmesi']] as [DocumentKind,string][]).map(([kind,label])=><Action key={kind} icon={FileText} label={label} onClick={()=>act(()=>props.onPrint(kind))}/>)}
       </section>}
     </div>
   </dialog>, document.body);
 }
 function Action({icon:Icon,label,detail,onClick,danger,selected,color}:{icon:LucideIcon;label:string;detail?:string;onClick:()=>void;danger?:boolean;selected?:boolean;color?:string}) {
-  return <button type="button" className={`uni-control ${styles.action}`} data-danger={danger||undefined} onClick={onClick} aria-current={selected?'true':undefined}>
+  const {m: _uiText, locale: _uiLocale} = useI18n();
+
+  return <button type="button" className={`uni-control ${styles.action}`} data-danger={danger||undefined} onClick={onClick} aria-current={selected?"true":undefined}>
     <span className={styles.actionIcon} style={color?{color}:undefined}><Icon size={19} strokeWidth={1.8} aria-hidden="true"/></span>
     <span className={styles.actionLabel}><strong>{label}</strong>{detail&&<small>{detail}</small>}</span>
-    {selected?<Check size={17} aria-label="Mevcut durum"/>:<ChevronRight size={15} className={styles.chevron} aria-hidden="true"/>}
+    {selected?<Check size={17} aria-label={_uiText("Mevcut durum")}/>:<ChevronRight size={15} className={styles.chevron} aria-hidden="true"/>}
   </button>;
 }
