@@ -68,5 +68,16 @@ for(const label of ['Canlı önizleme','Hesap','Sayı biçimi'])await page.getBy
 await page.getByRole('button',{name:dictionary['Detayları Gör'],exact:true}).click();
 await page.getByText(dictionary['İkincil buton önizlemesi. Tema tüm uygulamaya uygulandı.'],{exact:true}).waitFor();
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-settings-translations.png`});
-console.log('PASS',language,'all report cards and descriptions, catalog categories, setup steps and settings preview');
+assert.ok(dictionary['Resepsiyon Notları'],'Reception navigation translation');
+await page.locator('aside').getByRole('button',{name:dictionary['Resepsiyon Notları'],exact:true}).click();
+await page.getByRole('button',{name:dictionary['Yeni not'],exact:true}).waitFor();
+await page.getByText(dictionary['Ekip panosu · Bu tesisteki resepsiyon notları'],{exact:true}).waitFor();
+await page.getByText(dictionary['Kartları sütunlar arasında sürükleyin veya kartın durum menüsünü kullanın. Notun tamamı için başlığına tıklayın.'],{exact:true}).waitFor();
+await page.getByRole('button',{name:dictionary['Yeni not'],exact:true}).click();
+for(const key of ['Yeni resepsiyon notu','Bu not, bu tesise yetkili yönetici ve resepsiyon personeli tarafından görülebilir ve güncellenebilir.'])await page.getByText(dictionary[key],{exact:true}).first().waitFor();
+await page.getByPlaceholder(dictionary['Örn. 204 numaralı odanın geç çıkış talebi'],{exact:true}).waitFor();
+await page.getByPlaceholder(dictionary['Vardiya arkadaşlarınızın bilmesi gerekenleri yazın…'],{exact:true}).waitFor();
+await page.getByRole('button',{name:dictionary['Notu kaydet'],exact:true}).waitFor();
+await page.screenshot({path:`output/app-i18n/screenshots/${language}-reception-note-translations.png`});
+console.log('PASS',language,'all report cards and descriptions, catalog categories, setup steps, settings preview and reception note editor');
 await browser.close();

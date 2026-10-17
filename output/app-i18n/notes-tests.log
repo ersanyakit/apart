@@ -1,0 +1,23 @@
+✔ all report headings, report group introductions, setup steps and catalog categories have native resources (93.105333ms)
+✔ source extraction includes catalog entries and setup/domain validation messages (0.268625ms)
+✔ country controls translate in every language before inserting the selected name (52.901416ms)
+✔ all 60 languages have authored core resources and load their own application catalog (29.11175ms)
+✔ plural rules use native categories and preserve the selected room count (0.505584ms)
+✔ named interpolation preserves user content without translating it or treating it as HTML (0.122667ms)
+✔ date controls localize months and weekdays and share immutable cached formatters (27.385041ms)
+✔ new resources and interpolations remain static and external-service free (48.40075ms)
+✔ unit types and action contexts have distinct native translations in all languages (37.464833ms)
+✔ extraction excludes implementation strings while retaining visible notifications and form errors (0.13ms)
+✔ completed shared screens and dialogs have resources across all supported locales (74.401791ms)
+✔ board uses three clear columns, shared collapsible header, search and archive switch (11.979709ms)
+✔ note cards have author history and keyboard/touch controls besides dragging (16.35125ms)
+✔ header exposes notes shortcuts and the operation menu for reception staff (15.474917ms)
+✔ note audit entries are readable without raw JSON (0.231584ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2826.093042
