@@ -54,7 +54,7 @@ for(const c of catalog.categories)await page.getByText(dictionary[c.label.TR],{e
 await page.getByRole('button',{name:dictionary['Özellik Ekle'],exact:true}).waitFor();
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-features.png`});
 await page.getByRole('button',{name:core['Kurulum Sihirbazı'],exact:true}).first().click();
-const steps=page.getByRole('navigation',{name:'Kurulum adımları'});
+const steps=page.getByRole('navigation',{name:dictionary['Kurulum adımları']});
 for(const label of ['İşletme','Tesis','Olanaklar','Katlar','Odalar','Personel','Kontrol'])assert.ok(await steps.getByRole('button',{name:new RegExp(dictionary[label]||core[label])}).count(),label);
 await page.screenshot({path:`output/app-i18n/screenshots/${language}-setup.png`});
 console.log('PASS',language,'reservation card names/descriptions, catalog categories and setup step labels');

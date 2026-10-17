@@ -3,6 +3,7 @@ import { applicationLoaders } from './application-loaders';
 import plurals from './application-plurals.json';
 import { DEFAULT_LOCALE, resolveLocale } from './config';
 import { loadMarketingDictionary, type MarketingDictionary } from './marketing';
+import {translate, type MessageKey} from './messages';
 export type PluralMessage = Partial<Record<Intl.LDMLPluralRule,string>> & {other:string};
 export type ApplicationDictionary = Record<string, string | PluralMessage>;
 export type MessageParams = Record<string, string | number>;
@@ -40,3 +41,9 @@ export function applicationText(dictionary: ApplicationDictionary, source: strin
   });
 }
 export const defaultApplicationDictionary=coreDictionary(DEFAULT_LOCALE);
+
+/** Resolve a legacy semantic key before interpolating its variables. */
+export function applicationMessage(dictionary:ApplicationDictionary,key:MessageKey,params:MessageParams={},locale=DEFAULT_LOCALE as string):string {
+  const source=key==='language.description'?'Uygulamanın dilini seçin.':translate(locale,key);
+  return applicationText(dictionary,source,params,locale);
+}

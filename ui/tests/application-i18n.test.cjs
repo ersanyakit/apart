@@ -7,7 +7,7 @@ const ui=path.resolve(__dirname,'..'),out=mkdtempSync(path.join(os.tmpdir(),'ote
 after(()=>rmSync(out,{recursive:true,force:true}));
 execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--target','ES2022','--module','commonjs','--moduleResolution','node','--skipLibCheck','--strict','--esModuleInterop','--resolveJsonModule','--outDir',out,'src/lib/i18n/application.ts','src/lib/i18n/formatters.ts'],{cwd:ui,stdio:'pipe'});
 const {LOCALES}=require(path.join(out,'config.js'));
-const {coreDictionary,loadApplicationDictionary,applicationText}=require(path.join(out,'application.js'));
+const {coreDictionary,loadApplicationDictionary,applicationText,applicationMessage}=require(path.join(out,'application.js'));
 const {dateFieldLabels}=require(path.join(out,'formatters.js'));
 const core=require('../src/lib/i18n/application-core.json');
 const source=require('../src/lib/i18n/application-source.json');
@@ -26,6 +26,20 @@ test('source extraction includes catalog entries and setup/domain validation mes
  const catalog=require('../../internal/domain/catalog/defaults.json');
  for(const category of catalog.categories)for(const group of category.groups)for(const entry of group.entries)assert.ok(Object.hasOwn(source,entry.label.TR),entry.key);
  for(const key of ['En az bir kat ekleyin.','Her grup için 1–100 birim seçin.','Personel kullanıcı adları benzersiz olmalı.'])assert.ok(Object.hasOwn(source,key),key);
+});
+
+test('country controls translate in every language before inserting the selected name',async()=>{
+ const semantic=require('../src/lib/i18n/semantic-source.json');
+ for(const locale of Object.keys(LOCALES)){
+  const dictionary=await loadApplicationDictionary(locale);
+  for(const key of Object.keys(semantic))assert.ok(Object.hasOwn(dictionary,key),`${locale}: ${key}`);
+  const text=applicationMessage(dictionary,'country.trigger',{label:'FIELD',name:'Ayşe Örnek'},locale);
+  assert.ok(text.includes('FIELD')&&text.includes('Ayşe Örnek'),locale);
+  assert.ok(!text.includes('{label}')&&!text.includes('{name}'),locale);
+ }
+ const ja=await loadApplicationDictionary('ja');
+ assert.match(applicationMessage(ja,'country.label',{},'ja'),/^国/);
+ assert.equal(applicationMessage(ja,'guest.numberNationality',{number:2},'ja'),'ゲスト 2 の国籍');
 });
 
 test('all 60 languages have authored core resources and load their own application catalog',async()=>{
@@ -71,4 +85,16 @@ test('new resources and interpolations remain static and external-service free',
   }
  }
  assert.ok(Object.keys(source).length>1000);
+});
+
+
+test('unit types and action contexts have distinct native translations in all languages',async()=>{
+ for(const locale of Object.keys(LOCALES)){
+  const dictionary=await loadApplicationDictionary(locale);
+  for(const key of ['Daire','Koğuş','Yatak','Durum','Güncelle','Kaydediliyor…','İptal edildi']){if(locale==='tr')assert.equal(applicationText(dictionary,key),key);else assert.ok(dictionary[key],`${locale}: ${key}`);}
+ }
+ const en=await loadApplicationDictionary('en');
+ assert.equal(applicationText(en,'Güncelle'),'Update');
+ assert.equal(applicationText(en,'Durum'),'Status');
+ assert.notEqual(applicationText(en,'Kaydediliyor…'),applicationText(en,'Yükleniyor…'));
 });

@@ -180,7 +180,7 @@ export function UnitForm({
               .filter((r) => r.room_id !== draft.room_id && r.kind !== "bed")
               .map((r) => ({
                 value: r.room_id,
-                label: `${r.code} · ${unitKinds[r.kind]}`,
+                label: `${r.code} · ${_uiText(unitKinds[r.kind] || "")}`,
               })),
           ]}
         />

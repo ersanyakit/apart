@@ -14,7 +14,7 @@ return <div className={styles.grid}>{chartsFor(report).map(({spec,rows},i)=><Cha
 export function ChartCard({spec,rows,currency}:{spec:ChartSpec;rows:Row[];currency:string}){
   const {m: _uiText, locale: _uiLocale} = useI18n();
 
- const points=chartPoints(rows,spec);const [expanded,setExpanded]=useState(false);const hasMoney=spec.values.some(v=>v.format==='money');
+ const points=chartPoints(rows,spec,_uiLocale,_uiText);const [expanded,setExpanded]=useState(false);const hasMoney=spec.values.some(v=>v.format==='money');
  const hasData=rows.length>0&&points.some(p=>p.values.some(v=>v!==null&&v!==0));
  return <section className={styles.card} aria-label={_uiText(spec.title)} data-chart-kind={spec.kind}>
   <div className={styles.heading}><div><p className={styles.eyebrow}>{_uiText(names[spec.kind])}{hasMoney?_uiText(" · {value1}", {value1: String(currency)}):''}</p><h3>{_uiText(spec.title)}</h3><p className={styles.explanation}>{_uiText(spec.explanation)}</p></div></div>
@@ -69,7 +69,7 @@ function LineChart({points,spec,currency}:{points:Point[];spec:ChartSpec;currenc
 function Pivot({rows,spec,currency}:{rows:Row[];spec:ChartSpec;currency:string}){
   const {m: _uiText, locale: _uiLocale} = useI18n();
 
- const data=pivotData(rows,spec),[limit,setLimit]=useState(12);const peaks=data.columns.map((_,i)=>Math.max(1,...data.rows.map(r=>Math.abs(r.values[i]??0))));
+ const data=pivotData(rows,spec,_uiLocale,_uiText),[limit,setLimit]=useState(12);const peaks=data.columns.map((_,i)=>Math.max(1,...data.rows.map(r=>Math.abs(r.values[i]??0))));
  return <div className={styles.pivotBody}><div className={styles.scroll}><table className={styles.pivot}><caption className="sr-only">{_uiText(spec.title)}</caption><thead><tr><th scope="col">{_uiText("Karşılaştırma")}</th>{data.columns.map(col=><th scope="col" key={col}>{col}</th>)}</tr></thead><tbody>{data.rows.slice(0,limit).map((r,index)=><tr key={index}><th scope="row">{r.label}</th>{r.values.map((value,i)=><td key={i} style={{background:`color-mix(in srgb, var(--color-brand-blue-500) ${Math.min(27,Math.abs(value??0)/peaks[i]*27)}%, transparent)`}}>{display(value,data.formats[i],currency, _uiLocale, _uiText)}</td>)}</tr>)}</tbody></table></div>
  {data.rows.length>12&&<button type="button" className="uni-button uni-button-secondary" onClick={()=>setLimit(limit===12?data.rows.length:12)}>{limit===12?_uiText("{value1} satırın tamamını göster", {value1: String(data.rows.length)}):_uiText("İlk 12 satırı göster")}</button>}<p className={styles.pivotHint}>{_uiText("Daha koyu hücre, aynı sütunda daha yüksek değeri gösterir. Farklı ölçüler birbiriyle toplanmaz.")}</p></div>
 }

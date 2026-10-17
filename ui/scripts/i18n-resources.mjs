@@ -17,6 +17,12 @@ for(const locale of Object.keys(core)) {
   let existing={};try{existing=JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
   const native=Object.fromEntries(Object.entries({...builtins,...semantic}).flatMap(([key,value])=>value[locale.toUpperCase()]?[[key,value[locale.toUpperCase()]]]:[]));
   const resource=locale==='tr'?{...source,...core.tr}:{...neutral,...native,...existing,...core[locale]};
+  const marketing=JSON.parse(await fs.readFile(path.join(base,'marketing',`${locale}.json`),'utf8'));
+  // Reviewed equivalent labels used by older screens share the same translation.
+  if(locale!=='tr')for(const [alias,canonical]of Object.entries({'Apart otel':'Apart','Rezervasyon Al':'Yeni rezervasyon','Yeniden dene':'Tekrar dene'})){
+    const translated=resource[canonical]??marketing[canonical];
+    if(!Object.hasOwn(resource,alias)&&typeof translated==='string')resource[alias]=translated;
+  }
   await fs.writeFile(file,JSON.stringify(resource,null,2)+'\n');
 }
 const imports=Object.keys(core).map(locale=>`  ${JSON.stringify(locale)}: () => import('./application/${locale}.json'),`).join('\n');

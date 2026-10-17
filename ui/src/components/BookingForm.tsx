@@ -664,8 +664,8 @@ export function MoveBookingForm({
               .filter((r) => r.rentable && r.room_id !== booking.room_id)
               .map((r) => (
                 <option key={r.room_id} value={r.room_id}>
-                  {r.code} · {unitKinds[r.kind]} ·{" "}
-                  {r.kind === "bed" ? _uiText("{value1} kişi", {value1: String(r.capacity)}) : _uiText("Kişi sayısı rezervasyonda")}
+                  {r.code} · {_uiText(unitKinds[r.kind] || "")} ·{" "}
+                  {r.kind === "bed" ? _uiText("{count} kişi", {count: r.capacity}) : _uiText("Kişi sayısı rezervasyonda")}
                 </option>
               ))}
           </select>

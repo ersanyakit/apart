@@ -4,7 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import { DEFAULT_LOCALE, LOCALES, resolveLocale, type Locale } from "../lib/i18n/config";
 import { translate, type MessageKey } from "../lib/i18n/messages";
 
-import { applicationText, coreDictionary, loadApplicationDictionary, type ApplicationDictionary, type MessageParams } from '../lib/i18n/application';
+import { applicationText, applicationMessage, coreDictionary, loadApplicationDictionary, type ApplicationDictionary, type MessageParams } from '../lib/i18n/application';
 import { usePreference } from "./UserPreferences";
 
 type I18n = {
@@ -20,13 +20,16 @@ const I18nContext = createContext<I18n | null>(null);
 
 export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE, syncDocument = false }: { children: React.ReactNode; initialLocale?: Locale; syncDocument?: boolean }) {
   const [storedLocale, setLocaleState] = usePreference<Locale>("locale", initialLocale);
-  const locale = resolveLocale(storedLocale);
+  const requestedLocale = resolveLocale(storedLocale);
   const [loaded,setLoaded]=useState<{locale:Locale;dictionary:ApplicationDictionary}|null>(null);
+  // Keep the current language intact while the next catalog loads. Mixing a
+  // new core dictionary with Turkish source fallbacks causes a visible flash.
+  const locale=loaded?.locale??requestedLocale;
   useEffect(()=>{
     let active=true;
-    loadApplicationDictionary(locale).then(dictionary=>{if(active)setLoaded({locale,dictionary});}).catch(()=>{if(active)setLoaded({locale,dictionary:coreDictionary(locale)});});
+    loadApplicationDictionary(requestedLocale).then(dictionary=>{if(active)setLoaded({locale:requestedLocale,dictionary});}).catch(()=>{if(active)setLoaded({locale:requestedLocale,dictionary:coreDictionary(requestedLocale)});});
     return()=>{active=false};
-  },[locale]);
+  },[requestedLocale]);
   useEffect(()=>{
     if (!syncDocument) return;
     document.documentElement.lang=locale;
@@ -41,19 +44,17 @@ export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE, syncDoc
     update();
     return()=>window.removeEventListener('interactiveotel:locale',update);
   },[syncDocument,setLocaleState]);
-  const dictionary=loaded?.locale===locale?loaded.dictionary:coreDictionary(locale);
+  const dictionary=loaded?.dictionary??coreDictionary(locale);
   const setLocale = useCallback((value: string) => setLocaleState(resolveLocale(value)), [setLocaleState]);
 
   const value = useMemo<I18n>(() => ({
     m: (source,params) => applicationText(dictionary,source,params,locale),
-    loading: loaded?.locale!==locale,
+    loading: loaded?.locale!==requestedLocale,
     locale,
     direction: LOCALES[locale].direction,
     setLocale,
-    t: (key, params) => key==='language.description'
-      ? applicationText(dictionary,'Uygulamanın dilini seçin.',params,locale)
-      : applicationText(dictionary,translate(locale,key),params,locale),
-  }), [locale, setLocale, dictionary, loaded]);
+    t: (key, params) => applicationMessage(dictionary,key,params,locale),
+  }), [locale, requestedLocale, setLocale, dictionary, loaded]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

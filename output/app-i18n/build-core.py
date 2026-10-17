@@ -3,7 +3,7 @@ from pathlib import Path
 rows=[l.split('|') for l in Path('output/app-i18n/core.tsv').read_text().splitlines() if l and not l.startswith('#')]
 assert len(rows)==60 and all(len(r)==45 for r in rows)
 tr=rows[0][1:]
-aliases={'REZERV':'Rezerve','Personel Tanımları':'Personel','Durum':'Oda durumu','İptal':'Vazgeç','İptal et':'Vazgeç','Geri dön':'Geri','Temiz':'Temiz','Kirli':'Kirli','Arizali':'Arızalı','Tadilat':'Tadilatta','Bos':'Boş','Rezervli':'Rezerve','Seç':'Seçin','Hepsi':'Tümü','Sorgula':'Ara','Güncelle':'Yenile','Kaydediliyor…':'Yükleniyor…','Yükleniyor...':'Yükleniyor…','Yükleniyor':'Yükleniyor…','Kapatın':'Kapat','İşlem':'İşlemler','MİSAFİR':'Misafir','Sonuç yok':'Sonuç bulunamadı'}
+aliases={'REZERV':'Rezerve','Personel Tanımları':'Personel','İptal':'Vazgeç','İptal et':'Vazgeç','Geri dön':'Geri','Temiz':'Temiz','Kirli':'Kirli','Arizali':'Arızalı','Tadilat':'Tadilatta','Bos':'Boş','Rezervli':'Rezerve','Seç':'Seçin','Hepsi':'Tümü','Sorgula':'Ara','Yükleniyor...':'Yükleniyor…','Yükleniyor':'Yükleniyor…','Kapatın':'Kapat','İşlem':'İşlemler','MİSAFİR':'Misafir','Sonuç yok':'Sonuç bulunamadı'}
 result={}
 for code,*values in rows:
  d=dict(zip(tr,values))

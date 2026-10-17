@@ -210,7 +210,7 @@ export function InventoryView({
                         {s.rooms.find((p) => p.room_id === r.parent_id)?.code ||
                           "—"}
                       </td>
-                      <td>{unitKinds[r.kind]}</td>
+                      <td>{_uiText(unitKinds[r.kind] || "")}</td>
                       <td>{r.kind === "bed" ? _uiText("{value1} kişilik yatak yeri", {value1: String(r.capacity)}) : r.rental_mode === "beds" ? _uiText("Yataklar ayrı ayrı") : r.rentable ? _uiText("Tamamı kiralanır") : _uiText("Ayrı kiralanmaz")}</td>
                       <td>{r.status}</td>
                       <td className="p-3">

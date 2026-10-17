@@ -96,7 +96,7 @@ export function OriginalShell({
     return roomView(
       {
         ...r,
-        type: r.type || unitKinds[r.kind],
+        type: r.type || _uiText(unitKinds[r.kind] || ""),
         ...(b
           ? {
               name: b.guest_name,

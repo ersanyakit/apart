@@ -23,12 +23,6 @@
       "line": 37
     }
   ],
-  " · {value1} kişi": [
-    {
-      "file": "ui/src/components/fields/RoomSelectField.tsx",
-      "line": 251
-    }
-  ],
   " · {value1} yatak yeri": [
     {
       "file": "ui/src/components/FloorList.tsx",
@@ -149,8 +143,24 @@
   ],
   "{count} kişi": [
     {
+      "file": "ui/src/components/BookingForm.tsx",
+      "line": 668
+    },
+    {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 55
+    },
+    {
+      "file": "ui/src/components/fields/RoomSelectField.tsx",
+      "line": 153
+    },
+    {
+      "file": "ui/src/components/fields/RoomSelectField.tsx",
+      "line": 251
+    },
+    {
+      "file": "ui/src/lib/i18n/application-plurals.json",
+      "line": 1
     }
   ],
   "{count}. oda tipi": [
@@ -573,12 +583,6 @@
     {
       "file": "ui/src/App.tsx",
       "line": 596
-    }
-  ],
-  "{value1} kişi": [
-    {
-      "file": "ui/src/components/BookingForm.tsx",
-      "line": 668
     }
   ],
   "{value1} kişi · {value2}": [
@@ -1083,6 +1087,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 11
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "3 boyutlu görünüm açılamadı.": [
@@ -1179,22 +1187,10 @@
       "line": 1
     }
   ],
-  "600 38px system-ui": [
-    {
-      "file": "ui/src/components/property-3d/scene.ts",
-      "line": 285
-    }
-  ],
   "7. Kat": [
     {
       "file": "ui/src/lib/contracts.generated.json",
       "line": 1
-    }
-  ],
-  "700 20px monospace": [
-    {
-      "file": "ui/src/components/property-3d/scene.ts",
-      "line": 266
     }
   ],
   "8–30 gün": [
@@ -1288,7 +1284,7 @@
   "Açık": [
     {
       "file": "ui/src/components/reports/charts.ts",
-      "line": 73
+      "line": 83
     },
     {
       "file": "ui/src/components/reports/model.ts",
@@ -1529,6 +1525,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 10
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Ad soyad": [
@@ -1627,6 +1627,10 @@
     {
       "file": "ui/src/components/BookingForm.tsx",
       "line": 825
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Air fryer": [
@@ -1993,6 +1997,10 @@
     {
       "file": "ui/src/App.tsx",
       "line": 639
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Arama ve filtrelerde çıkar.": [
@@ -2083,6 +2091,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 44
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "ARIZALI:": [
@@ -2107,6 +2119,12 @@
     {
       "file": "ui/src/components/RoomStateEditor.tsx",
       "line": 51
+    }
+  ],
+  "Arizali": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Arka plan": [
@@ -2315,6 +2333,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 27
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Aydınlatma ve Elektrik": [
@@ -2443,6 +2465,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 18
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Bagaj muhafazası": [
@@ -3061,6 +3087,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 23
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Belge şablonu": [
@@ -3155,6 +3185,10 @@
     {
       "file": "ui/src/components/reports/charts.ts",
       "line": 67
+    },
+    {
+      "file": "ui/src/components/reports/charts.ts",
+      "line": 72
     },
     {
       "file": "ui/src/components/reports/customer-format.ts",
@@ -3433,10 +3467,6 @@
     {
       "file": "ui/src/components/reports/ReportsView.tsx",
       "line": 74
-    },
-    {
-      "file": "ui/src/components/stays-scheduler/StaysScheduler.tsx",
-      "line": 177
     },
     {
       "file": "ui/src/lib/audit-presentation.ts",
@@ -3887,6 +3917,12 @@
       "line": 1
     }
   ],
+  "Bos": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "Boş": [
     {
       "file": "ui/src/components/property-3d/model.ts",
@@ -3907,6 +3943,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 14
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     },
     {
       "file": "internal/domain/reporting/engine.go",
@@ -4333,6 +4373,10 @@
     {
       "file": "ui/src/components/stays-scheduler/StaysScheduler.tsx",
       "line": 115
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Bugün dolu / rezerve oda": [
@@ -4427,18 +4471,6 @@
     {
       "file": "ui/src/components/AppSettingsView.tsx",
       "line": 173
-    }
-  ],
-  "button,a,input,label": [
-    {
-      "file": "ui/src/components/BookingsTable.tsx",
-      "line": 75
-    }
-  ],
-  "button,input": [
-    {
-      "file": "ui/src/components/fields/StepperField.tsx",
-      "line": 118
     }
   ],
   "Buz kalıbı": [
@@ -4579,12 +4611,6 @@
     {
       "file": "ui/src/components/reports/ReportsView.tsx",
       "line": 58
-    }
-  ],
-  "cursor-move touch-none": [
-    {
-      "file": "ui/src/components/FloorBoard.tsx",
-      "line": 165
     }
   ],
   "Ça": [
@@ -4887,6 +4913,10 @@
     {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 49
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Çıkış yapan misafirin yeniden gelişi için yeni konaklama kaydı açın.": [
@@ -4935,6 +4965,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 85
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Çıkış yapılmadı": [
@@ -5625,6 +5659,10 @@
     {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 86
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Detaylar için bir odaya veya yatağa tıklayın.": [
@@ -5711,6 +5749,12 @@
     {
       "file": "ui/src/components/reports/options.ts",
       "line": 3
+    }
+  ],
+  "Diğer ({count} grup)": [
+    {
+      "file": "ui/src/components/reports/charts.ts",
+      "line": 87
     }
   ],
   "Diğer acente": [
@@ -5819,6 +5863,10 @@
       "line": 147
     },
     {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
+    {
       "file": "ui/src/lib/i18n/messages.ts",
       "line": 1
     }
@@ -5923,6 +5971,10 @@
     {
       "file": "ui/src/components/fields/RoomSelectField.tsx",
       "line": 264
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Dolu / rezerve birim-gece": [
@@ -6311,6 +6363,10 @@
     {
       "file": "ui/src/components/stays-scheduler/StaysScheduler.tsx",
       "line": 139
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Düzenleme yalnızca oluşturacağınız belgeye uygulanır.": [
@@ -6351,6 +6407,10 @@
     {
       "file": "ui/src/components/StaffIdentityFields.tsx",
       "line": 43
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "EFT": [
@@ -6485,6 +6545,12 @@
     {
       "file": "ui/src/components/BedPresetPicker.tsx",
       "line": 30
+    }
+  ],
+  "Ekle": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Eklediğiniz bilgi alanları belge oluşturulurken otomatik doldurulur.": [
@@ -6813,6 +6879,10 @@
     {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 49
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Erzak dolabı": [
@@ -6873,6 +6943,10 @@
     {
       "file": "ui/src/components/reports/model.ts",
       "line": 11
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Evrak düzenleyici": [
@@ -7791,12 +7865,22 @@
     {
       "file": "ui/src/components/reports/RecordEditor.tsx",
       "line": 85
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Geri al": [
     {
       "file": "ui/src/components/document-editor/DocumentEditor.tsx",
       "line": 43
+    }
+  ],
+  "Geri dön": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Geri dönüşüm kutusu": [
@@ -8043,6 +8127,10 @@
     {
       "file": "ui/src/components/RoomStatusCard.tsx",
       "line": 49
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "GİRİŞ YAP VE TESİS EKLE": [
@@ -8071,6 +8159,10 @@
     {
       "file": "ui/src/lib/status-palette.ts",
       "line": 6
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "GİRİŞ YAPILIYOR…": [
@@ -8803,6 +8895,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 15
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Hazır bir kat seçin veya elle giriş seçeneğini kullanın.": [
@@ -8929,6 +9025,12 @@
     {
       "file": "ui/src/components/FacilityView.tsx",
       "line": 44
+    }
+  ],
+  "Hepsi": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Her {value1} tek rezervasyonla kiralanır; içindeki yataklar ayrı satılmaz.": [
@@ -9149,12 +9251,6 @@
       "line": 334
     }
   ],
-  "hidromasajlı küvet": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "Hidromasajlı küvet": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -9231,12 +9327,6 @@
       "line": 1
     }
   ],
-  "hot tub": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "hotel_name branch_name room_code guest_name guest_names id_numbers phones relationships check_in check_out inventory amount currency payment_method payment_reference paid_at booking_id": [
     {
       "file": "internal/domain/document/markup.go",
@@ -9253,16 +9343,6 @@
     {
       "file": "ui/src/components/MediaEditor.tsx",
       "line": 152
-    }
-  ],
-  "ı": [
-    {
-      "file": "ui/src/components/BedPresetPicker.tsx",
-      "line": 17
-    },
-    {
-      "file": "ui/src/components/CatalogFields.tsx",
-      "line": 63
     }
   ],
   "Isı yalıtımlı pencere": [
@@ -9515,12 +9595,6 @@
       "line": 1
     }
   ],
-  "in-room jacuzzi": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "İndüksiyonlu ocak": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -9531,20 +9605,6 @@
     {
       "file": "ui/src/components/Currency.tsx",
       "line": 89
-    }
-  ],
-  "interactiveotel:locale": [
-    {
-      "file": "ui/src/components/I18n.tsx",
-      "line": 35
-    },
-    {
-      "file": "ui/src/components/I18n.tsx",
-      "line": 40
-    },
-    {
-      "file": "ui/src/components/I18n.tsx",
-      "line": 42
     }
   ],
   "interaktif": [
@@ -9609,8 +9669,8 @@
   ],
   "İptal": [
     {
-      "file": "ui/src/components/reports/model.ts",
-      "line": 11
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "İptal belgesi": [
@@ -9644,6 +9704,10 @@
     }
   ],
   "İptal edildi": [
+    {
+      "file": "ui/src/components/reports/model.ts",
+      "line": 11
+    },
     {
       "file": "ui/src/lib/status-palette.ts",
       "line": 12
@@ -9725,6 +9789,10 @@
     {
       "file": "ui/src/components/reports/ReportsView.tsx",
       "line": 102
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "İptal gerekçesi": [
@@ -9923,6 +9991,10 @@
       "line": 102
     },
     {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/reporting/engine.go",
       "line": 820
     }
@@ -9967,6 +10039,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 24
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "İşlem geçmişi sayfaları": [
@@ -10173,6 +10249,10 @@
     {
       "file": "ui/src/components/InventoryView.tsx",
       "line": 179
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "İşlemler için misafiri seçin.": [
@@ -10697,6 +10777,10 @@
     {
       "file": "ui/src/components/ConfirmDialog.tsx",
       "line": 89
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kapat: {value1}": [
@@ -10715,6 +10799,12 @@
     {
       "file": "ui/src/components/reports/RecordEditor.tsx",
       "line": 49
+    }
+  ],
+  "Kapatın": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kapı dürbünü": [
@@ -11007,6 +11097,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 9
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "kat · Düzenleme ve silme işlemlerini ilgili katın yanından yapabilirsiniz.": [
@@ -11483,6 +11577,10 @@
     {
       "file": "ui/src/components/FeatureRegistryView.tsx",
       "line": 172
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kaydetmeniz bu notu panodaki karta işler; yazıyı silmeniz kartı arşivler.": [
@@ -12169,6 +12267,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 34
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kirli · Temizlik gerekli": [
@@ -12307,6 +12409,10 @@
     {
       "file": "ui/src/components/OriginalShell.tsx",
       "line": 153
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kişisel bakım seti": [
@@ -13027,6 +13133,10 @@
     {
       "file": "ui/src/components/SetupWizard.tsx",
       "line": 79
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Kurulum tamamlandı": [
@@ -13625,6 +13735,10 @@
     {
       "file": "ui/src/components/ContextMenu.tsx",
       "line": 84
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Mevcut durum:": [
@@ -13811,6 +13925,16 @@
     {
       "file": "ui/src/lib/contracts.generated.json",
       "line": 1
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
+  "MİSAFİR": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Misafir / firma / tedarikçi adı": [
@@ -13843,6 +13967,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 22
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Misafir çıkışı yapıldı": [
@@ -14421,24 +14549,6 @@
       "line": 1
     }
   ],
-  "nav-icon-button app-toast-close": [
-    {
-      "file": "ui/src/components/Toast.tsx",
-      "line": 40
-    }
-  ],
-  "nav-icon-button page-header-toggle": [
-    {
-      "file": "ui/src/components/PageHeader.tsx",
-      "line": 56
-    }
-  ],
-  "navigation-artwork shrink-0": [
-    {
-      "file": "ui/src/components/NavigationIcon.tsx",
-      "line": 19
-    }
-  ],
   "Ne kiralanacak?": [
     {
       "file": "ui/src/components/SetupAccommodationFields.tsx",
@@ -14659,6 +14769,10 @@
     {
       "file": "ui/src/components/BookingForm.tsx",
       "line": 582
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Notlar ve detay": [
@@ -14753,6 +14867,10 @@
     {
       "file": "ui/src/lib/api.ts",
       "line": 260
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Oda {value1} · ": [
@@ -14883,6 +15001,10 @@
     {
       "file": "ui/src/components/ContextMenu.tsx",
       "line": 52
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Oda durumu değiştirildi": [
@@ -14921,12 +15043,6 @@
       "line": 14
     }
   ],
-  "oda içi jakuzi": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "Oda içi jakuzi": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -14949,6 +15065,10 @@
     {
       "file": "ui/src/components/ContextMenu.tsx",
       "line": 46
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Oda işlemlerini kapat": [
@@ -15201,6 +15321,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 26
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Olanak Tanımları ekranından bu tesis için özellik ekleyebilirsiniz.": [
@@ -15282,7 +15406,7 @@
   "Onaylı": [
     {
       "file": "ui/src/components/reports/charts.ts",
-      "line": 73
+      "line": 83
     },
     {
       "file": "ui/src/components/reports/model.ts",
@@ -15383,6 +15507,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 13
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Ortak kara liste kayıtları": [
@@ -15521,6 +15649,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 9
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Otel / tesis adı": [
@@ -15597,6 +15729,10 @@
     {
       "file": "ui/src/components/OriginalShell.tsx",
       "line": 120
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "OTEL PROGRAMI": [
@@ -15719,6 +15855,10 @@
     {
       "file": "ui/src/components/OriginalShell.tsx",
       "line": 318
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Oturumu Kapat": [
@@ -15758,6 +15898,10 @@
     }
   ],
   "Ödeme": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
     {
       "file": "internal/domain/reporting/engine.go",
       "line": 463
@@ -16017,12 +16161,6 @@
       "line": 95
     }
   ],
-  "özel açık hava jakuzisi": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "Özel açık hava jakuzisi": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -16271,6 +16409,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 10
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Pasif / diğer": [
@@ -16359,24 +16501,6 @@
     {
       "file": "internal/domain/catalog/defaults.json",
       "line": 1
-    }
-  ],
-  "peer sr-only": [
-    {
-      "file": "ui/src/components/AppSettingsView.tsx",
-      "line": 86
-    },
-    {
-      "file": "ui/src/components/AppSettingsView.tsx",
-      "line": 120
-    },
-    {
-      "file": "ui/src/components/AppSettingsView.tsx",
-      "line": 145
-    },
-    {
-      "file": "ui/src/components/AppSettingsView.tsx",
-      "line": 236
     }
   ],
   "Pembe": [
@@ -16480,6 +16604,10 @@
     },
     {
       "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
       "line": 1
     }
   ],
@@ -16637,6 +16765,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 21
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Personel ve dönem bazında kaydedilmiş maaş giderleri.": [
@@ -16897,18 +17029,6 @@
       "line": 1
     }
   ],
-  "position:fixed;left:-10000px;width:1100px;height:800px": [
-    {
-      "file": "ui/src/components/document-editor/ReportDocumentEditor.tsx",
-      "line": 33
-    }
-  ],
-  "position:fixed;width:1px;height:1px;left:-10000px;top:0;border:0": [
-    {
-      "file": "ui/src/components/hotel-calendar/print.ts",
-      "line": 7
-    }
-  ],
   "PostgreSQL bağlantısı veya sorgusu başarısız.": [
     {
       "file": "ui/src/lib/contracts.generated.json",
@@ -16919,12 +17039,6 @@
     {
       "file": "ui/src/components/OriginalShell.tsx",
       "line": 391
-    }
-  ],
-  "private outdoor jacuzzi": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
     }
   ],
   "Priz": [
@@ -17257,6 +17371,10 @@
     {
       "file": "ui/src/components/OriginalShell.tsx",
       "line": 134
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Raporlara kaynak olan finans ve operasyon kayıtları.": [
@@ -17381,6 +17499,12 @@
       "line": 1
     }
   ],
+  "REZERV": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "REZERV:": [
     {
       "file": "ui/src/components/OriginalShell.tsx",
@@ -17432,6 +17556,10 @@
     },
     {
       "file": "ui/src/lib/contracts.generated.json",
+      "line": 1
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
       "line": 1
     }
   ],
@@ -17961,10 +18089,22 @@
       "line": 1
     }
   ],
+  "Rezerve": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "Rezerve Et": [
     {
       "file": "ui/src/components/ContextMenu.tsx",
       "line": 60
+    }
+  ],
+  "Rezervli": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Robot süpürge": [
@@ -18371,6 +18511,10 @@
     {
       "file": "ui/src/components/BookingsTable.tsx",
       "line": 68
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Seçenek kodları (virgülle ayırın)": [
@@ -18527,6 +18671,10 @@
       "line": 150
     },
     {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
+    {
       "file": "ui/src/lib/i18n/messages.ts",
       "line": 1
     }
@@ -18669,12 +18817,6 @@
       "line": 1
     }
   ],
-  "sidebar-menu-group property-switcher-card": [
-    {
-      "file": "ui/src/components/PropertySwitcher.tsx",
-      "line": 15
-    }
-  ],
   "Sigara içilebilir alan": [
     {
       "file": "internal/domain/catalog/defaults.json",
@@ -18699,6 +18841,10 @@
     {
       "file": "ui/src/components/StaffView.tsx",
       "line": 109
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Silindi": [
@@ -18907,10 +19053,28 @@
       "line": 52
     }
   ],
+  "Sonuç bulunamadı": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
+  "Sonuç yok": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "Sonuçlanan işler ve teslim notları": [
     {
       "file": "ui/src/components/kanban/model.ts",
       "line": 4
+    }
+  ],
+  "Sorgula": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Sorumlu": [
@@ -19495,6 +19659,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 9
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Şirket adresi": [
@@ -19557,6 +19725,10 @@
     {
       "file": "ui/src/components/PageHeader.tsx",
       "line": 25
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Şirketi düzenle": [
@@ -19695,6 +19867,12 @@
       "line": 24
     }
   ],
+  "Tadilat": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "TADİLAT:": [
     {
       "file": "ui/src/components/OriginalShell.tsx",
@@ -19709,6 +19887,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 54
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Taharet musluğu": [
@@ -19971,6 +20153,10 @@
     {
       "file": "ui/src/App.tsx",
       "line": 715
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Tarih / saat": [
@@ -20218,7 +20404,7 @@
     },
     {
       "file": "ui/src/components/reports/charts.ts",
-      "line": 73
+      "line": 83
     },
     {
       "file": "ui/src/components/reports/model.ts",
@@ -20333,6 +20519,10 @@
       "line": 1
     },
     {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
+    {
       "file": "internal/domain/catalog/defaults.json",
       "line": 1
     }
@@ -20401,6 +20591,10 @@
     {
       "file": "ui/src/lib/statuses.generated.ts",
       "line": 24
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Temiz olarak kaydet": [
@@ -20827,6 +21021,10 @@
     {
       "file": "ui/src/components/reports/ReportCharts.tsx",
       "line": 39
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Toplam fatura": [
@@ -20951,6 +21149,10 @@
     {
       "file": "ui/src/lib/audit-presentation.ts",
       "line": 10
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Tutar bakım maliyetidir; finansal gider raporu için ayrıca gider kaydı oluşturun.": [
@@ -21219,6 +21421,12 @@
       "line": 51
     }
   ],
+  "Tümü": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
   "Tümünü seç": [
     {
       "file": "ui/src/components/CatalogFields.tsx",
@@ -21403,8 +21611,8 @@
   ],
   "Uygulamanın dilini seçin.": [
     {
-      "file": "ui/src/components/I18n.tsx",
-      "line": 54
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Uygulamayı yükle": [
@@ -21534,6 +21742,10 @@
     }
   ],
   "Ülke": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    },
     {
       "file": "ui/src/lib/i18n/messages.ts",
       "line": 1
@@ -21937,6 +22149,10 @@
     {
       "file": "ui/src/components/reports/ReportsView.tsx",
       "line": 87
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "VER": [
@@ -22013,12 +22229,6 @@
       "line": 1
     }
   ],
-  "whirlpool bath": [
-    {
-      "file": "ui/src/components/property-3d/room-fixtures.ts",
-      "line": 7
-    }
-  ],
   "Wire Transfer": [
     {
       "file": "internal/domain/payment/payment.go",
@@ -22065,6 +22275,10 @@
     {
       "file": "ui/src/lib/room-board.ts",
       "line": 38
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Yalnızca boş yatakları göster": [
@@ -22863,6 +23077,10 @@
     {
       "file": "ui/src/components/reports/CustomerList.tsx",
       "line": 44
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Yenileniyor…": [
@@ -23079,6 +23297,16 @@
     {
       "file": "ui/src/components/MediaUpload.tsx",
       "line": 51
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
+    }
+  ],
+  "Yükleniyor...": [
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Yükleniyor…": [
@@ -23097,6 +23325,10 @@
     {
       "file": "ui/src/components/kanban/KanbanView.tsx",
       "line": 94
+    },
+    {
+      "file": "ui/src/lib/i18n/application-core.json",
+      "line": 1
     }
   ],
   "Yüksek": [

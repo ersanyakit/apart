@@ -80,7 +80,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
       <section className={styles.history} aria-label={_uiText("İşlem geçmişi")} aria-busy={busy}>
        <div className={styles.listHeader}><span>{_uiText("Yapılan işlem")}</span><span>{_uiText("İşlemi yapan")}</span><span>{_uiText("Tarih / saat")}</span></div>
        {!busy&&rows.map(r=>{
-        const location=auditLocationSummary(r.entity,r.details),changes=auditChanges(r,_uiLocale,_uiText);
+        const location=auditLocationSummary(r.entity,r.details,_uiText),changes=auditChanges(r,_uiLocale,_uiText);
         const time=new Date(r.created_at);
         const highlight=changes.find(c=>c.key==='status');
         return <article className={styles.entry} key={r.id}>

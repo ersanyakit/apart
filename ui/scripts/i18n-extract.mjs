@@ -18,7 +18,7 @@ function files(dir,extensions){return fs.readdirSync(dir,{withFileTypes:true}).f
  const file=path.join(dir,e.name);
  return e.isDirectory()?files(file,extensions):extensions.some(ext=>file.endsWith(ext))?[file]:[];
 });}
-function human(text){return /[çğıöşüÇĞİÖŞÜ]|\p{L}[ ,;:…]\p{L}/u.test(text)&&!/[\n\r]|https?:|var\(--|SELECT |INSERT |UPDATE |DELETE |CREATE |ALTER |JOIN /i.test(text)&&!/(?:^|\s)(?:flex|grid|rounded-|text-|bg-|border-|gap-|items-|justify-|w-|h-|px-|py-|mt-|mb-|fixed|absolute|overflow-|space-|shadow-|font-|min-|max-|hover:|sm:|md:|lg:|uni-|divide-|leading-|tracking-|object-|pointer-|whitespace-|break-|outline-|ring-|select-|transition-|duration-|ease-)/.test(text);}
+function human(text){return text.length>1&&!/^interactiveotel:|^(?:position|font|color|width|height):|^\d{3} \d+px /.test(text)&&/[çğıöşüÇĞİÖŞÜ]|\p{L}[ ,;:…]\p{L}/u.test(text)&&!/[\n\r]|https?:|var\(--|SELECT |INSERT |UPDATE |DELETE |CREATE |ALTER |JOIN /i.test(text)&&!/(?:^|\s)(?:flex|grid|rounded-|text-|bg-|border-|gap-|items-|justify-|w-|h-|px-|py-|mt-|mb-|fixed|absolute|overflow-|space-|shadow-|font-|min-|max-|hover:|sm:|md:|lg:|uni-|divide-|leading-|tracking-|object-|pointer-|whitespace-|break-|outline-|ring-|select-|transition-|duration-|ease-|peer(?:$|\s)|navigation-artwork|sidebar-menu-group|nav-icon-button|cursor-|touch-)/.test(text);}
 // Follow the real application graph. Unused design prototypes are not screens
 // reachable through the application's sidebar, and do not belong to its audit.
 const reachable=new Set();
@@ -46,6 +46,9 @@ for(const file of files(path.join(ui,'src'),['.ts','.tsx'])){
  const record=(n,text,force=false)=>add(text,relative,ast.getLineAndCharacterOfPosition(n.getStart(ast)).line+1,force);
  function literals(n){if(ts.isStringLiteral(n)||ts.isNoSubstitutionTemplateLiteral(n))record(n,n.text);else ts.forEachChild(n,literals);}
  function visit(n){
+  if(ts.isJsxAttribute(n)&&['className','id','style','data-testid'].includes(n.name.getText(ast)))return;
+  if((ts.isStringLiteral(n)||ts.isNoSubstitutionTemplateLiteral(n))&&ts.isCallExpression(n.parent)&&ts.isPropertyAccessExpression(n.parent.expression)&&['querySelector','querySelectorAll','closest','matches','replace','replaceAll','getContext','addEventListener','removeEventListener'].includes(n.parent.expression.name.text))return;
+  if(file.endsWith('/components/property-3d/room-fixtures.ts'))return;
   if(file.endsWith('/components/Currency.tsx')&&ts.isVariableDeclaration(n)&&n.name.getText(ast)==='CURRENCIES')return;
   if(file.endsWith('/lib/audit-presentation.ts')&&ts.isVariableDeclaration(n)&&n.name.getText(ast)==='fields'&&n.initializer)literals(n.initializer);
   if(ts.isCallExpression(n)&&['_uiText','m','translate'].includes(n.expression.getText(ast))&&n.arguments[0]&&ts.isStringLiteral(n.arguments[0]))record(n.arguments[0],n.arguments[0].text,true);
@@ -62,6 +65,10 @@ const contracts=JSON.parse(fs.readFileSync(path.join(ui,'src/lib/contracts.gener
 for(const text of Object.values(contracts.errors))add(text,'ui/src/lib/contracts.generated.json',1);
 for(const item of [...contracts.reports,...contracts.report_groups,...contracts.report_record_kinds])for(const key of ['name','description','hint','category'])add(item[key],'ui/src/lib/contracts.generated.json',1);
 const builtins={};
+for(const file of ['application-core.json','application-plurals.json']){
+ const dictionary=JSON.parse(fs.readFileSync(path.join(base,file),'utf8'));
+ for(const key of Object.keys(dictionary.tr))add(key,`ui/src/lib/i18n/${file}`,1,true);
+}
 // Legacy semantic keys also have canonical source messages. Preserve their
 // existing translations when extending the application catalogs to all locales.
 const semanticFile=path.join(base,'messages.ts'),semanticText=fs.readFileSync(semanticFile,'utf8');

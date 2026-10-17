@@ -63,7 +63,7 @@ export function RoomSelectField({
   const q = query.toLocaleLowerCase(_uiLocale);
   const filtered = rooms.filter((r) => {
     if (!q) return true;
-    const hay = `${r.code} ${unitKinds[r.kind]} ${r.effective_capacity || r.capacity}`
+    const hay = `${r.code} ${_uiText(unitKinds[r.kind] || "")} ${r.effective_capacity || r.capacity}`
       .toLocaleLowerCase(_uiLocale);
     return hay.includes(q);
   });
@@ -124,7 +124,7 @@ export function RoomSelectField({
       <FieldCard className="h-full">
         <button
           type="button"
-          aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(selected ? `${selected.code} ${unitKinds[selected.kind]}` : "yok")})}
+          aria-label={_uiText("{value1} seçin. Seçili: {value2}", {value1: String(label), value2: String(selected ? `${selected.code} ${_uiText(unitKinds[selected.kind] || "")}` : "yok")})}
           aria-haspopup="listbox"
           aria-expanded={open}
           disabled={disabled}
@@ -144,13 +144,13 @@ export function RoomSelectField({
                 className={`font-uninav-book block truncate text-[1.25rem] leading-8 ${selected ? "text-slate-900" : "text-slate-400"}`}
               >
                 {selected
-                  ? _uiText("{value1} · {value2}", {value1: String(selected.code), value2: String(unitKinds[selected.kind])})
+                  ? _uiText("{value1} · {value2}", {value1: String(selected.code), value2: String(_uiText(unitKinds[selected.kind] || ""))})
                   : _uiText("Birim seçin")}
               </span>
             </span>
             <span className="mt-1 block truncate text-[0.875rem] leading-5 text-slate-500">
               {selected
-                ? _uiText("{value1}{value2}", {value1: String(selected.kind === "bed" ? `${selected.capacity} kişi · ` : ""), value2: String(selectedBusy ? "Dolu" : "Müsait")})
+                ? _uiText("{value1}{value2}", {value1: String(selected.kind === "bed" ? `${_uiText("{count} kişi", {count: selected.capacity})} · ` : ""), value2: _uiText(selectedBusy ? "Dolu" : "Müsait")})
                 : _uiText("kod · tip · müsaitlik")}
             </span>
           </span>
@@ -248,7 +248,7 @@ export function RoomSelectField({
                             {r.code}
                           </span>
                           <span className="block truncate text-xs leading-4 text-slate-500">
-                            {unitKinds[r.kind]}{r.kind === "bed" ? _uiText(" · {value1} kişi", {value1: String(r.capacity)}) : ""}
+                            {_uiText(unitKinds[r.kind] || "")}{r.kind === "bed" ? " · " + _uiText("{count} kişi", {count: r.capacity}) : ""}
                           </span>
                         </span>
                         {isSelected ? (

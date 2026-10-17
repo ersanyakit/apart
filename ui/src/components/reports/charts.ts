@@ -65,18 +65,33 @@ export const CHARTS:Record<string,ChartSpec[]>={
 };
 export type Point={key?:string;label:string;values:(number|null)[]};
 export function groupLabel(value:unknown){if(value===null||value===undefined||value==='')return 'Belirtilmemiş';const s=String(value);if(/^\d{4}-\d{2}-\d{2}T/.test(s))return new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Istanbul'}).format(new Date(s));return display(s)}
-export function chartPoints(rows:Row[],spec:ChartSpec):Point[]{
- if(spec.separate)return rows.map((row,index)=>({key:String(row.id??index),label:[groupLabel(row[spec.group]),...(spec.suffix??[]).map(k=>groupLabel(row[k]))].join(' · '),values:spec.values.map(v=>row[v.key]===null||row[v.key]===undefined?null:Number(row[v.key]))}));
+type Translate=(source:string,params?:Record<string,string|number>)=>string;
+const identity:Translate=(source,params={})=>source.replace(/\{(\w+)\}/g,(token,key)=>String(params[key]??token));
+const enumGroups=new Set(['status','kind','method','channel','type','category','level','measure']);
+function localizedGroup(label:string,key:string,locale:string,translate:Translate){
+ if(label==='Belirtilmemiş')return translate(label);
+ if(enumGroups.has(key))return translate(label);
+ if(key==='date'&&/^\d{4}-\d{2}-\d{2}$/.test(label))return new Intl.DateTimeFormat(locale,{dateStyle:'short',timeZone:'Europe/Istanbul'}).format(new Date(label+'T12:00:00+03:00'));
+ return label;
+}
+export function chartPoints(rows:Row[],spec:ChartSpec,locale='tr-TR',translate:Translate=identity):Point[]{
+ const localize=(point:Point):Point=>({...point,label:localizedGroup(point.label,spec.group,locale,translate)});
+ if(spec.separate)return rows.map((row,index)=>({key:String(row.id??index),label:[localizedGroup(groupLabel(row[spec.group]),spec.group,locale,translate),...(spec.suffix??[]).map(k=>localizedGroup(groupLabel(row[k]),k,locale,translate))].join(' · '),values:spec.values.map(v=>row[v.key]===null||row[v.key]===undefined?null:Number(row[v.key]))}));
  const map=new Map<string,Point>();
  for(const row of rows){const label=groupLabel(row[spec.group]);let p=map.get(label);if(!p){p={label,values:spec.values.map(()=>null)};map.set(label,p)};spec.values.forEach((v,i)=>{const raw=spec.count?1:row[v.key];if(raw!==null&&raw!==undefined&&Number.isFinite(Number(raw)))p!.values[i]=(p!.values[i]??0)+Number(raw)})}
- let points=[...map.values()];if(spec.kind==='line')return points.sort((a,b)=>a.label.localeCompare(b.label));
- if(spec.kind==='funnel'){const order=['Açık','Teklif verildi','Onaylı','Kaybedildi'];return points.sort((a,b)=>order.indexOf(a.label)-order.indexOf(b.label))}
- points.sort((a,b)=>Math.abs(b.values[0]??0)-Math.abs(a.values[0]??0));if(points.length>12&&spec.kind!=='pivot'){const tail=points.slice(11);points=[...points.slice(0,11),{label:`Diğer (${tail.length} grup)`,values:spec.values.map((_,i)=>tail.reduce((sum,p)=>sum+(p.values[i]??0),0))}]};return points;
+ let points=[...map.values()];if(spec.kind==='line')return points.sort((a,b)=>a.label.localeCompare(b.label)).map(localize);
+ if(spec.kind==='funnel'){const order=['Açık','Teklif verildi','Onaylı','Kaybedildi'];return points.sort((a,b)=>order.indexOf(a.label)-order.indexOf(b.label)).map(localize)}
+ points.sort((a,b)=>Math.abs(b.values[0]??0)-Math.abs(a.values[0]??0));
+ if(points.length>12&&spec.kind!=='pivot'){
+  const tail=points.slice(11);
+  return [...points.slice(0,11).map(localize),{label:translate('Diğer ({count} grup)',{count:tail.length}),values:spec.values.map((_,i)=>tail.reduce((sum,p)=>sum+(p.values[i]??0),0))}];
+ }
+ return points.map(localize);
 }
-export function pivotData(rows:Row[],spec:ChartSpec){
- if(!spec.column)return {columns:spec.values.map(v=>v.label),formats:spec.values.map(v=>v.format),rows:chartPoints(rows,spec)};
+export function pivotData(rows:Row[],spec:ChartSpec,locale='tr-TR',translate:Translate=identity){
+ if(!spec.column)return {columns:spec.values.map(v=>translate(v.label)),formats:spec.values.map(v=>v.format),rows:chartPoints(rows,spec,locale,translate)};
  const cols=Array.from(new Set(rows.map(r=>groupLabel(r[spec.column!])))).sort();const cells=new Map<string,(number|null)[]>();
  for(const r of rows){const label=groupLabel(r[spec.group]);const values=cells.get(label)??cols.map(()=>null);const i=cols.indexOf(groupLabel(r[spec.column]));const n=spec.count?1:Number(r[spec.values[0].key]??0);values[i]=(values[i]??0)+n;cells.set(label,values)}
- return {columns:cols,formats:cols.map(()=>spec.values[0].format),rows:[...cells].map(([label,values])=>({label,values}))};
+ return {columns:cols.map(col=>localizedGroup(col,spec.column!,locale,translate)),formats:cols.map(()=>spec.values[0].format),rows:[...cells].map(([label,values])=>({label:localizedGroup(label,spec.group,locale,translate),values}))};
 }
 export function chartsFor(report:ReportResult){return (CHARTS[report.key]??[]).map(spec=>({spec,rows:report.tables.find(t=>t.key===spec.table)?.rows??[]}))}

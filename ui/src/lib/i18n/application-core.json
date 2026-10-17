@@ -56,8 +56,6 @@
     "Seç": "Seç",
     "Hepsi": "Hepsi",
     "Sorgula": "Sorgula",
-    "Güncelle": "Güncelle",
-    "Kaydediliyor…": "Kaydediliyor…",
     "Yükleniyor...": "Yükleniyor...",
     "Yükleniyor": "Yükleniyor",
     "Kapatın": "Kapatın",
@@ -87,8 +85,7 @@
     "Erken giriş yap": "Erken giriş yap",
     "Oda durumu": "Oda durumu",
     "Oda işlemleri": "Oda işlemleri",
-    "Mevcut durum": "Mevcut durum",
-    "Durum": "Durum"
+    "Mevcut durum": "Mevcut durum"
   },
   "en": {
     "Kaydet": "Save",
@@ -147,8 +144,6 @@
     "Seç": "Select",
     "Hepsi": "All",
     "Sorgula": "Search",
-    "Güncelle": "Refresh",
-    "Kaydediliyor…": "Loading…",
     "Yükleniyor...": "Loading…",
     "Yükleniyor": "Loading…",
     "Kapatın": "Close",
@@ -178,8 +173,7 @@
     "Erken giriş yap": "Early check-in",
     "Oda durumu": "Room status",
     "Oda işlemleri": "Room actions",
-    "Mevcut durum": "Current status",
-    "Durum": "Room status"
+    "Mevcut durum": "Current status"
   },
   "de": {
     "Kaydet": "Speichern",
@@ -238,8 +232,6 @@
     "Seç": "Auswählen",
     "Hepsi": "Alle",
     "Sorgula": "Suchen",
-    "Güncelle": "Aktualisieren",
-    "Kaydediliyor…": "Wird geladen…",
     "Yükleniyor...": "Wird geladen…",
     "Yükleniyor": "Wird geladen…",
     "Kapatın": "Schließen",
@@ -269,8 +261,7 @@
     "Erken giriş yap": "Früher Check-in",
     "Oda durumu": "Zimmerstatus",
     "Oda işlemleri": "Zimmeraktionen",
-    "Mevcut durum": "Aktueller Status",
-    "Durum": "Zimmerstatus"
+    "Mevcut durum": "Aktueller Status"
   },
   "fr": {
     "Kaydet": "Enregistrer",
@@ -329,8 +320,6 @@
     "Seç": "Sélectionner",
     "Hepsi": "Tous",
     "Sorgula": "Rechercher",
-    "Güncelle": "Actualiser",
-    "Kaydediliyor…": "Chargement…",
     "Yükleniyor...": "Chargement…",
     "Yükleniyor": "Chargement…",
     "Kapatın": "Fermer",
@@ -360,8 +349,7 @@
     "Erken giriş yap": "Arrivée anticipée",
     "Oda durumu": "État de la chambre",
     "Oda işlemleri": "Actions de la chambre",
-    "Mevcut durum": "État actuel",
-    "Durum": "État de la chambre"
+    "Mevcut durum": "État actuel"
   },
   "ru": {
     "Kaydet": "Сохранить",
@@ -420,8 +408,6 @@
     "Seç": "Выбрать",
     "Hepsi": "Все",
     "Sorgula": "Поиск",
-    "Güncelle": "Обновить",
-    "Kaydediliyor…": "Загрузка…",
     "Yükleniyor...": "Загрузка…",
     "Yükleniyor": "Загрузка…",
     "Kapatın": "Закрыть",
@@ -451,8 +437,7 @@
     "Erken giriş yap": "Раннее заселение",
     "Oda durumu": "Состояние номера",
     "Oda işlemleri": "Действия с номером",
-    "Mevcut durum": "Текущее состояние",
-    "Durum": "Состояние номера"
+    "Mevcut durum": "Текущее состояние"
   },
   "ar": {
     "Kaydet": "حفظ",
@@ -511,8 +496,6 @@
     "Seç": "اختيار",
     "Hepsi": "الكل",
     "Sorgula": "بحث",
-    "Güncelle": "تحديث",
-    "Kaydediliyor…": "جارٍ التحميل…",
     "Yükleniyor...": "جارٍ التحميل…",
     "Yükleniyor": "جارٍ التحميل…",
     "Kapatın": "إغلاق",
@@ -542,8 +525,7 @@
     "Erken giriş yap": "تسجيل وصول مبكر",
     "Oda durumu": "حالة الغرفة",
     "Oda işlemleri": "إجراءات الغرفة",
-    "Mevcut durum": "الحالة الحالية",
-    "Durum": "حالة الغرفة"
+    "Mevcut durum": "الحالة الحالية"
   },
   "ne": {
     "Kaydet": "सुरक्षित गर्नुहोस्",
@@ -602,8 +584,6 @@
     "Seç": "छान्नुहोस्",
     "Hepsi": "सबै",
     "Sorgula": "खोज्नुहोस्",
-    "Güncelle": "ताजा गर्नुहोस्",
-    "Kaydediliyor…": "लोड हुँदैछ…",
     "Yükleniyor...": "लोड हुँदैछ…",
     "Yükleniyor": "लोड हुँदैछ…",
     "Kapatın": "बन्द गर्नुहोस्",
@@ -633,8 +613,7 @@
     "Erken giriş yap": "चाँडो चेक इन",
     "Oda durumu": "कोठाको अवस्था",
     "Oda işlemleri": "कोठाका कार्यहरू",
-    "Mevcut durum": "हालको अवस्था",
-    "Durum": "कोठाको अवस्था"
+    "Mevcut durum": "हालको अवस्था"
   },
   "th": {
     "Kaydet": "บันทึก",
@@ -693,8 +672,6 @@
     "Seç": "เลือก",
     "Hepsi": "ทั้งหมด",
     "Sorgula": "ค้นหา",
-    "Güncelle": "รีเฟรช",
-    "Kaydediliyor…": "กำลังโหลด…",
     "Yükleniyor...": "กำลังโหลด…",
     "Yükleniyor": "กำลังโหลด…",
     "Kapatın": "ปิด",
@@ -724,8 +701,7 @@
     "Erken giriş yap": "เช็กอินก่อนเวลา",
     "Oda durumu": "สถานะห้อง",
     "Oda işlemleri": "การดำเนินการห้องพัก",
-    "Mevcut durum": "สถานะปัจจุบัน",
-    "Durum": "สถานะห้อง"
+    "Mevcut durum": "สถานะปัจจุบัน"
   },
   "zh-CN": {
     "Kaydet": "保存",
@@ -784,8 +760,6 @@
     "Seç": "请选择",
     "Hepsi": "全部",
     "Sorgula": "搜索",
-    "Güncelle": "刷新",
-    "Kaydediliyor…": "加载中…",
     "Yükleniyor...": "加载中…",
     "Yükleniyor": "加载中…",
     "Kapatın": "关闭",
@@ -815,8 +789,7 @@
     "Erken giriş yap": "提前入住",
     "Oda durumu": "客房状态",
     "Oda işlemleri": "客房操作",
-    "Mevcut durum": "当前状态",
-    "Durum": "客房状态"
+    "Mevcut durum": "当前状态"
   },
   "zh-TW": {
     "Kaydet": "儲存",
@@ -875,8 +848,6 @@
     "Seç": "請選擇",
     "Hepsi": "全部",
     "Sorgula": "搜尋",
-    "Güncelle": "重新整理",
-    "Kaydediliyor…": "載入中…",
     "Yükleniyor...": "載入中…",
     "Yükleniyor": "載入中…",
     "Kapatın": "關閉",
@@ -906,8 +877,7 @@
     "Erken giriş yap": "提前入住",
     "Oda durumu": "客房狀態",
     "Oda işlemleri": "客房操作",
-    "Mevcut durum": "目前狀態",
-    "Durum": "客房狀態"
+    "Mevcut durum": "目前狀態"
   },
   "hi": {
     "Kaydet": "सहेजें",
@@ -966,8 +936,6 @@
     "Seç": "चुनें",
     "Hepsi": "सभी",
     "Sorgula": "खोजें",
-    "Güncelle": "रीफ़्रेश करें",
-    "Kaydediliyor…": "लोड हो रहा है…",
     "Yükleniyor...": "लोड हो रहा है…",
     "Yükleniyor": "लोड हो रहा है…",
     "Kapatın": "बंद करें",
@@ -997,8 +965,7 @@
     "Erken giriş yap": "समय से पहले चेक इन",
     "Oda durumu": "कमरे की स्थिति",
     "Oda işlemleri": "कमरे की कार्रवाइयाँ",
-    "Mevcut durum": "वर्तमान स्थिति",
-    "Durum": "कमरे की स्थिति"
+    "Mevcut durum": "वर्तमान स्थिति"
   },
   "km": {
     "Kaydet": "រក្សាទុក",
@@ -1057,8 +1024,6 @@
     "Seç": "ជ្រើសរើស",
     "Hepsi": "ទាំងអស់",
     "Sorgula": "ស្វែងរក",
-    "Güncelle": "ផ្ទុកឡើងវិញ",
-    "Kaydediliyor…": "កំពុងផ្ទុក…",
     "Yükleniyor...": "កំពុងផ្ទុក…",
     "Yükleniyor": "កំពុងផ្ទុក…",
     "Kapatın": "បិទ",
@@ -1088,8 +1053,7 @@
     "Erken giriş yap": "ចុះឈ្មោះចូលមុនម៉ោង",
     "Oda durumu": "ស្ថានភាពបន្ទប់",
     "Oda işlemleri": "សកម្មភាពបន្ទប់",
-    "Mevcut durum": "ស្ថានភាពបច្ចុប្បន្ន",
-    "Durum": "ស្ថានភាពបន្ទប់"
+    "Mevcut durum": "ស្ថានភាពបច្ចុប្បន្ន"
   },
   "si": {
     "Kaydet": "සුරකින්න",
@@ -1148,8 +1112,6 @@
     "Seç": "තෝරන්න",
     "Hepsi": "සියල්ල",
     "Sorgula": "සොයන්න",
-    "Güncelle": "නැවුම් කරන්න",
-    "Kaydediliyor…": "පූරණය වෙමින්…",
     "Yükleniyor...": "පූරණය වෙමින්…",
     "Yükleniyor": "පූරණය වෙමින්…",
     "Kapatın": "වසන්න",
@@ -1179,8 +1141,7 @@
     "Erken giriş yap": "කලින් ඇතුළත් කිරීම",
     "Oda durumu": "කාමරයේ තත්ත්වය",
     "Oda işlemleri": "කාමර ක්‍රියා",
-    "Mevcut durum": "වත්මන් තත්ත්වය",
-    "Durum": "කාමරයේ තත්ත්වය"
+    "Mevcut durum": "වත්මන් තත්ත්වය"
   },
   "ta": {
     "Kaydet": "சேமி",
@@ -1239,8 +1200,6 @@
     "Seç": "தேர்ந்தெடு",
     "Hepsi": "அனைத்தும்",
     "Sorgula": "தேடு",
-    "Güncelle": "புதுப்பி",
-    "Kaydediliyor…": "ஏற்றுகிறது…",
     "Yükleniyor...": "ஏற்றுகிறது…",
     "Yükleniyor": "ஏற்றுகிறது…",
     "Kapatın": "மூடு",
@@ -1270,8 +1229,7 @@
     "Erken giriş yap": "முன்கூட்டிய வருகை பதிவு",
     "Oda durumu": "அறை நிலை",
     "Oda işlemleri": "அறைச் செயல்கள்",
-    "Mevcut durum": "தற்போதைய நிலை",
-    "Durum": "அறை நிலை"
+    "Mevcut durum": "தற்போதைய நிலை"
   },
   "yue": {
     "Kaydet": "儲存",
@@ -1330,8 +1288,6 @@
     "Seç": "請選擇",
     "Hepsi": "全部",
     "Sorgula": "搜尋",
-    "Güncelle": "重新整理",
-    "Kaydediliyor…": "載入緊…",
     "Yükleniyor...": "載入緊…",
     "Yükleniyor": "載入緊…",
     "Kapatın": "關閉",
@@ -1361,8 +1317,7 @@
     "Erken giriş yap": "提早入住",
     "Oda durumu": "客房狀態",
     "Oda işlemleri": "客房操作",
-    "Mevcut durum": "目前狀態",
-    "Durum": "客房狀態"
+    "Mevcut durum": "目前狀態"
   },
   "ur": {
     "Kaydet": "محفوظ کریں",
@@ -1421,8 +1376,6 @@
     "Seç": "منتخب کریں",
     "Hepsi": "سبھی",
     "Sorgula": "تلاش کریں",
-    "Güncelle": "تازہ کریں",
-    "Kaydediliyor…": "لوڈ ہو رہا ہے…",
     "Yükleniyor...": "لوڈ ہو رہا ہے…",
     "Yükleniyor": "لوڈ ہو رہا ہے…",
     "Kapatın": "بند کریں",
@@ -1452,8 +1405,7 @@
     "Erken giriş yap": "وقت سے پہلے چیک اِن",
     "Oda durumu": "کمرے کی حالت",
     "Oda işlemleri": "کمرے کی کارروائیاں",
-    "Mevcut durum": "موجودہ حالت",
-    "Durum": "کمرے کی حالت"
+    "Mevcut durum": "موجودہ حالت"
   },
   "bn": {
     "Kaydet": "সংরক্ষণ করুন",
@@ -1512,8 +1464,6 @@
     "Seç": "বেছে নিন",
     "Hepsi": "সব",
     "Sorgula": "খুঁজুন",
-    "Güncelle": "রিফ্রেশ করুন",
-    "Kaydediliyor…": "লোড হচ্ছে…",
     "Yükleniyor...": "লোড হচ্ছে…",
     "Yükleniyor": "লোড হচ্ছে…",
     "Kapatın": "বন্ধ করুন",
@@ -1543,8 +1493,7 @@
     "Erken giriş yap": "আগাম চেক ইন",
     "Oda durumu": "কক্ষের অবস্থা",
     "Oda işlemleri": "কক্ষের কার্যক্রম",
-    "Mevcut durum": "বর্তমান অবস্থা",
-    "Durum": "কক্ষের অবস্থা"
+    "Mevcut durum": "বর্তমান অবস্থা"
   },
   "dz": {
     "Kaydet": "བསྲུང་།",
@@ -1603,8 +1552,6 @@
     "Seç": "གདམ་ཁ།",
     "Hepsi": "ཆ་མཉམ།",
     "Sorgula": "འཚོལ།",
-    "Güncelle": "ཡང་བསྐྱར་ཕབ་ལེན།",
-    "Kaydediliyor…": "ཕབ་ལེན་འབད་དོ…",
     "Yükleniyor...": "ཕབ་ལེན་འབད་དོ…",
     "Yükleniyor": "ཕབ་ལེན་འབད་དོ…",
     "Kapatın": "ཁ་བསྡམས།",
@@ -1634,8 +1581,7 @@
     "Erken giriş yap": "དུས་ཚོད་ཀྱི་ཧེ་མ་ནང་འཛུལ།",
     "Oda durumu": "ཁང་མིག་གནས་སྟངས།",
     "Oda işlemleri": "ཁང་མིག་བྱ་བ།",
-    "Mevcut durum": "ད་ལྟོའི་གནས་སྟངས།",
-    "Durum": "ཁང་མིག་གནས་སྟངས།"
+    "Mevcut durum": "ད་ལྟོའི་གནས་སྟངས།"
   },
   "es": {
     "Kaydet": "Guardar",
@@ -1694,8 +1640,6 @@
     "Seç": "Seleccionar",
     "Hepsi": "Todos",
     "Sorgula": "Buscar",
-    "Güncelle": "Actualizar",
-    "Kaydediliyor…": "Cargando…",
     "Yükleniyor...": "Cargando…",
     "Yükleniyor": "Cargando…",
     "Kapatın": "Cerrar",
@@ -1725,8 +1669,7 @@
     "Erken giriş yap": "Entrada anticipada",
     "Oda durumu": "Estado de la habitación",
     "Oda işlemleri": "Acciones de la habitación",
-    "Mevcut durum": "Estado actual",
-    "Durum": "Estado de la habitación"
+    "Mevcut durum": "Estado actual"
   },
   "it": {
     "Kaydet": "Salva",
@@ -1785,8 +1728,6 @@
     "Seç": "Seleziona",
     "Hepsi": "Tutti",
     "Sorgula": "Cerca",
-    "Güncelle": "Aggiorna",
-    "Kaydediliyor…": "Caricamento…",
     "Yükleniyor...": "Caricamento…",
     "Yükleniyor": "Caricamento…",
     "Kapatın": "Chiudi",
@@ -1816,8 +1757,7 @@
     "Erken giriş yap": "Check-in anticipato",
     "Oda durumu": "Stato della camera",
     "Oda işlemleri": "Azioni della camera",
-    "Mevcut durum": "Stato attuale",
-    "Durum": "Stato della camera"
+    "Mevcut durum": "Stato attuale"
   },
   "pt": {
     "Kaydet": "Guardar",
@@ -1876,8 +1816,6 @@
     "Seç": "Selecionar",
     "Hepsi": "Todos",
     "Sorgula": "Pesquisar",
-    "Güncelle": "Atualizar",
-    "Kaydediliyor…": "A carregar…",
     "Yükleniyor...": "A carregar…",
     "Yükleniyor": "A carregar…",
     "Kapatın": "Fechar",
@@ -1907,8 +1845,7 @@
     "Erken giriş yap": "Entrada antecipada",
     "Oda durumu": "Estado do quarto",
     "Oda işlemleri": "Ações do quarto",
-    "Mevcut durum": "Estado atual",
-    "Durum": "Estado do quarto"
+    "Mevcut durum": "Estado atual"
   },
   "nl": {
     "Kaydet": "Opslaan",
@@ -1967,8 +1904,6 @@
     "Seç": "Selecteren",
     "Hepsi": "Alle",
     "Sorgula": "Zoeken",
-    "Güncelle": "Vernieuwen",
-    "Kaydediliyor…": "Laden…",
     "Yükleniyor...": "Laden…",
     "Yükleniyor": "Laden…",
     "Kapatın": "Sluiten",
@@ -1998,8 +1933,7 @@
     "Erken giriş yap": "Vroeg inchecken",
     "Oda durumu": "Kamerstatus",
     "Oda işlemleri": "Kameracties",
-    "Mevcut durum": "Huidige status",
-    "Durum": "Kamerstatus"
+    "Mevcut durum": "Huidige status"
   },
   "pl": {
     "Kaydet": "Zapisz",
@@ -2058,8 +1992,6 @@
     "Seç": "Wybierz",
     "Hepsi": "Wszystkie",
     "Sorgula": "Szukaj",
-    "Güncelle": "Odśwież",
-    "Kaydediliyor…": "Wczytywanie…",
     "Yükleniyor...": "Wczytywanie…",
     "Yükleniyor": "Wczytywanie…",
     "Kapatın": "Zamknij",
@@ -2089,8 +2021,7 @@
     "Erken giriş yap": "Wcześniejsze zameldowanie",
     "Oda durumu": "Status pokoju",
     "Oda işlemleri": "Działania dotyczące pokoju",
-    "Mevcut durum": "Bieżący status",
-    "Durum": "Status pokoju"
+    "Mevcut durum": "Bieżący status"
   },
   "cs": {
     "Kaydet": "Uložit",
@@ -2149,8 +2080,6 @@
     "Seç": "Vybrat",
     "Hepsi": "Vše",
     "Sorgula": "Hledat",
-    "Güncelle": "Obnovit",
-    "Kaydediliyor…": "Načítání…",
     "Yükleniyor...": "Načítání…",
     "Yükleniyor": "Načítání…",
     "Kapatın": "Zavřít",
@@ -2180,8 +2109,7 @@
     "Erken giriş yap": "Předčasné ubytování",
     "Oda durumu": "Stav pokoje",
     "Oda işlemleri": "Akce pokoje",
-    "Mevcut durum": "Aktuální stav",
-    "Durum": "Stav pokoje"
+    "Mevcut durum": "Aktuální stav"
   },
   "hu": {
     "Kaydet": "Mentés",
@@ -2240,8 +2168,6 @@
     "Seç": "Kiválasztás",
     "Hepsi": "Összes",
     "Sorgula": "Keresés",
-    "Güncelle": "Frissítés",
-    "Kaydediliyor…": "Betöltés…",
     "Yükleniyor...": "Betöltés…",
     "Yükleniyor": "Betöltés…",
     "Kapatın": "Bezárás",
@@ -2271,8 +2197,7 @@
     "Erken giriş yap": "Korai bejelentkezés",
     "Oda durumu": "Szoba állapota",
     "Oda işlemleri": "Szobaműveletek",
-    "Mevcut durum": "Jelenlegi állapot",
-    "Durum": "Szoba állapota"
+    "Mevcut durum": "Jelenlegi állapot"
   },
   "ro": {
     "Kaydet": "Salvează",
@@ -2331,8 +2256,6 @@
     "Seç": "Selectează",
     "Hepsi": "Toate",
     "Sorgula": "Caută",
-    "Güncelle": "Reîmprospătează",
-    "Kaydediliyor…": "Se încarcă…",
     "Yükleniyor...": "Se încarcă…",
     "Yükleniyor": "Se încarcă…",
     "Kapatın": "Închide",
@@ -2362,8 +2285,7 @@
     "Erken giriş yap": "Sosire anticipată",
     "Oda durumu": "Starea camerei",
     "Oda işlemleri": "Acțiuni cameră",
-    "Mevcut durum": "Starea actuală",
-    "Durum": "Starea camerei"
+    "Mevcut durum": "Starea actuală"
   },
   "el": {
     "Kaydet": "Αποθήκευση",
@@ -2422,8 +2344,6 @@
     "Seç": "Επιλογή",
     "Hepsi": "Όλα",
     "Sorgula": "Αναζήτηση",
-    "Güncelle": "Ανανέωση",
-    "Kaydediliyor…": "Φόρτωση…",
     "Yükleniyor...": "Φόρτωση…",
     "Yükleniyor": "Φόρτωση…",
     "Kapatın": "Κλείσιμο",
@@ -2453,8 +2373,7 @@
     "Erken giriş yap": "Πρόωρη άφιξη",
     "Oda durumu": "Κατάσταση δωματίου",
     "Oda işlemleri": "Ενέργειες δωματίου",
-    "Mevcut durum": "Τρέχουσα κατάσταση",
-    "Durum": "Κατάσταση δωματίου"
+    "Mevcut durum": "Τρέχουσα κατάσταση"
   },
   "uk": {
     "Kaydet": "Зберегти",
@@ -2513,8 +2432,6 @@
     "Seç": "Вибрати",
     "Hepsi": "Усі",
     "Sorgula": "Пошук",
-    "Güncelle": "Оновити",
-    "Kaydediliyor…": "Завантаження…",
     "Yükleniyor...": "Завантаження…",
     "Yükleniyor": "Завантаження…",
     "Kapatın": "Закрити",
@@ -2544,8 +2461,7 @@
     "Erken giriş yap": "Раннє заселення",
     "Oda durumu": "Стан номера",
     "Oda işlemleri": "Дії з номером",
-    "Mevcut durum": "Поточний стан",
-    "Durum": "Стан номера"
+    "Mevcut durum": "Поточний стан"
   },
   "bg": {
     "Kaydet": "Запази",
@@ -2604,8 +2520,6 @@
     "Seç": "Избери",
     "Hepsi": "Всички",
     "Sorgula": "Търси",
-    "Güncelle": "Обнови",
-    "Kaydediliyor…": "Зареждане…",
     "Yükleniyor...": "Зареждане…",
     "Yükleniyor": "Зареждане…",
     "Kapatın": "Затвори",
@@ -2635,8 +2549,7 @@
     "Erken giriş yap": "Ранно настаняване",
     "Oda durumu": "Състояние на стаята",
     "Oda işlemleri": "Действия със стаята",
-    "Mevcut durum": "Текущо състояние",
-    "Durum": "Състояние на стаята"
+    "Mevcut durum": "Текущо състояние"
   },
   "sr": {
     "Kaydet": "Сачувај",
@@ -2695,8 +2608,6 @@
     "Seç": "Изабери",
     "Hepsi": "Све",
     "Sorgula": "Претражи",
-    "Güncelle": "Освежи",
-    "Kaydediliyor…": "Учитавање…",
     "Yükleniyor...": "Учитавање…",
     "Yükleniyor": "Учитавање…",
     "Kapatın": "Затвори",
@@ -2726,8 +2637,7 @@
     "Erken giriş yap": "Рана пријава",
     "Oda durumu": "Статус собе",
     "Oda işlemleri": "Радње за собу",
-    "Mevcut durum": "Тренутни статус",
-    "Durum": "Статус собе"
+    "Mevcut durum": "Тренутни статус"
   },
   "hr": {
     "Kaydet": "Spremi",
@@ -2786,8 +2696,6 @@
     "Seç": "Odaberi",
     "Hepsi": "Sve",
     "Sorgula": "Pretraži",
-    "Güncelle": "Osvježi",
-    "Kaydediliyor…": "Učitavanje…",
     "Yükleniyor...": "Učitavanje…",
     "Yükleniyor": "Učitavanje…",
     "Kapatın": "Zatvori",
@@ -2817,8 +2725,7 @@
     "Erken giriş yap": "Rana prijava",
     "Oda durumu": "Status sobe",
     "Oda işlemleri": "Radnje za sobu",
-    "Mevcut durum": "Trenutni status",
-    "Durum": "Status sobe"
+    "Mevcut durum": "Trenutni status"
   },
   "sk": {
     "Kaydet": "Uložiť",
@@ -2877,8 +2784,6 @@
     "Seç": "Vybrať",
     "Hepsi": "Všetky",
     "Sorgula": "Hľadať",
-    "Güncelle": "Obnoviť",
-    "Kaydediliyor…": "Načítava sa…",
     "Yükleniyor...": "Načítava sa…",
     "Yükleniyor": "Načítava sa…",
     "Kapatın": "Zavrieť",
@@ -2908,8 +2813,7 @@
     "Erken giriş yap": "Skoré ubytovanie",
     "Oda durumu": "Stav izby",
     "Oda işlemleri": "Akcie izby",
-    "Mevcut durum": "Aktuálny stav",
-    "Durum": "Stav izby"
+    "Mevcut durum": "Aktuálny stav"
   },
   "sl": {
     "Kaydet": "Shrani",
@@ -2968,8 +2872,6 @@
     "Seç": "Izberi",
     "Hepsi": "Vse",
     "Sorgula": "Išči",
-    "Güncelle": "Osveži",
-    "Kaydediliyor…": "Nalaganje…",
     "Yükleniyor...": "Nalaganje…",
     "Yükleniyor": "Nalaganje…",
     "Kapatın": "Zapri",
@@ -2999,8 +2901,7 @@
     "Erken giriş yap": "Zgodnja prijava",
     "Oda durumu": "Stanje sobe",
     "Oda işlemleri": "Dejanja za sobo",
-    "Mevcut durum": "Trenutno stanje",
-    "Durum": "Stanje sobe"
+    "Mevcut durum": "Trenutno stanje"
   },
   "fi": {
     "Kaydet": "Tallenna",
@@ -3059,8 +2960,6 @@
     "Seç": "Valitse",
     "Hepsi": "Kaikki",
     "Sorgula": "Hae",
-    "Güncelle": "Päivitä",
-    "Kaydediliyor…": "Ladataan…",
     "Yükleniyor...": "Ladataan…",
     "Yükleniyor": "Ladataan…",
     "Kapatın": "Sulje",
@@ -3090,8 +2989,7 @@
     "Erken giriş yap": "Aikainen sisäänkirjautuminen",
     "Oda durumu": "Huoneen tila",
     "Oda işlemleri": "Huoneen toiminnot",
-    "Mevcut durum": "Nykyinen tila",
-    "Durum": "Huoneen tila"
+    "Mevcut durum": "Nykyinen tila"
   },
   "sv": {
     "Kaydet": "Spara",
@@ -3150,8 +3048,6 @@
     "Seç": "Välj",
     "Hepsi": "Alla",
     "Sorgula": "Sök",
-    "Güncelle": "Uppdatera",
-    "Kaydediliyor…": "Laddar…",
     "Yükleniyor...": "Laddar…",
     "Yükleniyor": "Laddar…",
     "Kapatın": "Stäng",
@@ -3181,8 +3077,7 @@
     "Erken giriş yap": "Tidig incheckning",
     "Oda durumu": "Rumsstatus",
     "Oda işlemleri": "Rumsåtgärder",
-    "Mevcut durum": "Aktuell status",
-    "Durum": "Rumsstatus"
+    "Mevcut durum": "Aktuell status"
   },
   "da": {
     "Kaydet": "Gem",
@@ -3241,8 +3136,6 @@
     "Seç": "Vælg",
     "Hepsi": "Alle",
     "Sorgula": "Søg",
-    "Güncelle": "Opdater",
-    "Kaydediliyor…": "Indlæser…",
     "Yükleniyor...": "Indlæser…",
     "Yükleniyor": "Indlæser…",
     "Kapatın": "Luk",
@@ -3272,8 +3165,7 @@
     "Erken giriş yap": "Tidlig indtjekning",
     "Oda durumu": "Værelsesstatus",
     "Oda işlemleri": "Værelseshandlinger",
-    "Mevcut durum": "Nuværende status",
-    "Durum": "Værelsesstatus"
+    "Mevcut durum": "Nuværende status"
   },
   "no": {
     "Kaydet": "Lagre",
@@ -3332,8 +3224,6 @@
     "Seç": "Velg",
     "Hepsi": "Alle",
     "Sorgula": "Søk",
-    "Güncelle": "Oppdater",
-    "Kaydediliyor…": "Laster…",
     "Yükleniyor...": "Laster…",
     "Yükleniyor": "Laster…",
     "Kapatın": "Lukk",
@@ -3363,8 +3253,7 @@
     "Erken giriş yap": "Tidlig innsjekking",
     "Oda durumu": "Romstatus",
     "Oda işlemleri": "Romhandlinger",
-    "Mevcut durum": "Gjeldende status",
-    "Durum": "Romstatus"
+    "Mevcut durum": "Gjeldende status"
   },
   "ms": {
     "Kaydet": "Simpan",
@@ -3423,8 +3312,6 @@
     "Seç": "Pilih",
     "Hepsi": "Semua",
     "Sorgula": "Cari",
-    "Güncelle": "Muat semula",
-    "Kaydediliyor…": "Memuatkan…",
     "Yükleniyor...": "Memuatkan…",
     "Yükleniyor": "Memuatkan…",
     "Kapatın": "Tutup",
@@ -3454,8 +3341,7 @@
     "Erken giriş yap": "Daftar masuk awal",
     "Oda durumu": "Status bilik",
     "Oda işlemleri": "Tindakan bilik",
-    "Mevcut durum": "Status semasa",
-    "Durum": "Status bilik"
+    "Mevcut durum": "Status semasa"
   },
   "id": {
     "Kaydet": "Simpan",
@@ -3514,8 +3400,6 @@
     "Seç": "Pilih",
     "Hepsi": "Semua",
     "Sorgula": "Cari",
-    "Güncelle": "Muat ulang",
-    "Kaydediliyor…": "Memuat…",
     "Yükleniyor...": "Memuat…",
     "Yükleniyor": "Memuat…",
     "Kapatın": "Tutup",
@@ -3545,8 +3429,7 @@
     "Erken giriş yap": "Check-in awal",
     "Oda durumu": "Status kamar",
     "Oda işlemleri": "Tindakan kamar",
-    "Mevcut durum": "Status saat ini",
-    "Durum": "Status kamar"
+    "Mevcut durum": "Status saat ini"
   },
   "vi": {
     "Kaydet": "Lưu",
@@ -3605,8 +3488,6 @@
     "Seç": "Chọn",
     "Hepsi": "Tất cả",
     "Sorgula": "Tìm kiếm",
-    "Güncelle": "Làm mới",
-    "Kaydediliyor…": "Đang tải…",
     "Yükleniyor...": "Đang tải…",
     "Yükleniyor": "Đang tải…",
     "Kapatın": "Đóng",
@@ -3636,8 +3517,7 @@
     "Erken giriş yap": "Nhận phòng sớm",
     "Oda durumu": "Trạng thái phòng",
     "Oda işlemleri": "Thao tác phòng",
-    "Mevcut durum": "Trạng thái hiện tại",
-    "Durum": "Trạng thái phòng"
+    "Mevcut durum": "Trạng thái hiện tại"
   },
   "ja": {
     "Kaydet": "保存",
@@ -3696,8 +3576,6 @@
     "Seç": "選択",
     "Hepsi": "すべて",
     "Sorgula": "検索",
-    "Güncelle": "更新",
-    "Kaydediliyor…": "読み込み中…",
     "Yükleniyor...": "読み込み中…",
     "Yükleniyor": "読み込み中…",
     "Kapatın": "閉じる",
@@ -3727,8 +3605,7 @@
     "Erken giriş yap": "アーリーチェックイン",
     "Oda durumu": "客室の状態",
     "Oda işlemleri": "客室の操作",
-    "Mevcut durum": "現在の状態",
-    "Durum": "客室の状態"
+    "Mevcut durum": "現在の状態"
   },
   "ko": {
     "Kaydet": "저장",
@@ -3787,8 +3664,6 @@
     "Seç": "선택",
     "Hepsi": "전체",
     "Sorgula": "검색",
-    "Güncelle": "새로 고침",
-    "Kaydediliyor…": "불러오는 중…",
     "Yükleniyor...": "불러오는 중…",
     "Yükleniyor": "불러오는 중…",
     "Kapatın": "닫기",
@@ -3818,8 +3693,7 @@
     "Erken giriş yap": "얼리 체크인",
     "Oda durumu": "객실 상태",
     "Oda işlemleri": "객실 작업",
-    "Mevcut durum": "현재 상태",
-    "Durum": "객실 상태"
+    "Mevcut durum": "현재 상태"
   },
   "fa": {
     "Kaydet": "ذخیره",
@@ -3878,8 +3752,6 @@
     "Seç": "انتخاب",
     "Hepsi": "همه",
     "Sorgula": "جستجو",
-    "Güncelle": "تازه‌سازی",
-    "Kaydediliyor…": "در حال بارگذاری…",
     "Yükleniyor...": "در حال بارگذاری…",
     "Yükleniyor": "در حال بارگذاری…",
     "Kapatın": "بستن",
@@ -3909,8 +3781,7 @@
     "Erken giriş yap": "ورود زودهنگام",
     "Oda durumu": "وضعیت اتاق",
     "Oda işlemleri": "عملیات اتاق",
-    "Mevcut durum": "وضعیت فعلی",
-    "Durum": "وضعیت اتاق"
+    "Mevcut durum": "وضعیت فعلی"
   },
   "he": {
     "Kaydet": "שמירה",
@@ -3969,8 +3840,6 @@
     "Seç": "בחירה",
     "Hepsi": "הכול",
     "Sorgula": "חיפוש",
-    "Güncelle": "רענון",
-    "Kaydediliyor…": "בטעינה…",
     "Yükleniyor...": "בטעינה…",
     "Yükleniyor": "בטעינה…",
     "Kapatın": "סגירה",
@@ -4000,8 +3869,7 @@
     "Erken giriş yap": "צ׳ק-אין מוקדם",
     "Oda durumu": "מצב החדר",
     "Oda işlemleri": "פעולות החדר",
-    "Mevcut durum": "המצב הנוכחי",
-    "Durum": "מצב החדר"
+    "Mevcut durum": "המצב הנוכחי"
   },
   "sw": {
     "Kaydet": "Hifadhi",
@@ -4060,8 +3928,6 @@
     "Seç": "Chagua",
     "Hepsi": "Vyote",
     "Sorgula": "Tafuta",
-    "Güncelle": "Onyesha upya",
-    "Kaydediliyor…": "Inapakia…",
     "Yükleniyor...": "Inapakia…",
     "Yükleniyor": "Inapakia…",
     "Kapatın": "Funga",
@@ -4091,8 +3957,7 @@
     "Erken giriş yap": "Kuingia mapema",
     "Oda durumu": "Hali ya chumba",
     "Oda işlemleri": "Vitendo vya chumba",
-    "Mevcut durum": "Hali ya sasa",
-    "Durum": "Hali ya chumba"
+    "Mevcut durum": "Hali ya sasa"
   },
   "am": {
     "Kaydet": "አስቀምጥ",
@@ -4151,8 +4016,6 @@
     "Seç": "ምረጥ",
     "Hepsi": "ሁሉም",
     "Sorgula": "ፈልግ",
-    "Güncelle": "አድስ",
-    "Kaydediliyor…": "በመጫን ላይ…",
     "Yükleniyor...": "በመጫን ላይ…",
     "Yükleniyor": "በመጫን ላይ…",
     "Kapatın": "ዝጋ",
@@ -4182,8 +4045,7 @@
     "Erken giriş yap": "ቀድሞ መግባት",
     "Oda durumu": "የክፍል ሁኔታ",
     "Oda işlemleri": "የክፍል እርምጃዎች",
-    "Mevcut durum": "የአሁኑ ሁኔታ",
-    "Durum": "የክፍል ሁኔታ"
+    "Mevcut durum": "የአሁኑ ሁኔታ"
   },
   "mr": {
     "Kaydet": "जतन करा",
@@ -4242,8 +4104,6 @@
     "Seç": "निवडा",
     "Hepsi": "सर्व",
     "Sorgula": "शोधा",
-    "Güncelle": "रिफ्रेश करा",
-    "Kaydediliyor…": "लोड होत आहे…",
     "Yükleniyor...": "लोड होत आहे…",
     "Yükleniyor": "लोड होत आहे…",
     "Kapatın": "बंद करा",
@@ -4273,8 +4133,7 @@
     "Erken giriş yap": "लवकर चेक इन",
     "Oda durumu": "खोलीची स्थिती",
     "Oda işlemleri": "खोलीसंबंधी कृती",
-    "Mevcut durum": "सध्याची स्थिती",
-    "Durum": "खोलीची स्थिती"
+    "Mevcut durum": "सध्याची स्थिती"
   },
   "pa": {
     "Kaydet": "ਸੰਭਾਲੋ",
@@ -4333,8 +4192,6 @@
     "Seç": "ਚੁਣੋ",
     "Hepsi": "ਸਾਰੇ",
     "Sorgula": "ਖੋਜੋ",
-    "Güncelle": "ਤਾਜ਼ਾ ਕਰੋ",
-    "Kaydediliyor…": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
     "Yükleniyor...": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
     "Yükleniyor": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…",
     "Kapatın": "ਬੰਦ ਕਰੋ",
@@ -4364,8 +4221,7 @@
     "Erken giriş yap": "ਸਮੇਂ ਤੋਂ ਪਹਿਲਾਂ ਚੈੱਕ ਇਨ",
     "Oda durumu": "ਕਮਰੇ ਦੀ ਸਥਿਤੀ",
     "Oda işlemleri": "ਕਮਰੇ ਦੀਆਂ ਕਾਰਵਾਈਆਂ",
-    "Mevcut durum": "ਮੌਜੂਦਾ ਸਥਿਤੀ",
-    "Durum": "ਕਮਰੇ ਦੀ ਸਥਿਤੀ"
+    "Mevcut durum": "ਮੌਜੂਦਾ ਸਥਿਤੀ"
   },
   "te": {
     "Kaydet": "భద్రపరచు",
@@ -4424,8 +4280,6 @@
     "Seç": "ఎంచుకో",
     "Hepsi": "అన్నీ",
     "Sorgula": "వెతుకు",
-    "Güncelle": "రిఫ్రెష్ చేయి",
-    "Kaydediliyor…": "లోడ్ అవుతోంది…",
     "Yükleniyor...": "లోడ్ అవుతోంది…",
     "Yükleniyor": "లోడ్ అవుతోంది…",
     "Kapatın": "మూసివేయి",
@@ -4455,8 +4309,7 @@
     "Erken giriş yap": "ముందస్తు చెక్ ఇన్",
     "Oda durumu": "గది స్థితి",
     "Oda işlemleri": "గది చర్యలు",
-    "Mevcut durum": "ప్రస్తుత స్థితి",
-    "Durum": "గది స్థితి"
+    "Mevcut durum": "ప్రస్తుత స్థితి"
   },
   "my": {
     "Kaydet": "သိမ်းဆည်းရန်",
@@ -4515,8 +4368,6 @@
     "Seç": "ရွေးချယ်ရန်",
     "Hepsi": "အားလုံး",
     "Sorgula": "ရှာရန်",
-    "Güncelle": "ပြန်လည်ဖွင့်ရန်",
-    "Kaydediliyor…": "ဖွင့်နေသည်…",
     "Yükleniyor...": "ဖွင့်နေသည်…",
     "Yükleniyor": "ဖွင့်နေသည်…",
     "Kapatın": "ပိတ်ရန်",
@@ -4546,8 +4397,7 @@
     "Erken giriş yap": "အချိန်စော၍ ဝင်ရောက်ရန်",
     "Oda durumu": "အခန်းအခြေအနေ",
     "Oda işlemleri": "အခန်းလုပ်ဆောင်ချက်များ",
-    "Mevcut durum": "လက်ရှိအခြေအနေ",
-    "Durum": "အခန်းအခြေအနေ"
+    "Mevcut durum": "လက်ရှိအခြေအနေ"
   },
   "lo": {
     "Kaydet": "ບັນທຶກ",
@@ -4606,8 +4456,6 @@
     "Seç": "ເລືອກ",
     "Hepsi": "ທັງໝົດ",
     "Sorgula": "ຄົ້ນຫາ",
-    "Güncelle": "ໂຫຼດໃໝ່",
-    "Kaydediliyor…": "ກຳລັງໂຫຼດ…",
     "Yükleniyor...": "ກຳລັງໂຫຼດ…",
     "Yükleniyor": "ກຳລັງໂຫຼດ…",
     "Kapatın": "ປິດ",
@@ -4637,8 +4485,7 @@
     "Erken giriş yap": "ເຊັກອິນກ່ອນເວລາ",
     "Oda durumu": "ສະຖານະຫ້ອງ",
     "Oda işlemleri": "ການດຳເນີນການຫ້ອງ",
-    "Mevcut durum": "ສະຖານະປັດຈຸບັນ",
-    "Durum": "ສະຖານະຫ້ອງ"
+    "Mevcut durum": "ສະຖານະປັດຈຸບັນ"
   },
   "ka": {
     "Kaydet": "შენახვა",
@@ -4697,8 +4544,6 @@
     "Seç": "არჩევა",
     "Hepsi": "ყველა",
     "Sorgula": "ძიება",
-    "Güncelle": "განახლება",
-    "Kaydediliyor…": "იტვირთება…",
     "Yükleniyor...": "იტვირთება…",
     "Yükleniyor": "იტვირთება…",
     "Kapatın": "დახურვა",
@@ -4728,8 +4573,7 @@
     "Erken giriş yap": "ადრეული შესახლება",
     "Oda durumu": "ოთახის სტატუსი",
     "Oda işlemleri": "ოთახის მოქმედებები",
-    "Mevcut durum": "მიმდინარე სტატუსი",
-    "Durum": "ოთახის სტატუსი"
+    "Mevcut durum": "მიმდინარე სტატუსი"
   },
   "hy": {
     "Kaydet": "Պահպանել",
@@ -4788,8 +4632,6 @@
     "Seç": "Ընտրել",
     "Hepsi": "Բոլորը",
     "Sorgula": "Որոնել",
-    "Güncelle": "Թարմացնել",
-    "Kaydediliyor…": "Բեռնվում է…",
     "Yükleniyor...": "Բեռնվում է…",
     "Yükleniyor": "Բեռնվում է…",
     "Kapatın": "Փակել",
@@ -4819,8 +4661,7 @@
     "Erken giriş yap": "Վաղ ժամանում",
     "Oda durumu": "Սենյակի կարգավիճակ",
     "Oda işlemleri": "Սենյակի գործողություններ",
-    "Mevcut durum": "Ընթացիկ կարգավիճակ",
-    "Durum": "Սենյակի կարգավիճակ"
+    "Mevcut durum": "Ընթացիկ կարգավիճակ"
   },
   "az": {
     "Kaydet": "Yadda saxla",
@@ -4879,8 +4720,6 @@
     "Seç": "Seçin",
     "Hepsi": "Hamısı",
     "Sorgula": "Axtar",
-    "Güncelle": "Yenilə",
-    "Kaydediliyor…": "Yüklənir…",
     "Yükleniyor...": "Yüklənir…",
     "Yükleniyor": "Yüklənir…",
     "Kapatın": "Bağla",
@@ -4910,8 +4749,7 @@
     "Erken giriş yap": "Erkən giriş",
     "Oda durumu": "Otaq vəziyyəti",
     "Oda işlemleri": "Otaq əməliyyatları",
-    "Mevcut durum": "Cari vəziyyət",
-    "Durum": "Otaq vəziyyəti"
+    "Mevcut durum": "Cari vəziyyət"
   },
   "kk": {
     "Kaydet": "Сақтау",
@@ -4970,8 +4808,6 @@
     "Seç": "Таңдау",
     "Hepsi": "Барлығы",
     "Sorgula": "Іздеу",
-    "Güncelle": "Жаңарту",
-    "Kaydediliyor…": "Жүктелуде…",
     "Yükleniyor...": "Жүктелуде…",
     "Yükleniyor": "Жүктелуде…",
     "Kapatın": "Жабу",
@@ -5001,8 +4837,7 @@
     "Erken giriş yap": "Ерте кіру",
     "Oda durumu": "Бөлме күйі",
     "Oda işlemleri": "Бөлме әрекеттері",
-    "Mevcut durum": "Ағымдағы күй",
-    "Durum": "Бөлме күйі"
+    "Mevcut durum": "Ағымдағы күй"
   },
   "uz": {
     "Kaydet": "Saqlash",
@@ -5061,8 +4896,6 @@
     "Seç": "Tanlash",
     "Hepsi": "Barchasi",
     "Sorgula": "Qidirish",
-    "Güncelle": "Yangilash",
-    "Kaydediliyor…": "Yuklanmoqda…",
     "Yükleniyor...": "Yuklanmoqda…",
     "Yükleniyor": "Yuklanmoqda…",
     "Kapatın": "Yopish",
@@ -5092,8 +4925,7 @@
     "Erken giriş yap": "Erta kirish",
     "Oda durumu": "Xona holati",
     "Oda işlemleri": "Xona amallari",
-    "Mevcut durum": "Joriy holat",
-    "Durum": "Xona holati"
+    "Mevcut durum": "Joriy holat"
   },
   "ky": {
     "Kaydet": "Сактоо",
@@ -5152,8 +4984,6 @@
     "Seç": "Тандоо",
     "Hepsi": "Баары",
     "Sorgula": "Издөө",
-    "Güncelle": "Жаңылоо",
-    "Kaydediliyor…": "Жүктөлүүдө…",
     "Yükleniyor...": "Жүктөлүүдө…",
     "Yükleniyor": "Жүктөлүүдө…",
     "Kapatın": "Жабуу",
@@ -5183,8 +5013,7 @@
     "Erken giriş yap": "Эрте кирүү",
     "Oda durumu": "Бөлмөнүн абалы",
     "Oda işlemleri": "Бөлмө аракеттери",
-    "Mevcut durum": "Учурдагы абал",
-    "Durum": "Бөлмөнүн абалы"
+    "Mevcut durum": "Учурдагы абал"
   },
   "mn": {
     "Kaydet": "Хадгалах",
@@ -5243,8 +5072,6 @@
     "Seç": "Сонгох",
     "Hepsi": "Бүгд",
     "Sorgula": "Хайх",
-    "Güncelle": "Шинэчлэх",
-    "Kaydediliyor…": "Уншиж байна…",
     "Yükleniyor...": "Уншиж байна…",
     "Yükleniyor": "Уншиж байна…",
     "Kapatın": "Хаах",
@@ -5274,8 +5101,7 @@
     "Erken giriş yap": "Эрт бүртгүүлэх",
     "Oda durumu": "Өрөөний төлөв",
     "Oda işlemleri": "Өрөөний үйлдлүүд",
-    "Mevcut durum": "Одоогийн төлөв",
-    "Durum": "Өрөөний төлөв"
+    "Mevcut durum": "Одоогийн төлөв"
   },
   "ps": {
     "Kaydet": "خوندي کړئ",
@@ -5334,8 +5160,6 @@
     "Seç": "غوره کړئ",
     "Hepsi": "ټول",
     "Sorgula": "ولټوئ",
-    "Güncelle": "تازه کړئ",
-    "Kaydediliyor…": "د پورته کېدو په حال کې…",
     "Yükleniyor...": "د پورته کېدو په حال کې…",
     "Yükleniyor": "د پورته کېدو په حال کې…",
     "Kapatın": "وتړئ",
@@ -5365,8 +5189,7 @@
     "Erken giriş yap": "وختي ننوتل",
     "Oda durumu": "د کوټې حالت",
     "Oda işlemleri": "د کوټې کړنې",
-    "Mevcut durum": "اوسنی حالت",
-    "Durum": "د کوټې حالت"
+    "Mevcut durum": "اوسنی حالت"
   },
   "ku": {
     "Kaydet": "Tomar bike",
@@ -5425,8 +5248,6 @@
     "Seç": "Hilbijêre",
     "Hepsi": "Hemû",
     "Sorgula": "Bigere",
-    "Güncelle": "Nû bike",
-    "Kaydediliyor…": "Tê barkirin…",
     "Yükleniyor...": "Tê barkirin…",
     "Yükleniyor": "Tê barkirin…",
     "Kapatın": "Bigire",
@@ -5456,7 +5277,6 @@
     "Erken giriş yap": "Têketina zû",
     "Oda durumu": "Rewşa odeyê",
     "Oda işlemleri": "Karûbarên odeyê",
-    "Mevcut durum": "Rewşa niha",
-    "Durum": "Rewşa odeyê"
+    "Mevcut durum": "Rewşa niha"
   }
 }

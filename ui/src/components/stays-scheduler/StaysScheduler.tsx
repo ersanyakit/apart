@@ -74,7 +74,7 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
     `${b.guest_name} ${(b.guests || []).map(g => g.name).join(" ")}`.toLocaleLowerCase(locale).includes(needle)).map(b => b.booking_id));
   const floorGroups = resourceGroups(rooms, floors).map(g => ({...g, label: g.floor ? localized(g.floor.label, locale.toUpperCase()) || g.floor.code : _uiText("Kat atanmamış")}));
   const typeGroups = [...new Set(rooms.map(r => r.type || unitKinds[r.kind] || "Diğer birimler"))].sort((a,b) => a.localeCompare(b,locale)).map(type => ({
-    id: `type:${type}`, label: type, rooms: floorGroups.flatMap(g => g.rooms).filter(({room}) => (room.type || unitKinds[room.kind] || "Diğer birimler") === type).sort((a,b) => a.room.code.localeCompare(b.room.code, locale, {numeric:true})),
+    id: `type:${type}`, label: rooms.some(r => r.type === type) ? type : _uiText(type), rooms: floorGroups.flatMap(g => g.rooms).filter(({room}) => (room.type || unitKinds[room.kind] || "Diğer birimler") === type).sort((a,b) => a.room.code.localeCompare(b.room.code, locale, {numeric:true})),
   }));
   const candidateGroups = (reservations ? typeGroups : floorGroups).filter(g => !floorId || g.id === floorId)
     .map(g => ({ ...g, rooms: g.rooms.filter(({ room }) => (room.rentable !== false || allSegments.some(s => s.roomId === room.room_id && s.start < end && s.end > start)) && (!needle || `${room.code} ${room.name}`.toLocaleLowerCase(locale).includes(needle) ||
@@ -174,7 +174,7 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
             const state = roomBoardState(rooms, bookings, room, now);
             return <div key={room.room_id} className={styles.row} style={{ height: lanes * laneHeight + 20 }}>
               <div className={styles.resource} style={{ paddingInlineStart: 16 + Math.min(depth, 3) * 14 }}>
-                <div><strong>{room.code}</strong><span>{room.name || unitKinds[room.kind] || _uiText("Birim")}</span></div>
+                <div><strong>{room.code}</strong><span>{room.name || _uiText(unitKinds[room.kind] || "Birim")}</span></div>
                 <small data-tone={state.tone} style={{color:STATUS_PALETTE[boardStatusKey(state)].text}}>{_uiText("Şu an ·")} {state.label}</small>
               </div>
               <div className={styles.track}>
