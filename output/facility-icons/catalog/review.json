@@ -237,5 +237,61 @@
       "real 256x256 AVIF"
     ],
     "status": "reviewed"
+  },
+  "facilities": {
+    "entries": 47,
+    "pages_reviewed": [
+      1,
+      2,
+      3
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "accessibility": {
+    "entries": 17,
+    "pages_reviewed": [
+      1
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "structural": {
+    "entries": 23,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "guest_supplies": {
+    "entries": 24,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
   }
 }
