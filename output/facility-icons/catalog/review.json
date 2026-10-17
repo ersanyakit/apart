@@ -128,5 +128,114 @@
       "real 256x256 AVIF"
     ],
     "status": "reviewed"
+  },
+  "lighting": {
+    "entries": 20,
+    "pages_reviewed": [
+      1
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "decoration": {
+    "entries": 38,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "outdoor": {
+    "entries": 28,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "pool_spa": {
+    "entries": 33,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "safety": {
+    "entries": 26,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "housekeeping": {
+    "entries": 28,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "workspace": {
+    "entries": 18,
+    "pages_reviewed": [
+      1
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
+  },
+  "children": {
+    "entries": 19,
+    "pages_reviewed": [
+      1
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
   }
 }

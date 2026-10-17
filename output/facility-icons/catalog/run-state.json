@@ -1,0 +1,27 @@
+{
+  "active_generation_cell": "117",
+  "target_entries": 682,
+  "new_target": 554,
+  "last_new_observed": 472,
+  "review_file": "output/facility-icons/catalog/review.json",
+  "helpers": [
+    "normalize.py",
+    "preview.py",
+    "finalize.py"
+  ],
+  "outstanding_categories": [
+    "children",
+    "facilities",
+    "accessibility",
+    "structural",
+    "guest_supplies"
+  ],
+  "final_checks": [
+    "normalize shared assets preserving alpha",
+    "finalize manifest and AVIF-only archive",
+    "npm run lint",
+    "npm run test:catalog-icons",
+    "npm run test:facility-icons",
+    "npm run test:navigation"
+  ]
+}
