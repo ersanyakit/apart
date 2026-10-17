@@ -51,8 +51,8 @@ export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE, syncDoc
     direction: LOCALES[locale].direction,
     setLocale,
     t: (key, params) => key==='language.description'
-      ? applicationText(dictionary,'Uygulamanın dilini seçin.')
-      : applicationText(dictionary,translate(locale,key,params)),
+      ? applicationText(dictionary,'Uygulamanın dilini seçin.',params,locale)
+      : applicationText(dictionary,translate(locale,key),params,locale),
   }), [locale, setLocale, dictionary, loaded]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

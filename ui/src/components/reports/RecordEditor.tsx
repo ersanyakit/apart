@@ -4,7 +4,7 @@ import { useI18n } from "../I18n";
 import React,{useEffect,useRef,useState} from 'react';
 import {command,messageOf,localized,type Snapshot,type Booking,type APIRoom} from '../../lib/api';
 import {SettingsEditor} from '../SettingsEditor';
-import {DateField,InlineSelectField,TextField,TextAreaField,Switch,CURRENCIES,MoneyField} from '../fields';
+import {DateField,InlineSelectField,TextField,TextAreaField,Switch,CURRENCIES, localizedCurrencies,MoneyField} from '../fields';
 import {formatMoney,type CurrencyId} from '../Currency';
 import {ErrorMessage,buttonStyle,secondaryStyle} from '../FormKit';
 import type {RecordKind} from './model';
@@ -72,7 +72,7 @@ export function RecordEditor({snapshot:s,kinds,currency:initialCurrency,initialK
  {payment&&<InlineSelectField label={_uiText("İlgili vardiya (isteğe bağlı)")} value={shift} onChange={setShift} options={[{value:'',label:_uiText("Vardiyaya bağlama")},...choices.shifts.filter(c=>c.currency===currency)]}/>}
  {['receipt','payment'].includes(kind)&&<InlineSelectField label={_uiText("Açık hesapla eşleştir (isteğe bağlı)")} value={reference} onChange={setReference} options={[{value:'',label:_uiText("Açık hesaba bağlı değil")},...choices.accounts.filter(c=>c.kind===(kind==='receipt'?'receivable':'payable')&&c.currency===currency)]}/>}
  {stock&&<InlineSelectField label={_uiText("Ürün")} value={reference} onChange={v=>{setReference(v);if(!label)setLabel(products.find(p=>p.value===v)?.label??'')}} options={[{value:'',label:_uiText("Katalogdan ürün seçin")},...products]}/>}
-  {money&&<><MoneyField label={_uiText("{value1} ({value2})", {value1: _uiText(amountLabel), value2: String(currency)})} valueMinor={amountMinor} onChange={setAmountMinor} currency={currency as CurrencyId} disabled={busy} sub={_uiText("Kaydedilecek tutar: {value1}", {value1: String(formatMoney(amountMinor,currency as CurrencyId,'tr'))})}/><InlineSelectField label={_uiText("Para birimi")} value={currency} onChange={setCurrency} options={CURRENCIES.map(c=>({value:c.id,label:c.label}))}/></>}
+  {money&&<><MoneyField label={_uiText("{value1} ({value2})", {value1: _uiText(amountLabel), value2: String(currency)})} valueMinor={amountMinor} onChange={setAmountMinor} currency={currency as CurrencyId} disabled={busy} sub={_uiText("Kaydedilecek tutar: {value1}", {value1: String(formatMoney(amountMinor,currency as CurrencyId,'tr'))})}/><InlineSelectField label={_uiText("Para birimi")} value={currency} onChange={setCurrency} options={localizedCurrencies(_uiLocale).map(c=>({value:c.id,label:c.label}))}/></>}
  {(stock||['review','overtime','common_area'].includes(kind))&&<TextField label={kind==='review'?_uiText("Puan (1–5)"):kind==='overtime'?_uiText("Çalışılan saat"):_uiText("Miktar")} value={quantity} onChange={setQuantity} type="number" required/>}
  {stock&&<><InlineSelectField label={_uiText("Ölçü birimi")} value={measure} onChange={setMeasure} options={[['piece','Adet'],['litre','Litre'],['kg','Kilogram'],['pack','Paket']].map(([value,label])=>({value,label}))}/><TextField label={_uiText("Stok bu miktara düşünce uyar")} value={threshold} onChange={setThreshold} type="number"/></>}
  {statusOptions.length>1&&<InlineSelectField label={_uiText("İşlemin durumu")} value={status} onChange={setStatus} options={statusOptions.map(option=>({...option,label:_uiText(option.label)}))}/>}

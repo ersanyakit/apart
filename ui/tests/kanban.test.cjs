@@ -9,6 +9,10 @@ execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--target',
 process.env.NODE_PATH=path.join(ui,'node_modules');require('node:module').Module._initPaths();
 mkdirSync(path.join(out,'components/kanban'),{recursive:true});copyFileSync(path.join(ui,'src/components/kanban/KanbanView.module.css'),path.join(out,'components/kanban/KanbanView.module.css'));for(const css of ['ContextMenu.module.css','RoomOperationDialog.module.css'])copyFileSync(path.join(ui,'src/components',css),path.join(out,'components',css));
 require.extensions['.css']=(module)=>{module.exports={}};
+const flagsPath=path.join(out,'assets/flags');require('node:fs').mkdirSync(flagsPath,{recursive:true});
+for(const file of require('node:fs').readdirSync(path.join(ui,'src/assets/flags')))if(/^[a-z]{2}\.svg$/.test(file))require('node:fs').copyFileSync(path.join(ui,'src/assets/flags',file),path.join(flagsPath,file));
+require.extensions['.svg']=(module,filename)=>{module.exports={src:'/flags/'+path.basename(filename)}};
+
 const React=require('react'),{renderToStaticMarkup:render}=require('react-dom/server');
 const {KanbanView,NoteCard}=require(path.join(out,'components/kanban/KanbanView.js'));
 const {OriginalShell}=require(path.join(out,'components/OriginalShell.js'));

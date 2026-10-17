@@ -40,7 +40,7 @@ function KanbanBoard({snapshot:s,onOpenBooking}:{snapshot:Snapshot;onOpenBooking
  const close=()=>{if(busy)return;setDraft(null);setOriginal(null);setError('')};
  const save=async(input:NoteInput,fromEditor=false)=>{
   if(saving.current)return;saving.current=true;setBusy(true);setError('');
-  try {await command<Note>('note.save',noteInput(input));if(fromEditor){setDraft(null);setOriginal(null);if(input.version===0){setArchived(false);setSearch('')}}setRevision(v=>v+1);notify(input.archived?'Not arşive taşındı.':input.version===0?'Not panoya eklendi.':'Not güncellendi.')}
+  try {await command<Note>('note.save',noteInput(input));if(fromEditor){setDraft(null);setOriginal(null);if(input.version===0){setArchived(false);setSearch('')}}setRevision(v=>v+1);notify(input.archived?_uiText("Not arşive taşındı."):input.version===0?_uiText("Not panoya eklendi."):_uiText("Not güncellendi."))}
   catch(e){setError(messageOf(e));setRevision(v=>v+1)}finally{saving.current=false;setBusy(false);setDragged(null);setOver(null)}
  };
  const move=(note:Note,status:Status)=>{if(note.status!==status&&!busy&&!draft)void save({...noteInput(note),status})};
@@ -104,8 +104,8 @@ export function NoteCard({note,disabled,booking,roomCode,onOpen,onMove,onArchive
    <span className={styles.bookingLine}><BedDouble size={15} aria-hidden="true"/><span>{roomCode?_uiText("Oda {value1} · ", {value1: String(roomCode)}):''}{boardDate(booking.check_in, _uiLocale)} → {boardDate(booking.check_out, _uiLocale)}</span></span>
    <span className={styles.bookingCta}>{_uiText("Rezervasyona git")}<ArrowRight size={15} aria-hidden="true"/></span>
   </button>}
-  <div className={styles.author}><span>{note.created_by_name}</span><time dateTime={note.created_at}>{noteDate(note.created_at)}</time></div>
-  {note.version>1&&<p className={styles.updated}>{_uiText("Son işlem:")} {note.updated_by_name} · {noteDate(note.updated_at)}</p>}
+  <div className={styles.author}><span>{note.created_by_name}</span><time dateTime={note.created_at}>{noteDate(note.created_at, _uiLocale)}</time></div>
+  {note.version>1&&<p className={styles.updated}>{_uiText("Son işlem:")} {note.updated_by_name} · {noteDate(note.updated_at, _uiLocale)}</p>}
   <div className={styles.cardFooter}><fieldset disabled={disabled} className="min-w-0"><UniSelect caption="" icon={<CheckCheck size={15}/>} ariaLabel={_uiText("{value1}: durum",{value1:String(note.title)})} value={note.status} options={[...COLUMNS]} onChange={value=>onMove(value as Status)}/></fieldset><button type="button" className="nav-icon-button" disabled={disabled} onClick={onArchive} title={note.archived?_uiText("Arşivden geri al"):_uiText("Arşive taşı")} aria-label={_uiText("{value1}: {value2}", {value1: String(note.title), value2: String(note.archived?'arşivden geri al':'arşive taşı')})}>{note.archived?<ArchiveRestore size={17}/>:<Archive size={17}/>}</button></div>
  </article>;
 }

@@ -15,6 +15,8 @@ require('node:module').Module._initPaths();
 const { occupancy } = require(path.join(output, 'lib/api.js'));
 const { roomBoardState, roomMenuOperation, bookingCanCheckIn } = require(path.join(output, 'lib/room-board.js'));
 require('node:fs').copyFileSync(path.join(ui,'src/components/RoomStatusCard.module.css'),path.join(output,'components/RoomStatusCard.module.css'));require.extensions['.css']=(module)=>{module.exports={}};
+require('./helpers/flag-assets.cjs')(output);
+
 const { RoomStatusCard } = require(path.join(output, 'components/RoomStatusCard.js'));
 const room = { room_id:'r1', branch_id:'b1', code:'101', kind:'room', status:'Temiz' };
 const now = '2026-10-13T15:30:00Z';

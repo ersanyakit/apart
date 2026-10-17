@@ -1,13 +1,17 @@
 import ts from '../../ui/node_modules/typescript/lib/typescript.js';
 import fs from 'node:fs';
 import path from 'node:path';
-const attributes=new Set(['label','title','placeholder','aria-label','alt','description','caption','emptyText','emptyLabel','closeLabel','hint','eyebrow','subtitle','text','message','detail','tooltip','backLabel','sub','helpText','submitLabel','cancelLabel','confirmLabel','searchPlaceholder']);
+const attributes=new Set(['label','title','placeholder','aria-label','alt','description','caption','emptyText','emptyLabel','closeLabel','hint','eyebrow','subtitle','text','message','detail','tooltip','backLabel','sub','helpText','submitLabel','cancelLabel','confirmLabel','searchPlaceholder','cancelText','confirmText','okText','loadingText','helperText','header','emptyMessage']);
+const messages=new Set(['notify','confirmDialog','setError','setMessage','setHint','setAnnouncement']);
 function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?(e.name==='landing'?[]:files(path.join(dir,e.name))):e.name.endsWith('.tsx')?[path.join(dir,e.name)]:[]);}
 let count=0;
 for(const file of ['ui/src/App.tsx',...files('ui/src/components')]){
  const source=fs.readFileSync(file,'utf8');if(!source.includes('_uiText'))continue;
  const ast=ts.createSourceFile(file,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX),edits=[];
- function component(n){for(let p=n.parent;p;p=p.parent){if(ts.isFunctionDeclaration(p)&&p.parent===ast)return p.body?.getText(ast).includes('m: _uiText')?p:undefined;}return undefined;}
+ function component(n){for(let p=n.parent;p;p=p.parent){
+  if(ts.isFunctionDeclaration(p)&&p.parent===ast)return /\bm\s*:\s*_uiText\b/.test(p.body?.getText(ast)||'')?p:undefined;
+  if(ts.isArrowFunction(p)&&ts.isVariableDeclaration(p.parent)&&/^[A-Z]/.test(p.parent.name.getText(ast))&&/\bm\s*:\s*_uiText\b/.test(p.body.getText(ast)))return p;
+ }return undefined;}
  function literal(n){
   if(ts.isStringLiteral(n)||ts.isNoSubstitutionTemplateLiteral(n)){
    if(n.text.trim()&&/\p{L}/u.test(n.text)&&n.text!=='INTERACTIVEOTEL')edits.push([n.getStart(ast),n.end,`_uiText(${JSON.stringify(n.text)})`]);
@@ -19,6 +23,7 @@ for(const file of ['ui/src/App.tsx',...files('ui/src/components')]){
   }
  }
  function visit(n){
+  if(ts.isCallExpression(n)&&messages.has(n.expression.getText(ast))&&n.arguments[0]&&component(n))literal(n.arguments[0]);
   if(ts.isJsxExpression(n)&&n.expression&&component(n)){
    if(!ts.isJsxAttribute(n.parent)||attributes.has(n.parent.name.getText(ast)))literal(n.expression);
   }

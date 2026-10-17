@@ -20,7 +20,7 @@ import {display} from './model';
 const nil='00000000-0000-0000-0000-000000000000';
 export type CustomerStay={daily_price_minor:number;currency:string;booking_nights:number;lodging_amount_minor:number;guest_id:string;name:string;booking_id:string;branch_id:string;branch_name:string;room_id:string;room_code:string;start:string;end:string;status:string;booking_notes:string;guest_note:string;cancellation_reason?:string;companions:{guest_id:string;name:string}[]};
 type StayPage={items:CustomerStay[];total:number;page:number};
-const date=(v:string)=>new Intl.DateTimeFormat('tr-TR',{timeZone:'Europe/Istanbul',dateStyle:'medium',timeStyle:'short'}).format(new Date(v));
+const date=(v:string,locale='tr-TR')=>new Intl.DateTimeFormat(locale,{timeZone:'Europe/Istanbul',dateStyle:'medium',timeStyle:'short'}).format(new Date(v));
 
 
 export function CustomerDetail({snapshot:s,customer,onClose}:{snapshot:Snapshot;customer:Customer;onClose:()=>void}) {
@@ -73,7 +73,7 @@ export function CustomerIdentity({customer}:{customer:Customer}) {
   const {m: _uiText, locale: _uiLocale} = useI18n();
 
  const fields=[['Ad soyad',customer.name],['Kimlik / pasaport',customer.national_id],['Telefon',customer.phone],['Uyruk',customerCountry(customer.nationality).label],['Adres',customer.address]];
- return <section aria-label={_uiText("Müşteri bilgileri")} className="rounded-3xl bg-[var(--color-uni-surface)] p-5"><h3 className="mb-4 font-semibold">{_uiText("Müşteri bilgileri")}</h3><dl className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{fields.map(([label,value])=><div key={label} className={label==='Adres'?"sm:col-span-2":''}><dt className="text-xs text-uni-muted">{label}</dt><dd className="mt-1 break-words text-sm font-medium">{label==='Uyruk'?<span className={styles.country}><img src={customerCountry(customer.nationality).flagSrc} alt="" aria-hidden="true" width={24} height={24} className={styles.countryFlag}/>{value}</span>:value||_uiText("Belirtilmemiş")}</dd></div>)}</dl></section>;
+ return <section aria-label={_uiText("Müşteri bilgileri")} className="rounded-3xl bg-[var(--color-uni-surface)] p-5"><h3 className="mb-4 font-semibold">{_uiText("Müşteri bilgileri")}</h3><dl className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{fields.map(([label,value])=><div key={label} className={label==='Adres'?"sm:col-span-2":''}><dt className="text-xs text-uni-muted">{_uiText(label)}</dt><dd className="mt-1 break-words text-sm font-medium">{label==='Uyruk'?<span className={styles.country}><img src={customerCountry(customer.nationality).flagSrc} alt="" aria-hidden="true" width={24} height={24} className={styles.countryFlag}/>{value}</span>:value||_uiText("Belirtilmemiş")}</dd></div>)}</dl></section>;
 }
 
 function CustomerHistory({snapshot:s,customer,revision,onAssess}:{snapshot:Snapshot;customer:Customer;revision:number;onAssess:(target:AssessmentTarget)=>void}) {
@@ -117,8 +117,8 @@ export function CustomerStayRow({stay:r,expanded,onToggle,onAssess,rowId,tone='l
  return <>
   <tr className={styles.customerRow} data-tone={tone} onClick={onToggle}>
    <td><strong className="font-semibold">{r.room_code}</strong><p className="mt-1 text-xs text-uni-muted">{r.branch_name}</p></td>
-   <td className="whitespace-nowrap"><time dateTime={r.start}>{date(r.start)}</time>{planned&&<p className="mt-1 text-xs text-uni-muted">{_uiText("Planlanan")}</p>}</td>
-   <td className="whitespace-nowrap"><time dateTime={r.end}>{date(r.end)}</time>{(planned||r.status===BookingState.CheckedIn)&&<p className="mt-1 text-xs text-uni-muted">{_uiText("Planlanan")}</p>}</td>
+   <td className="whitespace-nowrap"><time dateTime={r.start}>{date(r.start, _uiLocale)}</time>{planned&&<p className="mt-1 text-xs text-uni-muted">{_uiText("Planlanan")}</p>}</td>
+   <td className="whitespace-nowrap"><time dateTime={r.end}>{date(r.end, _uiLocale)}</time>{(planned||r.status===BookingState.CheckedIn)&&<p className="mt-1 text-xs text-uni-muted">{_uiText("Planlanan")}</p>}</td>
    <td><span className="whitespace-nowrap text-xs font-medium">{bookingStatuses[r.status]||r.status}</span></td>
    <td className="tabular-nums whitespace-nowrap">{r.daily_price_minor>0?<><strong className="font-semibold">{display(r.lodging_amount_minor,'money',r.currency||'TRY', _uiLocale, _uiText)}</strong><p className="mt-1 whitespace-normal text-xs text-uni-muted">{display(r.daily_price_minor,'money',r.currency||'TRY', _uiLocale, _uiText)} {_uiText("/ gece ·")} {r.booking_nights} {_uiText("gece")}</p>{r.status===BookingState.Cancelled&&<p className="mt-1 text-xs text-uni-muted">{_uiText("İptal öncesi bedel")}</p>}</>:<span className="text-xs text-uni-muted">{_uiText("Fiyat girilmemiş")}</span>}</td>
    <td><button type="button" className={secondaryStyle} aria-expanded={expanded} aria-controls={`stay-${rowId}`} onClick={e=>{e.stopPropagation();onToggle()}}>{expanded?<ChevronUp size={16}/>:<ChevronDown size={16}/>} {noteCount?_uiText("{value1} not", {value1: String(noteCount)}):_uiText("Detay")}</button></td>

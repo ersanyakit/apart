@@ -91,7 +91,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
                   onClick={async () => {
                     if (
                       !(await confirmDialog(
-                        `${p.first_name} ${p.last_name} personel kaydı silinsin mi? Açık oturumları kapatılacak, işlem geçmişi korunacak.`,
+                        _uiText("{value1} {value2} personel kaydı silinsin mi? Açık oturumları kapatılacak, işlem geçmişi korunacak.", {value1: String(p.first_name), value2: String(p.last_name)}),
                       ))
                     )
                       return;

@@ -1,0 +1,59 @@
+en	Currency	Check-out	Description	Not specified	Unit	Nightly rate	Check-in	Cancellation reason	Title	Priority	Completed	Retry	Type	Scheduled check-in	Scheduled check-out	All floors
+de	Währung	Abreise	Beschreibung	Nicht angegeben	Einheit	Preis pro Nacht	Anreise	Stornierungsgrund	Titel	Priorität	Abgeschlossen	Erneut versuchen	Typ	Geplante Anreise	Geplante Abreise	Alle Etagen
+fr	Devise	Départ	Description	Non précisé	Unité	Tarif par nuit	Arrivée	Motif d’annulation	Titre	Priorité	Terminé	Réessayer	Type	Arrivée prévue	Départ prévu	Tous les étages
+ru	Валюта	Выезд	Описание	Не указано	Единица размещения	Цена за ночь	Заезд	Причина отмены	Заголовок	Приоритет	Завершено	Повторить	Тип	Плановый заезд	Плановый выезд	Все этажи
+ar	العملة	المغادرة	الوصف	غير محدد	وحدة الإقامة	سعر الليلة	الوصول	سبب الإلغاء	العنوان	الأولوية	مكتمل	إعادة المحاولة	النوع	الوصول المقرر	المغادرة المقررة	جميع الطوابق
+ne	मुद्रा	प्रस्थान	विवरण	उल्लेख गरिएको छैन	एकाइ	प्रति रातको दर	आगमन	रद्द गर्नुको कारण	शीर्षक	प्राथमिकता	पूरा भयो	फेरि प्रयास गर्नुहोस्	प्रकार	निर्धारित आगमन	निर्धारित प्रस्थान	सबै तल्ला
+th	สกุลเงิน	เช็กเอาต์	รายละเอียด	ไม่ได้ระบุ	หน่วยที่พัก	ราคาต่อคืน	เช็กอิน	เหตุผลในการยกเลิก	หัวข้อ	ความสำคัญ	เสร็จสิ้น	ลองอีกครั้ง	ประเภท	กำหนดเช็กอิน	กำหนดเช็กเอาต์	ทุกชั้น
+zh-CN	货币	退房	描述	未指定	住宿单元	每晚价格	入住	取消原因	标题	优先级	已完成	重试	类型	计划入住	计划退房	所有楼层
+zh-TW	幣別	退房	說明	未指定	住宿單元	每晚房價	入住	取消原因	標題	優先順序	已完成	重試	類型	預計入住	預計退房	所有樓層
+hi	मुद्रा	प्रस्थान	विवरण	निर्दिष्ट नहीं	इकाई	प्रति रात दर	आगमन	रद्द करने का कारण	शीर्षक	प्राथमिकता	पूरा हुआ	फिर कोशिश करें	प्रकार	निर्धारित आगमन	निर्धारित प्रस्थान	सभी मंज़िलें
+km	រូបិយប័ណ្ណ	ចាកចេញ	ការពិពណ៌នា	មិនបានបញ្ជាក់	ឯកតាស្នាក់នៅ	តម្លៃក្នុងមួយយប់	ចូលស្នាក់នៅ	មូលហេតុលុបចោល	ចំណងជើង	អាទិភាព	បានបញ្ចប់	ព្យាយាមម្តងទៀត	ប្រភេទ	ការចូលស្នាក់នៅដែលបានគ្រោង	ការចាកចេញដែលបានគ្រោង	គ្រប់ជាន់
+si	මුදල් ඒකකය	පිටවීම	විස්තරය	සඳහන් කර නැත	ඒකකය	රාත්‍රියක මිල	පැමිණීම	අවලංගු කිරීමේ හේතුව	මාතෘකාව	ප්‍රමුඛතාව	සම්පූර්ණයි	නැවත උත්සාහ කරන්න	වර්ගය	නියමිත පැමිණීම	නියමිත පිටවීම	සියලු මහල්
+ta	நாணயம்	வெளியேறல்	விளக்கம்	குறிப்பிடப்படவில்லை	அலகு	ஓரிரவுக் கட்டணம்	வருகைப் பதிவு	ரத்துக்கான காரணம்	தலைப்பு	முன்னுரிமை	முடிந்தது	மீண்டும் முயலவும்	வகை	திட்டமிட்ட வருகை	திட்டமிட்ட புறப்பாடு	அனைத்துத் தளங்கள்
+yue	貨幣	退房	說明	未指定	住宿單位	每晚房價	入住	取消原因	標題	優先次序	已完成	重試	類型	預計入住	預計退房	所有樓層
+ur	کرنسی	روانگی	تفصیل	متعین نہیں	اکائی	فی رات کرایہ	آمد	منسوخی کی وجہ	عنوان	ترجیح	مکمل	دوبارہ کوشش کریں	قسم	طے شدہ آمد	طے شدہ روانگی	تمام منزلیں
+bn	মুদ্রা	প্রস্থান	বিবরণ	উল্লেখ নেই	ইউনিট	প্রতি রাতের মূল্য	আগমন	বাতিলের কারণ	শিরোনাম	অগ্রাধিকার	সম্পন্ন	আবার চেষ্টা করুন	ধরন	নির্ধারিত আগমন	নির্ধারিত প্রস্থান	সব তলা
+dz	དངུལ་རིགས།	ཕྱིར་ཐོན།	འགྲེལ་བཤད།	གསལ་བཀོད་མེད།	སྡོད་གནས་སྡེ་ཚན།	མཚན་རེའི་གོང་ཚད།	ནང་འཛུལ།	ཆ་མེད་ཀྱི་རྒྱུ་མཚན།	མགོ་མིང་།	གཙོ་རིམ།	མཇུག་བསྡུ་ཡོད།	ལོག་འབད།	དབྱེ་བ།	འཆར་གཞིའི་ནང་འཛུལ།	འཆར་གཞིའི་ཕྱིར་ཐོན།	ཐོག་ཚད་ཆ་མཉམ།
+es	Moneda	Salida	Descripción	No especificado	Unidad	Tarifa por noche	Entrada	Motivo de cancelación	Título	Prioridad	Completado	Reintentar	Tipo	Entrada prevista	Salida prevista	Todas las plantas
+it	Valuta	Partenza	Descrizione	Non specificato	Unità	Tariffa a notte	Arrivo	Motivo della cancellazione	Titolo	Priorità	Completato	Riprova	Tipo	Arrivo previsto	Partenza prevista	Tutti i piani
+pt	Moeda	Saída	Descrição	Não especificado	Unidade	Preço por noite	Entrada	Motivo do cancelamento	Título	Prioridade	Concluído	Tentar novamente	Tipo	Entrada prevista	Saída prevista	Todos os pisos
+nl	Valuta	Vertrek	Beschrijving	Niet opgegeven	Eenheid	Prijs per nacht	Aankomst	Annuleringsreden	Titel	Prioriteit	Voltooid	Opnieuw proberen	Type	Geplande aankomst	Gepland vertrek	Alle verdiepingen
+pl	Waluta	Wyjazd	Opis	Nie określono	Jednostka	Cena za noc	Przyjazd	Powód anulowania	Tytuł	Priorytet	Zakończono	Spróbuj ponownie	Typ	Planowany przyjazd	Planowany wyjazd	Wszystkie piętra
+cs	Měna	Odjezd	Popis	Neuvedeno	Jednotka	Cena za noc	Příjezd	Důvod storna	Název	Priorita	Dokončeno	Zkusit znovu	Typ	Plánovaný příjezd	Plánovaný odjezd	Všechna podlaží
+hu	Pénznem	Távozás	Leírás	Nincs megadva	Egység	Éjszakánkénti ár	Érkezés	Lemondás oka	Cím	Prioritás	Befejezve	Újrapróbálás	Típus	Tervezett érkezés	Tervezett távozás	Minden emelet
+ro	Monedă	Plecare	Descriere	Nespecificat	Unitate	Tarif pe noapte	Sosire	Motivul anulării	Titlu	Prioritate	Finalizat	Încearcă din nou	Tip	Sosire planificată	Plecare planificată	Toate etajele
+el	Νόμισμα	Αναχώρηση	Περιγραφή	Δεν καθορίστηκε	Μονάδα	Τιμή ανά διανυκτέρευση	Άφιξη	Λόγος ακύρωσης	Τίτλος	Προτεραιότητα	Ολοκληρώθηκε	Δοκιμάστε ξανά	Τύπος	Προγραμματισμένη άφιξη	Προγραμματισμένη αναχώρηση	Όλοι οι όροφοι
+uk	Валюта	Виїзд	Опис	Не вказано	Одиниця розміщення	Ціна за ніч	Заїзд	Причина скасування	Заголовок	Пріоритет	Завершено	Спробувати ще раз	Тип	Запланований заїзд	Запланований виїзд	Усі поверхи
+bg	Валута	Заминаване	Описание	Не е посочено	Единица	Цена на нощувка	Пристигане	Причина за анулиране	Заглавие	Приоритет	Завършено	Опитай отново	Тип	Планирано пристигане	Планирано заминаване	Всички етажи
+sr	Валута	Одлазак	Опис	Није наведено	Јединица	Цена по ноћи	Долазак	Разлог отказивања	Наслов	Приоритет	Завршено	Покушај поново	Тип	Планирани долазак	Планирани одлазак	Сви спратови
+hr	Valuta	Odlazak	Opis	Nije navedeno	Jedinica	Cijena po noći	Dolazak	Razlog otkazivanja	Naslov	Prioritet	Dovršeno	Pokušaj ponovno	Vrsta	Planirani dolazak	Planirani odlazak	Svi katovi
+sk	Mena	Odchod	Popis	Neuvedené	Jednotka	Cena za noc	Príchod	Dôvod zrušenia	Názov	Priorita	Dokončené	Skúsiť znova	Typ	Plánovaný príchod	Plánovaný odchod	Všetky poschodia
+sl	Valuta	Odhod	Opis	Ni določeno	Enota	Cena na noč	Prihod	Razlog odpovedi	Naslov	Prednost	Dokončano	Poskusi znova	Vrsta	Načrtovani prihod	Načrtovani odhod	Vsa nadstropja
+fi	Valuutta	Lähtö	Kuvaus	Ei määritetty	Yksikkö	Hinta yöltä	Saapuminen	Peruutuksen syy	Otsikko	Prioriteetti	Valmis	Yritä uudelleen	Tyyppi	Suunniteltu saapuminen	Suunniteltu lähtö	Kaikki kerrokset
+sv	Valuta	Avresa	Beskrivning	Inte angivet	Enhet	Pris per natt	Ankomst	Avbokningsorsak	Rubrik	Prioritet	Slutfört	Försök igen	Typ	Planerad ankomst	Planerad avresa	Alla våningar
+da	Valuta	Afrejse	Beskrivelse	Ikke angivet	Enhed	Pris pr. nat	Ankomst	Årsag til afbestilling	Titel	Prioritet	Afsluttet	Prøv igen	Type	Planlagt ankomst	Planlagt afrejse	Alle etager
+no	Valuta	Avreise	Beskrivelse	Ikke angitt	Enhet	Pris per natt	Ankomst	Avbestillingsårsak	Tittel	Prioritet	Fullført	Prøv igjen	Type	Planlagt ankomst	Planlagt avreise	Alle etasjer
+ms	Mata wang	Daftar keluar	Penerangan	Tidak dinyatakan	Unit	Kadar semalam	Daftar masuk	Sebab pembatalan	Tajuk	Keutamaan	Selesai	Cuba lagi	Jenis	Daftar masuk dijadualkan	Daftar keluar dijadualkan	Semua tingkat
+id	Mata uang	Check-out	Deskripsi	Tidak ditentukan	Unit	Tarif per malam	Check-in	Alasan pembatalan	Judul	Prioritas	Selesai	Coba lagi	Jenis	Check-in terjadwal	Check-out terjadwal	Semua lantai
+vi	Tiền tệ	Trả phòng	Mô tả	Chưa xác định	Đơn vị	Giá mỗi đêm	Nhận phòng	Lý do hủy	Tiêu đề	Mức ưu tiên	Đã hoàn tất	Thử lại	Loại	Nhận phòng dự kiến	Trả phòng dự kiến	Tất cả các tầng
+ja	通貨	チェックアウト	説明	未指定	ユニット	1泊料金	チェックイン	キャンセル理由	タイトル	優先度	完了	再試行	種類	チェックイン予定	チェックアウト予定	すべての階
+ko	통화	체크아웃	설명	미지정	숙박 단위	1박 요금	체크인	취소 사유	제목	우선순위	완료	다시 시도	유형	체크인 예정	체크아웃 예정	모든 층
+fa	واحد پول	خروج	توضیحات	مشخص نشده	واحد	نرخ هر شب	ورود	دلیل لغو	عنوان	اولویت	تکمیل‌شده	تلاش دوباره	نوع	ورود برنامه‌ریزی‌شده	خروج برنامه‌ریزی‌شده	همه طبقات
+he	מטבע	יציאה	תיאור	לא צוין	יחידה	מחיר ללילה	כניסה	סיבת הביטול	כותרת	עדיפות	הושלם	ניסיון נוסף	סוג	כניסה מתוכננת	יציאה מתוכננת	כל הקומות
+sw	Sarafu	Kuondoka	Maelezo	Haijabainishwa	Kitengo	Bei kwa usiku	Kuwasili	Sababu ya kughairi	Kichwa	Kipaumbele	Imekamilika	Jaribu tena	Aina	Kuwasili kulikopangwa	Kuondoka kulikopangwa	Ghorofa zote
+am	ምንዛሬ	መውጫ	መግለጫ	አልተገለጸም	ክፍል አሃድ	የአንድ ሌሊት ዋጋ	መግቢያ	የስረዛ ምክንያት	ርዕስ	ቅድሚያ	ተጠናቋል	እንደገና ይሞክሩ	ዓይነት	የታቀደ መግቢያ	የታቀደ መውጫ	ሁሉም ፎቆች
+mr	चलन	प्रस्थान	वर्णन	नमूद केलेले नाही	एकक	प्रति रात्रीचा दर	आगमन	रद्द करण्याचे कारण	शीर्षक	प्राधान्य	पूर्ण झाले	पुन्हा प्रयत्न करा	प्रकार	नियोजित आगमन	नियोजित प्रस्थान	सर्व मजले
+pa	ਮੁਦਰਾ	ਰਵਾਨਗੀ	ਵੇਰਵਾ	ਨਿਰਧਾਰਤ ਨਹੀਂ	ਇਕਾਈ	ਪ੍ਰਤੀ ਰਾਤ ਦਰ	ਆਮਦ	ਰੱਦ ਕਰਨ ਦਾ ਕਾਰਨ	ਸਿਰਲੇਖ	ਤਰਜੀਹ	ਪੂਰਾ ਹੋਇਆ	ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ	ਕਿਸਮ	ਤੈਅ ਆਮਦ	ਤੈਅ ਰਵਾਨਗੀ	ਸਾਰੀਆਂ ਮੰਜ਼ਿਲਾਂ
+te	కరెన్సీ	నిష్క్రమణ	వివరణ	పేర్కొనలేదు	యూనిట్	రాత్రి ధర	ప్రవేశం	రద్దు కారణం	శీర్షిక	ప్రాధాన్యత	పూర్తయింది	మళ్లీ ప్రయత్నించండి	రకం	ప్రణాళికాబద్ధ ప్రవేశం	ప్రణాళికాబద్ధ నిష్క్రమణ	అన్ని అంతస్తులు
+my	ငွေကြေး	ထွက်ခွာမှု	ဖော်ပြချက်	မသတ်မှတ်ထား	ယူနစ်	တစ်ညဈေးနှုန်း	ဝင်ရောက်မှု	ပယ်ဖျက်ရသည့်အကြောင်း	ခေါင်းစဉ်	ဦးစားပေး	ပြီးစီးပြီ	ထပ်မံကြိုးစားရန်	အမျိုးအစား	စီစဉ်ထားသည့်ဝင်ရောက်မှု	စီစဉ်ထားသည့်ထွက်ခွာမှု	အထပ်အားလုံး
+lo	ສະກຸນເງິນ	ອອກຈາກທີ່ພັກ	ລາຍລະອຽດ	ບໍ່ໄດ້ລະບຸ	ໜ່ວຍ	ລາຄາຕໍ່ຄືນ	ເຂົ້າພັກ	ເຫດຜົນຍົກເລີກ	ຫົວຂໍ້	ຄວາມສຳຄັນ	ສຳເລັດແລ້ວ	ລອງອີກຄັ້ງ	ປະເພດ	ການເຂົ້າພັກຕາມແຜນ	ການອອກຈາກທີ່ພັກຕາມແຜນ	ທຸກຊັ້ນ
+ka	ვალუტა	გამგზავრება	აღწერა	მითითებული არ არის	ერთეული	ერთი ღამის ფასი	ჩამოსვლა	გაუქმების მიზეზი	სათაური	პრიორიტეტი	დასრულებულია	ხელახლა ცდა	ტიპი	დაგეგმილი ჩამოსვლა	დაგეგმილი გამგზავრება	ყველა სართული
+hy	Արժույթ	Մեկնում	Նկարագրություն	Նշված չէ	Միավոր	Մեկ գիշերվա գին	Ժամանում	Չեղարկման պատճառ	Վերնագիր	Առաջնահերթություն	Ավարտված	Կրկին փորձել	Տեսակ	Պլանավորված ժամանում	Պլանավորված մեկնում	Բոլոր հարկերը
+az	Valyuta	Çıxış	Açıqlama	Göstərilməyib	Vahid	Gecəlik qiymət	Giriş	Ləğv səbəbi	Başlıq	Prioritet	Tamamlandı	Yenidən cəhd et	Növ	Planlaşdırılan giriş	Planlaşdırılan çıxış	Bütün mərtəbələr
+kk	Валюта	Кету	Сипаттама	Көрсетілмеген	Бірлік	Түнгі баға	Келу	Бас тарту себебі	Тақырып	Басымдық	Аяқталды	Қайта көру	Түрі	Жоспарланған келу	Жоспарланған кету	Барлық қабаттар
+uz	Valyuta	Ketish	Tavsif	Ko‘rsatilmagan	Birlik	Bir kechalik narx	Kelish	Bekor qilish sababi	Sarlavha	Ustuvorlik	Tugallandi	Qayta urinib ko‘ring	Turi	Rejalashtirilgan kelish	Rejalashtirilgan ketish	Barcha qavatlar
+ky	Валюта	Кетүү	Сүрөттөмө	Көрсөтүлгөн эмес	Бирдик	Түнкү баа	Келүү	Жокко чыгаруу себеби	Аталыш	Артыкчылык	Аяктады	Кайра аракет кылыңыз	Түрү	Пландалган келүү	Пландалган кетүү	Бардык кабаттар
+mn	Валют	Гарах	Тайлбар	Тодорхойлоогүй	Нэгж	Нэг шөнийн үнэ	Бүртгүүлэх	Цуцлах шалтгаан	Гарчиг	Эрэмбэ	Дууссан	Дахин оролдох	Төрөл	Төлөвлөсөн бүртгүүлэх хугацаа	Төлөвлөсөн гарах хугацаа	Бүх давхар
+ps	اسعار	وتل	تشریح	نه دی ټاکل شوی	واحد	د یوې شپې بیه	راتګ	د لغوه کولو لامل	سرلیک	لومړیتوب	بشپړ شو	بیا هڅه وکړئ	ډول	پلان شوی راتګ	پلان شوي وتل	ټول پوړونه
+ku	Dirav	Derketin	Daxuyanî	Nehatiye diyarkirin	Yekîne	Bihayê şevê	Hatin	Sedema betalkirinê	Sernav	Pêşî	Qediya	Dîsa biceribîne	Cure	Hatina plankirî	Derketina plankirî	Hemû qat

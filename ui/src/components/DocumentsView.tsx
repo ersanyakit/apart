@@ -19,7 +19,7 @@ import {
   MoneyField,
   TextField,
 } from "./fields";
-import { CURRENCIES } from "./Currency";
+import { CURRENCIES, localizedCurrencies } from "./Currency";
 import { confirmDialog } from "./ConfirmDialog";
 import { localDate } from "./BookingForm";
 export { documentKinds } from './document-editor/markup';
@@ -168,7 +168,7 @@ export function BookingDocuments({
               label={_uiText("Para birimi")}
               value={currency}
               onChange={setCurrency}
-              options={CURRENCIES.map((c) => ({
+              options={localizedCurrencies(_uiLocale).map((c) => ({
                 value: c.id,
                 label: `${c.id} · ${c.label}`,
               }))}
@@ -222,7 +222,7 @@ export function BookingDocuments({
           onClick={async () => {
             if (
               await confirmDialog(
-                "Belge seçilen dilde kaydedilsin ve PDF olarak indirilsin mi? Kayıtlı belgenin metni sonradan değişmez.",
+                _uiText("Belge seçilen dilde kaydedilsin ve PDF olarak indirilsin mi? Kayıtlı belgenin metni sonradan değişmez."),
               )
             )
               await prepare(true);

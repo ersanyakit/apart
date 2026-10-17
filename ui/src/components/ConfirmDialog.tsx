@@ -101,7 +101,7 @@ export function ConfirmDialogHost() {
           id="confirm-description"
           className="mt-3 text-sm leading-6 text-slate-500 whitespace-pre-wrap"
         >
-          {request.message}
+          {_uiText(request.message)}
         </p>
         <div className="flex justify-end gap-3 mt-7">
           <button

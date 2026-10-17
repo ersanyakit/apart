@@ -826,8 +826,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                                 if (
                                   await confirmDialog(
                                     targetBooking
-                                      ? `${sourceBooking.guest_name} ile ${targetBooking.guest_name} konaklamalarının odaları değiştirilsin mi?`
-                                      : `${sourceBooking.guest_name}, ${s.rooms.find(room=>room.room_id===dragged)?.code || "kaynak"} odasından ${s.rooms.find(room=>room.room_id===target)?.code || "hedef"} odasına taşınsın mı?`,
+                                      ? _uiText("{value1} ile {value2} konaklamalarının odaları değiştirilsin mi?", {value1: String(sourceBooking.guest_name), value2: String(targetBooking.guest_name)})
+                                      : _uiText("{value1}, {value2} odasından {value3} odasına taşınsın mı?", {value1: String(sourceBooking.guest_name), value2: String(s.rooms.find(room=>room.room_id===dragged)?.code || "kaynak"), value3: String(s.rooms.find(room=>room.room_id===target)?.code || "hedef")}),
                                   )
                                 )
                                   void run(async () => {
@@ -905,8 +905,8 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
           />
         )}
         {tab === "staff" && <StaffView key={s.hotel_id} snapshot={s} />}
-        {checkout&&<CheckoutFolio booking={checkout} onClose={()=>setCheckout(null)} onSaved={async()=>{await refresh();notify("Çıkış tamamlandı.")}}/>}
-        {reasonOperation&&<OperationReason operation={reasonOperation} onClose={()=>setReasonOperation(null)} onSaved={async()=>{await refresh();notify("İşlem gerekçesiyle kaydedildi.")}}/>}
+        {checkout&&<CheckoutFolio booking={checkout} onClose={()=>setCheckout(null)} onSaved={async()=>{await refresh();notify(_uiText("Çıkış tamamlandı."))}}/>}
+        {reasonOperation&&<OperationReason operation={reasonOperation} onClose={()=>setReasonOperation(null)} onSaved={async()=>{await refresh();notify(_uiText("İşlem gerekçesiyle kaydedildi."))}}/>}
         {openTabs.includes("guests") && <div hidden={tab !== "guests"}><GuestView key={`${s.hotel_id}-${s.branch_id}`} snapshot={s} /></div>}
         {Object.entries(guestHistoryTabs).map(([id, guest]) => <section key={`${s.hotel_id}-${s.branch_id}-${id}`} hidden={tab !== id} aria-label={_uiText("{value1} · Konaklama geçmişi", {value1: String(guest.name)})}>
           <GuestView snapshot={s} guestId={guest.id} guestName={guest.name} onBack={()=>activateTab("guests")}/>
@@ -1044,7 +1044,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
               allowedStatuses={operator ? operationalRoomStatuses : housekeeping ? housekeepingRoomStatuses : [RoomState.OutOfOrder,RoomState.Maintenance]}
               onBusyChange={onBusyChange}
               onClose={()=>setContextMenu(null)}
-              onSaved={async()=>{await refresh();notify("Oda durumu ve açıklaması kaydedildi.")}}
+              onSaved={async()=>{await refresh();notify(_uiText("Oda durumu ve açıklaması kaydedildi."))}}
             />}
             onPrint={(type) => {
               const b = contextMenu.booking;

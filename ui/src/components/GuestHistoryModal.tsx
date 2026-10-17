@@ -37,10 +37,10 @@ export interface GuestProfileDetail {
   nationality: string;
 }
 
-const dayFmt = (v: string) => {
+const dayFmt = (v: string, locale = "tr-TR") => {
   const d = new Date(v);
   if (isNaN(d.getTime())) return "—";
-  return d.toLocaleDateString("tr-TR", {
+  return d.toLocaleDateString(locale, {
     day: "numeric",
     month: "short",
     hour: "2-digit",
@@ -48,10 +48,10 @@ const dayFmt = (v: string) => {
   });
 };
 
-const shortDay = (v: string) => {
+const shortDay = (v: string, locale = "tr-TR") => {
   const d = new Date(v);
   if (isNaN(d.getTime())) return "—";
-  return d.toLocaleDateString("tr-TR", { day: "numeric", month: "short" });
+  return d.toLocaleDateString(locale, { day: "numeric", month: "short" });
 };
 
 /** Takvim günü farkından gece sayısı (en az 1). */
@@ -166,7 +166,7 @@ export function GuestHistoryModal({
   type NoteRow = { text: string; kind: "guest" | "booking"; context: string };
   const notes: NoteRow[] = [];
   for (const s of stays) {
-    const context = `${s.room_code} · ${shortDay(s.start)}`;
+    const context = `${s.room_code} · ${shortDay(s.start, _uiLocale)}`;
     if (s.guest_note?.trim()) {
       notes.push({ text: s.guest_note.trim(), kind: "guest", context });
     }
@@ -338,7 +338,7 @@ export function GuestHistoryModal({
                         </span>
                       </div>
                       <p className="mt-1 text-xs font-medium tabular-nums text-slate-500">
-                        {dayFmt(s.start)} → {dayFmt(s.end)} · {n} {_uiText("gece")} </p>
+                        {dayFmt(s.start, _uiLocale)} → {dayFmt(s.end, _uiLocale)} · {n} {_uiText("gece")} </p>
                       <div className="mt-1 flex items-center justify-between gap-3">
                         <p className="min-w-0 truncate text-xs text-slate-500">
                           {s.companions.length > 0

@@ -50,7 +50,7 @@ export function MediaEditor({
     const [item] = items.splice(from, 1);
     items.splice(to, 0, item);
     commit(items);
-    setAnnouncement(`Medya ${from + 1}, ${to + 1}. sıraya taşındı.`);
+    setAnnouncement(_uiText("Medya {value1}, {value2}. sıraya taşındı.", {value1: String(from + 1), value2: String(to + 1)}));
   };
   const [url, setURL] = useState("");
   const [kind, setKind] = useState<"image" | "video">("image");

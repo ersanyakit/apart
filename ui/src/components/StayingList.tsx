@@ -115,7 +115,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
           cell: info => <span className="text-red-500 font-black">{info.getValue()?.split(' ')[0] || '---'}</span>,
         }),
         columnHelper.accessor('status', {
-          header: 'DURUM',
+          header: _uiText("DURUM"),
           cell: info => (
             <span className={`px-2 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${info.getValue() === 'Dolu' ? 'bg-red-50 text-red-600 ring-1 ring-red-100' : 'bg-brand-blue-50 text-brand-blue-600 ring-1 ring-brand-blue-100'}`}>
               {info.getValue()}
@@ -129,7 +129,7 @@ export const StayingList: React.FC<StayingListProps> = ({ rooms, hotel, isArchiv
     cols.push(
       columnHelper.display({
         id: 'actions',
-        header: 'İŞLEM',
+        header: _uiText("İŞLEM"),
         cell: info => (
           <div className="flex items-center gap-2">
             {!isArchive && (

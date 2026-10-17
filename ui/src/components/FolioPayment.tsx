@@ -12,7 +12,7 @@ import { paymentOptions } from "./reports/options";
 import type { Folio } from "./CheckoutFolio";
 
 type Channel = { code: string; labels: Record<string, string>; active: boolean };
-const money = (n: number, c: string) => new Intl.NumberFormat("tr-TR", { style: "currency", currency: c }).format(n / 100);
+const money = (n: number, c: string, locale: string) => new Intl.NumberFormat(locale, { style: "currency", currency: c }).format(n / 100);
 
 /**
  * Oda kartı ve giriş akışından tahsilat girişi. Resepsiyonun rapor
@@ -52,7 +52,7 @@ export function FolioPayment({ hotelId, booking, roomCode, entry, onClose, onSav
       if (!active) return;
       setFolio(f);
       const extra = channels.filter((c) => c.active && !paymentOptions.some((p) => p.value === c.code))
-        .map((c) => ({ value: c.code, label: localized(c.labels) }));
+        .map((c) => ({ value: c.code, label: localized(c.labels, _uiLocale.toUpperCase()) }));
       if (extra.length) setMethods([...paymentOptions, ...extra]);
       const total = f.totals.find((t) => t.currency === currency) ?? f.totals[0];
       if (total && total.balance > 0) setAmount(total.balance);
@@ -102,13 +102,13 @@ export function FolioPayment({ hotelId, booking, roomCode, entry, onClose, onSav
       <ErrorMessage message={error} />
       {loading && <p role="status" className="text-sm text-uni-muted">{_uiText("Folyo ve kalan borç yükleniyor…")}</p>}
       {total && <dl className="grid grid-cols-3 gap-3 rounded-2xl bg-[var(--color-uni-surface)] p-4 text-sm">
-        <div><dt className="text-xs text-uni-muted">{_uiText("Toplam ücret")}</dt><dd className="mt-1 font-semibold">{money(total.charges, total.currency)}</dd></div>
-        <div><dt className="text-xs text-uni-muted">{_uiText("Alınan")}</dt><dd className="mt-1 font-semibold">{money(total.paid, total.currency)}</dd></div>
-        <div><dt className="text-xs text-uni-muted">{_uiText("Kalan borç")}</dt><dd className="mt-1 font-semibold">{money(total.balance, total.currency)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Toplam ücret")}</dt><dd className="mt-1 font-semibold">{money(total.charges, total.currency, _uiLocale)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Alınan")}</dt><dd className="mt-1 font-semibold">{money(total.paid, total.currency, _uiLocale)}</dd></div>
+        <div><dt className="text-xs text-uni-muted">{_uiText("Kalan borç")}</dt><dd className="mt-1 font-semibold">{money(total.balance, total.currency, _uiLocale)}</dd></div>
       </dl>}
       {total && total.balance <= 0 && !loading && <p className="text-sm text-uni-muted">{_uiText("Bu rezervasyonda tahsil edilecek borç kalmamış; isterseniz avans tahsil edebilirsiniz.")}</p>}
       <MoneyField label={_uiText("Alınan tutar ({value1})", {value1: String(currency)})} valueMinor={amount} onChange={setAmount} disabled={busy || loading} />
-      <InlineSelectField label={_uiText("Ödeme yöntemi")} value={channel} onChange={setChannel} options={methods} />
+      <InlineSelectField label={_uiText("Ödeme yöntemi")} value={channel} onChange={setChannel} options={methods.map(option=>({...option,label:_uiText(option.label)}))} />
       <TextField label={_uiText("Açıklama")} value={label} onChange={setLabel} maxLength={200} required disabled={busy} />
       <div className="flex flex-wrap justify-end gap-2">
         <button type="button" className={`${secondaryStyle} !rounded-full`} disabled={busy} onClick={onClose}>

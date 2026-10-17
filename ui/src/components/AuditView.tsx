@@ -72,7 +72,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
       <ErrorMessage message={error} />
       <PageHeader pageId="logs" actions={<button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={16}/>{_uiText("Yenile")}</button>}/>
       <div className={styles.filters}>
-        <div className={styles.actionFilter}><InlineSelectField label={_uiText("İşlem türü")} value={action} onChange={value=>{setAction(value);setPage(1);}} options={[{value:"",label:_uiText("Tüm işlemler")},...Object.entries(actions).map(([value,label])=>({value,label}))]}/></div>
+        <div className={styles.actionFilter}><InlineSelectField label={_uiText("İşlem türü")} value={action} onChange={value=>{setAction(value);setPage(1);}} options={[{value:"",label:_uiText("Tüm işlemler")},...Object.entries(actions).map(([value,label])=>({value,label:_uiText(label)}))]}/></div>
         <button type="button" aria-expanded={showDates} className={`uni-control ${secondaryStyle}`} onClick={()=>setShowDates(v=>!v)}><SlidersHorizontal size={16}/>{_uiText("Tarih aralığı")}</button>
         {(from||to||action)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setFrom('');setTo('');setAction('');setShowDates(false);setPage(1);}}>{_uiText("Filtreleri temizle")}</button>}
         {showDates&&<div className={styles.dates}><DateField withTime={false} label={_uiText("Başlangıç tarihi")} value={from} onChange={v=>{setFrom(v);setPage(1);}}/><DateField withTime={false} label={_uiText("Bitiş tarihi")} value={to} onChange={v=>{setTo(v);setPage(1);}}/></div>}
@@ -80,12 +80,12 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
       <section className={styles.history} aria-label={_uiText("İşlem geçmişi")} aria-busy={busy}>
        <div className={styles.listHeader}><span>{_uiText("Yapılan işlem")}</span><span>{_uiText("İşlemi yapan")}</span><span>{_uiText("Tarih / saat")}</span></div>
        {!busy&&rows.map(r=>{
-        const location=auditLocationSummary(r.entity,r.details),changes=auditChanges(r);
+        const location=auditLocationSummary(r.entity,r.details),changes=auditChanges(r,_uiLocale,_uiText);
         const time=new Date(r.created_at);
         const highlight=changes.find(c=>c.key==='status');
         return <article className={styles.entry} key={r.id}>
          <div className={styles.row}>
-          <div className={styles.operation}><span className={styles.category}>{entities[r.entity]||_uiText("İşlem kaydı")}</span><h3>{auditHeadline(r)}</h3>{auditSubject(r)&&<p>{auditSubject(r)}</p>}
+          <div className={styles.operation}><span className={styles.category}>{_uiText(entities[r.entity]||"İşlem kaydı")}</span><h3>{auditHeadline(r,_uiText)}</h3>{auditSubject(r)&&<p>{auditSubject(r)}</p>}
            <p>{location.label!=='—'&&<strong>{location.label}</strong>}{location.branch&&<span>{location.branch}</span>}</p>
            {highlight&&<p className={styles.change}>{highlight.before!=='—'?<>{highlight.before} <span aria-label={_uiText("şu duruma değişti")}>→</span></>:<span>{_uiText("Durum:")}</span>} {highlight.after}</p>}
           </div>
@@ -93,7 +93,7 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
           <time className={styles.time} dateTime={r.created_at}>{time.toLocaleDateString(_uiLocale,{timeZone:'Europe/Istanbul',day:'numeric',month:'short',year:'numeric'})}<span>{time.toLocaleTimeString(_uiLocale,{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</span></time>
          </div>
          <details className={styles.details}><summary>{_uiText("İşlem ayrıntıları")}<ChevronDown size={15}/></summary>
-          <p>{auditSummary(r)}</p>
+          <p>{auditSummary(r,_uiText)}</p>
           {r.details?.reason&&<p><strong>{_uiText("Gerekçe:")}</strong> {r.details.reason}</p>}
           {location.inferred&&<p>{_uiText("Oda bilgisi güncel kayıttan alınmıştır.")}</p>}
           {!!changes.length&&<dl className={styles.changes}>{changes.map(c=><div key={c.key}><dt>{c.label}</dt><dd>{r.action!=='create'&&<p><span>{_uiText("Önce")}</span>{c.before}</p>}{r.action!=='delete'&&<p><span>{r.action==='create'?_uiText("Bilgi"):_uiText("Sonra")}</span>{c.after}</p>}</dd></div>)}</dl>}

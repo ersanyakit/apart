@@ -33,7 +33,7 @@ export function RoomStateEditor({room, allowedStatuses, initialStatus, onSaved, 
   const submit=async(event:React.FormEvent)=>{
     event.preventDefault();
     if(busy||!allowedStatuses.includes(selected as RoomStatus))return;
-    if(note.trim().length>2000||(required&&note.trim().length<10)){setError(required?'Açıklamayı en az 10, en fazla 2000 karakterle yazın.':'Açıklama en fazla 2000 karakter olabilir.');return;}
+    if(note.trim().length>2000||(required&&note.trim().length<10)){setError(required?_uiText("Açıklamayı en az 10, en fazla 2000 karakterle yazın."):_uiText("Açıklama en fazla 2000 karakter olabilir."));return;}
     if(clean&&!people.some(p=>p.user_id===cleaner)){setError(_uiText("Temizliği yapan personeli seçin."));return;}
     setBusy(true);onBusyChange?.(true);setError('');
     try{

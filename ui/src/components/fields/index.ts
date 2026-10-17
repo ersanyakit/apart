@@ -13,6 +13,7 @@ export {
   CurrencyProvider,
   useCurrency,
   CURRENCIES,
+  localizedCurrencies,
   MONEY_FORMATS,
   formatMoney,
   parseMoney,

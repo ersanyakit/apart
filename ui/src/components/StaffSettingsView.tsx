@@ -204,7 +204,7 @@ export const StaffSettingsView: React.FC<StaffSettingsViewProps> = ({
                               {React.cloneElement(icon as React.ReactElement<{className?:string}>, { className: 'w-3.5 h-3.5' })}
                            </div>
                            <span className={`text-[9px] font-black uppercase tracking-tighter text-left leading-tight ${newStaff.permissions?.[key as keyof StaffPermissions] ? 'text-brand-blue-800' : 'text-slate-400'}`}>
-                             {label}
+                             {_uiText(label)}
                            </span>
                         </button>
                       ))}

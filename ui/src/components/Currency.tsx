@@ -66,6 +66,17 @@ export const CURRENCIES: CurrencyOption[] = [
   { id: "ZAR", symbol: "R", label: "Güney Afrika Randı" },
 ];
 
+const localizedCurrencyCache = new Map<string, CurrencyOption[]>();
+/** ISO codes and symbols stay stable; display names follow the interface locale. */
+export function localizedCurrencies(locale: string): CurrencyOption[] {
+  const cached = localizedCurrencyCache.get(locale);
+  if (cached) return cached;
+  const names = new Intl.DisplayNames(locale, {type: 'currency', fallback: 'code'});
+  const options = CURRENCIES.map(option => ({...option, label: locale === 'tr' ? option.label : names.of(option.id) || option.id}));
+  localizedCurrencyCache.set(locale, options);
+  return options;
+}
+
 /** Sembol dairede taşmayacak yazı boyutu (uzun semboller küçülür). */
 export function currencySymbolClass(symbol: string): string {
   if (symbol.length <= 1) return "text-base";

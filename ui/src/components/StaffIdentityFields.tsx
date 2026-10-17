@@ -1,3 +1,5 @@
+import {roleLabels as roles} from "../lib/roles";
+export {roles};
 import { useI18n } from "./I18n";
 import { InlineSelectField, TextField } from "./fields";
 export type Person = {
@@ -10,16 +12,6 @@ export type Person = {
   role: string;
   branch_ids: string[];
   password?: string;
-};
-export const roles: Record<string, string> = {
-  management: "Yönetim",
-  reception: "Resepsiyon",
-  accounting: "Muhasebe",
-  housekeeping: "Kat hizmetleri",
-  technical_service: "Teknik servis",
-  maintenance: "Bakım",
-  supervisor: "Sorumlu",
-  admin: "Sistem yöneticisi",
 };
 export function StaffIdentityFields({value:p,onChange,allowAdmin=false}:{value:Person;onChange:(value:Person)=>void;allowAdmin?:boolean}) {
   const {m: _uiText, locale: _uiLocale} = useI18n();

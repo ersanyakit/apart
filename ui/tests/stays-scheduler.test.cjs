@@ -80,7 +80,9 @@ test('short stays keep readable labels without overlapping or falsifying their d
 process.env.NODE_PATH=path.resolve(__dirname,'../node_modules');
 require('node:module').Module._initPaths();
 copyFileSync(path.resolve(__dirname,'../src/components/stays-scheduler/StaysScheduler.module.css'),path.join(output,'components/stays-scheduler/StaysScheduler.module.css'));
-require.extensions['.css']=(module)=>{module.exports=new Proxy({}, {get:(_,key)=>key==='__esModule'?false:String(key)});};
+require.extensions['.css']=(module)=>{module.exports=new Proxy({}, {get:(_,key)=>key==='__esModule'?false:String(key)});
+require('./helpers/flag-assets.cjs')(output);
+};
 const React=require('react');
 const {renderToStaticMarkup}=require('react-dom/server');
 const {I18nProvider}=require(path.join(output,'components/I18n.js'));

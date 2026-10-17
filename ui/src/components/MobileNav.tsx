@@ -61,7 +61,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
           pendingLogout.current = false;
           // Wait until the native dialog has left the top layer before confirming.
           requestAnimationFrame(() => {
-            void confirmDialog("Oturumu kapatmak istediğinize emin misiniz?").then((confirmed) => {
+            void confirmDialog(_uiText("Oturumu kapatmak istediğinize emin misiniz?")).then((confirmed) => {
               if (confirmed) onLogout();
             });
           });

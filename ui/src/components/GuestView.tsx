@@ -23,11 +23,12 @@ import {
   secondaryStyle,
 } from "./FormKit";
 type Stay = CustomerStay & { phone?: string };
-const date = (v: string) => new Date(v).toLocaleString("tr-TR", {timeZone:"Europe/Istanbul", dateStyle:"medium", timeStyle:"short"});
+const date = (v: string, locale = "tr-TR") => new Date(v).toLocaleString(locale, {timeZone:"Europe/Istanbul", dateStyle:"medium", timeStyle:"short"});
 function StayDate({value}:{value:string}) {
+  const {locale: _uiLocale}=useI18n();
   const parsed=new Date(value);
   if(!Number.isFinite(parsed.getTime()))return <span className="guest-table-secondary">—</span>;
-  return <time dateTime={value} className="guest-table-date"><span>{parsed.toLocaleDateString('tr-TR',{timeZone:'Europe/Istanbul',day:'2-digit',month:'short',year:'numeric'})}</span><span className="guest-table-secondary">{parsed.toLocaleTimeString('tr-TR',{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</span></time>;
+  return <time dateTime={value} className="guest-table-date"><span>{parsed.toLocaleDateString(_uiLocale,{timeZone:'Europe/Istanbul',day:'2-digit',month:'short',year:'numeric'})}</span><span className="guest-table-secondary">{parsed.toLocaleTimeString(_uiLocale,{timeZone:'Europe/Istanbul',hour:'2-digit',minute:'2-digit'})}</span></time>;
 }
 export function GuestView({
   snapshot: s,
@@ -189,7 +190,7 @@ export function GuestView({
                 ["end", "Çıkış"],
               ].map(([key, label]) => (
                 <th key={key} scope="col" aria-sort={sort===key?(desc?"descending":"ascending"):"none"}>
-                  <button type="button" className="uni-control guest-table-sort" onClick={() => sortBy(key)}><span>{label}</span>{sort===key?(desc?<ArrowDown size={14}/>:<ArrowUp size={14}/>):<ArrowUpDown size={14}/>}</button>
+                  <button type="button" className="uni-control guest-table-sort" onClick={() => sortBy(key)}><span>{_uiText(label)}</span>{sort===key?(desc?<ArrowDown size={14}/>:<ArrowUp size={14}/>):<ArrowUpDown size={14}/>}</button>
                 </th>
               ))}
               <th scope="col" className="guest-table-amount">{_uiText("Konaklama bedeli")}</th><th scope="col">{_uiText("Birlikte kaldıkları")}</th>
@@ -235,7 +236,7 @@ export function GuestView({
                     </button>
                   ))}
                 </td>
-                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{bookingStatuses[r.status]}</span></td><td className="p-4"><div className={styles.rowActions}>{openHistory && <button type="button" className="uni-control" aria-label={_uiText("{value1} konaklama geçmişi", {value1: String(r.name)})} onClick={()=>openHistory({id:r.guest_id,name:r.name})}><History size={15} aria-hidden="true"/>{_uiText("Konaklama geçmişi")}</button>}<button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>{_uiText("Puan / Kara liste")}</button></div></td>
+                <td className="p-4"><span className="guest-history-status" data-status={r.status}>{_uiText(bookingStatuses[r.status])}</span></td><td className="p-4"><div className={styles.rowActions}>{openHistory && <button type="button" className="uni-control" aria-label={_uiText("{value1} konaklama geçmişi", {value1: String(r.name)})} onClick={()=>openHistory({id:r.guest_id,name:r.name})}><History size={15} aria-hidden="true"/>{_uiText("Konaklama geçmişi")}</button>}<button type="button" className={`${secondaryStyle} guest-table-assess !rounded-full`} onClick={()=>setAssessment(r)}><Star size={14} aria-hidden="true"/>{_uiText("Puan / Kara liste")}</button></div></td>
               </tr>
             ))}
           </tbody>
@@ -253,8 +254,8 @@ export function GuestView({
           <h3 className="font-semibold">{_uiText("Misafir ve rezervasyon notları")}</h3>
           <p className="text-xs text-uni-muted">{_uiText("Listelenen konaklamaların notları. Önceki kayıtları görmek için konaklama sayfasını değiştirebilirsiniz.")}</p>
           {rows.filter((row,index,all)=>all.findIndex(other=>other.booking_id===row.booking_id)===index).filter(row=>row.guest_note||row.booking_notes||row.cancellation_reason).map(row=><article key={row.booking_id} className="space-y-3 rounded-xl bg-uni-surface p-4">
-            <p className="text-xs text-uni-muted">{row.branch_name} · {row.room_code} · {date(row.start)}</p>
-            <dl className="grid gap-3 text-sm sm:grid-cols-2">{[['Misafire özel not',row.guest_note],['Rezervasyon notu',row.booking_notes],['İptal gerekçesi',row.cancellation_reason]].filter(([,text])=>text).map(([label,text])=><div key={label}><dt className="text-xs font-medium text-uni-muted">{label}</dt><dd className="mt-1 whitespace-pre-wrap break-words">{text}</dd></div>)}</dl>
+            <p className="text-xs text-uni-muted">{row.branch_name} · {row.room_code} · {date(row.start, _uiLocale)}</p>
+            <dl className="grid gap-3 text-sm sm:grid-cols-2">{[['Misafire özel not',row.guest_note],['Rezervasyon notu',row.booking_notes],['İptal gerekçesi',row.cancellation_reason]].filter(([,text])=>text).map(([label,text])=><div key={label}><dt className="text-xs font-medium text-uni-muted">{_uiText(label ?? "")}</dt><dd className="mt-1 whitespace-pre-wrap break-words">{text}</dd></div>)}</dl>
           </article>)}
           {!busy&&!rows.some(row=>row.guest_note||row.booking_notes||row.cancellation_reason)&&<p className="text-sm text-uni-muted">{_uiText("Listelenen konaklamalara not eklenmemiş.")}</p>}
         </section>

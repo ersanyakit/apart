@@ -138,7 +138,7 @@ function BookingNoteEditor({ booking: b, hotelId, onRefresh }: {
       setEditing(false);
       await onRefresh();
       await loadLinked();
-      notify(text.trim() ? "Not kaydedildi, panoya eklendi." : "Not silindi, pano kartı arşivlendi.");
+      notify(text.trim() ? _uiText("Not kaydedildi, panoya eklendi.") : _uiText("Not silindi, pano kartı arşivlendi."));
     } catch (e) {
       setError(messageOf(e));
     } finally {

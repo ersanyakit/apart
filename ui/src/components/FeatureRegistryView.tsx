@@ -52,7 +52,7 @@ export function FeatureRegistryView({
       if (kind === "feature") setDraft(null);
       setError("");
       await onRefresh();
-      notify(kind === "category" ? "Kategori silindi." : "Olanak silindi.");
+      notify(kind === "category" ? _uiText("Kategori silindi.") : _uiText("Olanak silindi."));
     } catch (e) {
       notify(messageOf(e), "error");
     } finally {
@@ -251,7 +251,7 @@ export function FeatureRegistryView({
                 string: "Metin",
                 enum: "Tek seçenek",
                 multi_enum: "Çoklu seçenek",
-              }).map(([value, label]) => ({ value, label }))}
+              }).map(([value, label]) => ({ value, label: _uiText(label) }))}
             />
             {["enum", "multi_enum"].includes(draft.value_type) && (
               <TextField

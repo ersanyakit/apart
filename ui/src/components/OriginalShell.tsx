@@ -1,3 +1,4 @@
+import {roleLabel} from "../lib/roles";
 import { useI18n } from "./I18n";
 import { RoomCondition, RoomConditionIcon } from './RoomCondition';
 import { BookingStatus as BookingState } from '../lib/statuses.generated';
@@ -272,7 +273,7 @@ export function OriginalShell({
                 {user.name}
               </p>
               <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-none">
-                {user.role}
+                {_uiText(roleLabel(user.role))}
               </p>
             </div>
             <div className="w-7 h-7 md:w-9 md:h-9 rounded-lg bg-brand-blue-500 flex items-center justify-center text-accent-contrast font-black text-xs shadow-lg shadow-brand-blue-100 border-2 border-white uppercase shrink-0">
@@ -318,7 +319,7 @@ export function OriginalShell({
               onClick={async () => {
                 if (
                   await confirmDialog(
-                    "Oturumu kapatmak istediğinize emin misiniz?",
+                    _uiText("Oturumu kapatmak istediğinize emin misiniz?"),
                   )
                 ) {
                   onLogout();
@@ -339,7 +340,7 @@ export function OriginalShell({
                       {user.name}
                     </span>
                     <span className="uni-profile-sub block truncate text-slate-500">
-                      {user.role}
+                      {_uiText(roleLabel(user.role))}
                     </span>
                   </span>
                   <Power className="w-5 h-5 shrink-0 text-slate-400" strokeWidth={2} />
@@ -407,7 +408,7 @@ export function OriginalShell({
                   <div className="space-y-1">
                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{_uiText("Erişim Yetkisi")} </label>
                     <div className="uni-card bg-white px-3 py-2 rounded-lg border border-slate-200 text-sm font-bold text-brand-blue-600 shadow-sm uppercase">
-                      {user.role}
+                      {_uiText(roleLabel(user.role))}
                     </div>
                   </div>
                   <button

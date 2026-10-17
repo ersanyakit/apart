@@ -1,4 +1,5 @@
 "use client";
+import {roleLabel} from "../lib/roles";
 import {InstallAppPanel} from "./PWA";
 import { PageHeader } from "./PageHeader";
 import { useUserPreferences } from "./UserPreferences";
@@ -17,7 +18,7 @@ import {
 import { FONT_SIZE_OPTIONS, useFontSize } from "./FontSize";
 import { BACKGROUND_OPTIONS, THEME_OPTIONS, useTheme } from "./Theme";
 import {
-  CURRENCIES,
+  CURRENCIES, localizedCurrencies,
   MONEY_FORMATS,
   formatMoney,
   useCurrency,
@@ -64,7 +65,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
   return (
     <div className="w-full space-y-5 pb-8 font-sans text-uni-ink">
       <PageHeader pageId="appsettings" actions={<>
-        <span className="text-sm text-uni-muted" role="status">{saveLabel}</span>
+        <span className="text-sm text-uni-muted" role="status">{_uiText(saveLabel)}</span>
         {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>{_uiText("Yeniden dene")}</button>}
       </>} />
 
@@ -83,13 +84,13 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={theme === option.id}
                   onChange={() => setTheme(option.id)}
                   className="peer sr-only"
-                  aria-label={option.label}
+                  aria-label={_uiText(option.label)}
                 />
                 <span className="uni-choice flex min-h-[100px] flex-col items-center justify-center gap-3 rounded-2xl border border-transparent bg-uni-surface px-2 py-4 transition-colors duration-150 hover:bg-uni-hover peer-checked:border-slate-400 peer-checked:bg-white peer-checked:shadow-sm peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
                   <span className="flex h-8 w-8 items-center justify-center rounded-full" style={{ backgroundColor: option.color }}>
                     {theme === option.id && <Check size={17} strokeWidth={2.5} className={option.id === "purple" ? "text-white" : "text-[#131313]"} />}
                   </span>
-                  <span className="text-xs font-medium">{option.label}</span>
+                  <span className="text-xs font-medium">{_uiText(option.label)}</span>
                 </span>
               </label>
             ))}
@@ -97,9 +98,9 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         </fieldset>
         <div className="mt-4 flex items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
           <Check size={14} className="text-brand-blue-600" />
-          <span>{currentTheme.label} {_uiText("tema etkin")}</span>
+          <span>{_uiText(currentTheme.label)} {_uiText("tema etkin")}</span>
           <span aria-hidden="true" className="mx-1">·</span>
-          <span>{saveLabel}</span>
+          <span>{_uiText(saveLabel)}</span>
         </div>
 
         <div className="my-6 border-t border-uni-border" />
@@ -117,10 +118,10 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={size === option.id}
                   onChange={() => setSize(option.id)}
                   className="peer sr-only"
-                  aria-label={option.label}
+                  aria-label={_uiText(option.label)}
                 />
                 <span className="uni-choice flex min-h-10 items-center justify-center rounded-2xl px-2 py-2 text-xs font-medium text-uni-muted transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-checked:text-uni-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
-                  {option.label}
+                  {_uiText(option.label)}
                 </span>
               </label>
             ))}
@@ -142,15 +143,15 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={background === option.id}
                   onChange={() => setBackground(option.id)}
                   className="peer sr-only"
-                  aria-label={_uiText("{value1} ({value2})", {value1: String(option.label), value2: String(option.hint)})}
+                  aria-label={_uiText("{value1} ({value2})", {value1: _uiText(option.label), value2: _uiText(option.hint)})}
                 />
                 <span
                   aria-hidden="true"
                   className={`h-6 w-6 shrink-0 rounded-full ring-1 ring-inset ring-slate-900/10 peer-checked:ring-2 peer-checked:ring-brand-blue-600 peer-checked:ring-offset-1 ${option.id === "white" ? "bg-white" : "bg-[#f5f5f7]"}`}
                 />
                 <span className="min-w-0">
-                  <span className="block text-xs font-bold text-uni-ink">{option.label}</span>
-                  <span className="block text-[11px] text-uni-muted">{option.hint}</span>
+                  <span className="block text-xs font-bold text-uni-ink">{_uiText(option.label)}</span>
+                  <span className="block text-[11px] text-uni-muted">{_uiText(option.hint)}</span>
                 </span>
               </label>
             ))}
@@ -213,9 +214,9 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           label={_uiText("Para birimi")}
           value={currency}
           onChange={(value) => setCurrency(value as typeof currency)}
-          options={CURRENCIES.map((option) => ({
+          options={localizedCurrencies(_uiLocale).map((option) => ({
             value: option.id,
-            label: `${option.symbol} ${option.id} · ${option.label}`,
+            label: `${option.symbol} ${option.id} · ${_uiText(option.label)}`,
           }))}
         />
 
@@ -233,11 +234,11 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
                   checked={format === option.id}
                   onChange={() => setFormat(option.id)}
                   className="peer sr-only"
-                  aria-label={_uiText("{value1} ({value2})", {value1: String(option.hint), value2: String(option.label)})}
+                  aria-label={_uiText("{value1} ({value2})", {value1: String(new Intl.DisplayNames(_uiLocale,{type:'language'}).of(option.id)), value2: String(option.label)})}
                 />
                 <span className="uni-choice flex min-h-10 flex-col items-center justify-center rounded-2xl px-2 py-2 transition-colors hover:bg-uni-surface peer-checked:bg-uni-hover peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-neutral-400">
-                  <span className="text-xs font-bold text-uni-ink">{option.label}</span>
-                  <span className="text-[11px] text-uni-muted">{option.hint}</span>
+                  <span className="text-xs font-bold text-uni-ink">{_uiText(option.label)}</span>
+                  <span className="text-[11px] text-uni-muted">{new Intl.DisplayNames(_uiLocale,{type:'language'}).of(option.id)}</span>
                 </span>
               </label>
             ))}
@@ -250,7 +251,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           <span aria-hidden="true" className="mx-1">·</span>
           <span>{currencyAuto ? _uiText("Varsayılan ülkeyi takip ediyor") : _uiText("Elle seçim etkin")}</span>
           <span aria-hidden="true" className="mx-1">·</span>
-          <span>{saveLabel}</span>
+          <span>{_uiText(saveLabel)}</span>
         </div>
       </section>
 
@@ -267,7 +268,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         <div className="my-4 border-t border-uni-border" />
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
           <span className="flex items-center gap-2 text-uni-muted"><ShieldCheck size={17} /> {_uiText("Erişim yetkisi")}</span>
-          <span className="font-medium">{userRole}</span>
+          <span className="font-medium">{_uiText(roleLabel(userRole))}</span>
         </div>
       </section>
 
@@ -276,7 +277,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
           type="button"
           className={`uni-control ${secondaryStyle} w-full sm:w-auto`}
           onClick={async () => {
-            if (await confirmDialog("Oturumu kapatmak istediğinize emin misiniz?")) onLogout();
+            if (await confirmDialog(_uiText("Oturumu kapatmak istediğinize emin misiniz?"))) onLogout();
           }}
         >
           <LogOut size={16} /> {_uiText("Oturumu Kapat")} </button>

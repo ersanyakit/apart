@@ -141,7 +141,7 @@ export function InventoryView({
           onRooms={f=>{setFloor(f.floor_id);setMode('rooms');setSelected([]);setParent(null);}}
           onDelete={f=>void (async()=>{
             const name=localized(f.label,locale.toUpperCase())||f.code;
-            if(await confirmDialog(`${name} (${f.code}) silinsin mi? Bu katta kayıtlı birim bulunmuyor.`))
+            if(await confirmDialog(_uiText("{value1} ({value2}) silinsin mi? Bu katta kayıtlı birim bulunmuyor.", {value1: String(name), value2: String(f.code)})))
               await work(async()=>{await command('floor.delete',{id:f.floor_id});if(floor===f.floor_id){setFloor('');setParent(null);}});
           })()}/>}
         {mode === "rooms" && (
@@ -308,7 +308,7 @@ export function InventoryView({
                         onClick={async () => {
                           if (
                             await confirmDialog(
-                              `${b.code} fiziksel yatağı ve yatak yerleri silinsin mi?`,
+                              _uiText("{value1} fiziksel yatağı ve yatak yerleri silinsin mi?", {value1: String(b.code)}),
                             )
                           )
                             await work(() =>
