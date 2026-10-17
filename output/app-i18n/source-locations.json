@@ -263,6 +263,18 @@
       "line": 101
     }
   ],
+  "{title}: üst alanı daralt": [
+    {
+      "file": "ui/src/components/PageHeader.tsx",
+      "line": 57
+    }
+  ],
+  "{title}: üst alanı genişlet": [
+    {
+      "file": "ui/src/components/PageHeader.tsx",
+      "line": 57
+    }
+  ],
   "{units} oda / daire ve {beds} fiziksel yatak hazırlanacak.": [
     {
       "file": "ui/src/components/SetupWizard.tsx",
@@ -857,12 +869,6 @@
     {
       "file": "ui/src/components/kanban/KanbanView.tsx",
       "line": 102
-    }
-  ],
-  "{value1}: üst alanı {value2}": [
-    {
-      "file": "ui/src/components/PageHeader.tsx",
-      "line": 57
     }
   ],
   "{value1}. Değerler grafiğin altındaki açılır tabloda da bulunur.": [
@@ -7755,12 +7761,6 @@
     {
       "file": "internal/domain/catalog/defaults.json",
       "line": 1
-    }
-  ],
-  "genişlet": [
-    {
-      "file": "ui/src/components/PageHeader.tsx",
-      "line": 57
     }
   ],
   "Genişlik": [

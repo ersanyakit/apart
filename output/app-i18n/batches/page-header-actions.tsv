@@ -1,0 +1,59 @@
+en	{value1} toolbar	Expand header: {title}	Collapse header: {title}	Expand header	Collapse header	Bookings
+de	Werkzeugleiste: {value1}	Kopfbereich erweitern: {title}	Kopfbereich einklappen: {title}	Kopfbereich erweitern	Kopfbereich einklappen	Buchungen
+fr	Barre d’outils : {value1}	Développer l’en-tête : {title}	Réduire l’en-tête : {title}	Développer l’en-tête	Réduire l’en-tête	Réservations
+ru	Панель инструментов: {value1}	Развернуть заголовок: {title}	Свернуть заголовок: {title}	Развернуть заголовок	Свернуть заголовок	Бронирования
+ar	شريط أدوات {value1}	توسيع الرأس: {title}	طي الرأس: {title}	توسيع الرأس	طي الرأس	الحجوزات
+ne	{value1} उपकरणपट्टी	शीर्ष भाग विस्तार गर्नुहोस्: {title}	शीर्ष भाग खुम्च्याउनुहोस्: {title}	शीर्ष भाग विस्तार गर्नुहोस्	शीर्ष भाग खुम्च्याउनुहोस्	आरक्षणहरू
+th	แถบเครื่องมือ {value1}	ขยายส่วนหัว: {title}	ย่อส่วนหัว: {title}	ขยายส่วนหัว	ย่อส่วนหัว	การจอง
+zh-CN	{value1}工具栏	展开页头：{title}	收起页头：{title}	展开页头	收起页头	预订
+zh-TW	{value1}工具列	展開頁首：{title}	收合頁首：{title}	展開頁首	收合頁首	預訂
+hi	{value1} टूलबार	शीर्ष भाग फैलाएँ: {title}	शीर्ष भाग समेटें: {title}	शीर्ष भाग फैलाएँ	शीर्ष भाग समेटें	आरक्षण
+km	របារឧបករណ៍ {value1}	ពង្រីកផ្នែកក្បាល៖ {title}	បង្រួមផ្នែកក្បាល៖ {title}	ពង្រីកផ្នែកក្បាល	បង្រួមផ្នែកក្បាល	ការកក់
+si	{value1} මෙවලම් තීරුව	ශීර්ෂය විහිදුවන්න: {title}	ශීර්ෂය හකුළන්න: {title}	ශීර්ෂය විහිදුවන්න	ශීර්ෂය හකුළන්න	වෙන්කිරීම්
+ta	{value1} கருவிப்பட்டி	தலைப்புப் பகுதியை விரி: {title}	தலைப்புப் பகுதியைச் சுருக்கு: {title}	தலைப்புப் பகுதியை விரி	தலைப்புப் பகுதியைச் சுருக்கு	முன்பதிவுகள்
+yue	{value1}工具列	展開頁首：{title}	收起頁首：{title}	展開頁首	收起頁首	預訂
+ur	{value1} ٹول بار	سرخی کا حصہ پھیلائیں: {title}	سرخی کا حصہ سمیٹیں: {title}	سرخی کا حصہ پھیلائیں	سرخی کا حصہ سمیٹیں	بکنگز
+bn	{value1} টুলবার	শিরোনাম অংশ খুলুন: {title}	শিরোনাম অংশ গুটান: {title}	শিরোনাম অংশ খুলুন	শিরোনাম অংশ গুটান	বুকিংসমূহ
+dz	{value1} ལག་ཆས་ཕྲ་རིང་།	མགོ་མིང་རྒྱ་བསྐྱེད་: {title}	མགོ་མིང་བསྡུ་: {title}	མགོ་མིང་རྒྱ་བསྐྱེད།	མགོ་མིང་བསྡུ།	སྔོན་མངགས་ཚུ།
+es	Barra de herramientas: {value1}	Expandir cabecera: {title}	Contraer cabecera: {title}	Expandir cabecera	Contraer cabecera	Reservas
+it	Barra degli strumenti: {value1}	Espandi intestazione: {title}	Comprimi intestazione: {title}	Espandi intestazione	Comprimi intestazione	Prenotazioni
+pt	Barra de ferramentas: {value1}	Expandir cabeçalho: {title}	Recolher cabeçalho: {title}	Expandir cabeçalho	Recolher cabeçalho	Reservas
+nl	Werkbalk: {value1}	Kop uitklappen: {title}	Kop inklappen: {title}	Kop uitklappen	Kop inklappen	Boekingen
+pl	Pasek narzędzi: {value1}	Rozwiń nagłówek: {title}	Zwiń nagłówek: {title}	Rozwiń nagłówek	Zwiń nagłówek	Rezerwacje
+cs	Panel nástrojů: {value1}	Rozbalit záhlaví: {title}	Sbalit záhlaví: {title}	Rozbalit záhlaví	Sbalit záhlaví	Rezervace
+hu	{value1} eszköztár	Fejléc kibontása: {title}	Fejléc összecsukása: {title}	Fejléc kibontása	Fejléc összecsukása	Foglalások
+ro	Bara de instrumente: {value1}	Extinde antetul: {title}	Restrânge antetul: {title}	Extinde antetul	Restrânge antetul	Rezervări
+el	Γραμμή εργαλείων: {value1}	Ανάπτυξη κεφαλίδας: {title}	Σύμπτυξη κεφαλίδας: {title}	Ανάπτυξη κεφαλίδας	Σύμπτυξη κεφαλίδας	Κρατήσεις
+uk	Панель інструментів: {value1}	Розгорнути заголовок: {title}	Згорнути заголовок: {title}	Розгорнути заголовок	Згорнути заголовок	Бронювання
+bg	Лента с инструменти: {value1}	Разгъни заглавната част: {title}	Свий заглавната част: {title}	Разгъни заглавната част	Свий заглавната част	Резервации
+sr	Трака са алаткама: {value1}	Прошири заглавље: {title}	Скупи заглавље: {title}	Прошири заглавље	Скупи заглавље	Резервације
+hr	Alatna traka: {value1}	Proširi zaglavlje: {title}	Sažmi zaglavlje: {title}	Proširi zaglavlje	Sažmi zaglavlje	Rezervacije
+sk	Panel nástrojov: {value1}	Rozbaliť hlavičku: {title}	Zbaliť hlavičku: {title}	Rozbaliť hlavičku	Zbaliť hlavičku	Rezervácie
+sl	Orodna vrstica: {value1}	Razširi glavo: {title}	Skrči glavo: {title}	Razširi glavo	Skrči glavo	Rezervacije
+fi	Työkalurivi: {value1}	Laajenna otsake: {title}	Kutista otsake: {title}	Laajenna otsake	Kutista otsake	Varaukset
+sv	Verktygsfält: {value1}	Expandera sidhuvudet: {title}	Fäll ihop sidhuvudet: {title}	Expandera sidhuvudet	Fäll ihop sidhuvudet	Bokningar
+da	Værktøjslinje: {value1}	Udvid sidehoved: {title}	Fold sidehoved sammen: {title}	Udvid sidehoved	Fold sidehoved sammen	Bookinger
+no	Verktøylinje: {value1}	Utvid topptekst: {title}	Fold sammen topptekst: {title}	Utvid topptekst	Fold sammen topptekst	Bestillinger
+ms	Bar alat {value1}	Kembangkan pengepala: {title}	Kecilkan pengepala: {title}	Kembangkan pengepala	Kecilkan pengepala	Tempahan
+id	Bilah alat {value1}	Perluas header: {title}	Ciutkan header: {title}	Perluas header	Ciutkan header	Reservasi
+vi	Thanh công cụ {value1}	Mở rộng phần đầu: {title}	Thu gọn phần đầu: {title}	Mở rộng phần đầu	Thu gọn phần đầu	Đặt phòng
+ja	{value1}のツールバー	ヘッダーを展開：{title}	ヘッダーを折りたたむ：{title}	ヘッダーを展開	ヘッダーを折りたたむ	予約一覧
+ko	{value1} 도구 모음	머리글 펼치기: {title}	머리글 접기: {title}	머리글 펼치기	머리글 접기	예약 목록
+fa	نوار ابزار {value1}	گسترش سرصفحه: {title}	جمع کردن سرصفحه: {title}	گسترش سرصفحه	جمع کردن سرصفحه	رزروها
+he	סרגל כלים: {value1}	הרחבת הכותרת: {title}	צמצום הכותרת: {title}	הרחבת הכותרת	צמצום הכותרת	הזמנות
+sw	Upau wa zana wa {value1}	Panua kichwa: {title}	Kunja kichwa: {title}	Panua kichwa	Kunja kichwa	Nafasi zilizohifadhiwa
+am	የ{value1} መሣሪያ አሞሌ	ራስጌን ዘርጋ፦ {title}	ራስጌን አጥብ፦ {title}	ራስጌን ዘርጋ	ራስጌን አጥብ	ቦታ ማስያዣዎች
+mr	{value1} साधनपट्टी	शीर्ष भाग विस्तृत करा: {title}	शीर्ष भाग संकुचित करा: {title}	शीर्ष भाग विस्तृत करा	शीर्ष भाग संकुचित करा	आरक्षणे
+pa	{value1} ਟੂਲਬਾਰ	ਸਿਰਲੇਖ ਭਾਗ ਫੈਲਾਓ: {title}	ਸਿਰਲੇਖ ਭਾਗ ਸਮੇਟੋ: {title}	ਸਿਰਲੇਖ ਭਾਗ ਫੈਲਾਓ	ਸਿਰਲੇਖ ਭਾਗ ਸਮੇਟੋ	ਬੁਕਿੰਗਾਂ
+te	{value1} సాధన పట్టీ	శీర్షికను విస్తరించండి: {title}	శీర్షికను కుదించండి: {title}	శీర్షికను విస్తరించండి	శీర్షికను కుదించండి	రిజర్వేషన్లు
+my	{value1} ကိရိယာဘား	ခေါင်းစီးချဲ့ရန်: {title}	ခေါင်းစီးချုံ့ရန်: {title}	ခေါင်းစီးချဲ့ရန်	ခေါင်းစီးချုံ့ရန်	ကြိုတင်မှာယူမှုများ
+lo	ແຖບເຄື່ອງມື {value1}	ຂະຫຍາຍສ່ວນຫົວ: {title}	ຫຍໍ້ສ່ວນຫົວ: {title}	ຂະຫຍາຍສ່ວນຫົວ	ຫຍໍ້ສ່ວນຫົວ	ການຈອງ
+ka	{value1}-ის ხელსაწყოთა ზოლი	სათაურის გაშლა: {title}	სათაურის შეკეცვა: {title}	სათაურის გაშლა	სათაურის შეკეცვა	ჯავშნები
+hy	{value1} գործիքագոտի	Ընդլայնել վերնամասը՝ {title}	Սեղմել վերնամասը՝ {title}	Ընդլայնել վերնամասը	Սեղմել վերնամասը	Ամրագրումներ
+az	{value1} alətlər paneli	Üst sahəni genişləndir: {title}	Üst sahəni daralt: {title}	Üst sahəni genişləndir	Üst sahəni daralt	Rezervasiyalar
+kk	{value1} құралдар тақтасы	Жоғарғы аймақты жаю: {title}	Жоғарғы аймақты жию: {title}	Жоғарғы аймақты жаю	Жоғарғы аймақты жию	Брондаулар
+uz	{value1} asboblar paneli	Yuqori qismni kengaytirish: {title}	Yuqori qismni yig‘ish: {title}	Yuqori qismni kengaytirish	Yuqori qismni yig‘ish	Bandlovlar
+ky	{value1} куралдар панели	Жогорку бөлүктү кеңейтүү: {title}	Жогорку бөлүктү жыйноо: {title}	Жогорку бөлүктү кеңейтүү	Жогорку бөлүктү жыйноо	Брондоолор
+mn	{value1} хэрэгслийн мөр	Толгой хэсгийг дэлгэх: {title}	Толгой хэсгийг хураах: {title}	Толгой хэсгийг дэлгэх	Толгой хэсгийг хураах	Захиалгууд
+ps	د {value1} اوزار پټه	سرلیک پراخ کړئ: {title}	سرلیک راټول کړئ: {title}	سرلیک پراخ کړئ	سرلیک راټول کړئ	ریزرفونه
+ku	Darikê amûran ê {value1}	Sernavê fireh bike: {title}	Sernavê teng bike: {title}	Sernavê fireh bike	Sernavê teng bike	Rezervasyon

@@ -54,7 +54,7 @@ export function PageHeader({ pageId, propertyName, actions, children, globalActi
         </h2>
       </div>
       <button type="button" className="nav-icon-button page-header-toggle" aria-expanded={!collapsed} aria-controls={`${id}-details`}
-        aria-label={_uiText("{value1}: üst alanı {value2}", {value1: String(title), value2: String(collapsed ? "genişlet" : "daralt")})} title={collapsed ? _uiText("Üst alanı genişlet") : _uiText("Üst alanı daralt")}
+        aria-label={collapsed?_uiText("{title}: üst alanı genişlet", {title}):_uiText("{title}: üst alanı daralt", {title})} title={collapsed ? _uiText("Üst alanı genişlet") : _uiText("Üst alanı daralt")}
         onClick={() => setCollapsed(!collapsed)}>
         {collapsed ? <ChevronDown size={20} aria-hidden="true" /> : <ChevronUp size={20} aria-hidden="true" />}
       </button>
