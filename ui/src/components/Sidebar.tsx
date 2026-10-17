@@ -29,7 +29,7 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
           aria-current={activeTab === entry.id ? "page" : undefined}
           onClick={() => onSelect(entry.id)}
           className={`nav-rail-item border-0 shadow-none outline-none ${activeTab === entry.id ? "bg-brand-blue-100 text-brand-blue-500" : "text-slate-500 hover:bg-black/[0.04] active:bg-black/[0.06]"}`}>
-          <NavigationIcon name={entry.id} />
+          <NavigationIcon name={entry.id} size={48} />
         </button>
       ))}
     </div>;
@@ -51,13 +51,13 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                   aria-current={isActive ? "page" : undefined}
                   title={typeof entry.label === "string" ? entry.label : undefined}
                   onClick={() => onSelect(entry.id)}
-                  className="uni-control sidebar-menu-row flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left outline-none select-none"
+                  className="uni-control sidebar-menu-row flex min-h-[72px] w-full cursor-pointer items-center gap-3 px-4 py-3 text-left outline-none select-none"
                 >
                   <span
                     aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-blue-50 text-brand-blue-500"
+                    className="sidebar-menu-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-blue-50 text-brand-blue-500"
                   >
-                    <NavigationIcon name={entry.id} />
+                    <NavigationIcon name={entry.id} size={48} />
                   </span>
                   <span
                     className={`min-w-0 flex-1 truncate text-[15px] leading-6 ${

@@ -1,17 +1,40 @@
 {
   "pages": {
-    "operations": "LayoutGrid", "board": "PanelsTopLeft", "property3d": "Box",
-    "calendar": "CalendarDays", "bookings": "CalendarCheck2", "bookings-list": "ClipboardList",
-    "newbooking": "CalendarPlus", "kanban": "PanelsLeftBottom", "stays": "BedDouble",
-    "blacklist": "ShieldBan", "guests": "UsersRound", "settings": "Settings2",
-    "appsettings": "SlidersHorizontal", "personal": "SlidersHorizontal", "setup": "WandSparkles",
-    "facility": "Building2", "units": "DoorOpen", "staff": "ContactRound",
-    "templates": "Files", "logs": "History", "features": "Sparkles",
-    "reports": "ChartNoAxesCombined", "folio": "ReceiptText", "home": "House"
+    "operations": "board",
+    "board": "board",
+    "property3d": "property3d",
+    "calendar": "calendar",
+    "bookings": "bookings",
+    "bookings-list": "bookings-list",
+    "newbooking": "bookings",
+    "kanban": "kanban",
+    "stays": "stays",
+    "blacklist": "blacklist",
+    "guests": "guests",
+    "settings": "settings",
+    "appsettings": "appsettings",
+    "personal": "appsettings",
+    "setup": "setup",
+    "facility": "facility",
+    "units": "units",
+    "staff": "staff",
+    "templates": "templates",
+    "logs": "logs",
+    "features": "features",
+    "reports": "reports",
+    "folio": "folio",
+    "home": "facility"
   },
   "reports": {
-    "finance": "Wallet", "occupancy": "ChartPie", "reservations": "CalendarCheck2",
-    "pricing": "TrendingUp", "guests": "UsersRound", "staff": "ContactRound",
-    "operations": "Wrench", "apart": "Building2", "hostel": "BedDouble", "management": "ChartColumnIncreasing"
+    "finance": "finance",
+    "occupancy": "occupancy",
+    "reservations": "bookings",
+    "pricing": "reports",
+    "guests": "guests",
+    "staff": "staff",
+    "operations": "maintenance",
+    "apart": "facility",
+    "hostel": "stays",
+    "management": "reports"
   }
 }

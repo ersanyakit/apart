@@ -43,20 +43,26 @@ page.setDefaultTimeout(15000);await page.emulateMedia({reducedMotion:'reduce'});
 await page.getByRole('button',{name:'Oda Durum Çizelgesi',exact:true}).last().click();
 await fs.mkdir('output/navigation-icons',{recursive:true});
 await page.locator('.navigation-artwork').first().waitFor();
-await page.evaluate(async()=>{
-  const urls=[...new Set(Array.from(document.querySelectorAll('.navigation-artwork')).map(el=>getComputedStyle(el).maskImage.match(/url\(["']?(.*?)["']?\)/)?.[1]).filter(Boolean))];
-  await Promise.all(urls.map(async url=>{const img=new Image();img.src=url;await img.decode();}));
-});
+await page.waitForFunction(()=>Array.from(document.querySelectorAll('img.navigation-artwork')).every(img=>img.complete&&img.naturalWidth>0));
 const themeColors=[];
 for(const theme of ['blue','pink','green','orange','purple','fuchsia']) {
   await page.evaluate(theme=>document.documentElement.setAttribute('data-theme',theme),theme);
-  const color=await page.locator('.navigation-artwork').first().evaluate(el=>getComputedStyle(el).backgroundColor);
+  const color=await page.locator('.navigation-artwork').first().evaluate(el=>getComputedStyle(el).filter);
   themeColors.push(color);
   await page.screenshot({path:`output/navigation-icons/theme-${theme}.png`});
 }
 assert.equal(new Set(themeColors).size,6,'Navigation artwork must follow every theme');
 await page.evaluate(()=>document.documentElement.setAttribute('data-theme','blue'));
 await page.screenshot({path:'output/navigation-icons/desktop.png'});
+const sidebarIcon=page.locator('.sidebar-menu-row img.navigation-artwork').first();
+assert.equal(await sidebarIcon.evaluate(el=>el.getBoundingClientRect().width),32);
+assert.equal(await sidebarIcon.evaluate(el=>el.getBoundingClientRect().height),32);
+await page.getByRole('button',{name:'Menüyü daralt',exact:true}).click();
+const railIcon=page.locator('.nav-rail-item img.navigation-artwork').first();
+assert.equal(await railIcon.evaluate(el=>el.getBoundingClientRect().width),32);
+await page.screenshot({path:'output/navigation-icons/collapsed.png'});
+await page.getByRole('button',{name:'Menüyü genişlet',exact:true}).click();
+
 await page.getByRole('button',{name:'104 işlemleri',exact:true}).click();
 let modal=page.getByRole('dialog',{name:'Oda 104',exact:true});
 await modal.getByRole('button',{name:'Oda durumu',exact:true}).click();
@@ -90,6 +96,15 @@ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWid
 await modal.getByRole('button',{name:'Temiz olarak kaydet',exact:true}).click();
 await modal.waitFor({state:'hidden'});
 assert.equal(writes[1].last_cleaning.cleaner_id,'cleaner-1');assert.equal(writes[1].last_cleaning.note,'Banyo ve havlular temizlendi.');
+await page.getByRole('button',{name:'Menüyü aç',exact:true}).click();
+await page.getByRole('dialog',{name:'Menü',exact:true}).waitFor();
+await page.waitForFunction(()=>Array.from(document.querySelectorAll('img.navigation-artwork')).every(img=>img.complete&&img.naturalWidth>0));
+const mobileIcon=page.locator('.mobile-menu-row img.navigation-artwork').first();
+assert.equal(await mobileIcon.evaluate(el=>el.getBoundingClientRect().width),32);
+await page.screenshot({path:'output/navigation-icons/mobile-menu.png'});
+assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+await page.keyboard.press('Escape');
+await page.getByRole('dialog',{name:'Menü',exact:true}).waitFor({state:'hidden'});
 await page.setViewportSize({width:1440,height:1000});
 await page.getByRole('button',{name:'201 işlemleri',exact:true}).click();
 await page.getByRole('button',{name:'Rezervasyonu İptal Et',exact:true}).click();

@@ -1,0 +1,32 @@
+{
+  "mode": "built-in image_gen",
+  "base": "Use case: stylized-concept. Production sidebar bitmap icon for hotel app, an extremely SIMPLE flat Day of the Tentacle 1993 adventure-game inventory item. Hand-drawn wonky silhouette, slightly exaggerated crooked proportions, thick smooth DARK NAVY BLUE contour, ONLY sky cyan blue #2ABDFF and pale icy blue #DFF5FF interior, one flat darker blue shadow plane maximum. No purple, no green, no pink. Bold filled cartoon shape, not thin line art. No textures, no gradients, no gloss, no 3D rendering, no decorative props, no background plaque, no letters numbers or text, no faces, no extra tiny details. Must be instantly recognizable at 24 pixels. One isolated centered object, occupying 88 percent of square, transparent background. Subject: ",
+  "subjects": {
+    "board": "a chunky slightly crooked 2 by 2 hotel room status tile board, four large tiles, no tiny marks",
+    "property3d": "one simple wonky isometric cube representing a hotel floor model",
+    "calendar": "one chunky desk calendar, two binding rings, one large square in its center",
+    "bookings": "one chunky calendar page with one oversized checkmark",
+    "bookings-list": "one chunky clipboard with exactly three broad horizontal marks",
+    "kanban": "two overlapping chunky sticky note squares, one tilted, absolutely no tiny markings",
+    "stays": "one simple chunky hotel double bed, two pillows, no people",
+    "blacklist": "one chunky security shield with one large diagonal forbidden slash",
+    "guests": "two simple rounded guest bust silhouettes, one foreground and one behind, no faces",
+    "settings": "one chunky wonky gear with six broad teeth and one central hole",
+    "appsettings": "two chunky vertical slider levers with large round knobs",
+    "setup": "one short chunky magic wand with one large four-point star",
+    "facility": "one simple chunky three-floor hotel building, three large windows and one door",
+    "units": "one slightly open chunky hotel door in a crooked frame",
+    "staff": "one simple hotel staff bust with a bellhop cap, no face details",
+    "templates": "two overlapping chunky blank document sheets with one folded corner",
+    "logs": "one chunky history clock with a broad curved return arrow, two hands",
+    "features": "one large four-point sparkle with one small companion sparkle",
+    "reports": "one simple chunky bar chart of three ascending bars on a single thick base",
+    "folio": "one chunky short receipt with zigzag bottom and exactly two broad horizontal marks",
+    "finance": "one chunky wallet with one large round clasp",
+    "occupancy": "one simple chunky circular pie chart with a single separated wedge",
+    "maintenance": "one chunky short-handled repair wrench"
+  },
+  "asset_directory": "ui/public/images/navigation-dott-simple",
+  "format": "AVIF",
+  "size": 192
+}

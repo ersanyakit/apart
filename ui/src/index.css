@@ -601,7 +601,7 @@ html:has(.app-shell), body:has(.app-shell) {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
-.nav-rail-item { width: 44px; margin-inline: auto; border-radius: 50%; }
+.nav-rail-item { width: 52px; height: 56px; margin-inline: auto; border-radius: 50%; }
 .nav-icon-button, .nav-rail-item { --interaction-press-scale: var(--interaction-icon-press-scale); }
 .nav-icon-button:active:not(:disabled):not([aria-disabled="true"]) { background-color: rgb(0 0 0 / 12%); }
 .mobile-sheet-dialog {
@@ -672,7 +672,7 @@ html:has(.app-shell), body:has(.app-shell) {
 .mobile-menu-row:active { background: #e5e5ea; }
 .mobile-menu-row[data-destructive="true"], .mobile-menu-row[data-destructive="true"] .mobile-menu-icon { color: #dc2626; }
 .mobile-menu-row[data-destructive="true"] .mobile-menu-icon { background: #fef2f2; }
-.mobile-menu-icon { display: flex; width: 32px; height: 32px; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 9px; color: var(--color-brand-blue-600); background: var(--color-brand-blue-50); }
+.mobile-menu-icon { display: flex; width: 48px; height: 48px; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 9px; color: var(--color-brand-blue-600); background: var(--color-brand-blue-50); }
 @media (min-width: 640px) {
   .mobile-sheet-panel { max-width: 620px; left: 50%; right: auto; margin-left: -310px; max-height: 90dvh; }
 }
@@ -1039,17 +1039,26 @@ div.flex:not(.flex-col):not(.flex-col-reverse):has([aria-expanded="true"]):has([
   height: auto;
 }
 
-/* AVIF provides the contour; the selected theme provides the color live. */
+/* Full-color cartoon AVIFs retain their drawing and adapt to the active theme. */
 .navigation-artwork {
   display: inline-block;
   vertical-align: middle;
-  color: var(--color-brand-blue-600);
-  background-color: currentColor;
-  mask-mode: alpha;
-  mask-size: contain;
-  mask-position: center;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  -webkit-mask-position: center;
-  -webkit-mask-repeat: no-repeat;
+  filter: var(--navigation-artwork-filter, none);
 }
+[data-theme="pink"] { --navigation-artwork-filter: hue-rotate(118deg); }
+[data-theme="green"] { --navigation-artwork-filter: hue-rotate(-30deg); }
+[data-theme="orange"] { --navigation-artwork-filter: hue-rotate(-181deg); }
+[data-theme="purple"] { --navigation-artwork-filter: hue-rotate(58deg); }
+[data-theme="fuchsia"] { --navigation-artwork-filter: hue-rotate(117deg) saturate(1.08); }
+
+/* Sidebar and mobile menu icon size: change this one token to preview sizes. */
+:root { --sidebar-icon-size: 32px; }
+.sidebar-menu-row, .nav-rail-item, .mobile-menu-row {
+  --navigation-icon-size: var(--sidebar-icon-size);
+}
+.sidebar-menu-icon, .mobile-menu-icon {
+  width: var(--sidebar-icon-size);
+  height: var(--sidebar-icon-size);
+}
+.sidebar-menu-row { min-height: calc(var(--sidebar-icon-size) + 24px); }
+.nav-rail-item { width: 44px; height: 44px; }

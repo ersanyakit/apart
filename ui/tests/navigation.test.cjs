@@ -119,7 +119,8 @@ test('every navigation destination uses shared AVIF artwork, including dynamic t
     const markup = renderToStaticMarkup(React.createElement(NavigationIcon, {name}));
     assert.ok(markup.includes(src), name);
     assert.ok(markup.includes('aria-hidden="true"'), name);
-    assert.ok(markup.includes('mask-image:'), name);
+    assert.ok(markup.includes('<img'), name);
+    assert.ok(!markup.includes('mask-image:'), name);
     assert.ok(!markup.includes('<svg'), name);
   }
 });

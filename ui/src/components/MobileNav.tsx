@@ -83,7 +83,7 @@ export function MobileNav({ snapshot, groups, activeTab, onSelect, onSelection, 
               {(group.subItems ?? [group]).map((item) => (
                 <button key={item.id} type="button" onClick={() => pick(item.id)} aria-current={activeTab === item.id ? "page" : undefined}
                   className="mobile-menu-row">
-                  <span className="mobile-menu-icon"><NavigationIcon name={item.id} /></span>
+                  <span className="mobile-menu-icon"><NavigationIcon name={item.id} size={48} /></span>
                   <span className="min-w-0 flex-1">{item.label}</span>
                   {activeTab === item.id ? <Check size={18} className="shrink-0 text-brand-blue-500" /> : <ChevronRight size={17} className="shrink-0 text-slate-300" />}
                 </button>

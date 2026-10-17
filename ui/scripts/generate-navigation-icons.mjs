@@ -1,18 +1,15 @@
 import fs from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
-import React from 'react';
-import {renderToStaticMarkup} from 'react-dom/server';
-import * as icons from 'lucide-react';
 import sharp from 'sharp';
 const ui=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const definitions=JSON.parse(await fs.readFile(path.join(ui,'src/lib/navigation-icons.json'),'utf8'));
-const target=path.join(ui,'public/images/navigation-flat');
+// Encode the selected Imagegen originals; the application only uses project AVIFs.
+const manifest=path.resolve(process.argv[2] ?? path.join(ui,'../output/navigation-icons/generated-sources.json'));
+const sources=JSON.parse(await fs.readFile(manifest,'utf8'));
+const target=path.join(ui,'public/images/navigation-dott-simple');
 await fs.mkdir(target,{recursive:true});
-for(const name of new Set([...Object.values(definitions.pages),...Object.values(definitions.reports)])) {
-  if(!icons[name]) throw new Error(`Unknown navigation icon: ${name}`);
-  // AVIF alpha masks: a single clean contour, colored live by the selected theme.
-  const svg=renderToStaticMarkup(React.createElement(icons[name],{size:32,strokeWidth:1.8,color:'#000000'}));
-  await sharp(Buffer.from(svg),{density:576}).resize(128,128).avif({quality:90,effort:7}).toFile(path.join(target,`${name}.avif`));
+for(const [key,source] of Object.entries(sources)) {
+  if(!/^[a-z0-9-]+$/.test(key)) throw new Error(`Invalid asset name: ${key}`);
+  await sharp(source).resize(192,192).avif({quality:85,effort:7}).toFile(path.join(target,`${key}.avif`));
 }
-console.log('Flat navigation AVIF assets generated.');
+console.log(`Encoded ${Object.keys(sources).length} cartoon navigation AVIFs.`);
