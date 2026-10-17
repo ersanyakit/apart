@@ -76,5 +76,57 @@
       "Extractor fan redrawn as flat under-cabinet unit, distinct from chimney hood"
     ],
     "status": "reviewed"
+  },
+  "kitchenware": {
+    "entries": 90,
+    "pages_reviewed": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "corrections": [
+      "Kitchen towel redrawn as reusable woven fabric, distinct from paper towel",
+      "Teapot redrawn as two-piece stovetop Turkish tea set, distinct from electric tea maker"
+    ],
+    "status": "reviewed"
+  },
+  "electronics": {
+    "entries": 27,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed",
+    "corrections": [
+      "Smart TV redrawn with application tiles and Wi-Fi symbol, distinct from ordinary TV"
+    ]
+  },
+  "climate": {
+    "entries": 23,
+    "pages_reviewed": [
+      1,
+      2
+    ],
+    "checks": [
+      "specific feature represented",
+      "coherent 2D adventure-game style",
+      "application palette",
+      "real 256x256 AVIF"
+    ],
+    "status": "reviewed"
   }
 }
