@@ -1,0 +1,33 @@
+(node:44476) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ builds only the selected branch, preserves arbitrary floor IDs and negative sort order (8.229584ms)
+✔ uses saved nonoverlapping placements; fallback layout is stable without API mutations (0.340083ms)
+✔ physical beds retain all four tiers, dimensions and unit IDs, without creating demo beds (0.425291ms)
+✔ nested rooms inherit their floor and standalone bunk units share one physical group (0.179292ms)
+✔ status uses shared booking semantics: overdue stays, future reservations, cancellations and branch isolation (0.425292ms)
+✔ page dedicates content to the scene with no page header and keeps controls inside (18.795833ms)
+✔ operation menu and active tab expose the new page for reception (7.842625ms)
+✔ scene rebuild and teardown release geometries, materials and textures; camera actions stay finite (54.201875ms)
+✔ explicit room layouts render single/double/twin beds without inventing rentable units (0.209125ms)
+✔ jacuzzi uses enabled room features, quantity or custom definition, not shared property spa (0.251708ms)
+✔ room bed selection produces distinct persistent structures, not a count-only visual (17.997083ms)
+✔ room form asks for whole-room or per-bed rental explicitly (39.938458ms)
+✔ sparse saved plans compact empty space without shrinking rooms, changing order or mutating API data (0.210375ms)
+✔ automatic room rows use tight shared partitions instead of broad empty lanes (0.101ms)
+✔ sleepers represent checked-in guests once with recorded gender; future bookings never create sleepers (0.242708ms)
+✔ room finishes stay stable through search and floors can be isolated without other floors (0.091833ms)
+✔ bedding uses varied reference textile colors stable across status changes and filters (0.176583ms)
+✔ dirty rooms propagate unmade bedding without marking maintenance or neighboring rooms dirty (0.262125ms)
+✔ available-bed filter excludes occupied, reserved, dirty, maintenance and inactive beds without mutating the scene (0.370833ms)
+✔ 3D booking targets permit future bookings for occupied units but block unavailable units (0.109209ms)
+✔ early checked-in guests appear immediately even when the planned reservation starts later (0.0945ms)
+✔ empty-bed filter keeps unoccupied physical bunks in a whole-room reservation without changing sales scope (1.153667ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3614.853375

@@ -270,7 +270,7 @@ test('room bed selection produces distinct persistent structures, not a count-on
   assert.equal(new Set(beds.flatMap(b => b.places.map(p => p.code))).size, 6);
   assert.ok(beds.flatMap(b => b.places).every(p => p.is_active && !p.rentable));
   const html = render(React.createElement(RoomBedsEditor, { branchId: 'b', value: choices, onChange() {}, disabled: false }));
-  for (const text of ['yatak yeri', 'kişilik yatak kapasitesi', 'Çift kişilik yatak', '4 katlı ranza']) assert.ok(html.includes(text), text);
+  for (const text of ['yatak yeri', '8 kişilik kapasite', 'Çift kişilik yatak', '4 katlı ranza']) assert.ok(html.includes(text), text);
 });
 
 test('room form asks for whole-room or per-bed rental explicitly', () => {
