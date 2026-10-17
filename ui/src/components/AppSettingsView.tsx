@@ -7,11 +7,11 @@ import { Check, ArrowUpRight, ALargeSmall, LogOut, Palette, ShieldCheck, User, B
 import { confirmDialog } from "./ConfirmDialog";
 import { useI18n } from "./I18n";
 import { LOCALES, type Locale } from "../lib/i18n/config";
+import { CountryFlag } from "./CountryFlag";
 import { CountrySelect } from "./CountrySelect";
 import { InlineSelectField } from "./fields";
 import {
   countryByCode,
-  countryFlag,
   currencyForCountry,
 } from "../lib/countries";
 import { FONT_SIZE_OPTIONS, useFontSize } from "./FontSize";
@@ -65,7 +65,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
     <div className="w-full space-y-5 pb-8 font-sans text-uni-ink">
       <PageHeader pageId="appsettings" actions={<>
         <span className="text-sm text-uni-muted" role="status">{saveLabel}</span>
-        {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>{"Yeniden dene"}</button>}
+        {preferences?.saveState === "error" && <button type="button" className={`uni-control ${secondaryStyle}`} onClick={() => void preferences.flush()}>{_uiText("Yeniden dene")}</button>}
       </>} />
 
       <div className="mx-auto max-w-[720px] space-y-5">
@@ -190,7 +190,7 @@ export function AppSettingsView({ userName, userRole, onLogout }: AppSettingsVie
         <SectionHeading icon={<Globe size={20} />} title={t("country.defaultTitle")} description={t("country.defaultDescription")} />
         <CountrySelect label={t("country.label")} value={defaultCountry} onChange={setDefaultCountry} />
         <div className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-uni-muted" aria-live="polite">
-          <span aria-hidden="true" className="text-base leading-none">{countryFlag(defaultCountry)}</span>
+          <CountryFlag code={defaultCountry} size={20} />
           <span>{countryByCode(defaultCountry, locale)?.name}</span>
           <span aria-hidden="true" className="mx-1">·</span>
           {countryCurrencyLabel ? (

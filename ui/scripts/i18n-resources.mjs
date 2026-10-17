@@ -5,12 +5,14 @@ const ui=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const base=path.join(ui,'src/lib/i18n');
 const core=JSON.parse(await fs.readFile(path.join(base,'application-core.json'),'utf8'));
 const source=JSON.parse(await fs.readFile(path.join(base,'application-source.json'),'utf8'));
+const builtins=JSON.parse(await fs.readFile(path.join(base,'catalog-source.json'),'utf8'));
 const target=path.join(base,'application');
 await fs.mkdir(target,{recursive:true});
 for(const locale of Object.keys(core)) {
   const file=path.join(target,`${locale}.json`);
   let existing={};try{existing=JSON.parse(await fs.readFile(file,'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
-  const resource=locale==='tr'?{...source,...core.tr}:{...existing,...core[locale]};
+  const native=Object.fromEntries(Object.entries(builtins).flatMap(([key,value])=>value[locale.toUpperCase()]?[[key,value[locale.toUpperCase()]]]:[]));
+  const resource=locale==='tr'?{...source,...core.tr}:{...native,...existing,...core[locale]};
   await fs.writeFile(file,JSON.stringify(resource,null,2)+'\n');
 }
 const imports=Object.keys(core).map(locale=>`  ${JSON.stringify(locale)}: () => import('./application/${locale}.json'),`).join('\n');

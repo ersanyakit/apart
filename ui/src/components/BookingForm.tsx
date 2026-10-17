@@ -397,7 +397,7 @@ export function BookingForm({
               setCount(Math.max(count, guests.length + 1));
             }}
           >
-            <Plus className="w-4 h-4" aria-hidden="true" />{"Misafir Ekle"} </button>
+            <Plus className="w-4 h-4" aria-hidden="true" />{_uiText("Misafir Ekle")} </button>
         }
       >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">

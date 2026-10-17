@@ -259,7 +259,7 @@ export function InventoryView({
                   value={parent || ""}
                   onChange={(v) => setParent(v || null)}
                   options={[
-                    { value: "", label: "Tüm odalar / bağımsız yataklar" },
+                    { value: "", label: _uiText("Tüm odalar / bağımsız yataklar") },
                     ...rooms
                       .filter((r) => r.kind !== "bed")
                       .map((r) => ({ value: r.room_id, label: r.code })),
@@ -458,7 +458,7 @@ function BedForm({
             })
           }
           options={[
-            { value: "", label: "Bağımsız yatak" },
+            { value: "", label: _uiText("Bağımsız yatak") },
             ...s.rooms
               .filter((r) => r.kind !== "bed")
               .map((r) => ({ value: r.room_id, label: r.code })),
@@ -469,7 +469,7 @@ function BedForm({
           value={b.floor_id || ""}
           onChange={(v) => patch({ floor_id: v || null })}
           options={[
-            { value: "", label: "Kat atanmamış" },
+            { value: "", label: _uiText("Kat atanmamış") },
             ...s.floors.map((f) => ({
               value: f.floor_id,
               label: localized(f.label,locale.toUpperCase()) || f.code,

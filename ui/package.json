@@ -28,7 +28,8 @@
     "test:property-3d": "node --test tests/property-3d.test.cjs",
     "test:bed-presets": "node --test tests/bed-presets.test.cjs",
     "test:status": "node --test tests/status-palette.test.cjs",
-    "audit:i18n": "node scripts/i18n-audit.mjs --strict"
+    "audit:i18n": "node scripts/i18n-audit.mjs --strict",
+    "extract:i18n": "node scripts/i18n-extract.mjs && node scripts/i18n-resources.mjs"
   },
   "dependencies": {
     "@lexical/history": "^0.39.0",

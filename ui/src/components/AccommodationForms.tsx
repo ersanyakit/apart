@@ -133,7 +133,7 @@ export function UnitForm({
           disabled={draft.kind === "bed"}
           onChange={(v) => patch({ floor_id: v || null })}
           options={[
-            { value: "", label: "Kat atanmamış" },
+            { value: "", label: _uiText("Kat atanmamış") },
             ...snapshot.floors.map((f) => ({
               value: f.floor_id,
               label: localized(f.label,locale.toUpperCase()) || f.code,
@@ -175,7 +175,7 @@ export function UnitForm({
           disabled={draft.kind === "bed"}
           onChange={(v) => patch({ parent_id: v || null })}
           options={[
-            { value: "", label: "Bağımsız birim" },
+            { value: "", label: _uiText("Bağımsız birim") },
             ...snapshot.rooms
               .filter((r) => r.room_id !== draft.room_id && r.kind !== "bed")
               .map((r) => ({
@@ -453,7 +453,7 @@ export function BulkUnitForm({
           value={floor}
           onChange={setFloor}
           options={[
-            { value: "", label: "Atanmamış" },
+            { value: "", label: _uiText("Atanmamış") },
             ...snapshot.floors.map((f) => ({
               value: f.floor_id,
               label: localized(f.label,locale.toUpperCase()) || f.code,
@@ -465,7 +465,7 @@ export function BulkUnitForm({
           value={parent}
           onChange={setParent}
           options={[
-            { value: "", label: "Bağımsız" },
+            { value: "", label: _uiText("Bağımsız") },
             ...snapshot.rooms
               .filter((r) => r.kind !== "bed")
               .map((r) => ({ value: r.room_id, label: r.code })),

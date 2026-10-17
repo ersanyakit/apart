@@ -632,7 +632,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
         </AnimatePresence>
         {["board", "bookings", "bookings-list"].includes(tab) && (
           <>
-            <PageHeader className={tab === "board" ? roomCardStyles.boardHeader : undefined} pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>{"Arıza bildir"}</button>:undefined}>
+            <PageHeader className={tab === "board" ? roomCardStyles.boardHeader : undefined} pageId={tab === "board" ? "board" : tab === "bookings-list" ? "bookings-list" : "bookings"} actions={tab !== "board" && (housekeeping||["technical","maintenance"].includes(s.user.role))?<button type="button" className={`${secondaryStyle} !rounded-full`} onClick={()=>setReasonOperation({kind:"issue",rooms:s.rooms})}>{_uiText("Arıza bildir")}</button>:undefined}>
             <div className="flex flex-wrap items-stretch gap-3">
               <FieldCard className="w-full lg:w-auto lg:flex-[2] lg:min-w-64">
                 <label className="block min-w-0 cursor-text">
@@ -670,7 +670,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                         if (!v) setPlan(false);
                       }}
                       options={[
-                        { value: "", label: "Tüm katlar" },
+                        { value: "", label: _uiText("Tüm katlar") },
                         ...s.floors.map((f) => ({
                           value: f.floor_id,
                           label: localized(f.label,locale.toUpperCase()) || f.code,
@@ -684,7 +684,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                       value={kind}
                       onChange={(v) => setKind(v)}
                       options={[
-                        { value: "", label: "Tüm birimler" },
+                        { value: "", label: _uiText("Tüm birimler") },
                         ...Object.entries(unitKinds).map(([v, l]) => ({
                           value: v,
                           label: l,
@@ -700,7 +700,7 @@ function AppContent({ snapshot, setSnapshot, initialTab, startRegistration, onLo
                     value={bookingFilter}
                     onChange={(v) => setBookingFilter(v)}
                     options={[
-                      { value: "", label: "Tüm durumlar" },
+                      { value: "", label: _uiText("Tüm durumlar") },
                       ...Object.entries(bookingStatuses).map(([v, l]) => ({
                         value: v,
                         label: l,

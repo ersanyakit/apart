@@ -188,9 +188,9 @@ export function BookingDocuments({
                       label: c.labels.TR || c.code,
                     }))
                   : [
-                      { value: "cash", label: "Nakit" },
-                      { value: "card", label: "Kart" },
-                      { value: "bank_transfer", label: "Banka transferi" },
+                      { value: "cash", label: _uiText("Nakit") },
+                      { value: "card", label: _uiText("Kart") },
+                      { value: "bank_transfer", label: _uiText("Banka transferi") },
                     ]
               }
             />

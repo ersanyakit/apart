@@ -9,6 +9,7 @@ import { useI18n } from "./I18n";
 import { StepperField, Switch, TextField } from "./fields";
 import facilityIconMap from "../lib/facility-icon-map.json";
 import catalogIconMap from "../lib/catalog-icon-map.json";
+import builtinLabels from "../lib/i18n/catalog-source.json";
 
 const icons = {
   bath: Bath, bed: BedDouble, sofa: Sofa, table: Table2,
@@ -31,10 +32,17 @@ export function CatalogIcon({ iconKey, artwork = false, featureCode, artworkSize
   return <Icon size={21} strokeWidth={1.8} aria-hidden="true" className="shrink-0" />;
 }
 
-// The catalog ships TR/EN labels. Other UI languages use English until a
-// translation for that language is supplied by the server.
-export function catalogLabel(value: LocalizedString | undefined, locale: string) {
-  return value?.[locale.toUpperCase()] || value?.EN || value?.TR || "";
+export function catalogLabel(value: LocalizedString | undefined, locale: string, translate?: (source: string) => string) {
+  const explicit=value?.[locale.toUpperCase()];
+  if(explicit)return explicit;
+  const source=value?.TR;
+  // Only application-owned catalog labels enter the UI dictionary. Hotel-authored
+  // names keep their own localized values and are never translated as UI messages.
+  if(source&&translate&&Object.hasOwn(builtinLabels,source)){
+    const translated=translate(source);
+    if(translated!==source)return translated;
+  }
+  return value?.EN || source || "";
 }
 
 export function CatalogFields({ definitions, value = [], onChange, readOnly = false, scope = "room" }: {
@@ -50,14 +58,13 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   const id = useId();
   const [query, setQuery] = useState("");
   const [opened, setOpened] = useState<string[]>([]);
-  const tr = locale === "tr";
   const useArtwork = true;
-  const label = (v?: LocalizedString) => catalogLabel(v, locale);
+  const label = (v?: LocalizedString) => catalogLabel(v, locale, _uiText);
   const normalize = (v: string) => v.toLocaleLowerCase(locale).normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll("ı", "i");
   const search = normalize(query.trim());
   const all = definitions.filter((d) => d.catalog_kind && (readOnly || d.scopes.includes(scope)));
   const items = all.filter((d) => !search || normalize([
-    d.code, ...Object.values(d.label), ...Object.values(d.category_label || {}),
+    d.code, label(d.label), label(d.category_label), label(d.group_label), ...Object.values(d.label), ...Object.values(d.category_label || {}),
     ...Object.values(d.group_label || {}),
   ].join(" ")).includes(search)).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
   const categories = Array.from(new Set(items.map((d) => d.category || "")));
@@ -67,17 +74,17 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
   ]);
   if (!all.length) return null;
   return (
-    <section className="space-y-4" aria-label={tr ? _uiText("Standart olanak ve envanter kataloğu") : _uiText("Standard amenities and inventory catalog")}>
+    <section className="space-y-4" aria-label={_uiText("Standart olanak ve envanter kataloğu")}>
       <div>
-        <h3 className="font-uninav-book text-lg text-slate-900">{scope === "property" ? (tr ? _uiText("Tesis olanakları ve envanteri") : _uiText("Property amenities and inventory")) : (tr ? _uiText("Olanaklar ve oda envanteri") : _uiText("Amenities and room inventory"))}</h3>
+        <h3 className="font-uninav-book text-lg text-slate-900">{scope === "property" ? (_uiText("Tesis olanakları ve envanteri")) : (_uiText("Olanaklar ve oda envanteri"))}</h3>
         <p className="mt-1 text-sm text-slate-500">{readOnly
-          ? (tr ? _uiText("Tüm otellerin ortak kataloğu. Odaya ait ürün ve olanaklar oda formunda seçilir.") : _uiText("Shared catalog for all hotels. Room items and amenities are selected in the room form."))
-          : scope === "property" ? (tr ? _uiText("Tesisin ortak alanlarında sunulan olanakları seçin. Fiziksel ürünlerde adedi belirtin.") : _uiText("Select amenities available at the property. Enter quantities for physical items."))
-          : (tr ? _uiText("Yalnızca bu odada bulunanları seçin. Fiziksel ürünlerde adedi belirtin.") : _uiText("Select what is available in this room. Enter quantities for physical items."))}</p>
+          ? (_uiText("Tüm otellerin ortak kataloğu. Odaya ait ürün ve olanaklar oda formunda seçilir."))
+          : scope === "property" ? (_uiText("Tesisin ortak alanlarında sunulan olanakları seçin. Fiziksel ürünlerde adedi belirtin."))
+          : (_uiText("Yalnızca bu odada bulunanları seçin. Fiziksel ürünlerde adedi belirtin."))}</p>
       </div>
-      <TextField label={tr ? _uiText("Katalogda ara") : _uiText("Search catalog")} type="search" value={query} onChange={setQuery}
-        placeholder={tr ? _uiText("Havlu, Wi-Fi, mutfak…") : _uiText("Towel, Wi-Fi, kitchen…")} />
-      {!items.length && <p className="text-sm text-slate-500">{tr ? _uiText("Eşleşen kayıt yok.") : _uiText("No matching items.")}</p>}
+      <TextField label={_uiText("Katalogda ara")} type="search" value={query} onChange={setQuery}
+        placeholder={_uiText("Havlu, Wi-Fi, mutfak…")} />
+      {!items.length && <p className="text-sm text-slate-500">{_uiText("Eşleşen kayıt yok.")}</p>}
       {categories.map((category, index) => {
         const rows = items.filter((d) => d.category === category);
         const expanded = !!search || opened.includes(category);
@@ -114,14 +121,14 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
                   <h4 className="text-sm font-medium text-slate-600">{groupName}</h4>
                   {!readOnly && <div className="flex flex-wrap items-center gap-1">
                     <button type="button" disabled={allSelected} onClick={() => updateGroup(true)}
-                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: String(tr ? "Tümünü seç" : "Select all")})}
+                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: _uiText("Tümünü seç")})}
                       className="uni-control min-h-11 rounded-xl px-3 text-xs font-medium text-slate-700 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
-                      {tr ? _uiText("Tümünü seç") : _uiText("Select all")}
+                      {_uiText("Tümünü seç")}
                     </button>
                     <button type="button" disabled={!anySelected} onClick={() => updateGroup(false)}
-                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: String(tr ? "Seçimi temizle" : "Clear selection")})}
+                      aria-label={_uiText("{value1}: {value2}", {value1: String(groupName), value2: _uiText("Seçimi temizle")})}
                       className="uni-control min-h-11 rounded-xl px-3 text-xs text-slate-500 hover:bg-white focus-visible:ring-2 focus-visible:ring-neutral-400 disabled:opacity-40">
-                      {tr ? _uiText("Seçimi temizle") : _uiText("Clear selection")}
+                      {_uiText("Seçimi temizle")}
                     </button>
                   </div>}
                 </div>
@@ -140,9 +147,9 @@ export function CatalogFields({ definitions, value = [], onChange, readOnly = fa
                         </div>
                       </div>
                       {readOnly ? <p className="mt-1 break-all text-xs text-slate-400">
-                        {d.code} · {d.scopes.includes("room") ? (tr ? _uiText("Oda") : _uiText("Room")) : (tr ? _uiText("Ortak alan / tesis") : _uiText("Common area / property"))}
+                        {d.code} · {d.scopes.includes("room") ? (_uiText("Oda")) : (_uiText("Ortak alan / tesis"))}
                       </p> : selected && d.catalog_kind !== "amenity" && <div className="mt-2">
-                        <StepperField label={_uiText("{value1} — {value2}", {value1: String(name), value2: String(tr ? "Adet" : "Quantity")})} min={0} max={Number.MAX_SAFE_INTEGER}
+                        <StepperField label={_uiText("{value1} — {value2}", {value1: String(name), value2: _uiText("Adet")})} min={0} max={Number.MAX_SAFE_INTEGER}
                           value={typeof current === "number" ? current : 1} onChange={(n) => set(d.code, n)} />
                       </div>}
                     </div>;

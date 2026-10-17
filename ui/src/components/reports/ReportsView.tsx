@@ -48,45 +48,45 @@ function ReportsPanel({snapshot:s,reportKey:key}:{snapshot:Snapshot;reportKey:st
  },[key,s.hotel_id,branch,start,end,currency,unit,group,room,channel,type,revision]);
 
  const preset=(mode:string)=>{if(mode==='today'){setStart(today);setEnd(today)}else if(mode==='month'){setStart(today.slice(0,8)+'01');setEnd(today)}else{setStart(today);setEnd(shiftDay(today,Number(mode)-1))}};
- const download=()=>{if(!data)return;const url=URL.createObjectURL(new Blob([reportCSV(data)],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`${key}-${start}-${end}-${currency}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify(_uiText("Rapor CSV olarak indirildi."))};
- if(documentEditor&&data) return <ReportDocumentEditor snapshot={s} report={data} name={current?.name??key} period={`${start} – ${end}`} branch={s.branches.find(b=>b.branch_id===branch)?.name??"Tüm tesisler"} onClose={()=>setDocumentEditor(false)}/>;
+ const download=()=>{if(!data)return;const url=URL.createObjectURL(new Blob([reportCSV(data,_uiLocale,_uiText)],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=`${key}-${start}-${end}-${currency}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify(_uiText("Rapor CSV olarak indirildi."))};
+ if(documentEditor&&data) return <ReportDocumentEditor snapshot={s} report={data} name={_uiText(current?.name??key)} period={`${start} – ${end}`} branch={s.branches.find(b=>b.branch_id===branch)?.name??"Tüm tesisler"} onClose={()=>setDocumentEditor(false)}/>;
  if(editor) return <RecordEditor snapshot={s} kinds={kinds} currency={currency} initialCategory={expensePage?expenseCategory:undefined} skipKindSelection={expensePage} initialKind={expensePage?"expense":key.includes("maintenance")?"maintenance":key.includes("complaint")?"complaint":key.includes("satisfaction")?"review":key.includes("inventory")?"stock_in":key.includes("task")||key.includes("housekeeping")||key.includes("readiness")?"task":key.includes("expense")||key.includes("costs")?"expense":key.includes("contract")||key.includes("rent")?"contract":key.includes("deposit")?"deposit_in":key.includes("conversion")?"lead":key.includes("competitor")?"competitor":key.includes("damage")?"damage":key.includes("common_area")?"common_area":key.includes("channels")?"booking_details":"receipt"} onClose={()=>setEditor(false)} onSaved={()=>{setEditor(false);setRevision(v=>v+1);notify("Rapor kaydı kaydedildi.")}}/>;
  return <div className={styles.layout}>
   <PageHeader pageId={reportPageID(key)} actions={<>
-   <button type="button" className={secondaryStyle} onClick={()=>setCustomize(v=>!v)} aria-expanded={customize}><SlidersHorizontal size={17}/>{"Görünüm"}</button>
-   <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={()=>setDocumentEditor(true)}><FileText size={17}/>{"Belge hazırla"}</button>
-   <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={download}><Download size={17}/>{"CSV indir"}</button>
-   <button type="button" className={buttonStyle} disabled={!kinds.length} onClick={()=>setEditor(true)}><Plus size={17}/>{key==='finance.payroll'?"Maaş gideri ekle":key==='finance.rent_expenses'?"Kira gideri ekle":key==='finance.utility_expenses'?"Fatura gideri ekle":expensePage?"Gider ekle":"İşlem kaydı"}</button>
+   <button type="button" className={secondaryStyle} onClick={()=>setCustomize(v=>!v)} aria-expanded={customize}><SlidersHorizontal size={17}/>{_uiText("Görünüm")}</button>
+   <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={()=>setDocumentEditor(true)}><FileText size={17}/>{_uiText("Belge hazırla")}</button>
+   <button type="button" className={secondaryStyle} disabled={busy||!data} onClick={download}><Download size={17}/>{_uiText("CSV indir")}</button>
+   <button type="button" className={buttonStyle} disabled={!kinds.length} onClick={()=>setEditor(true)}><Plus size={17}/>{key==='finance.payroll'?_uiText("Maaş gideri ekle"):key==='finance.rent_expenses'?_uiText("Kira gideri ekle"):key==='finance.utility_expenses'?_uiText("Fatura gideri ekle"):expensePage?_uiText("Gider ekle"):_uiText("İşlem kaydı")}</button>
   </>}>
    <div className={styles.filters}>
-    <InlineSelectField label={_uiText("Tesis")} value={branch} onChange={v=>{setBranch(v);setRoom('');setType('')}} options={[{value:'',label:"Tüm tesisler"},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/>
+    <InlineSelectField label={_uiText("Tesis")} value={branch} onChange={v=>{setBranch(v);setRoom('');setType('')}} options={[{value:'',label:_uiText("Tüm tesisler")},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/>
     <DateField label={_uiText("Başlangıç")} value={start} onChange={setStart} withTime={false}/>
     <DateField label={_uiText("Bitiş (dahil)")} value={end} onChange={setEnd} withTime={false} min={start}/>
     <InlineSelectField label={_uiText("Para birimi")} value={currency} onChange={setCurrency} options={CURRENCIES.map(c=>({value:c.id,label:c.label}))}/>
-    <InlineSelectField label={_uiText("Analiz birimi")} value={current?.unit||unit} onChange={setUnit} disabled={!!current?.unit} options={[{value:'room',label:"Oda / oda-gece"},{value:'bed',label:"Yatak / yatak-gece"},{value:'apartment',label:"Daire / daire-gece"},{value:'dormitory',label:"Yatakhane / gece"}]}/>
-    <InlineSelectField label={_uiText("Dönem gruplaması")} value={group} onChange={setGroup} options={[{value:'day',label:"Günlük"},{value:'week',label:"Haftalık"},{value:'month',label:"Aylık"}]}/>
+    <InlineSelectField label={_uiText("Analiz birimi")} value={current?.unit||unit} onChange={setUnit} disabled={!!current?.unit} options={[{value:'room',label:_uiText("Oda / oda-gece")},{value:'bed',label:_uiText("Yatak / yatak-gece")},{value:'apartment',label:_uiText("Daire / daire-gece")},{value:'dormitory',label:_uiText("Yatakhane / gece")}]}/>
+    <InlineSelectField label={_uiText("Dönem gruplaması")} value={group} onChange={setGroup} options={[{value:'day',label:_uiText("Günlük")},{value:'week',label:_uiText("Haftalık")},{value:'month',label:_uiText("Aylık")}]}/>
    </div>
    <div className="flex flex-wrap gap-2 mt-3">
-    {[['today','Bugün'],['month','Bu ay'],['7','Gelecek 7 gün'],['30','Gelecek 30 gün'],['90','Gelecek 90 gün']].map(([v,l])=><button key={v} className={secondaryStyle} onClick={()=>preset(v)}>{l}</button>)}
+    {[['today','Bugün'],['month','Bu ay'],['7','Gelecek 7 gün'],['30','Gelecek 30 gün'],['90','Gelecek 90 gün']].map(([v,l])=><button key={v} className={secondaryStyle} onClick={()=>preset(v)}>{_uiText(l)}</button>)}
     <button className="nav-icon-button" aria-label={_uiText("Raporu yenile")} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={18}/></button>
    </div>
    <details className="mt-3 text-sm text-uni-muted"><summary className="cursor-pointer py-2">{_uiText("Birim, tür ve kanal filtreleri")}</summary><div className={`${styles.filters} mt-3`}>
-    <InlineSelectField label={_uiText("Birim")} value={room} onChange={setRoom} options={[{value:'',label:"Tüm birimler"},...s.rooms.filter(r=>r.branch_id===branch).map(r=>({value:r.room_id,label:r.code}))]}/>
-    <InlineSelectField label={_uiText("Birim türü")} value={type} onChange={setType} options={[{value:'',label:"Tüm türler"},...Array.from(new Set(s.rooms.filter(r=>r.branch_id===branch).map(r=>r.type))).filter(Boolean).map(v=>({value:v,label:v}))]}/>
-    <InlineSelectField label={_uiText("Kanal")} value={channel} onChange={setChannel} options={[{value:"",label:"Tüm kanallar"},...sourceOptions,...paymentOptions.filter(p=>!sourceOptions.some(s=>s.value===p.value))]}/>
+    <InlineSelectField label={_uiText("Birim")} value={room} onChange={setRoom} options={[{value:'',label:_uiText("Tüm birimler")},...s.rooms.filter(r=>r.branch_id===branch).map(r=>({value:r.room_id,label:r.code}))]}/>
+    <InlineSelectField label={_uiText("Birim türü")} value={type} onChange={setType} options={[{value:'',label:_uiText("Tüm türler")},...Array.from(new Set(s.rooms.filter(r=>r.branch_id===branch).map(r=>r.type))).filter(Boolean).map(v=>({value:v,label:v}))]}/>
+    <InlineSelectField label={_uiText("Kanal")} value={channel} onChange={setChannel} options={[{value:"",label:_uiText("Tüm kanallar")},...[...sourceOptions,...paymentOptions.filter(p=>!sourceOptions.some(s=>s.value===p.value))].map(option=>({...option,label:_uiText(option.label)}))]}/>
    </div></details>
   </PageHeader>
   {customize&&<div className={`${styles.filters} ${styles.notes}`}><Switch label={_uiText("Finans göstergeleri")} checked={finance} onChange={setFinance}/><Switch label={_uiText("Kapasite göstergeleri")} checked={capacity} onChange={setCapacity}/><Switch label={_uiText("Operasyon göstergeleri")} checked={operations} onChange={setOperations}/></div>}
   <ErrorMessage message={error}/>
   {busy&&<div className={styles.empty} role="status">{_uiText("Rapor hesaplanıyor…")}</div>}
   {!busy&&data&&<>
-   <div className={styles.metrics}>{data.metrics.filter(m=>m.key.includes('occupancy')?capacity:['arrivals','departures','dirty','maintenance'].includes(m.key)?operations:finance).map(m=><article className={styles.metric} key={m.key}><p>{_uiText(m.label)}</p><strong>{display(m.value,m.format,data.currency, _uiLocale)}</strong>{m.note&&<p>{_uiText(m.note)}</p>}</article>)}</div>
+   <div className={styles.metrics}>{data.metrics.filter(m=>m.key.includes('occupancy')?capacity:['arrivals','departures','dirty','maintenance'].includes(m.key)?operations:finance).map(m=><article className={styles.metric} key={m.key}><p>{_uiText(m.label)}</p><strong>{display(m.value,m.format,data.currency, _uiLocale, _uiText)}</strong>{m.note&&<p>{_uiText(m.note)}</p>}</article>)}</div>
    <ReportCharts report={data}/>
    {data.tables.map(t=><DataTable key={`${key}-${start}-${end}-${branch}-${currency}-${room}-${type}-${channel}-${revision}-${t.key}`} table={t} currency={data.currency} onVoid={key==='management.records'?id=>{setVoidId(id);setVoidReason('');setVoidError('')}:undefined}/>)}
    {voidId&&<form className={styles.notes} onSubmit={async e=>{e.preventDefault();setVoidBusy(true);setVoidError('');try{await command('report.void',{hotel_id:s.hotel_id,id:voidId,reason:voidReason});setVoidId('');setRevision(v=>v+1);notify("Kayıt gerekçesiyle iptal edildi.")}catch(e){setVoidError(messageOf(e))}finally{setVoidBusy(false)}}}>
     <p className="mb-3">{_uiText("İptal edilen kayıt hesaplamalardan çıkarılır; işlem geçmişi korunur.")}</p><ErrorMessage message={voidError}/><TextField label={_uiText("İptal gerekçesi")} value={voidReason} onChange={setVoidReason} required minLength={3} maxLength={500}/><div className="flex gap-2 mt-3"><button className={buttonStyle} disabled={voidBusy}>{_uiText("Kaydı iptal et")}</button><button type="button" className={secondaryStyle} onClick={()=>setVoidId('')} disabled={voidBusy}>{_uiText("Vazgeç")}</button></div>
    </form>}
-   <details className={styles.notes}><summary>{_uiText("Hesaplama yöntemi ve veri kapsamı")}</summary>{data.notes.map(n=><p className="mt-3" key={n}>{n}</p>)}<p className="mt-3">{_uiText("Hesaplama zamanı:")} {display(data.generated_at,'datetime', 'TRY', _uiLocale)}</p></details>
+   <details className={styles.notes}><summary>{_uiText("Hesaplama yöntemi ve veri kapsamı")}</summary>{data.notes.map(n=><p className="mt-3" key={n}>{_uiText(n)}</p>)}<p className="mt-3">{_uiText("Hesaplama zamanı:")} {display(data.generated_at,'datetime', 'TRY', _uiLocale, _uiText)}</p></details>
   </>}
  </div>;
 }
@@ -99,7 +99,7 @@ export function DataTable({table:t,currency,onVoid}:{table:ReportTable;currency:
  return <section className={styles.card} aria-label={_uiText(t.title)}>
   <div className={styles.cardHead}><h3>{_uiText(t.title)}</h3><span className="text-xs text-uni-muted">{t.rows.length} {_uiText("kayıt")}</span></div>
 
-  {rows.length?<div className={styles.scroller} tabIndex={0} role="region" aria-label={_uiText("{value1}; yatay kaydırılabilir", {value1: String(t.title)})}><table className={styles.table}><thead><tr>{t.columns.map(c=><th scope="col" key={c.key}>{_uiText(c.label)}</th>)}{onVoid&&<th scope="col">{_uiText("İşlem")}</th>}</tr></thead><tbody>{rows.map((r,i)=><tr key={String(r.id??i)}>{t.columns.map(c=><td key={c.key} data-numeric={['money','number','percent'].includes(c.format??'')}>{display(r[c.key],c.format,currency, _uiLocale)}</td>)}{onVoid&&<td><button type="button" className={secondaryStyle} onClick={()=>onVoid(String(r.id))}>{_uiText("İptal et")}</button></td>}</tr>)}</tbody></table></div>:<p className={styles.empty}>{_uiText("Bu filtrede kayıt bulunamadı. Tarih aralığını kontrol edin veya ilgili işlem kaydını ekleyin.")}</p>}
+  {rows.length?<div className={styles.scroller} tabIndex={0} role="region" aria-label={_uiText("{value1}; yatay kaydırılabilir", {value1: String(t.title)})}><table className={styles.table}><thead><tr>{t.columns.map(c=><th scope="col" key={c.key}>{_uiText(c.label)}</th>)}{onVoid&&<th scope="col">{_uiText("İşlem")}</th>}</tr></thead><tbody>{rows.map((r,i)=><tr key={String(r.id??i)}>{t.columns.map(c=><td key={c.key} data-numeric={['money','number','percent'].includes(c.format??'')}>{display(r[c.key],c.format,currency, _uiLocale, _uiText)}</td>)}{onVoid&&<td><button type="button" className={secondaryStyle} onClick={()=>onVoid(String(r.id))}>{_uiText("İptal et")}</button></td>}</tr>)}</tbody></table></div>:<p className={styles.empty}>{_uiText("Bu filtrede kayıt bulunamadı. Tarih aralığını kontrol edin veya ilgili işlem kaydını ekleyin.")}</p>}
   {t.rows.length>25&&<Pagination label={_uiText("{value1} sayfaları", {value1: String(t.title)})} page={page} pageSize={size} total={t.rows.length} busy={false} onPageChange={setPage} onPageSizeChange={v=>{setSize(v);setPage(1)}}/>}
  </section>;
 }

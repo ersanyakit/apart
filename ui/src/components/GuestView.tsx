@@ -147,8 +147,8 @@ export function GuestView({
     <DateField label={_uiText("Başlangıç")} value={from} onChange={value=>{setFrom(value);setPage(1);}}/>
     <DateField label={_uiText("Bitiş")} value={to} onChange={value=>{setTo(value);setPage(1);}}/>
     <InlineSelectField label={_uiText("Kayıtlar")} value={status} onChange={value=>{setStatus(value);setPage(1);}} options={[
-      {value:'',label:"Tüm konaklamalar"}, {value:BookingState.CheckedIn,label:"Şu an konaklayanlar"},
-      {value:BookingState.Completed,label:"Çıkış yapanlar"}, {value:BookingState.Confirmed,label:"Planlanan rezervasyonlar"}, {value:BookingState.Cancelled,label:"İptal edilenler"},
+      {value:'',label:_uiText("Tüm konaklamalar")}, {value:BookingState.CheckedIn,label:_uiText("Şu an konaklayanlar")},
+      {value:BookingState.Completed,label:_uiText("Çıkış yapanlar")}, {value:BookingState.Confirmed,label:_uiText("Planlanan rezervasyonlar")}, {value:BookingState.Cancelled,label:_uiText("İptal edilenler")},
     ]}/>
   </div>;
   if(assessment)return <GuestAssessment snapshot={s} target={assessment} onClose={()=>{setAssessment(null);setRevision(value=>value+1);}}/>;

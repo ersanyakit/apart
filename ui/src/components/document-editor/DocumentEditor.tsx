@@ -55,7 +55,7 @@ export function DocumentEditor({value,onChange,fields={},language='TR',label='Be
    {tool('Ortala',<AlignCenter size={17}/>,e=>e.dispatchCommand(FORMAT_ELEMENT_COMMAND,'center'))}
    {tool('Sağa hizala',<AlignRight size={17}/>,e=>e.dispatchCommand(FORMAT_ELEMENT_COMMAND,'right'))}
    {tool('Tablo ekle (3 satır, 2 sütun)',<Table2 size={17}/>,e=>e.dispatchCommand(INSERT_TABLE_COMMAND,{rows:'3',columns:'2',includeHeaders:true}))}
-   {Object.keys(fields).length>0&&<div className={styles.fields}><InlineSelectField label={_uiText("Otomatik bilgi ekle")} value="" disabled={disabled} options={[{value:'',label:"Alan seçin…"},...Object.entries(fields).map(([value,label])=>({value,label}))]} onChange={key=>{if(key)act(()=>{const s=$getSelection();if($isRangeSelection(s))s.insertNodes([$createTextNode(`{{${key}}}`)])})}}/></div>}
+   {Object.keys(fields).length>0&&<div className={styles.fields}><InlineSelectField label={_uiText("Otomatik bilgi ekle")} value="" disabled={disabled} options={[{value:'',label:_uiText("Alan seçin…")},...Object.entries(fields).map(([value,label])=>({value,label}))]} onChange={key=>{if(key)act(()=>{const s=$getSelection();if($isRangeSelection(s))s.insertNodes([$createTextNode(`{{${key}}}`)])})}}/></div>}
   </div>
   {error&&<p role="alert" className="p-3 text-red-600 text-sm">{error}</p>}
   <div ref={root} contentEditable={!disabled} suppressContentEditableWarning role="textbox" aria-multiline="true" aria-label={label} aria-disabled={disabled} spellCheck lang={language.toLowerCase()} dir={language==='AR'?"rtl":"ltr"} className={styles.body}/>

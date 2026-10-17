@@ -72,7 +72,7 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
   const allSegments = useMemo(() => segmentsFor(bookings, now), [bookings, now]);
   const matchingIds = new Set(matching.filter(b => !needle ||
     `${b.guest_name} ${(b.guests || []).map(g => g.name).join(" ")}`.toLocaleLowerCase(locale).includes(needle)).map(b => b.booking_id));
-  const floorGroups = resourceGroups(rooms, floors).map(g => ({...g, label: g.floor ? localized(g.floor.label, locale.toUpperCase()) || g.floor.code : "Kat atanmamış"}));
+  const floorGroups = resourceGroups(rooms, floors).map(g => ({...g, label: g.floor ? localized(g.floor.label, locale.toUpperCase()) || g.floor.code : _uiText("Kat atanmamış")}));
   const typeGroups = [...new Set(rooms.map(r => r.type || unitKinds[r.kind] || "Diğer birimler"))].sort((a,b) => a.localeCompare(b,locale)).map(type => ({
     id: `type:${type}`, label: type, rooms: floorGroups.flatMap(g => g.rooms).filter(({room}) => (room.type || unitKinds[room.kind] || "Diğer birimler") === type).sort((a,b) => a.room.code.localeCompare(b.room.code, locale, {numeric:true})),
   }));
@@ -103,8 +103,8 @@ export function StaysScheduler({ variant = "stays", anchorDay, onContextMenu, ro
     <div className={styles.filters}>
       <TextField label={_uiText("Birim veya misafir ara")} value={query} onChange={setQuery} placeholder={_uiText("İsim veya birim numarası")} />
       <InlineSelectField label={_uiText("Kat")} value={floorId} onChange={setFloorId} options={[
-        { value: "", label: "Tüm katlar" }, ...floors.map(f => ({ value: f.floor_id, label: localized(f.label, locale.toUpperCase()) || f.code })),
-        { value: "unassigned", label: "Kat atanmamış" },
+        { value: "", label: _uiText("Tüm katlar") }, ...floors.map(f => ({ value: f.floor_id, label: localized(f.label, locale.toUpperCase()) || f.code })),
+        { value: "unassigned", label: _uiText("Kat atanmamış") },
       ]} />
       <DateField label={_uiText("Çizelge başlangıcı")} value={startDay} withTime={false} onChange={v => { if (v && Number.isFinite(dayTime(v))) setStartDay(v); }} />
     </div>

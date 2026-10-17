@@ -1,0 +1,4236 @@
+{
+  "Banyo ve Tuvalet": {
+    "TR": "Banyo ve Tuvalet",
+    "EN": "Bathroom and Toilet"
+  },
+  "Banyo donanımları": {
+    "TR": "Banyo donanımları",
+    "EN": "Bathroom fixtures"
+  },
+  "Duş": {
+    "TR": "Duş",
+    "EN": "Shower"
+  },
+  "Duşakabin": {
+    "TR": "Duşakabin",
+    "EN": "Shower cabin"
+  },
+  "Küvet": {
+    "TR": "Küvet",
+    "EN": "Bathtub"
+  },
+  "Jakuzi": {
+    "TR": "Jakuzi",
+    "EN": "Jacuzzi"
+  },
+  "Lavabo": {
+    "TR": "Lavabo",
+    "EN": "Washbasin"
+  },
+  "Çift lavabo": {
+    "TR": "Çift lavabo",
+    "EN": "Double washbasin"
+  },
+  "Tuvalet": {
+    "TR": "Tuvalet",
+    "EN": "Toilet"
+  },
+  "Bide": {
+    "TR": "Bide",
+    "EN": "Bidet"
+  },
+  "Taharet musluğu": {
+    "TR": "Taharet musluğu",
+    "EN": "Bidet spray"
+  },
+  "Banyo aynası": {
+    "TR": "Banyo aynası",
+    "EN": "Bathroom mirror"
+  },
+  "Büyüteçli makyaj aynası": {
+    "TR": "Büyüteçli makyaj aynası",
+    "EN": "Magnifying makeup mirror"
+  },
+  "Banyo dolabı": {
+    "TR": "Banyo dolabı",
+    "EN": "Bathroom cabinet"
+  },
+  "Lavabo altı dolabı": {
+    "TR": "Lavabo altı dolabı",
+    "EN": "Vanity cabinet"
+  },
+  "Havlu askısı": {
+    "TR": "Havlu askısı",
+    "EN": "Towel rail"
+  },
+  "Havlu rafı": {
+    "TR": "Havlu rafı",
+    "EN": "Towel shelf"
+  },
+  "Tuvalet kâğıdı tutacağı": {
+    "TR": "Tuvalet kâğıdı tutacağı",
+    "EN": "Toilet paper holder"
+  },
+  "Tuvalet fırçası": {
+    "TR": "Tuvalet fırçası",
+    "EN": "Toilet brush"
+  },
+  "Çöp kovası": {
+    "TR": "Çöp kovası",
+    "EN": "Waste bin"
+  },
+  "Sabunluk": {
+    "TR": "Sabunluk",
+    "EN": "Soap dish"
+  },
+  "Duş rafı": {
+    "TR": "Duş rafı",
+    "EN": "Shower shelf"
+  },
+  "Duş başlığı": {
+    "TR": "Duş başlığı",
+    "EN": "Shower head"
+  },
+  "El duşu": {
+    "TR": "El duşu",
+    "EN": "Hand shower"
+  },
+  "Saç kurutma makinesi": {
+    "TR": "Saç kurutma makinesi",
+    "EN": "Hair dryer"
+  },
+  "Banyo taburesi": {
+    "TR": "Banyo taburesi",
+    "EN": "Bath stool"
+  },
+  "Kaymaz banyo paspası": {
+    "TR": "Kaymaz banyo paspası",
+    "EN": "Non-slip bath mat"
+  },
+  "Baskül": {
+    "TR": "Baskül",
+    "EN": "Bathroom scales"
+  },
+  "Bornoz askısı": {
+    "TR": "Bornoz askısı",
+    "EN": "Bathrobe hook"
+  },
+  "Banyo havalandırması": {
+    "TR": "Banyo havalandırması",
+    "EN": "Bathroom ventilation"
+  },
+  "Banyo tekstili": {
+    "TR": "Banyo tekstili",
+    "EN": "Bathroom linen"
+  },
+  "Banyo havlusu": {
+    "TR": "Banyo havlusu",
+    "EN": "Bath towel"
+  },
+  "El havlusu": {
+    "TR": "El havlusu",
+    "EN": "Hand towel"
+  },
+  "Yüz havlusu": {
+    "TR": "Yüz havlusu",
+    "EN": "Face towel"
+  },
+  "Ayak havlusu": {
+    "TR": "Ayak havlusu",
+    "EN": "Foot towel"
+  },
+  "Plaj havlusu": {
+    "TR": "Plaj havlusu",
+    "EN": "Beach towel"
+  },
+  "Bornoz": {
+    "TR": "Bornoz",
+    "EN": "Bathrobe"
+  },
+  "Banyo paspası": {
+    "TR": "Banyo paspası",
+    "EN": "Bath mat"
+  },
+  "Duş perdesi": {
+    "TR": "Duş perdesi",
+    "EN": "Shower curtain"
+  },
+  "Banyo sarf malzemeleri": {
+    "TR": "Banyo sarf malzemeleri",
+    "EN": "Bathroom supplies"
+  },
+  "Tuvalet kâğıdı": {
+    "TR": "Tuvalet kâğıdı",
+    "EN": "Toilet paper"
+  },
+  "Sıvı sabun": {
+    "TR": "Sıvı sabun",
+    "EN": "Liquid soap"
+  },
+  "Katı sabun": {
+    "TR": "Katı sabun",
+    "EN": "Bar soap"
+  },
+  "Şampuan": {
+    "TR": "Şampuan",
+    "EN": "Shampoo"
+  },
+  "Saç kremi": {
+    "TR": "Saç kremi",
+    "EN": "Hair conditioner"
+  },
+  "Duş jeli": {
+    "TR": "Duş jeli",
+    "EN": "Shower gel"
+  },
+  "Vücut losyonu": {
+    "TR": "Vücut losyonu",
+    "EN": "Body lotion"
+  },
+  "Diş bakım seti": {
+    "TR": "Diş bakım seti",
+    "EN": "Dental kit"
+  },
+  "Tıraş seti": {
+    "TR": "Tıraş seti",
+    "EN": "Shaving kit"
+  },
+  "Duş bonesi": {
+    "TR": "Duş bonesi",
+    "EN": "Shower cap"
+  },
+  "Kulak çubuğu": {
+    "TR": "Kulak çubuğu",
+    "EN": "Cotton buds"
+  },
+  "Makyaj temizleme pedi": {
+    "TR": "Makyaj temizleme pedi",
+    "EN": "Makeup remover pads"
+  },
+  "Hijyen poşeti": {
+    "TR": "Hijyen poşeti",
+    "EN": "Sanitary bag"
+  },
+  "Terlik": {
+    "TR": "Terlik",
+    "EN": "Slippers"
+  },
+  "Kişisel bakım seti": {
+    "TR": "Kişisel bakım seti",
+    "EN": "Personal care kit"
+  },
+  "Yatak Odası ve Uyku Donanımları": {
+    "TR": "Yatak Odası ve Uyku Donanımları",
+    "EN": "Bedroom and Sleeping Equipment"
+  },
+  "Yatak türleri": {
+    "TR": "Yatak türleri",
+    "EN": "Bed types"
+  },
+  "Tek kişilik yatak": {
+    "TR": "Tek kişilik yatak",
+    "EN": "Single bed"
+  },
+  "İki kişilik yatak": {
+    "TR": "İki kişilik yatak",
+    "EN": "Double bed"
+  },
+  "Çift kişilik geniş yatak (Queen)": {
+    "TR": "Çift kişilik geniş yatak (Queen)",
+    "EN": "Queen bed"
+  },
+  "King size yatak": {
+    "TR": "King size yatak",
+    "EN": "King size bed"
+  },
+  "Super king size yatak": {
+    "TR": "Super king size yatak",
+    "EN": "Super king size bed"
+  },
+  "İki ayrı tek kişilik yatak (Twin)": {
+    "TR": "İki ayrı tek kişilik yatak (Twin)",
+    "EN": "Twin beds"
+  },
+  "Birleştirilebilir iki tek kişilik yatak": {
+    "TR": "Birleştirilebilir iki tek kişilik yatak",
+    "EN": "Zip and link twin beds"
+  },
+  "Ranza": {
+    "TR": "Ranza",
+    "EN": "Bunk bed"
+  },
+  "Üç katlı ranza": {
+    "TR": "Üç katlı ranza",
+    "EN": "Triple bunk bed"
+  },
+  "Çekyat": {
+    "TR": "Çekyat",
+    "EN": "Fold-out sofa bed"
+  },
+  "Kanepe yatak": {
+    "TR": "Kanepe yatak",
+    "EN": "Sleeper sofa"
+  },
+  "Katlanır yatak": {
+    "TR": "Katlanır yatak",
+    "EN": "Folding bed"
+  },
+  "İlave yatak": {
+    "TR": "İlave yatak",
+    "EN": "Extra bed"
+  },
+  "Bebek yatağı": {
+    "TR": "Bebek yatağı",
+    "EN": "Baby cot"
+  },
+  "Portatif bebek yatağı": {
+    "TR": "Portatif bebek yatağı",
+    "EN": "Travel cot"
+  },
+  "Duvar yatağı": {
+    "TR": "Duvar yatağı",
+    "EN": "Murphy bed"
+  },
+  "Asma yatak": {
+    "TR": "Asma yatak",
+    "EN": "Loft bed"
+  },
+  "Yatak ekipmanları": {
+    "TR": "Yatak ekipmanları",
+    "EN": "Bedding"
+  },
+  "Yatak başlığı": {
+    "TR": "Yatak başlığı",
+    "EN": "Headboard"
+  },
+  "Yatak bazası": {
+    "TR": "Yatak bazası",
+    "EN": "Bed base"
+  },
+  "Yatak iskeleti": {
+    "TR": "Yatak iskeleti",
+    "EN": "Bed frame"
+  },
+  "Yatak koruyucu": {
+    "TR": "Yatak koruyucu",
+    "EN": "Mattress protector"
+  },
+  "Yatak alezi": {
+    "TR": "Yatak alezi",
+    "EN": "Waterproof mattress protector"
+  },
+  "Yatak pedi": {
+    "TR": "Yatak pedi",
+    "EN": "Mattress pad"
+  },
+  "Yatak üstü şiltesi": {
+    "TR": "Yatak üstü şiltesi",
+    "EN": "Mattress topper"
+  },
+  "Baş yastığı": {
+    "TR": "Baş yastığı",
+    "EN": "Sleeping pillow"
+  },
+  "Ortopedik yastık": {
+    "TR": "Ortopedik yastık",
+    "EN": "Orthopedic pillow"
+  },
+  "Dekoratif yastık": {
+    "TR": "Dekoratif yastık",
+    "EN": "Decorative pillow"
+  },
+  "Yorgan": {
+    "TR": "Yorgan",
+    "EN": "Duvet"
+  },
+  "Battaniye": {
+    "TR": "Battaniye",
+    "EN": "Blanket"
+  },
+  "Pike": {
+    "TR": "Pike",
+    "EN": "Summer bed cover"
+  },
+  "Yatak örtüsü": {
+    "TR": "Yatak örtüsü",
+    "EN": "Bedspread"
+  },
+  "Nevresim": {
+    "TR": "Nevresim",
+    "EN": "Bed linen"
+  },
+  "Çarşaf": {
+    "TR": "Çarşaf",
+    "EN": "Bed sheet"
+  },
+  "Lastikli çarşaf": {
+    "TR": "Lastikli çarşaf",
+    "EN": "Fitted sheet"
+  },
+  "Yastık kılıfı": {
+    "TR": "Yastık kılıfı",
+    "EN": "Pillowcase"
+  },
+  "Yorgan kılıfı": {
+    "TR": "Yorgan kılıfı",
+    "EN": "Duvet cover"
+  },
+  "Yatak odası mobilyaları": {
+    "TR": "Yatak odası mobilyaları",
+    "EN": "Bedroom furniture"
+  },
+  "Komodin": {
+    "TR": "Komodin",
+    "EN": "Nightstand"
+  },
+  "Başucu sehpası": {
+    "TR": "Başucu sehpası",
+    "EN": "Bedside table"
+  },
+  "Gardırop": {
+    "TR": "Gardırop",
+    "EN": "Wardrobe"
+  },
+  "Elbise dolabı": {
+    "TR": "Elbise dolabı",
+    "EN": "Clothes cabinet"
+  },
+  "Açık elbise askılığı": {
+    "TR": "Açık elbise askılığı",
+    "EN": "Open clothes rack"
+  },
+  "Elbise askısı": {
+    "TR": "Elbise askısı",
+    "EN": "Clothes hanger"
+  },
+  "Valizlik": {
+    "TR": "Valizlik",
+    "EN": "Luggage rack"
+  },
+  "Valiz sehpası": {
+    "TR": "Valiz sehpası",
+    "EN": "Luggage bench"
+  },
+  "Şifonyer": {
+    "TR": "Şifonyer",
+    "EN": "Dresser"
+  },
+  "Çekmeceli dolap": {
+    "TR": "Çekmeceli dolap",
+    "EN": "Drawer cabinet"
+  },
+  "Makyaj masası": {
+    "TR": "Makyaj masası",
+    "EN": "Dressing table"
+  },
+  "Makyaj sandalyesi": {
+    "TR": "Makyaj sandalyesi",
+    "EN": "Vanity chair"
+  },
+  "Boy aynası": {
+    "TR": "Boy aynası",
+    "EN": "Full-length mirror"
+  },
+  "Duvar aynası": {
+    "TR": "Duvar aynası",
+    "EN": "Wall mirror"
+  },
+  "Çalışma masası": {
+    "TR": "Çalışma masası",
+    "EN": "Desk"
+  },
+  "Çalışma sandalyesi": {
+    "TR": "Çalışma sandalyesi",
+    "EN": "Desk chair"
+  },
+  "Okuma koltuğu": {
+    "TR": "Okuma koltuğu",
+    "EN": "Reading chair"
+  },
+  "Yatak ucu bankı": {
+    "TR": "Yatak ucu bankı",
+    "EN": "Bed-end bench"
+  },
+  "Başucu lambası": {
+    "TR": "Başucu lambası",
+    "EN": "Bedside lamp"
+  },
+  "Gece lambası": {
+    "TR": "Gece lambası",
+    "EN": "Night light"
+  },
+  "Çamaşır sepeti": {
+    "TR": "Çamaşır sepeti",
+    "EN": "Laundry basket"
+  },
+  "Kirli çamaşır torbası": {
+    "TR": "Kirli çamaşır torbası",
+    "EN": "Laundry bag"
+  },
+  "Kasa": {
+    "TR": "Kasa",
+    "EN": "Safe"
+  },
+  "Ütü masası": {
+    "TR": "Ütü masası",
+    "EN": "Ironing board"
+  },
+  "Ütü": {
+    "TR": "Ütü",
+    "EN": "Iron"
+  },
+  "Duvar askılığı": {
+    "TR": "Duvar askılığı",
+    "EN": "Wall hooks"
+  },
+  "Salon ve Oturma Grubu": {
+    "TR": "Salon ve Oturma Grubu",
+    "EN": "Living room and seating"
+  },
+  "Üçlü koltuk": {
+    "TR": "Üçlü koltuk",
+    "EN": "Three-seater sofa"
+  },
+  "İkili koltuk": {
+    "TR": "İkili koltuk",
+    "EN": "Two-seater sofa"
+  },
+  "Tekli koltuk": {
+    "TR": "Tekli koltuk",
+    "EN": "Armchair"
+  },
+  "Berjer": {
+    "TR": "Berjer",
+    "EN": "Wing chair"
+  },
+  "Köşe koltuk": {
+    "TR": "Köşe koltuk",
+    "EN": "Corner sofa"
+  },
+  "L koltuk": {
+    "TR": "L koltuk",
+    "EN": "L-shaped sofa"
+  },
+  "Kanepe": {
+    "TR": "Kanepe",
+    "EN": "Sofa"
+  },
+  "Puf": {
+    "TR": "Puf",
+    "EN": "Pouf"
+  },
+  "Ayak uzatma taburesi": {
+    "TR": "Ayak uzatma taburesi",
+    "EN": "Footstool"
+  },
+  "Orta sehpa": {
+    "TR": "Orta sehpa",
+    "EN": "Coffee table"
+  },
+  "Yan sehpa": {
+    "TR": "Yan sehpa",
+    "EN": "Side table"
+  },
+  "Zigon sehpa": {
+    "TR": "Zigon sehpa",
+    "EN": "Nesting tables"
+  },
+  "TV ünitesi": {
+    "TR": "TV ünitesi",
+    "EN": "TV stand"
+  },
+  "Kitaplık": {
+    "TR": "Kitaplık",
+    "EN": "Bookcase"
+  },
+  "Vitrin": {
+    "TR": "Vitrin",
+    "EN": "Display cabinet"
+  },
+  "Konsol": {
+    "TR": "Konsol",
+    "EN": "Console table"
+  },
+  "Büfe": {
+    "TR": "Büfe",
+    "EN": "Sideboard"
+  },
+  "Duvar rafı": {
+    "TR": "Duvar rafı",
+    "EN": "Wall shelf"
+  },
+  "Dekoratif raf": {
+    "TR": "Dekoratif raf",
+    "EN": "Decorative shelf"
+  },
+  "Şömine": {
+    "TR": "Şömine",
+    "EN": "Fireplace"
+  },
+  "Elektrikli şömine": {
+    "TR": "Elektrikli şömine",
+    "EN": "Electric fireplace"
+  },
+  "Şömine aksesuarları": {
+    "TR": "Şömine aksesuarları",
+    "EN": "Fireplace accessories"
+  },
+  "Dergilik": {
+    "TR": "Dergilik",
+    "EN": "Magazine rack"
+  },
+  "Koltuk şalı": {
+    "TR": "Koltuk şalı",
+    "EN": "Sofa throw"
+  },
+  "Masa ve Sandalyeler": {
+    "TR": "Masa ve Sandalyeler",
+    "EN": "Tables and chairs"
+  },
+  "Yemek masası": {
+    "TR": "Yemek masası",
+    "EN": "Dining table"
+  },
+  "Yuvarlak masa": {
+    "TR": "Yuvarlak masa",
+    "EN": "Round table"
+  },
+  "Dikdörtgen masa": {
+    "TR": "Dikdörtgen masa",
+    "EN": "Rectangular table"
+  },
+  "Katlanır masa": {
+    "TR": "Katlanır masa",
+    "EN": "Folding table"
+  },
+  "Balkon masası": {
+    "TR": "Balkon masası",
+    "EN": "Balcony table"
+  },
+  "Bahçe masası": {
+    "TR": "Bahçe masası",
+    "EN": "Garden table"
+  },
+  "Mutfak masası": {
+    "TR": "Mutfak masası",
+    "EN": "Kitchen table"
+  },
+  "Sehpa": {
+    "TR": "Sehpa",
+    "EN": "Occasional table"
+  },
+  "Bar masası": {
+    "TR": "Bar masası",
+    "EN": "Bar table"
+  },
+  "Bar taburesi": {
+    "TR": "Bar taburesi",
+    "EN": "Bar stool"
+  },
+  "Yemek sandalyesi": {
+    "TR": "Yemek sandalyesi",
+    "EN": "Dining chair"
+  },
+  "Katlanır sandalye": {
+    "TR": "Katlanır sandalye",
+    "EN": "Folding chair"
+  },
+  "Balkon sandalyesi": {
+    "TR": "Balkon sandalyesi",
+    "EN": "Balcony chair"
+  },
+  "Bahçe sandalyesi": {
+    "TR": "Bahçe sandalyesi",
+    "EN": "Garden chair"
+  },
+  "Şezlong": {
+    "TR": "Şezlong",
+    "EN": "Sun lounger"
+  },
+  "Şezlong minderi": {
+    "TR": "Şezlong minderi",
+    "EN": "Lounger cushion"
+  },
+  "Sallanan sandalye": {
+    "TR": "Sallanan sandalye",
+    "EN": "Rocking chair"
+  },
+  "Mama sandalyesi": {
+    "TR": "Mama sandalyesi",
+    "EN": "High chair"
+  },
+  "Bank": {
+    "TR": "Bank",
+    "EN": "Bench"
+  },
+  "Piknik masası": {
+    "TR": "Piknik masası",
+    "EN": "Picnic table"
+  },
+  "Masa örtüsü": {
+    "TR": "Masa örtüsü",
+    "EN": "Tablecloth"
+  },
+  "Masa runner’ı": {
+    "TR": "Masa runner’ı",
+    "EN": "Table runner"
+  },
+  "Amerikan servis": {
+    "TR": "Amerikan servis",
+    "EN": "Placemat"
+  },
+  "Sandalye minderi": {
+    "TR": "Sandalye minderi",
+    "EN": "Chair cushion"
+  },
+  "Mutfak ve Beyaz Eşyalar": {
+    "TR": "Mutfak ve Beyaz Eşyalar",
+    "EN": "Kitchen and Appliances"
+  },
+  "Büyük ev aletleri": {
+    "TR": "Büyük ev aletleri",
+    "EN": "Large appliances"
+  },
+  "Buzdolabı": {
+    "TR": "Buzdolabı",
+    "EN": "Refrigerator"
+  },
+  "Mini buzdolabı": {
+    "TR": "Mini buzdolabı",
+    "EN": "Mini fridge"
+  },
+  "Derin dondurucu": {
+    "TR": "Derin dondurucu",
+    "EN": "Freezer"
+  },
+  "Ankastre buzdolabı": {
+    "TR": "Ankastre buzdolabı",
+    "EN": "Built-in refrigerator"
+  },
+  "Buz makinesi": {
+    "TR": "Buz makinesi",
+    "EN": "Ice maker"
+  },
+  "Bulaşık makinesi": {
+    "TR": "Bulaşık makinesi",
+    "EN": "Dishwasher"
+  },
+  "Çamaşır makinesi": {
+    "TR": "Çamaşır makinesi",
+    "EN": "Washing machine"
+  },
+  "Kurutma makinesi": {
+    "TR": "Kurutma makinesi",
+    "EN": "Tumble dryer"
+  },
+  "Fırın": {
+    "TR": "Fırın",
+    "EN": "Oven"
+  },
+  "Ankastre fırın": {
+    "TR": "Ankastre fırın",
+    "EN": "Built-in oven"
+  },
+  "Mikrodalga fırın": {
+    "TR": "Mikrodalga fırın",
+    "EN": "Microwave oven"
+  },
+  "Mini fırın": {
+    "TR": "Mini fırın",
+    "EN": "Mini oven"
+  },
+  "Elektrikli ocak": {
+    "TR": "Elektrikli ocak",
+    "EN": "Electric hob"
+  },
+  "Gazlı ocak": {
+    "TR": "Gazlı ocak",
+    "EN": "Gas hob"
+  },
+  "İndüksiyonlu ocak": {
+    "TR": "İndüksiyonlu ocak",
+    "EN": "Induction hob"
+  },
+  "Set üstü ocak": {
+    "TR": "Set üstü ocak",
+    "EN": "Countertop hob"
+  },
+  "Davlumbaz": {
+    "TR": "Davlumbaz",
+    "EN": "Extractor hood"
+  },
+  "Aspiratör": {
+    "TR": "Aspiratör",
+    "EN": "Extractor fan"
+  },
+  "Su sebili": {
+    "TR": "Su sebili",
+    "EN": "Water dispenser"
+  },
+  "Küçük mutfak aletleri": {
+    "TR": "Küçük mutfak aletleri",
+    "EN": "Small kitchen appliances"
+  },
+  "Elektrikli su ısıtıcısı (kettle)": {
+    "TR": "Elektrikli su ısıtıcısı (kettle)",
+    "EN": "Electric kettle"
+  },
+  "Çay makinesi": {
+    "TR": "Çay makinesi",
+    "EN": "Tea maker"
+  },
+  "Türk kahvesi makinesi": {
+    "TR": "Türk kahvesi makinesi",
+    "EN": "Turkish coffee maker"
+  },
+  "Filtre kahve makinesi": {
+    "TR": "Filtre kahve makinesi",
+    "EN": "Filter coffee maker"
+  },
+  "Espresso makinesi": {
+    "TR": "Espresso makinesi",
+    "EN": "Espresso machine"
+  },
+  "Tost makinesi": {
+    "TR": "Tost makinesi",
+    "EN": "Sandwich toaster"
+  },
+  "Ekmek kızartma makinesi": {
+    "TR": "Ekmek kızartma makinesi",
+    "EN": "Toaster"
+  },
+  "Blender": {
+    "TR": "Blender",
+    "EN": "Blender"
+  },
+  "El blenderı": {
+    "TR": "El blenderı",
+    "EN": "Hand blender"
+  },
+  "Mikser": {
+    "TR": "Mikser",
+    "EN": "Mixer"
+  },
+  "Mutfak robotu": {
+    "TR": "Mutfak robotu",
+    "EN": "Food processor"
+  },
+  "Katı meyve sıkacağı": {
+    "TR": "Katı meyve sıkacağı",
+    "EN": "Juicer"
+  },
+  "Narenciye sıkacağı": {
+    "TR": "Narenciye sıkacağı",
+    "EN": "Citrus juicer"
+  },
+  "Air fryer": {
+    "TR": "Air fryer",
+    "EN": "Air fryer"
+  },
+  "Elektrikli ızgara": {
+    "TR": "Elektrikli ızgara",
+    "EN": "Electric grill"
+  },
+  "Elektrikli düdüklü tencere": {
+    "TR": "Elektrikli düdüklü tencere",
+    "EN": "Electric pressure cooker"
+  },
+  "Mutfak tartısı": {
+    "TR": "Mutfak tartısı",
+    "EN": "Kitchen scales"
+  },
+  "Kahve öğütücü": {
+    "TR": "Kahve öğütücü",
+    "EN": "Coffee grinder"
+  },
+  "Elektrikli süt köpürtücü": {
+    "TR": "Elektrikli süt köpürtücü",
+    "EN": "Electric milk frother"
+  },
+  "Mutfak mobilyaları": {
+    "TR": "Mutfak mobilyaları",
+    "EN": "Kitchen furniture"
+  },
+  "Mutfak dolabı": {
+    "TR": "Mutfak dolabı",
+    "EN": "Kitchen cabinet"
+  },
+  "Üst dolap": {
+    "TR": "Üst dolap",
+    "EN": "Wall cabinet"
+  },
+  "Alt dolap": {
+    "TR": "Alt dolap",
+    "EN": "Base cabinet"
+  },
+  "Kiler dolabı": {
+    "TR": "Kiler dolabı",
+    "EN": "Pantry cabinet"
+  },
+  "Erzak dolabı": {
+    "TR": "Erzak dolabı",
+    "EN": "Food cupboard"
+  },
+  "Tezgâh": {
+    "TR": "Tezgâh",
+    "EN": "Worktop"
+  },
+  "Mutfak adası": {
+    "TR": "Mutfak adası",
+    "EN": "Kitchen island"
+  },
+  "Bar tezgâhı": {
+    "TR": "Bar tezgâhı",
+    "EN": "Bar counter"
+  },
+  "Kahvaltı barı": {
+    "TR": "Kahvaltı barı",
+    "EN": "Breakfast bar"
+  },
+  "Bulaşıklık": {
+    "TR": "Bulaşıklık",
+    "EN": "Dish rack"
+  },
+  "Tabak rafı": {
+    "TR": "Tabak rafı",
+    "EN": "Plate rack"
+  },
+  "Baharat rafı": {
+    "TR": "Baharat rafı",
+    "EN": "Spice rack"
+  },
+  "Çekmece içi düzenleyici": {
+    "TR": "Çekmece içi düzenleyici",
+    "EN": "Drawer organizer"
+  },
+  "Geri dönüşüm kutusu": {
+    "TR": "Geri dönüşüm kutusu",
+    "EN": "Recycling bin"
+  },
+  "Mutfak sandalyesi": {
+    "TR": "Mutfak sandalyesi",
+    "EN": "Kitchen chair"
+  },
+  "Mutfak Gereçleri ve Sofra Takımları": {
+    "TR": "Mutfak Gereçleri ve Sofra Takımları",
+    "EN": "Kitchenware and Tableware"
+  },
+  "Pişirme ekipmanları": {
+    "TR": "Pişirme ekipmanları",
+    "EN": "Cooking equipment"
+  },
+  "Tencere": {
+    "TR": "Tencere",
+    "EN": "Cooking pot"
+  },
+  "Tava": {
+    "TR": "Tava",
+    "EN": "Frying pan"
+  },
+  "Sahan": {
+    "TR": "Sahan",
+    "EN": "Shallow pan"
+  },
+  "Wok tava": {
+    "TR": "Wok tava",
+    "EN": "Wok"
+  },
+  "Düdüklü tencere": {
+    "TR": "Düdüklü tencere",
+    "EN": "Pressure cooker"
+  },
+  "Fırın tepsisi": {
+    "TR": "Fırın tepsisi",
+    "EN": "Baking tray"
+  },
+  "Kek kalıbı": {
+    "TR": "Kek kalıbı",
+    "EN": "Cake tin"
+  },
+  "Borcam": {
+    "TR": "Borcam",
+    "EN": "Glass baking dish"
+  },
+  "Güveç kabı": {
+    "TR": "Güveç kabı",
+    "EN": "Casserole dish"
+  },
+  "Izgara tavası": {
+    "TR": "Izgara tavası",
+    "EN": "Grill pan"
+  },
+  "Çaydanlık": {
+    "TR": "Çaydanlık",
+    "EN": "Teapot"
+  },
+  "Cezve": {
+    "TR": "Cezve",
+    "EN": "Turkish coffee pot"
+  },
+  "Sütlük": {
+    "TR": "Sütlük",
+    "EN": "Milk jug"
+  },
+  "Kapak seti": {
+    "TR": "Kapak seti",
+    "EN": "Lid set"
+  },
+  "Kesme tahtası": {
+    "TR": "Kesme tahtası",
+    "EN": "Chopping board"
+  },
+  "Bıçak seti": {
+    "TR": "Bıçak seti",
+    "EN": "Knife set"
+  },
+  "Şef bıçağı": {
+    "TR": "Şef bıçağı",
+    "EN": "Chef's knife"
+  },
+  "Soyacak": {
+    "TR": "Soyacak",
+    "EN": "Peeler"
+  },
+  "Rende": {
+    "TR": "Rende",
+    "EN": "Grater"
+  },
+  "Mutfak makası": {
+    "TR": "Mutfak makası",
+    "EN": "Kitchen scissors"
+  },
+  "Kevgir": {
+    "TR": "Kevgir",
+    "EN": "Skimmer"
+  },
+  "Süzgeç": {
+    "TR": "Süzgeç",
+    "EN": "Strainer"
+  },
+  "Süzme kabı": {
+    "TR": "Süzme kabı",
+    "EN": "Colander"
+  },
+  "Kepçe": {
+    "TR": "Kepçe",
+    "EN": "Ladle"
+  },
+  "Spatula": {
+    "TR": "Spatula",
+    "EN": "Spatula"
+  },
+  "Maşa": {
+    "TR": "Maşa",
+    "EN": "Serving tongs"
+  },
+  "Çırpıcı": {
+    "TR": "Çırpıcı",
+    "EN": "Whisk"
+  },
+  "Merdane": {
+    "TR": "Merdane",
+    "EN": "Rolling pin"
+  },
+  "Ölçü kabı": {
+    "TR": "Ölçü kabı",
+    "EN": "Measuring jug"
+  },
+  "Ölçü kaşığı": {
+    "TR": "Ölçü kaşığı",
+    "EN": "Measuring spoon"
+  },
+  "Hamur yoğurma kabı": {
+    "TR": "Hamur yoğurma kabı",
+    "EN": "Mixing bowl"
+  },
+  "Salata kurutucu": {
+    "TR": "Salata kurutucu",
+    "EN": "Salad spinner"
+  },
+  "Konserve açacağı": {
+    "TR": "Konserve açacağı",
+    "EN": "Can opener"
+  },
+  "Şişe açacağı": {
+    "TR": "Şişe açacağı",
+    "EN": "Bottle opener"
+  },
+  "Tirbuşon": {
+    "TR": "Tirbuşon",
+    "EN": "Corkscrew"
+  },
+  "Sarımsak ezici": {
+    "TR": "Sarımsak ezici",
+    "EN": "Garlic press"
+  },
+  "Patates ezici": {
+    "TR": "Patates ezici",
+    "EN": "Potato masher"
+  },
+  "Yemek ve servis takımları": {
+    "TR": "Yemek ve servis takımları",
+    "EN": "Dining and serving sets"
+  },
+  "Yemek tabağı": {
+    "TR": "Yemek tabağı",
+    "EN": "Dinner plate"
+  },
+  "Servis tabağı": {
+    "TR": "Servis tabağı",
+    "EN": "Serving plate"
+  },
+  "Pasta tabağı": {
+    "TR": "Pasta tabağı",
+    "EN": "Dessert plate"
+  },
+  "Kahvaltı tabağı": {
+    "TR": "Kahvaltı tabağı",
+    "EN": "Breakfast plate"
+  },
+  "Çorba kasesi": {
+    "TR": "Çorba kasesi",
+    "EN": "Soup bowl"
+  },
+  "Salata kasesi": {
+    "TR": "Salata kasesi",
+    "EN": "Salad bowl"
+  },
+  "Kahvaltı servis seti": {
+    "TR": "Kahvaltı servis seti",
+    "EN": "Breakfast serving set"
+  },
+  "Çatal": {
+    "TR": "Çatal",
+    "EN": "Fork"
+  },
+  "Yemek bıçağı": {
+    "TR": "Yemek bıçağı",
+    "EN": "Dinner knife"
+  },
+  "Tatlı kaşığı": {
+    "TR": "Tatlı kaşığı",
+    "EN": "Dessert spoon"
+  },
+  "Yemek kaşığı": {
+    "TR": "Yemek kaşığı",
+    "EN": "Tablespoon"
+  },
+  "Çay kaşığı": {
+    "TR": "Çay kaşığı",
+    "EN": "Teaspoon"
+  },
+  "Tatlı çatalı": {
+    "TR": "Tatlı çatalı",
+    "EN": "Dessert fork"
+  },
+  "Servis çatalı": {
+    "TR": "Servis çatalı",
+    "EN": "Serving fork"
+  },
+  "Servis kaşığı": {
+    "TR": "Servis kaşığı",
+    "EN": "Serving spoon"
+  },
+  "Su bardağı": {
+    "TR": "Su bardağı",
+    "EN": "Water glass"
+  },
+  "Meşrubat bardağı": {
+    "TR": "Meşrubat bardağı",
+    "EN": "Soft drink glass"
+  },
+  "Şarap kadehi": {
+    "TR": "Şarap kadehi",
+    "EN": "Wine glass"
+  },
+  "Rakı bardağı": {
+    "TR": "Rakı bardağı",
+    "EN": "Raki glass"
+  },
+  "Kahve fincanı": {
+    "TR": "Kahve fincanı",
+    "EN": "Coffee cup"
+  },
+  "Türk kahvesi fincanı": {
+    "TR": "Türk kahvesi fincanı",
+    "EN": "Turkish coffee cup"
+  },
+  "Çay bardağı": {
+    "TR": "Çay bardağı",
+    "EN": "Tea glass"
+  },
+  "Kupa": {
+    "TR": "Kupa",
+    "EN": "Mug"
+  },
+  "Sürahi": {
+    "TR": "Sürahi",
+    "EN": "Pitcher"
+  },
+  "Karaf": {
+    "TR": "Karaf",
+    "EN": "Carafe"
+  },
+  "Termos": {
+    "TR": "Termos",
+    "EN": "Thermos"
+  },
+  "Tepsi": {
+    "TR": "Tepsi",
+    "EN": "Tray"
+  },
+  "Şekerlik": {
+    "TR": "Şekerlik",
+    "EN": "Sugar bowl"
+  },
+  "Tuzluk": {
+    "TR": "Tuzluk",
+    "EN": "Salt shaker"
+  },
+  "Biberlik": {
+    "TR": "Biberlik",
+    "EN": "Pepper shaker"
+  },
+  "Yağdanlık": {
+    "TR": "Yağdanlık",
+    "EN": "Oil cruet"
+  },
+  "Sirkelik": {
+    "TR": "Sirkelik",
+    "EN": "Vinegar cruet"
+  },
+  "Peçetelik": {
+    "TR": "Peçetelik",
+    "EN": "Napkin holder"
+  },
+  "Ekmek sepeti": {
+    "TR": "Ekmek sepeti",
+    "EN": "Bread basket"
+  },
+  "Sunum tabağı": {
+    "TR": "Sunum tabağı",
+    "EN": "Presentation platter"
+  },
+  "Servis arabası": {
+    "TR": "Servis arabası",
+    "EN": "Serving trolley"
+  },
+  "Saklama ve temizlik": {
+    "TR": "Saklama ve temizlik",
+    "EN": "Storage and cleaning"
+  },
+  "Saklama kabı": {
+    "TR": "Saklama kabı",
+    "EN": "Storage container"
+  },
+  "Cam kavanoz": {
+    "TR": "Cam kavanoz",
+    "EN": "Glass jar"
+  },
+  "Erzak kutusu": {
+    "TR": "Erzak kutusu",
+    "EN": "Food storage box"
+  },
+  "Buz kalıbı": {
+    "TR": "Buz kalıbı",
+    "EN": "Ice cube tray"
+  },
+  "Streç film": {
+    "TR": "Streç film",
+    "EN": "Cling film"
+  },
+  "Alüminyum folyo": {
+    "TR": "Alüminyum folyo",
+    "EN": "Aluminium foil"
+  },
+  "Pişirme kâğıdı": {
+    "TR": "Pişirme kâğıdı",
+    "EN": "Baking paper"
+  },
+  "Bulaşık süngeri": {
+    "TR": "Bulaşık süngeri",
+    "EN": "Dish sponge"
+  },
+  "Bulaşık deterjanı": {
+    "TR": "Bulaşık deterjanı",
+    "EN": "Dishwashing liquid"
+  },
+  "Bulaşık makinesi tableti": {
+    "TR": "Bulaşık makinesi tableti",
+    "EN": "Dishwasher tablet"
+  },
+  "Bulaşık eldiveni": {
+    "TR": "Bulaşık eldiveni",
+    "EN": "Washing-up gloves"
+  },
+  "Bulaşıklık altlığı": {
+    "TR": "Bulaşıklık altlığı",
+    "EN": "Draining mat"
+  },
+  "Mutfak havlusu": {
+    "TR": "Mutfak havlusu",
+    "EN": "Kitchen towel"
+  },
+  "Kurulama bezi": {
+    "TR": "Kurulama bezi",
+    "EN": "Tea towel"
+  },
+  "Kâğıt havlu": {
+    "TR": "Kâğıt havlu",
+    "EN": "Paper towel"
+  },
+  "Çöp poşeti": {
+    "TR": "Çöp poşeti",
+    "EN": "Bin bag"
+  },
+  "Elektronik ve Eğlence Sistemleri": {
+    "TR": "Elektronik ve Eğlence Sistemleri",
+    "EN": "Electronics and entertainment"
+  },
+  "Televizyon": {
+    "TR": "Televizyon",
+    "EN": "Television"
+  },
+  "Smart TV": {
+    "TR": "Smart TV",
+    "EN": "Smart TV"
+  },
+  "Uydu alıcısı": {
+    "TR": "Uydu alıcısı",
+    "EN": "Satellite receiver"
+  },
+  "TV kumandası": {
+    "TR": "TV kumandası",
+    "EN": "TV remote"
+  },
+  "Ses sistemi": {
+    "TR": "Ses sistemi",
+    "EN": "Sound system"
+  },
+  "Bluetooth hoparlör": {
+    "TR": "Bluetooth hoparlör",
+    "EN": "Bluetooth speaker"
+  },
+  "Soundbar": {
+    "TR": "Soundbar",
+    "EN": "Soundbar"
+  },
+  "Radyo": {
+    "TR": "Radyo",
+    "EN": "Radio"
+  },
+  "Telefon": {
+    "TR": "Telefon",
+    "EN": "Telephone"
+  },
+  "Kablosuz telefon": {
+    "TR": "Kablosuz telefon",
+    "EN": "Cordless phone"
+  },
+  "Masa telefonu": {
+    "TR": "Masa telefonu",
+    "EN": "Desk phone"
+  },
+  "Şarj istasyonu": {
+    "TR": "Şarj istasyonu",
+    "EN": "Charging station"
+  },
+  "USB şarj cihazı": {
+    "TR": "USB şarj cihazı",
+    "EN": "USB charger"
+  },
+  "Elektrik priz adaptörü": {
+    "TR": "Elektrik priz adaptörü",
+    "EN": "Plug adapter"
+  },
+  "Uzatma kablosu": {
+    "TR": "Uzatma kablosu",
+    "EN": "Extension cord"
+  },
+  "Çoklu priz": {
+    "TR": "Çoklu priz",
+    "EN": "Power strip"
+  },
+  "Kablosuz internet erişim noktası": {
+    "TR": "Kablosuz internet erişim noktası",
+    "EN": "Wireless access point"
+  },
+  "Ethernet bağlantısı": {
+    "TR": "Ethernet bağlantısı",
+    "EN": "Ethernet connection"
+  },
+  "Projektör": {
+    "TR": "Projektör",
+    "EN": "Projector"
+  },
+  "Oyun konsolu": {
+    "TR": "Oyun konsolu",
+    "EN": "Game console"
+  },
+  "DVD/Blu-ray oynatıcı": {
+    "TR": "DVD/Blu-ray oynatıcı",
+    "EN": "DVD/Blu-ray player"
+  },
+  "Akıllı ev kontrol paneli": {
+    "TR": "Akıllı ev kontrol paneli",
+    "EN": "Smart home control panel"
+  },
+  "Akıllı hoparlör": {
+    "TR": "Akıllı hoparlör",
+    "EN": "Smart speaker"
+  },
+  "Alarm saati": {
+    "TR": "Alarm saati",
+    "EN": "Alarm clock"
+  },
+  "Dijital saat": {
+    "TR": "Dijital saat",
+    "EN": "Digital clock"
+  },
+  "Masa saati": {
+    "TR": "Masa saati",
+    "EN": "Table clock"
+  },
+  "Bebek monitörü": {
+    "TR": "Bebek monitörü",
+    "EN": "Baby monitor"
+  },
+  "Isıtma, Soğutma ve Havalandırma": {
+    "TR": "Isıtma, Soğutma ve Havalandırma",
+    "EN": "Heating, cooling and ventilation"
+  },
+  "Klima": {
+    "TR": "Klima",
+    "EN": "Air conditioning"
+  },
+  "Split klima": {
+    "TR": "Split klima",
+    "EN": "Split air conditioner"
+  },
+  "Merkezi klima": {
+    "TR": "Merkezi klima",
+    "EN": "Central air conditioning"
+  },
+  "Taşınabilir klima": {
+    "TR": "Taşınabilir klima",
+    "EN": "Portable air conditioner"
+  },
+  "Isıtıcı": {
+    "TR": "Isıtıcı",
+    "EN": "Heater"
+  },
+  "Elektrikli radyatör": {
+    "TR": "Elektrikli radyatör",
+    "EN": "Electric radiator"
+  },
+  "Yağlı radyatör": {
+    "TR": "Yağlı radyatör",
+    "EN": "Oil-filled radiator"
+  },
+  "Konvektör ısıtıcı": {
+    "TR": "Konvektör ısıtıcı",
+    "EN": "Convector heater"
+  },
+  "Fanlı ısıtıcı": {
+    "TR": "Fanlı ısıtıcı",
+    "EN": "Fan heater"
+  },
+  "Merkezi ısıtma": {
+    "TR": "Merkezi ısıtma",
+    "EN": "Central heating"
+  },
+  "Kombi": {
+    "TR": "Kombi",
+    "EN": "Combi boiler"
+  },
+  "Yerden ısıtma": {
+    "TR": "Yerden ısıtma",
+    "EN": "Underfloor heating"
+  },
+  "Tavan vantilatörü": {
+    "TR": "Tavan vantilatörü",
+    "EN": "Ceiling fan"
+  },
+  "Ayaklı vantilatör": {
+    "TR": "Ayaklı vantilatör",
+    "EN": "Pedestal fan"
+  },
+  "Masa vantilatörü": {
+    "TR": "Masa vantilatörü",
+    "EN": "Desk fan"
+  },
+  "Hava temizleme cihazı": {
+    "TR": "Hava temizleme cihazı",
+    "EN": "Air purifier"
+  },
+  "Hava nemlendirici": {
+    "TR": "Hava nemlendirici",
+    "EN": "Humidifier"
+  },
+  "Hava nem alma cihazı": {
+    "TR": "Hava nem alma cihazı",
+    "EN": "Dehumidifier"
+  },
+  "Termostat": {
+    "TR": "Termostat",
+    "EN": "Thermostat"
+  },
+  "Akıllı termostat": {
+    "TR": "Akıllı termostat",
+    "EN": "Smart thermostat"
+  },
+  "Havalandırma sistemi": {
+    "TR": "Havalandırma sistemi",
+    "EN": "Ventilation system"
+  },
+  "Aydınlatma ve Elektrik": {
+    "TR": "Aydınlatma ve Elektrik",
+    "EN": "Lighting and electricity"
+  },
+  "Avize": {
+    "TR": "Avize",
+    "EN": "Chandelier"
+  },
+  "Tavan lambası": {
+    "TR": "Tavan lambası",
+    "EN": "Ceiling light"
+  },
+  "Sarkıt lamba": {
+    "TR": "Sarkıt lamba",
+    "EN": "Pendant light"
+  },
+  "Duvar aplikleri": {
+    "TR": "Duvar aplikleri",
+    "EN": "Wall lights"
+  },
+  "Abajur": {
+    "TR": "Abajur",
+    "EN": "Shaded lamp"
+  },
+  "Masa lambası": {
+    "TR": "Masa lambası",
+    "EN": "Desk lamp"
+  },
+  "LED aydınlatma": {
+    "TR": "LED aydınlatma",
+    "EN": "LED lighting"
+  },
+  "Spot aydınlatma": {
+    "TR": "Spot aydınlatma",
+    "EN": "Spot lighting"
+  },
+  "Gizli LED aydınlatma": {
+    "TR": "Gizli LED aydınlatma",
+    "EN": "Concealed LED lighting"
+  },
+  "Gece aydınlatması": {
+    "TR": "Gece aydınlatması",
+    "EN": "Night lighting"
+  },
+  "Sensörlü lamba": {
+    "TR": "Sensörlü lamba",
+    "EN": "Sensor light"
+  },
+  "Acil durum aydınlatması": {
+    "TR": "Acil durum aydınlatması",
+    "EN": "Emergency lighting"
+  },
+  "Acil çıkış levhası": {
+    "TR": "Acil çıkış levhası",
+    "EN": "Emergency exit sign"
+  },
+  "Dimmer": {
+    "TR": "Dimmer",
+    "EN": "Dimmer"
+  },
+  "Akıllı anahtar": {
+    "TR": "Akıllı anahtar",
+    "EN": "Smart switch"
+  },
+  "Priz": {
+    "TR": "Priz",
+    "EN": "Power socket"
+  },
+  "USB priz": {
+    "TR": "USB priz",
+    "EN": "USB socket"
+  },
+  "Jeneratör": {
+    "TR": "Jeneratör",
+    "EN": "Generator"
+  },
+  "Kesintisiz güç kaynağı (UPS)": {
+    "TR": "Kesintisiz güç kaynağı (UPS)",
+    "EN": "Uninterruptible power supply (UPS)"
+  },
+  "Halı, Perde ve Dekorasyon": {
+    "TR": "Halı, Perde ve Dekorasyon",
+    "EN": "Carpets, Curtains and Decoration"
+  },
+  "Zemin ve tekstil": {
+    "TR": "Zemin ve tekstil",
+    "EN": "Floor coverings and textiles"
+  },
+  "Halı": {
+    "TR": "Halı",
+    "EN": "Carpet"
+  },
+  "Kilim": {
+    "TR": "Kilim",
+    "EN": "Kilim rug"
+  },
+  "Yolluk": {
+    "TR": "Yolluk",
+    "EN": "Runner rug"
+  },
+  "Kapı önü paspası": {
+    "TR": "Kapı önü paspası",
+    "EN": "Doormat"
+  },
+  "Balkon halısı": {
+    "TR": "Balkon halısı",
+    "EN": "Balcony rug"
+  },
+  "Perde": {
+    "TR": "Perde",
+    "EN": "Curtain"
+  },
+  "Tül perde": {
+    "TR": "Tül perde",
+    "EN": "Sheer curtain"
+  },
+  "Fon perde": {
+    "TR": "Fon perde",
+    "EN": "Drapes"
+  },
+  "Karartma perde": {
+    "TR": "Karartma perde",
+    "EN": "Blackout curtains"
+  },
+  "Stor perde": {
+    "TR": "Stor perde",
+    "EN": "Roller blind"
+  },
+  "Zebra perde": {
+    "TR": "Zebra perde",
+    "EN": "Day and night blind"
+  },
+  "Jaluzi": {
+    "TR": "Jaluzi",
+    "EN": "Venetian blind"
+  },
+  "Güneşlik": {
+    "TR": "Güneşlik",
+    "EN": "Sunshade curtain"
+  },
+  "Perde kornişi": {
+    "TR": "Perde kornişi",
+    "EN": "Curtain rod"
+  },
+  "Perde rayı": {
+    "TR": "Perde rayı",
+    "EN": "Curtain track"
+  },
+  "Perde bağı": {
+    "TR": "Perde bağı",
+    "EN": "Curtain tieback"
+  },
+  "Dekoratif ürünler": {
+    "TR": "Dekoratif ürünler",
+    "EN": "Decorative items"
+  },
+  "Tablo": {
+    "TR": "Tablo",
+    "EN": "Painting"
+  },
+  "Duvar dekoru": {
+    "TR": "Duvar dekoru",
+    "EN": "Wall decoration"
+  },
+  "Ayna": {
+    "TR": "Ayna",
+    "EN": "Mirror"
+  },
+  "Dekoratif vazo": {
+    "TR": "Dekoratif vazo",
+    "EN": "Decorative vase"
+  },
+  "Yapay çiçek": {
+    "TR": "Yapay çiçek",
+    "EN": "Artificial flowers"
+  },
+  "Canlı bitki": {
+    "TR": "Canlı bitki",
+    "EN": "Live plant"
+  },
+  "Saksı": {
+    "TR": "Saksı",
+    "EN": "Plant pot"
+  },
+  "Dekoratif heykel": {
+    "TR": "Dekoratif heykel",
+    "EN": "Decorative sculpture"
+  },
+  "Duvar saati": {
+    "TR": "Duvar saati",
+    "EN": "Wall clock"
+  },
+  "Dekoratif tepsi": {
+    "TR": "Dekoratif tepsi",
+    "EN": "Decorative tray"
+  },
+  "Mumluk": {
+    "TR": "Mumluk",
+    "EN": "Candle holder"
+  },
+  "Dekoratif mum": {
+    "TR": "Dekoratif mum",
+    "EN": "Decorative candle"
+  },
+  "Kitap": {
+    "TR": "Kitap",
+    "EN": "Book"
+  },
+  "Dekoratif sepet": {
+    "TR": "Dekoratif sepet",
+    "EN": "Decorative basket"
+  },
+  "Fotoğraf çerçevesi": {
+    "TR": "Fotoğraf çerçevesi",
+    "EN": "Photo frame"
+  },
+  "Yastık": {
+    "TR": "Yastık",
+    "EN": "Pillow"
+  },
+  "Kırlent": {
+    "TR": "Kırlent",
+    "EN": "Cushion"
+  },
+  "Kapı süsü": {
+    "TR": "Kapı süsü",
+    "EN": "Door decoration"
+  },
+  "Balkon, Teras ve Bahçe": {
+    "TR": "Balkon, Teras ve Bahçe",
+    "EN": "Balcony, terrace and garden"
+  },
+  "Bahçe koltuğu": {
+    "TR": "Bahçe koltuğu",
+    "EN": "Garden armchair"
+  },
+  "Bahçe oturma grubu": {
+    "TR": "Bahçe oturma grubu",
+    "EN": "Garden seating set"
+  },
+  "Şemsiye": {
+    "TR": "Şemsiye",
+    "EN": "Umbrella"
+  },
+  "Güneş şemsiyesi": {
+    "TR": "Güneş şemsiyesi",
+    "EN": "Parasol"
+  },
+  "Pergola": {
+    "TR": "Pergola",
+    "EN": "Pergola"
+  },
+  "Veranda salıncağı": {
+    "TR": "Veranda salıncağı",
+    "EN": "Porch swing"
+  },
+  "Hamak": {
+    "TR": "Hamak",
+    "EN": "Hammock"
+  },
+  "Barbekü": {
+    "TR": "Barbekü",
+    "EN": "Barbecue"
+  },
+  "Mangal": {
+    "TR": "Mangal",
+    "EN": "Charcoal grill"
+  },
+  "Bahçe aydınlatması": {
+    "TR": "Bahçe aydınlatması",
+    "EN": "Garden lighting"
+  },
+  "Bitki sulama sistemi": {
+    "TR": "Bitki sulama sistemi",
+    "EN": "Plant irrigation system"
+  },
+  "Bahçe hortumu": {
+    "TR": "Bahçe hortumu",
+    "EN": "Garden hose"
+  },
+  "Sulama başlığı": {
+    "TR": "Sulama başlığı",
+    "EN": "Spray nozzle"
+  },
+  "Bahçe deposu": {
+    "TR": "Bahçe deposu",
+    "EN": "Garden shed"
+  },
+  "Dış mekân duşu": {
+    "TR": "Dış mekân duşu",
+    "EN": "Outdoor shower"
+  },
+  "Dış mekân lavabo": {
+    "TR": "Dış mekân lavabo",
+    "EN": "Outdoor sink"
+  },
+  "Teras ısıtıcısı": {
+    "TR": "Teras ısıtıcısı",
+    "EN": "Patio heater"
+  },
+  "Dış mekân prizleri": {
+    "TR": "Dış mekân prizleri",
+    "EN": "Outdoor sockets"
+  },
+  "Dış mekân halısı": {
+    "TR": "Dış mekân halısı",
+    "EN": "Outdoor rug"
+  },
+  "Bahçe minderleri": {
+    "TR": "Bahçe minderleri",
+    "EN": "Garden cushions"
+  },
+  "Ateş çukuru": {
+    "TR": "Ateş çukuru",
+    "EN": "Fire pit"
+  },
+  "Havuz, Jakuzi ve Spa": {
+    "TR": "Havuz, Jakuzi ve Spa",
+    "EN": "Pool, Jacuzzi and Spa"
+  },
+  "Havuz": {
+    "TR": "Havuz",
+    "EN": "Pool"
+  },
+  "Özel havuz": {
+    "TR": "Özel havuz",
+    "EN": "Private pool"
+  },
+  "Ortak havuz": {
+    "TR": "Ortak havuz",
+    "EN": "Shared pool"
+  },
+  "Kapalı havuz": {
+    "TR": "Kapalı havuz",
+    "EN": "Indoor pool"
+  },
+  "Açık havuz": {
+    "TR": "Açık havuz",
+    "EN": "Outdoor pool"
+  },
+  "Isıtmalı havuz": {
+    "TR": "Isıtmalı havuz",
+    "EN": "Heated pool"
+  },
+  "Çocuk havuzu": {
+    "TR": "Çocuk havuzu",
+    "EN": "Children's pool"
+  },
+  "Sonsuzluk havuzu": {
+    "TR": "Sonsuzluk havuzu",
+    "EN": "Infinity pool"
+  },
+  "Havuz merdiveni": {
+    "TR": "Havuz merdiveni",
+    "EN": "Pool ladder"
+  },
+  "Havuz tutamağı": {
+    "TR": "Havuz tutamağı",
+    "EN": "Pool handrail"
+  },
+  "Havuz duşu": {
+    "TR": "Havuz duşu",
+    "EN": "Pool shower"
+  },
+  "Havuz şezlongu": {
+    "TR": "Havuz şezlongu",
+    "EN": "Pool lounger"
+  },
+  "Havuz şemsiyesi": {
+    "TR": "Havuz şemsiyesi",
+    "EN": "Pool parasol"
+  },
+  "Havuz havlusu": {
+    "TR": "Havuz havlusu",
+    "EN": "Pool towel"
+  },
+  "Havuz örtüsü": {
+    "TR": "Havuz örtüsü",
+    "EN": "Pool cover"
+  },
+  "Havuz temizleme robotu": {
+    "TR": "Havuz temizleme robotu",
+    "EN": "Pool cleaning robot"
+  },
+  "Havuz filtresi": {
+    "TR": "Havuz filtresi",
+    "EN": "Pool filter"
+  },
+  "Havuz pompası": {
+    "TR": "Havuz pompası",
+    "EN": "Pool pump"
+  },
+  "Havuz ısıtma sistemi": {
+    "TR": "Havuz ısıtma sistemi",
+    "EN": "Pool heating system"
+  },
+  "Havuz aydınlatması": {
+    "TR": "Havuz aydınlatması",
+    "EN": "Pool lighting"
+  },
+  "Havuz güvenlik bariyeri": {
+    "TR": "Havuz güvenlik bariyeri",
+    "EN": "Pool safety barrier"
+  },
+  "Havuz suyu analiz ekipmanı": {
+    "TR": "Havuz suyu analiz ekipmanı",
+    "EN": "Pool water testing equipment"
+  },
+  "Jakuzi ve spa": {
+    "TR": "Jakuzi ve spa",
+    "EN": "Jacuzzi and spa"
+  },
+  "Oda içi jakuzi": {
+    "TR": "Oda içi jakuzi",
+    "EN": "In-room jacuzzi"
+  },
+  "Özel açık hava jakuzisi": {
+    "TR": "Özel açık hava jakuzisi",
+    "EN": "Private outdoor jacuzzi"
+  },
+  "Ortak jakuzi": {
+    "TR": "Ortak jakuzi",
+    "EN": "Shared jacuzzi"
+  },
+  "Hidromasajlı küvet": {
+    "TR": "Hidromasajlı küvet",
+    "EN": "Whirlpool bath"
+  },
+  "Sauna": {
+    "TR": "Sauna",
+    "EN": "Sauna"
+  },
+  "Buhar odası": {
+    "TR": "Buhar odası",
+    "EN": "Steam room"
+  },
+  "Türk hamamı": {
+    "TR": "Türk hamamı",
+    "EN": "Turkish bath"
+  },
+  "Masaj yatağı": {
+    "TR": "Masaj yatağı",
+    "EN": "Massage bed"
+  },
+  "Spa dinlenme koltuğu": {
+    "TR": "Spa dinlenme koltuğu",
+    "EN": "Spa relaxation chair"
+  },
+  "Spa havlusu": {
+    "TR": "Spa havlusu",
+    "EN": "Spa towel"
+  },
+  "Spa bornozu": {
+    "TR": "Spa bornozu",
+    "EN": "Spa bathrobe"
+  },
+  "Ayak masaj cihazı": {
+    "TR": "Ayak masaj cihazı",
+    "EN": "Foot massager"
+  },
+  "Güvenlik ve Acil Durum Ekipmanları": {
+    "TR": "Güvenlik ve Acil Durum Ekipmanları",
+    "EN": "Safety and emergency equipment"
+  },
+  "Oda kasası": {
+    "TR": "Oda kasası",
+    "EN": "Room safe"
+  },
+  "Elektronik kasa": {
+    "TR": "Elektronik kasa",
+    "EN": "Electronic safe"
+  },
+  "Yangın söndürücü": {
+    "TR": "Yangın söndürücü",
+    "EN": "Fire extinguisher"
+  },
+  "Yangın battaniyesi": {
+    "TR": "Yangın battaniyesi",
+    "EN": "Fire blanket"
+  },
+  "Duman dedektörü": {
+    "TR": "Duman dedektörü",
+    "EN": "Smoke detector"
+  },
+  "Karbonmonoksit dedektörü": {
+    "TR": "Karbonmonoksit dedektörü",
+    "EN": "Carbon monoxide detector"
+  },
+  "Gaz dedektörü": {
+    "TR": "Gaz dedektörü",
+    "EN": "Gas detector"
+  },
+  "Yangın alarmı": {
+    "TR": "Yangın alarmı",
+    "EN": "Fire alarm"
+  },
+  "Yangın sprinkler sistemi": {
+    "TR": "Yangın sprinkler sistemi",
+    "EN": "Fire sprinkler system"
+  },
+  "İlk yardım çantası": {
+    "TR": "İlk yardım çantası",
+    "EN": "First aid kit"
+  },
+  "Acil durum talimatı": {
+    "TR": "Acil durum talimatı",
+    "EN": "Emergency instructions"
+  },
+  "Güvenlik kamerası": {
+    "TR": "Güvenlik kamerası",
+    "EN": "Security camera"
+  },
+  "Alarm sistemi": {
+    "TR": "Alarm sistemi",
+    "EN": "Alarm system"
+  },
+  "Kapı dürbünü": {
+    "TR": "Kapı dürbünü",
+    "EN": "Door peephole"
+  },
+  "Elektronik kapı kilidi": {
+    "TR": "Elektronik kapı kilidi",
+    "EN": "Electronic door lock"
+  },
+  "Kartlı geçiş sistemi": {
+    "TR": "Kartlı geçiş sistemi",
+    "EN": "Card access system"
+  },
+  "Akıllı kilit": {
+    "TR": "Akıllı kilit",
+    "EN": "Smart lock"
+  },
+  "Mekanik kapı kilidi": {
+    "TR": "Mekanik kapı kilidi",
+    "EN": "Mechanical door lock"
+  },
+  "Kapı zinciri": {
+    "TR": "Kapı zinciri",
+    "EN": "Door chain"
+  },
+  "Pencere kilidi": {
+    "TR": "Pencere kilidi",
+    "EN": "Window lock"
+  },
+  "Çocuk güvenlik kilidi": {
+    "TR": "Çocuk güvenlik kilidi",
+    "EN": "Child safety lock"
+  },
+  "Elektrik kaçak akım rölesi": {
+    "TR": "Elektrik kaçak akım rölesi",
+    "EN": "Residual current device"
+  },
+  "Deprem acil durum ekipmanı": {
+    "TR": "Deprem acil durum ekipmanı",
+    "EN": "Earthquake emergency kit"
+  },
+  "Temizlik ve Kat Hizmetleri": {
+    "TR": "Temizlik ve Kat Hizmetleri",
+    "EN": "Cleaning and housekeeping"
+  },
+  "Elektrikli süpürge": {
+    "TR": "Elektrikli süpürge",
+    "EN": "Vacuum cleaner"
+  },
+  "Robot süpürge": {
+    "TR": "Robot süpürge",
+    "EN": "Robot vacuum"
+  },
+  "Buharlı temizleyici": {
+    "TR": "Buharlı temizleyici",
+    "EN": "Steam cleaner"
+  },
+  "Yer yıkama makinesi": {
+    "TR": "Yer yıkama makinesi",
+    "EN": "Floor scrubber"
+  },
+  "Paspas": {
+    "TR": "Paspas",
+    "EN": "Mop"
+  },
+  "Mop kovası": {
+    "TR": "Mop kovası",
+    "EN": "Mop bucket"
+  },
+  "Temizlik arabası": {
+    "TR": "Temizlik arabası",
+    "EN": "Cleaning trolley"
+  },
+  "Temizlik kovası": {
+    "TR": "Temizlik kovası",
+    "EN": "Cleaning bucket"
+  },
+  "Cam temizleme aparatı": {
+    "TR": "Cam temizleme aparatı",
+    "EN": "Window cleaning tool"
+  },
+  "Cam sileceği": {
+    "TR": "Cam sileceği",
+    "EN": "Window squeegee"
+  },
+  "Faraş": {
+    "TR": "Faraş",
+    "EN": "Dustpan"
+  },
+  "Süpürge": {
+    "TR": "Süpürge",
+    "EN": "Broom"
+  },
+  "Mikrofiber bez": {
+    "TR": "Mikrofiber bez",
+    "EN": "Microfiber cloth"
+  },
+  "Toz alma aparatı": {
+    "TR": "Toz alma aparatı",
+    "EN": "Duster"
+  },
+  "Kirli çamaşır arabası": {
+    "TR": "Kirli çamaşır arabası",
+    "EN": "Laundry trolley"
+  },
+  "Çamaşır kurutmalığı": {
+    "TR": "Çamaşır kurutmalığı",
+    "EN": "Drying rack"
+  },
+  "Çamaşır askısı": {
+    "TR": "Çamaşır askısı",
+    "EN": "Laundry hanger"
+  },
+  "Dikiş seti": {
+    "TR": "Dikiş seti",
+    "EN": "Sewing kit"
+  },
+  "Leke çıkarıcı": {
+    "TR": "Leke çıkarıcı",
+    "EN": "Stain remover"
+  },
+  "Yüzey temizleyici": {
+    "TR": "Yüzey temizleyici",
+    "EN": "Surface cleaner"
+  },
+  "Dezenfektan": {
+    "TR": "Dezenfektan",
+    "EN": "Disinfectant"
+  },
+  "Kireç çözücü": {
+    "TR": "Kireç çözücü",
+    "EN": "Descaler"
+  },
+  "Çalışma Alanı ve İş Donanımları": {
+    "TR": "Çalışma Alanı ve İş Donanımları",
+    "EN": "Workspace and business equipment"
+  },
+  "Masaüstü priz": {
+    "TR": "Masaüstü priz",
+    "EN": "Desktop power socket"
+  },
+  "USB şarj noktası": {
+    "TR": "USB şarj noktası",
+    "EN": "USB charging point"
+  },
+  "Ethernet portu": {
+    "TR": "Ethernet portu",
+    "EN": "Ethernet port"
+  },
+  "Kablosuz internet": {
+    "TR": "Kablosuz internet",
+    "EN": "Wireless internet"
+  },
+  "Bilgisayar monitörü": {
+    "TR": "Bilgisayar monitörü",
+    "EN": "Computer monitor"
+  },
+  "Klavye": {
+    "TR": "Klavye",
+    "EN": "Keyboard"
+  },
+  "Fare": {
+    "TR": "Fare",
+    "EN": "Mouse"
+  },
+  "Yazıcı": {
+    "TR": "Yazıcı",
+    "EN": "Printer"
+  },
+  "Tarayıcı": {
+    "TR": "Tarayıcı",
+    "EN": "Scanner"
+  },
+  "Evrak düzenleyici": {
+    "TR": "Evrak düzenleyici",
+    "EN": "Document organizer"
+  },
+  "Kalemlik": {
+    "TR": "Kalemlik",
+    "EN": "Pen holder"
+  },
+  "Not defteri": {
+    "TR": "Not defteri",
+    "EN": "Notepad"
+  },
+  "Dosyalık": {
+    "TR": "Dosyalık",
+    "EN": "File holder"
+  },
+  "Sunum ekranı": {
+    "TR": "Sunum ekranı",
+    "EN": "Presentation screen"
+  },
+  "Çocuk ve Bebek Ekipmanları": {
+    "TR": "Çocuk ve Bebek Ekipmanları",
+    "EN": "Children and baby equipment"
+  },
+  "Bebek nevresim takımı": {
+    "TR": "Bebek nevresim takımı",
+    "EN": "Baby bedding set"
+  },
+  "Bebek yastığı": {
+    "TR": "Bebek yastığı",
+    "EN": "Baby pillow"
+  },
+  "Bebek mama sandalyesi": {
+    "TR": "Bebek mama sandalyesi",
+    "EN": "Baby high chair"
+  },
+  "Bebek küveti": {
+    "TR": "Bebek küveti",
+    "EN": "Baby bath"
+  },
+  "Bebek bakım masası": {
+    "TR": "Bebek bakım masası",
+    "EN": "Baby changing table"
+  },
+  "Alt değiştirme minderi": {
+    "TR": "Alt değiştirme minderi",
+    "EN": "Changing mat"
+  },
+  "Bebek telsizi": {
+    "TR": "Bebek telsizi",
+    "EN": "Baby audio monitor"
+  },
+  "Bebek arabası": {
+    "TR": "Bebek arabası",
+    "EN": "Stroller"
+  },
+  "Çocuk yatağı": {
+    "TR": "Çocuk yatağı",
+    "EN": "Child bed"
+  },
+  "Çocuk taburesi": {
+    "TR": "Çocuk taburesi",
+    "EN": "Child stool"
+  },
+  "Çocuk yemek takımı": {
+    "TR": "Çocuk yemek takımı",
+    "EN": "Children's tableware"
+  },
+  "Çocuk güvenlik kapısı": {
+    "TR": "Çocuk güvenlik kapısı",
+    "EN": "Child safety gate"
+  },
+  "Priz koruyucu": {
+    "TR": "Priz koruyucu",
+    "EN": "Socket cover"
+  },
+  "Dolap kilidi": {
+    "TR": "Dolap kilidi",
+    "EN": "Cabinet lock"
+  },
+  "Merdiven güvenlik bariyeri": {
+    "TR": "Merdiven güvenlik bariyeri",
+    "EN": "Stair safety gate"
+  },
+  "Çocuk oyun matı": {
+    "TR": "Çocuk oyun matı",
+    "EN": "Children's play mat"
+  },
+  "Çocuk oyun alanı ekipmanları": {
+    "TR": "Çocuk oyun alanı ekipmanları",
+    "EN": "Playground equipment"
+  },
+  "Genel Tesis Olanakları": {
+    "TR": "Genel Tesis Olanakları",
+    "EN": "General Property Amenities"
+  },
+  "İnternet ve iletişim": {
+    "TR": "İnternet ve iletişim",
+    "EN": "Internet and communication"
+  },
+  "Ücretsiz Wi-Fi": {
+    "TR": "Ücretsiz Wi-Fi",
+    "EN": "Free Wi-Fi"
+  },
+  "Ücretli Wi-Fi": {
+    "TR": "Ücretli Wi-Fi",
+    "EN": "Paid Wi-Fi"
+  },
+  "Kablolu internet": {
+    "TR": "Kablolu internet",
+    "EN": "Wired internet"
+  },
+  "Uydu TV": {
+    "TR": "Uydu TV",
+    "EN": "Satellite TV"
+  },
+  "Akıllı TV": {
+    "TR": "Akıllı TV",
+    "EN": "Smart TV"
+  },
+  "Konfor": {
+    "TR": "Konfor",
+    "EN": "Comfort"
+  },
+  "Isıtma": {
+    "TR": "Isıtma",
+    "EN": "Heating"
+  },
+  "Özel banyo": {
+    "TR": "Özel banyo",
+    "EN": "Private bathroom"
+  },
+  "Ortak banyo": {
+    "TR": "Ortak banyo",
+    "EN": "Shared bathroom"
+  },
+  "Özel mutfak": {
+    "TR": "Özel mutfak",
+    "EN": "Private kitchen"
+  },
+  "Ortak mutfak": {
+    "TR": "Ortak mutfak",
+    "EN": "Shared kitchen"
+  },
+  "Balkon": {
+    "TR": "Balkon",
+    "EN": "Balcony"
+  },
+  "Teras": {
+    "TR": "Teras",
+    "EN": "Terrace"
+  },
+  "Deniz manzarası": {
+    "TR": "Deniz manzarası",
+    "EN": "Sea view"
+  },
+  "Şehir manzarası": {
+    "TR": "Şehir manzarası",
+    "EN": "City view"
+  },
+  "Bahçe manzarası": {
+    "TR": "Bahçe manzarası",
+    "EN": "Garden view"
+  },
+  "Dağ manzarası": {
+    "TR": "Dağ manzarası",
+    "EN": "Mountain view"
+  },
+  "Havuz manzarası": {
+    "TR": "Havuz manzarası",
+    "EN": "Pool view"
+  },
+  "Ses yalıtımı": {
+    "TR": "Ses yalıtımı",
+    "EN": "Soundproofing"
+  },
+  "Sigara içilmeyen oda": {
+    "TR": "Sigara içilmeyen oda",
+    "EN": "Non-smoking room"
+  },
+  "Sigara içilebilir alan": {
+    "TR": "Sigara içilebilir alan",
+    "EN": "Smoking area"
+  },
+  "Tesis hizmetleri": {
+    "TR": "Tesis hizmetleri",
+    "EN": "Property services"
+  },
+  "Ücretsiz otopark": {
+    "TR": "Ücretsiz otopark",
+    "EN": "Free parking"
+  },
+  "Kapalı otopark": {
+    "TR": "Kapalı otopark",
+    "EN": "Covered parking"
+  },
+  "Vale hizmeti": {
+    "TR": "Vale hizmeti",
+    "EN": "Valet parking"
+  },
+  "Havaalanı transferi": {
+    "TR": "Havaalanı transferi",
+    "EN": "Airport transfer"
+  },
+  "Kahvaltı": {
+    "TR": "Kahvaltı",
+    "EN": "Breakfast"
+  },
+  "Restoran": {
+    "TR": "Restoran",
+    "EN": "Restaurant"
+  },
+  "Bar": {
+    "TR": "Bar",
+    "EN": "Bar"
+  },
+  "Oda servisi": {
+    "TR": "Oda servisi",
+    "EN": "Room service"
+  },
+  "Çamaşırhane": {
+    "TR": "Çamaşırhane",
+    "EN": "Laundry service"
+  },
+  "Kuru temizleme": {
+    "TR": "Kuru temizleme",
+    "EN": "Dry cleaning"
+  },
+  "Günlük temizlik": {
+    "TR": "Günlük temizlik",
+    "EN": "Daily housekeeping"
+  },
+  "Bagaj muhafazası": {
+    "TR": "Bagaj muhafazası",
+    "EN": "Luggage storage"
+  },
+  "24 saat resepsiyon": {
+    "TR": "24 saat resepsiyon",
+    "EN": "24-hour reception"
+  },
+  "Asansör": {
+    "TR": "Asansör",
+    "EN": "Elevator"
+  },
+  "Spor salonu": {
+    "TR": "Spor salonu",
+    "EN": "Gym"
+  },
+  "Spa": {
+    "TR": "Spa",
+    "EN": "Spa"
+  },
+  "Toplantı odası": {
+    "TR": "Toplantı odası",
+    "EN": "Meeting room"
+  },
+  "İş merkezi": {
+    "TR": "İş merkezi",
+    "EN": "Business center"
+  },
+  "Çocuk oyun alanı": {
+    "TR": "Çocuk oyun alanı",
+    "EN": "Children's play area"
+  },
+  "Evcil hayvan kabulü": {
+    "TR": "Evcil hayvan kabulü",
+    "EN": "Pets allowed"
+  },
+  "Engelli erişimi": {
+    "TR": "Engelli erişimi",
+    "EN": "Disabled access"
+  },
+  "Elektrikli araç şarj istasyonu": {
+    "TR": "Elektrikli araç şarj istasyonu",
+    "EN": "Electric vehicle charging station"
+  },
+  "Engelli Erişimi ve Erişilebilirlik": {
+    "TR": "Engelli Erişimi ve Erişilebilirlik",
+    "EN": "Disabled access and accessibility"
+  },
+  "Tekerlekli sandalye erişimine uygun oda": {
+    "TR": "Tekerlekli sandalye erişimine uygun oda",
+    "EN": "Wheelchair-accessible room"
+  },
+  "Geniş kapı açıklığı": {
+    "TR": "Geniş kapı açıklığı",
+    "EN": "Wide doorway"
+  },
+  "Engelsiz duş": {
+    "TR": "Engelsiz duş",
+    "EN": "Accessible shower"
+  },
+  "Tutunma barı": {
+    "TR": "Tutunma barı",
+    "EN": "Grab bar"
+  },
+  "Alçak lavabo": {
+    "TR": "Alçak lavabo",
+    "EN": "Low washbasin"
+  },
+  "Alçak yatak": {
+    "TR": "Alçak yatak",
+    "EN": "Low bed"
+  },
+  "Erişilebilir tuvalet": {
+    "TR": "Erişilebilir tuvalet",
+    "EN": "Accessible toilet"
+  },
+  "Duş oturağı": {
+    "TR": "Duş oturağı",
+    "EN": "Shower seat"
+  },
+  "Acil çağrı butonu": {
+    "TR": "Acil çağrı butonu",
+    "EN": "Emergency call button"
+  },
+  "Rampa": {
+    "TR": "Rampa",
+    "EN": "Ramp"
+  },
+  "Görsel alarm": {
+    "TR": "Görsel alarm",
+    "EN": "Visual alarm"
+  },
+  "İşitsel alarm": {
+    "TR": "İşitsel alarm",
+    "EN": "Audible alarm"
+  },
+  "Braille işaretleme": {
+    "TR": "Braille işaretleme",
+    "EN": "Braille signage"
+  },
+  "Dokunsal yönlendirme": {
+    "TR": "Dokunsal yönlendirme",
+    "EN": "Tactile guidance"
+  },
+  "Erişilebilir otopark": {
+    "TR": "Erişilebilir otopark",
+    "EN": "Accessible parking"
+  },
+  "Erişilebilir ortak alan": {
+    "TR": "Erişilebilir ortak alan",
+    "EN": "Accessible common area"
+  },
+  "Kapı, Pencere ve Yapısal Donanımlar": {
+    "TR": "Kapı, Pencere ve Yapısal Donanımlar",
+    "EN": "Doors, windows and structural fixtures"
+  },
+  "Oda kapısı": {
+    "TR": "Oda kapısı",
+    "EN": "Room door"
+  },
+  "Banyo kapısı": {
+    "TR": "Banyo kapısı",
+    "EN": "Bathroom door"
+  },
+  "Balkon kapısı": {
+    "TR": "Balkon kapısı",
+    "EN": "Balcony door"
+  },
+  "Pencere": {
+    "TR": "Pencere",
+    "EN": "Window"
+  },
+  "Çift cam": {
+    "TR": "Çift cam",
+    "EN": "Double glazing"
+  },
+  "Isı yalıtımlı pencere": {
+    "TR": "Isı yalıtımlı pencere",
+    "EN": "Thermally insulated window"
+  },
+  "Ses yalıtımlı pencere": {
+    "TR": "Ses yalıtımlı pencere",
+    "EN": "Soundproof window"
+  },
+  "Panjur": {
+    "TR": "Panjur",
+    "EN": "Roller shutter"
+  },
+  "Kepenk": {
+    "TR": "Kepenk",
+    "EN": "Shutter"
+  },
+  "Sineklik": {
+    "TR": "Sineklik",
+    "EN": "Insect screen"
+  },
+  "Kapı kolu": {
+    "TR": "Kapı kolu",
+    "EN": "Door handle"
+  },
+  "Kapı stoperi": {
+    "TR": "Kapı stoperi",
+    "EN": "Door stop"
+  },
+  "Kapı yayı": {
+    "TR": "Kapı yayı",
+    "EN": "Door closer"
+  },
+  "Elektronik kilit": {
+    "TR": "Elektronik kilit",
+    "EN": "Electronic lock"
+  },
+  "Kartlı kapı kilidi": {
+    "TR": "Kartlı kapı kilidi",
+    "EN": "Keycard door lock"
+  },
+  "Manyetik kapı kontağı": {
+    "TR": "Manyetik kapı kontağı",
+    "EN": "Magnetic door contact"
+  },
+  "Ayakkabılık": {
+    "TR": "Ayakkabılık",
+    "EN": "Shoe rack"
+  },
+  "Ayakkabı çekeceği": {
+    "TR": "Ayakkabı çekeceği",
+    "EN": "Shoehorn"
+  },
+  "Şemsiye standı": {
+    "TR": "Şemsiye standı",
+    "EN": "Umbrella stand"
+  },
+  "Sarf Malzemeleri ve Misafir İkramları": {
+    "TR": "Sarf Malzemeleri ve Misafir İkramları",
+    "EN": "Consumables and guest refreshments"
+  },
+  "İçme suyu": {
+    "TR": "İçme suyu",
+    "EN": "Drinking water"
+  },
+  "Şişe su": {
+    "TR": "Şişe su",
+    "EN": "Bottled water"
+  },
+  "Kahve": {
+    "TR": "Kahve",
+    "EN": "Coffee"
+  },
+  "Çay": {
+    "TR": "Çay",
+    "EN": "Tea"
+  },
+  "Şeker": {
+    "TR": "Şeker",
+    "EN": "Sugar"
+  },
+  "Tatlandırıcı": {
+    "TR": "Tatlandırıcı",
+    "EN": "Sweetener"
+  },
+  "Süt": {
+    "TR": "Süt",
+    "EN": "Milk"
+  },
+  "Krema": {
+    "TR": "Krema",
+    "EN": "Cream"
+  },
+  "Kahve kapsülü": {
+    "TR": "Kahve kapsülü",
+    "EN": "Coffee capsule"
+  },
+  "Mini bar ürünleri": {
+    "TR": "Mini bar ürünleri",
+    "EN": "Minibar products"
+  },
+  "Atıştırmalıklar": {
+    "TR": "Atıştırmalıklar",
+    "EN": "Snacks"
+  },
+  "Karşılama ikramı": {
+    "TR": "Karşılama ikramı",
+    "EN": "Welcome refreshment"
+  },
+  "Hoş geldiniz seti": {
+    "TR": "Hoş geldiniz seti",
+    "EN": "Welcome kit"
+  },
+  "Tek kullanımlık terlik": {
+    "TR": "Tek kullanımlık terlik",
+    "EN": "Disposable slippers"
+  },
+  "Ayakkabı parlatma seti": {
+    "TR": "Ayakkabı parlatma seti",
+    "EN": "Shoe shine kit"
+  },
+  "Çamaşır torbası": {
+    "TR": "Çamaşır torbası",
+    "EN": "Laundry bag"
+  },
+  "Kalem": {
+    "TR": "Kalem",
+    "EN": "Pen"
+  },
+  "Oda bilgi kitapçığı": {
+    "TR": "Oda bilgi kitapçığı",
+    "EN": "Room information booklet"
+  },
+  "Menü": {
+    "TR": "Menü",
+    "EN": "Menu"
+  },
+  "Peçete": {
+    "TR": "Peçete",
+    "EN": "Napkin"
+  },
+  "Kâğıt mendil": {
+    "TR": "Kâğıt mendil",
+    "EN": "Tissue"
+  },
+  "2. Bodrum": {
+    "AM": "የመሬት ውስጥ ፎቅ 2",
+    "AR": "القبو 2",
+    "AZ": "2-ci zirzəmi",
+    "BG": "Подземен етаж 2",
+    "BN": "ভূগর্ভস্থ তলা 2",
+    "CS": "Podzemní podlaží 2",
+    "DA": "Kælderetage 2",
+    "DE": "2. Untergeschoss",
+    "DZ": "ས་འོག་ཐོག་ 2",
+    "EL": "Υπόγειο 2",
+    "EN": "Basement 2",
+    "ES": "Sótano 2",
+    "FA": "زیرزمین 2",
+    "FI": "Kellarikerros 2",
+    "FR": "Sous-sol 2",
+    "HE": "קומת מרתף 2",
+    "HI": "तहखाना 2",
+    "HR": "Podzemna etaža 2",
+    "HU": "2. pinceszint",
+    "HY": "Ստորգետնյա հարկ 2",
+    "ID": "Lantai bawah tanah 2",
+    "IT": "Piano interrato 2",
+    "JA": "地下2階",
+    "KA": "მიწისქვეშა სართული 2",
+    "KK": "2-жерасты қабаты",
+    "KM": "ជាន់ក្រោមដីទី 2",
+    "KO": "지하 2층",
+    "KU": "Qata binerdê 2",
+    "KY": "2-жер төлө кабаты",
+    "LO": "ຊັ້ນໃຕ້ດິນ 2",
+    "MN": "Зоорийн 2-р давхар",
+    "MR": "तळघर 2",
+    "MS": "Aras bawah tanah 2",
+    "MY": "မြေအောက်ထပ် 2",
+    "NE": "भूमिगत तल्ला 2",
+    "NL": "Kelderverdieping 2",
+    "NO": "Kjelleretasje 2",
+    "PA": "ਤਹਿਖ਼ਾਨਾ 2",
+    "PL": "Poziom podziemny 2",
+    "PS": "د ځمکې لاندې پوړ 2",
+    "PT": "Subsolo 2",
+    "RO": "Subsolul 2",
+    "RU": "Подземный этаж 2",
+    "SI": "භූගත මහල 2",
+    "SK": "Podzemné podlažie 2",
+    "SL": "Kletna etaža 2",
+    "SR": "Подземни ниво 2",
+    "SV": "Källarplan 2",
+    "SW": "Ghorofa ya chini ya ardhi 2",
+    "TA": "நிலத்தடி தளம் 2",
+    "TE": "భూగర్భ అంతస్తు 2",
+    "TH": "ชั้นใต้ดิน 2",
+    "TR": "2. Bodrum",
+    "UK": "Підземний поверх 2",
+    "UR": "تہہ خانہ 2",
+    "UZ": "2-yerto‘la qavati",
+    "VI": "Tầng hầm 2",
+    "YUE": "地庫2樓",
+    "ZH-CN": "地下2层",
+    "ZH-TW": "地下2樓"
+  },
+  "1. Bodrum": {
+    "AM": "የመሬት ውስጥ ፎቅ 1",
+    "AR": "القبو 1",
+    "AZ": "1-ci zirzəmi",
+    "BG": "Подземен етаж 1",
+    "BN": "ভূগর্ভস্থ তলা 1",
+    "CS": "Podzemní podlaží 1",
+    "DA": "Kælderetage 1",
+    "DE": "1. Untergeschoss",
+    "DZ": "ས་འོག་ཐོག་ 1",
+    "EL": "Υπόγειο 1",
+    "EN": "Basement 1",
+    "ES": "Sótano 1",
+    "FA": "زیرزمین 1",
+    "FI": "Kellarikerros 1",
+    "FR": "Sous-sol 1",
+    "HE": "קומת מרתף 1",
+    "HI": "तहखाना 1",
+    "HR": "Podzemna etaža 1",
+    "HU": "1. pinceszint",
+    "HY": "Ստորգետնյա հարկ 1",
+    "ID": "Lantai bawah tanah 1",
+    "IT": "Piano interrato 1",
+    "JA": "地下1階",
+    "KA": "მიწისქვეშა სართული 1",
+    "KK": "1-жерасты қабаты",
+    "KM": "ជាន់ក្រោមដីទី 1",
+    "KO": "지하 1층",
+    "KU": "Qata binerdê 1",
+    "KY": "1-жер төлө кабаты",
+    "LO": "ຊັ້ນໃຕ້ດິນ 1",
+    "MN": "Зоорийн 1-р давхар",
+    "MR": "तळघर 1",
+    "MS": "Aras bawah tanah 1",
+    "MY": "မြေအောက်ထပ် 1",
+    "NE": "भूमिगत तल्ला 1",
+    "NL": "Kelderverdieping 1",
+    "NO": "Kjelleretasje 1",
+    "PA": "ਤਹਿਖ਼ਾਨਾ 1",
+    "PL": "Poziom podziemny 1",
+    "PS": "د ځمکې لاندې پوړ 1",
+    "PT": "Subsolo 1",
+    "RO": "Subsolul 1",
+    "RU": "Подземный этаж 1",
+    "SI": "භූගත මහල 1",
+    "SK": "Podzemné podlažie 1",
+    "SL": "Kletna etaža 1",
+    "SR": "Подземни ниво 1",
+    "SV": "Källarplan 1",
+    "SW": "Ghorofa ya chini ya ardhi 1",
+    "TA": "நிலத்தடி தளம் 1",
+    "TE": "భూగర్భ అంతస్తు 1",
+    "TH": "ชั้นใต้ดิน 1",
+    "TR": "1. Bodrum",
+    "UK": "Підземний поверх 1",
+    "UR": "تہہ خانہ 1",
+    "UZ": "1-yerto‘la qavati",
+    "VI": "Tầng hầm 1",
+    "YUE": "地庫1樓",
+    "ZH-CN": "地下1层",
+    "ZH-TW": "地下1樓"
+  },
+  "Zemin Kat": {
+    "AM": "የመሬት ወለል",
+    "AR": "الطابق الأرضي",
+    "AZ": "Zəmin mərtəbə",
+    "BG": "Партер",
+    "BN": "ভূতল",
+    "CS": "Přízemí",
+    "DA": "Stueetage",
+    "DE": "Erdgeschoss",
+    "DZ": "ས་ཐོག",
+    "EL": "Ισόγειο",
+    "EN": "Ground Floor",
+    "ES": "Planta baja",
+    "FA": "همکف",
+    "FI": "Maantasokerros",
+    "FR": "Rez-de-chaussée",
+    "HE": "קומת קרקע",
+    "HI": "भूतल",
+    "HR": "Prizemlje",
+    "HU": "Földszint",
+    "HY": "Գետնահարկ",
+    "ID": "Lantai dasar",
+    "IT": "Piano terra",
+    "JA": "地上階",
+    "KA": "მიწისპირა სართული",
+    "KK": "Жер деңгейіндегі қабат",
+    "KM": "ជាន់ផ្ទាល់ដី",
+    "KO": "지상층",
+    "KU": "Qata erdê",
+    "KY": "Жер деңгээлиндеги кабат",
+    "LO": "ຊັ້ນລຸ່ມ",
+    "MN": "Газрын түвшний давхар",
+    "MR": "तळमजला",
+    "MS": "Aras bawah",
+    "MY": "မြေညီထပ်",
+    "NE": "भुइँतल्ला",
+    "NL": "Begane grond",
+    "NO": "Bakkeplan",
+    "PA": "ਜ਼ਮੀਨੀ ਮੰਜ਼ਿਲ",
+    "PL": "Parter",
+    "PS": "ځمکنی پوړ",
+    "PT": "Rés do chão",
+    "RO": "Parter",
+    "RU": "Наземный этаж",
+    "SI": "බිම් මහල",
+    "SK": "Prízemie",
+    "SL": "Pritličje",
+    "SR": "Приземље",
+    "SV": "Bottenvåning",
+    "SW": "Ghorofa ya chini",
+    "TA": "தரைத் தளம்",
+    "TE": "నేల అంతస్తు",
+    "TH": "ชั้นระดับพื้นดิน",
+    "TR": "Zemin Kat",
+    "UK": "Наземний поверх",
+    "UR": "زمینی منزل",
+    "UZ": "Yer sathidagi qavat",
+    "VI": "Tầng trệt",
+    "YUE": "地下",
+    "ZH-CN": "地面层",
+    "ZH-TW": "地面層"
+  },
+  "Asma Kat": {
+    "AM": "መካከለኛ ፎቅ",
+    "AR": "الميزانين",
+    "AZ": "Ara mərtəbə",
+    "BG": "Мецанин",
+    "BN": "মধ্যবর্তী তলা",
+    "CS": "Mezipatro",
+    "DA": "Mellemetage",
+    "DE": "Zwischengeschoss",
+    "DZ": "བར་ཐོག",
+    "EL": "Ημιώροφος",
+    "EN": "Mezzanine",
+    "ES": "Entreplanta",
+    "FA": "نیم‌طبقه",
+    "FI": "Välikerros",
+    "FR": "Mezzanine",
+    "HE": "קומת ביניים",
+    "HI": "मध्य तल",
+    "HR": "Polukat",
+    "HU": "Félemelet",
+    "HY": "Միջնահարկ",
+    "ID": "Mezanin",
+    "IT": "Piano ammezzato",
+    "JA": "中二階",
+    "KA": "ანტრესოლი",
+    "KK": "Аралық қабат",
+    "KM": "ជាន់ឡៅតឿ",
+    "KO": "중간층",
+    "KU": "Nîvqat",
+    "KY": "Аралык кабат",
+    "LO": "ຊັ້ນລອຍ",
+    "MN": "Завсрын давхар",
+    "MR": "मधला मजला",
+    "MS": "Mezanin",
+    "MY": "ထပ်ခိုး",
+    "NE": "मध्यतल्ला",
+    "NL": "Tussenverdieping",
+    "NO": "Mellometasje",
+    "PA": "ਵਿਚਕਾਰਲੀ ਮੰਜ਼ਿਲ",
+    "PL": "Antresola",
+    "PS": "منځنی پوړ",
+    "PT": "Mezanino",
+    "RO": "Mezanin",
+    "RU": "Антресоль",
+    "SI": "අතරමැදි මහල",
+    "SK": "Medziposchodie",
+    "SL": "Medetaža",
+    "SR": "Међуспрат",
+    "SV": "Mellanvåning",
+    "SW": "Ghorofa ya kati",
+    "TA": "இடைத் தளம்",
+    "TE": "మధ్య అంతస్తు",
+    "TH": "ชั้นลอย",
+    "TR": "Asma Kat",
+    "UK": "Антресоль",
+    "UR": "درمیانی منزل",
+    "UZ": "Oraliq qavat",
+    "VI": "Tầng lửng",
+    "YUE": "閣樓",
+    "ZH-CN": "夹层",
+    "ZH-TW": "夾層"
+  },
+  "1. Kat": {
+    "AM": "ፎቅ 1",
+    "AR": "الطابق 1",
+    "AZ": "1-ci mərtəbə",
+    "BG": "Етаж 1",
+    "BN": "তলা 1",
+    "CS": "Podlaží 1",
+    "DA": "Etage 1",
+    "DE": "1. Obergeschoss",
+    "DZ": "ཐོག་ 1",
+    "EL": "Όροφος 1",
+    "EN": "Floor 1",
+    "ES": "Planta 1",
+    "FA": "طبقه 1",
+    "FI": "Kerros 1",
+    "FR": "Étage 1",
+    "HE": "קומה 1",
+    "HI": "मंज़िल 1",
+    "HR": "Kat 1",
+    "HU": "1. emelet",
+    "HY": "Հարկ 1",
+    "ID": "Lantai 1",
+    "IT": "Piano 1",
+    "JA": "1階",
+    "KA": "სართული 1",
+    "KK": "1-қабат",
+    "KM": "ជាន់ទី 1",
+    "KO": "1층",
+    "KU": "Qata 1",
+    "KY": "1-кабат",
+    "LO": "ຊັ້ນ 1",
+    "MN": "1-р давхар",
+    "MR": "मजला 1",
+    "MS": "Tingkat 1",
+    "MY": "အထပ် 1",
+    "NE": "तल्ला 1",
+    "NL": "Verdieping 1",
+    "NO": "Etasje 1",
+    "PA": "ਮੰਜ਼ਿਲ 1",
+    "PL": "Piętro 1",
+    "PS": "پوړ 1",
+    "PT": "Andar 1",
+    "RO": "Etajul 1",
+    "RU": "Этаж 1",
+    "SI": "මහල 1",
+    "SK": "Podlažie 1",
+    "SL": "Nadstropje 1",
+    "SR": "Спрат 1",
+    "SV": "Våning 1",
+    "SW": "Ghorofa 1",
+    "TA": "தளம் 1",
+    "TE": "అంతస్తు 1",
+    "TH": "ชั้น 1",
+    "TR": "1. Kat",
+    "UK": "Поверх 1",
+    "UR": "منزل 1",
+    "UZ": "1-qavat",
+    "VI": "Tầng 1",
+    "YUE": "1樓",
+    "ZH-CN": "1层",
+    "ZH-TW": "1樓"
+  },
+  "2. Kat": {
+    "AM": "ፎቅ 2",
+    "AR": "الطابق 2",
+    "AZ": "2-ci mərtəbə",
+    "BG": "Етаж 2",
+    "BN": "তলা 2",
+    "CS": "Podlaží 2",
+    "DA": "Etage 2",
+    "DE": "2. Obergeschoss",
+    "DZ": "ཐོག་ 2",
+    "EL": "Όροφος 2",
+    "EN": "Floor 2",
+    "ES": "Planta 2",
+    "FA": "طبقه 2",
+    "FI": "Kerros 2",
+    "FR": "Étage 2",
+    "HE": "קומה 2",
+    "HI": "मंज़िल 2",
+    "HR": "Kat 2",
+    "HU": "2. emelet",
+    "HY": "Հարկ 2",
+    "ID": "Lantai 2",
+    "IT": "Piano 2",
+    "JA": "2階",
+    "KA": "სართული 2",
+    "KK": "2-қабат",
+    "KM": "ជាន់ទី 2",
+    "KO": "2층",
+    "KU": "Qata 2",
+    "KY": "2-кабат",
+    "LO": "ຊັ້ນ 2",
+    "MN": "2-р давхар",
+    "MR": "मजला 2",
+    "MS": "Tingkat 2",
+    "MY": "အထပ် 2",
+    "NE": "तल्ला 2",
+    "NL": "Verdieping 2",
+    "NO": "Etasje 2",
+    "PA": "ਮੰਜ਼ਿਲ 2",
+    "PL": "Piętro 2",
+    "PS": "پوړ 2",
+    "PT": "Andar 2",
+    "RO": "Etajul 2",
+    "RU": "Этаж 2",
+    "SI": "මහල 2",
+    "SK": "Podlažie 2",
+    "SL": "Nadstropje 2",
+    "SR": "Спрат 2",
+    "SV": "Våning 2",
+    "SW": "Ghorofa 2",
+    "TA": "தளம் 2",
+    "TE": "అంతస్తు 2",
+    "TH": "ชั้น 2",
+    "TR": "2. Kat",
+    "UK": "Поверх 2",
+    "UR": "منزل 2",
+    "UZ": "2-qavat",
+    "VI": "Tầng 2",
+    "YUE": "2樓",
+    "ZH-CN": "2层",
+    "ZH-TW": "2樓"
+  },
+  "3. Kat": {
+    "AM": "ፎቅ 3",
+    "AR": "الطابق 3",
+    "AZ": "3-ci mərtəbə",
+    "BG": "Етаж 3",
+    "BN": "তলা 3",
+    "CS": "Podlaží 3",
+    "DA": "Etage 3",
+    "DE": "3. Obergeschoss",
+    "DZ": "ཐོག་ 3",
+    "EL": "Όροφος 3",
+    "EN": "Floor 3",
+    "ES": "Planta 3",
+    "FA": "طبقه 3",
+    "FI": "Kerros 3",
+    "FR": "Étage 3",
+    "HE": "קומה 3",
+    "HI": "मंज़िल 3",
+    "HR": "Kat 3",
+    "HU": "3. emelet",
+    "HY": "Հարկ 3",
+    "ID": "Lantai 3",
+    "IT": "Piano 3",
+    "JA": "3階",
+    "KA": "სართული 3",
+    "KK": "3-қабат",
+    "KM": "ជាន់ទី 3",
+    "KO": "3층",
+    "KU": "Qata 3",
+    "KY": "3-кабат",
+    "LO": "ຊັ້ນ 3",
+    "MN": "3-р давхар",
+    "MR": "मजला 3",
+    "MS": "Tingkat 3",
+    "MY": "အထပ် 3",
+    "NE": "तल्ला 3",
+    "NL": "Verdieping 3",
+    "NO": "Etasje 3",
+    "PA": "ਮੰਜ਼ਿਲ 3",
+    "PL": "Piętro 3",
+    "PS": "پوړ 3",
+    "PT": "Andar 3",
+    "RO": "Etajul 3",
+    "RU": "Этаж 3",
+    "SI": "මහල 3",
+    "SK": "Podlažie 3",
+    "SL": "Nadstropje 3",
+    "SR": "Спрат 3",
+    "SV": "Våning 3",
+    "SW": "Ghorofa 3",
+    "TA": "தளம் 3",
+    "TE": "అంతస్తు 3",
+    "TH": "ชั้น 3",
+    "TR": "3. Kat",
+    "UK": "Поверх 3",
+    "UR": "منزل 3",
+    "UZ": "3-qavat",
+    "VI": "Tầng 3",
+    "YUE": "3樓",
+    "ZH-CN": "3层",
+    "ZH-TW": "3樓"
+  },
+  "4. Kat": {
+    "AM": "ፎቅ 4",
+    "AR": "الطابق 4",
+    "AZ": "4-ci mərtəbə",
+    "BG": "Етаж 4",
+    "BN": "তলা 4",
+    "CS": "Podlaží 4",
+    "DA": "Etage 4",
+    "DE": "4. Obergeschoss",
+    "DZ": "ཐོག་ 4",
+    "EL": "Όροφος 4",
+    "EN": "Floor 4",
+    "ES": "Planta 4",
+    "FA": "طبقه 4",
+    "FI": "Kerros 4",
+    "FR": "Étage 4",
+    "HE": "קומה 4",
+    "HI": "मंज़िल 4",
+    "HR": "Kat 4",
+    "HU": "4. emelet",
+    "HY": "Հարկ 4",
+    "ID": "Lantai 4",
+    "IT": "Piano 4",
+    "JA": "4階",
+    "KA": "სართული 4",
+    "KK": "4-қабат",
+    "KM": "ជាន់ទី 4",
+    "KO": "4층",
+    "KU": "Qata 4",
+    "KY": "4-кабат",
+    "LO": "ຊັ້ນ 4",
+    "MN": "4-р давхар",
+    "MR": "मजला 4",
+    "MS": "Tingkat 4",
+    "MY": "အထပ် 4",
+    "NE": "तल्ला 4",
+    "NL": "Verdieping 4",
+    "NO": "Etasje 4",
+    "PA": "ਮੰਜ਼ਿਲ 4",
+    "PL": "Piętro 4",
+    "PS": "پوړ 4",
+    "PT": "Andar 4",
+    "RO": "Etajul 4",
+    "RU": "Этаж 4",
+    "SI": "මහල 4",
+    "SK": "Podlažie 4",
+    "SL": "Nadstropje 4",
+    "SR": "Спрат 4",
+    "SV": "Våning 4",
+    "SW": "Ghorofa 4",
+    "TA": "தளம் 4",
+    "TE": "అంతస్తు 4",
+    "TH": "ชั้น 4",
+    "TR": "4. Kat",
+    "UK": "Поверх 4",
+    "UR": "منزل 4",
+    "UZ": "4-qavat",
+    "VI": "Tầng 4",
+    "YUE": "4樓",
+    "ZH-CN": "4层",
+    "ZH-TW": "4樓"
+  },
+  "5. Kat": {
+    "AM": "ፎቅ 5",
+    "AR": "الطابق 5",
+    "AZ": "5-ci mərtəbə",
+    "BG": "Етаж 5",
+    "BN": "তলা 5",
+    "CS": "Podlaží 5",
+    "DA": "Etage 5",
+    "DE": "5. Obergeschoss",
+    "DZ": "ཐོག་ 5",
+    "EL": "Όροφος 5",
+    "EN": "Floor 5",
+    "ES": "Planta 5",
+    "FA": "طبقه 5",
+    "FI": "Kerros 5",
+    "FR": "Étage 5",
+    "HE": "קומה 5",
+    "HI": "मंज़िल 5",
+    "HR": "Kat 5",
+    "HU": "5. emelet",
+    "HY": "Հարկ 5",
+    "ID": "Lantai 5",
+    "IT": "Piano 5",
+    "JA": "5階",
+    "KA": "სართული 5",
+    "KK": "5-қабат",
+    "KM": "ជាន់ទី 5",
+    "KO": "5층",
+    "KU": "Qata 5",
+    "KY": "5-кабат",
+    "LO": "ຊັ້ນ 5",
+    "MN": "5-р давхар",
+    "MR": "मजला 5",
+    "MS": "Tingkat 5",
+    "MY": "အထပ် 5",
+    "NE": "तल्ला 5",
+    "NL": "Verdieping 5",
+    "NO": "Etasje 5",
+    "PA": "ਮੰਜ਼ਿਲ 5",
+    "PL": "Piętro 5",
+    "PS": "پوړ 5",
+    "PT": "Andar 5",
+    "RO": "Etajul 5",
+    "RU": "Этаж 5",
+    "SI": "මහල 5",
+    "SK": "Podlažie 5",
+    "SL": "Nadstropje 5",
+    "SR": "Спрат 5",
+    "SV": "Våning 5",
+    "SW": "Ghorofa 5",
+    "TA": "தளம் 5",
+    "TE": "అంతస్తు 5",
+    "TH": "ชั้น 5",
+    "TR": "5. Kat",
+    "UK": "Поверх 5",
+    "UR": "منزل 5",
+    "UZ": "5-qavat",
+    "VI": "Tầng 5",
+    "YUE": "5樓",
+    "ZH-CN": "5层",
+    "ZH-TW": "5樓"
+  },
+  "6. Kat": {
+    "AM": "ፎቅ 6",
+    "AR": "الطابق 6",
+    "AZ": "6-ci mərtəbə",
+    "BG": "Етаж 6",
+    "BN": "তলা 6",
+    "CS": "Podlaží 6",
+    "DA": "Etage 6",
+    "DE": "6. Obergeschoss",
+    "DZ": "ཐོག་ 6",
+    "EL": "Όροφος 6",
+    "EN": "Floor 6",
+    "ES": "Planta 6",
+    "FA": "طبقه 6",
+    "FI": "Kerros 6",
+    "FR": "Étage 6",
+    "HE": "קומה 6",
+    "HI": "मंज़िल 6",
+    "HR": "Kat 6",
+    "HU": "6. emelet",
+    "HY": "Հարկ 6",
+    "ID": "Lantai 6",
+    "IT": "Piano 6",
+    "JA": "6階",
+    "KA": "სართული 6",
+    "KK": "6-қабат",
+    "KM": "ជាន់ទី 6",
+    "KO": "6층",
+    "KU": "Qata 6",
+    "KY": "6-кабат",
+    "LO": "ຊັ້ນ 6",
+    "MN": "6-р давхар",
+    "MR": "मजला 6",
+    "MS": "Tingkat 6",
+    "MY": "အထပ် 6",
+    "NE": "तल्ला 6",
+    "NL": "Verdieping 6",
+    "NO": "Etasje 6",
+    "PA": "ਮੰਜ਼ਿਲ 6",
+    "PL": "Piętro 6",
+    "PS": "پوړ 6",
+    "PT": "Andar 6",
+    "RO": "Etajul 6",
+    "RU": "Этаж 6",
+    "SI": "මහල 6",
+    "SK": "Podlažie 6",
+    "SL": "Nadstropje 6",
+    "SR": "Спрат 6",
+    "SV": "Våning 6",
+    "SW": "Ghorofa 6",
+    "TA": "தளம் 6",
+    "TE": "అంతస్తు 6",
+    "TH": "ชั้น 6",
+    "TR": "6. Kat",
+    "UK": "Поверх 6",
+    "UR": "منزل 6",
+    "UZ": "6-qavat",
+    "VI": "Tầng 6",
+    "YUE": "6樓",
+    "ZH-CN": "6层",
+    "ZH-TW": "6樓"
+  },
+  "7. Kat": {
+    "AM": "ፎቅ 7",
+    "AR": "الطابق 7",
+    "AZ": "7-ci mərtəbə",
+    "BG": "Етаж 7",
+    "BN": "তলা 7",
+    "CS": "Podlaží 7",
+    "DA": "Etage 7",
+    "DE": "7. Obergeschoss",
+    "DZ": "ཐོག་ 7",
+    "EL": "Όροφος 7",
+    "EN": "Floor 7",
+    "ES": "Planta 7",
+    "FA": "طبقه 7",
+    "FI": "Kerros 7",
+    "FR": "Étage 7",
+    "HE": "קומה 7",
+    "HI": "मंज़िल 7",
+    "HR": "Kat 7",
+    "HU": "7. emelet",
+    "HY": "Հարկ 7",
+    "ID": "Lantai 7",
+    "IT": "Piano 7",
+    "JA": "7階",
+    "KA": "სართული 7",
+    "KK": "7-қабат",
+    "KM": "ជាន់ទី 7",
+    "KO": "7층",
+    "KU": "Qata 7",
+    "KY": "7-кабат",
+    "LO": "ຊັ້ນ 7",
+    "MN": "7-р давхар",
+    "MR": "मजला 7",
+    "MS": "Tingkat 7",
+    "MY": "အထပ် 7",
+    "NE": "तल्ला 7",
+    "NL": "Verdieping 7",
+    "NO": "Etasje 7",
+    "PA": "ਮੰਜ਼ਿਲ 7",
+    "PL": "Piętro 7",
+    "PS": "پوړ 7",
+    "PT": "Andar 7",
+    "RO": "Etajul 7",
+    "RU": "Этаж 7",
+    "SI": "මහල 7",
+    "SK": "Podlažie 7",
+    "SL": "Nadstropje 7",
+    "SR": "Спрат 7",
+    "SV": "Våning 7",
+    "SW": "Ghorofa 7",
+    "TA": "தளம் 7",
+    "TE": "అంతస్తు 7",
+    "TH": "ชั้น 7",
+    "TR": "7. Kat",
+    "UK": "Поверх 7",
+    "UR": "منزل 7",
+    "UZ": "7-qavat",
+    "VI": "Tầng 7",
+    "YUE": "7樓",
+    "ZH-CN": "7层",
+    "ZH-TW": "7樓"
+  },
+  "8. Kat": {
+    "AM": "ፎቅ 8",
+    "AR": "الطابق 8",
+    "AZ": "8-ci mərtəbə",
+    "BG": "Етаж 8",
+    "BN": "তলা 8",
+    "CS": "Podlaží 8",
+    "DA": "Etage 8",
+    "DE": "8. Obergeschoss",
+    "DZ": "ཐོག་ 8",
+    "EL": "Όροφος 8",
+    "EN": "Floor 8",
+    "ES": "Planta 8",
+    "FA": "طبقه 8",
+    "FI": "Kerros 8",
+    "FR": "Étage 8",
+    "HE": "קומה 8",
+    "HI": "मंज़िल 8",
+    "HR": "Kat 8",
+    "HU": "8. emelet",
+    "HY": "Հարկ 8",
+    "ID": "Lantai 8",
+    "IT": "Piano 8",
+    "JA": "8階",
+    "KA": "სართული 8",
+    "KK": "8-қабат",
+    "KM": "ជាន់ទី 8",
+    "KO": "8층",
+    "KU": "Qata 8",
+    "KY": "8-кабат",
+    "LO": "ຊັ້ນ 8",
+    "MN": "8-р давхар",
+    "MR": "मजला 8",
+    "MS": "Tingkat 8",
+    "MY": "အထပ် 8",
+    "NE": "तल्ला 8",
+    "NL": "Verdieping 8",
+    "NO": "Etasje 8",
+    "PA": "ਮੰਜ਼ਿਲ 8",
+    "PL": "Piętro 8",
+    "PS": "پوړ 8",
+    "PT": "Andar 8",
+    "RO": "Etajul 8",
+    "RU": "Этаж 8",
+    "SI": "මහල 8",
+    "SK": "Podlažie 8",
+    "SL": "Nadstropje 8",
+    "SR": "Спрат 8",
+    "SV": "Våning 8",
+    "SW": "Ghorofa 8",
+    "TA": "தளம் 8",
+    "TE": "అంతస్తు 8",
+    "TH": "ชั้น 8",
+    "TR": "8. Kat",
+    "UK": "Поверх 8",
+    "UR": "منزل 8",
+    "UZ": "8-qavat",
+    "VI": "Tầng 8",
+    "YUE": "8樓",
+    "ZH-CN": "8层",
+    "ZH-TW": "8樓"
+  },
+  "9. Kat": {
+    "AM": "ፎቅ 9",
+    "AR": "الطابق 9",
+    "AZ": "9-ci mərtəbə",
+    "BG": "Етаж 9",
+    "BN": "তলা 9",
+    "CS": "Podlaží 9",
+    "DA": "Etage 9",
+    "DE": "9. Obergeschoss",
+    "DZ": "ཐོག་ 9",
+    "EL": "Όροφος 9",
+    "EN": "Floor 9",
+    "ES": "Planta 9",
+    "FA": "طبقه 9",
+    "FI": "Kerros 9",
+    "FR": "Étage 9",
+    "HE": "קומה 9",
+    "HI": "मंज़िल 9",
+    "HR": "Kat 9",
+    "HU": "9. emelet",
+    "HY": "Հարկ 9",
+    "ID": "Lantai 9",
+    "IT": "Piano 9",
+    "JA": "9階",
+    "KA": "სართული 9",
+    "KK": "9-қабат",
+    "KM": "ជាន់ទី 9",
+    "KO": "9층",
+    "KU": "Qata 9",
+    "KY": "9-кабат",
+    "LO": "ຊັ້ນ 9",
+    "MN": "9-р давхар",
+    "MR": "मजला 9",
+    "MS": "Tingkat 9",
+    "MY": "အထပ် 9",
+    "NE": "तल्ला 9",
+    "NL": "Verdieping 9",
+    "NO": "Etasje 9",
+    "PA": "ਮੰਜ਼ਿਲ 9",
+    "PL": "Piętro 9",
+    "PS": "پوړ 9",
+    "PT": "Andar 9",
+    "RO": "Etajul 9",
+    "RU": "Этаж 9",
+    "SI": "මහල 9",
+    "SK": "Podlažie 9",
+    "SL": "Nadstropje 9",
+    "SR": "Спрат 9",
+    "SV": "Våning 9",
+    "SW": "Ghorofa 9",
+    "TA": "தளம் 9",
+    "TE": "అంతస్తు 9",
+    "TH": "ชั้น 9",
+    "TR": "9. Kat",
+    "UK": "Поверх 9",
+    "UR": "منزل 9",
+    "UZ": "9-qavat",
+    "VI": "Tầng 9",
+    "YUE": "9樓",
+    "ZH-CN": "9层",
+    "ZH-TW": "9樓"
+  },
+  "10. Kat": {
+    "AM": "ፎቅ 10",
+    "AR": "الطابق 10",
+    "AZ": "10-ci mərtəbə",
+    "BG": "Етаж 10",
+    "BN": "তলা 10",
+    "CS": "Podlaží 10",
+    "DA": "Etage 10",
+    "DE": "10. Obergeschoss",
+    "DZ": "ཐོག་ 10",
+    "EL": "Όροφος 10",
+    "EN": "Floor 10",
+    "ES": "Planta 10",
+    "FA": "طبقه 10",
+    "FI": "Kerros 10",
+    "FR": "Étage 10",
+    "HE": "קומה 10",
+    "HI": "मंज़िल 10",
+    "HR": "Kat 10",
+    "HU": "10. emelet",
+    "HY": "Հարկ 10",
+    "ID": "Lantai 10",
+    "IT": "Piano 10",
+    "JA": "10階",
+    "KA": "სართული 10",
+    "KK": "10-қабат",
+    "KM": "ជាន់ទី 10",
+    "KO": "10층",
+    "KU": "Qata 10",
+    "KY": "10-кабат",
+    "LO": "ຊັ້ນ 10",
+    "MN": "10-р давхар",
+    "MR": "मजला 10",
+    "MS": "Tingkat 10",
+    "MY": "အထပ် 10",
+    "NE": "तल्ला 10",
+    "NL": "Verdieping 10",
+    "NO": "Etasje 10",
+    "PA": "ਮੰਜ਼ਿਲ 10",
+    "PL": "Piętro 10",
+    "PS": "پوړ 10",
+    "PT": "Andar 10",
+    "RO": "Etajul 10",
+    "RU": "Этаж 10",
+    "SI": "මහල 10",
+    "SK": "Podlažie 10",
+    "SL": "Nadstropje 10",
+    "SR": "Спрат 10",
+    "SV": "Våning 10",
+    "SW": "Ghorofa 10",
+    "TA": "தளம் 10",
+    "TE": "అంతస్తు 10",
+    "TH": "ชั้น 10",
+    "TR": "10. Kat",
+    "UK": "Поверх 10",
+    "UR": "منزل 10",
+    "UZ": "10-qavat",
+    "VI": "Tầng 10",
+    "YUE": "10樓",
+    "ZH-CN": "10层",
+    "ZH-TW": "10樓"
+  },
+  "11. Kat": {
+    "AM": "ፎቅ 11",
+    "AR": "الطابق 11",
+    "AZ": "11-ci mərtəbə",
+    "BG": "Етаж 11",
+    "BN": "তলা 11",
+    "CS": "Podlaží 11",
+    "DA": "Etage 11",
+    "DE": "11. Obergeschoss",
+    "DZ": "ཐོག་ 11",
+    "EL": "Όροφος 11",
+    "EN": "Floor 11",
+    "ES": "Planta 11",
+    "FA": "طبقه 11",
+    "FI": "Kerros 11",
+    "FR": "Étage 11",
+    "HE": "קומה 11",
+    "HI": "मंज़िल 11",
+    "HR": "Kat 11",
+    "HU": "11. emelet",
+    "HY": "Հարկ 11",
+    "ID": "Lantai 11",
+    "IT": "Piano 11",
+    "JA": "11階",
+    "KA": "სართული 11",
+    "KK": "11-қабат",
+    "KM": "ជាន់ទី 11",
+    "KO": "11층",
+    "KU": "Qata 11",
+    "KY": "11-кабат",
+    "LO": "ຊັ້ນ 11",
+    "MN": "11-р давхар",
+    "MR": "मजला 11",
+    "MS": "Tingkat 11",
+    "MY": "အထပ် 11",
+    "NE": "तल्ला 11",
+    "NL": "Verdieping 11",
+    "NO": "Etasje 11",
+    "PA": "ਮੰਜ਼ਿਲ 11",
+    "PL": "Piętro 11",
+    "PS": "پوړ 11",
+    "PT": "Andar 11",
+    "RO": "Etajul 11",
+    "RU": "Этаж 11",
+    "SI": "මහල 11",
+    "SK": "Podlažie 11",
+    "SL": "Nadstropje 11",
+    "SR": "Спрат 11",
+    "SV": "Våning 11",
+    "SW": "Ghorofa 11",
+    "TA": "தளம் 11",
+    "TE": "అంతస్తు 11",
+    "TH": "ชั้น 11",
+    "TR": "11. Kat",
+    "UK": "Поверх 11",
+    "UR": "منزل 11",
+    "UZ": "11-qavat",
+    "VI": "Tầng 11",
+    "YUE": "11樓",
+    "ZH-CN": "11层",
+    "ZH-TW": "11樓"
+  },
+  "12. Kat": {
+    "AM": "ፎቅ 12",
+    "AR": "الطابق 12",
+    "AZ": "12-ci mərtəbə",
+    "BG": "Етаж 12",
+    "BN": "তলা 12",
+    "CS": "Podlaží 12",
+    "DA": "Etage 12",
+    "DE": "12. Obergeschoss",
+    "DZ": "ཐོག་ 12",
+    "EL": "Όροφος 12",
+    "EN": "Floor 12",
+    "ES": "Planta 12",
+    "FA": "طبقه 12",
+    "FI": "Kerros 12",
+    "FR": "Étage 12",
+    "HE": "קומה 12",
+    "HI": "मंज़िल 12",
+    "HR": "Kat 12",
+    "HU": "12. emelet",
+    "HY": "Հարկ 12",
+    "ID": "Lantai 12",
+    "IT": "Piano 12",
+    "JA": "12階",
+    "KA": "სართული 12",
+    "KK": "12-қабат",
+    "KM": "ជាន់ទី 12",
+    "KO": "12층",
+    "KU": "Qata 12",
+    "KY": "12-кабат",
+    "LO": "ຊັ້ນ 12",
+    "MN": "12-р давхар",
+    "MR": "मजला 12",
+    "MS": "Tingkat 12",
+    "MY": "အထပ် 12",
+    "NE": "तल्ला 12",
+    "NL": "Verdieping 12",
+    "NO": "Etasje 12",
+    "PA": "ਮੰਜ਼ਿਲ 12",
+    "PL": "Piętro 12",
+    "PS": "پوړ 12",
+    "PT": "Andar 12",
+    "RO": "Etajul 12",
+    "RU": "Этаж 12",
+    "SI": "මහල 12",
+    "SK": "Podlažie 12",
+    "SL": "Nadstropje 12",
+    "SR": "Спрат 12",
+    "SV": "Våning 12",
+    "SW": "Ghorofa 12",
+    "TA": "தளம் 12",
+    "TE": "అంతస్తు 12",
+    "TH": "ชั้น 12",
+    "TR": "12. Kat",
+    "UK": "Поверх 12",
+    "UR": "منزل 12",
+    "UZ": "12-qavat",
+    "VI": "Tầng 12",
+    "YUE": "12樓",
+    "ZH-CN": "12层",
+    "ZH-TW": "12樓"
+  },
+  "13. Kat": {
+    "AM": "ፎቅ 13",
+    "AR": "الطابق 13",
+    "AZ": "13-ci mərtəbə",
+    "BG": "Етаж 13",
+    "BN": "তলা 13",
+    "CS": "Podlaží 13",
+    "DA": "Etage 13",
+    "DE": "13. Obergeschoss",
+    "DZ": "ཐོག་ 13",
+    "EL": "Όροφος 13",
+    "EN": "Floor 13",
+    "ES": "Planta 13",
+    "FA": "طبقه 13",
+    "FI": "Kerros 13",
+    "FR": "Étage 13",
+    "HE": "קומה 13",
+    "HI": "मंज़िल 13",
+    "HR": "Kat 13",
+    "HU": "13. emelet",
+    "HY": "Հարկ 13",
+    "ID": "Lantai 13",
+    "IT": "Piano 13",
+    "JA": "13階",
+    "KA": "სართული 13",
+    "KK": "13-қабат",
+    "KM": "ជាន់ទី 13",
+    "KO": "13층",
+    "KU": "Qata 13",
+    "KY": "13-кабат",
+    "LO": "ຊັ້ນ 13",
+    "MN": "13-р давхар",
+    "MR": "मजला 13",
+    "MS": "Tingkat 13",
+    "MY": "အထပ် 13",
+    "NE": "तल्ला 13",
+    "NL": "Verdieping 13",
+    "NO": "Etasje 13",
+    "PA": "ਮੰਜ਼ਿਲ 13",
+    "PL": "Piętro 13",
+    "PS": "پوړ 13",
+    "PT": "Andar 13",
+    "RO": "Etajul 13",
+    "RU": "Этаж 13",
+    "SI": "මහල 13",
+    "SK": "Podlažie 13",
+    "SL": "Nadstropje 13",
+    "SR": "Спрат 13",
+    "SV": "Våning 13",
+    "SW": "Ghorofa 13",
+    "TA": "தளம் 13",
+    "TE": "అంతస్తు 13",
+    "TH": "ชั้น 13",
+    "TR": "13. Kat",
+    "UK": "Поверх 13",
+    "UR": "منزل 13",
+    "UZ": "13-qavat",
+    "VI": "Tầng 13",
+    "YUE": "13樓",
+    "ZH-CN": "13层",
+    "ZH-TW": "13樓"
+  },
+  "14. Kat": {
+    "AM": "ፎቅ 14",
+    "AR": "الطابق 14",
+    "AZ": "14-ci mərtəbə",
+    "BG": "Етаж 14",
+    "BN": "তলা 14",
+    "CS": "Podlaží 14",
+    "DA": "Etage 14",
+    "DE": "14. Obergeschoss",
+    "DZ": "ཐོག་ 14",
+    "EL": "Όροφος 14",
+    "EN": "Floor 14",
+    "ES": "Planta 14",
+    "FA": "طبقه 14",
+    "FI": "Kerros 14",
+    "FR": "Étage 14",
+    "HE": "קומה 14",
+    "HI": "मंज़िल 14",
+    "HR": "Kat 14",
+    "HU": "14. emelet",
+    "HY": "Հարկ 14",
+    "ID": "Lantai 14",
+    "IT": "Piano 14",
+    "JA": "14階",
+    "KA": "სართული 14",
+    "KK": "14-қабат",
+    "KM": "ជាន់ទី 14",
+    "KO": "14층",
+    "KU": "Qata 14",
+    "KY": "14-кабат",
+    "LO": "ຊັ້ນ 14",
+    "MN": "14-р давхар",
+    "MR": "मजला 14",
+    "MS": "Tingkat 14",
+    "MY": "အထပ် 14",
+    "NE": "तल्ला 14",
+    "NL": "Verdieping 14",
+    "NO": "Etasje 14",
+    "PA": "ਮੰਜ਼ਿਲ 14",
+    "PL": "Piętro 14",
+    "PS": "پوړ 14",
+    "PT": "Andar 14",
+    "RO": "Etajul 14",
+    "RU": "Этаж 14",
+    "SI": "මහල 14",
+    "SK": "Podlažie 14",
+    "SL": "Nadstropje 14",
+    "SR": "Спрат 14",
+    "SV": "Våning 14",
+    "SW": "Ghorofa 14",
+    "TA": "தளம் 14",
+    "TE": "అంతస్తు 14",
+    "TH": "ชั้น 14",
+    "TR": "14. Kat",
+    "UK": "Поверх 14",
+    "UR": "منزل 14",
+    "UZ": "14-qavat",
+    "VI": "Tầng 14",
+    "YUE": "14樓",
+    "ZH-CN": "14层",
+    "ZH-TW": "14樓"
+  },
+  "15. Kat": {
+    "AM": "ፎቅ 15",
+    "AR": "الطابق 15",
+    "AZ": "15-ci mərtəbə",
+    "BG": "Етаж 15",
+    "BN": "তলা 15",
+    "CS": "Podlaží 15",
+    "DA": "Etage 15",
+    "DE": "15. Obergeschoss",
+    "DZ": "ཐོག་ 15",
+    "EL": "Όροφος 15",
+    "EN": "Floor 15",
+    "ES": "Planta 15",
+    "FA": "طبقه 15",
+    "FI": "Kerros 15",
+    "FR": "Étage 15",
+    "HE": "קומה 15",
+    "HI": "मंज़िल 15",
+    "HR": "Kat 15",
+    "HU": "15. emelet",
+    "HY": "Հարկ 15",
+    "ID": "Lantai 15",
+    "IT": "Piano 15",
+    "JA": "15階",
+    "KA": "სართული 15",
+    "KK": "15-қабат",
+    "KM": "ជាន់ទី 15",
+    "KO": "15층",
+    "KU": "Qata 15",
+    "KY": "15-кабат",
+    "LO": "ຊັ້ນ 15",
+    "MN": "15-р давхар",
+    "MR": "मजला 15",
+    "MS": "Tingkat 15",
+    "MY": "အထပ် 15",
+    "NE": "तल्ला 15",
+    "NL": "Verdieping 15",
+    "NO": "Etasje 15",
+    "PA": "ਮੰਜ਼ਿਲ 15",
+    "PL": "Piętro 15",
+    "PS": "پوړ 15",
+    "PT": "Andar 15",
+    "RO": "Etajul 15",
+    "RU": "Этаж 15",
+    "SI": "මහල 15",
+    "SK": "Podlažie 15",
+    "SL": "Nadstropje 15",
+    "SR": "Спрат 15",
+    "SV": "Våning 15",
+    "SW": "Ghorofa 15",
+    "TA": "தளம் 15",
+    "TE": "అంతస్తు 15",
+    "TH": "ชั้น 15",
+    "TR": "15. Kat",
+    "UK": "Поверх 15",
+    "UR": "منزل 15",
+    "UZ": "15-qavat",
+    "VI": "Tầng 15",
+    "YUE": "15樓",
+    "ZH-CN": "15层",
+    "ZH-TW": "15樓"
+  },
+  "16. Kat": {
+    "AM": "ፎቅ 16",
+    "AR": "الطابق 16",
+    "AZ": "16-ci mərtəbə",
+    "BG": "Етаж 16",
+    "BN": "তলা 16",
+    "CS": "Podlaží 16",
+    "DA": "Etage 16",
+    "DE": "16. Obergeschoss",
+    "DZ": "ཐོག་ 16",
+    "EL": "Όροφος 16",
+    "EN": "Floor 16",
+    "ES": "Planta 16",
+    "FA": "طبقه 16",
+    "FI": "Kerros 16",
+    "FR": "Étage 16",
+    "HE": "קומה 16",
+    "HI": "मंज़िल 16",
+    "HR": "Kat 16",
+    "HU": "16. emelet",
+    "HY": "Հարկ 16",
+    "ID": "Lantai 16",
+    "IT": "Piano 16",
+    "JA": "16階",
+    "KA": "სართული 16",
+    "KK": "16-қабат",
+    "KM": "ជាន់ទី 16",
+    "KO": "16층",
+    "KU": "Qata 16",
+    "KY": "16-кабат",
+    "LO": "ຊັ້ນ 16",
+    "MN": "16-р давхар",
+    "MR": "मजला 16",
+    "MS": "Tingkat 16",
+    "MY": "အထပ် 16",
+    "NE": "तल्ला 16",
+    "NL": "Verdieping 16",
+    "NO": "Etasje 16",
+    "PA": "ਮੰਜ਼ਿਲ 16",
+    "PL": "Piętro 16",
+    "PS": "پوړ 16",
+    "PT": "Andar 16",
+    "RO": "Etajul 16",
+    "RU": "Этаж 16",
+    "SI": "මහල 16",
+    "SK": "Podlažie 16",
+    "SL": "Nadstropje 16",
+    "SR": "Спрат 16",
+    "SV": "Våning 16",
+    "SW": "Ghorofa 16",
+    "TA": "தளம் 16",
+    "TE": "అంతస్తు 16",
+    "TH": "ชั้น 16",
+    "TR": "16. Kat",
+    "UK": "Поверх 16",
+    "UR": "منزل 16",
+    "UZ": "16-qavat",
+    "VI": "Tầng 16",
+    "YUE": "16樓",
+    "ZH-CN": "16层",
+    "ZH-TW": "16樓"
+  },
+  "17. Kat": {
+    "AM": "ፎቅ 17",
+    "AR": "الطابق 17",
+    "AZ": "17-ci mərtəbə",
+    "BG": "Етаж 17",
+    "BN": "তলা 17",
+    "CS": "Podlaží 17",
+    "DA": "Etage 17",
+    "DE": "17. Obergeschoss",
+    "DZ": "ཐོག་ 17",
+    "EL": "Όροφος 17",
+    "EN": "Floor 17",
+    "ES": "Planta 17",
+    "FA": "طبقه 17",
+    "FI": "Kerros 17",
+    "FR": "Étage 17",
+    "HE": "קומה 17",
+    "HI": "मंज़िल 17",
+    "HR": "Kat 17",
+    "HU": "17. emelet",
+    "HY": "Հարկ 17",
+    "ID": "Lantai 17",
+    "IT": "Piano 17",
+    "JA": "17階",
+    "KA": "სართული 17",
+    "KK": "17-қабат",
+    "KM": "ជាន់ទី 17",
+    "KO": "17층",
+    "KU": "Qata 17",
+    "KY": "17-кабат",
+    "LO": "ຊັ້ນ 17",
+    "MN": "17-р давхар",
+    "MR": "मजला 17",
+    "MS": "Tingkat 17",
+    "MY": "အထပ် 17",
+    "NE": "तल्ला 17",
+    "NL": "Verdieping 17",
+    "NO": "Etasje 17",
+    "PA": "ਮੰਜ਼ਿਲ 17",
+    "PL": "Piętro 17",
+    "PS": "پوړ 17",
+    "PT": "Andar 17",
+    "RO": "Etajul 17",
+    "RU": "Этаж 17",
+    "SI": "මහල 17",
+    "SK": "Podlažie 17",
+    "SL": "Nadstropje 17",
+    "SR": "Спрат 17",
+    "SV": "Våning 17",
+    "SW": "Ghorofa 17",
+    "TA": "தளம் 17",
+    "TE": "అంతస్తు 17",
+    "TH": "ชั้น 17",
+    "TR": "17. Kat",
+    "UK": "Поверх 17",
+    "UR": "منزل 17",
+    "UZ": "17-qavat",
+    "VI": "Tầng 17",
+    "YUE": "17樓",
+    "ZH-CN": "17层",
+    "ZH-TW": "17樓"
+  },
+  "18. Kat": {
+    "AM": "ፎቅ 18",
+    "AR": "الطابق 18",
+    "AZ": "18-ci mərtəbə",
+    "BG": "Етаж 18",
+    "BN": "তলা 18",
+    "CS": "Podlaží 18",
+    "DA": "Etage 18",
+    "DE": "18. Obergeschoss",
+    "DZ": "ཐོག་ 18",
+    "EL": "Όροφος 18",
+    "EN": "Floor 18",
+    "ES": "Planta 18",
+    "FA": "طبقه 18",
+    "FI": "Kerros 18",
+    "FR": "Étage 18",
+    "HE": "קומה 18",
+    "HI": "मंज़िल 18",
+    "HR": "Kat 18",
+    "HU": "18. emelet",
+    "HY": "Հարկ 18",
+    "ID": "Lantai 18",
+    "IT": "Piano 18",
+    "JA": "18階",
+    "KA": "სართული 18",
+    "KK": "18-қабат",
+    "KM": "ជាន់ទី 18",
+    "KO": "18층",
+    "KU": "Qata 18",
+    "KY": "18-кабат",
+    "LO": "ຊັ້ນ 18",
+    "MN": "18-р давхар",
+    "MR": "मजला 18",
+    "MS": "Tingkat 18",
+    "MY": "အထပ် 18",
+    "NE": "तल्ला 18",
+    "NL": "Verdieping 18",
+    "NO": "Etasje 18",
+    "PA": "ਮੰਜ਼ਿਲ 18",
+    "PL": "Piętro 18",
+    "PS": "پوړ 18",
+    "PT": "Andar 18",
+    "RO": "Etajul 18",
+    "RU": "Этаж 18",
+    "SI": "මහල 18",
+    "SK": "Podlažie 18",
+    "SL": "Nadstropje 18",
+    "SR": "Спрат 18",
+    "SV": "Våning 18",
+    "SW": "Ghorofa 18",
+    "TA": "தளம் 18",
+    "TE": "అంతస్తు 18",
+    "TH": "ชั้น 18",
+    "TR": "18. Kat",
+    "UK": "Поверх 18",
+    "UR": "منزل 18",
+    "UZ": "18-qavat",
+    "VI": "Tầng 18",
+    "YUE": "18樓",
+    "ZH-CN": "18层",
+    "ZH-TW": "18樓"
+  },
+  "19. Kat": {
+    "AM": "ፎቅ 19",
+    "AR": "الطابق 19",
+    "AZ": "19-ci mərtəbə",
+    "BG": "Етаж 19",
+    "BN": "তলা 19",
+    "CS": "Podlaží 19",
+    "DA": "Etage 19",
+    "DE": "19. Obergeschoss",
+    "DZ": "ཐོག་ 19",
+    "EL": "Όροφος 19",
+    "EN": "Floor 19",
+    "ES": "Planta 19",
+    "FA": "طبقه 19",
+    "FI": "Kerros 19",
+    "FR": "Étage 19",
+    "HE": "קומה 19",
+    "HI": "मंज़िल 19",
+    "HR": "Kat 19",
+    "HU": "19. emelet",
+    "HY": "Հարկ 19",
+    "ID": "Lantai 19",
+    "IT": "Piano 19",
+    "JA": "19階",
+    "KA": "სართული 19",
+    "KK": "19-қабат",
+    "KM": "ជាន់ទី 19",
+    "KO": "19층",
+    "KU": "Qata 19",
+    "KY": "19-кабат",
+    "LO": "ຊັ້ນ 19",
+    "MN": "19-р давхар",
+    "MR": "मजला 19",
+    "MS": "Tingkat 19",
+    "MY": "အထပ် 19",
+    "NE": "तल्ला 19",
+    "NL": "Verdieping 19",
+    "NO": "Etasje 19",
+    "PA": "ਮੰਜ਼ਿਲ 19",
+    "PL": "Piętro 19",
+    "PS": "پوړ 19",
+    "PT": "Andar 19",
+    "RO": "Etajul 19",
+    "RU": "Этаж 19",
+    "SI": "මහල 19",
+    "SK": "Podlažie 19",
+    "SL": "Nadstropje 19",
+    "SR": "Спрат 19",
+    "SV": "Våning 19",
+    "SW": "Ghorofa 19",
+    "TA": "தளம் 19",
+    "TE": "అంతస్తు 19",
+    "TH": "ชั้น 19",
+    "TR": "19. Kat",
+    "UK": "Поверх 19",
+    "UR": "منزل 19",
+    "UZ": "19-qavat",
+    "VI": "Tầng 19",
+    "YUE": "19樓",
+    "ZH-CN": "19层",
+    "ZH-TW": "19樓"
+  },
+  "20. Kat": {
+    "AM": "ፎቅ 20",
+    "AR": "الطابق 20",
+    "AZ": "20-ci mərtəbə",
+    "BG": "Етаж 20",
+    "BN": "তলা 20",
+    "CS": "Podlaží 20",
+    "DA": "Etage 20",
+    "DE": "20. Obergeschoss",
+    "DZ": "ཐོག་ 20",
+    "EL": "Όροφος 20",
+    "EN": "Floor 20",
+    "ES": "Planta 20",
+    "FA": "طبقه 20",
+    "FI": "Kerros 20",
+    "FR": "Étage 20",
+    "HE": "קומה 20",
+    "HI": "मंज़िल 20",
+    "HR": "Kat 20",
+    "HU": "20. emelet",
+    "HY": "Հարկ 20",
+    "ID": "Lantai 20",
+    "IT": "Piano 20",
+    "JA": "20階",
+    "KA": "სართული 20",
+    "KK": "20-қабат",
+    "KM": "ជាន់ទី 20",
+    "KO": "20층",
+    "KU": "Qata 20",
+    "KY": "20-кабат",
+    "LO": "ຊັ້ນ 20",
+    "MN": "20-р давхар",
+    "MR": "मजला 20",
+    "MS": "Tingkat 20",
+    "MY": "အထပ် 20",
+    "NE": "तल्ला 20",
+    "NL": "Verdieping 20",
+    "NO": "Etasje 20",
+    "PA": "ਮੰਜ਼ਿਲ 20",
+    "PL": "Piętro 20",
+    "PS": "پوړ 20",
+    "PT": "Andar 20",
+    "RO": "Etajul 20",
+    "RU": "Этаж 20",
+    "SI": "මහල 20",
+    "SK": "Podlažie 20",
+    "SL": "Nadstropje 20",
+    "SR": "Спрат 20",
+    "SV": "Våning 20",
+    "SW": "Ghorofa 20",
+    "TA": "தளம் 20",
+    "TE": "అంతస్తు 20",
+    "TH": "ชั้น 20",
+    "TR": "20. Kat",
+    "UK": "Поверх 20",
+    "UR": "منزل 20",
+    "UZ": "20-qavat",
+    "VI": "Tầng 20",
+    "YUE": "20樓",
+    "ZH-CN": "20层",
+    "ZH-TW": "20樓"
+  },
+  "Çatı Katı": {
+    "AM": "የጣሪያ ፎቅ",
+    "AR": "طابق السطح",
+    "AZ": "Çardaq mərtəbəsi",
+    "BG": "Тавански етаж",
+    "BN": "ছাদের তলা",
+    "CS": "Podkroví",
+    "DA": "Tagetage",
+    "DE": "Dachgeschoss",
+    "DZ": "ཁང་ཐོག",
+    "EL": "Όροφος στέγης",
+    "EN": "Roof Floor",
+    "ES": "Planta de cubierta",
+    "FA": "طبقه پشت‌بام",
+    "FI": "Ullakkokerros",
+    "FR": "Étage sous les toits",
+    "HE": "קומת גג",
+    "HI": "छत का तल",
+    "HR": "Potkrovlje",
+    "HU": "Tetőtér",
+    "HY": "Ձեղնահարկ",
+    "ID": "Lantai atap",
+    "IT": "Piano sottotetto",
+    "JA": "屋上階",
+    "KA": "მანსარდის სართული",
+    "KK": "Шатыр қабаты",
+    "KM": "ជាន់ដំបូល",
+    "KO": "옥상층",
+    "KU": "Qata banî",
+    "KY": "Чатыр кабаты",
+    "LO": "ຊັ້ນດາດຟ້າ",
+    "MN": "Дээврийн давхар",
+    "MR": "छतावरील मजला",
+    "MS": "Aras bumbung",
+    "MY": "ခေါင်မိုးထပ်",
+    "NE": "छानाको तल्ला",
+    "NL": "Dakverdieping",
+    "NO": "Loftsetasje",
+    "PA": "ਛੱਤ ਵਾਲੀ ਮੰਜ਼ਿਲ",
+    "PL": "Poddasze",
+    "PS": "د بام پوړ",
+    "PT": "Cobertura",
+    "RO": "Mansardă",
+    "RU": "Мансардный этаж",
+    "SI": "වහල මහල",
+    "SK": "Podkrovie",
+    "SL": "Podstrešje",
+    "SR": "Поткровље",
+    "SV": "Vindsvåning",
+    "SW": "Ghorofa ya paa",
+    "TA": "கூரைத் தளம்",
+    "TE": "పైకప్పు అంతస్తు",
+    "TH": "ชั้นดาดฟ้า",
+    "TR": "Çatı Katı",
+    "UK": "Мансардний поверх",
+    "UR": "چھت کی منزل",
+    "UZ": "Chordoqli qavat",
+    "VI": "Tầng mái",
+    "YUE": "天台層",
+    "ZH-CN": "屋顶层",
+    "ZH-TW": "屋頂層"
+  }
+}

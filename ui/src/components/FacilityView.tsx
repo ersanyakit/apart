@@ -21,8 +21,8 @@ export function FacilityView({snapshot:s,onEdit,onCreate,onSelect,onArchive}: {
  const amenities=(property?.feature_assignments||[]).flatMap(a=>{
   const definition=s.feature_registry.definitions.find(d=>d.code===a.code&&d.scopes.includes('property'));
   if(!definition||a.value===false||a.value===0||a.value===''||(Array.isArray(a.value)&&!a.value.length))return [];
-  const value=typeof a.value==='boolean'?'':Array.isArray(a.value)?a.value.map(v=>catalogLabel(definition.option_labels?.[v],locale)||v).join(', '):catalogLabel(definition.option_labels?.[String(a.value)],locale)||String(a.value);
-  return [{code:a.code,icon:definition.icon_key,label:catalogLabel(definition.label,locale),value,quantity:typeof a.value==='number'&&definition.catalog_kind!=='amenity'&&!!definition.catalog_kind?a.value:undefined}];
+  const value=typeof a.value==='boolean'?'':Array.isArray(a.value)?a.value.map(v=>catalogLabel(definition.option_labels?.[v],locale,_uiText)||v).join(', '):catalogLabel(definition.option_labels?.[String(a.value)],locale,_uiText)||String(a.value);
+  return [{code:a.code,icon:definition.icon_key,label:catalogLabel(definition.label,locale,_uiText),value,quantity:typeof a.value==='number'&&definition.catalog_kind!=='amenity'&&!!definition.catalog_kind?a.value:undefined}];
  });
  const manager=['admin','management'].includes(s.user.role);
  const contact=(data:Facility)=><div className={styles.contact}>

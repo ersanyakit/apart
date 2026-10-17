@@ -52,7 +52,7 @@ export function StaffView({ snapshot: s }: { snapshot: Snapshot }) {
             })
           }
         >
-          <Plus size={14} />{"Personel Ekle"} </button>
+          <Plus size={14} />{_uiText("Personel Ekle")} </button>
         } />
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {people.map((p) => (

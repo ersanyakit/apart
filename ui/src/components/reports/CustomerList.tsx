@@ -41,8 +41,8 @@ export function CustomerList({snapshot:s,onOpenCustomer}:{snapshot:Snapshot;onOp
  };
  const changeSort=(key:string)=>{setPage(1);setSort(key);setDesc(sort===key?!desc:false)};
  return <div className={styles.layout}>
-  <PageHeader pageId={reportPageID(CUSTOMER_DIRECTORY.key)} actions={<button type="button" className={secondaryStyle} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={17}/>{"Yenile"}</button>}>
-   <div className={styles.filters}><TextField label={_uiText("Müşteri ara")} value={search} maxLength={200} onChange={v=>{setSearch(v);setPage(1)}}/><InlineSelectField label={_uiText("Tesis")} value={branch} onChange={v=>{setBranch(v);setPage(1)}} options={[{value:'',label:"Tüm tesisler"},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/></div>
+  <PageHeader pageId={reportPageID(CUSTOMER_DIRECTORY.key)} actions={<button type="button" className={secondaryStyle} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={17}/>{_uiText("Yenile")}</button>}>
+   <div className={styles.filters}><TextField label={_uiText("Müşteri ara")} value={search} maxLength={200} onChange={v=>{setSearch(v);setPage(1)}}/><InlineSelectField label={_uiText("Tesis")} value={branch} onChange={v=>{setBranch(v);setPage(1)}} options={[{value:'',label:_uiText("Tüm tesisler")},...s.branches.map(b=>({value:b.branch_id!,label:b.name}))]}/></div>
   </PageHeader>
   <ErrorMessage message={error}/><ErrorMessage message={exportError}/>
   <section className={styles.customerPanel} aria-label={_uiText("Benzersiz müşteri listesi")} aria-busy={busy}>

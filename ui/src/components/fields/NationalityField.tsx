@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "../I18n";
+import { CountryFlag } from "../CountryFlag";
 import { FieldCard, FieldCaption } from "./FieldCard";
 import {
   countryByCode,
-  countryFlag,
   searchCountries,
   normalizeCountrySearch,
   type Country,
@@ -34,9 +34,7 @@ export function CountryRow({
           ? "bg-brand-blue-50/70 text-brand-blue-700"
           : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
     >
-      <span aria-hidden="true" className="text-xl leading-none">
-        {countryFlag(country.code)}
-      </span>
+      <CountryFlag code={country.code} />
       <span className="min-w-0 flex-1 truncate text-[0.9375rem] font-bold leading-5 text-slate-900">
         {country.name}
       </span>
@@ -123,7 +121,6 @@ export function NationalityField({
     inputRef.current?.blur();
   };
 
-  const flag = countryFlag(value);
 
   return (
     <div className="h-full" lang={locale} dir={direction}>
@@ -134,7 +131,7 @@ export function NationalityField({
           title={selected?.name}
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[rgba(19,19,19,0.08)] text-xl leading-none"
         >
-          {flag || "🌍"}
+          <CountryFlag code={value} size={32} />
         </span>
         <label className="block min-w-0 flex-1 cursor-text">
           <FieldCaption>{label}</FieldCaption>

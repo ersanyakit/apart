@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { ChevronDown, Globe, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import { useI18n } from "./I18n";
+import { CountryFlag } from "./CountryFlag";
 import { CountryRow } from "./fields/NationalityField";
 import {
   countryByCode,
-  countryFlag,
   searchCountries,
 } from "../lib/countries";
 
@@ -71,7 +71,7 @@ export function CountrySelect({
       >
         <span className="flex min-w-0 flex-1 items-center gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-xl leading-none shadow-sm ring-1 ring-slate-200/70">
-            {countryFlag(value) || <Globe size={18} className="text-slate-500" />}
+            <CountryFlag code={value} size={32} />
           </span>
           <span className="min-w-0">
             <span className="block text-[11px] font-medium uppercase tracking-wider text-uni-muted">

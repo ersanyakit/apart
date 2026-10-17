@@ -70,9 +70,9 @@ function AuditLogList({ hotelId }: { hotelId: string }) {
   return (
     <div className="space-y-5">
       <ErrorMessage message={error} />
-      <PageHeader pageId="logs" actions={<button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={16}/>{"Yenile"}</button>}/>
+      <PageHeader pageId="logs" actions={<button type="button" className={`uni-control ${secondaryStyle}`} disabled={busy} onClick={()=>setRevision(v=>v+1)}><RefreshCw size={16}/>{_uiText("Yenile")}</button>}/>
       <div className={styles.filters}>
-        <div className={styles.actionFilter}><InlineSelectField label={_uiText("İşlem türü")} value={action} onChange={value=>{setAction(value);setPage(1);}} options={[{value:"",label:"Tüm işlemler"},...Object.entries(actions).map(([value,label])=>({value,label}))]}/></div>
+        <div className={styles.actionFilter}><InlineSelectField label={_uiText("İşlem türü")} value={action} onChange={value=>{setAction(value);setPage(1);}} options={[{value:"",label:_uiText("Tüm işlemler")},...Object.entries(actions).map(([value,label])=>({value,label}))]}/></div>
         <button type="button" aria-expanded={showDates} className={`uni-control ${secondaryStyle}`} onClick={()=>setShowDates(v=>!v)}><SlidersHorizontal size={16}/>{_uiText("Tarih aralığı")}</button>
         {(from||to||action)&&<button type="button" className={`uni-control ${secondaryStyle}`} onClick={()=>{setFrom('');setTo('');setAction('');setShowDates(false);setPage(1);}}>{_uiText("Filtreleri temizle")}</button>}
         {showDates&&<div className={styles.dates}><DateField withTime={false} label={_uiText("Başlangıç tarihi")} value={from} onChange={v=>{setFrom(v);setPage(1);}}/><DateField withTime={false} label={_uiText("Bitiş tarihi")} value={to} onChange={v=>{setTo(v);setPage(1);}}/></div>}

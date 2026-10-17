@@ -85,8 +85,8 @@ export function FeatureRegistryView({
             className={`uni-control ${buttonStyle}`}
             disabled={!snapshot.feature_registry.categories?.length}
             onClick={() => setDraft(empty())}
-          >{"Özellik Ekle"} </button>
-          <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>{"Kategori Ekle"} </button>
+          >{_uiText("Özellik Ekle")} </button>
+          <button className={`uni-control ${secondaryStyle}`} onClick={() => setCategory(true)}>{_uiText("Kategori Ekle")} </button>
         </div>
         } />
         {customCategories.length > 0 && (
@@ -96,12 +96,12 @@ export function FeatureRegistryView({
               {customCategories.map((c) => (
                 <div key={c.category_id} className="flex items-center gap-3 rounded-[20px] bg-[#f9f9f9] p-4">
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-slate-900">{localized(c.label) || c.code}</p>
+                    <p className="truncate text-slate-900">{localized(c.label, _uiLocale.toUpperCase()) || c.code}</p>
                     <p className="truncate text-sm text-slate-500">{c.code}</p>
                   </div>
                   <button type="button" className="nav-icon-button text-red-600" disabled={busy}
-                    aria-label={_uiText("{value1} kategorisini sil", {value1: String(localized(c.label) || c.code)})}
-                    onClick={() => void remove("category", c.category_id, localized(c.label) || c.code)}>
+                    aria-label={_uiText("{value1} kategorisini sil", {value1: String(localized(c.label, _uiLocale.toUpperCase()) || c.code)})}
+                    onClick={() => void remove("category", c.category_id, localized(c.label, _uiLocale.toUpperCase()) || c.code)}>
                     <Trash2 size={18} aria-hidden="true" />
                   </button>
                 </div>
@@ -116,7 +116,7 @@ export function FeatureRegistryView({
               className="uni-control rounded-[20px] bg-[#f9f9f9] p-4 text-left outline-none transition-all duration-150 ease-out hover:bg-[#efefef] focus-visible:ring-2 focus-visible:ring-neutral-400"
               onClick={() => setDraft({ ...d, assets: d.assets || [] })}
             >
-              <h3 className="font-uninav-book truncate text-[1.125rem] leading-6 text-slate-900">{localized(d.label) || d.code}</h3>
+              <h3 className="font-uninav-book truncate text-[1.125rem] leading-6 text-slate-900">{localized(d.label, _uiLocale.toUpperCase()) || d.code}</h3>
               <p className="mt-1 truncate text-[0.875rem] leading-5 text-slate-500">
                 {d.code} · {d.value_type}
               </p>
@@ -212,7 +212,7 @@ export function FeatureRegistryView({
                 onChange={(v) => setDraft({ ...draft, category_id: v })}
                 options={(snapshot.feature_registry.categories || []).map((c) => ({
                   value: c.category_id,
-                  label: localized(c.label),
+                  label: localized(c.label, _uiLocale.toUpperCase()),
                 }))}
               />
             </div>
@@ -333,7 +333,7 @@ export function FeatureRegistryView({
               <button disabled={busy || uploading} className={`uni-control ${buttonStyle}`}>{_uiText("Özelliği Kaydet")} </button>
               {draft.feature_id && !draft.catalog_kind && (
                 <button type="button" disabled={busy || uploading} className={`uni-control ${secondaryStyle} text-red-600`}
-                  onClick={() => void remove("feature", draft.feature_id!, localized(draft.label) || draft.code)}>
+                  onClick={() => void remove("feature", draft.feature_id!, localized(draft.label, _uiLocale.toUpperCase()) || draft.code)}>
                   <Trash2 size={18} aria-hidden="true" /> {_uiText("Olanağı Sil")} </button>
               )}
             </div>

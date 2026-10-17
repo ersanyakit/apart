@@ -147,7 +147,7 @@ export function LocalizedTextFields({
           onChange={(code) => {
             if (code) setLang(code, "");
           }}
-          options={[{ value: "", label: "Seçin" }, ...remaining]}
+          options={[{ value: "", label: _uiText("Seçin") }, ...remaining]}
         />
       )}
     </div>

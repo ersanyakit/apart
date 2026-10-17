@@ -28,7 +28,7 @@ export function UnitsToolbar({ floors, floor, mode, busy, onFloorChange, onModeC
   </div>
   {mode!=='floors'&&<div className="flex flex-wrap items-center justify-between gap-3">
    <UniSelect caption={_uiText("Kat")} icon={<Layers size={18}/>} ariaLabel={_uiText("Kat filtresi")} value={floor} onChange={onFloorChange}
-    options={[{value:'',label:"Tüm katlar"},...floors.map(f=>({value:f.floor_id,label:localized(f.label,locale.toUpperCase())||f.code}))]}/>
+    options={[{value:'',label:_uiText("Tüm katlar")},...floors.map(f=>({value:f.floor_id,label:localized(f.label,locale.toUpperCase())||f.code}))]}/>
    <details className="relative">
     <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-xl px-3 text-sm text-uni-muted hover:bg-uni-surface [&::-webkit-details-marker]:hidden">{_uiText("Diğer işlemler")}<ChevronDown size={15}/></summary>
     <div className="absolute right-0 z-20 mt-2 grid min-w-60 gap-1 rounded-2xl border border-uni-border bg-white p-2 shadow-lg">
