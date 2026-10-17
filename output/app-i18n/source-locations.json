@@ -235,6 +235,12 @@
       "line": 101
     }
   ],
+  "{units} oda / daire ve {beds} fiziksel yatak hazırlanacak.": [
+    {
+      "file": "ui/src/components/SetupWizard.tsx",
+      "line": 111
+    }
+  ],
   "{value1}": [
     {
       "file": "ui/src/components/CheckoutFolio.tsx",
@@ -3701,12 +3707,6 @@
       "line": 73
     }
   ],
-  "birim. Kesin müsaitlik kaydetme sırasında tekrar kontrol edilir.": [
-    {
-      "file": "ui/src/components/BookingForm.tsx",
-      "line": 377
-    }
-  ],
   "Birimde başlangıç": [
     {
       "file": "ui/src/components/hotel-calendar/model.ts",
@@ -4299,7 +4299,7 @@
       "line": 204
     }
   ],
-  "Bu tarih ve kişi sayısına uygun": [
+  "Bu tarih ve kişi sayısına uygun {count} birim var. Kesin müsaitlik kaydetme sırasında tekrar kontrol edilir.": [
     {
       "file": "ui/src/components/BookingForm.tsx",
       "line": 377
@@ -7303,12 +7303,6 @@
       "line": 26
     }
   ],
-  "fiziksel yatak hazırlanacak.": [
-    {
-      "file": "ui/src/components/SetupWizard.tsx",
-      "line": 111
-    }
-  ],
   "Fiziksel yatak ölçüleri alınamadı: {value1}. Birim kayıtları gösteriliyor.": [
     {
       "file": "ui/src/components/property-3d/PropertyView.tsx",
@@ -7428,6 +7422,10 @@
     }
   ],
   "gece": [
+    {
+      "file": "ui/src/components/BookingForm.tsx",
+      "line": 307
+    },
     {
       "file": "ui/src/components/CheckoutFolio.tsx",
       "line": 38
@@ -14905,12 +14903,6 @@
     {
       "file": "ui/src/components/SetupWizard.tsx",
       "line": 121
-    }
-  ],
-  "oda / daire,": [
-    {
-      "file": "ui/src/components/SetupWizard.tsx",
-      "line": 111
     }
   ],
   "Oda / oda-gece": [

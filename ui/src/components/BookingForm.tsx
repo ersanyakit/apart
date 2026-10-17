@@ -304,7 +304,7 @@ export function BookingForm({
             min={1}
             max={365}
             onChange={handleNightsChange}
-            sub="gece"
+            sub={_uiText("gece")}
           />
         </div>
         <div className="col-span-12 sm:col-span-5 min-w-0">
@@ -374,7 +374,7 @@ export function BookingForm({
       {options && (
         <p className="flex items-start gap-2 rounded-xl border border-emerald-200/70 bg-emerald-50/60 px-4 py-3 text-xs text-emerald-800">
           <Info className="w-4 h-4 shrink-0 mt-0.5" />
-          <span>{_uiText("Bu tarih ve kişi sayısına uygun")} {options.length} {_uiText("birim. Kesin müsaitlik kaydetme sırasında tekrar kontrol edilir.")} </span>
+          <span>{_uiText("Bu tarih ve kişi sayısına uygun {count} birim var. Kesin müsaitlik kaydetme sırasında tekrar kontrol edilir.", {count: options.length})} </span>
         </p>
       )}
       <p className="flex items-start gap-2 rounded-xl border border-slate-200/70 bg-slate-50/70 px-4 py-3 text-xs text-slate-500">
@@ -444,7 +444,7 @@ export function BookingForm({
         }}
         sub={
           selectedRoom?.kind === "bed"
-            ? _uiText("Yatak kapasitesi: {value1} kişi", {value1: String(selectedRoom.capacity)})
+            ? _uiText("Yatak kapasitesi: {value1} kişi", {value1: selectedRoom.capacity})
             : _uiText("Konaklayacak kişi sayısı")
         }
       />

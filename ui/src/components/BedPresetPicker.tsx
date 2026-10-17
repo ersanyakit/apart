@@ -27,8 +27,8 @@ export function BedPresetPicker({ onSelect, disabled, adding = false, compact = 
         <div className={styles.presets}>
           {members.map(preset=>{
             return <button key={preset.key} type="button" disabled={disabled} className={`uni-control ${styles.preset}`}
-              aria-label={_uiText("{value1}{value2}", {value1: _uiText(preset.label), value2: String(adding?_uiText('ekle'):_uiText('seç'))})} onClick={()=>onSelect(preset)}>
-              <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1}/><span><strong>{_uiText(preset.label)}</strong><small>{preset.capacity} {_uiText("kişi ·")} {preset.bed_places} {_uiText("yatak yeri")}{preset.physical_count>1?_uiText(" · 2 ayrı yatak"):''}</small></span>
+              aria-label={adding?_uiText("{bed} ekle", {bed:_uiText(preset.label)}):_uiText("{bed} seç", {bed:_uiText(preset.label)})} onClick={()=>onSelect(preset)}>
+              <BedIllustration type={preset.type} structure={preset.structure} levels={preset.levels} twin={preset.physical_count > 1}/><span><strong>{_uiText(preset.label)}</strong><small>{_uiText("{places} yatak yeri · {capacity} kişi", {places:preset.bed_places,capacity:preset.capacity})}{preset.physical_count>1?_uiText(" · 2 ayrı yatak"):''}</small></span>
               {adding&&<Plus size={16} aria-hidden="true"/>}
             </button>;
           })}

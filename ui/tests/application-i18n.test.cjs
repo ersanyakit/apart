@@ -108,7 +108,7 @@ test('extraction excludes implementation strings while retaining visible notific
 
 test('completed shared screens and dialogs have resources across all supported locales',async()=>{
  const locations=JSON.parse(readFileSync(path.join(ui,'../output/app-i18n/source-locations.json'),'utf8'));
- const files=new Set(['StaffView.tsx','StaffIdentityFields.tsx','RoomFolio.tsx','AppSettingsView.tsx','FontSize.tsx','SettingsEditor.tsx','ConfirmDialog.tsx','PWA.tsx','kanban/NoteModal.tsx','kanban/KanbanView.tsx','kanban/model.ts'].map(file=>'ui/src/components/'+file));
+ const files=new Set(['SetupWizard.tsx','FacilityDetailsFields.tsx','FloorDefinitionFields.tsx','UnitSleepingFields.tsx','FeatureFields.tsx','CatalogFields.tsx','PropertySwitcher.tsx','AccommodationForms.tsx','BookingForm.tsx','SetupAccommodationFields.tsx','StaffView.tsx','StaffIdentityFields.tsx','RoomFolio.tsx','AppSettingsView.tsx','FontSize.tsx','SettingsEditor.tsx','ConfirmDialog.tsx','PWA.tsx','kanban/NoteModal.tsx','kanban/KanbanView.tsx','kanban/model.ts'].map(file=>'ui/src/components/'+file));
  const keys=Object.entries(locations).filter(([,refs])=>refs.some(ref=>files.has(ref.file))).map(([key])=>key);
  const fold=text=>text.trim().replace(/\s+/g,' ').toLocaleLowerCase('tr');
  for(const locale of Object.keys(LOCALES)){

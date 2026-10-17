@@ -108,7 +108,7 @@ export function SetupWizard({snapshot:s,onComplete}:{snapshot:Snapshot;onComplet
      <p className={styles.note}>{_uiText("Katlarda farklı sayıda oda varsa her kat için ayrı oda tipi ekleyin. Örneğin 1. katta 5 çift kişilik oda, 2. katta 3 aile odası.")}</p>
      <Switch label={_uiText("Birimler temiz ve misafir girişine hazır")} checked={clean} onChange={setClean}/>
      <p className={styles.note}>{_uiText("Kapalıysa birimler kirli kaydedilir. İleri tarihli rezervasyon alınabilir; girişten önce temiz olarak güncellenmelidir.")}</p>
-     {preview.length>0&&<p className={styles.note}>{preview.length} {_uiText("oda / daire,")} {preview.reduce((n,u)=>n+u.room.beds_to_add.length,0)} {_uiText("fiziksel yatak hazırlanacak.")}</p>}
+     {preview.length>0&&<p className={styles.note}>{_uiText("{units} oda / daire ve {beds} fiziksel yatak hazırlanacak.", {units:preview.length,beds:preview.reduce((n,u)=>n+u.room.beds_to_add.length,0)})}</p>}
     </>}
     {step===5&&<>
      {!people.length&&<Switch label={_uiText("Şimdilik tek başıma kullanacağım")} checked={solo} onChange={setSolo}/>}

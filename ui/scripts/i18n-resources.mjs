@@ -8,9 +8,11 @@ const source=JSON.parse(await fs.readFile(path.join(base,'application-source.jso
 const builtins=JSON.parse(await fs.readFile(path.join(base,'catalog-source.json'),'utf8'));
 const semantic=JSON.parse(await fs.readFile(path.join(base,'semantic-source.json'),'utf8'));
 const target=path.join(base,'application');
+// SI unit symbols are language-independent, rather than Turkish copy.
+const symbols=new Set(['cm']);
 // A template containing only placeholders and punctuation has no linguistic
 // content. Keeping it identical is intentional, rather than a language fallback.
-const neutral=Object.fromEntries(Object.keys(source).filter(key=>!/[\p{L}]/u.test(key.replace(/\{\w+\}/g,''))).map(key=>[key,key]));
+const neutral=Object.fromEntries(Object.keys(source).filter(key=>symbols.has(key)||!/[\p{L}]/u.test(key.replace(/\{\w+\}/g,''))).map(key=>[key,key]));
 await fs.mkdir(target,{recursive:true});
 for(const locale of Object.keys(core)) {
   const file=path.join(target,`${locale}.json`);
