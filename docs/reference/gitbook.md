@@ -40,3 +40,11 @@ Türkçe alanın mevcut `interactiveotel-user-guide-tr` anahtarı ve `guide` yol
 GitBook'un dil kodları listesinde Nepalce bulunmadığı için Nepalce alanında `content.language` belirtilmez. Alanın adı नेपाली, yolu `ne`, içeriği Nepalcedir. Çince sürümlerinde GitBook'un beklediği `zh` ve `zh-tw` kodları kullanılır.
 
 Ekran görüntülerinin dili Türkçedir; metinler çevrilmiştir. Görseller her dil alanının kendi `images/` klasöründe yer alır. Bir işlem değiştiğinde aynı sayfayı tüm dil sürümlerinde güncelleyin. Dil alanı anahtarlarını sonradan değiştirmeyin.
+
+## Dil bağlantıları ve Search Console 404 kayıtları
+
+Alan içindeki sayfalara göreli Markdown bağlantıları verin. Başka bir dil alanına geçerken `https://docs.interaktifotel.com/hi/` gibi tam yayın adresi kullanın; dil yolu `gitbook-docs.yaml` içindeki `path` ile aynı olmalıdır. `languages/hi/README.md` ve `docs/languages/hi` depo yollarıdır, yayın adresi değildir. Dosyanın depoda bulunması alanlar arası bağlantının GitBook'ta çözüleceğini garanti etmez. `python3 scripts/validate-docs.py` bu ayrımı Türkçe ve çeviri dosyalarında denetler.
+
+Search Console'da `/gunluk-operasyon/docs/languages/hi` veya `/th/undefined-6/docs/languages/hi` gibi adresler görülürse önce bunları üreten bağlantıları düzeltin ve Git Sync eşitlemesinden sonra canlı dil bağlantılarını kontrol edin. `undefined-*` bölümleri kaynak dosyalarda bulunmuyorsa GitBook'taki ilgili sayfa grubunun yayın yolunu inceleyin; mevcut yolları doğrulamadan topluca değiştirmeyin.
+
+Eski bozuk dil bağlantılarını kurtarmak için GitBook'un [site yönlendirmeleri](https://gitbook.com/docs/publish/site-redirects) ayarlarında her eski yolu ilgili dilin doğrulanmış açılış sayfasına yönlendirin. Örneğin yukarıdaki iki Hintçe bağlantının hedefi `/hi/` olur. `.gitbook.yaml` yönlendirmeleri yalnız kendi alanı içinde geçerlidir; alanlar arası düzeltmeleri site düzeyinde yapın. Yayındaki hedefin 200, eski yolun kalıcı yönlendirme döndürdüğünü kontrol ettikten sonra Search Console'da düzeltmeyi doğrulatın. Bu depo değişikliği tek başına canlı site yönlendirmesi oluşturmaz.

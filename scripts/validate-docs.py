@@ -3,6 +3,7 @@
 from pathlib import Path
 import hashlib
 import re
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'docs'
@@ -19,8 +20,28 @@ def require(condition, message):
         raise AssertionError(message)
 
 
-source_pages = set(targets(DOCS / 'SUMMARY.md'))
+source_pages = {target for target in targets(DOCS / 'SUMMARY.md') if not target.startswith('development/')}
 require(len(source_pages) == 25, 'Expected 25 source guide pages')
+# Files in another language directory belong to a separate GitBook space.
+# An existing repository file does not imply that GitBook can resolve its link.
+for file in DOCS.rglob('*.md'):
+    base = DOCS if not file.is_relative_to(DOCS / 'languages') else DOCS / 'languages' / file.relative_to(DOCS / 'languages').parts[0]
+    for target in targets(file):
+        url = urlsplit(target)
+        if url.scheme or target.startswith('#'):
+            if url.hostname == 'docs.interaktifotel.com':
+                require(not re.search(r'(?:^|/)(?:docs|languages|undefined(?:-\d+)?)(?:/|$)', url.path), f'{file}: invalid published URL: {target}')
+            continue
+        require(not target.startswith('/'), f'{file}: use a full published URL for links between spaces: {target}')
+        resolved = (file.parent / url.path).resolve()
+        require(resolved.is_relative_to(base.resolve()), f'{file}: link escapes language space: {target}')
+        if base == DOCS:
+            require(not resolved.is_relative_to((DOCS / 'languages').resolve()), f'{file}: use a published URL for another language space: {target}')
+        require(resolved.exists(), f'{file}: broken link: {target}')
+
+language_links = [target for target in targets(DOCS / 'README.md') if urlsplit(target).hostname == 'docs.interaktifotel.com']
+require(set(language_links) == {f'https://docs.interaktifotel.com/{locale}/' for locale in LANGUAGES}, 'Expected published URLs for all eight language editions')
+require(len(language_links) == len(LANGUAGES), 'Duplicate language edition link')
 source_images = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (DOCS / 'images').glob('*') if p.is_file()}
 require(len(source_images) == 15, 'Expected 15 source images')
 page_total = 0
@@ -66,6 +87,7 @@ require('key: interactiveotel-user-guide-tr' in site and 'path: guide' in site, 
 require(site.count('default: true') == 1, 'Exactly one default language required')
 for locale in LANGUAGES:
     require(f'directory: ./docs/languages/{locale}' in site, f'{locale}: missing site mapping')
+    require(re.search(rf'key: interactiveotel-user-guide-{re.escape(locale)}\n\s+title: [^\n]+\n\s+path: {re.escape(locale)}\n', site), f'{locale}: published language URL does not match site path')
 require('language: ne\n' not in site, 'GitBook does not accept the ne language enum; omit it for the Nepali space')
 require('language: zh\n' in site and 'language: zh-tw\n' in site, 'Use GitBook Chinese language codes')
 print(f'PASS: {page_total} translated guide pages, {link_total} local links, 9 configured spaces')

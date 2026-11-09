@@ -26,11 +26,11 @@ Her konuda işlem sırası, kayıttan sonra kontrol edilecek sonuç ve ilgili di
 
 ## Diğer diller
 
-- [English](languages/en/README.md)
-- [Deutsch](languages/de/README.md)
-- [简体中文](languages/zh-cn/README.md)
-- [繁體中文（台灣）](languages/zh-tw/README.md)
-- [日本語](languages/ja/README.md)
-- [ภาษาไทย](languages/th/README.md)
-- [नेपाली](languages/ne/README.md)
-- [हिन्दी](languages/hi/README.md)
+- [English](https://docs.interaktifotel.com/en/)
+- [Deutsch](https://docs.interaktifotel.com/de/)
+- [简体中文](https://docs.interaktifotel.com/zh-cn/)
+- [繁體中文（台灣）](https://docs.interaktifotel.com/zh-tw/)
+- [日本語](https://docs.interaktifotel.com/ja/)
+- [ภาษาไทย](https://docs.interaktifotel.com/th/)
+- [नेपाली](https://docs.interaktifotel.com/ne/)
+- [हिन्दी](https://docs.interaktifotel.com/hi/)
